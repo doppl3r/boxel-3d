@@ -7,28 +7,26 @@ var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHei
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 var player = new Player();
 
-scene.background = new THREE.Color(0xf8d4de);
+// Update scene settings
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-
-
+scene.background = new THREE.Color(0xf8d4de);
 scene.add(player);
 camera.position.z = 5;
+document.body.appendChild(renderer.domElement);
 
+// Render all elements to the screen
 function render() {
     delta += clock.getDelta();
     if (delta > interval) update();
     requestAnimationFrame(render);
 };
 
+// Update each element
 function update() {
     player.rotation.z -= delta;
     delta = delta % interval;
     renderer.render(scene, camera);
 }
-
-render();
 
 // Resize renderer
 window.addEventListener( 'resize', function(){
@@ -36,3 +34,6 @@ window.addEventListener( 'resize', function(){
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
 });
+
+// Initialize app
+render();
