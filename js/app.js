@@ -1,26 +1,36 @@
+var clock = new THREE.Clock();
+var delta = 0;
+var fps = 30;
+var interval = (1 / fps);
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-scene.background = new THREE.Color(0xf8d4de);
-
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
-
 var player = new Player();
 
-player.position.y -= 2;
+scene.background = new THREE.Color(0xf8d4de);
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+
+
 scene.add(player);
 camera.position.z = 5;
 
-var animate = function () {
-    requestAnimationFrame(animate);
-    player.rotation.z -= 0.01;
-    renderer.render(scene, camera);
+function render() {
+    delta += clock.getDelta();
+    if (delta > interval) update();
+    requestAnimationFrame(render);
 };
 
-animate();
+function update() {
+    player.rotation.z -= delta;
+    delta = delta % interval;
+    renderer.render(scene, camera);
+}
 
-// Resize render size
+render();
+
+// Resize renderer
 window.addEventListener( 'resize', function(){
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
