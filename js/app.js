@@ -6,25 +6,23 @@ var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-var material = new THREE.MeshBasicMaterial( { color: 0xdc265a } );
-var cube = new THREE.Mesh( geometry, material );
-cube.position.y -= 2;
+var player = new Player();
 
-console.log(cube);
-
-scene.add( cube );
-
+player.position.y -= 2;
+scene.add(player);
 camera.position.z = 5;
 
 var animate = function () {
-    requestAnimationFrame( animate );
-
-    //cube.rotation.x += 0.01;
-    cube.position.y += 0.01;
-    cube.rotation.y += 0.01;
-
-    renderer.render( scene, camera );
+    requestAnimationFrame(animate);
+    player.rotation.z -= 0.01;
+    renderer.render(scene, camera);
 };
 
 animate();
+
+// Resize render size
+window.addEventListener( 'resize', function(){
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+});
