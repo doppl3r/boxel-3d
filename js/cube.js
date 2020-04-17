@@ -17,10 +17,8 @@ class Cube extends THREE.Mesh {
     }
 
     setPosition = function(x, y, z) {
-        this.position.x = x;
-        this.position.y = y;
-        this.position.z = z;
-        Matter.Body.setPosition(this.rectangle, { x: x, y: y });
+        this.position.set(x, y, z);
+        Matter.Body.setPosition(this.rectangle, { x: x, y: -y });
     }
 
     setColor = function(color) {

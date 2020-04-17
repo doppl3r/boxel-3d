@@ -10,9 +10,21 @@ var renderer = new THREE.WebGLRenderer({ antialias: true });
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 var scene = new THREE.Scene();
 var light = new THREE.HemisphereLight(0xffffff, 1);
-light.position.set(0, 0, 1);
-scene.add( light );;
 
+// Add lighting
+light.position.set(0, 0, 1);
+scene.add(light);
+
+// Update scene settings
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio)
+scene.background = new THREE.Color(0xf8d4de);
+camera.position.x = 0;
+camera.position.y = 0;
+camera.position.z = 200;
+document.body.appendChild(renderer.domElement);
+
+// Populate world with cubes
 var dataSet = [
     "BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BG","BG","BG",
     "BK","BK","BK","BK","BK","BK","RD","RD","RD","RD","RD","BK","BK","BG","BG","BG",
@@ -23,72 +35,45 @@ var dataSet = [
     "BK","BK","BK","BK","BR","BR","BG","BG","BG","BG","BR","BR","BR","BR","RD","BK",
     "BK","BK","BK","BK","BK","BK","BG","BG","BG","BG","BG","BG","BG","RD","BK","BK"
 ];
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio)
-scene.background = new THREE.Color(0xf8d4de);
-camera.position.x = 0;
-camera.position.y = 0;
-camera.position.z = 200;
-document.body.appendChild(renderer.domElement);
-
-// create two rectangles and a ground
-var rectangles = [];
 for (var i = 0; i < dataSet.length; i++) {
     var x = X_START_POS + (i % BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 7);
     var y = Y_START_POS + Math.floor(i / BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 20);
     var cube = new Cube();
-    cube.setPosition(x, y);
+    cube.setPosition(x, -y, 0);
     cube.setScale(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-    rectangles.push(cube.rectangle);
+    Matter.World.add(engine.world, cube.rectangle);
+    scene.add(cube);
 }
 
+// Add floor
 var floor = new Cube();
-floor.setPosition(0, BOX_SIZE * 4, 0);
+scene.add(floor);
+floor.setPosition(0, -BOX_SIZE * 4, 0);
 floor.setScale(BOX_SIZE * 12, BOX_SIZE, BOX_SIZE);
 floor.setStatic(true);
 floor.setColor('#620460');
-
-// add all of the bodies to the world
-Matter.World.add(engine.world, rectangles);
 Matter.World.add(engine.world, floor.rectangle);
 
-var bodies = [];
-var material = new THREE.MeshPhongMaterial({ color: 0x620460 });
-var group = new THREE.Object3D();
-
-scene.add(group);
-
-for (var j = 0; j < engine.world.bodies.length; j++) {
-    var b = engine.world.bodies[j];
-    var w = b.bounds.max.x - b.bounds.min.x;
-    var h = b.bounds.max.y - b.bounds.min.y;
-
-    if (b.isStatic) {
-        var geometry = new THREE.BoxGeometry(w, h, BOX_SIZE);
-        m = new THREE.Mesh(geometry, material);
-    }
-    else {
-        m = new Cube();
-        m.setScale(16, 16, 16);
-    }
-
-    group.add(m); // 3d items
-    bodies.push(m); // 2d items
-}
-
+// Main render function
 function render() {
     delta += clock.getDelta();
     if (delta > interval) update();
     requestAnimationFrame(render);
 }
 
+// Main update function
 function update() {
     delta = delta % interval;
-    for (var j = 0; j < engine.world.bodies.length; j++) {
-        var b = engine.world.bodies[j].position;
-        bodies[j].rotation.z = -engine.world.bodies[j].angle;
-        bodies[j].position.set(b.x, -b.y, 0);
+    for (var j = 0; j < scene.children.length; j++) {
+        var child = scene.children[j];
+        if (child.rectangle != null) {
+            var rect = child.rectangle;
+            var x = rect.position.x;
+            var y = rect.position.y;
+            var z = rect.angle;
+            child.setPosition(x, -y, 0);
+            child.rotation.z = -z;
+        }
     }
     renderer.render(scene, camera);
 }
