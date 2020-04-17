@@ -1,6 +1,6 @@
 var clock = new THREE.Clock();
 var delta = 0;
-var fps = 30;
+var fps = 12;
 var interval = (1 / fps);
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -11,7 +11,7 @@ var player = new Player();
 renderer.setSize(window.innerWidth, window.innerHeight);
 scene.background = new THREE.Color(0xf8d4de);
 scene.add(player);
-camera.position.z = 5;
+camera.position.z = 200;
 document.body.appendChild(renderer.domElement);
 
 // Render all elements to the screen
