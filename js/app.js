@@ -21,15 +21,7 @@ var dataSet = [
     "BK","BK","BK","BK","BR","BG","BR","BG","BG","BG","BR","BG","BG","RD","RD","RD",
     "BK","BK","BK","BK","BR","BG","BR","BR","BG","BG","BG","BR","BG","BG","BG","RD",
     "BK","BK","BK","BK","BR","BR","BG","BG","BG","BG","BR","BR","BR","BR","RD","BK",
-    "BK","BK","BK","BK","BK","BK","BG","BG","BG","BG","BG","BG","BG","RD","BK","BK",
-    "BK","BK","RD","RD","RD","RD","RD","BL","RD","RD","RD","BL","RD","BK","BK","BK",
-    "BK","RD","RD","RD","RD","RD","RD","RD","BL","RD","RD","RD","BL","BK","BK","BR",
-    "BG","BG","RD","RD","RD","RD","RD","RD","BL","BL","BL","BL","BL","BK","BK","BR",
-    "BG","BG","BG","BK","BL","BL","RD","BL","BL","YL","BL","BL","YL","BL","BR","BR",
-    "BK","BG","BK","BR","BL","BL","BL","BL","BL","BL","BL","BL","BL","BL","BR","BR",
-    "BK","BK","BR","BR","BR","BL","BL","BL","BL","BL","BL","BL","BL","BL","BR","BR",
-    "BK","BR","BR","BR","BL","BL","BL","BL","BL","BL","BL","BK","BK","BK","BK","BK",
-    "BK","BR","BK","BK","BL","BL","BL","BL","BK","BK","BK","BK","BK","BK","BK","BK"
+    "BK","BK","BK","BK","BK","BK","BG","BG","BG","BG","BG","BG","BG","RD","BK","BK"
 ];
 
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -40,26 +32,26 @@ camera.position.y = 0;
 camera.position.z = 200;
 document.body.appendChild(renderer.domElement);
 
-// create two boxes and a ground
-var boxes = [];
+// create two rectangles and a ground
+var rectangles = [];
 for (var i = 0; i < dataSet.length; i++) {
     var x = X_START_POS + (i % BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 7);
     var y = Y_START_POS + Math.floor(i / BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 20);
     var cube = new Cube();
     cube.setPosition(x, y);
     cube.setScale(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-    boxes.push(cube.rectangle);
+    rectangles.push(cube.rectangle);
 }
 
-var ground = Matter.Bodies.rectangle(0, BOX_SIZE * 4, BOX_SIZE * 12, BOX_SIZE, {isStatic: true});
 var floor = new Cube();
 floor.setPosition(0, BOX_SIZE * 4, 0);
+floor.setScale(BOX_SIZE * 12, BOX_SIZE, BOX_SIZE);
+floor.setStatic(true);
 floor.setColor('#620460');
 
 // add all of the bodies to the world
-Matter.World.add(engine.world, boxes);
-Matter.World.add(engine.world, ground);
-Matter.World.add(engine.world, floor);
+Matter.World.add(engine.world, rectangles);
+Matter.World.add(engine.world, floor.rectangle);
 
 var bodies = [];
 var material = new THREE.MeshPhongMaterial({ color: 0x620460 });
