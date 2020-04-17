@@ -45,21 +45,21 @@ var boxes = [];
 for (var i = 0; i < dataSet.length; i++) {
     var x = X_START_POS + (i % BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 7);
     var y = Y_START_POS + Math.floor(i / BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 20);
-
-    boxes.push(Matter.Bodies.rectangle(x, y, BOX_SIZE, BOX_SIZE, {
-        friction: 0.001,
-        frictionAir: 0.01,
-        restitution: 0.5,
-        density: 0.001,
-        slop: 0.05
-    }));
+    var cube = new Cube();
+    cube.setPosition(x, y);
+    cube.setScale(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+    boxes.push(cube.rectangle);
 }
 
 var ground = Matter.Bodies.rectangle(0, BOX_SIZE * 4, BOX_SIZE * 12, BOX_SIZE, {isStatic: true});
+var floor = new Cube();
+floor.setPosition(0, BOX_SIZE * 4, 0);
+floor.setColor('#620460');
 
 // add all of the bodies to the world
 Matter.World.add(engine.world, boxes);
 Matter.World.add(engine.world, ground);
+Matter.World.add(engine.world, floor);
 
 var bodies = [];
 var material = new THREE.MeshPhongMaterial({ color: 0x620460 });
@@ -78,6 +78,7 @@ for (var j = 0; j < engine.world.bodies.length; j++) {
     }
     else {
         m = new Cube();
+        m.setScale(16, 16, 16);
     }
 
     group.add(m); // 3d items
