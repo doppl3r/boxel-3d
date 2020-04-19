@@ -9,7 +9,7 @@ var engine = Matter.Engine.create();
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 var scene = new THREE.Scene();
-var light = new THREE.HemisphereLight(0xffffff, 1);
+var light = new THREE.HemisphereLight('#ffffff', 1);
 
 // Add lighting
 light.position.set(0, 0, 1);
@@ -37,8 +37,8 @@ var dataSet = [
 ];
 for (var i = 0; i < dataSet.length; i++) {
     var x = X_START_POS + (i % BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 7);
-    var y = Y_START_POS + Math.floor(i / BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 20);
-    var cube = new Cube();
+    var y = Y_START_POS + Math.floor(i / BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 10);
+    var cube = new Player();
     cube.setPosition(x, -y, 0);
     cube.setScale(BOX_SIZE, BOX_SIZE, BOX_SIZE);
     Matter.World.add(engine.world, cube.rectangle);
