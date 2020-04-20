@@ -29,8 +29,10 @@ class Cube extends THREE.Mesh {
         Matter.Body.setStatic(this.rectangle, isStatic);
     }
 
-    setScale = function(scaleX, scaleY, scaleZ) {
-        this.scale.set(scaleX, scaleY, scaleZ);
+    scaleCube = function(scaleX, scaleY, scaleZ) {
+        this.scale.x *= scaleX;
+        this.scale.y *= scaleY;
+        this.scale.z *= scaleZ;
         Matter.Body.scale(this.rectangle, scaleX, scaleY);
     }
 }

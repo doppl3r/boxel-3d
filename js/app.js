@@ -1,6 +1,6 @@
 var clock = new THREE.Clock();
 var delta = 0;
-var fps = 30;
+var fps = 60;
 var interval = (1 / fps);
 var BOX_SIZE = 16;
 var X_START_POS = 0;
@@ -40,7 +40,6 @@ for (var i = 0; i < dataSet.length; i++) {
     var y = Y_START_POS + Math.floor(i / BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 10);
     var cube = new Player();
     cube.setPosition(x, -y, 0);
-    cube.setScale(BOX_SIZE, BOX_SIZE, BOX_SIZE);
     Matter.World.add(engine.world, cube.rectangle);
     scene.add(cube);
 }
@@ -49,7 +48,7 @@ for (var i = 0; i < dataSet.length; i++) {
 var floor = new Cube();
 scene.add(floor);
 floor.setPosition(0, -BOX_SIZE * 4, 0);
-floor.setScale(BOX_SIZE * 12, BOX_SIZE, BOX_SIZE);
+floor.scaleCube(BOX_SIZE * 12, BOX_SIZE, BOX_SIZE);
 floor.setStatic(true);
 floor.setColor('#620460');
 Matter.World.add(engine.world, floor.rectangle);
@@ -64,8 +63,8 @@ function render() {
 // Main update function
 function update() {
     delta = delta % interval;
-    for (var j = 0; j < scene.children.length; j++) {
-        var child = scene.children[j];
+    for (var i = 0; i < scene.children.length; i++) {
+        var child = scene.children[i];
         if (child.rectangle != null) {
             var rect = child.rectangle;
             var x = rect.position.x;
