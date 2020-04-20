@@ -1,7 +1,3 @@
-var clock = new THREE.Clock();
-var delta = 0;
-var fps = 60;
-var interval = (1 / fps);
 var BOX_SIZE = 16;
 var X_START_POS = 0;
 var Y_START_POS = 0;
@@ -24,45 +20,32 @@ camera.position.y = 0;
 camera.position.z = 200;
 document.body.appendChild(renderer.domElement);
 
-// Populate world with cubes
-var dataSet = [
-    "BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BK","BG","BG","BG",
-    "BK","BK","BK","BK","BK","BK","RD","RD","RD","RD","RD","BK","BK","BG","BG","BG",
-    "BK","BK","BK","BK","BK","RD","RD","RD","RD","RD","RD","RD","RD","RD","BG","BG",
-    "BK","BK","BK","BK","BK","BR","BR","BR","BG","BG","BR","BG","BK","RD","RD","RD",
-    "BK","BK","BK","BK","BR","BG","BR","BG","BG","BG","BR","BG","BG","RD","RD","RD",
-    "BK","BK","BK","BK","BR","BG","BR","BR","BG","BG","BG","BR","BG","BG","BG","RD",
-    "BK","BK","BK","BK","BR","BR","BG","BG","BG","BG","BR","BR","BR","BR","RD","BK",
-    "BK","BK","BK","BK","BK","BK","BG","BG","BG","BG","BG","BG","BG","RD","BK","BK"
-];
-for (var i = 0; i < dataSet.length; i++) {
-    var x = X_START_POS + (i % BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 7);
-    var y = Y_START_POS + Math.floor(i / BOX_SIZE) * (BOX_SIZE) - (BOX_SIZE * 10);
-    var cube = new Player();
-    cube.setPosition(x, -y, 0);
-    Matter.World.add(engine.world, cube.rectangle);
-    scene.add(cube);
-}
+var player = new Player();
+player.setPosition(0, -BOX_SIZE * 3, 0);
+Matter.World.add(engine.world, player.rectangle);
+scene.add(player);
 
 // Add floor
-var floor = new Cube();
-scene.add(floor);
-floor.setPosition(0, -BOX_SIZE * 4, 0);
-floor.scaleCube(BOX_SIZE * 12, BOX_SIZE, BOX_SIZE);
-floor.setStatic(true);
-floor.setColor('#620460');
-Matter.World.add(engine.world, floor.rectangle);
+for (var i = 0; i < 24; i++) {
+    var floor = new Cube();
+    floor.setPosition(i * BOX_SIZE + (-BOX_SIZE * 3.5), -BOX_SIZE * 4, 0);
+    floor.scaleCube(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+    floor.setStatic(true);
+    floor.setColor('#620460');
+    scene.add(floor);
+    Matter.World.add(engine.world, floor.rectangle);
+}
 
 // Main render function
 function render() {
-    delta += clock.getDelta();
-    if (delta > interval) update();
     requestAnimationFrame(render);
 }
 
-// Main update function
-function update() {
-    delta = delta % interval;
+Matter.Events.on(engine, "beforeUpdate", function() {
+    player.rectangle.force.x = 0.000025;
+    camera.position.x = player.position.x;
+    camera.position.y = player.position.y;
+    //camera.lookAt(player.position.x, player.position.y, player.position.z);
     for (var i = 0; i < scene.children.length; i++) {
         var child = scene.children[i];
         if (child.rectangle != null) {
@@ -75,7 +58,7 @@ function update() {
         }
     }
     renderer.render(scene, camera);
-}
+});
 
 // Run the engine and render
 Matter.Engine.run(engine);
@@ -87,3 +70,7 @@ window.addEventListener('resize', function(){
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
 });
+
+window.addEventListener('mousedown', function() {
+    player.jump();
+}, false);
