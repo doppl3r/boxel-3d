@@ -2,8 +2,13 @@ var BOX_SIZE = 16;
 var X_START_POS = 0;
 var Y_START_POS = 0;
 var engine = Matter.Engine.create();
+var screenWidth = window.innerWidth;
+var screenHeight = window.innerHeight;
+var stats = new Stats();
+//var screenWidth = 640;
+//var screenHeight = 360;
 var renderer = new THREE.WebGLRenderer({ antialias: true });
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+var camera = new THREE.PerspectiveCamera(75, screenWidth / screenHeight, 1, 1000);
 var scene = new THREE.Scene();
 var light = new THREE.HemisphereLight('#ffffff', 1);
 
@@ -11,9 +16,18 @@ var light = new THREE.HemisphereLight('#ffffff', 1);
 light.position.set(0, 0, 1);
 scene.add(light);
 
+// Update stats
+stats.setMode(0);
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = '0';
+stats.domElement.style.top = '0';
+document.body.appendChild(stats.domElement);
+
 // Update scene settings
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio)
+//renderer.powerPreference = 'high-performance';
+renderer.setSize(screenWidth, screenHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.powerPreference = 'high-performance';
 scene.background = new THREE.Color(0xf8d4de);
 camera.position.x = 0;
 camera.position.y = 0;
@@ -29,7 +43,7 @@ scene.add(player);
 for (var i = 0; i < 24; i++) {
     var floor = new Cube();
     floor.setPosition(i * BOX_SIZE + (-BOX_SIZE * 3.5), -BOX_SIZE * 4, 0);
-    floor.scaleCube(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+    floor.scaleCube(BOX_SIZE - 5, BOX_SIZE - 5, BOX_SIZE - 5);
     floor.setStatic(true);
     floor.setColor('#620460');
     scene.add(floor);
@@ -39,13 +53,15 @@ for (var i = 0; i < 24; i++) {
 // Main render function
 function render() {
     requestAnimationFrame(render);
+    renderer.render(scene, camera);
+    stats.update();
 }
 
 Matter.Events.on(engine, "beforeUpdate", function() {
-    player.rectangle.force.x = 0.000025;
+    //player.rectangle.force.x = 0.000025;
+    Matter.Body.applyForce(player.rectangle, player.rectangle.position, { x: 0.00001, y: 0 });
     camera.position.x = player.position.x;
-    camera.position.y = player.position.y;
-    //camera.lookAt(player.position.x, player.position.y, player.position.z);
+    camera.lookAt(player.position.x, player.position.y, player.position.z);
     for (var i = 0; i < scene.children.length; i++) {
         var child = scene.children[i];
         if (child.rectangle != null) {
@@ -57,7 +73,7 @@ Matter.Events.on(engine, "beforeUpdate", function() {
             child.rotation.z = -z;
         }
     }
-    renderer.render(scene, camera);
+    
 });
 
 // Run the engine and render
@@ -66,9 +82,11 @@ render();
 
 // Add event listeners
 window.addEventListener('resize', function(){
-    camera.aspect = window.innerWidth / window.innerHeight;
+    var screenWidth = window.innerWidth;
+    var screenHeight = window.innerHeight;
+    camera.aspect = screenWidth / screenHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( screenWidth, screenHeight );
 });
 
 window.addEventListener('mousedown', function() {
