@@ -40,15 +40,13 @@ Matter.World.add(engine.world, player.rectangle);
 scene.add(player);
 
 // Add floor
-for (var i = 0; i < 24; i++) {
-    var floor = new Cube();
-    floor.setPosition(i * BOX_SIZE + (-BOX_SIZE * 3.5), -BOX_SIZE * 4, 0);
-    floor.scaleCube(BOX_SIZE - 5, BOX_SIZE - 5, BOX_SIZE - 5);
-    floor.setStatic(true);
-    floor.setColor('#620460');
-    scene.add(floor);
-    Matter.World.add(engine.world, floor.rectangle);
-}
+var floor = new Cube();
+floor.setPosition(0, -BOX_SIZE * 4, 0);
+floor.scaleCube(BOX_SIZE * 24, BOX_SIZE, BOX_SIZE);
+floor.setStatic(true);
+floor.setColor('#620460');
+scene.add(floor);
+Matter.World.add(engine.world, floor.rectangle);
 
 // Main render function
 function render() {
@@ -59,7 +57,7 @@ function render() {
 
 Matter.Events.on(engine, "beforeUpdate", function() {
     //player.rectangle.force.x = 0.000025;
-    Matter.Body.applyForce(player.rectangle, player.rectangle.position, { x: 0.00001, y: 0 });
+    //Matter.Body.applyForce(player.rectangle, player.rectangle.position, { x: 0.00001, y: 0 });
     camera.position.x = player.position.x;
     camera.lookAt(player.position.x, player.position.y, player.position.z);
     for (var i = 0; i < scene.children.length; i++) {
@@ -89,6 +87,29 @@ window.addEventListener('resize', function(){
     renderer.setSize( screenWidth, screenHeight );
 });
 
-window.addEventListener('mousedown', function() {
+window.addEventListener('mousedown', function(e) {
     player.jump();
+    var pos = getMousePosition(e);
+
+    var floor = new Cube();
+    floor.setPosition(pos.x, pos.y, 0);
+    floor.scaleCube(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+    floor.setStatic(true);
+    floor.setColor('#620460');
+    scene.add(floor);
+    Matter.World.add(engine.world, floor.rectangle);
 }, false);
+
+function getMousePosition(event) {                
+    var vec = new THREE.Vector3(); // create once and reuse
+    var pos = new THREE.Vector3(); // create once and reuse
+    var distance = 0;
+    var x = (event.clientX / window.innerWidth) * 2 - 1;
+    var y = -(event.clientY / window.innerHeight) * 2 + 1;
+    vec.set(x, y, 0.5);
+    vec.unproject(camera);
+    vec.sub(camera.position).normalize();
+    distance = - camera.position.z / vec.z;
+    pos.copy(camera.position).add(vec.multiplyScalar(distance));
+    return(pos);
+}

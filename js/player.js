@@ -15,7 +15,7 @@ class Player extends Cube {
     jump = function() {
         //Matter.Body.setAngularVelocity(this.rectangle, 0.1);
         //Matter.Body.applyForce(this.rectangle, this.rectangle.position, { x: 0, y: (-0.025 * this.rectangle.mass ) });
-        this.rectangle.torque = 0.025;
+        //sthis.rectangle.torque = 0.025;
         this.rectangle.force = { x: 0, y: -0.0065 };
     }
 }
