@@ -27,6 +27,10 @@ class Cube extends THREE.Mesh {
         Matter.Body.setPosition(this.rectangle, { x: x, y: -y });
     }
 
+    setRotation = function(angle) {
+        Matter.Body.rotate(this.rectangle, angle);
+    }
+
     setColor = function(color) {
         this.material.color.set(color);
     }

@@ -46,6 +46,7 @@ floor.scaleCube(BOX_SIZE * 24, BOX_SIZE, BOX_SIZE);
 floor.setStatic(true);
 floor.setColor('#620460');
 scene.add(floor);
+floor.setRotation(0.1);
 Matter.World.add(engine.world, floor.rectangle);
 
 // Main render function
