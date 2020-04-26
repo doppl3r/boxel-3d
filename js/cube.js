@@ -20,6 +20,10 @@ class Cube extends THREE.Mesh {
 
     resetPosition = function() {
         this.setPosition(0, 0, 0);
+        Matter.Body.setPosition(this.rectangle, { x: 0, y: 0 });
+        Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
+        Matter.Body.setAngle(this.rectangle, 0);
+        Matter.Body.setAngularVelocity(this.rectangle, 0);
     }
 
     setPosition = function(x, y, z) {
