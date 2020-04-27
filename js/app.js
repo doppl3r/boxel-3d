@@ -5,27 +5,20 @@ var engine = Matter.Engine.create();
 var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;
 var quality = 5; // 1=low, 10=high
-var stats = new Stats();
-var delta = 0;
-var fps = 60;
+var currentFPS = 60;
+var lastTimeStamp = engine.timing.timestamp;
+var clock = new THREE.Clock();
 var renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
 var camera = new THREE.PerspectiveCamera(75, screenWidth / screenHeight, 1, 1000);
 var scene = new THREE.Scene();
 var light = new THREE.HemisphereLight('#ffffff', 1);
+var delta = 0;
 
 // Add lighting
 light.position.set(0, 0, 1);
 scene.add(light);
 
-// Update stats
-stats.setMode(0);
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0';
-stats.domElement.style.top = '0';
-document.body.appendChild(stats.domElement);
-
 // Update scene settings
-//renderer.powerPreference = 'high-performance';
 renderer.setSize(screenWidth, screenHeight);
 renderer.setPixelRatio(window.devicePixelRatio / (10 / quality));
 renderer.powerPreference = 'high-performance';
@@ -47,23 +40,22 @@ floor.scaleCube(BOX_SIZE * 24, BOX_SIZE, BOX_SIZE);
 floor.setStatic(true);
 floor.setColor('#620460');
 scene.add(floor);
-//floor.setRotation(0.1);
+floor.setRotation(-0.1);
 Matter.World.add(engine.world, floor.rectangle);
 
 // Main render function
 function render() {
-    delta = (engine.timing.timestamp - this.lastTimeStamp) / (1000 / fps);
-    this.lastTimeStamp = engine.timing.timestamp; //track last engine timestamp
-    stats.update();
-    console.log(this.delta)
-    requestAnimationFrame(render); 
+    update();
+    currentFPS = 1000 / (engine.timing.timestamp - lastTimeStamp);
+    delta = (engine.timing.timestamp - lastTimeStamp) / (1000 / 60);
+    lastTimeStamp = engine.timing.timestamp;
     renderer.render(scene, camera);
+    requestAnimationFrame(render);
 }
 
 function update() {
-    //player.rectangle.force.x = 0.000025;
-    Matter.Body.applyForce(player.rectangle, player.rectangle.position, { x: 0.000025, y: 0 });
     if (player.position.y < -1000) player.resetPosition();
+    Matter.Body.applyForce(player.rectangle, player.rectangle.position, { x: (0.000025), y: 0 });
     camera.position.x = player.position.x;
     camera.lookAt(player.position.x, player.position.y, player.position.z);
     for (var i = 0; i < scene.children.length; i++) {
@@ -94,7 +86,6 @@ function click(e) {
 // Add event listeners
 window.addEventListener('resize', resizeWindow);
 window.addEventListener('mousedown', click, false);
-Matter.Events.on(engine, "beforeUpdate", update);
 
 // Run the engine and render
 Matter.Engine.run(engine);
