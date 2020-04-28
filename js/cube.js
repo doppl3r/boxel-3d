@@ -13,6 +13,7 @@ class Cube extends THREE.Mesh {
             restitution: 0.0,
             density: 0.0
         });
+        this.name = this.uuid;
         this.castShadow = true;
         this.receiveShadow = true;
         this.resetPosition();
@@ -48,5 +49,10 @@ class Cube extends THREE.Mesh {
         this.scale.y *= scaleY;
         this.scale.z *= scaleZ;
         Matter.Body.scale(this.rectangle, scaleX, scaleY);
+    }
+
+    remove = function() {
+        scene.remove(this);
+        Matter.World.remove(engine.world, this.rectangle);
     }
 }

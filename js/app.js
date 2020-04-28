@@ -71,21 +71,27 @@ function update() {
     }
 }
 
-function click(e) {
-    player.jump();
-    var pos = getMousePosition(e);
-    var floor = new Cube();
-    floor.setPosition(pos.x, pos.y, 0);
-    floor.scaleCube(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-    floor.setStatic(true);
-    floor.setColor('#620460');
-    scene.add(floor);
-    Matter.World.add(engine.world, floor.rectangle);
+function click(event) {
+    var object = getObject(event);
+    if (object == null) {
+        var pos = getMousePosition(event);
+        var floor = new Cube();
+        floor.setPosition(pos.x, pos.y, 0);
+        floor.scaleCube(BOX_SIZE, BOX_SIZE, BOX_SIZE);
+        floor.setStatic(true);
+        floor.setColor('#620460');
+        scene.add(floor);
+        Matter.World.add(engine.world, floor.rectangle);
+    }
+    else {
+        player.jump();
+        object.remove();
+    }
 }
 
 // Add event listeners
 window.addEventListener('resize', resizeWindow);
-window.addEventListener('mousedown', click, false);
+renderer.domElement.addEventListener('mousedown', click, false);
 
 // Run the engine and render
 Matter.Engine.run(engine);
@@ -105,10 +111,23 @@ function getMousePosition(event) {
     var distance = 0;
     var x = (event.clientX / window.innerWidth) * 2 - 1;
     var y = -(event.clientY / window.innerHeight) * 2 + 1;
-    vec.set(x, y, 0.5);
+    vec.set(x, y, 0);
     vec.unproject(camera);
     vec.sub(camera.position).normalize();
     distance = - camera.position.z / vec.z;
     pos.copy(camera.position).add(vec.multiplyScalar(distance));
     return(pos);
+}
+
+function getObject(event) {
+    var raycaster = new THREE.Raycaster();
+    var vec = new THREE.Vector3();
+    var object;
+    var x = (event.clientX / window.innerWidth) * 2 - 1;
+    var y = -(event.clientY / window.innerHeight) * 2 + 1;
+    vec.set(x, y, 0);
+    raycaster.setFromCamera(vec, camera);
+    var intersects = raycaster.intersectObjects(scene.children);
+    if (intersects.length > 0) object = intersects[0].object;
+    return(object);
 }
