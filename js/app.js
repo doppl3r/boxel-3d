@@ -74,6 +74,7 @@ function update() {
 function click(event) {
     var object = getObject(event);
     if (object == null) {
+        player.jump();
         var pos = getMousePosition(event);
         var floor = new Cube();
         floor.setPosition(pos.x, pos.y, 0);
@@ -84,8 +85,8 @@ function click(event) {
         Matter.World.add(engine.world, floor.rectangle);
     }
     else {
-        player.jump();
-        object.remove();
+        object.setColor("#fff");
+        console.log(object);
     }
 }
 
