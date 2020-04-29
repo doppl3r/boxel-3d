@@ -36,7 +36,7 @@ scene.add(player);
 // Add floor
 var floor = new Cube();
 floor.setPosition(0, -BOX_SIZE * 4, 0);
-floor.scaleCube(BOX_SIZE * 24, BOX_SIZE, BOX_SIZE);
+floor.scaleCube(BOX_SIZE * 124, BOX_SIZE, BOX_SIZE);
 floor.setStatic(true);
 floor.setColor('#620460');
 scene.add(floor);
@@ -55,7 +55,7 @@ function render() {
 
 function update() {
     if (player.position.y < -1000) player.resetPosition();
-    Matter.Body.applyForce(player.rectangle, player.rectangle.position, { x: (0.000025), y: 0 });
+    //Matter.Body.applyForce(player.rectangle, player.rectangle.position, { x: (0.000025), y: 0 });
     camera.position.x = player.position.x;
     camera.lookAt(player.position.x, player.position.y, player.position.z);
     for (var i = 0; i < scene.children.length; i++) {
