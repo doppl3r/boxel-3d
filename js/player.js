@@ -15,12 +15,9 @@ class Player extends Cube {
     }
 
     jump = function() {
-        Matter.Body.setAngularVelocity(this.rectangle, this.rectangle.velocity.x / 10);
-        //console.log(this.rectangle);
+        //Matter.Body.setAngularVelocity(this.rectangle, this.rectangle.velocity.x / 10);
         Matter.Body.setVelocity(this.rectangle, { x: this.rectangle.velocity.x, y: 0 });
-        console.log(this.rectangle.angle % 1.25);
-        //console.log(this.rectangle.angle);
-        Matter.Body.applyForce(this.rectangle, this.rectangle.position, { x: 0, y: this.jumpForce / delta });
+        Matter.Body.applyForce(this.rectangle, this.rectangle.position, { x: 0, y: this.jumpForce });
         //this.rectangle.force.y = this.jumpForce / delta;
     }
 }
