@@ -45,7 +45,7 @@ scene.add(player);
 // Add floor
 var floor = new Cube();
 floor.setPosition(0, -BOX_SIZE * 4, 0);
-floor.scaleCube(BOX_SIZE * 124, BOX_SIZE, BOX_SIZE);
+floor.scaleCube(BOX_SIZE * 24, BOX_SIZE, BOX_SIZE);
 floor.setStatic(true);
 floor.setColor('#620460');
 scene.add(floor);
