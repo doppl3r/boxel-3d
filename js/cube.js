@@ -8,10 +8,10 @@ class Cube extends THREE.Mesh {
         this.geometry = new THREE.BoxGeometry(this.width, this.height, this.length);
         this.rectangle = Matter.Bodies.rectangle(0, 0, this.width, this.height, { 
             friction: 0.0,
-            frictionAir: 0.0,
+            frictionAir: 0.0125,
             frictionStatic: 0.0,
             restitution: 0.0,
-            density: 0.0
+            density: 0.001
         });
         this.name = this.uuid;
         this.castShadow = true;
