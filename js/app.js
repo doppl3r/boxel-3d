@@ -49,7 +49,7 @@ floor.scaleCube(BOX_SIZE * 124, BOX_SIZE, BOX_SIZE);
 floor.setStatic(true);
 floor.setColor('#620460');
 scene.add(floor);
-floor.setRotation((Math.PI / 180) * 0);
+floor.setRotation((Math.PI / 180) * 10);
 Matter.World.add(engine.world, floor.rectangle);
 
 //setInterval(render, interval);
@@ -71,6 +71,7 @@ function render() {
 // Main update function
 function update() {
     camera.position.x = player.position.x;
+    camera.position.y = player.position.y + 100;
     camera.lookAt(player.position.x, player.position.y, player.position.z);
     for (var i = 0; i < scene.children.length; i++) {
         var child = scene.children[i];
