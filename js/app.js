@@ -1,3 +1,9 @@
+class App {
+    constructor() {
+        
+    }
+}
+
 var BOX_SIZE = 16;
 var X_START_POS = 0;
 var Y_START_POS = 0;
@@ -95,7 +101,7 @@ function click(event) {
         var floor = new Cube();
         floor.setPosition(pos.x, pos.y, 0);
         floor.scaleCube(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-        floor.setStatic(true);
+        //floor.setStatic(true);
         floor.setColor('#620460');
         scene.add(floor);
         Matter.World.add(engine.world, floor.rectangle);
