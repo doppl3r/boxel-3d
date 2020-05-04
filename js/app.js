@@ -17,6 +17,7 @@ var interval = 1000 / targetFPS;
 var then = new Date().getTime();
 var now = then;
 var delta = 0;
+var ui = new UIController();
 var renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
 var camera = new THREE.PerspectiveCamera(75, screenWidth / screenHeight, 1, 1000);
 var scene = new THREE.Scene();
@@ -28,9 +29,7 @@ scene.add(light);
 
 // Update stats
 stats.setMode(0);
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0';
-stats.domElement.style.top = '0';
+stats.domElement.classList.add('stats');
 document.body.appendChild(stats.domElement);
 
 // Update scene settings
