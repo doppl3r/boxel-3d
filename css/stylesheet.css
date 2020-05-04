@@ -1,5 +1,5 @@
 * { box-sizing: border-box; user-select: none; }
-body { margin: 0; overflow: hidden; width: 100vw; height: 100vh; }
+body { background-color: #f8d4de; margin: 0; overflow: hidden; width: 100vw; height: 100vh; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; }
 body .stats { position: absolute; top: initial !important; right: 0 !important; bottom: 0 !important; left: initial !important; }
 body .ui-controller .disabled { display: none !important; }

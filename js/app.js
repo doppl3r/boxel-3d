@@ -1,154 +1,147 @@
 class App {
     constructor() {
-        
+        var a = this;
+        a.window = window;
+        a.document = document;
+        a.BOX_SIZE = 16;
+        a.engine = Matter.Engine.create();
+        a.screenWidth = a.window.innerWidth;
+        a.screenHeight = a.window.innerHeight;
+        a.stats = new Stats();
+        a.quality = 5; // 1=low, 10=high
+        a.targetFPS = 60;
+        a.interval = 1000 / a.targetFPS;
+        a.then = new Date().getTime();
+        a.now = a.then;
+        a.delta = 0;
+        a.ui = new UIController();
+        a.renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
+        a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 1000);
+        a.scene = new THREE.Scene();
+        a.light = new THREE.HemisphereLight('#ffffff', 1);
+
+        // Add lighting
+        a.light.position.set(0, 0, 1);
+        a.scene.add(a.light);
+
+        // Update stats
+        a.stats.setMode(0);
+        a.stats.domElement.classList.add('stats');
+        a.document.body.appendChild(a.stats.domElement);
+
+        // Update scene settings
+        a.renderer.setSize(a.screenWidth, a.screenHeight);
+        a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
+        a.renderer.powerPreference = 'high-performance';
+        a.scene.background = new THREE.Color('#f8d4de');
+        a.camera.position.x = 0;
+        a.camera.position.y = 0;
+        a.camera.position.z = 200;
+        a.document.body.appendChild(a.renderer.domElement);
+
+        // Add player
+        a.player = new Player();
+        a.player.setPosition(0, 0, 0);
+        Matter.World.add(a.engine.world, a.player.rectangle);
+        a.scene.add(a.player);
+
+        // Add floor
+        a.floor = new Cube();
+        a.floor.setPosition(0, -a.BOX_SIZE * 4, 0);
+        a.floor.scaleCube(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
+        a.floor.setStatic(true);
+        a.floor.setColor('#620460');
+        a.scene.add(a.floor);
+        a.floor.setRotation((Math.PI / 180) * 10);
+        Matter.World.add(a.engine.world, a.floor.rectangle);
+
+        // Add event listeners and render app
+        a.renderer.domElement.addEventListener('mousedown', function(e){ a.clickCanvas(e, a); }, false);
+        a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
+        a.render(null, a);
     }
-}
 
-var BOX_SIZE = 16;
-var X_START_POS = 0;
-var Y_START_POS = 0;
-var engine = Matter.Engine.create();
-var screenWidth = window.innerWidth;
-var screenHeight = window.innerHeight;
-var stats = new Stats();
-var quality = 5; // 1=low, 10=high
-var targetFPS = 60;
-var interval = 1000 / targetFPS;
-var then = new Date().getTime();
-var now = then;
-var delta = 0;
-var ui = new UIController();
-var renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
-var camera = new THREE.PerspectiveCamera(75, screenWidth / screenHeight, 1, 1000);
-var scene = new THREE.Scene();
-var light = new THREE.HemisphereLight('#ffffff', 1);
-
-// Add lighting
-light.position.set(0, 0, 1);
-scene.add(light);
-
-// Update stats
-stats.setMode(0);
-stats.domElement.classList.add('stats');
-document.body.appendChild(stats.domElement);
-
-// Update scene settings
-renderer.setSize(screenWidth, screenHeight);
-renderer.setPixelRatio(window.devicePixelRatio / (10 / quality));
-renderer.powerPreference = 'high-performance';
-scene.background = new THREE.Color(0xf8d4de);
-camera.position.x = 0;
-camera.position.y = 0;
-camera.position.z = 200;
-document.body.appendChild(renderer.domElement);
-
-var player = new Player();
-player.setPosition(0, 0, 0);
-Matter.World.add(engine.world, player.rectangle);
-scene.add(player);
-
-// Add floor
-var floor = new Cube();
-floor.setPosition(0, -BOX_SIZE * 4, 0);
-floor.scaleCube(BOX_SIZE * 24, BOX_SIZE, BOX_SIZE);
-floor.setStatic(true);
-floor.setColor('#620460');
-scene.add(floor);
-floor.setRotation((Math.PI / 180) * 10);
-Matter.World.add(engine.world, floor.rectangle);
-
-//setInterval(render, interval);
-
-// Main render function
-function render() {
-    now = new Date().getTime();
-    delta = now - then;
-    if (delta > interval) {
-        update();
-        Matter.Engine.update(engine); // Manually Update Engine
-        then = now - (delta % interval);
-        stats.update();
+    render = function(e, a) {
+        a.now = new Date().getTime();
+        a.delta = a.now - a.then;
+        if (a.delta > a.interval) {
+            a.update(null, a);
+            Matter.Engine.update(a.engine); // Manually Update Engine
+            a.then = a.now - (a.delta % a.interval);
+            a.stats.update();
+        }
+        a.renderer.render(a.scene, a.camera);
+        requestAnimationFrame(function(e) { a.render(e, a); });
     }
-    renderer.render(scene, camera);
-    requestAnimationFrame(render);
-}
 
-// Main update function
-function update() {
-    camera.position.x = player.position.x;
-    camera.position.y = player.position.y + 100;
-    camera.lookAt(player.position.x, player.position.y, player.position.z);
-    for (var i = 0; i < scene.children.length; i++) {
-        var child = scene.children[i];
-        if (child.rectangle != null) {
-            var rect = child.rectangle;
-            var x = rect.position.x;
-            var y = rect.position.y;
-            var z = rect.angle;
-            child.setPosition(x, -y, 0);
-            child.rotation.z = -z;
-            if (child.position.y < -1000) child.resetPosition();
+    update = function(e, a) {
+        a.camera.position.x = a.player.position.x;
+        a.camera.position.y = a.player.position.y + 100;
+        a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
+        for (var i = 0; i < a.scene.children.length; i++) {
+            var child = a.scene.children[i];
+            if (child.rectangle != null) {
+                var rect = child.rectangle;
+                var x = rect.position.x;
+                var y = rect.position.y;
+                var z = rect.angle;
+                child.setPosition(x, -y, 0);
+                child.rotation.z = -z;
+                if (child.position.y < -1000) child.resetPosition();
+            }
         }
     }
-}
 
-function click(event) {
-    var object = getObject(event);
-    if (object == null) {
-        player.jump();
-        var pos = getMousePosition(event);
-        var floor = new Cube();
-        floor.setPosition(pos.x, pos.y, 0);
-        floor.scaleCube(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-        //floor.setStatic(true);
-        floor.setColor('#620460');
-        scene.add(floor);
-        Matter.World.add(engine.world, floor.rectangle);
+    clickCanvas = function(e, a) {
+        var object = a.getObject(e, a);
+        if (object == null) {
+            a.player.jump();
+            var pos = a.getMousePosition(e, a);
+            var floor = new Cube();
+            floor.setPosition(pos.x, pos.y, 0);
+            floor.scaleCube(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
+            floor.setColor('#620460');
+            a.scene.add(floor);
+            Matter.World.add(a.engine.world, floor.rectangle);
+        }
+        else {
+            object.setColor("#fff");
+        }
     }
-    else {
-        object.setColor("#fff");
+
+    resizeWindow = function(e, a) {
+        var screenWidth = a.window.innerWidth;
+        var screenHeight = a.window.innerHeight;
+        a.camera.aspect = screenWidth / screenHeight;
+        a.camera.updateProjectionMatrix();
+        a.renderer.setSize(screenWidth, screenHeight);
+    }
+
+    getObject = function(e, a) {
+        var raycaster = new THREE.Raycaster();
+        var vec = new THREE.Vector3();
+        var object;
+        var x = (e.clientX / a.window.innerWidth) * 2 - 1;
+        var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
+        vec.set(x, y, 0);
+        raycaster.setFromCamera(vec, a.camera);
+        var intersects = raycaster.intersectObjects(a.scene.children);
+        if (intersects.length > 0) object = intersects[0].object;
+        return(object);
+    }
+
+    getMousePosition = function(e, a) {                
+        var vec = new THREE.Vector3(); // create once and reuse
+        var pos = new THREE.Vector3(); // create once and reuse
+        var distance = 0;
+        var x = (e.clientX / a.window.innerWidth) * 2 - 1;
+        var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
+        vec.set(x, y, 0);
+        vec.unproject(a.camera);
+        vec.sub(a.camera.position).normalize();
+        distance = - a.camera.position.z / vec.z;
+        pos.copy(a.camera.position).add(vec.multiplyScalar(distance));
+        return(pos);
     }
 }
-
-// Add event listeners
-window.addEventListener('resize', resizeWindow);
-renderer.domElement.addEventListener('mousedown', click, false);
-Matter.Events.on(engine, "beforeUpdate", function() {  });
-
-// Run the engine and render
-render();
-
-function resizeWindow() {
-    var screenWidth = window.innerWidth;
-    var screenHeight = window.innerHeight;
-    camera.aspect = screenWidth / screenHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(screenWidth, screenHeight);
-}
-
-function getMousePosition(event) {                
-    var vec = new THREE.Vector3(); // create once and reuse
-    var pos = new THREE.Vector3(); // create once and reuse
-    var distance = 0;
-    var x = (event.clientX / window.innerWidth) * 2 - 1;
-    var y = -(event.clientY / window.innerHeight) * 2 + 1;
-    vec.set(x, y, 0);
-    vec.unproject(camera);
-    vec.sub(camera.position).normalize();
-    distance = - camera.position.z / vec.z;
-    pos.copy(camera.position).add(vec.multiplyScalar(distance));
-    return(pos);
-}
-
-function getObject(event) {
-    var raycaster = new THREE.Raycaster();
-    var vec = new THREE.Vector3();
-    var object;
-    var x = (event.clientX / window.innerWidth) * 2 - 1;
-    var y = -(event.clientY / window.innerHeight) * 2 + 1;
-    vec.set(x, y, 0);
-    raycaster.setFromCamera(vec, camera);
-    var intersects = raycaster.intersectObjects(scene.children);
-    if (intersects.length > 0) object = intersects[0].object;
-    return(object);
-}
+var app = new App();
