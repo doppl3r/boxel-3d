@@ -1,18 +1,14 @@
-* { box-sizing: border-box; }
+* { box-sizing: border-box; user-select: none; }
 body { margin: 0; overflow: hidden; width: 100vw; height: 100vh; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; }
-body .ui-controller .row { display: flex; position: absolute; z-index: 1; }
-body .ui-controller .row.top { top: 48px; right: 48px; left: 48px; }
-body .ui-controller .row.top .col { display: flex; overflow-x: auto; }
-body .ui-controller .row.left { bottom: 0; top: 144px; left: 48px; }
+body .stats { position: absolute; top: initial !important; right: 0 !important; bottom: 0 !important; left: initial !important; }
+body .ui-controller .disabled { display: none !important; }
+body .ui-controller .row { display: flex; position: absolute; z-index: 1; pointer-events: none; }
+body .ui-controller .row .col { pointer-events: all; background-color: #333333; }
+body .ui-controller .row.top { top: 0; right: 0; left: 0; }
+body .ui-controller .row.top .col { display: flex; overflow-x: auto; width: 100%; }
+body .ui-controller .row.left { bottom: 0; top: 48px; left: 0; }
 body .ui-controller .row.left .col { display: flex; flex-direction: column; overflow-y: auto; }
 body .ui-controller a { background-color: #333333; display: flex; flex-shrink: 0; justify-content: center; align-items: center; width: 48px; height: 48px; }
-body .ui-controller a:hover * { stroke: #fff; }
-
-@media (max-width: 640px) {
-    body .stats { display: none; }
-    body .ui-controller .row.top { left: 12px; top: 12px; right: 12px; }
-    body .ui-controller .row.left { left: 12px; top: 64px;  }
-    body .ui-controller a { width: 36px; height: 36px; }
-    body .ui-controller a svg { transform: scale(.75); }
-}
+body .ui-controller a:hover img,
+body .ui-controller .selected img { filter: brightness(2); }

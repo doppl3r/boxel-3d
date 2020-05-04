@@ -1,27 +1,20 @@
 class UIController {
     constructor() {
-        this.loadSVGFiles();
         this.bindActions();
-    }
-
-    loadSVGFiles = function() {
-        // Requires jQuery to load
-        $('.ui-controller a').each(function(){
-            var item = $(this);
-            var url = 'img/svg/' + item.attr('class') + '.svg';
-            $.ajax({ url: url, dataType: 'html' }).done(
-                function(response) {
-                    item.html(response);
-                }
-            );
-        });
+        this.initializeUI();
     }
 
     bindActions = function() {
         $('.ui-controller a').on('click', function(event){
             event.preventDefault();
-            var action = $(this).attr('href').substring(1);
+            var action = $(this).attr('href');
             console.log(action);
         });
+    }
+
+    initializeUI = function() {
+        $('.options-level [href="add"]').addClass('selected');
+        $('.options-object-type [href="cube"]').addClass('selected');
+        $('.options-object-properties').addClass('disabled');
     }
 }
