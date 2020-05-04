@@ -15,6 +15,7 @@ class App {
         a.now = a.then;
         a.delta = 0;
         a.ui = new UIController();
+        a.play = false;
         a.renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 1000);
         a.scene = new THREE.Scene();
@@ -58,6 +59,7 @@ class App {
         // Add event listeners and render app
         a.renderer.domElement.addEventListener('mousedown', function(e){ a.clickCanvas(e, a); }, false);
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
+        a.update(null, a);
         a.render(null, a);
     }
 
@@ -65,8 +67,11 @@ class App {
         a.now = new Date().getTime();
         a.delta = a.now - a.then;
         if (a.delta > a.interval) {
-            a.update(null, a);
-            Matter.Engine.update(a.engine); // Manually Update Engine
+            // Update if play is true
+            if (a.play == true) {
+                a.update(null, a);
+                Matter.Engine.update(a.engine);
+            }
             a.then = a.now - (a.delta % a.interval);
             a.stats.update();
         }
