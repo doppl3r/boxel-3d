@@ -111,7 +111,7 @@ class App {
         }
         else {
             object.setColor("#fff");
-            object.setScale(object.scale.x * 2, object.scale.y * 2, object.scale.z * 2);
+            object.setScale(object.scale.x * 1, object.scale.y * 1, object.scale.z * 1);
         }
     }
 

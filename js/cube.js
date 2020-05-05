@@ -61,10 +61,16 @@ class Cube extends THREE.Mesh {
     }
 
     setScale = function(scaleX, scaleY, scaleZ) {
+        // Temporarily set rectangle angle to zero to prevent skewing
+        var tempAngle = this.rotation.z;
+        this.setRotation(-this.rotation.z);
+
+        // Scale rectangle by previous scale, then update mesh scale ratio
         Matter.Body.scale(this.rectangle, scaleX / this.scale.x, scaleY / this.scale.y);
         this.scale.x = scaleX;
         this.scale.y = scaleY;
         this.scale.z = scaleZ;
+        this.setRotation(tempAngle); // Revert angle
     }
 
     setScaleOrigin = function(scaleX, scaleY, scaleZ) {
