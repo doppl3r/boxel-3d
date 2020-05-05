@@ -1,16 +1,20 @@
 class Cube extends THREE.Mesh {
-    constructor(x, y, z, angle) {
+    constructor(options) {
         super();
-        x = (x == null) ? 0 : x;
-        y = (y == null) ? 0 : y;
-        z = (z == null) ? 0 : z;
-        angle = (angle == null) ? 0 : angle;
-        this.width = 1;
-        this.height = 1;
-        this.length = 1;
+
+        // Update null values
+        options.x = (options.x == null) ? 0 : options.x;
+        options.y = (options.y == null) ? 0 : options.y;
+        options.z = (options.z == null) ? 0 : options.z;
+        options.scaleX = (options.scaleX == null) ? 1 : options.scaleX;
+        options.scaleY = (options.scaleY == null) ? 1 : options.scaleY;
+        options.scaleZ = (options.scaleZ == null) ? 1 : options.scaleZ;
+        options.angle = (options.angle == null) ? 0 : options.angle;
+        
+        // Set default properties
         this.material = new THREE.MeshPhongMaterial({ color: '#fff' });
-        this.geometry = new THREE.BoxGeometry(this.width, this.height, this.length);
-        this.rectangle = Matter.Bodies.rectangle(0, 0, this.width, this.height, { 
+        this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, this.length);
+        this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
             friction: 0.0,
             frictionAir: 0.0,
             frictionStatic: 0.0,
@@ -20,41 +24,53 @@ class Cube extends THREE.Mesh {
         this.name = this.uuid;
         this.castShadow = true;
         this.receiveShadow = true;
-        this.setPosition(x, y, z); // Default center of scene
-        this.setRotation(angle);
+        this.setPosition(options.x, options.y, options.z);
+        this.setPositionOrigin(options.x, options.y, options.z);
+        this.setRotation(options.angle);
+        this.setRotationOrigin(options.angle);
+        this.setScale(options.scaleX, options.scaleY, options.scaleZ);
+        this.setScaleOrigin(options.scaleX, options.scaleY, options.scaleZ);
     }
 
     resetToOrigin = function() {
         this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin);
         Matter.Body.setPosition(this.rectangle, { x: this.xOrigin, y: -this.yOrigin });
         Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
-        Matter.Body.setAngle(this.rectangle, 0);
         Matter.Body.setAngularVelocity(this.rectangle, 0);
+        Matter.Body.setAngle(this.rectangle, this.rotationOrigin);
     }
 
     setPosition = function(x, y, z) {
-        if (this.xOrigin == null || this.yOrigin == null || this.zOrigin == null){
-            this.setOriginPosition(x, y, z);
-        }
         this.position.set(x, y, z);
         Matter.Body.setPosition(this.rectangle, { x: x, y: -y });
     }
 
-    setOriginPosition = function(x, y, z) {
+    setPositionOrigin = function(x, y, z) {
         this.xOrigin = x;
         this.yOrigin = y;
         this.zOrigin = z;
     }
 
-    setRotation = function(angle) {
-        if (this.angleOrigin == null) {
-            this.setOriginRotation(angle);
-        }
-        Matter.Body.rotate(this.rectangle, angle);
+    setRotation = function(angle, updateCollision = true) {
+        this.rotation.z = angle;
+        if (updateCollision == true) Matter.Body.rotate(this.rectangle, -angle);
     }
 
-    setOriginRotation = function(angle) {
+    setRotationOrigin = function(angle) {
         this.rotationOrigin = angle;
+    }
+
+    setScale = function(scaleX, scaleY, scaleZ) {
+        Matter.Body.scale(this.rectangle, scaleX / this.scale.x, scaleY / this.scale.y);
+        this.scale.x = scaleX;
+        this.scale.y = scaleY;
+        this.scale.z = scaleZ;
+    }
+
+    setScaleOrigin = function(scaleX, scaleY, scaleZ) {
+        this.scaleXOrigin = scaleX;
+        this.scaleYOrigin = scaleY;
+        this.scaleZOrigin = scaleZ;
     }
 
     setColor = function(color) {
@@ -63,13 +79,6 @@ class Cube extends THREE.Mesh {
 
     setStatic = function(isStatic) {
         Matter.Body.setStatic(this.rectangle, isStatic);
-    }
-
-    scaleCube = function(scaleX, scaleY, scaleZ) {
-        this.scale.x *= scaleX;
-        this.scale.y *= scaleY;
-        this.scale.z *= scaleZ;
-        Matter.Body.scale(this.rectangle, scaleX, scaleY);
     }
 
     remove = function() {

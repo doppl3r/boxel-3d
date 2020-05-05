@@ -1,8 +1,8 @@
 class Player extends Cube {
-    constructor(x, y, z, angle) {
-        super(x, y, z, angle);
+    constructor(options) {
+        super(options);
         this.setColor('#dc265a');
-        this.scaleCube(16, 16, 16);
+        this.setScale(16, 16, 16);
         this.mass = 5;
         this.jumpForce = -0.00125 * this.mass;
     }

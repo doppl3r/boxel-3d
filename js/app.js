@@ -41,17 +41,18 @@ class App {
         a.document.body.appendChild(a.renderer.domElement);
 
         // Add player
-        a.player = new Player(0, 0, 0);
+        a.player = new Player({ x: 0, y: 0, z: 0 });
         Matter.World.add(a.engine.world, a.player.rectangle);
         a.scene.add(a.player);
 
         // Add floor
-        a.floor = new Cube(0, -a.BOX_SIZE * 4, 0);
-        a.floor.scaleCube(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
+        a.floor = new Cube({ x: 0, y: -a.BOX_SIZE * 4, z: 0 });
+        a.floor.setScale(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
         a.floor.setStatic(true);
         a.floor.setColor('#620460');
         a.scene.add(a.floor);
-        a.floor.setRotation((Math.PI / 180) * 10);
+        a.floor.setRotation(-(Math.PI / 180) * 10);
+        a.floor.setRotationOrigin(-(Math.PI / 180) * 10);
         Matter.World.add(a.engine.world, a.floor.rectangle);
 
         // Add event listeners and render app
@@ -84,13 +85,15 @@ class App {
         for (var i = 0; i < a.scene.children.length; i++) {
             var child = a.scene.children[i];
             if (child.rectangle != null) {
-                var rect = child.rectangle;
-                var x = rect.position.x;
-                var y = rect.position.y;
-                var z = rect.angle;
-                child.setPosition(x, -y, 0);
-                child.rotation.z = -z;
-                if (child.position.y < -1000) child.resetToOrigin();
+                if (child.rectangle.isStatic == false) {
+                    var rect = child.rectangle;
+                    var x = rect.position.x;
+                    var y = rect.position.y;
+                    var z = rect.angle;
+                    child.setPosition(x, -y, 0);
+                    child.setRotation(-z, false);
+                    if (child.position.y < -1000) child.resetToOrigin();
+                }
             }
         }
     }
@@ -100,14 +103,15 @@ class App {
         if (object == null) {
             //a.player.jump();
             var pos = a.getMousePosition(e, a);
-            var floor = new Cube(pos.x, pos.y, 0);
-            floor.scaleCube(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
+            var floor = new Cube({ x: pos.x, y: pos.y, z: 0 });
+            floor.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
             floor.setColor('#620460');
             a.scene.add(floor);
             Matter.World.add(a.engine.world, floor.rectangle);
         }
         else {
             object.setColor("#fff");
+            object.setScale(object.scale.x * 2, object.scale.y * 2, object.scale.z * 2);
         }
     }
 
