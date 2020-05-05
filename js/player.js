@@ -1,6 +1,6 @@
 class Player extends Cube {
-    constructor() {
-        super();
+    constructor(x, y, z, angle) {
+        super(x, y, z, angle);
         this.setColor('#dc265a');
         this.scaleCube(16, 16, 16);
         this.mass = 5;

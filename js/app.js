@@ -41,14 +41,12 @@ class App {
         a.document.body.appendChild(a.renderer.domElement);
 
         // Add player
-        a.player = new Player();
-        a.player.setPosition(0, 0, 0);
+        a.player = new Player(0, 0, 0);
         Matter.World.add(a.engine.world, a.player.rectangle);
         a.scene.add(a.player);
 
         // Add floor
-        a.floor = new Cube();
-        a.floor.setPosition(0, -a.BOX_SIZE * 4, 0);
+        a.floor = new Cube(0, -a.BOX_SIZE * 4, 0);
         a.floor.scaleCube(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
         a.floor.setStatic(true);
         a.floor.setColor('#620460');
@@ -92,7 +90,7 @@ class App {
                 var z = rect.angle;
                 child.setPosition(x, -y, 0);
                 child.rotation.z = -z;
-                if (child.position.y < -1000) child.resetPosition();
+                if (child.position.y < -1000) child.resetToOrigin();
             }
         }
     }
@@ -102,8 +100,7 @@ class App {
         if (object == null) {
             //a.player.jump();
             var pos = a.getMousePosition(e, a);
-            var floor = new Cube();
-            floor.setPosition(pos.x, pos.y, 0);
+            var floor = new Cube(pos.x, pos.y, 0);
             floor.scaleCube(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
             floor.setColor('#620460');
             a.scene.add(floor);
