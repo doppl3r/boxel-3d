@@ -25,24 +25,14 @@ class Cube extends THREE.Mesh {
         this.castShadow = true;
         this.receiveShadow = true;
         this.setPosition(options.x, options.y, options.z);
-        this.setPositionOrigin(options.x, options.y, options.z);
         this.setRotation(options.angle);
-        this.setRotationOrigin(options.angle);
         this.setScale(options.scaleX, options.scaleY, options.scaleZ);
-        this.setScaleOrigin(options.scaleX, options.scaleY, options.scaleZ);
     }
 
-    resetToOrigin = function() {
-        this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin);
-        Matter.Body.setPosition(this.rectangle, { x: this.xOrigin, y: -this.yOrigin });
-        Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
-        Matter.Body.setAngularVelocity(this.rectangle, 0);
-        Matter.Body.setAngle(this.rectangle, this.rotationOrigin);
-    }
-
-    setPosition = function(x, y, z) {
+    setPosition = function(x, y, z, updateOrigin = true) {
         this.position.set(x, y, z);
         Matter.Body.setPosition(this.rectangle, { x: x, y: -y });
+        if (updateOrigin == true) this.setPositionOrigin(x, y, z);
     }
 
     setPositionOrigin = function(x, y, z) {
@@ -51,19 +41,20 @@ class Cube extends THREE.Mesh {
         this.zOrigin = z;
     }
 
-    setRotation = function(angle, updateCollision = true) {
+    setRotation = function(angle, updateOrigin = true) {
         this.rotation.z = angle;
-        if (updateCollision == true) Matter.Body.rotate(this.rectangle, -angle);
+        Matter.Body.setAngle(this.rectangle, -angle);
+        if (updateOrigin == true) this.setRotationOrigin(angle);
     }
 
     setRotationOrigin = function(angle) {
         this.rotationOrigin = angle;
     }
 
-    setScale = function(scaleX, scaleY, scaleZ) {
+    setScale = function(scaleX, scaleY, scaleZ, updateOrigin = true) {
         // Temporarily set rectangle angle to zero to prevent skewing
         var tempAngle = this.rotation.z;
-        this.setRotation(-this.rotation.z);
+        this.setRotation(0);
 
         // Scale rectangle by previous scale, then update mesh scale ratio
         Matter.Body.scale(this.rectangle, scaleX / this.scale.x, scaleY / this.scale.y);
@@ -71,12 +62,21 @@ class Cube extends THREE.Mesh {
         this.scale.y = scaleY;
         this.scale.z = scaleZ;
         this.setRotation(tempAngle); // Revert angle
+        if (updateOrigin == true) this.setScaleOrigin(scaleX, scaleY, scaleZ);
     }
 
     setScaleOrigin = function(scaleX, scaleY, scaleZ) {
         this.scaleXOrigin = scaleX;
         this.scaleYOrigin = scaleY;
         this.scaleZOrigin = scaleZ;
+    }
+
+    resetToOrigin = function() {
+        this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin);
+        this.setRotation(this.rotationOrigin);
+        this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin);
+        Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
+        Matter.Body.setAngularVelocity(this.rectangle, 0);
     }
 
     setColor = function(color) {

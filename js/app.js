@@ -52,7 +52,6 @@ class App {
         a.floor.setColor('#620460');
         a.scene.add(a.floor);
         a.floor.setRotation(-(Math.PI / 180) * 10);
-        a.floor.setRotationOrigin(-(Math.PI / 180) * 10);
         Matter.World.add(a.engine.world, a.floor.rectangle);
 
         // Add event listeners and render app
@@ -90,7 +89,7 @@ class App {
                     var x = rect.position.x;
                     var y = rect.position.y;
                     var z = rect.angle;
-                    child.setPosition(x, -y, 0);
+                    child.setPosition(x, -y, 0, false);
                     child.setRotation(-z, false);
                     if (child.position.y < -1000) child.resetToOrigin();
                 }
