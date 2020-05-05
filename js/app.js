@@ -100,7 +100,7 @@ class App {
     clickCanvas = function(e, a) {
         var object = a.getObject(e, a);
         if (object == null) {
-            a.player.jump();
+            //a.player.jump();
             var pos = a.getMousePosition(e, a);
             var floor = new Cube();
             floor.setPosition(pos.x, pos.y, 0);
