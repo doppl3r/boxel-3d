@@ -12,8 +12,8 @@ class Cube extends THREE.Mesh {
         options.angle = (options.angle == null) ? 0 : options.angle;
         
         // Set default properties
+        this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
         this.material = new THREE.MeshPhongMaterial({ color: '#fff' });
-        this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, this.length);
         this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
             friction: 0.0,
             frictionAir: 0.0,
@@ -75,16 +75,33 @@ class Cube extends THREE.Mesh {
         this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin);
         this.setRotation(this.rotationOrigin);
         this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin);
+        this.setColor(this.colorOrigin);
+        this.select(false);
         Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.rectangle, 0);
     }
 
-    setColor = function(color) {
+    setColor = function(color, updateOrigin = true) {
         this.material.color.set(color);
+        if (updateOrigin == true) this.setColorOrigin(color);
+    }
+
+    setColorOrigin = function(color) {
+        this.colorOrigin = color;
     }
 
     setStatic = function(isStatic) {
         Matter.Body.setStatic(this.rectangle, isStatic);
+    }
+
+    select = function(selected) {
+        this.selected = selected;
+        this.material.wireframe = selected;
+    }
+
+    toggleSelected = function() {
+        this.selected = !this.selected;
+        this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
     }
 
     remove = function() {

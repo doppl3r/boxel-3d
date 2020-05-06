@@ -48,10 +48,10 @@ class App {
         // Add floor
         a.floor = new Cube({ x: 0, y: -a.BOX_SIZE * 4, z: 0 });
         a.floor.setScale(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
-        a.floor.setStatic(true);
-        a.floor.setColor('#620460');
-        a.scene.add(a.floor);
         a.floor.setRotation(-(Math.PI / 180) * 10);
+        a.floor.setColor('#620460');
+        a.floor.setStatic(true);
+        a.scene.add(a.floor);
         Matter.World.add(a.engine.world, a.floor.rectangle);
 
         // Add event listeners and render app
@@ -84,15 +84,13 @@ class App {
         for (var i = 0; i < a.scene.children.length; i++) {
             var child = a.scene.children[i];
             if (child.rectangle != null) {
-                if (child.rectangle.isStatic == false) {
-                    var rect = child.rectangle;
-                    var x = rect.position.x;
-                    var y = rect.position.y;
-                    var z = rect.angle;
-                    child.setPosition(x, -y, 0, false);
-                    child.setRotation(-z, false);
-                    if (child.position.y < -1000) child.resetToOrigin();
-                }
+                var rect = child.rectangle;
+                var x = rect.position.x;
+                var y = rect.position.y;
+                var z = rect.angle;
+                child.setPosition(x, -y, 0, false);
+                child.setRotation(-z, false);
+                if (child.position.y < -1000) child.resetToOrigin();
             }
         }
     }
@@ -102,14 +100,14 @@ class App {
         if (object == null) {
             //a.player.jump();
             var pos = a.getMousePosition(e, a);
-            var floor = new Cube({ x: pos.x, y: pos.y, z: 0 });
-            floor.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
-            floor.setColor('#620460');
-            a.scene.add(floor);
-            Matter.World.add(a.engine.world, floor.rectangle);
+            var object = new Cube({ x: pos.x, y: pos.y, z: 0 });
+            object.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
+            object.setColor('#620460');
+            a.scene.add(object);
+            Matter.World.add(a.engine.world, object.rectangle);
         }
         else {
-            object.setColor("#fff");
+            object.toggleSelected();
             object.setScale(object.scale.x * 1, object.scale.y * 1, object.scale.z * 1);
         }
     }
@@ -130,7 +128,7 @@ class App {
         var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
         vec.set(x, y, 0);
         raycaster.setFromCamera(vec, a.camera);
-        var intersects = raycaster.intersectObjects(a.scene.children);
+        var intersects = raycaster.intersectObjects(a.scene.children, true);
         if (intersects.length > 0) object = intersects[0].object;
         return(object);
     }
@@ -147,6 +145,16 @@ class App {
         distance = - a.camera.position.z / vec.z;
         pos.copy(a.camera.position).add(vec.multiplyScalar(distance));
         return(pos);
+    }
+
+    reset = function(a) {
+        for (var i=0; i < a.scene.children.length; i++) {
+            var child = a.scene.children[i];
+            if (child.rectangle != null) {
+                a.scene.children[i].resetToOrigin();
+                a.update(null, a);
+            }
+        }
     }
 }
 var app = new App();

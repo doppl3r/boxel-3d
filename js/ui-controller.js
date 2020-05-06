@@ -8,15 +8,18 @@ class UIController {
         $('.ui-controller a').on('click', function(event){
             event.preventDefault();
             var action = $(this).attr('href');
-            if (action == 'play') {
-                app.play = true;
-                $('.options-level [href="pause"]').removeClass('selected');
-                $('.options-level [href="play"]').addClass('selected');
+            if (action == 'rewind') {
+                app.reset(app);
             }
             else if (action == 'pause') {
                 app.play = false;
                 $('.options-level [href="play"]').removeClass('selected');
                 $('.options-level [href="pause"]').addClass('selected');
+            }
+            else if (action == 'play') {
+                app.play = true;
+                $('.options-level [href="pause"]').removeClass('selected');
+                $('.options-level [href="play"]').addClass('selected');
             }
             console.log(action);
         });
