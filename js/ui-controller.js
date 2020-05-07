@@ -22,7 +22,7 @@ class UIController {
                 $('.options-level [href="play"]').addClass('selected');
             }
             else if (action == 'pin') {
-                app.selectedObject.toggleStatic();
+                app.selectedObject.toggleSleeping();
                 app.ui.updateObjectOptions();
             }
             else if (action == 'trash') {
@@ -50,9 +50,9 @@ class UIController {
     }
 
     updateObjectOptions = function() {
-        var isStatic = app.selectedObject.isStatic();
+        var isSleeping = app.selectedObject.isSleeping();
         var pinIcon = $('.options-object-properties [href="pin"]');
-        if (isStatic == true) pinIcon.addClass('selected');
+        if (isSleeping == true) pinIcon.addClass('selected');
         else pinIcon.removeClass('selected');
     }
 }

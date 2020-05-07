@@ -19,6 +19,7 @@ class Cube extends THREE.Mesh {
             frictionAir: 0.0,
             frictionStatic: 0.0,
             restitution: 0.0,
+            isSleeping: true,
             density: 0.001
         });
         this.name = this.uuid;
@@ -88,18 +89,18 @@ class Cube extends THREE.Mesh {
         this.colorOrigin = color;
     }
 
-    setStatic = function(isStatic = true) {
-        Matter.Body.setStatic(this.rectangle, isStatic);
+    setSleeping = function(isSleeping = true) {
+        Matter.Sleeping.set(this.rectangle, isSleeping);;
     }
 
-    toggleStatic = function() {
-        var isStatic = !this.rectangle.isStatic;
-        Matter.Body.setStatic(this.rectangle, isStatic);
-        return isStatic;
+    toggleSleeping = function() {
+        var isSleeping = !this.rectangle.isSleeping;
+        Matter.Sleeping.set(this.rectangle, isSleeping);
+        return isSleeping;
     }
 
-    isStatic = function() {
-        return this.rectangle.isStatic;
+    isSleeping = function() {
+        return this.rectangle.isSleeping;
     }
 
     select = function(state = true) {
