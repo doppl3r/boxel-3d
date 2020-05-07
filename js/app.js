@@ -96,23 +96,26 @@ class App {
     }
 
     clickCanvas = function(e, a) {
-        var object = a.getObject(e, a);
-        if (object == null) {
+        this.selectedObject = a.getObject(e, a);
+        if (this.selectedObject == null) {
             a.deselectScene(a);
             a.ui.showObjectOptions(true);
             var pos = a.getMousePosition(e, a);
-            var object = new Cube({ x: pos.x, y: pos.y, z: 0 });
-            object.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
-            object.setColor('#620460');
-            a.scene.add(object);
-            Matter.World.add(a.engine.world, object.rectangle);
-            object.select();
+            this.selectedObject = new Cube({ x: pos.x, y: pos.y, z: 0 });
+            this.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
+            this.selectedObject.setColor('#620460');
+            a.scene.add(this.selectedObject);
+            Matter.World.add(a.engine.world, this.selectedObject.rectangle);
+            this.selectedObject.select();
+            a.ui.updateObjectOptions();
         }
         else {
-            var selected = !object.selected; // Toggle selected
+            var selected = !this.selectedObject.selected; // Toggle selected
             a.deselectScene(a);
             a.ui.showObjectOptions(selected);
-            object.select(selected);
+            this.selectedObject.select(selected);
+            if (selected == false) this.selectedObject = null;
+            a.ui.updateObjectOptions();
         }
     }
 
@@ -169,6 +172,11 @@ class App {
                 a.update(null, a);
             }
         }
+    }
+
+    removeObject = function(object, a) {
+        Matter.World.remove(a.engine.world, object.rectangle);
+        a.scene.remove(object);
     }
 }
 var app = new App();

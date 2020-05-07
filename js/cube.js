@@ -75,8 +75,6 @@ class Cube extends THREE.Mesh {
         this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin);
         this.setRotation(this.rotationOrigin);
         this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin);
-        this.setColor(this.colorOrigin);
-        this.select(false);
         Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.rectangle, 0);
     }
@@ -90,8 +88,18 @@ class Cube extends THREE.Mesh {
         this.colorOrigin = color;
     }
 
-    setStatic = function(isStatic) {
+    setStatic = function(isStatic = true) {
         Matter.Body.setStatic(this.rectangle, isStatic);
+    }
+
+    toggleStatic = function() {
+        var isStatic = !this.rectangle.isStatic;
+        Matter.Body.setStatic(this.rectangle, isStatic);
+        return isStatic;
+    }
+
+    isStatic = function() {
+        return this.rectangle.isStatic;
     }
 
     select = function(state = true) {
@@ -102,10 +110,6 @@ class Cube extends THREE.Mesh {
     toggleSelected = function() {
         this.selected = !this.selected;
         this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
-    }
-
-    remove = function() {
-        scene.remove(this);
-        Matter.World.remove(engine.world, this.rectangle);
+        return this.selected;
     }
 }

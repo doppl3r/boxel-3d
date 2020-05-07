@@ -21,6 +21,13 @@ class UIController {
                 $('.options-level [href="pause"]').removeClass('selected');
                 $('.options-level [href="play"]').addClass('selected');
             }
+            else if (action == 'pin') {
+                app.selectedObject.toggleStatic();
+                app.ui.updateObjectOptions();
+            }
+            else if (action == 'trash') {
+                app.removeObject(app.selectedObject, app);
+            }
             console.log(action);
         });
     }
@@ -40,5 +47,12 @@ class UIController {
 
     toggleObjectOptions = function() {
         $('.options-object-properties').toggleClass('disabled');
+    }
+
+    updateObjectOptions = function() {
+        var isStatic = app.selectedObject.isStatic();
+        var pinIcon = $('.options-object-properties [href="pin"]');
+        if (isStatic == true) pinIcon.addClass('selected');
+        else pinIcon.removeClass('selected');
     }
 }
