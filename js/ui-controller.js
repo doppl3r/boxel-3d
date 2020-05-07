@@ -9,7 +9,7 @@ class UIController {
             event.preventDefault();
             var action = $(this).attr('href');
             if (action == 'rewind') {
-                app.reset(app);
+                app.resetScene(app);
             }
             else if (action == 'pause') {
                 app.play = false;
@@ -30,5 +30,15 @@ class UIController {
         $('.options-level [href="pause"]').addClass('selected');
         $('.options-object-type [href="cube"]').addClass('selected');
         $('.options-object-properties').addClass('disabled');
+    }
+
+    showObjectOptions = function(state) {
+        var objectOptions = $('.options-object-properties');
+        if (state == true) objectOptions.removeClass('disabled');
+        else objectOptions.addClass('disabled');
+    }
+
+    toggleObjectOptions = function() {
+        $('.options-object-properties').toggleClass('disabled');
     }
 }

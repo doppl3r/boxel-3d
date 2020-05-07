@@ -98,17 +98,21 @@ class App {
     clickCanvas = function(e, a) {
         var object = a.getObject(e, a);
         if (object == null) {
-            //a.player.jump();
+            a.deselectScene(a);
+            a.ui.showObjectOptions(true);
             var pos = a.getMousePosition(e, a);
             var object = new Cube({ x: pos.x, y: pos.y, z: 0 });
             object.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
             object.setColor('#620460');
             a.scene.add(object);
             Matter.World.add(a.engine.world, object.rectangle);
+            object.select();
         }
         else {
-            object.toggleSelected();
-            object.setScale(object.scale.x * 1, object.scale.y * 1, object.scale.z * 1);
+            var selected = !object.selected; // Toggle selected
+            a.deselectScene(a);
+            a.ui.showObjectOptions(selected);
+            object.select(selected);
         }
     }
 
@@ -147,11 +151,21 @@ class App {
         return(pos);
     }
 
-    reset = function(a) {
+    deselectScene = function(a) {
         for (var i=0; i < a.scene.children.length; i++) {
             var child = a.scene.children[i];
             if (child.rectangle != null) {
-                a.scene.children[i].resetToOrigin();
+                child.select(false);
+            }
+        }
+    }
+
+    resetScene = function(a) {
+        a.ui.showObjectOptions(false);
+        for (var i=0; i < a.scene.children.length; i++) {
+            var child = a.scene.children[i];
+            if (child.rectangle != null) {
+                child.resetToOrigin();
                 a.update(null, a);
             }
         }

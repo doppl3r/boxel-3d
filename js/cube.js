@@ -94,9 +94,9 @@ class Cube extends THREE.Mesh {
         Matter.Body.setStatic(this.rectangle, isStatic);
     }
 
-    select = function(selected) {
-        this.selected = selected;
-        this.material.wireframe = selected;
+    select = function(state = true) {
+        this.selected = state;
+        this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
     }
 
     toggleSelected = function() {
