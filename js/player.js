@@ -3,7 +3,7 @@ class Player extends Cube {
         super(options);
         this.setColor('#dc265a');
         this.setScale(16, 16, 16);
-        this.setSleeping(false);
+        this.setStatic(false);
         this.mass = 5;
         this.jumpForce = -0.00125 * this.mass;
     }

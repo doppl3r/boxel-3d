@@ -10,6 +10,7 @@ class UIController {
             var action = $(this).attr('href');
             if (action == 'rewind') {
                 app.resetScene(app);
+                app.deselectScene(app);
             }
             else if (action == 'pause') {
                 app.play = false;
@@ -22,7 +23,7 @@ class UIController {
                 $('.options-level [href="play"]').addClass('selected');
             }
             else if (action == 'pin') {
-                app.selectedObject.toggleSleeping();
+                app.selectedObject.toggleStatic();
                 app.ui.updateObjectOptions();
             }
             else if (action == 'trash') {
@@ -50,9 +51,10 @@ class UIController {
     }
 
     updateObjectOptions = function() {
-        var isSleeping = app.selectedObject.isSleeping();
+        var isStatic = false;
         var pinIcon = $('.options-object-properties [href="pin"]');
-        if (isSleeping == true) pinIcon.addClass('selected');
+        if (app.selectedObject != null) isStatic = app.selectedObject.isStatic();
+        if (isStatic == true) pinIcon.addClass('selected');
         else pinIcon.removeClass('selected');
     }
 }

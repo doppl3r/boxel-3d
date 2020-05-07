@@ -50,6 +50,7 @@ class App {
         a.floor.setScale(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
         a.floor.setRotation(-(Math.PI / 180) * 10);
         a.floor.setColor('#620460');
+        a.floor.setStatic(true);
         a.scene.add(a.floor);
         Matter.World.add(a.engine.world, a.floor.rectangle);
 

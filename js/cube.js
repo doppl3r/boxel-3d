@@ -19,7 +19,6 @@ class Cube extends THREE.Mesh {
             frictionAir: 0.0,
             frictionStatic: 0.0,
             restitution: 0.0,
-            isSleeping: true,
             density: 0.001
         });
         this.name = this.uuid;
@@ -73,9 +72,10 @@ class Cube extends THREE.Mesh {
     }
 
     resetToOrigin = function() {
-        this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin);
-        this.setRotation(this.rotationOrigin);
-        this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin);
+        this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin, false);
+        this.setRotation(this.rotationOrigin, false);
+        this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin, false);
+        this.setStatic(this.isStaticOrigin, false);
         Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.rectangle, 0);
     }
@@ -89,18 +89,23 @@ class Cube extends THREE.Mesh {
         this.colorOrigin = color;
     }
 
-    setSleeping = function(isSleeping = true) {
-        Matter.Sleeping.set(this.rectangle, isSleeping);;
+    setStatic = function(isStatic, updateOrigin = true) {
+        Matter.Body.setStatic(this.rectangle, isStatic);
+        if (updateOrigin == true) this.setStaticOrigin(isStatic);
     }
 
-    toggleSleeping = function() {
-        var isSleeping = !this.rectangle.isSleeping;
-        Matter.Sleeping.set(this.rectangle, isSleeping);
-        return isSleeping;
+    setStaticOrigin = function(isStatic) {
+        this.isStaticOrigin = isStatic;
     }
 
-    isSleeping = function() {
-        return this.rectangle.isSleeping;
+    toggleStatic = function() {
+        var isStatic = !this.rectangle.isStatic;
+        this.setStatic(isStatic);
+        return isStatic;
+    }
+
+    isStatic = function() {
+        return this.rectangle.isStatic;
     }
 
     select = function(state = true) {
