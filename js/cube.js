@@ -30,6 +30,12 @@ class Cube extends THREE.Mesh {
     }
 
     setPosition = function(x, y, z, updateOrigin = true) {
+        // Set null values
+        x = (x == null) ? this.position.x : x;
+        y = (y == null) ? this.position.y : y;
+        z = (z == null) ? this.position.z : z;
+
+        // Update position
         this.position.set(x, y, z);
         Matter.Body.setPosition(this.rectangle, { x: x, y: -y });
         if (updateOrigin == true) this.setPositionOrigin(x, y, z);
@@ -52,6 +58,11 @@ class Cube extends THREE.Mesh {
     }
 
     setScale = function(scaleX, scaleY, scaleZ, updateOrigin = true) {
+        // Resolve null values
+        scaleX = (scaleX == null) ? this.scale.x : scaleX;
+        scaleY = (scaleY == null) ? this.scale.y : scaleY;
+        scaleZ = (scaleZ == null) ? this.scale.z : scaleZ;
+        
         // Temporarily set rectangle angle to zero to prevent skewing
         var tempAngle = this.rotation.z;
         this.setRotation(0);

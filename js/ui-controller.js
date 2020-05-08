@@ -8,6 +8,7 @@ class UIController {
         $('.ui-controller a').on('click', function(event){
             event.preventDefault();
             var action = $(this).attr('href');
+            var BOX_SIZE = app.BOX_SIZE;
             if (action == 'rewind') {
                 app.resetScene(app);
                 app.deselectScene(app);
@@ -25,6 +26,42 @@ class UIController {
             else if (action == 'pin') {
                 app.selectedObject.toggleStatic();
                 app.ui.updateObjectOptions();
+            }
+            else if (action == 'move-up') {
+                app.selectedObject.setPosition(null, app.selectedObject.position.y + BOX_SIZE);
+            }
+            else if (action == 'move-down') {
+                app.selectedObject.setPosition(null, app.selectedObject.position.y - BOX_SIZE);
+            }
+            else if (action == 'move-right') {
+                app.selectedObject.setPosition(app.selectedObject.position.x + BOX_SIZE);
+            }
+            else if (action == 'move-left') {
+                app.selectedObject.setPosition(app.selectedObject.position.x - BOX_SIZE);
+            }
+            else if (action == 'rotate-clockwise') {
+                var angle = app.selectedObject.rotation.z;
+                app.selectedObject.setRotation(angle - (15 * (Math.PI / 180)));
+            }
+            else if (action == 'rotate-counterclockwise') {
+                var angle = app.selectedObject.rotation.z;
+                app.selectedObject.setRotation(angle + (15 * (Math.PI / 180)));
+            }
+            else if (action == 'scale-out-x') {
+                var scaleX = app.selectedObject.scale.x;
+                app.selectedObject.setScale(scaleX + BOX_SIZE, null, null);
+            }
+            else if (action == 'scale-in-x') {
+                var scaleX = app.selectedObject.scale.x;
+                if (scaleX - BOX_SIZE > 0) app.selectedObject.setScale(scaleX - BOX_SIZE, null, null);
+            }
+            else if (action == 'scale-out-y') {
+                var scaleY = app.selectedObject.scale.y;
+                app.selectedObject.setScale(null, scaleY + BOX_SIZE, null);
+            }
+            else if (action == 'scale-in-y') {
+                var scaleY = app.selectedObject.scale.y;
+                if (scaleY - BOX_SIZE > 0) app.selectedObject.setScale(null, scaleY - BOX_SIZE, null);
             }
             else if (action == 'trash') {
                 app.removeObject(app.selectedObject, app);
