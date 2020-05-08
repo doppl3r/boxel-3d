@@ -57,6 +57,8 @@ class App {
         // Add event listeners and render app
         a.renderer.domElement.addEventListener('mousedown', function(e){ a.clickCanvas(e, a); }, false);
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
+        a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
+        a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
         a.update(null, a);
         a.render(null, a);
     }
@@ -125,6 +127,20 @@ class App {
         a.camera.aspect = screenWidth / screenHeight;
         a.camera.updateProjectionMatrix();
         a.renderer.setSize(screenWidth, screenHeight);
+    }
+
+    keyDown = function(e, a) {
+        switch (e.keyCode) {
+            case 16: break; //shift
+            case 17: break; //ctrl
+            case 27: break; //esc
+            case 32: a.player.jump(); break; //space
+            case 38: break; //up
+        }
+    }
+
+    keyUp = function(e, a) {
+
     }
 
     getObject = function(e, a) {
