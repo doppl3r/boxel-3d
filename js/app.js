@@ -101,8 +101,23 @@ class App {
     }
 
     mouseDown = function(e, a) {
-        this.selectedObject = a.getObject(e, a);
         a.mouse.mouseDown(a.getMousePosition(e, a));
+        var targetSelectedObject = a.getObject(e, a);
+        
+    }
+
+    mouseMove = function(e, a) {
+        a.mouse.mouseMove(a.getMousePosition(e, a));
+        if (a.mouse.drag == true) {
+            var down = a.mouse.down;
+            var diff = a.mouse.getDragDifference();
+            if (a.selectedObject != null) a.selectedObject.setPosition(down.x - diff.x, down.y - diff.y);
+        }
+    }
+
+    mouseUp = function(e, a) {
+        a.mouse.mouseUp(a.getMousePosition(e, a));
+        this.selectedObject = a.getObject(e, a);
         if (this.selectedObject == null) {
             a.deselectScene(a);
             a.ui.showObjectOptions(true);
@@ -115,21 +130,8 @@ class App {
             a.ui.updateObjectOptions();
         }
         else {
-            var selected = !this.selectedObject.selected; // Toggle selected
-            a.deselectScene(a);
-            a.ui.showObjectOptions(selected);
-            this.selectedObject.select(selected);
-            if (selected == false) this.selectedObject = null;
-            a.ui.updateObjectOptions();
+            //a.deselectScene(a);
         }
-    }
-
-    mouseMove = function(e, a) {
-        a.mouse.mouseMove(a.getMousePosition(e, a));
-    }
-
-    mouseUp = function(e, a) {
-        a.mouse.mouseUp(a.getMousePosition(e, a));
     }
 
     resizeWindow = function(e, a) {
@@ -142,11 +144,11 @@ class App {
 
     keyDown = function(e, a) {
         switch (e.keyCode) {
-            case 16: break; //shift
-            case 17: break; //ctrl
-            case 27: break; //esc
-            case 32: a.player.jump(); break; //space
-            case 38: break; //up
+            case 16: break; //  Shift
+            case 17: break; // Ctrl
+            case 27: break; // Esc
+            case 32: a.player.jump(); break; // Space
+            case 38: break; // Up
         }
     }
 
