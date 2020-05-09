@@ -15,6 +15,7 @@ class App {
         a.now = a.then;
         a.delta = 0;
         a.ui = new UIController();
+        a.mouse = new Mouse();
         a.play = false;
         a.renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 1000);
@@ -48,14 +49,16 @@ class App {
         // Add floor
         a.floor = new Cube({ x: 0, y: -a.BOX_SIZE * 4, z: 0 });
         a.floor.setScale(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
-        a.floor.setRotation(-(Math.PI / 180) * 10);
+        a.floor.setRotation(-(Math.PI / 180) * 0);
         a.floor.setColor('#620460');
         a.floor.setStatic(true);
         a.scene.add(a.floor);
         Matter.World.add(a.engine.world, a.floor.rectangle);
 
         // Add event listeners and render app
-        a.renderer.domElement.addEventListener('mousedown', function(e){ a.clickCanvas(e, a); }, false);
+        a.renderer.domElement.addEventListener('mousedown', function(e){ a.mouseDown(e, a); }, false);
+        a.renderer.domElement.addEventListener('mousemove', function(e){ a.mouseMove(e, a); }, false);
+        a.renderer.domElement.addEventListener('mouseup', function(e){ a.mouseUp(e, a); }, false);
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
         a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
         a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
@@ -97,13 +100,13 @@ class App {
         }
     }
 
-    clickCanvas = function(e, a) {
+    mouseDown = function(e, a) {
         this.selectedObject = a.getObject(e, a);
+        a.mouse.mouseDown(a.getMousePosition(e, a));
         if (this.selectedObject == null) {
             a.deselectScene(a);
             a.ui.showObjectOptions(true);
-            var pos = a.getMousePosition(e, a);
-            this.selectedObject = new Cube({ x: pos.x, y: pos.y, z: 0 });
+            this.selectedObject = new Cube({ x: a.mouse.down.x, y: a.mouse.down.y, z: 0 });
             this.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
             this.selectedObject.setColor('#620460');
             a.scene.add(this.selectedObject);
@@ -119,6 +122,14 @@ class App {
             if (selected == false) this.selectedObject = null;
             a.ui.updateObjectOptions();
         }
+    }
+
+    mouseMove = function(e, a) {
+        a.mouse.mouseMove(a.getMousePosition(e, a));
+    }
+
+    mouseUp = function(e, a) {
+        a.mouse.mouseUp(a.getMousePosition(e, a));
     }
 
     resizeWindow = function(e, a) {
