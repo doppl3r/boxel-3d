@@ -117,10 +117,12 @@ class App {
                 a.selectedObject = targetSelectedObject;
                 a.selectedObject.select(true);
                 a.ui.updateObjectOptions();
+                a.moveCamera = false;
             }
             else {
                 // Disable dragging if no selected object
-                a.mouse.drag = false;
+                //a.mouse.drag = false;
+                a.moveCamera = true;
             }
         }
     }
@@ -130,15 +132,24 @@ class App {
             a.mouse.mouseMove(a.getMousePosition(e, a));
             // Update selected object if drag is true
             if (a.mouse.drag == true) {
-                if (a.selectedObject != null) {
-                    var down = a.mouse.down;
-                    var diff = a.mouse.getDragDifference();
-                    // Update position if tolerance is true
-                    if (a.mouse.getTolerance() == true) {
-                        a.selectedObject.setPosition(
-                            a.mouse.snap(down.x - diff.x, a.snap),
-                            a.mouse.snap(down.y - diff.y, a.snap)
-                        );
+                if (a.mouse.getTolerance() == true) {
+                    if (a.moveCamera == true) {
+                        if (a.selectedObject != null){
+                            a.selectedObject.select(false);
+                            a.selectedObject = null;
+                        }
+                    }
+                    else {
+                        if (a.selectedObject != null) {
+                            a.moveCamera = false;
+                            var down = a.mouse.down;
+                            var diff = a.mouse.getDragDifference();
+                            // Update position if tolerance is true
+                            a.selectedObject.setPosition(
+                                a.mouse.snap(down.x - diff.x, a.snap),
+                                a.mouse.snap(down.y - diff.y, a.snap)
+                            );
+                        }
                     }
                 }
             }
@@ -151,19 +162,21 @@ class App {
             var targetSelectedObject = a.getObject(e, a);
             if (targetSelectedObject == null && this.selectedObject == null) {
                 // Add cube if nothing is selected
-                a.deselectScene(a);
-                a.ui.showObjectOptions(true);
-                this.selectedObject = new Cube({ 
-                    x: a.mouse.snap(a.mouse.down.x, a.snap), 
-                    y: a.mouse.snap(a.mouse.down.y, a.snap),
-                    z: 0
-                });
-                this.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
-                this.selectedObject.setColor('#620460');
-                a.scene.add(this.selectedObject);
-                Matter.World.add(a.engine.world, this.selectedObject.rectangle);
-                this.selectedObject.select(true);
-                a.ui.updateObjectOptions();
+                if (a.mouse.getTolerance() == false) {
+                    a.deselectScene(a);
+                    a.ui.showObjectOptions(true);
+                    this.selectedObject = new Cube({ 
+                        x: a.mouse.snap(a.mouse.down.x, a.snap), 
+                        y: a.mouse.snap(a.mouse.down.y, a.snap),
+                        z: 0
+                    });
+                    this.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
+                    this.selectedObject.setColor('#620460');
+                    a.scene.add(this.selectedObject);
+                    Matter.World.add(a.engine.world, this.selectedObject.rectangle);
+                    this.selectedObject.select(true);
+                    a.ui.updateObjectOptions();
+                }
             }
             else {
                 if (targetSelectedObject == null) {
