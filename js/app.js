@@ -4,6 +4,7 @@ class App {
         a.window = window;
         a.document = document;
         a.BOX_SIZE = 16;
+        a.snap = 1; // Drag snapping
         a.engine = Matter.Engine.create();
         a.screenWidth = a.window.innerWidth;
         a.screenHeight = a.window.innerHeight;
@@ -86,8 +87,12 @@ class App {
         a.camera.position.x = a.player.position.x;
         a.camera.position.y = a.player.position.y + 100;
         a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
+        
+        // Loop through scene for all children
         for (var i = 0; i < a.scene.children.length; i++) {
             var child = a.scene.children[i];
+
+            // Update child if it has a collision box
             if (child.rectangle != null) {
                 var rect = child.rectangle;
                 var x = rect.position.x;
@@ -101,36 +106,73 @@ class App {
     }
 
     mouseDown = function(e, a) {
-        a.mouse.mouseDown(a.getMousePosition(e, a));
-        var targetSelectedObject = a.getObject(e, a);
-        
+        if (a.play == false) {
+            var targetSelectedObject = a.getObject(e, a);
+            a.mouse.mouseDown(a.getMousePosition(e, a));
+            if (targetSelectedObject != null) {
+                // Select a new object on start click
+                a.mouse.setOffset(targetSelectedObject.position);
+                a.deselectScene(a);
+                a.ui.showObjectOptions(true);
+                a.selectedObject = targetSelectedObject;
+                a.selectedObject.select(true);
+                a.ui.updateObjectOptions();
+            }
+            else {
+                // Disable dragging if no selected object
+                a.mouse.drag = false;
+            }
+        }
     }
 
     mouseMove = function(e, a) {
-        a.mouse.mouseMove(a.getMousePosition(e, a));
-        if (a.mouse.drag == true) {
-            var down = a.mouse.down;
-            var diff = a.mouse.getDragDifference();
-            if (a.selectedObject != null) a.selectedObject.setPosition(down.x - diff.x, down.y - diff.y);
+        if (a.play == false) {
+            a.mouse.mouseMove(a.getMousePosition(e, a));
+            // Update selected object if drag is true
+            if (a.mouse.drag == true) {
+                if (a.selectedObject != null) {
+                    var down = a.mouse.down;
+                    var diff = a.mouse.getDragDifference();
+                    // Update position if tolerance is true
+                    if (a.mouse.getTolerance() == true) {
+                        a.selectedObject.setPosition(
+                            a.mouse.snap(down.x - diff.x, a.snap),
+                            a.mouse.snap(down.y - diff.y, a.snap)
+                        );
+                    }
+                }
+            }
         }
     }
 
     mouseUp = function(e, a) {
-        a.mouse.mouseUp(a.getMousePosition(e, a));
-        this.selectedObject = a.getObject(e, a);
-        if (this.selectedObject == null) {
-            a.deselectScene(a);
-            a.ui.showObjectOptions(true);
-            this.selectedObject = new Cube({ x: a.mouse.down.x, y: a.mouse.down.y, z: 0 });
-            this.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
-            this.selectedObject.setColor('#620460');
-            a.scene.add(this.selectedObject);
-            Matter.World.add(a.engine.world, this.selectedObject.rectangle);
-            this.selectedObject.select();
-            a.ui.updateObjectOptions();
-        }
-        else {
-            //a.deselectScene(a);
+        if (a.play == false) {
+            a.mouse.mouseUp(a.getMousePosition(e, a));
+            var targetSelectedObject = a.getObject(e, a);
+            if (targetSelectedObject == null && this.selectedObject == null) {
+                // Add cube if nothing is selected
+                a.deselectScene(a);
+                a.ui.showObjectOptions(true);
+                this.selectedObject = new Cube({ 
+                    x: a.mouse.snap(a.mouse.down.x, a.snap), 
+                    y: a.mouse.snap(a.mouse.down.y, a.snap),
+                    z: 0
+                });
+                this.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
+                this.selectedObject.setColor('#620460');
+                a.scene.add(this.selectedObject);
+                Matter.World.add(a.engine.world, this.selectedObject.rectangle);
+                this.selectedObject.select(true);
+                a.ui.updateObjectOptions();
+            }
+            else {
+                if (targetSelectedObject == null) {
+                    // Deselected object
+                    a.ui.showObjectOptions(false);
+                    this.selectedObject.select(false);
+                    this.selectedObject = null;
+                }
+            }
         }
     }
 
@@ -184,6 +226,7 @@ class App {
     }
 
     deselectScene = function(a) {
+        a.selectedObject = null;
         for (var i=0; i < a.scene.children.length; i++) {
             var child = a.scene.children[i];
             if (child.rectangle != null) {
@@ -206,6 +249,8 @@ class App {
     removeObject = function(object, a) {
         Matter.World.remove(a.engine.world, object.rectangle);
         a.scene.remove(object);
+        a.deselectScene(a);
+        a.ui.showObjectOptions(false);
     }
 }
 var app = new App();

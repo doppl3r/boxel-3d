@@ -15,29 +15,19 @@ class UIController {
             }
             else if (action == 'pause') {
                 app.play = false;
+                app.deselectScene(app);
                 $('.options-level [href="play"]').removeClass('selected');
                 $('.options-level [href="pause"]').addClass('selected');
             }
             else if (action == 'play') {
                 app.play = true;
+                app.deselectScene(app);
                 $('.options-level [href="pause"]').removeClass('selected');
                 $('.options-level [href="play"]').addClass('selected');
             }
             else if (action == 'pin') {
                 app.selectedObject.toggleStatic();
                 app.ui.updateObjectOptions();
-            }
-            else if (action == 'move-up') {
-                app.selectedObject.setPosition(null, app.selectedObject.position.y + BOX_SIZE);
-            }
-            else if (action == 'move-down') {
-                app.selectedObject.setPosition(null, app.selectedObject.position.y - BOX_SIZE);
-            }
-            else if (action == 'move-right') {
-                app.selectedObject.setPosition(app.selectedObject.position.x + BOX_SIZE);
-            }
-            else if (action == 'move-left') {
-                app.selectedObject.setPosition(app.selectedObject.position.x - BOX_SIZE);
             }
             else if (action == 'rotate-clockwise') {
                 var angle = app.selectedObject.rotation.z;
