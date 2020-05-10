@@ -12,16 +12,19 @@ class UIController {
             if (action == 'rewind') {
                 app.resetScene(app);
                 app.deselectScene(app);
+                app.ui.showObjectOptions(false);
             }
             else if (action == 'pause') {
                 app.play = false;
                 app.deselectScene(app);
+                app.ui.showObjectOptions(false);
                 $('.options-level [href="play"]').removeClass('selected');
                 $('.options-level [href="pause"]').addClass('selected');
             }
             else if (action == 'play') {
                 app.play = true;
                 app.deselectScene(app);
+                app.ui.showObjectOptions(false);
                 $('.options-level [href="pause"]').removeClass('selected');
                 $('.options-level [href="play"]').addClass('selected');
             }
