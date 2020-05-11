@@ -10,10 +10,11 @@ class Mouse {
     }
     
     mouseDown = function(e, a) {
+        a.camera.moved = false;
         if (a.play == false) {
             var target = a.getObject(e, a);
             a.mouse.setPosition('down', a.getMousePosition(e, a));
-            
+            a.mouse.setOffset(a.mouse.down);
             // Select a new object on start click
             if (target != null) {
                 a.mouse.setOffset(target.position);
@@ -22,11 +23,11 @@ class Mouse {
                 a.selectedObject = target;
                 a.selectedObject.select(true);
                 a.ui.updateObjectOptions();
-                a.mouse.moveCamera = false;
+                a.camera.movable = false;
             }
             else {
                 // Enable camera dragging
-                a.mouse.moveCamera = true;
+                a.camera.movable = true;
             }
         }
     }
@@ -43,21 +44,25 @@ class Mouse {
                     var down = a.mouse.down;
                     var diff = a.mouse.getDragDifference();
                     var camTolerance = 100;
-                    if (a.mouse.moveCamera == true) {
+                    if (a.camera.movable == true) {
+                        // Deselect object
                         if (a.selectedObject != null){
+                            a.ui.showObjectOptions(false);
                             a.selectedObject.select(false);
                             a.selectedObject = null;
                         }
+                        // Resolve camera ray miscalculations
                         if (Math.abs(diff.x) > camTolerance || Math.abs(diff.y) > camTolerance || Math.abs(diff.z) > camTolerance) {
                             diff = { x: 0, y: 0, z: 0 };
-                            a.mouse.setOffset(a.mouse.down);
                         }
+                        // Update camera position
                         a.camera.position.x += diff.x;
                         a.camera.position.y += diff.y;
+                        a.camera.moved = true;
                     }
                     else { // Update object position
                         if (a.selectedObject != null) {
-                            a.mouse.moveCamera = false;
+                            a.camera.movable = false;
                             a.selectedObject.setPosition(
                                 a.mouse.snap(down.x - diff.x, a.snap),
                                 a.mouse.snap(down.y - diff.y, a.snap)
@@ -76,8 +81,10 @@ class Mouse {
 
             // Add cube if nothing is selected
             if (target == null && a.selectedObject == null) {
+                // Check if mouse moved more than tolerance
                 if (a.mouse.getTolerance() == false) {
-                    if (a.mouse.moveCamera == false) {
+                    // Check if the camera was moved when given permission
+                    if (a.camera.moved != true) {
                         a.deselectScene(a);
                         a.ui.showObjectOptions(true);
                         a.selectedObject = new Cube({ 
