@@ -146,10 +146,10 @@ class App {
         var distance = 0;
         var x = (e.clientX / a.window.innerWidth) * 2 - 1;
         var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
-        vec.set(x, y, 0);
+        vec.set(x, y, 0.5);
         vec.unproject(a.camera);
         vec.sub(a.camera.position).normalize();
-        distance = - a.camera.position.z / vec.z;
+        distance = ( 0 - a.camera.position.z ) / vec.z;
         pos.copy(a.camera.position).add(vec.multiplyScalar(distance));
         return(pos);
     }
