@@ -57,9 +57,9 @@ class App {
         Matter.World.add(a.engine.world, a.floor.rectangle);
 
         // Add event listeners and render app
-        a.renderer.domElement.addEventListener('mousedown', function(e){ a.mouseDown(e, a); }, false);
-        a.renderer.domElement.addEventListener('mousemove', function(e){ a.mouseMove(e, a); }, false);
-        a.renderer.domElement.addEventListener('mouseup', function(e){ a.mouseUp(e, a); }, false);
+        a.renderer.domElement.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
+        a.renderer.domElement.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);
+        a.renderer.domElement.addEventListener('mouseup', function(e){ a.mouse.mouseUp(e, a); }, false);
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
         a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
         a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
@@ -101,90 +101,6 @@ class App {
                 child.setPosition(x, -y, 0, false);
                 child.setRotation(-z, false);
                 if (child.position.y < -1000) child.resetToOrigin();
-            }
-        }
-    }
-
-    mouseDown = function(e, a) {
-        if (a.play == false) {
-            var targetSelectedObject = a.getObject(e, a);
-            a.mouse.mouseDown(a.getMousePosition(e, a));
-            if (targetSelectedObject != null) {
-                // Select a new object on start click
-                a.mouse.setOffset(targetSelectedObject.position);
-                a.deselectScene(a);
-                a.ui.showObjectOptions(true);
-                a.selectedObject = targetSelectedObject;
-                a.selectedObject.select(true);
-                a.ui.updateObjectOptions();
-                a.moveCamera = false;
-            }
-            else {
-                // Disable dragging if no selected object
-                //a.mouse.drag = false;
-                a.moveCamera = true;
-            }
-        }
-    }
-
-    mouseMove = function(e, a) {
-        if (a.play == false) {
-            a.mouse.mouseMove(a.getMousePosition(e, a));
-            // Update selected object if drag is true
-            if (a.mouse.drag == true) {
-                if (a.mouse.getTolerance() == true) {
-                    if (a.moveCamera == true) {
-                        if (a.selectedObject != null){
-                            a.selectedObject.select(false);
-                            a.selectedObject = null;
-                        }
-                    }
-                    else {
-                        if (a.selectedObject != null) {
-                            a.moveCamera = false;
-                            var down = a.mouse.down;
-                            var diff = a.mouse.getDragDifference();
-                            // Update position if tolerance is true
-                            a.selectedObject.setPosition(
-                                a.mouse.snap(down.x - diff.x, a.snap),
-                                a.mouse.snap(down.y - diff.y, a.snap)
-                            );
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    mouseUp = function(e, a) {
-        if (a.play == false) {
-            a.mouse.mouseUp(a.getMousePosition(e, a));
-            var targetSelectedObject = a.getObject(e, a);
-            if (targetSelectedObject == null && this.selectedObject == null) {
-                // Add cube if nothing is selected
-                if (a.mouse.getTolerance() == false) {
-                    a.deselectScene(a);
-                    a.ui.showObjectOptions(true);
-                    this.selectedObject = new Cube({ 
-                        x: a.mouse.snap(a.mouse.down.x, a.snap), 
-                        y: a.mouse.snap(a.mouse.down.y, a.snap),
-                        z: 0
-                    });
-                    this.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
-                    this.selectedObject.setColor('#620460');
-                    a.scene.add(this.selectedObject);
-                    Matter.World.add(a.engine.world, this.selectedObject.rectangle);
-                    this.selectedObject.select(true);
-                    a.ui.updateObjectOptions();
-                }
-            }
-            else {
-                if (targetSelectedObject == null) {
-                    // Deselected object
-                    a.ui.showObjectOptions(false);
-                    this.selectedObject.select(false);
-                    this.selectedObject = null;
-                }
             }
         }
     }

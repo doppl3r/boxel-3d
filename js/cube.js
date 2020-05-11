@@ -122,6 +122,10 @@ class Cube extends THREE.Mesh {
     select = function(state = true) {
         this.selected = state;
         this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
+        if (state == true) {
+            Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
+            Matter.Body.setAngularVelocity(this.rectangle, 0);
+        }
     }
 
     toggleSelected = function() {
