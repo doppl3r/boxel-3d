@@ -18,8 +18,8 @@ class App {
         a.ui = new UIController();
         a.mouse = new Mouse();
         a.play = false;
-        a.renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 1000);
+        a.renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', 1);
 

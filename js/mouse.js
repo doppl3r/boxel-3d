@@ -13,8 +13,9 @@ class Mouse {
         if (a.play == false) {
             var target = a.getObject(e, a);
             a.mouse.setPosition('down', a.getMousePosition(e, a));
+            
+            // Select a new object on start click
             if (target != null) {
-                // Select a new object on start click
                 a.mouse.setOffset(target.position);
                 a.deselectScene(a);
                 a.ui.showObjectOptions(true);
@@ -24,8 +25,7 @@ class Mouse {
                 a.mouse.moveCamera = false;
             }
             else {
-                // Disable dragging if no selected object
-                //a.mouse.drag = false;
+                // Enable camera dragging
                 a.mouse.moveCamera = true;
             }
         }
@@ -34,24 +34,30 @@ class Mouse {
     mouseMove = function(e, a) {
         if (a.play == false) {
             a.mouse.setPosition('move', a.getMousePosition(e, a));
+            
             // Update selected object if drag is true
             if (a.mouse.drag == true) {
+                // Update object or camera position if tolerance is true
                 if (a.mouse.getTolerance() == true) {
+                    // Update camera position
                     var down = a.mouse.down;
                     var diff = a.mouse.getDragDifference();
+                    var camTolerance = 100;
                     if (a.mouse.moveCamera == true) {
-                        // Update camera position
                         if (a.selectedObject != null){
                             a.selectedObject.select(false);
                             a.selectedObject = null;
                         }
-                        //a.camera.position.x += diff.x;
-                        //a.camera.position.y += diff.y;
+                        if (Math.abs(diff.x) > camTolerance || Math.abs(diff.y) > camTolerance || Math.abs(diff.z) > camTolerance) {
+                            diff = { x: 0, y: 0, z: 0 };
+                            a.mouse.setOffset(a.mouse.down);
+                        }
+                        a.camera.position.x += diff.x;
+                        a.camera.position.y += diff.y;
                     }
-                    else {
+                    else { // Update object position
                         if (a.selectedObject != null) {
                             a.mouse.moveCamera = false;
-                            // Update object position if tolerance is true
                             a.selectedObject.setPosition(
                                 a.mouse.snap(down.x - diff.x, a.snap),
                                 a.mouse.snap(down.y - diff.y, a.snap)
@@ -65,29 +71,31 @@ class Mouse {
 
     mouseUp = function(e, a) {
         if (a.play == false) {
-            a.mouse.setPosition('up', a.getMousePosition(e, a));
             var target = a.getObject(e, a);
+            a.mouse.setPosition('up', a.getMousePosition(e, a));
+
+            // Add cube if nothing is selected
             if (target == null && a.selectedObject == null) {
-                // Add cube if nothing is selected
                 if (a.mouse.getTolerance() == false) {
-                    a.deselectScene(a);
-                    a.ui.showObjectOptions(true);
-                    a.selectedObject = new Cube({ 
-                        x: a.mouse.snap(a.mouse.down.x, a.snap), 
-                        y: a.mouse.snap(a.mouse.down.y, a.snap),
-                        z: 0
-                    });
-                    a.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
-                    a.selectedObject.setColor('#620460');
-                    a.scene.add(a.selectedObject);
-                    Matter.World.add(a.engine.world, a.selectedObject.rectangle);
-                    a.selectedObject.select(true);
-                    a.ui.updateObjectOptions();
+                    if (a.mouse.moveCamera == false) {
+                        a.deselectScene(a);
+                        a.ui.showObjectOptions(true);
+                        a.selectedObject = new Cube({ 
+                            x: a.mouse.snap(a.mouse.down.x, a.snap), 
+                            y: a.mouse.snap(a.mouse.down.y, a.snap),
+                            z: 0
+                        });
+                        a.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
+                        a.selectedObject.setColor('#620460');
+                        a.scene.add(a.selectedObject);
+                        Matter.World.add(a.engine.world, a.selectedObject.rectangle);
+                        a.selectedObject.select(true);
+                        a.ui.updateObjectOptions();
+                    }
                 }
             }
-            else {
+            else { // Deselected object
                 if (target == null) {
-                    // Deselected object
                     a.ui.showObjectOptions(false);
                     a.selectedObject.select(false);
                     a.selectedObject = null;
@@ -119,9 +127,9 @@ class Mouse {
 
     getDragDifference = function() {
         return { 
-            x: this.down.x - this.move.x - this.offset.x, 
-            y: this.down.y - this.move.y - this.offset.y, 
-            z: this.down.z - this.move.z - this.offset.z
+            x: Math.round(this.down.x - this.move.x - this.offset.x), 
+            y: Math.round(this.down.y - this.move.y - this.offset.y), 
+            z: Math.round(this.down.z - this.move.z - this.offset.z)
         }
     }
 
