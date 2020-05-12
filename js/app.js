@@ -18,7 +18,8 @@ class App {
         a.ui = new UIController();
         a.mouse = new Mouse();
         a.play = false;
-        a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 1000);
+        a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
+        a.camera.tilt = 100;
         a.renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', 1);
@@ -60,6 +61,7 @@ class App {
         a.renderer.domElement.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
         a.renderer.domElement.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);
         a.renderer.domElement.addEventListener('mouseup', function(e){ a.mouse.mouseUp(e, a); }, false);
+        a.renderer.domElement.addEventListener('wheel', function(e){ a.mouse.wheel(e, a); }, false);
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
         a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
         a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
@@ -85,9 +87,9 @@ class App {
 
     update = function(e, a) {
         a.camera.position.x = a.player.position.x;
-        a.camera.position.y = a.player.position.y + 100;
+        a.camera.position.y = a.player.position.y + a.camera.tilt;
         a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
-        
+
         // Loop through scene for all children
         for (var i = 0; i < a.scene.children.length; i++) {
             var child = a.scene.children[i];

@@ -29,6 +29,9 @@ class Mouse {
                 a.camera.allowMovement = true;
             }
         }
+        else {
+            a.player.jump();
+        }
     }
 
     mouseMove = function(e, a) {
@@ -103,6 +106,13 @@ class Mouse {
                 }
             }
         }
+    }
+
+    wheel = function(e, a) {
+        var zoom = a.camera.position.z + e.deltaY;
+        if (zoom < 200) zoom = 200;
+        else if (zoom > 1000) zoom = 1000;
+        a.camera.position.z = zoom;
     }
 
     setPosition = function(state, position) {
