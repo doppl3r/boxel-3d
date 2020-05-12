@@ -6,13 +6,12 @@ class Mouse {
         this.up = new THREE.Vector3();
         this.tolerance = 5;
         this.drag = false;
-        this.moveCamera;
     }
     
     mouseDown = function(e, a) {
-        a.camera.moved = false;
         if (a.play == false) {
             var target = a.getObject(e, a);
+            a.camera.moved = false;
             a.mouse.setPosition('down', a.getMousePosition(e, a));
             a.mouse.setOffset(a.mouse.down);
             // Select a new object on start click
@@ -23,11 +22,11 @@ class Mouse {
                 a.selectedObject = target;
                 a.selectedObject.select(true);
                 a.ui.updateObjectOptions();
-                a.camera.movable = false;
+                a.camera.allowMovement = false;
             }
             else {
                 // Enable camera dragging
-                a.camera.movable = true;
+                a.camera.allowMovement = true;
             }
         }
     }
@@ -35,7 +34,6 @@ class Mouse {
     mouseMove = function(e, a) {
         if (a.play == false) {
             a.mouse.setPosition('move', a.getMousePosition(e, a));
-            
             // Update selected object if drag is true
             if (a.mouse.drag == true) {
                 // Update object or camera position if tolerance is true
@@ -44,13 +42,7 @@ class Mouse {
                     var down = a.mouse.down;
                     var diff = a.mouse.getDragDifference();
                     var camTolerance = 100;
-                    if (a.camera.movable == true) {
-                        // Deselect object
-                        if (a.selectedObject != null){
-                            a.ui.showObjectOptions(false);
-                            a.selectedObject.select(false);
-                            a.selectedObject = null;
-                        }
+                    if (a.camera.allowMovement == true) {
                         // Resolve camera ray miscalculations
                         if (Math.abs(diff.x) > camTolerance || Math.abs(diff.y) > camTolerance || Math.abs(diff.z) > camTolerance) {
                             diff = { x: 0, y: 0, z: 0 };
@@ -62,7 +54,7 @@ class Mouse {
                     }
                     else { // Update object position
                         if (a.selectedObject != null) {
-                            a.camera.movable = false;
+                            a.camera.allowMovement = false;
                             a.selectedObject.setPosition(
                                 a.mouse.snap(down.x - diff.x, a.snap),
                                 a.mouse.snap(down.y - diff.y, a.snap)
@@ -83,7 +75,7 @@ class Mouse {
             if (target == null && a.selectedObject == null) {
                 // Check if mouse moved more than tolerance
                 if (a.mouse.getTolerance() == false) {
-                    // Check if the camera was moved when given permission
+                    // Check if the camera was not moved when given permission to add cube
                     if (a.camera.moved != true) {
                         a.deselectScene(a);
                         a.ui.showObjectOptions(true);
@@ -103,9 +95,11 @@ class Mouse {
             }
             else { // Deselected object
                 if (target == null) {
-                    a.ui.showObjectOptions(false);
-                    a.selectedObject.select(false);
-                    a.selectedObject = null;
+                    if (a.camera.moved != true) {
+                        a.ui.showObjectOptions(false);
+                        a.selectedObject.select(false);
+                        a.selectedObject = null;
+                    }
                 }
             }
         }
