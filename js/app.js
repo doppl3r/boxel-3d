@@ -50,7 +50,7 @@ class App {
 
         // Add floor
         a.floor = new Cube({ x: 0, y: -a.BOX_SIZE * 4, z: 0 });
-        a.floor.setScale(a.BOX_SIZE * 24, a.BOX_SIZE, a.BOX_SIZE);
+        a.floor.setScale(a.BOX_SIZE * 16, a.BOX_SIZE, a.BOX_SIZE);
         a.floor.setRotation(-(Math.PI / 180) * 0);
         a.floor.setColor('#620460');
         a.floor.setStatic(true);
@@ -58,6 +58,7 @@ class App {
         Matter.World.add(a.engine.world, a.floor.rectangle);
 
         // Add event listeners and render app
+        a.renderer.domElement.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
         a.renderer.domElement.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
         a.renderer.domElement.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);
         a.renderer.domElement.addEventListener('mouseup', function(e){ a.mouse.mouseUp(e, a); }, false);

@@ -11,38 +11,45 @@
 		<div class="ui-controller">
 			<div class="row top">
 				<div class="col options-level">
-					<a href="add" title="Add cubes"><img src="img/svg/pencil.svg"></a>
-					<a href="erase" title="Erase cubes"><img src="img/svg/eraser.svg"></a>
-					<a href="home" title="Exit level editor"><img src="img/svg/home.svg"></a>
-					<a href="save" title="Save level"><img src="img/svg/save.svg"></a>
-					<a href="upload" title="Upload level"><img src="img/svg/upload.svg"></a>
-					<a href="undo" title="Undo edit"><img src="img/svg/undo.svg"></a>
-					<a href="redo" title="Redo edit"><img src="img/svg/redo.svg"></a>
-					<a href="rewind" title="Restart level"><img src="img/svg/rewind.svg"></a>
-					<a href="pause" title="Pause level"><img src="img/svg/pause.svg"></a>
-					<a href="play" title="Play level"><img src="img/svg/play.svg"></a>
+					<a class="item" href="add" title="Add cubes"><img src="img/svg/pencil.svg"></a>
+					<a class="item" href="erase" title="Erase cubes"><img src="img/svg/eraser.svg"></a>
+					<a class="item" href="home" title="Exit level editor"><img src="img/svg/home.svg"></a>
+					<a class="item" href="save" title="Save level"><img src="img/svg/save.svg"></a>
+					<a class="item" href="upload" title="Upload level"><img src="img/svg/upload.svg"></a>
+					<a class="item" href="undo" title="Undo edit"><img src="img/svg/undo.svg"></a>
+					<a class="item" href="redo" title="Redo edit"><img src="img/svg/redo.svg"></a>
+					<a class="item" href="rewind" title="Restart level"><img src="img/svg/rewind.svg"></a>
+					<a class="item" href="pause" title="Pause level"><img src="img/svg/pause.svg"></a>
+					<a class="item" href="play" title="Play level"><img src="img/svg/play.svg"></a>
 				</div>
 			</div>
 			<div class="row left">
 				<div class="col options-object-type">
-					<a href="cube" title="Basic cube"><img src="img/svg/cube.svg"></a>
-					<a href="tip" title="Tip cube"><img src="img/svg/tip.svg"></a>
-					<a href="jump" title="Jump cube"><img src="img/svg/jump.svg"></a>
-					<a href="checkpoint" title="Checkpoint cube"><img src="img/svg/checkpoint.svg"></a>
-					<a href="spike" title="Spike cube"><img src="img/svg/spike.svg"></a>
-					<a href="shrink" title="Shrink cube"><img src="img/svg/shrink.svg"></a>
-					<a href="grow" title="Grow cube"><img src="img/svg/grow.svg"></a>
-					<a href="finish" title="Finish cube"><img src="img/svg/finish.svg"></a>
+					<a class="item" href="cube" title="Basic cube"><img src="img/svg/cube.svg"></a>
+					<a class="item" href="tip" title="Tip cube"><img src="img/svg/tip.svg"></a>
+					<a class="item" href="jump" title="Jump cube"><img src="img/svg/jump.svg"></a>
+					<a class="item" href="checkpoint" title="Checkpoint cube"><img src="img/svg/checkpoint.svg"></a>
+					<a class="item" href="spike" title="Spike cube"><img src="img/svg/spike.svg"></a>
+					<a class="item" href="shrink" title="Shrink cube"><img src="img/svg/shrink.svg"></a>
+					<a class="item" href="grow" title="Grow cube"><img src="img/svg/grow.svg"></a>
+					<a class="item" href="finish" title="Finish cube"><img src="img/svg/finish.svg"></a>
 				</div>
 				<div class="col options-object-properties disabled">
-					<a href="pin" title="Pin"><img src="img/svg/pin.svg"></a>
-					<a href="rotate-counterclockwise" title="Rotate counter-clockwise"><img src="img/svg/rotate-counterclockwise.svg"></a>
-					<a href="rotate-clockwise" title="Rotate clockwise"><img src="img/svg/rotate-clockwise.svg"></a>
-					<a href="scale-out-x" title="Scale-X out"><img src="img/svg/scale-out-x.svg"></a>
-					<a href="scale-out-y" title="Scale-Y out"><img src="img/svg/scale-out-y.svg"></a>
-					<a href="scale-in-x" title="Scale-X in"><img src="img/svg/scale-in-x.svg"></a>
-					<a href="scale-in-y" title="Scale-Y in"><img src="img/svg/scale-in-y.svg"></a>
-					<a href="trash" title="Delete"><img src="img/svg/trash.svg"></a>
+					<a class="item" href="pin" title="Pin"><img src="img/svg/pin.svg"></a>
+					<div class="item">
+						<a href="rotate" title="Rotate"><img src="img/svg/rotate-clockwise.svg"></a>
+						<div class="slider"><input name="rotate" type="range" min="0" max="360" step="15" value="0"></div>
+					</div>
+					<div class="item">
+						<a href="scale-x" title="Scale-X"><img src="img/svg/scale-out-x.svg"></a>
+						<div class="slider"><input name="scale-x" type="range" min="16" max="512" step="16" value="16"></div>
+					</div>
+					<div class="item">
+						<a href="scale-y" title="Scale-Y"><img src="img/svg/scale-out-y.svg"></a>
+						<div class="slider"><input name="scale-y" type="range" min="16" max="512" step="16" value="16"></div>
+					</div>
+					<a class="item" href="accept" title="Accept"><img src="img/svg/accept.svg"></a>
+					<a class="item" href="trash" title="Delete"><img src="img/svg/trash.svg"></a>
 				</div>
 			</div>
 		</div>

@@ -57,6 +57,12 @@ class Cube extends THREE.Mesh {
         this.rotationOrigin = angle;
     }
 
+    getRotation = function(format = 'radians') {
+        var value = this.rotation.z; // Default radians
+        if (format == 'degrees') value = this.rotation.z * (180 / Math.PI);
+        return value;
+    }
+
     setScale = function(scaleX, scaleY, scaleZ, updateOrigin = true) {
         // Resolve null values
         scaleX = (scaleX == null) ? this.scale.x : scaleX;
