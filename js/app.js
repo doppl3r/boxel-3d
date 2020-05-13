@@ -50,7 +50,7 @@ class App {
 
         // Add floor
         a.floor = new Cube({ x: 0, y: -a.BOX_SIZE * 4, z: 0 });
-        a.floor.setScale(a.BOX_SIZE * 16, a.BOX_SIZE, a.BOX_SIZE);
+        a.floor.setScale(a.BOX_SIZE * 15, a.BOX_SIZE, a.BOX_SIZE);
         a.floor.setRotation(-(Math.PI / 180) * 0);
         a.floor.setColor('#620460');
         a.floor.setStatic(true);

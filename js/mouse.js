@@ -75,7 +75,7 @@ class Mouse {
             a.mouse.setPosition('up', a.getMousePosition(e, a));
 
             // Add cube if nothing is selected
-            if (target == null && a.selectedObject == null) {
+            if (target == null) {
                 // Check if mouse moved more than tolerance
                 if (a.mouse.getTolerance() == false) {
                     // Check if the camera was not moved when given permission to add cube
@@ -92,16 +92,8 @@ class Mouse {
                         a.scene.add(a.selectedObject);
                         Matter.World.add(a.engine.world, a.selectedObject.rectangle);
                         a.selectedObject.select(true);
+                        a.selectedObject.setStatic(true);
                         a.ui.updateObjectOptions();
-                    }
-                }
-            }
-            else { // Deselected object
-                if (target == null) {
-                    if (a.camera.moved != true) {
-                        a.ui.showObjectOptions(false);
-                        a.selectedObject.select(false);
-                        a.selectedObject = null;
                     }
                 }
             }
