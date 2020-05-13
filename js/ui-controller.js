@@ -8,7 +8,6 @@ class UIController {
         $('.ui-controller a').on('click', function(event){
             event.preventDefault();
             var action = $(this).attr('href');
-            var BOX_SIZE = app.BOX_SIZE;
             if (action == 'rewind') {
                 app.resetScene(app);
                 app.deselectScene(app);
