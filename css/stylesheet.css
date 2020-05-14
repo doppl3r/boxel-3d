@@ -6,6 +6,7 @@ body .ui-controller .disabled { display: none !important; }
 body .ui-controller .row { display: flex; position: absolute; z-index: 1; pointer-events: none; }
 body .ui-controller .row .col { pointer-events: all; background-color: #333333; }
 body .ui-controller .row .col .item { position: relative; }
+body .ui-controller .row .col .item a { cursor: default; }
 body .ui-controller .row.top { top: 0; right: 0; left: 0; }
 body .ui-controller .row.top .col { display: flex; overflow-x: auto; width: 100%; }
 body .ui-controller .row.top .col.options-object-type {  overflow-y: auto; }

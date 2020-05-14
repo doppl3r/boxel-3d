@@ -8,7 +8,10 @@ class UIController {
         $('.ui-controller a').on('click', function(event){
             event.preventDefault();
             var action = $(this).attr('href');
-            if (action == 'rewind') {
+            if (action == 'save') {
+                app.level.removeAllObjects(app);
+            }
+            else if (action == 'rewind') {
                 app.resetScene(app);
                 app.deselectScene(app);
                 app.ui.showObjectOptions(false);
