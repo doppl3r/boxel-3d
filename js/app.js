@@ -17,6 +17,8 @@ class App {
         a.delta = 0;
         a.ui = new UIController();
         a.mouse = new Mouse();
+        a.level = new Level();
+        a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
         a.camera.tilt = 100;
@@ -24,7 +26,7 @@ class App {
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', 1);
 
-        // Add lighting
+        // Add lighting to scene
         a.light.position.set(0, 0, 1);
         a.scene.add(a.light);
 
@@ -43,19 +45,19 @@ class App {
         a.camera.position.z = 200;
         a.document.body.appendChild(a.renderer.domElement);
 
-        // Add player
-        a.player = new Player({ x: 0, y: 0, z: 0 });
-        Matter.World.add(a.engine.world, a.player.rectangle);
-        a.scene.add(a.player);
+        // Add player object to the level
+        a.level.addObject(a.player, a);
 
-        // Add floor
+        // Add floor object to the level
         a.floor = new Cube({ x: 0, y: -a.BOX_SIZE * 4, z: 0 });
         a.floor.setScale(a.BOX_SIZE * 15, a.BOX_SIZE, a.BOX_SIZE);
         a.floor.setRotation(-(Math.PI / 180) * 0);
         a.floor.setColor('#620460');
         a.floor.setStatic(true);
-        a.scene.add(a.floor);
-        Matter.World.add(a.engine.world, a.floor.rectangle);
+        a.level.addObject(a.floor, a);
+
+        // Add level to scene
+        a.scene.add(a.level);
 
         // Add event listeners and render app
         a.renderer.domElement.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
@@ -66,6 +68,7 @@ class App {
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
         a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
         a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
+        Matter.Events.on(a.engine, 'collisionStart', function(e) { a.checkPlayerCollision(e, a); });
         a.update(null, a);
         a.render(null, a);
     }
@@ -92,9 +95,9 @@ class App {
         a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
 
         // Loop through scene for all children
-        for (var i = 0; i < a.scene.children.length; i++) {
-            var child = a.scene.children[i];
-
+        for (var i = 0; i < a.level.children.length; i++) {
+            var child = a.level.children[i];
+            
             // Update child if it has a collision box
             if (child.rectangle != null) {
                 var rect = child.rectangle;
@@ -159,8 +162,8 @@ class App {
 
     deselectScene = function(a) {
         a.selectedObject = null;
-        for (var i=0; i < a.scene.children.length; i++) {
-            var child = a.scene.children[i];
+        for (var i=0; i < a.level.children.length; i++) {
+            var child = a.level.children[i];
             if (child.rectangle != null) {
                 child.select(false);
             }
@@ -169,8 +172,8 @@ class App {
 
     resetScene = function(a) {
         a.ui.showObjectOptions(false);
-        for (var i=0; i < a.scene.children.length; i++) {
-            var child = a.scene.children[i];
+        for (var i=0; i < a.level.children.length; i++) {
+            var child = a.level.children[i];
             if (child.rectangle != null) {
                 child.resetToOrigin();
                 a.update(null, a);
@@ -178,11 +181,14 @@ class App {
         }
     }
 
-    removeObject = function(object, a) {
-        Matter.World.remove(a.engine.world, object.rectangle);
-        a.scene.remove(object);
-        a.deselectScene(a);
-        a.ui.showObjectOptions(false);
+    checkPlayerCollision = function(e, a) {
+        var pairs = e.pairs;
+        for (var i = 0; i < pairs.length; i++) {
+            var pair = pairs[i];
+            if (pair.bodyA.class == 'player' || pair.bodyA.class) {
+                a.player.allowJump = true;
+            }
+        }
     }
 }
 var app = new App();

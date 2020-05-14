@@ -89,8 +89,7 @@ class Mouse {
                         });
                         a.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
                         a.selectedObject.setColor('#620460');
-                        a.scene.add(a.selectedObject);
-                        Matter.World.add(a.engine.world, a.selectedObject.rectangle);
+                        a.level.addObject(a.selectedObject, a);
                         a.selectedObject.select(true);
                         a.selectedObject.setStatic(true);
                         a.ui.updateObjectOptions();

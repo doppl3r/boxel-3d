@@ -39,7 +39,7 @@ class UIController {
                 app.ui.showObjectOptions(false);
             }
             else if (action == 'trash') {
-                app.removeObject(app.selectedObject, app);
+                app.level.removeObject(app.selectedObject, app);
             }
             console.log(action);
         });
@@ -57,7 +57,6 @@ class UIController {
             }
             else if (name == 'scale-y') {
                 app.selectedObject.setScale(null, val, null);
-
             }
         });
     }
