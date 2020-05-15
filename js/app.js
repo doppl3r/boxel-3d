@@ -53,6 +53,7 @@ class App {
         a.scene.add(a.level);
 
         // Add event listeners and render app
+        a.renderer.domElement.classList.add('disabled');
         a.renderer.domElement.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
         a.renderer.domElement.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
         a.renderer.domElement.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);

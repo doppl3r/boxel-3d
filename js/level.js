@@ -10,10 +10,13 @@ class Level extends THREE.Group {
     }
 
     removeObject = function(object, a) {
-        Matter.World.remove(a.engine.world, object.rectangle);
-        this.remove(object);
-        a.deselectScene(a);
-        a.ui.showObjectOptions(false);
+        // Prevent deleting the player
+        if (object != a.player) {
+            Matter.World.remove(a.engine.world, object.rectangle);
+            this.remove(object);
+            a.deselectScene(a);
+            a.ui.showObjectOptions(false);
+        }
     }
 
     clearLevel = function(a) {
@@ -22,6 +25,16 @@ class Level extends THREE.Group {
             var child = a.level.children[0];
             this.removeObject(child, a);
         }
+    }
+
+    createNewLevel = function(a) {
+        a.player.setPosition(); // Reset player position
+        this.clearLevel(a);
+        this.add(a.player); // Add player object
+        var floor = new Cube({ x: 0, y: -64, z: 0 });
+        floor.setScale(64, 16, 16);
+        floor.setStatic(true);
+        this.add(floor);
     }
 
     exportToJSON = function(a) {
@@ -34,6 +47,7 @@ class Level extends THREE.Group {
             var child = a.level.children[i];
             object.isStatic = child.isStatic();
             object.class = child.getClass();
+            object.color = child.getColor();
             object.position = { x: child.position.x, y: child.position.y, z: child.position.z };
             object.rotation = { x: child.rotation.x, y: child.rotation.y, z: child.rotation.z };
             object.scale = { x: child.scale.x, y: child.scale.y, z: child.scale.z };
@@ -58,6 +72,7 @@ class Level extends THREE.Group {
             object.setScale(child.scale.x, child.scale.y, child.scale.z);
             object.setRotation(child.rotation.z);
             object.setStatic(child.isStatic);
+            object.setColor(child.color);
             this.addObject(object, a);
         }
     } 

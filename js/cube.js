@@ -12,8 +12,9 @@ class Cube extends THREE.Mesh {
         options.angle = (options.angle == null) ? 0 : options.angle;
         
         // Set default properties
+        this.color = '#620460';
         this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
-        this.material = new THREE.MeshPhongMaterial({ color: '#620460' });
+        this.material = new THREE.MeshPhongMaterial({ color: this.color });
         this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
             friction: 0.0,
             frictionAir: 0.0,
@@ -99,12 +100,17 @@ class Cube extends THREE.Mesh {
     }
 
     setColor = function(color, updateOrigin = true) {
+        this.color = color;
         this.material.color.set(color);
         if (updateOrigin == true) this.setColorOrigin(color);
     }
 
     setColorOrigin = function(color) {
         this.colorOrigin = color;
+    }
+
+    getColor = function() {
+        return this.color;
     }
 
     setStatic = function(isStatic, updateOrigin = true) {

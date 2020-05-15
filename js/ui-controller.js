@@ -10,7 +10,7 @@ class UIController {
             var action = $(this).attr('href');
             if (action == 'add-level') {
                 var levelData = {};
-                app.level.clearLevel(app);
+                app.level.createNewLevel(app);
                 levelData = app.level.exportToJSON(app); // Init default data
                 app.storage.addLevelToStorage(levelData); // Store data
                 app.ui.appendLevelItem(levelData);
@@ -22,6 +22,7 @@ class UIController {
                 app.ui.removeLevelItem($(this));
             }
             else if (action == 'save') {
+                app.deselectScene(app);
                 app.level.saveLevel(app);
             }
             else if (action == 'rewind') {
@@ -113,9 +114,10 @@ class UIController {
     appendListOfLevels = function(a) {
         var list = a.storage.getListOfLevels();
         var levelData = {};
+
+        // Add empty level if none exist
         if (list.length < 1) {
-            // Add empty level if none exist
-            a.level.clearLevel(a);
+            a.level.createNewLevel(a);
             levelData = a.level.exportToJSON(a);
             a.storage.addLevelToStorage(levelData);
             list.push(levelData);
@@ -161,5 +163,6 @@ class UIController {
         // Update UI
         $('.level-manager').addClass('disabled');
         $('.level-editor').removeClass('disabled');
+        $('canvas').removeClass('disabled');
     }
 }
