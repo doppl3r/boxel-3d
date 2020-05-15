@@ -40,7 +40,7 @@ class App {
         a.renderer.setSize(a.screenWidth, a.screenHeight);
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
         a.renderer.powerPreference = 'high-performance';
-        a.scene.background = new THREE.Color('#252526');
+        a.scene.background = new THREE.Color('#1e1e1e');
         a.camera.position.x = 0;
         a.camera.position.y = 0;
         a.camera.position.z = 200;

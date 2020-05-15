@@ -94,7 +94,7 @@ class UIController {
             $('canvas').addClass('disabled');
             $('.level-manager').removeClass('disabled');
             $('.level-editor').addClass('disabled');
-            $('.options-level [href="add"]').addClass('selected');
+            $('.options-level [href="add-cube"]').addClass('selected');
             $('.options-level [href="pause"]').addClass('selected');
             $('.options-object-type [href="cube"]').addClass('selected');
             $('.options-object-properties').addClass('disabled');
