@@ -11,12 +11,10 @@ class Level extends THREE.Group {
 
     removeObject = function(object, a) {
         // Prevent deleting the player
-        if (object != a.player) {
-            Matter.World.remove(a.engine.world, object.rectangle);
-            this.remove(object);
-            a.deselectScene(a);
-            a.ui.showObjectOptions(false);
-        }
+        Matter.World.remove(a.engine.world, object.rectangle);
+        this.remove(object);
+        a.deselectScene(a);
+        a.ui.showObjectOptions(false);
     }
 
     clearLevel = function(a) {

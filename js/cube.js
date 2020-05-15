@@ -12,7 +12,7 @@ class Cube extends THREE.Mesh {
         options.angle = (options.angle == null) ? 0 : options.angle;
         
         // Set default properties
-        this.color = '#620460';
+        this.setColor('#620460');
         this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
         this.material = new THREE.MeshPhongMaterial({ color: this.color });
         this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 

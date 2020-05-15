@@ -1,7 +1,7 @@
 class UIController {
     constructor() {
         this.bindActions();
-        this.initializeUI();
+        this.updateUI('level-manager');
     }
 
     bindActions = function() {
@@ -16,12 +16,23 @@ class UIController {
                 app.ui.appendLevelItem(levelData);
             }
             else if (action == 'edit-level') {
-                app.ui.editLevel($(this));
+                app.ui.updateLevelFromItem($(this));
+                app.ui.updateUI('level-editor');
+                app.resetScene(app);
             }
             else if (action == 'delete-level') {
                 app.ui.removeLevelItem($(this));
             }
+            else if (action == 'home') {
+                app.play = false;
+                app.resetScene(app);
+                app.deselectScene(app);
+                app.level.saveLevel(app);
+                app.level.clearLevel(app);
+                app.ui.updateUI('level-manager');
+            }
             else if (action == 'save') {
+                app.resetScene(app);
                 app.deselectScene(app);
                 app.level.saveLevel(app);
             }
@@ -78,11 +89,23 @@ class UIController {
         });
     }
 
-    initializeUI = function() {
-        $('.options-level [href="add"]').addClass('selected');
-        $('.options-level [href="pause"]').addClass('selected');
-        $('.options-object-type [href="cube"]').addClass('selected');
-        $('.options-object-properties').addClass('disabled');
+    updateUI(state) {
+        if (state == 'level-manager') {
+            $('canvas').addClass('disabled');
+            $('.level-manager').removeClass('disabled');
+            $('.level-editor').addClass('disabled');
+            $('.options-level [href="add"]').addClass('selected');
+            $('.options-level [href="pause"]').addClass('selected');
+            $('.options-object-type [href="cube"]').addClass('selected');
+            $('.options-object-properties').addClass('disabled');
+        }
+        else if (state == 'level-editor') {
+            // Update UI
+            $('canvas').removeClass('disabled');
+            $('.level-manager').addClass('disabled');
+            $('.level-editor').removeClass('disabled');
+            $('canvas').removeClass('disabled');
+        }
     }
 
     showObjectOptions = function(state) {
@@ -111,6 +134,10 @@ class UIController {
         else pinIcon.removeClass('selected');
     }
 
+    removeListOfLevels = function() {
+        $('.level-manager .left .col').empty();
+    }
+
     appendListOfLevels = function(a) {
         var list = a.storage.getListOfLevels();
         var levelData = {};
@@ -124,6 +151,7 @@ class UIController {
         }
 
         // Append each list item
+        this.removeListOfLevels(); // Empty list before populating
         for (var i = 0; i < list.length; i++) {
             levelData = list[i];
             a.ui.appendLevelItem(levelData);
@@ -149,20 +177,16 @@ class UIController {
         item.remove();
     }
 
-    editLevel = function(button) {
+    updateLevelFromItem = function(button) {
+        // Select level details from HTML input attributes & values
         var item = button.parent();
         var key = item.find('input').attr('key');
         var name = item.find('input').val();
         var levelData = app.storage.getLevelFromStorage(key);
 
-        // Populate
+        // Update current level with selected attributes
         levelData.name = name;
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
-
-        // Update UI
-        $('.level-manager').addClass('disabled');
-        $('.level-editor').removeClass('disabled');
-        $('canvas').removeClass('disabled');
     }
 }

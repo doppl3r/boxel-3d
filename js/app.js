@@ -40,7 +40,7 @@ class App {
         a.renderer.setSize(a.screenWidth, a.screenHeight);
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
         a.renderer.powerPreference = 'high-performance';
-        a.scene.background = new THREE.Color('#f8d4de');
+        a.scene.background = new THREE.Color('#252526');
         a.camera.position.x = 0;
         a.camera.position.y = 0;
         a.camera.position.z = 200;
@@ -53,12 +53,13 @@ class App {
         a.scene.add(a.level);
 
         // Add event listeners and render app
-        a.renderer.domElement.classList.add('disabled');
-        a.renderer.domElement.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
-        a.renderer.domElement.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
-        a.renderer.domElement.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);
-        a.renderer.domElement.addEventListener('mouseup', function(e){ a.mouse.mouseUp(e, a); }, false);
-        a.renderer.domElement.addEventListener('wheel', function(e){ a.mouse.wheel(e, a); }, false);
+        a.canvas = a.renderer.domElement;
+        a.canvas.classList.add('disabled'); // Default hidden with CSS
+        a.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
+        a.canvas.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
+        a.canvas.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);
+        a.canvas.addEventListener('mouseup', function(e){ a.mouse.mouseUp(e, a); }, false);
+        a.canvas.addEventListener('wheel', function(e){ a.mouse.wheel(e, a); }, false);
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
         a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
         a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
@@ -84,9 +85,7 @@ class App {
     }
 
     update = function(e, a) {
-        a.camera.position.x = a.player.position.x;
-        a.camera.position.y = a.player.position.y + a.camera.tilt;
-        a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
+        a.updateCamera(a);
 
         // Loop through scene for all children
         for (var i = 0; i < a.level.children.length; i++) {
@@ -165,6 +164,7 @@ class App {
     }
 
     resetScene = function(a) {
+        a.updateCamera(a);
         a.ui.showObjectOptions(false);
         for (var i=0; i < a.level.children.length; i++) {
             var child = a.level.children[i];
@@ -173,6 +173,12 @@ class App {
                 a.update(null, a);
             }
         }
+    }
+
+    updateCamera = function(a) {
+        a.camera.position.x = a.player.position.x;
+        a.camera.position.y = a.player.position.y + a.camera.tilt;
+        a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
     }
 
     checkPlayerCollision = function(e, a) {

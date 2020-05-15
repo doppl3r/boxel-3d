@@ -88,7 +88,6 @@ class Mouse {
                             z: 0
                         });
                         a.selectedObject.setScale(a.BOX_SIZE, a.BOX_SIZE, a.BOX_SIZE);
-                        a.selectedObject.setColor('#620460');
                         a.level.addObject(a.selectedObject, a);
                         a.selectedObject.select(true);
                         a.selectedObject.setStatic(true);
