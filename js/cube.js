@@ -1,5 +1,5 @@
 class Cube extends THREE.Mesh {
-    constructor(options) {
+    constructor(options = {}) {
         super();
 
         // Update null values
@@ -13,7 +13,7 @@ class Cube extends THREE.Mesh {
         
         // Set default properties
         this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
-        this.material = new THREE.MeshPhongMaterial({ color: '#fff' });
+        this.material = new THREE.MeshPhongMaterial({ color: '#620460' });
         this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
             friction: 0.0,
             frictionAir: 0.0,
@@ -124,6 +124,10 @@ class Cube extends THREE.Mesh {
 
     isStatic = function() {
         return this.rectangle.isStatic;
+    }
+
+    getClass = function() {
+        return this.rectangle.class;
     }
 
     select = function(state = true) {

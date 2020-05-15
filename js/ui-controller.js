@@ -5,11 +5,24 @@ class UIController {
     }
 
     bindActions = function() {
-        $('.ui-controller a').on('click', function(event){
+        $(document).on('click', '.ui-controller a', function(event){
             event.preventDefault();
             var action = $(this).attr('href');
-            if (action == 'save') {
-                app.level.removeAllObjects(app);
+            if (action == 'add-level') {
+                var levelData = {};
+                app.level.clearLevel(app);
+                levelData = app.level.exportToJSON(app); // Init default data
+                app.storage.addLevelToStorage(levelData); // Store data
+                app.ui.appendLevelItem(levelData);
+            }
+            else if (action == 'edit-level') {
+                app.ui.editLevel($(this));
+            }
+            else if (action == 'delete-level') {
+                app.ui.removeLevelItem($(this));
+            }
+            else if (action == 'save') {
+                app.level.saveLevel(app);
             }
             else if (action == 'rewind') {
                 app.resetScene(app);
@@ -48,7 +61,7 @@ class UIController {
         });
 
         // Add object range input listeners
-        $('.ui-controller input').on('input', function(){
+        $(document).on('input', '.ui-controller .slider input', function(){
             event.preventDefault();
             var name = $(this).attr('name');
             var val = $(this).val();
@@ -95,5 +108,58 @@ class UIController {
         }
         if (isStatic == true) pinIcon.addClass('selected');
         else pinIcon.removeClass('selected');
+    }
+
+    appendListOfLevels = function(a) {
+        var list = a.storage.getListOfLevels();
+        var levelData = {};
+        if (list.length < 1) {
+            // Add empty level if none exist
+            a.level.clearLevel(a);
+            levelData = a.level.exportToJSON(a);
+            a.storage.addLevelToStorage(levelData);
+            list.push(levelData);
+        }
+
+        // Append each list item
+        for (var i = 0; i < list.length; i++) {
+            levelData = list[i];
+            a.ui.appendLevelItem(levelData);
+        }
+    }
+
+    appendLevelItem = function (levelData) {
+        var parent = $('.level-manager .left .col');
+        parent.append(
+            '<div class="item">' +
+                '<input type="text" key="' + levelData.key + '" value="' + levelData.name + '">' +
+                '<a href="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
+                '<a href="upload-level" title="Upload level"><img src="img/svg/upload.svg"></a>' +
+                '<a href="delete-level" title="Delete level"><img src="img/svg/trash.svg"></a>' +
+            '</div>'
+        );
+    }
+
+    removeLevelItem = function(button) {
+        var item = button.parent();
+        var key = item.find('input').attr('key');
+        app.storage.deleteLevelFromStorage(key);
+        item.remove();
+    }
+
+    editLevel = function(button) {
+        var item = button.parent();
+        var key = item.find('input').attr('key');
+        var name = item.find('input').val();
+        var levelData = app.storage.getLevelFromStorage(key);
+
+        // Populate
+        levelData.name = name;
+        app.level.clearLevel(app);
+        app.level.importFromJSON(levelData, app);
+
+        // Update UI
+        $('.level-manager').addClass('disabled');
+        $('.level-editor').removeClass('disabled');
     }
 }

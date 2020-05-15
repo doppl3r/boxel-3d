@@ -1,5 +1,5 @@
 class Player extends Cube {
-    constructor(options) {
+    constructor(options = {}) {
         super(options);
         this.rectangle.class = 'player';
         this.setColor('#dc265a');

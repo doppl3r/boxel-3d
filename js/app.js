@@ -17,6 +17,7 @@ class App {
         a.delta = 0;
         a.ui = new UIController();
         a.mouse = new Mouse();
+        a.storage = new StorageManager();
         a.level = new Level();
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
@@ -45,16 +46,8 @@ class App {
         a.camera.position.z = 200;
         a.document.body.appendChild(a.renderer.domElement);
 
-        // Add player object to the level
-        a.level.addObject(a.player, a);
-
-        // Add floor object to the level
-        a.floor = new Cube({ x: 0, y: -a.BOX_SIZE * 4, z: 0 });
-        a.floor.setScale(a.BOX_SIZE * 15, a.BOX_SIZE, a.BOX_SIZE);
-        a.floor.setRotation(-(Math.PI / 180) * 0);
-        a.floor.setColor('#620460');
-        a.floor.setStatic(true);
-        a.level.addObject(a.floor, a);
+        // Get list of levels
+        a.ui.appendListOfLevels(a);
 
         // Add level to scene
         a.scene.add(a.level);

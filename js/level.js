@@ -16,7 +16,7 @@ class Level extends THREE.Group {
         a.ui.showObjectOptions(false);
     }
 
-    removeAllObjects = function(a) {
+    clearLevel = function(a) {
         var length = a.level.children.length;
         for (var i=0; i < length; i++) {
             var child = a.level.children[0];
@@ -25,25 +25,40 @@ class Level extends THREE.Group {
     }
 
     exportToJSON = function(a) {
-        var json = {}
+        var json = {};
         json.name = this.name;
-        json.objects = [];
+        json.key = this.key;
+        json.children = [];
         for (var i = 0; i < a.level.children.length; i++) {
-            var object = {}
+            var object = {};
             var child = a.level.children[i];
+            object.isStatic = child.isStatic();
+            object.class = child.getClass();
             object.position = { x: child.position.x, y: child.position.y, z: child.position.z };
             object.rotation = { x: child.rotation.x, y: child.rotation.y, z: child.rotation.z };
             object.scale = { x: child.scale.x, y: child.scale.y, z: child.scale.z };
-            json.objects.push(object);
+            json.children.push(object);
         }
         return json;
     }
 
     saveLevel = function(a) {
-        console.log(this.exportToJSON(a));
+        a.storage.updateLevelToStorage(this.key, this.exportToJSON(a));
     }
 
-    importFromJSON = function() {
+    importFromJSON = function(levelData, a) {
+        this.name = levelData.name;
+        this.key = levelData.key;
 
+        for (var i = 0; i < levelData.children.length; i++) {
+            var child = levelData.children[i];
+            var object = new Cube();
+            if (child.class == 'player') object = a.player;
+            object.setPosition(child.position.x, child.position.y, child.position.z);
+            object.setScale(child.scale.x, child.scale.y, child.scale.z);
+            object.setRotation(child.rotation.z);
+            object.setStatic(child.isStatic);
+            this.addObject(object, a);
+        }
     } 
 }
