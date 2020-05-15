@@ -73,5 +73,23 @@ class Level extends THREE.Group {
             object.setColor(child.color);
             this.addObject(object, a);
         }
-    } 
+    }
+
+    setObjectProperties = function(objectData) {
+        object.setPosition(objectData.position.x, objectData.position.y, objectData.position.z);
+        object.setScale(objectData.scale.x, objectData.scale.y, objectData.scale.z);
+        object.setRotation(objectData.rotation.z);
+        object.setStatic(objectData.isStatic);
+        object.setColor(objectData.color);
+    }
+
+    setPlayer = function(a) {
+        for (var i = 0; i < this.children.length; i++) {
+            var child = this.children[i];
+            if (child.getClass() == 'player') {
+                child = a.player;
+                break;
+            }
+        }
+    }
 }
