@@ -36,22 +36,24 @@ class Level extends THREE.Group {
     }
 
     exportToJSON = function(a) {
-        var json = {};
-        json.name = this.name;
-        json.key = this.key;
-        json.children = [];
+        var levelJSON = {};
+        levelJSON.name = this.name;
+        levelJSON.key = this.key;
+        levelJSON.children = [];
+
+        // Loop through THREE.js group children
         for (var i = 0; i < a.level.children.length; i++) {
-            var object = {};
-            var child = a.level.children[i];
-            object.isStatic = child.isStatic();
-            object.class = child.getClass();
-            object.color = child.getColor();
-            object.position = { x: child.position.x, y: child.position.y, z: child.position.z };
-            object.rotation = { x: child.rotation.x, y: child.rotation.y, z: child.rotation.z };
-            object.scale = { x: child.scale.x, y: child.scale.y, z: child.scale.z };
-            json.children.push(object);
+            var object = a.level.children[i];
+            var objectData = {};
+            objectData.isStatic = object.isStatic();
+            objectData.class = object.getClass();
+            objectData.color = object.getColor();
+            objectData.position = { x: object.position.x, y: object.position.y, z: object.position.z };
+            objectData.rotation = { x: object.rotation.x, y: object.rotation.y, z: object.rotation.z };
+            objectData.scale = { x: object.scale.x, y: object.scale.y, z: object.scale.z };
+            levelJSON.children.push(objectData);
         }
-        return json;
+        return levelJSON;
     }
 
     saveLevel = function(a) {
@@ -62,34 +64,21 @@ class Level extends THREE.Group {
         this.name = levelData.name;
         this.key = levelData.key;
 
+        // Loop through JSON level data
         for (var i = 0; i < levelData.children.length; i++) {
-            var child = levelData.children[i];
             var object = new Cube();
-            if (child.class == 'player') object = a.player;
-            object.setPosition(child.position.x, child.position.y, child.position.z);
-            object.setScale(child.scale.x, child.scale.y, child.scale.z);
-            object.setRotation(child.rotation.z);
-            object.setStatic(child.isStatic);
-            object.setColor(child.color);
+            var objectData = levelData.children[i];
+            if (objectData.class == 'player') object = a.player;
+            this.setObjectProperties(object, objectData);
             this.addObject(object, a);
         }
     }
 
-    setObjectProperties = function(objectData) {
+    setObjectProperties = function(object, objectData) {
         object.setPosition(objectData.position.x, objectData.position.y, objectData.position.z);
         object.setScale(objectData.scale.x, objectData.scale.y, objectData.scale.z);
         object.setRotation(objectData.rotation.z);
         object.setStatic(objectData.isStatic);
         object.setColor(objectData.color);
-    }
-
-    setPlayer = function(a) {
-        for (var i = 0; i < this.children.length; i++) {
-            var child = this.children[i];
-            if (child.getClass() == 'player') {
-                child = a.player;
-                break;
-            }
-        }
     }
 }
