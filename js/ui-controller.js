@@ -29,6 +29,7 @@ class UIController {
                 app.deselectScene(app);
                 app.level.saveLevel(app);
                 app.level.clearLevel(app);
+                app.player.setPosition(0, 0, 0);
                 app.ui.updateUI('level-manager');
             }
             else if (action == 'save') {
@@ -126,9 +127,14 @@ class UIController {
             var rotation = app.selectedObject.getRotation('degrees');
             var scaleX = app.selectedObject.scale.x;
             var scaleY = app.selectedObject.scale.y;
+            var isPlayer = (app.selectedObject.getClass() == 'player');
             $('.options-object-properties [href*="rotate"] ~ .slider input').val(rotation);
             $('.options-object-properties [href*="scale-x"] ~ .slider input').val(scaleX);
             $('.options-object-properties [href*="scale-y"] ~ .slider input').val(scaleY);
+            
+            // Enable/Disable the trash icon for player
+            if (isPlayer == true) $('.options-object-properties [href*="trash"]').addClass('disabled');
+            else $('.options-object-properties [href*="trash"]').removeClass('disabled');
         }
         if (isStatic == true) pinIcon.addClass('selected');
         else pinIcon.removeClass('selected');

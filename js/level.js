@@ -9,19 +9,21 @@ class Level extends THREE.Group {
         this.add(object); // Add to group
     }
 
-    removeObject = function(object, a) {
+    removeObject = function(object, a, override = false) {
         // Prevent deleting the player
-        Matter.World.remove(a.engine.world, object.rectangle);
-        this.remove(object);
-        a.deselectScene(a);
-        a.ui.showObjectOptions(false);
+        if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
+            Matter.World.remove(a.engine.world, object.rectangle);
+            this.remove(object);
+            a.deselectScene(a);
+            a.ui.showObjectOptions(false);
+        }
     }
 
     clearLevel = function(a) {
         var length = a.level.children.length;
         for (var i=0; i < length; i++) {
             var child = a.level.children[0];
-            this.removeObject(child, a);
+            this.removeObject(child, a, true);
         }
     }
 
