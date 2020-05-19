@@ -61,7 +61,7 @@ class Cube extends THREE.Mesh {
 
     getRotation = function(format = 'radians') {
         var value = this.rotation.z; // Default radians
-        if (format == 'degrees') value = this.rotation.z * (180 / Math.PI);
+        if (format == 'degrees') value = Math.round(this.rotation.z * (180 / Math.PI));
         return value;
     }
 

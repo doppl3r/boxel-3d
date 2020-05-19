@@ -1,11 +1,17 @@
 class UIController {
     constructor() {
+        this.controller = $('.ui-controller');
+        this.levelManager = this.controller.find('.level-manager');
+        this.levelEditor = this.controller.find('.level-editor');
+        this.levelList = this.levelManager.find('.list');
+        this.objectOptions = this.levelEditor.find('.object-options');
+        this.updateCanvas();
         this.bindActions();
         this.updateUI('level-manager');
     }
 
     bindActions = function() {
-        $(document).on('click', '.ui-controller a', function(event){
+        this.controller.on('click', 'a', function(event){
             event.preventDefault();
             var action = $(this).attr('href');
             if (action == 'add-level') {
@@ -46,22 +52,22 @@ class UIController {
                 app.play = false;
                 app.deselectScene(app);
                 app.ui.showObjectOptions(false);
-                $('.options-level [href="play"]').removeClass('selected');
-                $('.options-level [href="pause"]').addClass('selected');
+                app.ui.levelEditor.find('[href="play"]').removeClass('selected');
+                app.ui.levelEditor.find('[href="pause"]').addClass('selected');
             }
             else if (action == 'play') {
                 app.play = true;
                 app.deselectScene(app);
                 app.ui.showObjectOptions(false);
-                $('.options-level [href="pause"]').removeClass('selected');
-                $('.options-level [href="play"]').addClass('selected');
+                app.ui.levelEditor.find('[href="pause"]').removeClass('selected');
+                app.ui.levelEditor.find('[href="play"]').addClass('selected');
             }
             else if (action == 'pin') {
                 app.selectedObject.toggleStatic();
                 app.ui.updateObjectOptions();
             }
             else if (action == 'rotate') {
-                $('.options-object-properties [name="rotate"]').focus();
+                this.objectOptions.find('[name="rotate"]').focus();
             }
             else if (action == 'accept') {
                 app.deselectScene(app);
@@ -74,7 +80,7 @@ class UIController {
         });
 
         // Add object range input listeners
-        $(document).on('input', '.ui-controller .slider input', function(){
+        this.controller.on('input', '.slider input', function(){
             event.preventDefault();
             var name = $(this).attr('name');
             var val = $(this).val();
@@ -91,57 +97,59 @@ class UIController {
     }
 
     updateUI(state) {
+        this.updateCanvas();
         if (state == 'level-manager') {
-            $('canvas').addClass('disabled');
-            $('.level-manager').removeClass('disabled');
-            $('.level-editor').addClass('disabled');
-            $('.options-level [href="add-cube"]').addClass('selected');
-            $('.options-level [href="pause"]').addClass('selected');
-            $('.options-object-type [href="cube"]').addClass('selected');
-            $('.options-object-properties').addClass('disabled');
+            this.canvas.addClass('disabled');
+            this.levelManager.removeClass('disabled');
+            this.levelEditor.addClass('disabled');
+            this.levelEditor.find('[href="add-cube"]').addClass('selected');
+            this.levelEditor.find('[href="pause"]').addClass('selected');
+            this.levelEditor.find('[href="cube"]').addClass('selected');
+            this.objectOptions.addClass('disabled');
         }
         else if (state == 'level-editor') {
             // Update UI
-            $('canvas').removeClass('disabled');
-            $('.level-manager').addClass('disabled');
-            $('.level-editor').removeClass('disabled');
-            $('canvas').removeClass('disabled');
+            this.canvas.removeClass('disabled');
+            this.levelManager.addClass('disabled');
+            this.levelEditor.removeClass('disabled');
+            this.canvas.removeClass('disabled');
         }
     }
 
     showObjectOptions = function(state) {
-        var objectOptions = $('.options-object-properties');
-        if (state == true) objectOptions.removeClass('disabled');
-        else objectOptions.addClass('disabled');
+        if (state == true) this.objectOptions.removeClass('disabled');
+        else this.objectOptions.addClass('disabled');
     }
 
     toggleObjectOptions = function() {
-        $('.options-object-properties').toggleClass('disabled');
+        this.objectOptions.toggleClass('disabled');
     }
 
     updateObjectOptions = function() {
-        var isStatic = false;
-        var pinIcon = $('.options-object-properties [href="pin"]');
+        // Check if selected object exists
         if (app.selectedObject != null) {
-            isStatic = app.selectedObject.isStatic();
-            var rotation = app.selectedObject.getRotation('degrees');
+            var isStatic = app.selectedObject.isStatic();
+            var pinIcon = this.objectOptions.find('[href="pin"]');
+            var rotation = -app.selectedObject.getRotation('degrees');
             var scaleX = app.selectedObject.scale.x;
             var scaleY = app.selectedObject.scale.y;
             var isPlayer = (app.selectedObject.getClass() == 'player');
-            $('.options-object-properties [href*="rotate"] ~ .slider input').val(rotation);
-            $('.options-object-properties [href*="scale-x"] ~ .slider input').val(scaleX);
-            $('.options-object-properties [href*="scale-y"] ~ .slider input').val(scaleY);
+            this.objectOptions.find('[href*="rotate"] ~ .slider input').val(rotation);
+            this.objectOptions.find('[href*="scale-x"] ~ .slider input').val(scaleX);
+            this.objectOptions.find('[href*="scale-y"] ~ .slider input').val(scaleY);
             
             // Enable/Disable the trash icon for player
-            if (isPlayer == true) $('.options-object-properties [href*="trash"]').addClass('disabled');
-            else $('.options-object-properties [href*="trash"]').removeClass('disabled');
+            if (isPlayer == true) this.objectOptions.find('[href*="trash"]').addClass('disabled');
+            else this.objectOptions.find('[href*="trash"]').removeClass('disabled');
+            
+            // Update selected pin status
+            if (isStatic == true) pinIcon.addClass('selected');
+            else pinIcon.removeClass('selected');
         }
-        if (isStatic == true) pinIcon.addClass('selected');
-        else pinIcon.removeClass('selected');
     }
 
     removeListOfLevels = function() {
-        $('.level-manager .left .col').empty();
+        this.levelList.empty();
     }
 
     appendListOfLevels = function(a) {
@@ -165,8 +173,7 @@ class UIController {
     }
 
     appendLevelItem = function (levelData) {
-        var parent = $('.level-manager .left .col');
-        parent.append(
+        this.levelList.append(
             '<div class="item">' +
                 '<input type="text" key="' + levelData.key + '" value="' + levelData.name + '">' +
                 '<a href="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
@@ -194,5 +201,11 @@ class UIController {
         levelData.name = name;
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
+    }
+
+    updateCanvas = function() {
+        if (this.canvas == null || this.canvas.length <= 0) {
+            this.canvas = $('canvas');
+        }
     }
 }
