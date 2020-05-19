@@ -15,7 +15,7 @@ class Cube extends THREE.Mesh {
         this.setColor('#620460');
         this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
         this.material = new THREE.MeshPhongMaterial({ color: this.color });
-        this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
+        this.body = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
             friction: 0.0,
             frictionAir: 0.0,
             frictionStatic: 0.0,
@@ -39,7 +39,7 @@ class Cube extends THREE.Mesh {
 
         // Update position
         this.position.set(x, y, z);
-        Matter.Body.setPosition(this.rectangle, { x: x, y: -y });
+        Matter.Body.setPosition(this.body, { x: x, y: -y });
         if (updateOrigin == true) this.setPositionOrigin(x, y, z);
     }
 
@@ -51,7 +51,7 @@ class Cube extends THREE.Mesh {
 
     setRotation = function(angle, updateOrigin = true) {
         this.rotation.z = angle;
-        Matter.Body.setAngle(this.rectangle, -angle);
+        Matter.Body.setAngle(this.body, -angle);
         if (updateOrigin == true) this.setRotationOrigin(angle);
     }
 
@@ -76,7 +76,7 @@ class Cube extends THREE.Mesh {
         this.setRotation(0);
 
         // Scale rectangle by previous scale, then update mesh scale ratio
-        Matter.Body.scale(this.rectangle, scaleX / this.scale.x, scaleY / this.scale.y);
+        Matter.Body.scale(this.body, scaleX / this.scale.x, scaleY / this.scale.y);
         this.scale.x = scaleX;
         this.scale.y = scaleY;
         this.scale.z = scaleZ;
@@ -95,8 +95,8 @@ class Cube extends THREE.Mesh {
         this.setRotation(this.rotationOrigin, false);
         this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin, false);
         this.setStatic(this.isStaticOrigin, false);
-        Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
-        Matter.Body.setAngularVelocity(this.rectangle, 0);
+        Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
+        Matter.Body.setAngularVelocity(this.body, 0);
     }
 
     setColor = function(color, updateOrigin = true) {
@@ -114,7 +114,7 @@ class Cube extends THREE.Mesh {
     }
 
     setStatic = function(isStatic, updateOrigin = true) {
-        Matter.Body.setStatic(this.rectangle, isStatic);
+        Matter.Body.setStatic(this.body, isStatic);
         if (updateOrigin == true) this.setStaticOrigin(isStatic);
     }
 
@@ -123,25 +123,25 @@ class Cube extends THREE.Mesh {
     }
 
     toggleStatic = function() {
-        var isStatic = !this.rectangle.isStatic;
+        var isStatic = !this.body.isStatic;
         this.setStatic(isStatic);
         return isStatic;
     }
 
     isStatic = function() {
-        return this.rectangle.isStatic;
+        return this.body.isStatic;
     }
 
     getClass = function() {
-        return this.rectangle.class;
+        return this.body.class;
     }
 
     select = function(state = true) {
         this.selected = state;
         this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
         if (state == true) {
-            Matter.Body.setVelocity(this.rectangle, { x: 0, y: 0 });
-            Matter.Body.setAngularVelocity(this.rectangle, 0);
+            Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
+            Matter.Body.setAngularVelocity(this.body, 0);
         }
     }
 

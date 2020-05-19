@@ -1,7 +1,7 @@
 class Player extends Cube {
     constructor(options = {}) {
         super(options);
-        this.rectangle.class = 'player';
+        this.body.class = 'player';
         this.setColor('#dc265a');
         this.setScale(16, 16, 16);
         this.setStatic(false);
@@ -19,8 +19,8 @@ class Player extends Cube {
             //var yForce = Math.cos(angle) * this.jumpForce;
             var xForce = 0;
             var yForce = this.jumpForce;
-            Matter.Body.setVelocity(this.rectangle, { x: this.rectangle.velocity.x, y: 0 });
-            Matter.Body.applyForce(this.rectangle, this.rectangle.position, { x: xForce, y: yForce });
+            Matter.Body.setVelocity(this.body, { x: this.body.velocity.x, y: 0 });
+            Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
         }
     }
 }

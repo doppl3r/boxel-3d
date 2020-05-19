@@ -5,14 +5,14 @@ class Level extends THREE.Group {
     }
 
     addObject = function(object, a) {
-        Matter.World.add(a.engine.world, object.rectangle); // Add hitbox to world
+        Matter.World.add(a.engine.world, object.body); // Add hitbox to world
         this.add(object); // Add to group
     }
 
     removeObject = function(object, a, override = false) {
         // Prevent deleting the player
         if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
-            Matter.World.remove(a.engine.world, object.rectangle);
+            Matter.World.remove(a.engine.world, object.body);
             this.remove(object);
             a.deselectScene(a);
             a.ui.showObjectOptions(false);

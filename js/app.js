@@ -92,8 +92,8 @@ class App {
             var child = a.level.children[i];
             
             // Update child if it has a collision box
-            if (child.rectangle != null) {
-                var rect = child.rectangle;
+            if (child.body != null) {
+                var rect = child.body;
                 var x = rect.position.x;
                 var y = rect.position.y;
                 var z = rect.angle;
@@ -157,7 +157,7 @@ class App {
         a.selectedObject = null;
         for (var i=0; i < a.level.children.length; i++) {
             var child = a.level.children[i];
-            if (child.rectangle != null) {
+            if (child.body != null) {
                 child.select(false);
             }
         }
@@ -168,7 +168,7 @@ class App {
         a.ui.showObjectOptions(false);
         for (var i=0; i < a.level.children.length; i++) {
             var child = a.level.children[i];
-            if (child.rectangle != null) {
+            if (child.body != null) {
                 child.resetToOrigin();
                 a.update(null, a);
             }
@@ -201,7 +201,7 @@ class App {
             // Update jump status if playerBody exists in collision check
             if (playerBody != null) {
                 // Check if player is falling
-                if (a.player.rectangle.velocity.y >= 0) {
+                if (a.player.body.velocity.y >= 0) {
                     a.player.allowJump = true;
                 }
             }
