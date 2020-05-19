@@ -13,7 +13,7 @@ class UIController {
     bindActions = function() {
         this.controller.on('click', 'a', function(event){
             event.preventDefault();
-            var action = $(this).attr('href');
+            var action = $(this).attr('action');
             if (action == 'add-level') {
                 var levelData = {};
                 app.level.createNewLevel(app);
@@ -52,15 +52,15 @@ class UIController {
                 app.play = false;
                 app.deselectScene(app);
                 app.ui.showObjectOptions(false);
-                app.ui.levelEditor.find('[href="play"]').removeClass('selected');
-                app.ui.levelEditor.find('[href="pause"]').addClass('selected');
+                app.ui.levelEditor.find('[action="play"]').removeClass('selected');
+                app.ui.levelEditor.find('[action="pause"]').addClass('selected');
             }
             else if (action == 'play') {
                 app.play = true;
                 app.deselectScene(app);
                 app.ui.showObjectOptions(false);
-                app.ui.levelEditor.find('[href="pause"]').removeClass('selected');
-                app.ui.levelEditor.find('[href="play"]').addClass('selected');
+                app.ui.levelEditor.find('[action="pause"]').removeClass('selected');
+                app.ui.levelEditor.find('[action="play"]').addClass('selected');
             }
             else if (action == 'pin') {
                 app.selectedObject.toggleStatic();
@@ -102,9 +102,9 @@ class UIController {
             this.canvas.addClass('disabled');
             this.levelManager.removeClass('disabled');
             this.levelEditor.addClass('disabled');
-            this.levelEditor.find('[href="add-cube"]').addClass('selected');
-            this.levelEditor.find('[href="pause"]').addClass('selected');
-            this.levelEditor.find('[href="cube"]').addClass('selected');
+            this.levelEditor.find('[action="add-cube"]').addClass('selected');
+            this.levelEditor.find('[action="pause"]').addClass('selected');
+            this.levelEditor.find('[action="cube"]').addClass('selected');
             this.objectOptions.addClass('disabled');
         }
         else if (state == 'level-editor') {
@@ -129,18 +129,18 @@ class UIController {
         // Check if selected object exists
         if (app.selectedObject != null) {
             var isStatic = app.selectedObject.isStatic();
-            var pinIcon = this.objectOptions.find('[href="pin"]');
+            var pinIcon = this.objectOptions.find('[action="pin"]');
             var rotation = -app.selectedObject.getRotation('degrees');
             var scaleX = app.selectedObject.scale.x;
             var scaleY = app.selectedObject.scale.y;
             var isPlayer = (app.selectedObject.getClass() == 'player');
-            this.objectOptions.find('[href*="rotate"] ~ .slider input').val(rotation);
-            this.objectOptions.find('[href*="scale-x"] ~ .slider input').val(scaleX);
-            this.objectOptions.find('[href*="scale-y"] ~ .slider input').val(scaleY);
+            this.objectOptions.find('[action*="rotate"] ~ .slider input').val(rotation);
+            this.objectOptions.find('[action*="scale-x"] ~ .slider input').val(scaleX);
+            this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
             
             // Enable/Disable the trash icon for player
-            if (isPlayer == true) this.objectOptions.find('[href*="trash"]').addClass('disabled');
-            else this.objectOptions.find('[href*="trash"]').removeClass('disabled');
+            if (isPlayer == true) this.objectOptions.find('[action*="trash"]').addClass('disabled');
+            else this.objectOptions.find('[action*="trash"]').removeClass('disabled');
             
             // Update selected pin status
             if (isStatic == true) pinIcon.addClass('selected');
@@ -176,9 +176,9 @@ class UIController {
         this.levelList.append(
             '<div class="item">' +
                 '<input type="text" key="' + levelData.key + '" value="' + levelData.name + '">' +
-                '<a href="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
-                '<a href="upload-level" title="Upload level"><img src="img/svg/upload.svg"></a>' +
-                '<a href="delete-level" title="Delete level"><img src="img/svg/trash.svg"></a>' +
+                '<a action="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
+                '<a action="upload-level" title="Upload level"><img src="img/svg/upload.svg"></a>' +
+                '<a action="delete-level" title="Delete level"><img src="img/svg/trash.svg"></a>' +
             '</div>'
         );
     }
