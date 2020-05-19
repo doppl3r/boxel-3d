@@ -12,6 +12,9 @@ class Cube extends THREE.Mesh {
         options.angle = (options.angle == null) ? 0 : options.angle;
         
         // Set default properties
+        this.shapes = new Shapes();
+        //this.shapes.addCube(options);
+        //this.add(this.shapes);
         this.setColor('#620460');
         this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
         this.material = new THREE.MeshPhongMaterial({ color: this.color });
@@ -31,7 +34,7 @@ class Cube extends THREE.Mesh {
         this.setScale(options.scaleX, options.scaleY, options.scaleZ);
     }
 
-    setPosition = function(x, y, z, updateOrigin = true) {
+    setPosition(x, y, z, updateOrigin = true) {
         // Set null values
         x = (x == null) ? this.position.x : x;
         y = (y == null) ? this.position.y : y;
@@ -43,29 +46,29 @@ class Cube extends THREE.Mesh {
         if (updateOrigin == true) this.setPositionOrigin(x, y, z);
     }
 
-    setPositionOrigin = function(x, y, z) {
+    setPositionOrigin(x, y, z) {
         this.xOrigin = x;
         this.yOrigin = y;
         this.zOrigin = z;
     }
 
-    setRotation = function(angle, updateOrigin = true) {
+    setRotation(angle, updateOrigin = true) {
         this.rotation.z = angle;
         Matter.Body.setAngle(this.body, -angle);
         if (updateOrigin == true) this.setRotationOrigin(angle);
     }
 
-    setRotationOrigin = function(angle) {
+    setRotationOrigin(angle) {
         this.rotationOrigin = angle;
     }
 
-    getRotation = function(format = 'radians') {
+    getRotation(format = 'radians') {
         var value = this.rotation.z; // Default radians
         if (format == 'degrees') value = Math.round(this.rotation.z * (180 / Math.PI));
         return value;
     }
 
-    setScale = function(scaleX, scaleY, scaleZ, updateOrigin = true) {
+    setScale(scaleX, scaleY, scaleZ, updateOrigin = true) {
         // Resolve null values
         scaleX = (scaleX == null) ? this.scale.x : scaleX;
         scaleY = (scaleY == null) ? this.scale.y : scaleY;
@@ -84,13 +87,13 @@ class Cube extends THREE.Mesh {
         if (updateOrigin == true) this.setScaleOrigin(scaleX, scaleY, scaleZ);
     }
 
-    setScaleOrigin = function(scaleX, scaleY, scaleZ) {
+    setScaleOrigin(scaleX, scaleY, scaleZ) {
         this.scaleXOrigin = scaleX;
         this.scaleYOrigin = scaleY;
         this.scaleZOrigin = scaleZ;
     }
 
-    resetToOrigin = function() {
+    resetToOrigin() {
         this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin, false);
         this.setRotation(this.rotationOrigin, false);
         this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin, false);
@@ -99,44 +102,44 @@ class Cube extends THREE.Mesh {
         Matter.Body.setAngularVelocity(this.body, 0);
     }
 
-    setColor = function(color, updateOrigin = true) {
+    setColor(color, updateOrigin = true) {
         this.color = color;
         this.material.color.set(color);
         if (updateOrigin == true) this.setColorOrigin(color);
     }
 
-    setColorOrigin = function(color) {
+    setColorOrigin(color) {
         this.colorOrigin = color;
     }
 
-    getColor = function() {
+    getColor() {
         return this.color;
     }
 
-    setStatic = function(isStatic, updateOrigin = true) {
+    setStatic(isStatic, updateOrigin = true) {
         Matter.Body.setStatic(this.body, isStatic);
         if (updateOrigin == true) this.setStaticOrigin(isStatic);
     }
 
-    setStaticOrigin = function(isStatic) {
+    setStaticOrigin(isStatic) {
         this.isStaticOrigin = isStatic;
     }
 
-    toggleStatic = function() {
+    toggleStatic() {
         var isStatic = !this.body.isStatic;
         this.setStatic(isStatic);
         return isStatic;
     }
 
-    isStatic = function() {
+    isStatic() {
         return this.body.isStatic;
     }
 
-    getClass = function() {
+    getClass() {
         return this.body.class;
     }
 
-    select = function(state = true) {
+    select(state = true) {
         this.selected = state;
         this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
         if (state == true) {
@@ -145,7 +148,7 @@ class Cube extends THREE.Mesh {
         }
     }
 
-    toggleSelected = function() {
+    toggleSelected() {
         this.selected = !this.selected;
         this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
         return this.selected;

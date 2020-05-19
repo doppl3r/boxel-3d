@@ -8,7 +8,7 @@ class Mouse {
         this.drag = false;
     }
     
-    mouseDown = function(e, a) {
+    mouseDown(e, a) {
         if (a.play == false) {
             var target = a.getObject(e, a);
             a.camera.moved = false;
@@ -34,7 +34,7 @@ class Mouse {
         }
     }
 
-    mouseMove = function(e, a) {
+    mouseMove(e, a) {
         if (a.play == false) {
             a.mouse.setPosition('move', a.getMousePosition(e, a));
             // Update selected object if drag is true
@@ -69,7 +69,7 @@ class Mouse {
         }
     }
 
-    mouseUp = function(e, a) {
+    mouseUp(e, a) {
         if (a.play == false) {
             var target = a.getObject(e, a);
             a.mouse.setPosition('up', a.getMousePosition(e, a));
@@ -98,14 +98,14 @@ class Mouse {
         }
     }
 
-    wheel = function(e, a) {
+    wheel(e, a) {
         var zoom = a.camera.position.z + e.deltaY;
         if (zoom < 200) zoom = 200;
         else if (zoom > 1000) zoom = 1000;
         a.camera.position.z = zoom;
     }
 
-    setPosition = function(state, position) {
+    setPosition(state, position) {
         if (state == 'down') {
             this.down = position;
             this.move = position; // Reset move
@@ -120,13 +120,13 @@ class Mouse {
         }
     }
 
-    setOffset = function(position) {
+    setOffset(position) {
         this.offset.x = position.x - this.down.x;
         this.offset.y = position.y - this.down.y;
         this.offset.z = position.z - this.down.z;
     }
 
-    getDragDifference = function() {
+    getDragDifference() {
         return { 
             x: Math.round(this.down.x - this.move.x - this.offset.x), 
             y: Math.round(this.down.y - this.move.y - this.offset.y), 
@@ -134,12 +134,12 @@ class Mouse {
         }
     }
 
-    getTolerance = function() {
+    getTolerance() {
         var diff = this.getDragDifference();
         return (Math.abs(diff.x + this.offset.x) + Math.abs(diff.y + this.offset.y) > this.tolerance);
     }
 
-    snap = function(value, step) {
+    snap(value, step) {
         return Math.round(value / step) * step;
     }
 }

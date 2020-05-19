@@ -4,12 +4,12 @@ class Level extends THREE.Group {
         this.name = 'My Level';
     }
 
-    addObject = function(object, a) {
+    addObject(object, a) {
         Matter.World.add(a.engine.world, object.body); // Add hitbox to world
         this.add(object); // Add to group
     }
 
-    removeObject = function(object, a, override = false) {
+    removeObject(object, a, override = false) {
         // Prevent deleting the player
         if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
             Matter.World.remove(a.engine.world, object.body);
@@ -19,7 +19,7 @@ class Level extends THREE.Group {
         }
     }
 
-    clearLevel = function(a) {
+    clearLevel(a) {
         var length = a.level.children.length;
         for (var i=0; i < length; i++) {
             var child = a.level.children[0];
@@ -27,7 +27,7 @@ class Level extends THREE.Group {
         }
     }
 
-    createNewLevel = function(a) {
+    createNewLevel(a) {
         a.player.setPosition(); // Reset player position
         this.clearLevel(a);
         this.add(a.player); // Add player object
@@ -37,7 +37,7 @@ class Level extends THREE.Group {
         this.add(floor);
     }
 
-    exportToJSON = function(a) {
+    exportToJSON(a) {
         var levelJSON = {};
         levelJSON.name = this.name;
         levelJSON.key = this.key;
@@ -58,11 +58,11 @@ class Level extends THREE.Group {
         return levelJSON;
     }
 
-    saveLevel = function(a) {
+    saveLevel(a) {
         a.storage.updateLevelToStorage(this.key, this.exportToJSON(a));
     }
 
-    importFromJSON = function(levelData, a) {
+    importFromJSON(levelData, a) {
         this.name = levelData.name;
         this.key = levelData.key;
 
@@ -76,7 +76,7 @@ class Level extends THREE.Group {
         }
     }
 
-    setObjectProperties = function(object, objectData) {
+    setObjectProperties(object, objectData) {
         object.setPosition(objectData.position.x, objectData.position.y, objectData.position.z);
         object.setScale(objectData.scale.x, objectData.scale.y, objectData.scale.z);
         object.setRotation(objectData.rotation.z);

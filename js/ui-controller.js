@@ -10,7 +10,7 @@ class UIController {
         this.updateUI('level-manager');
     }
 
-    bindActions = function() {
+    bindActions() {
         this.controller.on('click', 'a', function(event){
             event.preventDefault();
             var action = $(this).attr('action');
@@ -116,16 +116,16 @@ class UIController {
         }
     }
 
-    showObjectOptions = function(state) {
+    showObjectOptions(state) {
         if (state == true) this.objectOptions.removeClass('disabled');
         else this.objectOptions.addClass('disabled');
     }
 
-    toggleObjectOptions = function() {
+    toggleObjectOptions() {
         this.objectOptions.toggleClass('disabled');
     }
 
-    updateObjectOptions = function() {
+    updateObjectOptions() {
         // Check if selected object exists
         if (app.selectedObject != null) {
             var isStatic = app.selectedObject.isStatic();
@@ -148,11 +148,11 @@ class UIController {
         }
     }
 
-    removeListOfLevels = function() {
+    removeListOfLevels() {
         this.levelList.empty();
     }
 
-    appendListOfLevels = function(a) {
+    appendListOfLevels(a) {
         var list = a.storage.getListOfLevels();
         var levelData = {};
 
@@ -172,7 +172,7 @@ class UIController {
         }
     }
 
-    appendLevelItem = function (levelData) {
+    appendLevelItem (levelData) {
         this.levelList.append(
             '<div class="item">' +
                 '<input type="text" key="' + levelData.key + '" value="' + levelData.name + '">' +
@@ -183,14 +183,14 @@ class UIController {
         );
     }
 
-    removeLevelItem = function(button) {
+    removeLevelItem(button) {
         var item = button.parent();
         var key = item.find('input').attr('key');
         app.storage.deleteLevelFromStorage(key);
         item.remove();
     }
 
-    updateLevelFromItem = function(button) {
+    updateLevelFromItem(button) {
         // Select level details from HTML input attributes & values
         var item = button.parent();
         var key = item.find('input').attr('key');
@@ -203,7 +203,7 @@ class UIController {
         app.level.importFromJSON(levelData, app);
     }
 
-    updateCanvas = function() {
+    updateCanvas() {
         if (this.canvas == null || this.canvas.length <= 0) {
             this.canvas = $('canvas');
         }

@@ -68,7 +68,7 @@ class App {
         a.render(null, a);
     }
 
-    render = function(e, a) {
+    render(e, a) {
         a.now = new Date().getTime();
         a.delta = a.now - a.then;
         if (a.delta > a.interval) {
@@ -84,7 +84,7 @@ class App {
         requestAnimationFrame(function(e) { a.render(e, a); });
     }
 
-    update = function(e, a) {
+    update(e, a) {
         a.updateCamera(a);
 
         // Loop through scene for all children
@@ -104,7 +104,7 @@ class App {
         }
     }
 
-    resizeWindow = function(e, a) {
+    resizeWindow(e, a) {
         var screenWidth = a.window.innerWidth;
         var screenHeight = a.window.innerHeight;
         a.camera.aspect = screenWidth / screenHeight;
@@ -112,7 +112,7 @@ class App {
         a.renderer.setSize(screenWidth, screenHeight);
     }
 
-    keyDown = function(e, a) {
+    keyDown(e, a) {
         switch (e.keyCode) {
             case 16: break; //  Shift
             case 17: break; // Ctrl
@@ -122,11 +122,11 @@ class App {
         }
     }
 
-    keyUp = function(e, a) {
+    keyUp(e, a) {
 
     }
 
-    getObject = function(e, a) {
+    getObject(e, a) {
         var raycaster = new THREE.Raycaster();
         var vec = new THREE.Vector3();
         var object;
@@ -139,7 +139,7 @@ class App {
         return(object);
     }
 
-    getMousePosition = function(e, a) {                
+    getMousePosition(e, a) {                
         var vec = new THREE.Vector3(); // create once and reuse
         var pos = new THREE.Vector3(); // create once and reuse
         var distance = 0;
@@ -153,7 +153,7 @@ class App {
         return(pos);
     }
 
-    deselectScene = function(a) {
+    deselectScene(a) {
         a.selectedObject = null;
         for (var i=0; i < a.level.children.length; i++) {
             var child = a.level.children[i];
@@ -163,7 +163,7 @@ class App {
         }
     }
 
-    resetScene = function(a) {
+    resetScene(a) {
         a.updateCamera(a);
         a.ui.showObjectOptions(false);
         for (var i=0; i < a.level.children.length; i++) {
@@ -175,13 +175,13 @@ class App {
         }
     }
 
-    updateCamera = function(a) {
+    updateCamera(a) {
         a.camera.position.x = a.player.position.x;
         a.camera.position.y = a.player.position.y + a.camera.tilt;
         a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
     }
 
-    checkPlayerCollision = function(e, a) {
+    checkPlayerCollision(e, a) {
         var pairs = e.pairs;
         for (var i = 0; i < pairs.length; i++) {
             var pair = pairs[i];

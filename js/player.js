@@ -10,7 +10,7 @@ class Player extends Cube {
         this.allowJump = true;
     }
 
-    jump = function() {
+    jump() {
         if (this.allowJump == true) {
             this.allowJump = false;
             var radian = -(Math.PI / 180) * 360;
