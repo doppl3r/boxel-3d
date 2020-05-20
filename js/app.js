@@ -155,6 +155,7 @@ class App {
             case('finish'): object = new Finish(options); break;
             default: object = new Cube(options);
         }
+        console.log(object);
         return object;
     }
 

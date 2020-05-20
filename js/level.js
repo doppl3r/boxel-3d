@@ -67,8 +67,8 @@ class Level extends THREE.Group {
 
         // Loop through JSON level data
         for (var i = 0; i < levelData.children.length; i++) {
-            var object = new Cube();
             var objectData = levelData.children[i];
+            var object = a.newObject(objectData.class);
             if (objectData.class == 'player') object = a.player;
             this.setObjectProperties(object, objectData);
             this.addObject(object, a);

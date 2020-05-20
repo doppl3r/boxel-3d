@@ -3,17 +3,30 @@ class Shapes extends THREE.Group {
         super();
     }
 
-    addCube(options) {
+    addCube(options = {}) {
+        options.x = (options.x == null) ? 0 : options.x;
+        options.y = (options.y == null) ? 0 : options.y;
+        options.z = (options.z == null) ? 0 : options.z;
+        options.scaleX = (options.scaleX == null) ? 1 : options.scaleX;
+        options.scaleY = (options.scaleY == null) ? 1 : options.scaleY;
+        options.scaleZ = (options.scaleZ == null) ? 1 : options.scaleZ;
+        options.color = (options.color == null) ? '#620460' : options.color;
+        options.opacity = (options.opacity == null) ? 1 : options.opacity;
+
         var geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
-        var material = new THREE.MeshPhongMaterial({ color: options.color, colorOrigin: options.color });
+        var material = new THREE.MeshPhongMaterial({ color: options.color, transparent: true });
         var cube = new THREE.Mesh(geometry, material);
+        cube.position.set(options.x, options.y, options.z);
+        cube.material.colorOrigin = options.color;
+        cube.material.opacity = options.opacity;
         this.add(cube);
     }
-
-    addCone(options) {
+    
+    addCone(options = {}) {
         var geometry = new THREE.ConeGeometry(options.radius, options.height, options.segments);
-        var material = new THREE.MeshBasicMaterial({ color: options.color, colorOrigin: this.color });
+        var material = new THREE.MeshBasicMaterial({ color: options.color });
         var cone = new THREE.Mesh(geometry, material);
+        cube.material.colorOrigin = options.color;
         this.add(cone);
     }
 
@@ -23,6 +36,14 @@ class Shapes extends THREE.Group {
             var child = this.children[i];
             child.material.color.set(color);
             if (updateOrigin == true) child.material.colorOrigin = color;
+        }
+    }
+
+    setOpacities(opacity) {
+        var length = this.children.length;
+        for (var i = 0; i < length; i++) {
+            var child = this.children[i];
+            child.material.opacity = opacity;
         }
     }
 

@@ -14,7 +14,7 @@ class Cube extends THREE.Mesh {
 
         // Set default properties
         this.shapes = new Shapes();
-        this.shapes.addCube(options);
+        this.shapes.addCube();
         this.shapes.setColors(options.color);
         this.add(this.shapes);
         this.body = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
@@ -131,6 +131,8 @@ class Cube extends THREE.Mesh {
             Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
             Matter.Body.setAngularVelocity(this.body, 0);
         }
-        else this.shapes.resetColors();
+        else {
+            this.shapes.resetColors();
+        }
     }
 }
