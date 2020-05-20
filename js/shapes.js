@@ -23,10 +23,23 @@ class Shapes extends THREE.Group {
     }
     
     addCone(options = {}) {
-        var geometry = new THREE.ConeGeometry(options.radius, options.height, options.segments);
+        options.x = (options.x == null) ? 0 : options.x;
+        options.y = (options.y == null) ? 0 : options.y;
+        options.z = (options.z == null) ? 0 : options.z;
+        options.scaleX = (options.scaleX == null) ? 1 : options.scaleX;
+        options.scaleY = (options.scaleY == null) ? 1 : options.scaleY;
+        options.scaleZ = (options.scaleZ == null) ? 1 : options.scaleZ;
+        options.segments = (options.segments == null) ? 4 : options.segments;
+        options.color = (options.color == null) ? '#620460' : options.color;
+        options.opacity = (options.opacity == null) ? 1 : options.opacity;
+
+        var geometry = new THREE.ConeGeometry((options.scaleX / 2) * 1.3, options.scaleY, options.segments);
         var material = new THREE.MeshBasicMaterial({ color: options.color });
         var cone = new THREE.Mesh(geometry, material);
-        cube.material.colorOrigin = options.color;
+        cone.position.set(options.x, options.y, options.z);
+        cone.material.colorOrigin = options.color;
+        cone.material.opacity = options.opacity;
+        cone.rotation.y = (45 * Math.PI / 180); // Rotate Cone
         this.add(cone);
     }
 
