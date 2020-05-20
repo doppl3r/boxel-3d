@@ -142,6 +142,22 @@ class App {
         return(object);
     }
 
+    newObject(type, options) {
+        var object;
+        switch(type) {
+            case('player'): object = new Player(options); break;
+            case('tip'): object = new Tip(options); break;
+            case('jump'): object = new Jump(options); break;
+            case('checkpoint'): object = new Checkpoint(options); break;
+            case('spike'): object = new Spike(options); break;
+            case('shrink'): object = new Shrink(options); break;
+            case('grow'): object = new Grow(options); break;
+            case('finish'): object = new Finish(options); break;
+            default: object = new Cube(options);
+        }
+        return object;
+    }
+
     getMousePosition(e, a) {                
         var vec = new THREE.Vector3(); // create once and reuse
         var pos = new THREE.Vector3(); // create once and reuse

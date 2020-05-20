@@ -4,6 +4,8 @@ class UIController {
         this.levelManager = this.controller.find('.level-manager');
         this.levelEditor = this.controller.find('.level-editor');
         this.levelList = this.levelManager.find('.list');
+        this.levelOptions = this.levelEditor.find('.options-level');
+        this.objectType = this.levelEditor.find('.object-type');
         this.objectOptions = this.levelEditor.find('.object-options');
         this.updateCanvas();
         this.bindActions();
@@ -11,7 +13,7 @@ class UIController {
     }
 
     bindActions() {
-        this.controller.on('click', 'a', function(event){
+        this.controller.on('click', '[action]', function(event){
             event.preventDefault();
             var action = $(this).attr('action');
             if (action == 'add-level') {
@@ -52,16 +54,24 @@ class UIController {
                 app.play = false;
                 app.deselectScene(app);
                 app.ui.showObjectOptions(false);
-                app.ui.levelEditor.find('[action="play"]').removeClass('selected');
-                app.ui.levelEditor.find('[action="pause"]').addClass('selected');
+                app.ui.levelOptions.find('[action="play"]').removeClass('selected');
+                app.ui.levelOptions.find('[action="pause"]').addClass('selected');
             }
             else if (action == 'play') {
                 app.play = true;
                 app.deselectScene(app);
                 app.ui.showObjectOptions(false);
-                app.ui.levelEditor.find('[action="pause"]').removeClass('selected');
-                app.ui.levelEditor.find('[action="play"]').addClass('selected');
+                app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
+                app.ui.levelOptions.find('[action="play"]').addClass('selected');
             }
+            else if (action == 'cube') { app.ui.selectObjectType(action); }
+            else if (action == 'tip') { app.ui.selectObjectType(action); }
+            else if (action == 'jump') { app.ui.selectObjectType(action); }
+            else if (action == 'checkpoint') { app.ui.selectObjectType(action); }
+            else if (action == 'spike') { app.ui.selectObjectType(action); }
+            else if (action == 'shrink') { app.ui.selectObjectType(action); }
+            else if (action == 'grow') { app.ui.selectObjectType(action); }
+            else if (action == 'finish') { app.ui.selectObjectType(action); }
             else if (action == 'pin') {
                 app.selectedObject.toggleStatic();
                 app.ui.updateObjectOptions();
@@ -96,19 +106,28 @@ class UIController {
         });
     }
 
+    selectObjectType(type) {
+        app.ui.objectType.find('[action]').removeClass('selected');
+        app.ui.objectType.find('[action=' + type + ']').addClass('selected');
+    }
+
+    getSelectedObjectType() {
+        return app.ui.objectType.find('.selected').attr('action');
+    }
+
     updateUI(state) {
         this.updateCanvas();
         if (state == 'level-manager') {
             this.canvas.addClass('disabled');
             this.levelManager.removeClass('disabled');
-            this.levelEditor.addClass('disabled');
-            this.levelEditor.find('[action="add-cube"]').addClass('selected');
-            this.levelEditor.find('[action="pause"]').addClass('selected');
-            this.levelEditor.find('[action="cube"]').addClass('selected');
+            this.levelEditor.addClass('disabled'); // Hide while manager is open
+            this.levelEditor.find('[action]').removeClass('selected'); // Clear all selected
+            this.levelOptions.find('[action="pause"]').addClass('selected');
+            this.levelOptions.find('[action="add-cube"]').addClass('selected');
+            this.objectType.find('[action="cube"]').addClass('selected');
             this.objectOptions.addClass('disabled');
         }
         else if (state == 'level-editor') {
-            // Update UI
             this.canvas.removeClass('disabled');
             this.levelManager.addClass('disabled');
             this.levelEditor.removeClass('disabled');

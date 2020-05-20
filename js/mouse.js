@@ -80,9 +80,9 @@ class Mouse {
                 if (a.mouse.getTolerance() == false) {
                     // Check if the camera was not moved when given permission to add cube
                     if (a.camera.moved != true) {
+                        var objectType = a.ui.getSelectedObjectType();
                         a.deselectScene(a);
-                        a.ui.showObjectOptions(true);
-                        a.selectedObject = new Cube({ 
+                        a.selectedObject = a.newObject(objectType, { 
                             x: a.mouse.snap(a.mouse.down.x, a.snap), 
                             y: a.mouse.snap(a.mouse.down.y, a.snap),
                             z: 0
@@ -91,6 +91,7 @@ class Mouse {
                         a.level.addObject(a.selectedObject, a);
                         a.selectedObject.select(true);
                         a.selectedObject.setStatic(true);
+                        a.ui.showObjectOptions(true);
                         a.ui.updateObjectOptions();
                     }
                 }
