@@ -33,7 +33,7 @@ class Shapes extends THREE.Group {
         options.color = (options.color == null) ? '#620460' : options.color;
         options.opacity = (options.opacity == null) ? 1 : options.opacity;
 
-        var geometry = new THREE.ConeGeometry((options.scaleX / 2) * 1.3, options.scaleY, options.segments);
+        var geometry = new THREE.ConeGeometry((options.scaleX / 2) * 1.5, options.scaleY, options.segments);
         var material = new THREE.MeshBasicMaterial({ color: options.color });
         var cone = new THREE.Mesh(geometry, material);
         cone.position.set(options.x, options.y, options.z);

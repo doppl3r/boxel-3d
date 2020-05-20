@@ -22,7 +22,7 @@ class App {
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
-        a.camera.tilt = 100;
+        a.camera.tilt = 50;
         a.renderer = new THREE.WebGLRenderer({ antialias: true });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', 1);

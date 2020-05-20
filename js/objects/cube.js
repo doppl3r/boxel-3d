@@ -128,11 +128,13 @@ class Cube extends THREE.Mesh {
         this.selected = state;
         if (state == true) {
             this.shapes.setColors('#ffffff', false);
+            this.shapes.setOpacities(0.9);
             Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
             Matter.Body.setAngularVelocity(this.body, 0);
         }
         else {
             this.shapes.resetColors();
+            this.shapes.setOpacities(1);
         }
     }
 }

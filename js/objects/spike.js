@@ -1,7 +1,7 @@
 class Spike extends Cube {
     constructor(options = {}) {
         super(options);
-        this.body.class = 'checkpoint';
+        this.body.class = 'spike';
         this.setScale(16, 16, 16);
         this.shapes.removeAllShapes();
         this.addShapes(options);
