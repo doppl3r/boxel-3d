@@ -10,14 +10,13 @@ class Cube extends THREE.Mesh {
         options.scaleY = (options.scaleY == null) ? 1 : options.scaleY;
         options.scaleZ = (options.scaleZ == null) ? 1 : options.scaleZ;
         options.angle = (options.angle == null) ? 0 : options.angle;
-        
+        options.color = (options.color == null) ? '#620460' : options.color;
+
         // Set default properties
         this.shapes = new Shapes();
-        //this.shapes.addCube(options);
-        //this.add(this.shapes);
-        this.setColor('#620460');
-        this.geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
-        this.material = new THREE.MeshPhongMaterial({ color: this.color });
+        this.shapes.addCube(options);
+        this.shapes.setColors(options.color);
+        this.add(this.shapes);
         this.body = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
             friction: 0.0,
             frictionAir: 0.0,
@@ -102,20 +101,6 @@ class Cube extends THREE.Mesh {
         Matter.Body.setAngularVelocity(this.body, 0);
     }
 
-    setColor(color, updateOrigin = true) {
-        this.color = color;
-        this.material.color.set(color);
-        if (updateOrigin == true) this.setColorOrigin(color);
-    }
-
-    setColorOrigin(color) {
-        this.colorOrigin = color;
-    }
-
-    getColor() {
-        return this.color;
-    }
-
     setStatic(isStatic, updateOrigin = true) {
         Matter.Body.setStatic(this.body, isStatic);
         if (updateOrigin == true) this.setStaticOrigin(isStatic);
@@ -141,16 +126,11 @@ class Cube extends THREE.Mesh {
 
     select(state = true) {
         this.selected = state;
-        this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
         if (state == true) {
+            this.shapes.setColors('#ffffff', false);
             Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
             Matter.Body.setAngularVelocity(this.body, 0);
         }
-    }
-
-    toggleSelected() {
-        this.selected = !this.selected;
-        this.setColor(this.selected ? '#ffffff' : this.colorOrigin, false);
-        return this.selected;
+        else this.shapes.resetColors();
     }
 }

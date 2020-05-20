@@ -2,9 +2,9 @@ class Player extends Cube {
     constructor(options = {}) {
         super(options);
         this.body.class = 'player';
-        this.setColor('#dc265a');
         this.setScale(16, 16, 16);
         this.setStatic(false);
+        this.shapes.setColors('#dc265a');
         this.mass = 5;
         this.jumpForce = -0.00125 * this.mass;
         this.allowJump = true;

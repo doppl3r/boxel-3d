@@ -135,7 +135,10 @@ class App {
         vec.set(x, y, 0);
         raycaster.setFromCamera(vec, a.camera);
         var intersects = raycaster.intersectObjects(a.scene.children, true);
-        if (intersects.length > 0) object = intersects[0].object;
+        if (intersects.length > 0) {
+            // Parent #1 = Shapes, Parent #2 = Cube
+            object = intersects[0].object.parent.parent;
+        }
         return(object);
     }
 

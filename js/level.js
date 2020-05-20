@@ -49,7 +49,6 @@ class Level extends THREE.Group {
             var objectData = {};
             objectData.isStatic = object.isStatic();
             objectData.class = object.getClass();
-            objectData.color = object.getColor();
             objectData.position = { x: object.position.x, y: object.position.y, z: object.position.z };
             objectData.rotation = { x: object.rotation.x, y: object.rotation.y, z: object.rotation.z };
             objectData.scale = { x: object.scale.x, y: object.scale.y, z: object.scale.z };
@@ -81,6 +80,5 @@ class Level extends THREE.Group {
         object.setScale(objectData.scale.x, objectData.scale.y, objectData.scale.z);
         object.setRotation(objectData.rotation.z);
         object.setStatic(objectData.isStatic);
-        object.setColor(objectData.color);
     }
 }
