@@ -14,7 +14,7 @@ class Shapes extends THREE.Group {
         options.opacity = (options.opacity == null) ? 1 : options.opacity;
 
         var geometry = new THREE.BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
-        var material = new THREE.MeshPhongMaterial({ color: options.color, transparent: true });
+        var material = new THREE.MeshLambertMaterial({ color: options.color, transparent: true });
         var cube = new THREE.Mesh(geometry, material);
         cube.position.set(options.x, options.y, options.z);
         cube.material.colorOrigin = options.color;
@@ -34,7 +34,7 @@ class Shapes extends THREE.Group {
         options.opacity = (options.opacity == null) ? 1 : options.opacity;
 
         var geometry = new THREE.ConeGeometry((options.scaleX / 2) * 1.5, options.scaleY, options.segments);
-        var material = new THREE.MeshBasicMaterial({ color: options.color });
+        var material = new THREE.MeshLambertMaterial({ color: options.color });
         var cone = new THREE.Mesh(geometry, material);
         cone.position.set(options.x, options.y, options.z);
         cone.material.colorOrigin = options.color;
