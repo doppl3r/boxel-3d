@@ -18,6 +18,7 @@ class App {
         a.ui = new UIController();
         a.mouse = new Mouse();
         a.storage = new StorageManager();
+        a.collision = new Collision();
         a.level = new Level();
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
@@ -63,7 +64,7 @@ class App {
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
         a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
         a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
-        Matter.Events.on(a.engine, 'collisionStart', function(e) { a.checkPlayerCollision(e, a); });
+        Matter.Events.on(a.engine, 'collisionStart', function(e) { a.collision.checkPlayerCollision(e, a); });
         a.update(null, a);
         a.render(null, a);
     }
@@ -199,33 +200,6 @@ class App {
         a.camera.position.x = a.player.position.x;
         a.camera.position.y = a.player.position.y + a.camera.tilt;
         a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
-    }
-
-    checkPlayerCollision(e, a) {
-        var pairs = e.pairs;
-        for (var i = 0; i < pairs.length; i++) {
-            var pair = pairs[i];
-            var playerBody = null;
-            var objectBody = null;
-
-            // Check if player is touching object
-            if (pair.bodyA.class == 'player') {
-                playerBody = pair.bodyA;
-                objectBody = pair.bodyB;
-            }
-            else if (pair.bodyB.class == 'player') {
-                playerBody = pair.bodyB;
-                objectBody = pair.bodyA;
-            }
-
-            // Update jump status if playerBody exists in collision check
-            if (playerBody != null) {
-                // Check if player is falling
-                if (a.player.body.velocity.y >= 0) {
-                    a.player.allowJump = true;
-                }
-            }
-        }
     }
 }
 var app = new App();
