@@ -26,6 +26,7 @@ class UIController {
             else if (action == 'edit-level') {
                 app.ui.updateLevelFromItem($(this));
                 app.ui.updateUI('level-editor');
+                app.levelHistory.save(app);
                 app.resetScene(app);
             }
             else if (action == 'delete-level') {
@@ -37,6 +38,7 @@ class UIController {
                 app.deselectScene(app);
                 app.level.saveLevel(app);
                 app.level.clearLevel(app);
+                app.levelHistory.clear();
                 app.player.setPosition(0, 0, 0);
                 app.ui.updateUI('level-manager');
             }
@@ -44,6 +46,12 @@ class UIController {
                 app.resetScene(app);
                 app.deselectScene(app);
                 app.level.saveLevel(app);
+            }
+            else if (action == 'undo') {
+                app.levelHistory.undo(app);
+            }
+            else if (action == 'redo') {
+                app.levelHistory.redo(app);
             }
             else if (action == 'rewind') {
                 app.resetScene(app);
@@ -85,6 +93,7 @@ class UIController {
             }
             else if (action == 'trash') {
                 app.level.removeObject(app.selectedObject, app);
+                app.levelHistory.save(app);
             }
             console.log(action);
         });

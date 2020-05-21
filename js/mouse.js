@@ -96,6 +96,7 @@ class Mouse {
                         a.selectedObject = a.newObject(objectType);
                         a.level.setObjectProperties(a.selectedObject, objectData);
                         a.level.addObject(a.selectedObject, a);
+                        a.levelHistory.save(a);
                         a.selectedObject.select(true);
                         a.ui.showObjectOptions(true);
                         a.ui.updateObjectOptions();

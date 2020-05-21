@@ -20,6 +20,7 @@ class App {
         a.storage = new StorageManager();
         a.collision = new Collision();
         a.level = new Level();
+        a.levelHistory = new LevelHistory();
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
