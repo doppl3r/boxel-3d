@@ -2,6 +2,11 @@ class Player extends Cube {
     constructor(options = {}) {
         super(options);
         this.body.class = 'player';
+
+        // Set sensor to the bottom
+        Matter.Body.setParts(this.body, [this.rectangle]); // Removed sensor
+
+        // Update body
         this.setScale(16, 16, 16);
         this.setStatic(false);
         this.shapes.setColors('#dc265a');
