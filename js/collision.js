@@ -33,7 +33,10 @@ class Collision {
 
                 // Check spike collision
                 if (objectPart.class == 'sensor') {
-                    if (objectBody.class == 'jump') {
+                    if (objectBody.class == 'tip') {
+                        console.log('tip');
+                    }
+                    else if (objectBody.class == 'jump') {
                         console.log('jump');
                     }
                     else if (objectBody.class == 'spike') {
