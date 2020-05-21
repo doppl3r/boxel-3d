@@ -2,6 +2,13 @@ class Grow extends Cube {
     constructor(options = {}) {
         super(options);
         this.body.class = 'grow';
+        
+        // Set sensor the same size as rectangle
+        this.rectangle.isSensor = true;
+        this.sensor = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
+        Matter.Body.setParts(this.body, [this.rectangle, this.sensor]);
+
+        // Update body properties
         this.setScale(16, 16, 16);
         this.shapes.removeAllShapes();
         this.addShapes(options);

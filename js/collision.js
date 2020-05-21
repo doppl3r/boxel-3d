@@ -39,8 +39,20 @@ class Collision {
                     else if (objectBody.class == 'jump') {
                         console.log('jump');
                     }
+                    else if (objectBody.class == 'checkpoint') {
+                        console.log('player checkpoint');
+                    }
                     else if (objectBody.class == 'spike') {
                         console.log('kill player');
+                    }
+                    else if (objectBody.class == 'shrink') {
+                        console.log('shrink player');
+                    }
+                    else if (objectBody.class == 'grow') {
+                        console.log('grow player');
+                    }
+                    else if (objectBody.class == 'finish') {
+                        console.log('finish level');
                     }
                 }
             }
