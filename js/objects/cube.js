@@ -17,7 +17,10 @@ class Cube extends THREE.Mesh {
         this.shapes.addCube();
         this.shapes.setColors(options.color);
         this.add(this.shapes);
-        this.body = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { 
+        this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY);
+        this.sensor = Matter.Bodies.rectangle(0, -0.6, options.scaleX * 0.6, options.scaleY * 0.2, { isSensor: true, density: 0, class: 'sensor' });
+        this.body = Matter.Body.create({
+            parts: [this.rectangle, this.sensor],
             friction: 0.0,
             frictionAir: 0.0,
             frictionStatic: 0.0,
