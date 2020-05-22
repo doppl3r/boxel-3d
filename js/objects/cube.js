@@ -26,6 +26,7 @@ class Cube extends THREE.Mesh {
             frictionStatic: 0.0,
             restitution: 0.0,
             density: 0.001,
+            name: this.uuid, // Useful for finding scene object
             class: 'cube'
         });
         this.name = this.uuid;
@@ -139,5 +140,12 @@ class Cube extends THREE.Mesh {
             this.shapes.resetColors();
             this.shapes.setOpacities(1);
         }
+    }
+
+    force(force, angle) {
+        var xForce = Math.sin(angle) * force;
+        var yForce = Math.cos(angle) * force;
+        Matter.Body.setVelocity(this.body, { x: xForce, y: -yForce });
+        Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
     }
 }

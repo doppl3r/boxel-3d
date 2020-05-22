@@ -18,10 +18,6 @@ class Player extends Cube {
     jump() {
         if (this.allowJump == true) {
             this.allowJump = false;
-            var radian = -(Math.PI / 180) * 360;
-            var angle = this.rotation.z;
-            //var xForce = Math.sin(angle) * this.jumpForce;
-            //var yForce = Math.cos(angle) * this.jumpForce;
             var xForce = 0;
             var yForce = this.jumpForce;
             Matter.Body.setVelocity(this.body, { x: this.body.velocity.x, y: 0 });
