@@ -149,7 +149,7 @@ class App {
         switch(type) {
             case('player'): object = new Player(options); break;
             case('tip'): object = new Tip(options); break;
-            case('jump'): object = new Jump(options); break;
+            case('bounce'): object = new Bounce(options); break;
             case('checkpoint'): object = new Checkpoint(options); break;
             case('spike'): object = new Spike(options); break;
             case('shrink'): object = new Shrink(options); break;

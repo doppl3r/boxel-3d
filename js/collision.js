@@ -36,8 +36,8 @@ class Collision {
                     if (objectBody.class == 'tip') {
                         console.log('tip');
                     }
-                    else if (objectBody.class == 'jump') {
-                        console.log('jump');
+                    else if (objectBody.class == 'bounce') {
+                        console.log('bounce');
                     }
                     else if (objectBody.class == 'checkpoint') {
                         console.log('player checkpoint');

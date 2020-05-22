@@ -1,7 +1,7 @@
-class Jump extends Cube {
+class Bounce extends Cube {
     constructor(options = {}) {
         super(options);
-        this.body.class = 'jump';
+        this.body.class = 'bounce';
         this.setScale(16, 16, 16);
         this.shapes.removeAllShapes();
         this.addShapes(options);

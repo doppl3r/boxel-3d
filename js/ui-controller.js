@@ -74,7 +74,7 @@ class UIController {
             }
             else if (action == 'cube') { app.ui.selectObjectType(action); }
             else if (action == 'tip') { app.ui.selectObjectType(action); }
-            else if (action == 'jump') { app.ui.selectObjectType(action); }
+            else if (action == 'bounce') { app.ui.selectObjectType(action); }
             else if (action == 'checkpoint') { app.ui.selectObjectType(action); }
             else if (action == 'spike') { app.ui.selectObjectType(action); }
             else if (action == 'shrink') { app.ui.selectObjectType(action); }
