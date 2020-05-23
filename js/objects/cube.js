@@ -143,9 +143,39 @@ class Cube extends THREE.Mesh {
     }
 
     force(force, angle) {
+        var x1 = this.position.x;
+        var x2 = this.position.x + this.body.velocity.x;
+        var y1 = this.position.y;
+        var y2 = this.position.y + this.body.velocity.y;
+        var angleA = angle;
+        var angleB = Math.atan2(y2 - y1, x2 - x1) - (Math.PI / 2);
+        var angleDiff = (angleB - angleA);
+        var angleADegrees = (angleA * 180 / Math.PI);
+        var angleBDegrees = (angleB * 180 / Math.PI);
+        var angleDiffDegrees = (angleDiff * 180 / Math.PI);
         var xForce = Math.sin(angle) * force;
         var yForce = Math.cos(angle) * force;
-        Matter.Body.setVelocity(this.body, { x: xForce, y: -yForce });
-        Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
+        var xDirection = 1;
+        var yDirection = 1;
+
+        if (this.body.velocity.x >= 0 && angleDiffDegrees >= 0) xDirection = -1;
+        if (this.body.velocity.x < 0 && angleDiffDegrees < 0) xDirection = -1;
+        if (this.body.velocity.y >= 0 && angleDiffDegrees >= 0) yDirection = -1;
+        if (this.body.velocity.y < 0 && angleDiffDegrees < 0) yDirection = -1;
+
+        console.log('object velocity.x: ' + this.body.velocity.x + ', object velocity.y: ' + this.body.velocity.y);
+        console.log('wall degrees: ' + angleADegrees + ', object degrees: ' + angleBDegrees);
+        console.log('angleDiff: ' + angleDiff + ', angleDiffDegrees: ' + angleDiffDegrees);
+        console.log('xDirection: ' + xDirection + ', yDirection: ' + yDirection);
+        console.log('xForce: ' + xForce + ', yForce: ' + yForce);
+        
+        Matter.Body.setVelocity(this.body, { 
+            x: xForce,
+            y: -yForce
+        });
+
+        app.play = false; // FOR TESTING
+        
+        //Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
     }
 }
