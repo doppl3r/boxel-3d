@@ -18,9 +18,8 @@ class Cube extends THREE.Mesh {
         this.shapes.setColors(options.color);
         this.add(this.shapes);
         this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY);
-        this.sensor = Matter.Bodies.rectangle(0, -0.6, options.scaleX * 0.6, options.scaleY * 0.2, { isSensor: true, density: 0, class: 'sensor' });
         this.body = Matter.Body.create({
-            parts: [this.rectangle, this.sensor],
+            parts: [this.rectangle],
             friction: 0.0,
             frictionAir: 0.0,
             frictionStatic: 0.0,
@@ -142,40 +141,34 @@ class Cube extends THREE.Mesh {
         }
     }
 
-    force(force, angle) {
+    force(force, object) {
+        // Vector of this object
         var x1 = this.position.x;
         var x2 = this.position.x + this.body.velocity.x;
         var y1 = this.position.y;
         var y2 = this.position.y + this.body.velocity.y;
-        var angleA = angle;
-        var angleB = Math.atan2(y2 - y1, x2 - x1) - (Math.PI / 2);
-        var angleDiff = (angleB - angleA);
-        var angleADegrees = (angleA * 180 / Math.PI);
-        var angleBDegrees = (angleB * 180 / Math.PI);
-        var angleDiffDegrees = (angleDiff * 180 / Math.PI);
-        var xForce = Math.sin(angle) * force;
-        var yForce = Math.cos(angle) * force;
-        var xDirection = 1;
-        var yDirection = 1;
-
-        if (this.body.velocity.x >= 0 && angleDiffDegrees >= 0) xDirection = -1;
-        if (this.body.velocity.x < 0 && angleDiffDegrees < 0) xDirection = -1;
-        if (this.body.velocity.y >= 0 && angleDiffDegrees >= 0) yDirection = -1;
-        if (this.body.velocity.y < 0 && angleDiffDegrees < 0) yDirection = -1;
-
-        console.log('object velocity.x: ' + this.body.velocity.x + ', object velocity.y: ' + this.body.velocity.y);
-        console.log('wall degrees: ' + angleADegrees + ', object degrees: ' + angleBDegrees);
-        console.log('angleDiff: ' + angleDiff + ', angleDiffDegrees: ' + angleDiffDegrees);
-        console.log('xDirection: ' + xDirection + ', yDirection: ' + yDirection);
-        console.log('xForce: ' + xForce + ', yForce: ' + yForce);
         
+        var angleA = object.body.angle; // Ex: surface angle
+        var angleB = Math.atan2(y2 - y1, x2 - x1); // Ex: object angle
+
+        // Normalize velocity
+        var vx = Math.cos(angleB);
+        var vy = Math.sin(angleB);
+
+        // Set surface direction
+        var nx = -Math.sin(angleA);
+        var ny = Math.cos(angleA);
+
+        // Get dot value to calculate reflection
+        var dot = (vx * nx) + (vy * ny);
+
+        // Update velocity direction after reflection transforms
+        var vnewx = vx - (2 * dot * nx);
+        var vnewy = vy - (2 * dot * ny);
+
         Matter.Body.setVelocity(this.body, { 
-            x: xForce,
-            y: -yForce
+            x: vnewx * force,
+            y: vnewy * force
         });
-
-        app.play = false; // FOR TESTING
-        
-        //Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
     }
 }
