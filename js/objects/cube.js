@@ -17,9 +17,9 @@ class Cube extends THREE.Mesh {
         this.shapes.addCube();
         this.shapes.setColors(options.color);
         this.add(this.shapes);
-        this.rectangle = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY);
+        this.hitbox = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
         this.body = Matter.Body.create({
-            parts: [this.rectangle],
+            parts: [this.hitbox],
             friction: 0.0,
             frictionAir: 0.0,
             frictionStatic: 0.0,

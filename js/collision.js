@@ -5,52 +5,57 @@ class Collision {
 
     checkPlayerCollision(e, a) {
         var pairs = e.pairs;
-        var checkPair = true;
-        for (var i = 0; i < pairs.length; i++) {
-            var pair = pairs[i];
-            var parts = [ pair.bodyA, pair.bodyB ];
 
-            for (var j = 0; j < parts.length; j++) {
-                var partA = parts[(j + 0) % 2];
-                var partB = parts[(j + 1) % 2];
-                var objectA = a.level.getObjectByName(partA.parent.name);
-                var objectB = a.level.getObjectByName(partB.parent.name);
-                
-                // Check if player is falling
-                if (objectA.body.class == 'player') {
-                    if (a.player.body.velocity.y >= 0) { 
-                        a.player.allowJump = true; 
+        // Loop through pairs of collisions
+        for (var pairIndex = 0; pairIndex < pairs.length; pairIndex++) {
+            var pair = pairs[pairIndex];
+            var bodies = [pair.bodyA, pair.bodyB];
+
+            // Switch and compare bodies (bodyA and bodyB)
+            for (var bodyIndex = 0; bodyIndex < bodies.length; bodyIndex++) {
+                var bodyA = bodies[(bodyIndex + 0) % 2]; // Switch bodyA to bodyB
+                var bodyB = bodies[(bodyIndex + 1) % 2]; // Switch bodyB to bodyA
+                var objectA = a.level.getObjectByName(bodyA.parent.name);
+                var objectB = a.level.getObjectByName(bodyB.parent.name);
+
+                // Check bodies if bodyB is not a sensor. This prevents sensors reacting to each other.
+                if (bodyB.class != 'sensor') {
+
+                    // Check if player is falling
+                    if (objectA.body.class == 'player') {
+                        if (a.player.body.velocity.y >= 0) { 
+                            a.player.allowJump = true; 
+                        }
                     }
-                }
-                
-                if (partA.class == 'sensor') {
-                    if (objectA.body.class == 'tip') {
-                        console.log('tip');
-                    }
-                    else if (objectA.body.class == 'bounce') {
-                        checkPair = false;
-                        var force = objectA.scale.y / 2; // Use bounce height
-                        if (objectB.body.isStatic == false) objectB.force(force, objectA);
-                        if (objectA.body.isStatic == false) objectA.force(force, objectB, true);
-                    }
-                    else if (objectA.body.class == 'checkpoint') {
-                        console.log('player checkpoint');
-                    }
-                    else if (objectA.body.class == 'spike') {
-                        console.log('kill player');
-                    }
-                    else if (objectA.body.class == 'shrink') {
-                        console.log('shrink player');
-                    }
-                    else if (objectA.body.class == 'grow') {
-                        console.log('grow player');
-                    }
-                    else if (objectA.body.class == 'finish') {
-                        console.log('finish level');
+
+                    // Check sensor points
+                    if (bodyA.class == 'sensor') {
+                        if (objectA.body.class == 'tip') {
+                            console.log('tip');
+                        }
+                        else if (objectA.body.class == 'bounce') {
+                            var force = objectA.scale.y / 2; // Use bounce height
+                            if (objectB.body.isStatic == false) objectB.force(force, objectA);
+                            if (objectA.body.isStatic == false) objectA.force(force, objectB, true);
+                        }
+                        else if (objectA.body.class == 'checkpoint') {
+                            console.log('player checkpoint');
+                        }
+                        else if (objectA.body.class == 'spike') {
+                            console.log('kill player');
+                        }
+                        else if (objectA.body.class == 'shrink') {
+                            console.log('shrink player');
+                        }
+                        else if (objectA.body.class == 'grow') {
+                            console.log('grow player');
+                        }
+                        else if (objectA.body.class == 'finish') {
+                            console.log('finish level');
+                        }
                     }
                 }
             }
-            //if (checkPair == false) break;
         }
     }
 }

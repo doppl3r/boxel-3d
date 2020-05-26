@@ -4,9 +4,9 @@ class Shrink extends Cube {
         this.body.class = 'shrink';
 
         // Set sensor the same size as rectangle
-        this.rectangle.isSensor = true;
+        this.hitbox.isSensor = true;
         this.sensor = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
-        Matter.Body.setParts(this.body, [this.rectangle, this.sensor]);
+        Matter.Body.setParts(this.body, [this.hitbox, this.sensor]);
 
         // Update body properties
         this.setScale(16, 16, 16);

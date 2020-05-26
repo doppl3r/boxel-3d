@@ -5,7 +5,7 @@ class Bounce extends Cube {
 
         // Add bounce sensor
         this.sensor = Matter.Bodies.rectangle(0, -0.6, options.scaleX * 0.6, options.scaleY * 0.2, { isSensor: true, density: 0, class: 'sensor' });
-        Matter.Body.setParts(this.body, [this.rectangle, this.sensor]);
+        Matter.Body.setParts(this.body, [this.hitbox, this.sensor]);
 
         this.setScale(16, 16, 16);
         this.shapes.removeAllShapes();
