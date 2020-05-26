@@ -5,7 +5,7 @@ class Collision {
 
     checkPlayerCollision(e, a) {
         var pairs = e.pairs;
-        var breakLoop = false;
+        var checkPair = true;
         for (var i = 0; i < pairs.length; i++) {
             var pair = pairs[i];
             var parts = [ pair.bodyA, pair.bodyB ];
@@ -28,10 +28,10 @@ class Collision {
                         console.log('tip');
                     }
                     else if (objectA.body.class == 'bounce') {
-                        breakLoop = true;
+                        checkPair = false;
                         var force = objectA.scale.y / 2; // Use bounce height
                         if (objectB.body.isStatic == false) objectB.force(force, objectA);
-                        //if (objectA.body.isStatic == false) objectA.force(force, objectB); // Newton's Third Law
+                        if (objectA.body.isStatic == false) objectA.force(force, objectB, true);
                     }
                     else if (objectA.body.class == 'checkpoint') {
                         console.log('player checkpoint');
@@ -50,7 +50,7 @@ class Collision {
                     }
                 }
             }
-            if (breakLoop == true) break;
+            //if (checkPair == false) break;
         }
     }
 }

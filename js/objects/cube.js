@@ -141,18 +141,21 @@ class Cube extends THREE.Mesh {
         }
     }
 
-    force(force, object) {
+    force(force, object, inheritAngle = false) {
         // Vector of this cube
-        console.log(this.body);
         var x1 = this.body.positionPrev.x;
         var x2 = this.body.position.x;
         var y1 = this.body.positionPrev.y;
         var y2 = this.body.position.y;
-
-        //app.play = false;
-        
         var angleA = object.body.angle; // Ex: object angle
         var angleB = Math.atan2(y2 - y1, x2 - x1); // Ex: this angle
+
+        // Newtons 3rd law of pizza
+        if (inheritAngle == true) {
+            angleA = this.body.angle;
+            angleB = this.body.angle + (Math.PI / 2);
+            force *= -1;
+        }
 
         // Normalize velocity
         var vx = Math.cos(angleB);
