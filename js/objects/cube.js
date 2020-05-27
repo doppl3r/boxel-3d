@@ -141,7 +141,7 @@ class Cube extends THREE.Mesh {
         }
     }
 
-    force(force, object, inheritAngle = false) {
+    force(force, object, useThisAngle = false) {
         // Vector of this cube
         var x1 = this.body.positionPrev.x;
         var x2 = this.body.position.x;
@@ -151,10 +151,10 @@ class Cube extends THREE.Mesh {
         var angleB = Math.atan2(y2 - y1, x2 - x1); // Ex: this angle
 
         // Newtons 3rd law of pizza
-        if (inheritAngle == true) {
+        if (useThisAngle == true) {
             angleA = this.body.angle;
             angleB = this.body.angle + (Math.PI / 2);
-            force *= -1;
+            force *= -1; // Newtons 3rd law of pizza
         }
 
         // Normalize velocity
@@ -172,9 +172,21 @@ class Cube extends THREE.Mesh {
         var vnewx = vx - (2 * dot * nx);
         var vnewy = vy - (2 * dot * ny);
 
+        // Reverse force if dot product is negative
+        if (dot < 0) force *= -1;
+
         Matter.Body.setVelocity(this.body, { 
             x: vnewx * force,
             y: vnewy * force
         });
+        return force;
+    }
+
+    getVelocity(object = this) {
+        console.log(object);
+        return { 
+            x: object.body.position.x - object.body.positionPrev.x,
+            y: object.body.position.y - object.body.positionPrev.y
+        }
     }
 }

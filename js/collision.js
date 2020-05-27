@@ -35,8 +35,8 @@ class Collision {
                         }
                         else if (objectA.body.class == 'bounce') {
                             var force = objectA.scale.y / 2; // Use bounce height
-                            if (objectB.body.isStatic == false) objectB.force(force, objectA);
-                            if (objectA.body.isStatic == false) objectA.force(force, objectB, true);
+                            if (objectA.body.isStatic == false) { objectA.force(force, objectB, true); }
+                            if (objectB.body.isStatic == false) { objectB.force(force, objectA); }
                         }
                         else if (objectA.body.class == 'checkpoint') {
                             console.log('player checkpoint');
