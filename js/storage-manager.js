@@ -15,22 +15,28 @@ class StorageManager {
         return levels;
     }
 
-    getLevelFromStorage(key) {
+    getLevelDataFromStorage(key) {
         return JSON.parse(localStorage.getItem(key));
     }
 
-    updateLevelToStorage(key, levelData) {
+    updateLevelDataToStorage(key, levelData) {
         localStorage.setItem(key, JSON.stringify(levelData));
     }
 
-    addLevelToStorage(level) {
+    addLevelDataToStorage(level) {
         var index = 1;
         while (localStorage.getItem(this.levelPrefix + index) != null) index++;
         level.key = this.levelPrefix + index; // Store key in JSON object
         localStorage.setItem(this.levelPrefix + index, JSON.stringify(level));
     }
 
-    deleteLevelFromStorage(key) {
+    deleteLevelDataFromStorage(key) {
         localStorage.removeItem(key);
+    }
+
+    updateLevelDataName(key, name) {
+        var levelData = this.getLevelDataFromStorage(key);
+        levelData.name = name;
+        this.updateLevelDataToStorage(key, levelData);
     }
 }

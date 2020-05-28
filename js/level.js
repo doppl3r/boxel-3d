@@ -57,8 +57,8 @@ class Level extends THREE.Group {
         return levelJSON;
     }
 
-    saveLevel(a) {
-        a.storage.updateLevelToStorage(this.key, this.exportToJSON(a));
+    saveLevelData(a) {
+        a.storage.updateLevelDataToStorage(this.key, this.exportToJSON(a));
     }
 
     importFromJSON(levelData, a) {
