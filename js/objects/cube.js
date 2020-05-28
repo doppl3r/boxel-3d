@@ -141,7 +141,7 @@ class Cube extends THREE.Mesh {
         }
     }
 
-    force(force, object, useThisAngle = false) {
+    force(force, object, relativeAngle = false) {
         // Vector of this cube
         var x1 = this.body.positionPrev.x;
         var x2 = this.body.position.x;
@@ -150,8 +150,8 @@ class Cube extends THREE.Mesh {
         var angleA = object.body.angle; // Ex: object angle
         var angleB = Math.atan2(y2 - y1, x2 - x1); // Ex: this angle
 
-        // Newtons 3rd law of pizza
-        if (useThisAngle == true) {
+        // Use relative angle, not object angle
+        if (relativeAngle == true) {
             angleA = this.body.angle;
             angleB = this.body.angle + (Math.PI / 2);
             force *= -1; // Newtons 3rd law of pizza
