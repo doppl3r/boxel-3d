@@ -114,6 +114,12 @@ class UIController {
             else if (name == 'scale-y') { app.selectedObject.setScale(null, val, null); }
         });
 
+        // Save level history when input slider is updated
+        this.controller.on('mouseup', '.slider input', function(event){
+            event.preventDefault();
+            app.levelHistory.save(app);
+        });
+
         // Add level name change listener
         this.controller.on('focusout', '.list input', function(event) {
             event.preventDefault();

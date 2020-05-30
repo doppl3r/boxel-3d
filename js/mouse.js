@@ -103,6 +103,12 @@ class Mouse {
                     }
                 }
             }
+            else {
+                // Save history if object was moved
+                if (a.mouse.getTolerance() != false) {
+                    a.levelHistory.save(a);
+                }
+            }
         }
     }
 
