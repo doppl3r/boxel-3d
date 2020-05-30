@@ -1,7 +1,7 @@
 class Level extends THREE.Group {
     constructor() {
         super();
-        this.name = 'My Level';
+        this.name = this.defaultName = 'My Level';
     }
 
     addObject(object, a) {
@@ -20,6 +20,7 @@ class Level extends THREE.Group {
     }
 
     clearLevel(a) {
+        this.name = this.defaultName;
         var length = a.level.children.length;
         for (var i=0; i < length; i++) {
             var child = a.level.children[0];

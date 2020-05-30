@@ -31,7 +31,14 @@ class UIController {
                 app.resetScene(app);
             }
             else if (action == 'delete-level') {
-                app.ui.removeLevelItem($(this));
+                app.ui.addDialog({
+                    text: 'Are you sure you want to delete this level?',
+                    buttons: [
+                        { function: app.ui.removeLevelItem, parameter: $(this), text: 'yes' },
+                        { text: 'no' }
+                    ]
+                });
+                //app.ui.removeLevelItem($(this));
             }
             else if (action == 'home') {
                 app.play = false;
@@ -242,5 +249,43 @@ class UIController {
         if (this.canvas == null || this.canvas.length <= 0) {
             this.canvas = $('canvas');
         }
+    }
+
+    addDialog(options) {
+        var dialog = $('<div class="dialog"><div>');
+        var wrapper = $('<div class="wrapper"></div>');
+        
+        // Include copy
+        if (options.text != null) wrapper.append('<p>' + options.text + '</p>');
+        
+        // Bind functions
+        if (options.buttons != null) {
+            for (var i = 0; i < options.buttons.length; i++) {
+                var data = options.buttons[i];
+                var button = $('<a>', { text: data.text });
+
+                // Append button to wrapper
+                button[0]._function = function(){};
+                button[0]._parameter = button;
+                wrapper.append(button);
+
+                // Add events to button
+                if (data.function != null) button[0]._function = data.function;
+                if (data.parameter != null) button[0]._parameter = data.parameter;
+                button.on('click', function() {
+                    var self = $(this)[0];
+                    self._function(self._parameter);
+                    app.ui.removeDialog(); // Always close dialog
+                });
+            }
+        }
+        dialog.append(wrapper);
+        $('body').append(dialog);
+    }
+
+    removeDialog() {
+        var dialog = $('.dialog');
+        dialog.find('a').off();
+        dialog.remove();
     }
 }
