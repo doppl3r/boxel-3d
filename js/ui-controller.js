@@ -38,17 +38,15 @@ class UIController {
                         { text: 'no' }
                     ]
                 });
-                //app.ui.removeLevelItem($(this));
             }
             else if (action == 'home') {
-                app.play = false;
-                app.resetScene(app);
-                app.deselectScene(app);
-                app.level.saveLevelData(app);
-                app.level.clearLevel(app);
-                app.levelHistory.clear();
-                app.player.setPosition(0, 0, 0);
-                app.ui.updateUI('level-manager');
+                app.ui.addDialog({
+                    text: 'Would you like to save your level?',
+                    buttons: [
+                        { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'no' },
+                        { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'yes' }
+                    ]
+                });
             }
             else if (action == 'save') {
                 app.resetScene(app);
@@ -251,6 +249,17 @@ class UIController {
         }
     }
 
+    saveAndExitLevelEditor(saveLevel = true) {
+        app.play = false;
+        app.resetScene(app);
+        app.deselectScene(app);
+        if (saveLevel == true) app.level.saveLevelData(app);
+        app.level.clearLevel(app);
+        app.levelHistory.clear();
+        app.player.setPosition(0, 0, 0);
+        app.ui.updateUI('level-manager');
+    }
+
     addDialog(options) {
         var dialog = $('<div class="dialog"><div>');
         var wrapper = $('<div class="wrapper"></div>');
@@ -279,6 +288,7 @@ class UIController {
                 });
             }
         }
+        dialog.hide().fadeIn(100);
         dialog.append(wrapper);
         $('body').append(dialog);
     }
@@ -286,6 +296,6 @@ class UIController {
     removeDialog() {
         var dialog = $('.dialog');
         dialog.find('a').off();
-        dialog.remove();
+        dialog.fadeOut(100, function(){ dialog.remove(); });
     }
 }
