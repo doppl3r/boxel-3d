@@ -173,7 +173,7 @@ class Cube extends THREE.Mesh {
         var vnewy = vy - (2 * dot * ny);
 
         // Reverse force if dot product is negative
-        if (dot < 0) force *= -1;
+        if (dot < 0 && (Math.abs(vnewx) == 1 || Math.abs(vnewy) == 1)) { force *= -1; console.log(vnewx, vnewy); }
 
         Matter.Body.setVelocity(this.body, { 
             x: vnewx * force,
