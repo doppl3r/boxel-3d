@@ -32,7 +32,7 @@ class UIController {
             }
             else if (action == 'delete-level') {
                 app.ui.addDialog({
-                    text: 'Are you sure you want to delete this level?',
+                    text: 'Are you sure you want to <strong>delete</strong> this level?',
                     buttons: [
                         { function: app.ui.removeLevelItem, parameter: $(this), text: 'yes' },
                         { text: 'no' }
@@ -41,7 +41,7 @@ class UIController {
             }
             else if (action == 'home') {
                 app.ui.addDialog({
-                    text: 'Would you like to save your level?',
+                    text: 'Would you like to <strong>save</strong> your level?',
                     buttons: [
                         { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'no' },
                         { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'yes' }
@@ -263,6 +263,7 @@ class UIController {
     addDialog(options) {
         var dialog = $('<div class="dialog"><div>');
         var wrapper = $('<div class="wrapper"></div>');
+        var buttons = $('<div class="buttons"></div>');
         
         // Include copy
         if (options.text != null) wrapper.append('<p>' + options.text + '</p>');
@@ -276,7 +277,7 @@ class UIController {
                 // Append button to wrapper
                 button[0]._function = function(){};
                 button[0]._parameter = button;
-                wrapper.append(button);
+                buttons.append(button);
 
                 // Add events to button
                 if (data.function != null) button[0]._function = data.function;
@@ -287,9 +288,10 @@ class UIController {
                     app.ui.removeDialog(); // Always close dialog
                 });
             }
+            wrapper.append(buttons);
         }
-        dialog.hide().fadeIn(100);
         dialog.append(wrapper);
+        dialog.hide().fadeIn(100);
         $('body').append(dialog);
     }
 
