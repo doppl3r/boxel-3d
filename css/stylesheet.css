@@ -28,8 +28,7 @@ body .ui-controller .item:hover a ~ .slider { /* show */ display: inline-flex; }
 body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background-color: rgba(0, 0, 0, 0.5); }
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 240px; padding: 24px; width: 100%; }
 body .dialog .wrapper p { margin: 0; font-size: 16px; padding: 0 0 32px; }
-body .dialog .wrapper p strong { position: relative; }
-body .dialog .wrapper p strong:after { content: ''; background-color: #fff; position: absolute; bottom: -2px; left: 0; height: 2px; right: 0; border-radius: 2px; }
+body .dialog .wrapper p em { position: relative; }
 body .dialog .wrapper .buttons { display: flex; flex-wrap: wrap; justify-content: space-between; }
 body .dialog .wrapper .buttons a { border-radius: 4px; cursor: pointer; display: inline-block; padding: 12px 24px; }
 body .dialog .wrapper .buttons a:hover { animation: shake 0.25s; }

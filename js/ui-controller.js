@@ -32,7 +32,7 @@ class UIController {
             }
             else if (action == 'delete-level') {
                 app.ui.addDialog({
-                    text: 'Are you sure you want to <strong>delete</strong> this level?',
+                    text: 'Are you sure you want to <em>delete</em> this level?',
                     buttons: [
                         { function: app.ui.removeLevelItem, parameter: $(this), text: 'yes' },
                         { text: 'no' }
@@ -41,7 +41,7 @@ class UIController {
             }
             else if (action == 'home') {
                 app.ui.addDialog({
-                    text: 'Would you like to <strong>save</strong> your level?',
+                    text: 'Would you like to <em>save</em> your level?',
                     buttons: [
                         { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'no' },
                         { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'yes' }
