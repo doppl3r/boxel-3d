@@ -31,7 +31,8 @@ class Collision {
                     // Check sensor points
                     if (bodyA.class == 'sensor') {
                         if (objectA.body.class == 'tip') {
-                            console.log('tip');
+                            var tip = objectA.text;
+                            app.ui.showTip(tip);
                         }
                         else if (objectA.body.class == 'bounce') {
                             var force = objectA.scale.y / 2; // Use bounce height

@@ -65,18 +65,10 @@ class UIController {
                 app.ui.showObjectOptions(false);
             }
             else if (action == 'pause') {
-                app.play = false;
-                app.deselectScene(app);
-                app.ui.showObjectOptions(false);
-                app.ui.levelOptions.find('[action="play"]').removeClass('selected');
-                app.ui.levelOptions.find('[action="pause"]').addClass('selected');
+                app.ui.pause();
             }
             else if (action == 'play') {
-                app.play = true;
-                app.deselectScene(app);
-                app.ui.showObjectOptions(false);
-                app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
-                app.ui.levelOptions.find('[action="play"]').addClass('selected');
+                app.ui.play();
             }
             else if (action == 'cube') { app.ui.selectObjectType(action); }
             else if (action == 'tip') { app.ui.selectObjectType(action); }
@@ -312,6 +304,7 @@ class UIController {
                 // Add events to button
                 if (data.function != null) button[0]._function = data.function;
                 if (data.parameter != null) button[0]._parameter = data.parameter;
+                console.log(button);
                 button.on('click', function() {
                     var self = $(this)[0];
                     self._function(self._parameter);
@@ -335,5 +328,29 @@ class UIController {
         var input = $('.dialog input');
         app.selectedObject.text = input.val();
         app.levelHistory.save(app);
+    }
+
+    showTip(text) {
+        app.play = false;
+        app.ui.addDialog({
+            text: text,
+            buttons: [{ function: app.ui.play, parameter: true, text: 'Continue' }]
+        });
+    }
+
+    pause() {
+        app.play = false;
+        app.deselectScene(app);
+        app.ui.showObjectOptions(false);
+        app.ui.levelOptions.find('[action="play"]').removeClass('selected');
+        app.ui.levelOptions.find('[action="pause"]').addClass('selected');
+    }
+    
+    play() {
+        app.play = true;
+        app.deselectScene(app);
+        app.ui.showObjectOptions(false);
+        app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
+        app.ui.levelOptions.find('[action="play"]').addClass('selected');
     }
 }
