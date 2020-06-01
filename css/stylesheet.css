@@ -17,8 +17,9 @@ body .ui-controller .row.left .col.object-options { background-color: #252526; }
 body .ui-controller a { cursor: pointer; display: flex; flex-shrink: 0; justify-content: center; align-items: center; width: 48px; height: 48px; }
 body .ui-controller input { font-family: 'Comfortaa-Bold'; background-color: transparent; border: none; color: #858585; font-size: 16px; padding: 0 16px; width: 240px; }
 body .ui-controller input:focus { color: #fff; border: none; outline: none; }
+body .ui-controller a img { opacity: 0.3; }
 body .ui-controller a:hover img,
-body .ui-controller .selected img { animation: shake 0.25s; filter: brightness(2); }
+body .ui-controller .selected img { animation: shake 0.25s; filter: brightness(2); opacity: 1.0; }
 body .ui-controller .slider { /* default hidden */ display: none; align-items: center; position: relative; height: 48px; width: 144px; position: absolute; left: 100%; background-color: #252526; padding: 0 16px; top: 0; }
 body .ui-controller .slider input[type="range"] { width: 100%; height: 100%; padding: 0; margin: 0; cursor: pointer; }
 body .ui-controller .selected ~ .slider,
