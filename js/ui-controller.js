@@ -174,6 +174,7 @@ class UIController {
             var scaleX = app.selectedObject.scale.x;
             var scaleY = app.selectedObject.scale.y;
             var isPlayer = (app.selectedObject.getClass() == 'player');
+            var isTip = (app.selectedObject.getClass() == 'tip');
             this.objectOptions.find('[action*="rotate"] ~ .slider input').val(rotation);
             this.objectOptions.find('[action*="scale-x"] ~ .slider input').val(scaleX);
             this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
@@ -181,6 +182,10 @@ class UIController {
             // Enable/Disable the trash icon for player
             if (isPlayer == true) this.objectOptions.find('[action*="trash"]').addClass('disabled');
             else this.objectOptions.find('[action*="trash"]').removeClass('disabled');
+            
+            // Enable/Disable the tip icon for tip block
+            if (isTip == true) this.objectOptions.find('[action*="text"]').removeClass('disabled');
+            else this.objectOptions.find('[action*="text"]').addClass('disabled');
             
             // Update selected pin status
             if (isStatic == true) pinIcon.addClass('selected');
