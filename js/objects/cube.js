@@ -127,6 +127,12 @@ class Cube extends THREE.Mesh {
         return this.body.class;
     }
 
+    setText(text) {
+        if (text != null) this.text = text;
+    }
+
+    getText() { return this.text; }
+
     select(state = true) {
         this.selected = state;
         if (state == true) {

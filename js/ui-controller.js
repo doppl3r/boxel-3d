@@ -34,8 +34,8 @@ class UIController {
                 app.ui.addDialog({
                     text: 'Are you sure you want to <em>delete</em> this level?',
                     buttons: [
-                        { function: app.ui.removeLevelItem, parameter: $(this), text: 'yes' },
-                        { text: 'no' }
+                        { function: app.ui.removeLevelItem, parameter: $(this), text: 'Yes' },
+                        { text: 'No' }
                     ]
                 });
             }
@@ -43,8 +43,8 @@ class UIController {
                 app.ui.addDialog({
                     text: 'Would you like to <em>save</em> your level?',
                     buttons: [
-                        { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'no' },
-                        { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'yes' }
+                        { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'No' },
+                        { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'Yes' }
                     ]
                 });
             }
@@ -92,6 +92,16 @@ class UIController {
             }
             else if (action == 'rotate') {
                 this.objectOptions.find('[name="rotate"]').focus();
+            }
+            else if (action == 'text') {
+                app.ui.addDialog({
+                    text: 'Share a tip!',
+                    input: true,
+                    buttons: [
+                        { text: 'Cancel' },
+                        { function: app.ui.updateTip, parameter: $(this), text: 'Accept' }
+                    ]
+                });
             }
             else if (action == 'accept') {
                 app.deselectScene(app);
@@ -274,11 +284,20 @@ class UIController {
     addDialog(options) {
         var dialog = $('<div class="dialog"><div>');
         var wrapper = $('<div class="wrapper"></div>');
+        var input = $('<input type="text">');
         var buttons = $('<div class="buttons"></div>');
         
         // Include copy
         if (options.text != null) wrapper.append('<p>' + options.text + '</p>');
         
+        // Bind functions
+        if (options.input != null) {
+            console.log('input: ' + app.selectedObject.text);
+            var text = app.selectedObject.text;
+            input.val(text);
+            wrapper.append(input);
+        }
+
         // Bind functions
         if (options.buttons != null) {
             for (var i = 0; i < options.buttons.length; i++) {
@@ -310,5 +329,11 @@ class UIController {
         var dialog = $('.dialog');
         dialog.find('a').off();
         dialog.fadeOut(100, function(){ dialog.remove(); });
+    }
+
+    updateTip() {
+        var input = $('.dialog input');
+        app.selectedObject.text = input.val();
+        app.levelHistory.save(app);
     }
 }
