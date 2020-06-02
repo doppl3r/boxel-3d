@@ -74,9 +74,11 @@ class UIController {
             }
             else if (action == 'pause') {
                 app.ui.pause();
+                app.ui.updateLevelOptions();
             }
             else if (action == 'play') {
                 app.ui.play();
+                app.ui.updateLevelOptions();
             }
             else if (action == 'cube') { app.ui.selectObjectType(action); }
             else if (action == 'tip') { app.ui.selectObjectType(action); }
@@ -180,11 +182,20 @@ class UIController {
         if (app != null) {
             mode = app.mouse.mode;
             play = app.play == true ? 'play' : 'pause';
+            this.updateObjectType();
         }
         this.levelOptions.find('[action="pause"], [action="pause"]').removeClass('selected');
         this.levelOptions.find('[action="draw"], [action="erase"]').removeClass('selected');
         this.levelOptions.find('[action="' + mode + '"]').addClass('selected');
         this.levelOptions.find('[action="' + play + '"]').addClass('selected');
+    }
+
+    updateObjectType() {
+        var mode = app.mouse.mode;
+        var play = app.play == true ? 'play' : 'pause';
+        console.log(mode);
+        this.objectType.removeClass('disabled');
+        if (mode == 'erase' || play == 'play') this.objectType.addClass('disabled');
     }
 
     updateObjectOptions() {
