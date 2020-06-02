@@ -191,7 +191,7 @@ class App {
             var child = a.level.children[i];
             if (child.body != null) {
                 child.resetToOrigin();
-                a.update(null, a);
+                a.update(null, a); // TODO confirm static disappearing glitch
             }
         }
     }

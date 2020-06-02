@@ -39,6 +39,14 @@ class UIController {
                     ]
                 });
             }
+            else if (action == 'draw') {
+                app.mouse.setMode('draw');
+                app.ui.updateLevelOptions();
+            }
+            else if (action == 'erase') {
+                app.mouse.setMode('erase');
+                app.ui.updateLevelOptions();
+            }
             else if (action == 'home') {
                 app.ui.addDialog({
                     text: 'Would you like to <em>save</em> your level?',
@@ -145,8 +153,7 @@ class UIController {
             this.levelManager.removeClass('disabled');
             this.levelEditor.addClass('disabled'); // Hide while manager is open
             this.levelEditor.find('[action]').removeClass('selected'); // Clear all selected
-            this.levelOptions.find('[action="pause"]').addClass('selected');
-            this.levelOptions.find('[action="add-cube"]').addClass('selected');
+            this.updateLevelOptions(); // Update top bar
             this.objectType.find('[action="cube"]').addClass('selected');
             this.objectOptions.addClass('disabled');
         }
@@ -165,6 +172,19 @@ class UIController {
 
     toggleObjectOptions() {
         this.objectOptions.toggleClass('disabled');
+    }
+
+    updateLevelOptions() {
+        var mode = 'draw';
+        var play = 'pause';
+        if (app != null) {
+            mode = app.mouse.mode;
+            play = app.play == true ? 'play' : 'pause';
+        }
+        this.levelOptions.find('[action="pause"], [action="pause"]').removeClass('selected');
+        this.levelOptions.find('[action="draw"], [action="erase"]').removeClass('selected');
+        this.levelOptions.find('[action="' + mode + '"]').addClass('selected');
+        this.levelOptions.find('[action="' + play + '"]').addClass('selected');
     }
 
     updateObjectOptions() {
