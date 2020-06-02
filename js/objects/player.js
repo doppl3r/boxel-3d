@@ -21,4 +21,12 @@ class Player extends Cube {
             Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
         }
     }
+
+    kill() {
+        this.shapes.setOpacities(0);
+    }
+
+    respawn() {
+
+    }
 }

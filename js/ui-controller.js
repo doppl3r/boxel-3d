@@ -48,13 +48,16 @@ class UIController {
                 app.ui.updateLevelOptions();
             }
             else if (action == 'home') {
-                app.ui.addDialog({
-                    text: 'Would you like to <em>save</em> your level?',
-                    buttons: [
-                        { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'No' },
-                        { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'Yes' }
-                    ]
-                });
+                if (app.levelHistory.history.length > 2) {
+                    app.ui.addDialog({
+                        text: 'Would you like to <em>save</em> your level?',
+                        buttons: [
+                            { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'No' },
+                            { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'Yes' }
+                        ]
+                    });
+                }
+                else app.ui.saveAndExitLevelEditor(false);
             }
             else if (action == 'save') {
                 app.resetScene(app);
