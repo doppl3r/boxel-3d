@@ -28,6 +28,16 @@ class Level extends THREE.Group {
         }
     }
 
+    removeParticles(a) {
+        var length = a.level.children.length;
+        var index = length - 1;
+        while (index >= 0) {
+            var child = a.level.children[index];
+            if (child.isParticle != null) this.removeObject(child, a, true);
+            index--;
+        }
+    }
+
     createNewLevel(a) {
         a.player.setPosition(); // Reset player position
         this.clearLevel(a);

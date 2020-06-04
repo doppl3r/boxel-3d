@@ -6,7 +6,7 @@ class Player extends Cube {
         // Update body
         this.setScale(16, 16, 16);
         this.setStatic(false);
-        this.shapes.setColors('#dc265a');
+        this.setColors('#dc265a');
         this.mass = 5;
         this.jumpForce = -0.00125 * this.mass;
         this.allowJump = true;
@@ -23,7 +23,32 @@ class Player extends Cube {
     }
 
     kill() {
-        this.shapes.setOpacities(0);
+        this.freeze(true);
+        this.visible = false;
+        var rows = 4, cols = 4, layers = 4;
+        var scale = { x: this.scale.x / cols, y: this.scale.y / rows, z: this.scale.z / layers }
+        for (var row = -rows / 2; row < rows / 2; row++) {
+            for (var col = -cols / 2; col < cols / 2; col++) {
+                var randAngle = randomNumber(0, 360 * (Math.PI / 180));
+                var particleData = {
+                    class: 'particle',
+                    color: this.color,
+                    position: { 
+                        x: this.position.x + (col * scale.x) + (scale.x / 2),
+                        y: this.position.y + (row * scale.y) + (scale.y / 2), 
+                        z: 0
+                    },
+                    rotation: { x: 0, y: 0, z: randAngle },
+                    scale: { x: scale.x, y: scale.y, z: scale.z }
+                };
+                var particle = app.newObject('cube');
+                particle.isParticle = true;
+                app.level.setObjectProperties(particle, particleData);
+                app.level.addObject(particle, app);
+                particle.body.velocity = this.body.velocity;
+                particle.setColors(this.color);
+            }
+        }
     }
 
     respawn() {

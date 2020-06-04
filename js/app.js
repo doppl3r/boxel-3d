@@ -98,9 +98,10 @@ class App {
                 var rect = child.body;
                 var x = rect.position.x;
                 var y = rect.position.y;
-                var z = rect.angle;
-                child.setPosition(x, -y, 0, false);
-                child.setRotation(-z, false);
+                var z = child.position.z;
+                var rotation = rect.angle;
+                child.setPosition(x, -y, z, false);
+                child.setRotation(-rotation, false);
                 if (child.position.y < -1000) child.resetToOrigin();
             }
         }
@@ -187,6 +188,7 @@ class App {
     resetScene(a) {
         a.updateCamera(a);
         a.ui.showObjectOptions(false);
+        a.level.removeParticles(a);
         for (var i=0; i < a.level.children.length; i++) {
             var child = a.level.children[i];
             if (child.body != null) {

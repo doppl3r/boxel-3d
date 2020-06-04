@@ -43,7 +43,9 @@ class Collision {
                             console.log('player checkpoint');
                         }
                         else if (objectA.body.class == 'spike') {
-                            console.log('kill player');
+                            if (objectB.body.class ==  'player') {
+                                app.player.kill();
+                            }
                         }
                         else if (objectA.body.class == 'shrink') {
                             console.log('shrink player');

@@ -15,7 +15,7 @@ class Cube extends THREE.Mesh {
         // Set default properties
         this.shapes = new Shapes();
         this.shapes.addCube();
-        this.shapes.setColors(options.color);
+        this.setColors(options.color);
         this.add(this.shapes);
         this.hitbox = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
         this.body = Matter.Body.create({
@@ -34,6 +34,11 @@ class Cube extends THREE.Mesh {
         this.setPosition(options.x, options.y, options.z);
         this.setRotation(options.angle);
         this.setScale(options.scaleX, options.scaleY, options.scaleZ);
+    }
+
+    setColors(color) {
+        this.color = color; // Update last color
+        this.shapes.setColors(color);
     }
 
     setPosition(x, y, z, updateOrigin = true) {
@@ -89,6 +94,10 @@ class Cube extends THREE.Mesh {
         if (updateOrigin == true) this.setScaleOrigin(scaleX, scaleY, scaleZ);
     }
 
+    getScale() {
+        return this.scale;
+    }
+
     setScaleOrigin(scaleX, scaleY, scaleZ) {
         this.scaleXOrigin = scaleX;
         this.scaleYOrigin = scaleY;
@@ -96,13 +105,17 @@ class Cube extends THREE.Mesh {
     }
 
     resetToOrigin() {
-        this.setPosition(this.xOrigin, this.yOrigin, this.ZOrigin, false);
+        this.visible = true;
+        this.setPosition(this.xOrigin, this.yOrigin, this.zOrigin, false);
         this.setRotation(this.rotationOrigin, false);
         this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin, false);
         this.setStatic(this.isStaticOrigin, false);
         Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.body, 0);
-        if (this.getClass() == 'player') this.allowJump = true;
+        if (this.getClass() == 'player') {
+            this.freeze(false); // Unfreeze if applicable
+            this.allowJump = true;
+        }
     }
 
     setStatic(isStatic, updateOrigin = true) {
@@ -195,5 +208,10 @@ class Cube extends THREE.Mesh {
             x: object.body.position.x - object.body.positionPrev.x,
             y: object.body.position.y - object.body.positionPrev.y
         }
+    }
+
+    freeze(state = true) {
+        this.body.collisionFilter.category = (state == true) ? 0 : 1;
+        Matter.Sleeping.set(this.body, state);
     }
 }
