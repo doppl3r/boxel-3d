@@ -31,7 +31,7 @@ class Cube extends THREE.Mesh {
         this.name = this.uuid;
         this.castShadow = true;
         this.receiveShadow = true;
-        this.setPosition(options.x, options.y, options.z);
+        this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale(options.scaleX, options.scaleY, options.scaleZ);
     }
@@ -41,16 +41,19 @@ class Cube extends THREE.Mesh {
         this.shapes.setColors(color);
     }
 
-    setPosition(x, y, z, updateOrigin = true) {
+    setPosition(position, updateOrigin = true) {
         // Set null values
-        x = (x == null) ? this.position.x : x;
-        y = (y == null) ? this.position.y : y;
-        z = (z == null) ? this.position.z : z;
+        position.x = (position.x == null) ? this.position.x : position.x;
+        position.y = (position.y == null) ? this.position.y : position.y;
+        position.z = (position.z == null) ? this.position.z : position.z;
 
         // Update position
-        this.position.set(x, y, z);
-        Matter.Body.setPosition(this.body, { x: x, y: -y });
-        if (updateOrigin == true) this.setPositionOrigin(x, y, z);
+        this.position.set(position.x, position.y, position.z);
+        Matter.Body.setPosition(this.body, { x: position.x, y: -position.y });
+        if (updateOrigin == true) {
+            this.setPositionOrigin(position.x, position.y, position.z);
+            this.saveCheckpoint();
+        }
     }
 
     setPositionOrigin(x, y, z) {
@@ -106,7 +109,7 @@ class Cube extends THREE.Mesh {
 
     resetToOrigin() {
         this.visible = true;
-        this.setPosition(this.xOrigin, this.yOrigin, this.zOrigin, false);
+        this.setPosition({ x: this.xOrigin, y: this.yOrigin, z: this.zOrigin}, false);
         this.setRotation(this.rotationOrigin, false);
         this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin, false);
         this.setStatic(this.isStaticOrigin, false);
@@ -217,5 +220,18 @@ class Cube extends THREE.Mesh {
 
     isFrozen() {
         return this.body.collisionFilter.category == 0;
+    }
+
+    saveCheckpoint() {
+        if (this.checkpoint == null) this.checkpoint = {};
+        this.checkpoint.x = this.position.x;
+        this.checkpoint.y = this.position.y;
+        this.checkpoint.z = this.position.z;
+    }
+
+    setPositionToCheckpoint() {
+        this.position.x = this.checkpoint.x;
+        this.position.y = this.checkpoint.y;
+        this.position.z = this.checkpoint.z;
     }
 }

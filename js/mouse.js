@@ -73,10 +73,10 @@ class Mouse {
                         else { // Update object position
                             if (a.selectedObject != null) {
                                 a.camera.allowMovement = false;
-                                a.selectedObject.setPosition(
-                                    a.mouse.snap(down.x - diff.x, a.snap),
-                                    a.mouse.snap(down.y - diff.y, a.snap)
-                                );
+                                a.selectedObject.setPosition({
+                                    x: a.mouse.snap(down.x - diff.x, a.snap),
+                                    y: a.mouse.snap(down.y - diff.y, a.snap)
+                                });
                             }
                         }
                     }

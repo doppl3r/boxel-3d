@@ -88,7 +88,7 @@ class Level extends THREE.Group {
     }
 
     setObjectProperties(object, objectData) {
-        object.setPosition(objectData.position.x, objectData.position.y, objectData.position.z);
+        object.setPosition({ x: objectData.position.x, y: objectData.position.y, z: objectData.position.z });
         object.setScale(objectData.scale.x, objectData.scale.y, objectData.scale.z);
         object.setRotation(objectData.rotation.z);
         object.setStatic(objectData.isStatic);

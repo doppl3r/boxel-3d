@@ -57,6 +57,7 @@ class Player extends Cube {
     respawn() {
         if (app.player.isFrozen() == true) {
             app.resetScene(app);
+            app.player.setPositionToCheckpoint();
         }
     }
 }

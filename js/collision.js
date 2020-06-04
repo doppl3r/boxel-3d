@@ -40,7 +40,9 @@ class Collision {
                             if (objectB.body.isStatic == false) { objectB.force(force, objectA); }
                         }
                         else if (objectA.body.class == 'checkpoint') {
-                            console.log('player checkpoint');
+                            if (objectB.body.class ==  'player') {
+                                app.player.saveCheckpoint();
+                            }
                         }
                         else if (objectA.body.class == 'spike') {
                             if (objectB.body.class ==  'player') {

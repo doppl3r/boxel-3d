@@ -303,7 +303,7 @@ class UIController {
         if (saveLevel == true) app.level.saveLevelData(app);
         app.level.clearLevel(app);
         app.levelHistory.clear();
-        app.player.setPosition(0, 0, 0);
+        app.player.setPosition({ x: 0, y: 0, z: 0 });
         app.ui.updateUI('level-manager');
     }
 

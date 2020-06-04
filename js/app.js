@@ -101,7 +101,7 @@ class App {
                 var y = rect.position.y;
                 var z = child.position.z;
                 var rotation = rect.angle;
-                child.setPosition(x, -y, z, false);
+                child.setPosition({ x: x, y: -y, z: z }, false);
                 child.setRotation(-rotation, false);
                 if (child.position.y < -1000) {
                     if (child.getClass() == 'player') child.kill();
