@@ -125,8 +125,8 @@ class UIController {
             var name = $(this).attr('name');
             var val = $(this).val();
             if (name == 'rotate') { app.selectedObject.setRotation(-val * Math.PI / 180); }
-            else if (name == 'scale-x') { app.selectedObject.setScale(val, null, null); }
-            else if (name == 'scale-y') { app.selectedObject.setScale(null, val, null); }
+            else if (name == 'scale-x') { app.selectedObject.setScale({ x: val, y: null, z: null }); }
+            else if (name == 'scale-y') { app.selectedObject.setScale({ x: null, y: val, z: null }); }
         });
 
         // Save level history when input slider is updated

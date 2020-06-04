@@ -4,7 +4,7 @@ class Player extends Cube {
         this.body.class = 'player';
 
         // Update body
-        this.setScale(16, 16, 16);
+        this.setScale({ x: 16, y: 16, z: 16 });
         this.setStatic(false);
         this.setColors('#dc265a');
         this.mass = 5;

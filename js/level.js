@@ -43,7 +43,7 @@ class Level extends THREE.Group {
         this.clearLevel(a);
         this.add(a.player); // Add player object
         var floor = new Cube({ x: 0, y: -64, z: 0 });
-        floor.setScale(64, 16, 16);
+        floor.setScale({ x: 64, y: 16, z: 16 });
         floor.setStatic(true);
         this.add(floor);
     }
@@ -89,7 +89,7 @@ class Level extends THREE.Group {
 
     setObjectProperties(object, objectData) {
         object.setPosition({ x: objectData.position.x, y: objectData.position.y, z: objectData.position.z });
-        object.setScale(objectData.scale.x, objectData.scale.y, objectData.scale.z);
+        object.setScale({ x: objectData.scale.x, y: objectData.scale.y, z: objectData.scale.z });
         object.setRotation(objectData.rotation.z);
         object.setStatic(objectData.isStatic);
         object.setText(objectData.text);

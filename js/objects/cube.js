@@ -33,7 +33,7 @@ class Cube extends THREE.Mesh {
         this.receiveShadow = true;
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
-        this.setScale(options.scaleX, options.scaleY, options.scaleZ);
+        this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
     }
 
     setColors(color) {
@@ -78,40 +78,41 @@ class Cube extends THREE.Mesh {
         return value;
     }
 
-    setScale(scaleX, scaleY, scaleZ, updateOrigin = true) {
+    setScale(scale, updateOrigin = true) {
         // Resolve null values
-        scaleX = (scaleX == null) ? this.scale.x : scaleX;
-        scaleY = (scaleY == null) ? this.scale.y : scaleY;
-        scaleZ = (scaleZ == null) ? this.scale.z : scaleZ;
+        scale.x = (scale.x == null) ? this.scale.x : scale.x;
+        scale.y = (scale.y == null) ? this.scale.y : scale.y;
+        scale.z = (scale.z == null) ? this.scale.z : scale.z;
         
         // Temporarily set rectangle angle to zero to prevent skewing
         var tempAngle = this.rotation.z;
         this.setRotation(0);
 
         // Scale rectangle by previous scale, then update mesh scale ratio
-        Matter.Body.scale(this.body, scaleX / this.scale.x, scaleY / this.scale.y);
-        this.scale.x = scaleX;
-        this.scale.y = scaleY;
-        this.scale.z = scaleZ;
+        Matter.Body.scale(this.body, scale.x / this.scale.x, scale.y / this.scale.y);
+        this.scale.x = scale.x;
+        this.scale.y = scale.y;
+        this.scale.z = scale.z;
         this.setRotation(tempAngle); // Revert angle
-        if (updateOrigin == true) this.setScaleOrigin(scaleX, scaleY, scaleZ);
+        if (updateOrigin == true) this.setScaleOrigin({ x: scale.x, y: scale.y, z: scale.z });
     }
 
     getScale() {
         return this.scale;
     }
 
-    setScaleOrigin(scaleX, scaleY, scaleZ) {
-        this.scaleXOrigin = scaleX;
-        this.scaleYOrigin = scaleY;
-        this.scaleZOrigin = scaleZ;
+    setScaleOrigin(scale) {
+        if (this.scaleOrigin == null) this.scaleOrigin = {};
+        this.scaleOrigin.x = scale.x;
+        this.scaleOrigin.y = scale.y;
+        this.scaleOrigin.z = scale.z;
     }
 
     resetToOrigin() {
         this.visible = true;
         this.setPosition({ x: this.xOrigin, y: this.yOrigin, z: this.zOrigin}, false);
         this.setRotation(this.rotationOrigin, false);
-        this.setScale(this.scaleXOrigin, this.scaleYOrigin, this.scaleZOrigin, false);
+        this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
         this.setStatic(this.isStaticOrigin, false);
         Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.body, 0);

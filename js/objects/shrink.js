@@ -9,7 +9,7 @@ class Shrink extends Cube {
         Matter.Body.setParts(this.body, [this.hitbox, this.sensor]);
 
         // Update body properties
-        this.setScale(16, 16, 16);
+        this.setScale({ x: 16, y: 16, z: 16 });
         this.shapes.removeAllShapes();
         this.addShapes(options);
     }
