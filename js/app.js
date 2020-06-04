@@ -90,9 +90,10 @@ class App {
         a.updateCamera(a);
 
         // Loop through scene for all children
-        for (var i = 0; i < a.level.children.length; i++) {
-            var child = a.level.children[i];
-            
+        var index = a.level.children.length - 1;
+        while (index >= 0) {
+            var child = a.level.children[index];
+
             // Update child if it has a collision box
             if (child.body != null) {
                 var rect = child.body;
@@ -102,8 +103,12 @@ class App {
                 var rotation = rect.angle;
                 child.setPosition(x, -y, z, false);
                 child.setRotation(-rotation, false);
-                if (child.position.y < -1000) child.resetToOrigin();
+                if (child.position.y < -1000) {
+                    if (child.getClass() == 'player') child.kill();
+                    else a.level.removeObject(child, a);
+                }
             }
+            index--; // Update iterator
         }
     }
 

@@ -214,4 +214,8 @@ class Cube extends THREE.Mesh {
         this.body.collisionFilter.category = (state == true) ? 0 : 1;
         Matter.Sleeping.set(this.body, state);
     }
+
+    isFrozen() {
+        return this.body.collisionFilter.category == 0;
+    }
 }
