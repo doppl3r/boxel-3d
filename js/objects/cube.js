@@ -41,9 +41,8 @@ class Cube extends THREE.Mesh {
         this.shapes.setColors(color);
     }
 
-    setPosition(position, updateOrigin = true) {
+    setPosition(position = {}, updateOrigin = true) {
         // Set null values
-        if (position == null) position = {};
         position.x = (position.x == null) ? this.position.x : position.x;
         position.y = (position.y == null) ? this.position.y : position.y;
         position.z = (position.z == null) ? this.position.z : position.z;
@@ -52,15 +51,16 @@ class Cube extends THREE.Mesh {
         this.position.set(position.x, position.y, position.z);
         Matter.Body.setPosition(this.body, { x: position.x, y: -position.y });
         if (updateOrigin == true) {
-            this.setPositionOrigin(position.x, position.y, position.z);
+            this.setPositionOrigin(position);
             this.saveCheckpoint();
         }
     }
 
-    setPositionOrigin(x, y, z) {
-        this.xOrigin = x;
-        this.yOrigin = y;
-        this.zOrigin = z;
+    setPositionOrigin(position) {
+        if (this.positionOrigin == null) this.positionOrigin = {};
+        this.positionOrigin.x = position.x;
+        this.positionOrigin.y = position.y;
+        this.positionOrigin.z = position.z;
     }
 
     setRotation(angle, updateOrigin = true) {
@@ -79,7 +79,7 @@ class Cube extends THREE.Mesh {
         return value;
     }
 
-    setScale(scale, updateOrigin = true) {
+    setScale(scale = {}, updateOrigin = true) {
         // Resolve null values
         scale.x = (scale.x == null) ? this.scale.x : scale.x;
         scale.y = (scale.y == null) ? this.scale.y : scale.y;
@@ -111,7 +111,7 @@ class Cube extends THREE.Mesh {
 
     resetToOrigin() {
         this.visible = true;
-        this.setPosition({ x: this.xOrigin, y: this.yOrigin, z: this.zOrigin}, false);
+        this.setPosition(this.positionOrigin, false);
         this.setRotation(this.rotationOrigin, false);
         this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
         this.setStatic(this.isStaticOrigin, false);
@@ -208,7 +208,6 @@ class Cube extends THREE.Mesh {
     }
 
     getVelocity(object = this) {
-        console.log(object);
         return { 
             x: object.body.position.x - object.body.positionPrev.x,
             y: object.body.position.y - object.body.positionPrev.y
