@@ -43,6 +43,7 @@ class Cube extends THREE.Mesh {
 
     setPosition(position, updateOrigin = true) {
         // Set null values
+        if (position == null) position = {};
         position.x = (position.x == null) ? this.position.x : position.x;
         position.y = (position.y == null) ? this.position.y : position.y;
         position.z = (position.z == null) ? this.position.z : position.z;
