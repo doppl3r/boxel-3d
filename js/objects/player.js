@@ -54,6 +54,21 @@ class Player extends Cube {
         }
     }
 
+    saveCheckpoint(position) {
+        if (this.checkpoint == null) this.checkpoint = {};
+        this.checkpoint.x = position.x;
+        this.checkpoint.y = position.y;
+        this.checkpoint.z = position.z;
+    }
+
+    setPositionToCheckpoint() {
+        this.setPosition({
+            x: this.position.x = this.checkpoint.x,
+            y: this.position.y = this.checkpoint.y,
+            z: this.position.z = this.checkpoint.z
+        }, false);
+    }
+
     respawn() {
         if (app.player.isFrozen() == true) {
             app.resetScene(app);

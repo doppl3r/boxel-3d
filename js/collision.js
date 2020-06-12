@@ -41,7 +41,7 @@ class Collision {
                         }
                         else if (objectA.body.class == 'checkpoint') {
                             if (objectB.body.class ==  'player') {
-                                app.player.saveCheckpoint();
+                                app.player.saveCheckpoint(objectA.position);
                             }
                         }
                         else if (objectA.body.class == 'spike') {

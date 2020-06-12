@@ -50,10 +50,7 @@ class Cube extends THREE.Mesh {
         // Update position
         this.position.set(position.x, position.y, position.z);
         Matter.Body.setPosition(this.body, { x: position.x, y: -position.y });
-        if (updateOrigin == true) {
-            this.setPositionOrigin(position);
-            this.saveCheckpoint();
-        }
+        if (updateOrigin == true) this.setPositionOrigin(position);
     }
 
     setPositionOrigin(position) {
@@ -221,18 +218,5 @@ class Cube extends THREE.Mesh {
 
     isFrozen() {
         return this.body.collisionFilter.category == 0;
-    }
-
-    saveCheckpoint() {
-        if (this.checkpoint == null) this.checkpoint = {};
-        this.checkpoint.x = this.position.x;
-        this.checkpoint.y = this.position.y;
-        this.checkpoint.z = this.position.z;
-    }
-
-    setPositionToCheckpoint() {
-        this.position.x = this.checkpoint.x;
-        this.position.y = this.checkpoint.y;
-        this.position.z = this.checkpoint.z;
     }
 }
