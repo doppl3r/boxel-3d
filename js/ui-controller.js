@@ -73,6 +73,7 @@ class UIController {
             else if (action == 'rewind') {
                 app.resetScene(app);
                 app.deselectScene(app);
+                app.player.removeCheckpoint();
                 app.ui.showObjectOptions(false);
             }
             else if (action == 'pause') {

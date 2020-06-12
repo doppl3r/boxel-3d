@@ -61,17 +61,24 @@ class Player extends Cube {
         this.checkpoint.z = position.z;
     }
 
+    removeCheckpoint() {
+        this.checkpoint = null;
+    }
+
     setPositionToCheckpoint() {
-        this.setPosition({
-            x: this.position.x = this.checkpoint.x,
-            y: this.position.y = this.checkpoint.y,
-            z: this.position.z = this.checkpoint.z
-        }, false);
+        if (this.checkpoint != null) {
+            this.setPosition({
+                x: this.position.x = this.checkpoint.x,
+                y: this.position.y = this.checkpoint.y,
+                z: this.position.z = this.checkpoint.z
+            }, false);
+        }
     }
 
     respawn() {
         if (app.player.isFrozen() == true) {
-            app.resetScene(app);
+            app.level.removeParticles(app);
+            app.player.resetToOrigin();
             app.player.setPositionToCheckpoint();
         }
     }
