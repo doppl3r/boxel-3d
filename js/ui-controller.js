@@ -71,10 +71,10 @@ class UIController {
                 app.levelHistory.redo(app);
             }
             else if (action == 'rewind') {
-                app.resetScene(app);
+                app.level.retryLevel(app);
                 app.deselectScene(app);
-                app.player.removeCheckpoint();
                 app.ui.showObjectOptions(false);
+                app.play = false; // Override default retry behavior
             }
             else if (action == 'pause') {
                 app.ui.pause();
@@ -320,7 +320,6 @@ class UIController {
         
         // Bind functions
         if (options.input != null) {
-            console.log('input: ' + app.selectedObject.text);
             var text = app.selectedObject.text;
             input.val(text);
             wrapper.append(input);
@@ -340,7 +339,6 @@ class UIController {
                 // Add events to button
                 if (data.function != null) button[0]._function = data.function;
                 if (data.parameter != null) button[0]._parameter = data.parameter;
-                console.log(button);
                 button.on('click', function() {
                     var self = $(this)[0];
                     self._function(self._parameter);

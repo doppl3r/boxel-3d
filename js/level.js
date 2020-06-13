@@ -87,6 +87,16 @@ class Level extends THREE.Group {
         }
     }
 
+    retryLevel(a) {
+        a.play = true;
+        a.player.removeCheckpoint();
+        a.resetScene(a);
+    }
+
+    exitLevel(a) {
+        // TODO: Got to "home" screen
+    }
+
     setObjectProperties(object, objectData) {
         object.setPosition({ x: objectData.position.x, y: objectData.position.y, z: objectData.position.z });
         object.setScale({ x: objectData.scale.x, y: objectData.scale.y, z: objectData.scale.z });

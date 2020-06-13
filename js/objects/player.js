@@ -8,7 +8,6 @@ class Player extends Cube {
         this.setStatic(false);
         this.setColors('#dc265a');
         this.mass = 5;
-        this.jumpForce = -0.00125 * this.mass;
         this.allowJump = true;
     }
 
@@ -16,7 +15,7 @@ class Player extends Cube {
         if (this.allowJump == true) {
             this.allowJump = false;
             var xForce = 0;
-            var yForce = this.jumpForce;
+            var yForce = -0.025 * this.body.mass; // Scale force by mass
             Matter.Body.setVelocity(this.body, { x: this.body.velocity.x, y: 0 });
             Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
         }
@@ -81,5 +80,32 @@ class Player extends Cube {
             app.player.resetToOrigin();
             app.player.setPositionToCheckpoint();
         }
+    }
+
+    finish() {
+        app.play = false;
+        app.ui.addDialog({
+            text: 'Finished!',
+            buttons: [
+                { function: app.level.retryLevel, parameter: app, text: 'Retry' },
+                { function: app.level.exitLevel, parameter: app, text: 'Continue' }
+            ]
+        });
+    }
+
+    shrink() {
+        this.setScale({ 
+            x: this.scale.x / 2, 
+            y: this.scale.y / 2, 
+            z: this.scale.z / 2 
+        }, false);
+    }
+
+    grow() {
+        this.setScale({ 
+            x: this.scale.x * 2, 
+            y: this.scale.y * 2, 
+            z: this.scale.z * 2 
+        }, false);
     }
 }

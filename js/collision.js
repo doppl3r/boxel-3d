@@ -40,23 +40,19 @@ class Collision {
                             if (objectB.body.isStatic == false) { objectB.force(force, objectA); }
                         }
                         else if (objectA.body.class == 'checkpoint') {
-                            if (objectB.body.class ==  'player') {
-                                app.player.saveCheckpoint(objectA.position);
-                            }
+                            if (objectB.body.class ==  'player') { app.player.saveCheckpoint(objectA.position); }
                         }
                         else if (objectA.body.class == 'spike') {
-                            if (objectB.body.class ==  'player') {
-                                app.player.kill();
-                            }
+                            if (objectB.body.class ==  'player') { app.player.kill(); }
                         }
                         else if (objectA.body.class == 'shrink') {
-                            console.log('shrink player');
+                            if (objectB.body.class ==  'player') { app.player.shrink(); }
                         }
                         else if (objectA.body.class == 'grow') {
-                            console.log('grow player');
+                            if (objectB.body.class ==  'player') { app.player.grow(); }
                         }
                         else if (objectA.body.class == 'finish') {
-                            console.log('finish level');
+                            if (objectB.body.class ==  'player') { app.player.finish(); }
                         }
                     }
                 }
