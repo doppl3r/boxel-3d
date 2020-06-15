@@ -4,7 +4,7 @@ class Mouse {
         this.move = new THREE.Vector3();
         this.offset = new THREE.Vector3();
         this.up = new THREE.Vector3();
-        this.tolerance = 5;
+        this.tolerance = 5; // Default = 1000 / zoom
         this.drag = false;
         this.mode = 'draw';
         this.prevMode = this.mode;
@@ -148,8 +148,9 @@ class Mouse {
 
     wheel(e, a) {
         var zoom = a.camera.position.z + e.deltaY;
-        if (zoom < 200) zoom = 200;
+        if (zoom < 100) zoom = 100;
         else if (zoom > 1000) zoom = 1000;
+        this.tolerance = 1000 / zoom;
         a.camera.position.z = zoom;
     }
 
