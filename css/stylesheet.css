@@ -48,6 +48,16 @@ body.light .ui-controller .slider { background-color: #f1f1f1; }
 body.light .ui-controller .row .col { background-color: #ffffff; }
 body.light .ui-controller .row .col.object-options { background-color: #f1f1f1; }
 
+/* Background Gradients */
+body.background-1 { background: linear-gradient(180deg, #ffffff 0%, #ee95af 100%); }
+body.background-2 { background: linear-gradient(180deg, #f6f5cc 0%, #f1558d 33%, #55cfe7 66%, #0379d3 100%); }
+body.background-3 { background: linear-gradient(180deg, #047279 0%, #8AE9B0 50%, #0379D3 100%); }
+body.background-4 { background: linear-gradient(180deg, #000957 0%, #00041E 100%); }
+body.background-5 { background: linear-gradient(180deg, #4196DE 0%, #FFD6B0 50%, #ffffff 100%); }
+body.background-6 { background: linear-gradient(180deg, #002939 0%, #5D1D2C 25%, #CB6C17 50%, #034C63 75%, #002939 100%); }
+body.background-7 { background: linear-gradient(180deg, #279DCF 0%, #00EDFE 50%, #E5A29C 100%); }
+body.background-8 { background: linear-gradient(180deg, #EFC626 0%, #B12A13 50%, #100730 100%); }
+
 /* Dialog window styling */
 body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background-color: rgba(0, 0, 0, 0.5); }
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; }
