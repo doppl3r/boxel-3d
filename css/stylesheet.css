@@ -1,11 +1,12 @@
 * { box-sizing: border-box; user-select: none; }
-body { background-color: #1e1e1e; font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; }
+body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; }
 body canvas.disabled { display: none; }
 body .stats { position: absolute; top: initial !important; right: 0 !important; bottom: 0 !important; left: initial !important; }
 body .ui-controller .disabled { display: none !important; }
 body .ui-controller .row { display: flex; position: absolute; z-index: 1; pointer-events: none; }
-body .ui-controller .row .col { pointer-events: all; background-color: #333333; }
+body .ui-controller .row .col { pointer-events: all; }
+
 body .ui-controller .row .col .item { position: relative; display: flex; }
 body .ui-controller .row .col .item.highlight { background-color: #0287EF; }
 body .ui-controller .row.top { top: 0; right: 0; left: 0; }
@@ -13,18 +14,39 @@ body .ui-controller .row.top .col { display: flex; overflow-x: auto; width: 100%
 body .ui-controller .row.top .col.object-type {  overflow-y: auto; }
 body .ui-controller .level-manager .row .col { overflow-y: auto; }
 body .ui-controller .row.left { bottom: 0; top: 48px; left: 0; }
-body .ui-controller .row.left .col { background-color: #333333; display: flex; flex-direction: column; }
-body .ui-controller .row.left .col.object-options { background-color: #252526; }
+body .ui-controller .row.left .col { display: flex; flex-direction: column; }
+
 body .ui-controller a { cursor: pointer; display: flex; flex-shrink: 0; justify-content: center; align-items: center; width: 48px; height: 48px; }
-body .ui-controller input { font-family: 'Comfortaa-Bold'; background-color: transparent; border: none; color: #858585; font-size: 16px; padding: 0 16px; width: 240px; }
-body .ui-controller input:focus { color: #fff; border: none; outline: none; }
-body .ui-controller a img { opacity: 0.3; }
-body .ui-controller a:hover img,
-body .ui-controller .selected img { animation: shake 0.25s; filter: brightness(2); opacity: 1.0; }
-body .ui-controller .slider { /* default hidden */ display: none; align-items: center; position: relative; height: 48px; width: 144px; position: absolute; left: 100%; background-color: #252526; padding: 0 16px; top: 0; }
+body .ui-controller a:hover img { animation: shake 0.25s; }
+body .ui-controller .selected img { animation: shake 0.25s; }
+body .ui-controller input { font-family: 'Comfortaa-Bold'; background-color: transparent; border: none; font-size: 16px; padding: 0 16px; width: 240px; }
+body .ui-controller input:focus { border: none; outline: none; }
+body .ui-controller .slider { /* default hidden */ display: none; align-items: center; position: relative; height: 48px; width: 144px; position: absolute; left: 100%; padding: 0 16px; top: 0; }
 body .ui-controller .slider input[type="range"] { width: 100%; height: 100%; padding: 0; margin: 0; cursor: pointer; }
 body .ui-controller .selected ~ .slider,
 body .ui-controller .item:hover a ~ .slider { /* show */ display: inline-flex; }
+
+/* Dark Themes */
+body.dark { background-color: #1e1e1e; }
+body.dark .ui-controller a { filter: invert(50%); }
+body.dark .ui-controller a:hover { filter: invert(0%); }
+body.dark .ui-controller .selected { filter: invert(0%); }
+body.dark .ui-controller input { color: #808080; }
+body.dark .ui-controller input:focus { color: #ffffff; }
+body.dark .ui-controller .slider { background-color: #252526; }
+body.dark .ui-controller .row .col { background-color: #333333; }
+body.dark .ui-controller .row .col.object-options { background-color: #252526; }
+
+/* Light Themes */
+body.light { background-color: #e6e6e6; }
+body.light .ui-controller a { filter: invert(25%); }
+body.light .ui-controller a:hover { filter: invert(100%); }
+body.light .ui-controller .selected { filter: invert(100%); }
+body.light .ui-controller input { color: #bfbfbf; }
+body.light .ui-controller input:focus { color: #000000; }
+body.light .ui-controller .slider { background-color: #f1f1f1; }
+body.light .ui-controller .row .col { background-color: #ffffff; }
+body.light .ui-controller .row .col.object-options { background-color: #f1f1f1; }
 
 /* Dialog window styling */
 body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background-color: rgba(0, 0, 0, 0.5); }

@@ -9,7 +9,7 @@ class App {
         a.screenWidth = a.window.innerWidth;
         a.screenHeight = a.window.innerHeight;
         a.stats = new Stats();
-        a.quality = 5; // 1=low, 10=high
+        a.quality = 10; // 1=low, 10=high
         a.targetFPS = 60;
         a.interval = 1000 / a.targetFPS;
         a.then = new Date().getTime();
@@ -25,7 +25,7 @@ class App {
         a.play = false;
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
         a.camera.tilt = 50;
-        a.renderer = new THREE.WebGLRenderer({ /* antialias: true */ });
+        a.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', '#000000', 1);
 
@@ -42,7 +42,6 @@ class App {
         a.renderer.setSize(a.screenWidth, a.screenHeight);
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
         a.renderer.powerPreference = 'high-performance';
-        a.scene.background = new THREE.Color('#1e1e1e');
         a.camera.position.x = 0;
         a.camera.position.y = 0;
         a.camera.position.z = 200;
