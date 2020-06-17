@@ -1,6 +1,7 @@
 class UIController {
     constructor() {
         this.controller = $('.ui-controller');
+        this.home = this.controller.find('.home');
         this.levelManager = this.controller.find('.level-manager');
         this.levelEditor = this.controller.find('.level-editor');
         this.levelList = this.levelManager.find('.list');
@@ -9,7 +10,7 @@ class UIController {
         this.objectOptions = this.levelEditor.find('.object-options');
         this.updateCanvas();
         this.bindActions();
-        this.updateUI('level-manager');
+        this.updateUI('home');
     }
 
     bindActions() {
@@ -17,12 +18,19 @@ class UIController {
         this.controller.on('click', '[action]', function(event) {
             event.preventDefault();
             var action = $(this).attr('action');
-            if (action == 'add-level') {
+            
+            if (action == 'level-manager') {
+                app.ui.updateUI('level-manager');
+            }
+            else if (action == 'add-level') {
                 var levelData = {};
                 app.level.createNewLevel(app);
                 levelData = app.level.exportToJSON(app); // Init default data
                 app.storage.addLevelDataToStorage(levelData); // Store data
                 app.ui.appendLevelItem(levelData);
+            }
+            else if (action == 'exit-level-manager') {
+                app.ui.updateUI('home');
             }
             else if (action == 'edit-level') {
                 app.ui.updateLevelFromItem($(this));
@@ -47,7 +55,7 @@ class UIController {
                 app.mouse.setMode('erase');
                 app.ui.updateLevelOptions();
             }
-            else if (action == 'home') {
+            else if (action == 'exit-level-editor') {
                 if (app.levelHistory.history.length > 2) {
                     app.ui.addDialog({
                         text: 'Would you like to <em>save</em> your level?',
@@ -154,20 +162,22 @@ class UIController {
 
     updateUI(state) {
         this.updateCanvas();
-        if (state == 'level-manager') {
-            this.canvas.addClass('disabled');
+        this.canvas.addClass('disabled'); // Default hide canvas
+        this.controller.find('> *').addClass('disabled'); // Default hide all children
+        this.controller.find('[action]').removeClass('selected'); // Default remove all selected
+
+        if (state == 'home') {
+            this.home.removeClass('disabled');
+        }
+        else if (state == 'level-manager') {
             this.levelManager.removeClass('disabled');
-            this.levelEditor.addClass('disabled'); // Hide while manager is open
-            this.levelEditor.find('[action]').removeClass('selected'); // Clear all selected
             this.updateLevelOptions(); // Update top bar
-            this.objectType.find('[action="cube"]').addClass('selected');
-            this.objectOptions.addClass('disabled');
+            this.objectType.find('[action="cube"]').addClass('selected'); // Select by default
+            this.objectOptions.addClass('disabled'); // Disable bar on default
         }
         else if (state == 'level-editor') {
             this.canvas.removeClass('disabled');
-            this.levelManager.addClass('disabled');
             this.levelEditor.removeClass('disabled');
-            this.canvas.removeClass('disabled');
         }
     }
 

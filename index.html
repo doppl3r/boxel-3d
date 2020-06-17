@@ -9,11 +9,22 @@
 	</head>
 	<body class="dark">
 		<div class="ui-controller">
-			<div class="level-manager">
+			<div class="home">
+				<div class="wrapper">
+					<img src="img/svg/logo.svg" class="logo">
+					<div class="buttons">
+						<a class="button" action="level-picker"><span>Play</span></a>
+						<a class="button" action="level-manager"><span>Level Editor</span></a>
+						<a class="button" action="settings"><img src="img/svg/gear.svg"></a>
+					</div>
+				</div>
+			</div>
+			<div class="level-manager disabled">
 				<div class="row top">
 					<div class="col">
 						<a class="item" action="add-level" title="Add level"><img src="img/svg/add.svg"></a>
 						<a class="item" action="download" title="Download level"><img src="img/svg/download.svg"></a>
+						<a class="item" action="exit-level-manager" title="Exit level manager"><img src="img/svg/home.svg"></a>
 					</div>
 				</div>
 				<div class="row left">
@@ -25,7 +36,7 @@
 					<div class="col options-level">
 						<a class="item" action="draw" title="Draw cubes"><img src="img/svg/pencil.svg"></a>
 						<a class="item" action="erase" title="Erase cubes"><img src="img/svg/eraser.svg"></a>
-						<a class="item" action="home" title="Exit level editor"><img src="img/svg/home.svg"></a>
+						<a class="item" action="exit-level-editor" title="Exit level editor"><img src="img/svg/home.svg"></a>
 						<a class="item" action="save" title="Save level"><img src="img/svg/save.svg"></a>
 						<a class="item" action="upload" title="Upload level"><img src="img/svg/upload.svg"></a>
 						<a class="item" action="undo" title="Undo edit"><img src="img/svg/undo.svg"></a>
