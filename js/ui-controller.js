@@ -92,6 +92,9 @@ class UIController {
                 app.ui.play();
                 app.ui.updateLevelOptions();
             }
+            else if (action == 'toggle-theme') {
+                app.ui.toggleTheme();
+            }
             else if (action == 'cube') { app.ui.selectObjectType(action); }
             else if (action == 'tip') { app.ui.selectObjectType(action); }
             else if (action == 'bounce') { app.ui.selectObjectType(action); }
@@ -396,5 +399,13 @@ class UIController {
         app.ui.showObjectOptions(false);
         app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
+    }
+
+    toggleTheme() {
+        var themes = ['dark', 'light'];
+        var newTheme = $('body').hasClass('dark') ? themes[1] : themes[0];
+        // TODO: Use local storage to save theme state
+        $('body').removeClass(themes);
+        $('body').addClass(newTheme);
     }
 }

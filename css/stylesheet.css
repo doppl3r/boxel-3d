@@ -23,6 +23,7 @@ body .ui-controller .row .col .item.highlight { background-color: #0287EF; }
 body .ui-controller .row.top { top: 0; right: 0; left: 0; }
 body .ui-controller .row.top .col { display: flex; overflow-x: auto; width: 100%; }
 body .ui-controller .row.top .col.object-type {  overflow-y: auto; }
+body .ui-controller .row.top .col .item:last-of-type { /* Theme toggle */ margin-left: auto; }
 body .ui-controller .level-manager .row .col { overflow-y: auto; }
 body .ui-controller .row.left { bottom: 0; top: 48px; left: 0; }
 body .ui-controller .row.left .col { display: flex; flex-direction: column; }
