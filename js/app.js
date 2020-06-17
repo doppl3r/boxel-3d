@@ -17,6 +17,7 @@ class App {
         a.delta = 0;
         a.ui = new UIController();
         a.mouse = new Mouse();
+        a.audio = new Audio();
         a.storage = new StorageManager();
         a.collision = new Collision();
         a.level = new Level();

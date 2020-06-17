@@ -32,6 +32,16 @@ class UIController {
             else if (action == 'exit-level-manager') {
                 app.ui.updateUI('home');
             }
+            else if (action == 'settings') {
+                app.ui.addDialog({
+                    inputs: [
+                        { label: 'Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: 5 } },
+                        { label: 'Quality', attributes: { name: 'volume', type: 'range', min: 1, max: 10, value: 10 } },
+                        { attributes: { value: 'Cancel', type: 'button' } },
+                        { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
+                    ]
+                });
+            }
             else if (action == 'edit-level') {
                 app.ui.updateLevelFromItem($(this));
                 app.ui.updateUI('level-editor');
@@ -41,9 +51,9 @@ class UIController {
             else if (action == 'delete-level') {
                 app.ui.addDialog({
                     text: 'Are you sure you want to <em>delete</em> this level?',
-                    buttons: [
-                        { function: app.ui.removeLevelItem, parameter: $(this), text: 'Yes' },
-                        { text: 'No' }
+                    inputs: [
+                        { attributes: { value: 'No', type: 'button' } },
+                        { attributes: { value: 'Yes', type: 'button' }, function: app.ui.removeLevelItem, parameter: $(this) },
                     ]
                 });
             }
@@ -59,9 +69,9 @@ class UIController {
                 if (app.levelHistory.history.length > 2) {
                     app.ui.addDialog({
                         text: 'Would you like to <em>save</em> your level?',
-                        buttons: [
-                            { function: app.ui.saveAndExitLevelEditor, parameter: false, text: 'No' },
-                            { function: app.ui.saveAndExitLevelEditor, parameter: true, text: 'Yes' }
+                        inputs: [
+                            { attributes: { value: 'No', type: 'button' }, function: app.ui.saveAndExitLevelEditor, parameter: false },
+                            { attributes: { value: 'Yes', type: 'button' }, function: app.ui.saveAndExitLevelEditor, parameter: true },
                         ]
                     });
                 }
@@ -113,10 +123,10 @@ class UIController {
             else if (action == 'text') {
                 app.ui.addDialog({
                     text: 'Share a tip!',
-                    input: true,
-                    buttons: [
-                        { text: 'Cancel' },
-                        { function: app.ui.updateTip, parameter: $(this), text: 'Accept' }
+                    inputs: [
+                        { attributes: { value: app.selectedObject.text, type: 'text' } },
+                        { attributes: { value: 'Cancel', type: 'button' } },
+                        { attributes: { value: 'Accept', type: 'button' }, function: app.ui.updateTip, parameter: $(this) },
                     ]
                 });
             }
@@ -323,43 +333,37 @@ class UIController {
     }
 
     addDialog(options) {
-        var dialog = $('<div class="dialog"><div>');
-        var wrapper = $('<div class="wrapper"></div>');
-        var input = $('<input type="text">');
-        var buttons = $('<div class="buttons"></div>');
+        var dialog = $('<div class="dialog">');
+        var wrapper = $('<div class="wrapper">');
+        var inputs = $('<div class="inputs">');
         
         // Include copy
         if (options.text != null) wrapper.append('<p>' + options.text + '</p>');
         
         // Bind functions
-        if (options.input != null) {
-            var text = app.selectedObject.text;
-            input.val(text);
-            wrapper.append(input);
-        }
+        if (options.inputs != null) {
+            for (var i = 0; i < options.inputs.length; i++) {
+                var data = options.inputs[i];
+                var input = $('<input>', data.attributes);
 
-        // Bind functions
-        if (options.buttons != null) {
-            for (var i = 0; i < options.buttons.length; i++) {
-                var data = options.buttons[i];
-                var button = $('<a>', { text: data.text });
-
-                // Append button to wrapper
-                button[0]._function = function(){};
-                button[0]._parameter = button;
-                buttons.append(button);
-
-                // Add events to button
-                if (data.function != null) button[0]._function = data.function;
-                if (data.parameter != null) button[0]._parameter = data.parameter;
-                button.on('click', function() {
+                // Add default functionality
+                input[0]._function = function(){};
+                input[0]._parameter = input;
+                input[0]._attributes = data.attributes;
+                if (data.function != null) input[0]._function = data.function;
+                if (data.parameter != null) input[0]._parameter = data.parameter;
+                input.on('click', function() {
                     var self = $(this)[0];
                     self._function(self._parameter);
-                    app.ui.removeDialog(); // Always close dialog
+                    if (self._attributes.type == 'button') app.ui.removeDialog(); // Always close dialog
                 });
+
+                if (data.label != null) inputs.append('<label>' + data.label + '</label>');
+                inputs.append(input);
             }
-            wrapper.append(buttons);
+            wrapper.append(inputs);
         }
+
         dialog.append(wrapper);
         dialog.hide().fadeIn(100);
         $('body').append(dialog);
@@ -372,16 +376,23 @@ class UIController {
     }
 
     updateTip() {
-        var input = $('.dialog input');
+        var input = $('.dialog .inputs input');
         app.selectedObject.text = input.val();
         app.levelHistory.save(app);
+    }
+
+    updateSettings() {
+        // TODO: Store settings from dialog to local storage
+        console.log('settings updated');
     }
 
     showTip(text) {
         app.play = false;
         app.ui.addDialog({
             text: text,
-            buttons: [{ function: app.ui.play, parameter: true, text: 'Continue' }]
+            inputs: [
+                { attributes: { value: 'Continue', type: 'button' }, function: app.ui.play, parameter: true }
+            ]
         });
     }
 
