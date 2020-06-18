@@ -16,42 +16,39 @@ class StorageManager {
         return levels;
     }
 
-    getLevelDataFromStorage(key) {
+    getLevelData(key) {
         return JSON.parse(localStorage.getItem(key));
     }
 
-    updateLevelDataToStorage(key, levelData) {
-        localStorage.setItem(key, JSON.stringify(levelData));
-    }
-
-    addLevelDataToStorage(level) {
+    setLevelData(level) {
         var index = 1;
         while (localStorage.getItem(this.levelPrefix + index) != null) index++;
-        level.key = this.levelPrefix + index; // Store key in JSON object
-        localStorage.setItem(this.levelPrefix + index, JSON.stringify(level));
+        if (level.key == null) level.key = this.levelPrefix + index; // Store key in JSON object
+        localStorage.setItem(level.key, JSON.stringify(level));
     }
 
-    deleteLevelDataFromStorage(key) {
+    removeLevelData(key) {
         localStorage.removeItem(key);
     }
 
     updateLevelDataName(key, name) {
-        var levelData = this.getLevelDataFromStorage(key);
+        var levelData = this.getLevelData(key);
+        levelData.key = key;
         levelData.name = name;
-        this.updateLevelDataToStorage(key, levelData);
+        this.setLevelData(levelData);
     }
 
-    getSettingsFromStorage() {
+    getSettings() {
         var settings = localStorage.getItem('settings');
         if (settings == null) {
             settings = { 'volume': 5, 'quality': 10, 'theme': 0 };
-            this.setSettingsFromStorage(settings);
+            this.setSettings(settings);
             return settings;
         }
         return JSON.parse(settings);
     }
 
-    setSettingsFromStorage(settings) {
+    setSettings(settings) {
         localStorage.setItem('settings', JSON.stringify(settings));
     }
 }

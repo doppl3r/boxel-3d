@@ -26,18 +26,18 @@ class UIController {
                 var levelData = {};
                 app.level.createNewLevel(app);
                 levelData = app.level.exportToJSON(app); // Init default data
-                app.storage.addLevelDataToStorage(levelData); // Store data
+                app.storage.setLevelData(levelData); // Store data
                 app.ui.appendLevelItem(levelData);
             }
             else if (action == 'exit-level-manager') {
                 app.ui.updateUI('home');
             }
             else if (action == 'settings') {
-                var settings = app.storage.getSettingsFromStorage();
+                var settings = app.storage.getSettings();
                 app.ui.addDialog({
                     inputs: [
                         { label: 'Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: settings.volume } },
-                        { label: 'Quality', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } },
+                        { label: 'Quality', attributes: { name: 'quality', type: 'range', min: 5, max: 10, value: settings.quality } },
                         { label: 'Editor Theme', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
                         { attributes: { value: 'Cancel', type: 'button' } },
                         { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
@@ -208,7 +208,7 @@ class UIController {
     updateLevelOptions() {
         var mode = 'draw';
         var play = 'pause';
-        var settings = app.storage.getSettingsFromStorage();
+        var settings = app.storage.getSettings();
         if (app != null) {
             mode = app.mouse.mode;
             play = app.play == true ? 'play' : 'pause';
@@ -269,7 +269,7 @@ class UIController {
         if (list.length < 1) {
             a.level.createNewLevel(a);
             levelData = a.level.exportToJSON(a);
-            a.storage.addLevelDataToStorage(levelData);
+            a.storage.setLevelData(levelData);
             list.push(levelData);
         }
 
@@ -295,7 +295,7 @@ class UIController {
     removeLevelItem(button) {
         var item = button.parent();
         var key = item.find('input').attr('key');
-        app.storage.deleteLevelDataFromStorage(key);
+        app.storage.removeLevelData(key);
         item.remove();
     }
 
@@ -304,7 +304,7 @@ class UIController {
         var item = button.parent();
         var key = item.find('input').attr('key');
         var name = item.find('input').val();
-        var levelData = app.storage.getLevelDataFromStorage(key);
+        var levelData = app.storage.getLevelData(key);
 
         // Update current level with selected attributes
         levelData.name = name;

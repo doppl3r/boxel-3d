@@ -23,7 +23,7 @@ class App {
         a.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', '#000000', 1);
-        a.settings = a.storage.getSettingsFromStorage();
+        a.settings = a.storage.getSettings();
         a.quality = a.settings.quality; // 1=low, 10=high
         a.targetFPS = 60;
         a.interval = 1000 / a.targetFPS;
@@ -214,7 +214,7 @@ class App {
         a.audio.setVolume(settings.audio);
         a.updateQuality(settings.quality, a);
         a.ui.toggleTheme(settings.theme);
-        a.storage.setSettingsFromStorage(settings);
+        a.storage.setSettings(settings);
     }
 
     updateQuality(quality, a) {
