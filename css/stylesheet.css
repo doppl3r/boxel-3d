@@ -86,6 +86,7 @@ body .dialog { color: #fff; display: flex; align-items: center; justify-content:
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; }
 body .dialog .wrapper p { margin: 0; font-size: 16px; padding: 0 0 24px; }
 body .dialog .wrapper p em { position: relative; }
+body .dialog .wrapper label img { max-width: 24px; height: auto; vertical-align: bottom; }
 body .dialog .wrapper input { border-radius: 4px; background-color: transparent; color: #fff; font-family: 'Comfortaa-Bold'; font-size: 12px; margin: 0 0 24px; padding: 16px; }
 body .dialog .wrapper input[type="text"] { width: 100%; border: 2px solid #fff; }
 body .dialog .wrapper input[type="range"] { padding: 16px 0; width: 100%; }
