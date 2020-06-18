@@ -4,17 +4,17 @@ body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; }
 body canvas.disabled { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
 body input[type="range"]:focus { outline: none; }
-body input[type="range"]::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; background: rgba(255, 255, 255, 0.25); border-radius: 4px; }
+body input[type="range"]::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; background: #27a0ff; border-radius: 4px; }
 body input[type="range"]::-webkit-slider-thumb { height: 24px; width: 24px; border-radius: 4px; background: #ffffff; cursor: pointer; -webkit-appearance: none; margin-top: -6px; }
-body input[type="range"]:focus::-webkit-slider-runnable-track { background: rgba(255, 255, 255, 0.25); }
-body input[type="range"]::-moz-range-track { width: 100%; height: 12px; cursor: pointer; background: rgba(255, 255, 255, 0.25); border-radius: 4px; }
+body input[type="range"]:focus::-webkit-slider-runnable-track { background: #27a0ff; }
+body input[type="range"]::-moz-range-track { width: 100%; height: 12px; cursor: pointer; background: #27a0ff; border-radius: 4px; }
 body input[type="range"]::-moz-range-thumb { height: 24px; width: 24px; border-radius: 4px; background: #ffffff; cursor: pointer; }
 body input[type="range"]::-ms-track { width: 100%; height: 12px; cursor: pointer; background: transparent; border-color: transparent; color: transparent; }
-body input[type="range"]::-ms-fill-lower { background: rgba(255, 255, 255, 0.25); border-radius: 8px; }
-body input[type="range"]::-ms-fill-upper { background: rgba(255, 255, 255, 0.25); border-radius: 8px; }
+body input[type="range"]::-ms-fill-lower { background: #27a0ff; border-radius: 8px; }
+body input[type="range"]::-ms-fill-upper { background: #27a0ff; border-radius: 8px; }
 body input[type="range"]::-ms-thumb { height: 24px; width: 24px; border-radius: 4px; background: #ffffff; cursor: pointer; }
-body input[type="range"]:focus::-ms-fill-lower { background: rgba(255, 255, 255, 0.25); }
-body input[type="range"]:focus::-ms-fill-upper { background: rgba(255, 255, 255, 0.25); }
+body input[type="range"]:focus::-ms-fill-lower { background: #27a0ff; }
+body input[type="range"]:focus::-ms-fill-upper { background: #27a0ff; }
 body .stats { position: absolute; top: initial !important; right: 0 !important; bottom: 0 !important; left: initial !important; }
 body .ui-controller .disabled { display: none !important; }
 body .ui-controller .row { display: flex; position: absolute; z-index: 1; pointer-events: none; }

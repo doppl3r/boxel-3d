@@ -9,12 +9,6 @@ class App {
         a.screenWidth = a.window.innerWidth;
         a.screenHeight = a.window.innerHeight;
         a.stats = new Stats();
-        a.quality = 10; // 1=low, 10=high
-        a.targetFPS = 60;
-        a.interval = 1000 / a.targetFPS;
-        a.then = new Date().getTime();
-        a.now = a.then;
-        a.delta = 0;
         a.ui = new UIController();
         a.mouse = new Mouse();
         a.audio = new Audio();
@@ -29,6 +23,13 @@ class App {
         a.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', '#000000', 1);
+        a.settings = a.storage.getSettingsFromStorage();
+        a.quality = a.settings.quality; // 1=low, 10=high
+        a.targetFPS = 60;
+        a.interval = 1000 / a.targetFPS;
+        a.then = new Date().getTime();
+        a.now = a.then;
+        a.delta = 0;
 
         // Add lighting to scene
         a.light.position.set(0.25, 0.5, 1);
@@ -41,8 +42,8 @@ class App {
 
         // Update scene settings
         a.renderer.setSize(a.screenWidth, a.screenHeight);
-        a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
         a.renderer.powerPreference = 'high-performance';
+        a.updateQuality(a.quality, a);
         a.camera.position.x = 0;
         a.camera.position.y = 0;
         a.camera.position.z = 200;
@@ -207,6 +208,19 @@ class App {
         a.camera.position.x = a.player.position.x;
         a.camera.position.y = a.player.position.y + a.camera.tilt;
         a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
+    }
+
+    updateSettings(settings, a) {
+        a.audio.setVolume(settings.audio);
+        a.updateQuality(settings.quality, a);
+        a.ui.toggleTheme(settings.theme);
+        a.storage.setSettingsFromStorage(settings);
+    }
+
+    updateQuality(quality, a) {
+        if (quality <= 0) quality = 1;
+        a.quality = quality;
+        a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
     }
 }
 var app = new App();

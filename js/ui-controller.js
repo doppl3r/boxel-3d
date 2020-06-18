@@ -33,10 +33,12 @@ class UIController {
                 app.ui.updateUI('home');
             }
             else if (action == 'settings') {
+                var settings = app.storage.getSettingsFromStorage();
                 app.ui.addDialog({
                     inputs: [
-                        { label: 'Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: 5 } },
-                        { label: 'Quality', attributes: { name: 'volume', type: 'range', min: 1, max: 10, value: 10 } },
+                        { label: 'Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: settings.volume } },
+                        { label: 'Quality', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } },
+                        { label: 'Editor Theme', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
                         { attributes: { value: 'Cancel', type: 'button' } },
                         { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
                     ]
@@ -206,6 +208,7 @@ class UIController {
     updateLevelOptions() {
         var mode = 'draw';
         var play = 'pause';
+        var settings = app.storage.getSettingsFromStorage();
         if (app != null) {
             mode = app.mouse.mode;
             play = app.play == true ? 'play' : 'pause';
@@ -215,6 +218,7 @@ class UIController {
         this.levelOptions.find('[action="draw"], [action="erase"]').removeClass('selected');
         this.levelOptions.find('[action="' + mode + '"]').addClass('selected');
         this.levelOptions.find('[action="' + play + '"]').addClass('selected');
+        this.toggleTheme(settings.theme);
     }
 
     updateObjectType() {
@@ -376,14 +380,16 @@ class UIController {
     }
 
     updateTip() {
-        var input = $('.dialog .inputs input');
+        var input = $('.dialog .inputs input[type="text"]');
         app.selectedObject.text = input.val();
         app.levelHistory.save(app);
     }
 
     updateSettings() {
-        // TODO: Store settings from dialog to local storage
-        console.log('settings updated');
+        var volume = $('.dialog input[name="volume"]').val();
+        var quality = $('.dialog input[name="quality"]').val();
+        var theme = $('.dialog input[name="theme"]').val();
+        app.updateSettings({ 'volume': volume, 'quality': quality, 'theme': theme }, app);
     }
 
     showTip(text) {
@@ -412,9 +418,10 @@ class UIController {
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
     }
 
-    toggleTheme() {
+    toggleTheme(themeID) {
         var themes = ['dark', 'light'];
         var newTheme = $('body').hasClass('dark') ? themes[1] : themes[0];
+        if (themeID != null) newTheme = themes[themeID];
         // TODO: Use local storage to save theme state
         $('body').removeClass(themes);
         $('body').addClass(newTheme);

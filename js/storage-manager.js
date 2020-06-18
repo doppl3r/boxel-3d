@@ -40,4 +40,18 @@ class StorageManager {
         levelData.name = name;
         this.updateLevelDataToStorage(key, levelData);
     }
+
+    getSettingsFromStorage() {
+        var settings = localStorage.getItem('settings');
+        if (settings == null) {
+            settings = { 'volume': 5, 'quality': 10, 'theme': 0 };
+            this.setSettingsFromStorage(settings);
+            return settings;
+        }
+        return JSON.parse(settings);
+    }
+
+    setSettingsFromStorage(settings) {
+        localStorage.setItem('settings', JSON.stringify(settings));
+    }
 }
