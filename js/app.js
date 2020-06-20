@@ -50,7 +50,7 @@ class App {
         a.document.body.appendChild(a.renderer.domElement);
 
         // Get list of levels
-        a.ui.appendListOfLevels(a);
+        a.ui.appendEditorLevels(a);
 
         // Add level to scene
         a.scene.add(a.level);

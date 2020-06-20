@@ -2,6 +2,7 @@ class UIController {
     constructor() {
         this.controller = $('.ui-controller');
         this.home = this.controller.find('.home');
+        this.levelPicker = this.controller.find('.level-picker');
         this.levelManager = this.controller.find('.level-manager');
         this.levelEditor = this.controller.find('.level-editor');
         this.levelList = this.levelManager.find('.list');
@@ -19,7 +20,10 @@ class UIController {
             event.preventDefault();
             var action = $(this).attr('action');
             
-            if (action == 'level-manager') {
+            if (action == 'level-picker') {
+                app.ui.updateUI('level-picker');
+            }
+            else if (action == 'level-manager') {
                 app.ui.updateUI('level-manager');
             }
             else if (action == 'add-level') {
@@ -27,9 +31,9 @@ class UIController {
                 app.level.createNewLevel(app);
                 levelData = app.level.exportToJSON(app); // Init default data
                 app.storage.setLevelData(levelData); // Store data
-                app.ui.appendLevelItem(levelData);
+                app.ui.appendEditorLevel(levelData);
             }
-            else if (action == 'exit-level-manager') {
+            else if (action == 'exit-to-home') {
                 app.ui.updateUI('home');
             }
             else if (action == 'settings') {
@@ -45,7 +49,7 @@ class UIController {
                 });
             }
             else if (action == 'edit-level') {
-                app.ui.updateLevelFromItem($(this));
+                app.ui.loadEditorLevel($(this));
                 app.ui.updateUI('level-editor');
                 app.levelHistory.save(app);
                 app.resetScene(app);
@@ -55,7 +59,7 @@ class UIController {
                     text: 'Are you sure you want to <em>delete</em> this level?',
                     inputs: [
                         { attributes: { value: 'No', type: 'button' } },
-                        { attributes: { value: 'Yes', type: 'button' }, function: app.ui.removeLevelItem, parameter: $(this) },
+                        { attributes: { value: 'Yes', type: 'button' }, function: app.ui.removeEditorLevel, parameter: $(this) },
                     ]
                 });
             }
@@ -67,7 +71,7 @@ class UIController {
                 app.mouse.setMode('erase');
                 app.ui.updateLevelOptions();
             }
-            else if (action == 'exit-level-editor') {
+            else if (action == 'exit-to-level-manager') {
                 if (app.levelHistory.history.length > 2) {
                     app.ui.addDialog({
                         text: 'Would you like to <em>save</em> your level?',
@@ -162,7 +166,7 @@ class UIController {
         // Add level name change listener
         this.controller.on('focusout', '.list input', function(event) {
             event.preventDefault();
-            app.ui.updateLevelDataName($(this));
+            app.ui.updateEditorLevelName($(this));
         })
     }
 
@@ -183,6 +187,9 @@ class UIController {
 
         if (state == 'home') {
             this.home.removeClass('disabled');
+        }
+        else if (state == 'level-picker') {
+            this.levelPicker.removeClass('disabled');
         }
         else if (state == 'level-manager') {
             this.levelManager.removeClass('disabled');
@@ -261,7 +268,7 @@ class UIController {
         this.levelList.empty();
     }
 
-    appendListOfLevels(a) {
+    appendEditorLevels(a) {
         var list = a.storage.getListOfLevels();
         var levelData = {};
 
@@ -277,11 +284,11 @@ class UIController {
         this.removeListOfLevels(); // Empty list before populating
         for (var i = 0; i < list.length; i++) {
             levelData = list[i];
-            a.ui.appendLevelItem(levelData);
+            a.ui.appendEditorLevel(levelData);
         }
     }
 
-    appendLevelItem (levelData) {
+    appendEditorLevel(levelData) {
         this.levelList.append(
             '<div class="item">' +
                 '<input type="text" key="' + levelData.key + '" value="' + levelData.name + '">' +
@@ -292,14 +299,14 @@ class UIController {
         );
     }
 
-    removeLevelItem(button) {
+    removeEditorLevel(button) {
         var item = button.parent();
         var key = item.find('input').attr('key');
         app.storage.removeLevelData(key);
         item.remove();
     }
 
-    updateLevelFromItem(button) {
+    loadEditorLevel(button) {
         // Select level details from HTML input attributes & values
         var item = button.parent();
         var key = item.find('input').attr('key');
@@ -312,7 +319,7 @@ class UIController {
         app.level.importFromJSON(levelData, app);
     }
     
-    updateLevelDataName(input) {
+    updateEditorLevelName(input) {
         var key = input.attr('key');
         var name = input.val();
         app.storage.updateLevelDataName(key, name);

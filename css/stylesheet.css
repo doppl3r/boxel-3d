@@ -30,6 +30,14 @@ body .ui-controller .home .buttons .button[action='level-manager'] { animation-d
 body .ui-controller .home .buttons .button[action='settings'] { animation-delay: 3s; animation-name: shake-delay; }
 body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert(0%); }
 
+/* Level Picker Styling */
+body .ui-controller .level-picker { align-items: center; background-color: #f1f1f1; display: flex; height: 100vh; justify-content: center; }
+body .ui-controller .level-picker .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
+body .ui-controller .level-picker .levels {}
+body .ui-controller .level-picker .buttons { display: flex; justify-content: center; }
+body .ui-controller .level-picker .buttons .button { background-color: #1e1e1e; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 12px; width: auto; }
+body .ui-controller .level-picker .buttons .button img { max-width: 24px; filter: invert(0%); }
+
 /* Navigation defaults */
 body .ui-controller .row .col .item { position: relative; display: flex; }
 body .ui-controller .row .col .item.highlight { background-color: #0287EF; }
@@ -62,10 +70,10 @@ body.dark .ui-controller .row .col.object-options { background-color: #252526; }
 
 /* Light Themes */
 body.light { background-color: #e6e6e6; }
-body.light .ui-controller a img { filter: invert(25%); }
+body.light .ui-controller a img { filter: invert(50%); }
 body.light .ui-controller a:hover img { filter: invert(100%); }
 body.light .ui-controller .selected img { filter: invert(100%); }
-body.light .ui-controller input { color: #bfbfbf; }
+body.light .ui-controller input { color: #808080; }
 body.light .ui-controller input:focus { color: #000000; }
 body.light .ui-controller .slider { background-color: #f1f1f1; }
 body.light .ui-controller .row .col { background-color: #ffffff; }
