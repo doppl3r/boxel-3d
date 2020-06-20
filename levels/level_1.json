@@ -1,1 +1,0 @@
-{"name":"My Level","key":"level_5","children":[{"isStatic":false,"class":"player","position":{"x":0,"y":0,"z":0},"rotation":{"x":0,"y":0,"z":0},"scale":{"x":16,"y":16,"z":16}},{"isStatic":true,"class":"cube","position":{"x":0,"y":-64,"z":0},"rotation":{"x":0,"y":0,"z":0},"scale":{"x":64,"y":16,"z":16}}]}

@@ -32,11 +32,18 @@ body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert
 
 /* Level Picker Styling */
 body .ui-controller .level-picker { align-items: center; background-color: #f1f1f1; display: flex; height: 100vh; justify-content: center; }
-body .ui-controller .level-picker .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
-body .ui-controller .level-picker .levels {}
+body .ui-controller .level-picker .levels { display: flex; justify-content: center; margin-bottom: 56px; }
+body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 36px; margin: 8px; width: 64px; height: 64px; }
+body .ui-controller .level-picker .levels level:hover > * { animation: shake 0.25s; }
 body .ui-controller .level-picker .buttons { display: flex; justify-content: center; }
 body .ui-controller .level-picker .buttons .button { background-color: #1e1e1e; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 12px; width: auto; }
 body .ui-controller .level-picker .buttons .button img { max-width: 24px; filter: invert(0%); }
+
+/* Campaign */
+body .ui-controller .campaign { position: absolute; top: 0px; left: 0px; }
+body .ui-controller .campaign .buttons { display: flex; justify-content: center; }
+body .ui-controller .campaign .buttons .button { background-color: #1e1e1e; color: #fff; padding: 0 12px; width: auto; }
+body .ui-controller .campaign .buttons .button img { max-width: 24px; filter: invert(0%); }
 
 /* Navigation defaults */
 body .ui-controller .row .col .item { position: relative; display: flex; }

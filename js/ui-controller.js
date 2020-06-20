@@ -2,6 +2,7 @@ class UIController {
     constructor() {
         this.controller = $('.ui-controller');
         this.home = this.controller.find('.home');
+        this.campaign = this.controller.find('.campaign');
         this.levelPicker = this.controller.find('.level-picker');
         this.levelManager = this.controller.find('.level-manager');
         this.levelEditor = this.controller.find('.level-editor');
@@ -21,6 +22,7 @@ class UIController {
             var action = $(this).attr('action');
             
             if (action == 'level-picker') {
+                app.ui.appendLevels();
                 app.ui.updateUI('level-picker');
             }
             else if (action == 'level-manager') {
@@ -45,6 +47,16 @@ class UIController {
                         { label: 'Editor Theme <img src="img/svg/color.svg">', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
                         { attributes: { value: 'Cancel', type: 'button' } },
                         { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
+                    ]
+                });
+            }
+            else if (action == 'pause-campaign') {
+                app.play = false;
+                app.ui.addDialog({
+                    text: 'Paused',
+                    inputs: [
+                        { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
+                        { attributes: { value: 'Continue', type: 'button' }, function: app.ui.resumeCampaign },
                     ]
                 });
             }
@@ -144,6 +156,11 @@ class UIController {
                 app.level.removeObject(app.selectedObject, app);
                 app.levelHistory.save(app);
             }
+            else if (action.includes('level_')) {
+                app.ui.loadLevel($(this));
+                app.ui.updateUI('play');
+                app.resetScene(app);
+            }
             console.log(action);
         });
 
@@ -190,6 +207,10 @@ class UIController {
         }
         else if (state == 'level-picker') {
             this.levelPicker.removeClass('disabled');
+        }
+        else if (state == 'play') {
+            this.campaign.removeClass('disabled');
+            this.canvas.removeClass('disabled');
         }
         else if (state == 'level-manager') {
             this.levelManager.removeClass('disabled');
@@ -268,6 +289,26 @@ class UIController {
         this.levelList.empty();
     }
 
+    appendLevels() {
+        // Restructure HTML level data
+        var levels = $('.levels');
+        var loaded = (levels.hasClass('loaded'));
+
+        // Append levels if data elements have not been loaded
+        if (loaded == false) {
+            $.each(levels.find('level'), function(i) {
+                var level = $(this);
+                var levelData = level.html();
+                var levelIndex = i + 1;
+                var levelName = 'level_' + levelIndex;
+                level.attr('action', levelName);
+                level.html('<span>' + levelIndex + '</span>' + '<data style="display: none;">' + levelData + '</data>');
+            });
+            levels.show();
+            levels.addClass('loaded');
+        }
+    }
+
     appendEditorLevels(a) {
         var list = a.storage.getListOfLevels();
         var levelData = {};
@@ -304,6 +345,13 @@ class UIController {
         var key = item.find('input').attr('key');
         app.storage.removeLevelData(key);
         item.remove();
+    }
+
+    loadLevel(button) {
+        var levelData = JSON.parse(button.find('data').html());
+        app.level.clearLevel(app);
+        app.level.importFromJSON(levelData, app);
+        app.play = true;
     }
 
     loadEditorLevel(button) {
@@ -429,8 +477,20 @@ class UIController {
         var themes = ['dark', 'light'];
         var newTheme = $('body').hasClass('dark') ? themes[1] : themes[0];
         if (themeID != null) newTheme = themes[themeID];
-        // TODO: Use local storage to save theme state
         $('body').removeClass(themes);
         $('body').addClass(newTheme);
+    }
+
+    resumeCampaign() {
+        app.play = true;
+    }
+
+    exitCampaign() {
+        app.play = false;
+        app.resetScene(app);
+        app.level.clearLevel(app);
+        app.player.removeCheckpoint();
+        app.player.setPosition({ x: 0, y: 0, z: 0 });
+        app.ui.updateUI('level-picker');
     }
 }
