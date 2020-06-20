@@ -56,7 +56,7 @@ class UIController {
                     text: 'Paused',
                     inputs: [
                         { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
-                        { attributes: { value: 'Continue', type: 'button' }, function: app.ui.resumeCampaign },
+                        { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
                     ]
                 });
             }
@@ -197,6 +197,12 @@ class UIController {
     }
 
     updateUI(state) {
+        // Update theme
+        if (app != null) {
+            var settings = app.storage.getSettings();
+            this.toggleTheme(settings.theme);
+        }
+
         this.updateCanvas();
         this.canvas.addClass('disabled'); // Default hide canvas
         this.controller.find('> *').addClass('disabled'); // Default hide all children
@@ -236,7 +242,6 @@ class UIController {
     updateLevelOptions() {
         var mode = 'draw';
         var play = 'pause';
-        var settings = app.storage.getSettings();
         if (app != null) {
             mode = app.mouse.mode;
             play = app.play == true ? 'play' : 'pause';
@@ -246,7 +251,6 @@ class UIController {
         this.levelOptions.find('[action="draw"], [action="erase"]').removeClass('selected');
         this.levelOptions.find('[action="' + mode + '"]').addClass('selected');
         this.levelOptions.find('[action="' + play + '"]').addClass('selected');
-        this.toggleTheme(settings.theme);
     }
 
     updateObjectType() {
