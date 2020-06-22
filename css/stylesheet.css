@@ -109,11 +109,16 @@ body .dialog .wrapper input[type="button"] { border: none; border-radius: 4px; c
 body .dialog .wrapper input[type="button"]:hover { animation: shake 0.25s; }
 body .dialog .wrapper input[type="button"]:last-of-type { background-color: #27A0FF; }
 
+/* Loading animation */
+body.loading:before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(241, 241, 241, 0.9); z-index: 1; }
+body.loading:after { content: ''; position: absolute; box-sizing: border-box; border: 8px solid rgba(0, 0, 0, 0.05); border-radius: 50%; border-top: 8px solid #dc265a; width: 64px; height: 64px; animation: spin 1s linear infinite; top: 50%; left: 50%; margin: -32px 0 0 -32px; z-index: 1; }
+
 /* Animation keyframes */
 @keyframes shrink { 0% { transform: scale(1); } 50% { transform: scale(0.90); } 100% { transform: scale(1); } }
 @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(5deg); } 66% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
 @keyframes wave-delay { 0% { transform: translate(0px, 0px); } 5% { transform: translate(0px, -5px); } 10% { transform: translate(0px, 5px); } 15% { transform: translate(0px, 0px); } }
 @keyframes shake-delay { 0% { transform: rotate(0); } 5% { transform: rotate(5deg); } 10% { transform: rotate(-5deg); } 15% { transform: rotate(0deg); } }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}
 
 /* Font Family */
 @font-face {
