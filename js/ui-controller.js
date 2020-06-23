@@ -420,16 +420,16 @@ class UIController {
                     self._function(self._parameter);
                     if (self._attributes.type == 'button') app.ui.removeDialog(); // Always close dialog
                 });
-
                 if (data.label != null) inputs.append('<label>' + data.label + '</label>');
                 inputs.append(input);
             }
             wrapper.append(inputs);
         }
-
+        
         dialog.append(wrapper);
         dialog.hide().fadeIn(100);
         $('body').append(dialog);
+        dialog.find('input:last-of-type').focus();
     }
 
     removeDialog() {
