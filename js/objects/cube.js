@@ -162,6 +162,10 @@ class Cube extends THREE.Mesh {
         }
     }
 
+    isSelected() {
+        return this.selected;
+    }
+
     force(force, object, relativeAngle = false) {
         // Vector of this cube
         var x1 = this.body.positionPrev.x;

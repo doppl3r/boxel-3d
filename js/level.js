@@ -15,7 +15,6 @@ class Level extends THREE.Group {
             Matter.World.remove(a.engine.world, object.body);
             this.remove(object);
             a.deselectScene(a);
-            a.ui.showObjectOptions(false);
         }
     }
 
@@ -38,6 +37,23 @@ class Level extends THREE.Group {
         }
     }
 
+    refreshLevel(a) {
+        // Useful for updating all static objects
+        var levelData = this.exportToJSON(a);
+        this.clearLevel(a);
+        this.importFromJSON(levelData, a);
+    }
+
+    refreshObject(object, a) {
+        // Useful for update static objects
+        var objectData = this.exportObjectToJSON(object);
+        var newObject = a.newObject(objectData.class);
+        this.setObjectProperties(newObject, objectData);
+        this.removeObject(object, a);
+        this.addObject(newObject, a);
+        return newObject;
+    }
+
     createNewLevel(a) {
         a.player.setPosition(); // Reset player position
         this.clearLevel(a);
@@ -56,16 +72,21 @@ class Level extends THREE.Group {
         // Loop through THREE.js group children
         for (var i = 0; i < a.level.children.length; i++) {
             var object = a.level.children[i];
-            var objectData = {};
-            objectData.isStatic = object.isStatic();
-            objectData.class = object.getClass();
-            objectData.position = { x: object.position.x, y: object.position.y, z: object.position.z };
-            objectData.rotation = { x: object.rotation.x, y: object.rotation.y, z: object.rotation.z };
-            objectData.scale = { x: object.scale.x, y: object.scale.y, z: object.scale.z };
-            if (object.text != null) objectData.text = object.text; // Tip text
+            var objectData = this.exportObjectToJSON(object);
             levelJSON.children.push(objectData);
         }
         return levelJSON;
+    }
+
+    exportObjectToJSON(object) {
+        var objectJSON = {};
+        objectJSON.isStatic = object.isStatic();
+        objectJSON.class = object.getClass();
+        objectJSON.position = { x: object.position.x, y: object.position.y, z: object.position.z };
+        objectJSON.rotation = { x: object.rotation.x, y: object.rotation.y, z: object.rotation.z };
+        objectJSON.scale = { x: object.scale.x, y: object.scale.y, z: object.scale.z };
+        if (object.text != null) objectJSON.text = object.text; // Tip text
+        return objectJSON;
     }
 
     saveLevelData(a) {

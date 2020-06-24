@@ -103,9 +103,11 @@ class UIController {
             }
             else if (action == 'undo') {
                 app.levelHistory.undo(app);
+                app.ui.showObjectOptions(false);
             }
             else if (action == 'redo') {
                 app.levelHistory.redo(app);
+                app.ui.showObjectOptions(false);
             }
             else if (action == 'rewind') {
                 app.level.retryLevel(app);
@@ -135,6 +137,9 @@ class UIController {
             else if (action == 'finish') { app.ui.selectObjectType(action); }
             else if (action == 'pin') {
                 app.selectedObject.toggleStatic();
+                app.selectedObject = app.level.refreshObject(app.selectedObject, app);
+                app.selectedObject.select(true);
+                app.levelHistory.save(app);
                 app.ui.updateObjectOptions();
             }
             else if (action == 'rotate') {
