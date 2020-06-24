@@ -23,6 +23,8 @@ class Collision {
 
                     // Check if player is falling
                     if (objectA.body.class == 'player') {
+                        //Matter.Body.setAngle(a.player.body, objectB.body.angle);
+                        //Matter.Body.setAngularVelocity(a.player.body, 0);
                         if (a.player.body.velocity.y >= 0) { 
                             a.player.allowJump = true; 
                         }

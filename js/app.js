@@ -106,7 +106,10 @@ class App {
                 child.setRotation(-rotation, false);
                 if (child.position.y < -1000) {
                     if (child.getClass() == 'player') child.kill();
-                    else a.level.removeObject(child, a);
+                    else {
+                        //a.level.removeObject(child, a);
+                        child.resetToOrigin();
+                    }
                 }
             }
             index--; // Update iterator
