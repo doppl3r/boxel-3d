@@ -108,10 +108,11 @@ class UIController {
                 app.levelHistory.redo(app);
             }
             else if (action == 'rewind') {
-                app.level.retryLevel(app);
-                app.deselectScene(app);
-                app.ui.showObjectOptions(false);
-                app.play = false; // Override default retry behavior
+                if (app.play == true) {
+                    app.level.retryLevel(app);
+                    app.deselectScene(app);
+                    app.ui.showObjectOptions(false);
+                }
             }
             else if (action == 'pause') {
                 app.ui.pause();

@@ -107,7 +107,7 @@ class Cube extends THREE.Mesh {
     }
 
     resetToOrigin() {
-        this.visible = true;
+        this.hide(false); // reveal
         this.setPosition(this.positionOrigin, false);
         this.setRotation(this.rotationOrigin, false);
         this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
@@ -115,7 +115,6 @@ class Cube extends THREE.Mesh {
         Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.body, 0);
         if (this.getClass() == 'player') {
-            this.freeze(false); // Unfreeze if applicable
             this.allowJump = true;
         }
     }
@@ -214,6 +213,12 @@ class Cube extends THREE.Mesh {
     freeze(state = true) {
         this.body.collisionFilter.category = (state == true) ? 0 : 1;
         Matter.Sleeping.set(this.body, state);
+    }
+
+    hide(state = true) {
+        // Freeze and update visibility
+        this.visible = !state;
+        this.freeze(state);
     }
 
     isFrozen() {
