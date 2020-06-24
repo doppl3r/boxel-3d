@@ -30,10 +30,11 @@ class UIController {
             }
             else if (action == 'add-level') {
                 var levelData = {};
+                var key = null;
                 app.level.createNewLevel(app);
                 levelData = app.level.exportToJSON(app); // Init default data
-                app.storage.setLevelData(levelData); // Store data
-                app.ui.appendEditorLevel(levelData);
+                key = app.storage.setLevelData(null, levelData); // Store data and generate new key
+                app.ui.appendEditorLevel({ key: key, level: levelData });
             }
             else if (action == 'exit-to-home') {
                 app.ui.updateUI('home');
@@ -314,29 +315,29 @@ class UIController {
     }
 
     appendEditorLevels(a) {
-        var list = a.storage.getListOfLevels();
+        var list = a.storage.getListOfLevels(); // return format = [{ key: '', level: '' }, ...]
         var levelData = {};
+        var key = null;
 
         // Add empty level if none exist
         if (list.length < 1) {
             a.level.createNewLevel(a);
             levelData = a.level.exportToJSON(a);
-            a.storage.setLevelData(levelData);
-            list.push(levelData);
+            key = a.storage.setLevelData(null, levelData);
+            list.push({ key: key, level: levelData });
         }
 
         // Append each list item
-        this.removeListOfLevels(); // Empty list before populating
+        this.removeListOfLevels(); // Empty list HTML before populating
         for (var i = 0; i < list.length; i++) {
-            levelData = list[i];
-            a.ui.appendEditorLevel(levelData);
+            a.ui.appendEditorLevel(list[i]);
         }
     }
 
-    appendEditorLevel(levelData) {
+    appendEditorLevel(listItem) { // listItem = [{ key: '', level: '' }, ...]
         this.levelList.append(
             '<div class="item">' +
-                '<input type="text" key="' + levelData.key + '" value="' + levelData.name + '">' +
+                '<input type="text" key="' + listItem.key + '" value="' + listItem.level.name + '">' +
                 '<a action="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
                 '<a action="upload-level" title="Upload level"><img src="img/svg/upload.svg"></a>' +
                 '<a action="delete-level" title="Delete level"><img src="img/svg/trash.svg"></a>' +
@@ -369,6 +370,7 @@ class UIController {
         levelData.name = name;
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
+        app.level.key = key; // Update key value for saving the level
     }
     
     updateEditorLevelName(input) {
@@ -475,6 +477,7 @@ class UIController {
         app.ui.showObjectOptions(false);
         app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
+        if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
     }
 
     toggleTheme(themeID) {

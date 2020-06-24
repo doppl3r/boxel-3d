@@ -51,7 +51,6 @@ class Level extends THREE.Group {
     exportToJSON(a) {
         var levelJSON = {};
         levelJSON.name = this.name;
-        levelJSON.key = this.key;
         levelJSON.children = [];
 
         // Loop through THREE.js group children
@@ -70,12 +69,11 @@ class Level extends THREE.Group {
     }
 
     saveLevelData(a) {
-        a.storage.setLevelData(this.exportToJSON(a));
+        a.storage.setLevelData(this.key, this.exportToJSON(a));
     }
 
     importFromJSON(levelData, a) {
         this.name = levelData.name;
-        this.key = levelData.key;
 
         // Loop through JSON level data
         for (var i = 0; i < levelData.children.length; i++) {

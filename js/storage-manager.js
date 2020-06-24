@@ -9,10 +9,10 @@ class StorageManager {
         for (var i = 0; i < length; i++) {
             var key = localStorage.key(i);
             if (key.indexOf(this.levelPrefix) >= 0) {
-                levels.push(JSON.parse(localStorage.getItem(key)));
+                levels.push({ key: key, level: JSON.parse(localStorage.getItem(key)) });
             }
         }
-        levels.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        levels.sort((a,b) => (a.level.name > b.level.name) ? 1 : ((b.level.name > a.level.name) ? -1 : 0));
         return levels;
     }
 
@@ -20,11 +20,14 @@ class StorageManager {
         return JSON.parse(localStorage.getItem(key));
     }
 
-    setLevelData(level) {
+    setLevelData(key, level) {
         var index = 1;
-        while (localStorage.getItem(this.levelPrefix + index) != null) index++;
-        if (level.key == null) level.key = this.levelPrefix + index; // Store key in JSON object
-        localStorage.setItem(level.key, JSON.stringify(level));
+        if (key == null) {
+            while (localStorage.getItem(this.levelPrefix + index) != null) index++;
+            key = 'level_' + index;
+        }
+        localStorage.setItem(key, JSON.stringify(level));
+        return key; // Useful for sharing newly generated level key
     }
 
     removeLevelData(key) {
@@ -33,9 +36,8 @@ class StorageManager {
 
     updateLevelDataName(key, name) {
         var levelData = this.getLevelData(key);
-        levelData.key = key;
         levelData.name = name;
-        this.setLevelData(levelData);
+        this.setLevelData(key, levelData);
     }
 
     getSettings() {
