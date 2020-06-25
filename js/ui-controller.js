@@ -46,7 +46,7 @@ class UIController {
                         { label: 'Master Volume <img src="img/svg/audio.svg">', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: settings.volume } },
                         { label: 'Graphic Quality <img src="img/svg/eye.svg">', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } },
                         { label: 'Editor Theme <img src="img/svg/color.svg">', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
-                        { label: 'Editor Snap <img src="img/svg/drag.svg">', attributes: { name: 'snap', type: 'range', min: 1, max: 16, value: settings.snap } },
+                        { label: 'Editor Snap <img src="img/svg/drag.svg">', attributes: { name: 'snap', type: 'range', min: 1, max: 8, value: settings.snap } },
                         { attributes: { value: 'Cancel', type: 'button' } },
                         { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
                     ]
