@@ -217,13 +217,18 @@ class App {
         a.audio.setVolume(settings.audio);
         a.updateQuality(settings.quality, a);
         a.ui.toggleTheme(settings.theme);
-        a.storage.setSettings(settings);
+        a.updateSnap(settings.snap, a);
+        a.storage.setSettings(settings); // Store locally
     }
 
     updateQuality(quality, a) {
         if (quality <= 0) quality = 1;
         a.quality = quality;
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
+    }
+
+    updateSnap(snap, a) {
+        a.snap = snap;
     }
 }
 var app = new App();
