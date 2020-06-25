@@ -23,8 +23,6 @@ class App {
         a.renderer = new THREE.WebGLRenderer({ alpha: true, /* antialias: true */ });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', '#000000', 1);
-        a.settings = a.storage.getSettings();
-        a.quality = a.settings.quality; // 1=low, 10=high
         a.targetFPS = 60;
         a.interval = 1000 / a.targetFPS;
         a.then = new Date().getTime();
@@ -43,7 +41,6 @@ class App {
         // Update scene settings
         a.renderer.setSize(a.screenWidth, a.screenHeight);
         a.renderer.powerPreference = 'high-performance';
-        a.updateQuality(a.quality, a);
         a.camera.position.x = 0;
         a.camera.position.y = 0;
         a.camera.position.z = 200;
@@ -69,6 +66,7 @@ class App {
         Matter.Events.on(a.engine, 'collisionStart', function(e) { a.collision.checkPlayerCollision(e, a); });
         a.update(null, a);
         a.render(null, a);
+        a.updateSettings(null, a); // Update settings
     }
 
     render(e, a) {
@@ -107,8 +105,8 @@ class App {
                 if (child.position.y < -1000) {
                     if (child.getClass() == 'player') child.kill();
                     else {
-                        //a.level.removeObject(child, a);
-                        child.resetToOrigin();
+                        a.level.removeObject(child, a);
+                        //child.resetToOrigin();
                     }
                 }
             }
@@ -214,6 +212,7 @@ class App {
     }
 
     updateSettings(settings, a) {
+        if (settings == null) settings = a.storage.getSettings();
         a.audio.setVolume(settings.audio);
         a.updateQuality(settings.quality, a);
         a.ui.toggleTheme(settings.theme);
@@ -223,8 +222,7 @@ class App {
 
     updateQuality(quality, a) {
         if (quality <= 0) quality = 1;
-        a.quality = quality;
-        a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / a.quality));
+        a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
     }
 
     updateSnap(snap, a) {
