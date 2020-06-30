@@ -58,6 +58,7 @@ class UIController {
                     text: 'Paused',
                     inputs: [
                         { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
+                        { attributes: { value: 'Retry', type: 'button' }, function: app.level.retryLevel, parameter: app },
                         { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
                     ]
                 });
@@ -205,6 +206,7 @@ class UIController {
     }
 
     updateUI(state) {
+        this.state = state;
         // Update theme
         if (app != null) {
             var settings = app.storage.getSettings();

@@ -108,12 +108,21 @@ class Level extends THREE.Group {
 
     retryLevel(a) {
         a.play = true;
+        a.level.removeParticles(a);
         a.player.removeCheckpoint();
         a.resetScene(a);
     }
 
     exitLevel(a) {
-        // TODO: Got to "home" screen
+        a.player.removeCheckpoint();
+        a.level.removeParticles(a);
+
+        if (a.ui.state == 'play') {
+            app.ui.updateUI('level-picker');
+        }
+        else if (a.ui.state == 'level-editor') {
+            a.resetScene(a);
+        }
     }
 
     setObjectProperties(object, objectData) {

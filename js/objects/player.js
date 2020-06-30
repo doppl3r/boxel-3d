@@ -30,7 +30,7 @@ class Player extends Cube {
             this.visible = false;
             var rows = 4, cols = 4, layers = 4;
             var scale = { x: this.scale.x / cols, y: this.scale.y / rows, z: this.scale.z / layers }
-            setTimeout(this.respawn, 1000); // Respawn in 1 second
+            setTimeout(this.restart, 1000); // Respawn in 1 second
             for (var row = -rows / 2; row < rows / 2; row++) {
                 for (var col = -cols / 2; col < cols / 2; col++) {
                     var randAngle = randomNumber(0, 360 * (Math.PI / 180));
@@ -83,6 +83,10 @@ class Player extends Cube {
             app.player.resetToOrigin();
             app.player.setPositionToCheckpoint();
         }
+    }
+
+    restart() {
+        app.level.retryLevel(app);
     }
 
     finish() {

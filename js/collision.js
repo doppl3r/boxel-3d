@@ -35,7 +35,7 @@ class Collision {
                         if (objectA.body.class == 'tip') {
                             var tip = objectA.text;
                             app.ui.showTip(tip);
-                            objectA.hide();
+                            //objectA.hide();
                         }
                         else if (objectA.body.class == 'bounce') {
                             var force = objectA.scale.y / 2; // Use bounce height
