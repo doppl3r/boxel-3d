@@ -50,6 +50,12 @@ class Level extends THREE.Group {
         return newObject;
     }
 
+    changeObjectType(object, type, a) {
+        object.body.class = type;
+        var newObject = this.refreshObject(object, a);
+        return newObject;
+    }
+
     duplicateObject(object, a) {
         var objectData = this.exportObjectToJSON(object);
         var newObject = a.newObject(objectData.class);

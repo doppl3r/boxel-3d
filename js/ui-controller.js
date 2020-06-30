@@ -21,23 +21,13 @@ class UIController {
             event.preventDefault();
             var action = $(this).attr('action');
             
+            // Home page actions
             if (action == 'level-picker') {
                 app.ui.appendLevels();
                 app.ui.updateUI('level-picker');
             }
             else if (action == 'level-manager') {
                 app.ui.updateUI('level-manager');
-            }
-            else if (action == 'add-level') {
-                var levelData = {};
-                var key = null;
-                app.level.createNewLevel(app);
-                levelData = app.level.exportToJSON(app); // Init default data
-                key = app.storage.setLevelData(null, levelData); // Store data and generate new key
-                app.ui.appendEditorLevel({ key: key, level: levelData });
-            }
-            else if (action == 'exit-to-home') {
-                app.ui.updateUI('home');
             }
             else if (action == 'settings') {
                 var settings = app.storage.getSettings();
@@ -52,7 +42,19 @@ class UIController {
                     ]
                 });
             }
-            else if (action == 'pause-campaign') {
+
+            // Level picker UI
+            if (action.includes('level_')) {
+                app.ui.loadLevel($(this));
+                app.ui.updateUI('play');
+                app.resetScene(app);
+            }
+            else if (action == 'exit-to-home') {
+                app.ui.updateUI('home');
+            }
+
+            // Main game UI
+            if (action == 'pause-campaign') {
                 app.play = false;
                 app.ui.addDialog({
                     text: 'Paused',
@@ -62,6 +64,16 @@ class UIController {
                         { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
                     ]
                 });
+            }
+
+            // Level manager actions
+            if (action == 'add-level') {
+                var levelData = {};
+                var key = null;
+                app.level.createNewLevel(app);
+                levelData = app.level.exportToJSON(app); // Init default data
+                key = app.storage.setLevelData(null, levelData); // Store data and generate new key
+                app.ui.appendEditorLevel({ key: key, level: levelData });
             }
             else if (action == 'edit-level') {
                 app.ui.loadEditorLevel($(this));
@@ -78,7 +90,9 @@ class UIController {
                     ]
                 });
             }
-            else if (action == 'draw') {
+
+            // Level editor - level options
+            if (action == 'draw') {
                 app.mouse.setMode('draw');
                 app.ui.updateLevelOptions();
             }
@@ -129,7 +143,9 @@ class UIController {
             else if (action == 'toggle-theme') {
                 app.ui.toggleTheme();
             }
-            else if (action == 'cube') { app.ui.selectObjectType(action); }
+            
+            // Object type listener
+            if (action == 'cube') { app.ui.selectObjectType(action); }
             else if (action == 'tip') { app.ui.selectObjectType(action); }
             else if (action == 'bounce') { app.ui.selectObjectType(action); }
             else if (action == 'checkpoint') { app.ui.selectObjectType(action); }
@@ -137,7 +153,9 @@ class UIController {
             else if (action == 'shrink') { app.ui.selectObjectType(action); }
             else if (action == 'grow') { app.ui.selectObjectType(action); }
             else if (action == 'finish') { app.ui.selectObjectType(action); }
-            else if (action == 'pin') {
+
+            // Object options listener
+            if (action == 'pin') {
                 app.selectedObject.toggleStatic();
                 app.selectedObject = app.level.refreshObject(app.selectedObject, app);
                 app.selectedObject.select(true);
@@ -153,9 +171,6 @@ class UIController {
             else if (action == 'scale-y') {
                 app.ui.objectOptions.find('[name="scale-y"]').focus();
             }
-            else if (action == 'scale-y') {
-                app.ui.objectOptions.find('[name="scale-y"]').focus();
-            }
             else if (action == 'text') {
                 app.ui.addDialog({
                     text: 'Share a tip!',
@@ -167,7 +182,8 @@ class UIController {
                 });
             }
             else if (action == 'duplicate') {
-                app.level.duplicateObject(app.selectedObject, app);
+                app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
+                app.selectedObject.select(true);
                 app.levelHistory.save(app);
             }
             else if (action == 'accept') {
@@ -177,13 +193,8 @@ class UIController {
             else if (action == 'trash') {
                 app.level.removeObject(app.selectedObject, app);
                 app.levelHistory.save(app);
+                app.ui.showObjectOptions(false);
             }
-            else if (action.includes('level_')) {
-                app.ui.loadLevel($(this));
-                app.ui.updateUI('play');
-                app.resetScene(app);
-            }
-            console.log(action);
         });
 
         // Add object range input listeners
@@ -209,7 +220,14 @@ class UIController {
         })
     }
 
-    selectObjectType(type) {
+    selectObjectType(type, checkNull = true) {
+        // Swap object by type
+        if (app.selectedObject != null && checkNull == true) {
+            app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
+            app.selectedObject.select(true);
+            app.levelHistory.save(app);
+        }
+
         app.ui.objectType.find('[action]').removeClass('selected');
         app.ui.objectType.find('[action=' + type + ']').addClass('selected');
     }
@@ -244,10 +262,11 @@ class UIController {
         else if (state == 'level-manager') {
             this.levelManager.removeClass('disabled');
             this.updateLevelOptions(); // Update top bar
-            this.objectType.find('[action="cube"]').addClass('selected'); // Select by default
             this.objectOptions.addClass('disabled'); // Disable bar on default
         }
         else if (state == 'level-editor') {
+            this.updateLevelOptions();
+            this.objectType.find('[action="cube"]').addClass('selected'); // Select by default
             this.canvas.removeClass('disabled');
             this.levelEditor.removeClass('disabled');
         }
@@ -270,6 +289,7 @@ class UIController {
             play = app.play == true ? 'play' : 'pause';
             this.updateObjectType();
         }
+
         this.levelOptions.find('[action="pause"], [action="pause"]').removeClass('selected');
         this.levelOptions.find('[action="draw"], [action="erase"]').removeClass('selected');
         this.levelOptions.find('[action="' + mode + '"]').addClass('selected');
@@ -279,7 +299,6 @@ class UIController {
     updateObjectType() {
         var mode = app.mouse.mode;
         var play = app.play == true ? 'play' : 'pause';
-        console.log(mode);
         this.objectType.removeClass('disabled');
         if (mode == 'erase' || play == 'play') this.objectType.addClass('disabled');
     }

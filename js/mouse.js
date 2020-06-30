@@ -32,6 +32,7 @@ class Mouse {
                     a.selectedObject = target;
                     a.selectedObject.select(true);
                     a.ui.updateObjectOptions();
+                    a.ui.selectObjectType(a.selectedObject.getClass(), false);
                     a.camera.allowMovement = false;
                 }
                 else {
@@ -41,6 +42,8 @@ class Mouse {
             }
             else if (a.mouse.mode == 'erase') {
                 a.mouse.eraseTarget(e, a);
+                a.deselectScene(a); // Deselect everything
+                a.ui.showObjectOptions(false);
             }
         }
         else {
