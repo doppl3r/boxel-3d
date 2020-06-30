@@ -145,7 +145,16 @@ class UIController {
                 app.ui.updateObjectOptions();
             }
             else if (action == 'rotate') {
-                this.objectOptions.find('[name="rotate"]').focus();
+                app.ui.objectOptions.find('[name="rotate"]').focus();
+            }
+            else if (action == 'scale-x') {
+                app.ui.objectOptions.find('[name="scale-x"]').focus();
+            }
+            else if (action == 'scale-y') {
+                app.ui.objectOptions.find('[name="scale-y"]').focus();
+            }
+            else if (action == 'scale-y') {
+                app.ui.objectOptions.find('[name="scale-y"]').focus();
             }
             else if (action == 'text') {
                 app.ui.addDialog({
@@ -156,6 +165,10 @@ class UIController {
                         { attributes: { value: 'Accept', type: 'button' }, function: app.ui.updateTip, parameter: $(this) },
                     ]
                 });
+            }
+            else if (action == 'duplicate') {
+                app.level.duplicateObject(app.selectedObject, app);
+                app.levelHistory.save(app);
             }
             else if (action == 'accept') {
                 app.deselectScene(app);
@@ -286,8 +299,14 @@ class UIController {
             this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
             
             // Enable/Disable the trash icon for player
-            if (isPlayer == true) this.objectOptions.find('[action*="trash"]').addClass('disabled');
-            else this.objectOptions.find('[action*="trash"]').removeClass('disabled');
+            if (isPlayer == true) {
+                this.objectOptions.find('[action*="trash"]').addClass('disabled');
+                this.objectOptions.find('[action*="duplicate"]').addClass('disabled');
+            }
+            else {
+                this.objectOptions.find('[action*="trash"]').removeClass('disabled');
+                this.objectOptions.find('[action*="duplicate"]').removeClass('disabled');
+            }
             
             // Enable/Disable the tip icon for tip block
             if (isTip == true) this.objectOptions.find('[action*="text"]').removeClass('disabled');

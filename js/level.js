@@ -45,11 +45,15 @@ class Level extends THREE.Group {
     }
 
     refreshObject(object, a) {
-        // Useful for update static objects
+        this.removeObject(object, a); // Clear old object from world/engine
+        var newObject = this.duplicateObject(object, a);
+        return newObject;
+    }
+
+    duplicateObject(object, a) {
         var objectData = this.exportObjectToJSON(object);
         var newObject = a.newObject(objectData.class);
         this.setObjectProperties(newObject, objectData);
-        this.removeObject(object, a);
         this.addObject(newObject, a);
         return newObject;
     }
