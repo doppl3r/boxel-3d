@@ -20,11 +20,12 @@ class Cube extends THREE.Mesh {
         this.hitbox = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
         this.body = Matter.Body.create({
             parts: [this.hitbox],
-            friction: 0.0,
-            frictionAir: 0.0,
-            frictionStatic: 0.0,
-            restitution: 0.0,
-            density: 0.001,
+            friction: 0.0, // Default 0.1
+            frictionAir: 0.0, // Default 0.1
+            frictionStatic: 0.0, // Default: 0.5, stationary stickiness
+            restitution: 0.0, // Default: 0.0, bounciness
+            slop: 0.0, // Default: 0.05
+            timeScale: 1.0, // Default: 1
             name: this.uuid, // Useful for finding scene object
             class: 'cube'
         });
