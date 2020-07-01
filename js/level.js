@@ -9,12 +9,28 @@ class Level extends THREE.Group {
         this.add(object); // Add to group
     }
 
+    createObject(type, options) {
+        var object;
+        switch(type) {
+            case('player'): object = new Player(options); break;
+            case('tip'): object = new Tip(options); break;
+            case('bounce'): object = new Bounce(options); break;
+            case('checkpoint'): object = new Checkpoint(options); break;
+            case('spike'): object = new Spike(options); break;
+            case('shrink'): object = new Shrink(options); break;
+            case('grow'): object = new Grow(options); break;
+            case('finish'): object = new Finish(options); break;
+            default: object = new Cube(options);
+        }
+        return object;
+    }
+
     removeObject(object, a, override = false) {
         // Prevent deleting the player
         if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
             Matter.World.remove(a.engine.world, object.body);
             this.remove(object);
-            a.deselectScene(a);
+            a.level.deselectLevel(a);
         }
     }
 
@@ -51,14 +67,17 @@ class Level extends THREE.Group {
     }
 
     changeObjectType(object, type, a) {
-        object.body.class = type;
-        var newObject = this.refreshObject(object, a);
+        var newObject = object; // Default as self
+        if (object.getClass() != 'player') {
+            object.body.class = type;
+            newObject = this.refreshObject(object, a);
+        }
         return newObject;
     }
 
     duplicateObject(object, a) {
         var objectData = this.exportObjectToJSON(object);
-        var newObject = a.newObject(objectData.class);
+        var newObject = this.createObject(objectData.class);
         this.setObjectProperties(newObject, objectData);
         this.addObject(newObject, a);
         return newObject;
@@ -73,6 +92,16 @@ class Level extends THREE.Group {
         floor.setScale({ x: 64, y: 16, z: 16 });
         floor.setStatic(true);
         this.add(floor);
+    }
+
+    deselectLevel(a) {
+        a.selectedObject = null;
+        for (var i=0; i < a.level.children.length; i++) {
+            var child = a.level.children[i];
+            if (child.body != null) {
+                child.select(false);
+            }
+        }
     }
 
     exportToJSON(a) {
@@ -110,10 +139,17 @@ class Level extends THREE.Group {
         // Loop through JSON level data
         for (var i = 0; i < levelData.children.length; i++) {
             var objectData = levelData.children[i];
-            var object = a.newObject(objectData.class);
+            var object = this.createObject(objectData.class);
             if (objectData.class == 'player') object = a.player;
             this.setObjectProperties(object, objectData);
             this.addObject(object, a);
+        }
+    }
+
+    resetLevel(a) {
+        for (var i = 0; i < this.children.length; i++) {
+            var child = this.children[i];
+            child.resetToOrigin();
         }
     }
 

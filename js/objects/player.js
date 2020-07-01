@@ -44,7 +44,7 @@ class Player extends Cube {
                         rotation: { x: 0, y: 0, z: randAngle },
                         scale: { x: scale.x, y: scale.y, z: scale.z }
                     };
-                    var particle = app.newObject('cube');
+                    var particle = app.level.createObject('cube');
                     app.level.setObjectProperties(particle, particleData);
                     app.level.addObject(particle, app);
                     particle.isParticle = true;

@@ -4,7 +4,6 @@ class App {
         a.window = window;
         a.document = document;
         a.BOX_SIZE = 16;
-        a.snap = 1; // Drag snapping
         a.engine = Matter.Engine.create();
         a.screenWidth = a.window.innerWidth;
         a.screenHeight = a.window.innerHeight;
@@ -136,73 +135,11 @@ class App {
 
     }
 
-    getObject(e, a) {
-        var raycaster = new THREE.Raycaster();
-        var vec = new THREE.Vector3();
-        var object;
-        var x = (e.clientX / a.window.innerWidth) * 2 - 1;
-        var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
-        vec.set(x, y, 0);
-        raycaster.setFromCamera(vec, a.camera);
-        var intersects = raycaster.intersectObjects(a.scene.children, true);
-        if (intersects.length > 0) {
-            // Parent #1 = Shapes, Parent #2 = Cube
-            object = intersects[0].object.parent.parent;
-        }
-        return(object);
-    }
-
-    newObject(type, options) {
-        var object;
-        switch(type) {
-            case('player'): object = new Player(options); break;
-            case('tip'): object = new Tip(options); break;
-            case('bounce'): object = new Bounce(options); break;
-            case('checkpoint'): object = new Checkpoint(options); break;
-            case('spike'): object = new Spike(options); break;
-            case('shrink'): object = new Shrink(options); break;
-            case('grow'): object = new Grow(options); break;
-            case('finish'): object = new Finish(options); break;
-            default: object = new Cube(options);
-        }
-        return object;
-    }
-
-    getMousePosition(e, a) {                
-        var vec = new THREE.Vector3(); // create once and reuse
-        var pos = new THREE.Vector3(); // create once and reuse
-        var distance = 0;
-        var x = (e.clientX / a.window.innerWidth) * 2 - 1;
-        var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
-        vec.set(x, y, 0.5);
-        vec.unproject(a.camera);
-        vec.sub(a.camera.position).normalize();
-        distance = ( 0 - a.camera.position.z ) / vec.z;
-        pos.copy(a.camera.position).add(vec.multiplyScalar(distance));
-        return(pos);
-    }
-
-    deselectScene(a) {
-        a.selectedObject = null;
-        for (var i=0; i < a.level.children.length; i++) {
-            var child = a.level.children[i];
-            if (child.body != null) {
-                child.select(false);
-            }
-        }
-    }
-
     resetScene(a) {
-        a.updateCamera(a);
         a.ui.showObjectOptions(false);
         a.level.removeParticles(a);
-        for (var i=0; i < a.level.children.length; i++) {
-            var child = a.level.children[i];
-            if (child.body != null) {
-                child.resetToOrigin();
-                a.update(null, a); // TODO confirm static disappearing glitch
-            }
-        }
+        a.level.resetLevel(a);
+        a.update(null, a);
     }
 
     updateCamera(a) {
@@ -216,17 +153,13 @@ class App {
         a.audio.setVolume(settings.audio);
         a.updateQuality(settings.quality, a);
         a.ui.toggleTheme(settings.theme);
-        a.updateSnap(settings.snap, a);
+        a.mouse.setSnap(settings.snap);
         a.storage.setSettings(settings); // Store locally
     }
 
     updateQuality(quality, a) {
         if (quality <= 0) quality = 1;
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
-    }
-
-    updateSnap(snap, a) {
-        a.snap = snap;
     }
 }
 var app = new App();

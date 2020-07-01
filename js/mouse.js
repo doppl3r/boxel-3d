@@ -7,6 +7,7 @@ class Mouse {
         this.tolerance = 5; // Default = 1000 / zoom
         this.drag = false;
         this.mode = 'draw';
+        this.snap = 1; // Drag snapping
         this.prevMode = this.mode;
     }
     
@@ -19,15 +20,15 @@ class Mouse {
             }
 
             // Check if drawing or erasing
-            a.mouse.setPosition('down', a.getMousePosition(e, a));
+            a.mouse.setPosition('down', a.mouse.getPosition(e, a));
             if (a.mouse.mode == 'draw') {
-                var target = a.getObject(e, a);
+                var target = a.mouse.clickObject(e, a);
                 a.camera.moved = false;
                 a.mouse.setOffset(a.mouse.down);
                 // Select a new object on start click
                 if (target != null) {
                     a.mouse.setOffset(target.position);
-                    a.deselectScene(a);
+                    a.level.deselectLevel(a);
                     a.ui.showObjectOptions(true);
                     a.selectedObject = target;
                     a.selectedObject.select(true);
@@ -42,7 +43,7 @@ class Mouse {
             }
             else if (a.mouse.mode == 'erase') {
                 a.mouse.eraseTarget(e, a);
-                a.deselectScene(a); // Deselect everything
+                a.level.deselectLevel(a); // Deselect everything
                 a.ui.showObjectOptions(false);
             }
         }
@@ -53,7 +54,7 @@ class Mouse {
 
     mouseMove(e, a) {
         if (a.play == false) {
-            a.mouse.setPosition('move', a.getMousePosition(e, a));
+            a.mouse.setPosition('move', a.mouse.getPosition(e, a));
             // Update selected object if drag is true
             if (a.mouse.drag == true) {
                 if (a.mouse.mode == 'draw') {
@@ -77,8 +78,8 @@ class Mouse {
                             if (a.selectedObject != null) {
                                 a.camera.allowMovement = false;
                                 a.selectedObject.setPosition({
-                                    x: a.mouse.snap(down.x - diff.x, a.snap),
-                                    y: a.mouse.snap(down.y - diff.y, a.snap)
+                                    x: a.mouse.snapToValue(down.x - diff.x, a.mouse.snap),
+                                    y: a.mouse.snapToValue(down.y - diff.y, a.mouse.snap)
                                 });
                             }
                         }
@@ -93,8 +94,8 @@ class Mouse {
 
     mouseUp(e, a) {
         if (a.play == false) {
-            var target = a.getObject(e, a);
-            a.mouse.setPosition('up', a.getMousePosition(e, a));
+            var target = a.mouse.clickObject(e, a);
+            a.mouse.setPosition('up', a.mouse.getPosition(e, a));
 
             // Check if drawing or erasing
             if (a.mouse.mode == 'draw') {
@@ -109,15 +110,15 @@ class Mouse {
                                 class: objectType,
                                 isStatic: true,
                                 position: { 
-                                    x: a.mouse.snap(a.mouse.down.x, a.snap), 
-                                    y: a.mouse.snap(a.mouse.down.y, a.snap), 
+                                    x: a.mouse.snapToValue(a.mouse.down.x, a.mouse.snap), 
+                                    y: a.mouse.snapToValue(a.mouse.down.y, a.mouse.snap), 
                                     z: 0 
                                 },
                                 rotation: { x: 0, y: 0, z: 0 },
                                 scale: { x: a.BOX_SIZE, y: a.BOX_SIZE, z: a.BOX_SIZE }
                             };
-                            a.deselectScene(a); // Deselect everything
-                            a.selectedObject = a.newObject(objectType);
+                            a.level.deselectLevel(a); // Deselect everything
+                            a.selectedObject = a.level.createObject(objectType);
                             a.level.setObjectProperties(a.selectedObject, objectData);
                             a.level.addObject(a.selectedObject, a);
                             a.levelHistory.save(a);
@@ -147,6 +148,36 @@ class Mouse {
                 a.ui.updateLevelOptions()
             }
         }
+    }
+
+    getPosition(e, a) {
+        var vec = new THREE.Vector3(); // create once and reuse
+        var pos = new THREE.Vector3(); // create once and reuse
+        var distance = 0;
+        var x = (e.clientX / a.window.innerWidth) * 2 - 1;
+        var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
+        vec.set(x, y, 0.5);
+        vec.unproject(a.camera);
+        vec.sub(a.camera.position).normalize();
+        distance = ( 0 - a.camera.position.z ) / vec.z;
+        pos.copy(a.camera.position).add(vec.multiplyScalar(distance));
+        return(pos);
+    }
+
+    clickObject(e, a) {
+        var raycaster = new THREE.Raycaster();
+        var vec = new THREE.Vector3();
+        var object;
+        var x = (e.clientX / a.window.innerWidth) * 2 - 1;
+        var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
+        vec.set(x, y, 0);
+        raycaster.setFromCamera(vec, a.camera);
+        var intersects = raycaster.intersectObjects(a.scene.children, true);
+        if (intersects.length > 0) {
+            // Parent #1 = Shapes, Parent #2 = Cube
+            object = intersects[0].object.parent.parent;
+        }
+        return(object);
     }
 
     wheel(e, a) {
@@ -191,8 +222,12 @@ class Mouse {
         return (Math.abs(diff.x + this.offset.x) + Math.abs(diff.y + this.offset.y) > this.tolerance);
     }
 
-    snap(value, step) {
+    snapToValue(value, step) {
         return Math.round(value / step) * step;
+    }
+    
+    setSnap(snap) {
+        this.snap = snap;
     }
 
     setMode(mode) {
@@ -204,7 +239,7 @@ class Mouse {
     }
 
     eraseTarget(e, a) {
-        var target = a.getObject(e, a);
+        var target = a.mouse.clickObject(e, a);
         if (target != null) {
             if (target.getClass() != 'player') {
                 target.select(true);

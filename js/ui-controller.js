@@ -114,7 +114,7 @@ class UIController {
             }
             else if (action == 'save') {
                 app.resetScene(app);
-                app.deselectScene(app);
+                app.level.deselectLevel(app);
                 app.level.saveLevelData(app);
             }
             else if (action == 'undo') {
@@ -127,7 +127,7 @@ class UIController {
             }
             else if (action == 'rewind') {
                 app.level.retryLevel(app);
-                app.deselectScene(app);
+                app.level.deselectLevel(app);
                 app.ui.pause();
                 app.ui.updateLevelOptions();
                 app.ui.showObjectOptions(false);
@@ -187,7 +187,7 @@ class UIController {
                 app.levelHistory.save(app);
             }
             else if (action == 'accept') {
-                app.deselectScene(app);
+                app.level.deselectLevel(app);
                 app.ui.showObjectOptions(false);
             }
             else if (action == 'trash') {
@@ -435,7 +435,7 @@ class UIController {
     saveAndExitLevelEditor(saveLevel = true) {
         app.play = false;
         app.resetScene(app);
-        app.deselectScene(app);
+        app.level.deselectLevel(app);
         if (saveLevel == true) app.level.saveLevelData(app);
         app.level.clearLevel(app);
         app.levelHistory.clear();
@@ -513,7 +513,7 @@ class UIController {
 
     pause() {
         app.play = false;
-        app.deselectScene(app);
+        app.level.deselectLevel(app);
         app.ui.showObjectOptions(false);
         app.ui.levelOptions.find('[action="play"]').removeClass('selected');
         app.ui.levelOptions.find('[action="pause"]').addClass('selected');
@@ -521,7 +521,7 @@ class UIController {
     
     play() {
         app.play = true;
-        app.deselectScene(app);
+        app.level.deselectLevel(app);
         app.ui.showObjectOptions(false);
         app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
