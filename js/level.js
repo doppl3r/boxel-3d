@@ -66,6 +66,7 @@ class Level extends THREE.Group {
 
     createNewLevel(a) {
         a.player.setPosition(); // Reset player position
+        a.player.setScale({ x: 16, y: 16, z: 16 });
         this.clearLevel(a);
         this.add(a.player); // Add player object
         var floor = new Cube({ x: 0, y: -64, z: 0 });
