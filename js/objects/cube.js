@@ -20,7 +20,7 @@ class Cube extends THREE.Mesh {
         this.hitbox = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
         this.body = Matter.Body.create({
             parts: [this.hitbox],
-            friction: 1.0, // Default 0.1, use "setFriction()"
+            friction: 0.0, // Default 0.1
             frictionAir: 0.0, // Default 0.1
             frictionStatic: 0.0, // Default: 0.5, stationary stickiness
             restitution: 0.0, // Default: 0.0, bounciness
@@ -35,7 +35,6 @@ class Cube extends THREE.Mesh {
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
-        this.setFriction(1);
     }
 
     setColors(color) {
@@ -141,7 +140,7 @@ class Cube extends THREE.Mesh {
         return this.body.isStatic;
     }
 
-    setFriction(friction = 1, updateOrigin = true) {
+    setFriction(friction = 0.1, updateOrigin = true) {
         this.body.friction = parseFloat(friction);
         if (updateOrigin == true) this.setFrictionOrigin(friction);
     }
