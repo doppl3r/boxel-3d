@@ -121,7 +121,7 @@ class Mouse {
                             a.selectedObject = a.level.createObject(objectType);
                             a.level.setObjectProperties(a.selectedObject, objectData);
                             a.level.addObject(a.selectedObject, a);
-                            a.levelHistory.save(a);
+                            a.levelHistory.save('Added ' + objectType, a);
                             a.selectedObject.select(true);
                             a.ui.showObjectOptions(true);
                             a.ui.updateObjectOptions();
@@ -131,13 +131,13 @@ class Mouse {
                 else {
                     // Save history if object was moved
                     if (a.mouse.getTolerance() != false) {
-                        a.levelHistory.save(a);
+                        a.levelHistory.save('Moved object', a);
                     }
                 }
             }
             else if (a.mouse.mode == 'erase') {
                 if (a.mouse.erased == true) {
-                    a.levelHistory.save(a);
+                    a.levelHistory.save('Erased object', a);
                     a.mouse.erased = false; // Reset state
                 }
             }

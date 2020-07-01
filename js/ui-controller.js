@@ -78,7 +78,7 @@ class UIController {
             else if (action == 'edit-level') {
                 app.ui.loadEditorLevel($(this));
                 app.ui.updateUI('level-editor');
-                app.levelHistory.save(app);
+                app.levelHistory.save('Edited level', app);
                 app.resetScene(app);
             }
             else if (action == 'delete-level') {
@@ -159,7 +159,7 @@ class UIController {
                 app.selectedObject.toggleStatic();
                 app.selectedObject = app.level.refreshObject(app.selectedObject, app);
                 app.selectedObject.select(true);
-                app.levelHistory.save(app);
+                app.levelHistory.save('Updated object state', app);
                 app.ui.updateObjectOptions();
             }
             else if (action == 'rotate') {
@@ -184,7 +184,7 @@ class UIController {
             else if (action == 'duplicate') {
                 app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
                 app.selectedObject.select(true);
-                app.levelHistory.save(app);
+                app.levelHistory.save('Duplicated object', app);
             }
             else if (action == 'accept') {
                 app.level.deselectLevel(app);
@@ -192,7 +192,7 @@ class UIController {
             }
             else if (action == 'trash') {
                 app.level.removeObject(app.selectedObject, app);
-                app.levelHistory.save(app);
+                app.levelHistory.save('Deleted object', app);
                 app.ui.showObjectOptions(false);
             }
         });
@@ -210,7 +210,7 @@ class UIController {
         // Save level history when input slider is updated
         this.controller.on('mouseup', '.slider input', function(event){
             event.preventDefault();
-            app.levelHistory.save(app);
+            app.levelHistory.save('Updated object properties', app);
         });
 
         // Add level name change listener
@@ -225,7 +225,7 @@ class UIController {
         if (app.selectedObject != null && checkNull == true) {
             app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
             app.selectedObject.select(true);
-            app.levelHistory.save(app);
+            app.levelHistory.save('Changed object to ' + type, app);
         }
 
         app.ui.objectType.find('[action]').removeClass('selected');
@@ -490,7 +490,7 @@ class UIController {
     updateTip() {
         var input = $('.dialog .inputs input[type="text"]');
         app.selectedObject.text = input.val();
-        app.levelHistory.save(app);
+        app.levelHistory.save('Updated tip', app);
     }
 
     updateSettings() {
