@@ -53,7 +53,7 @@ class App {
 
         // Add event listeners and render app
         a.canvas = a.renderer.domElement;
-        a.canvas.classList.add('disabled'); // Default hidden with CSS
+        a.canvas.classList.add('hidden'); // Default hidden with CSS
         a.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
         a.canvas.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
         a.canvas.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);

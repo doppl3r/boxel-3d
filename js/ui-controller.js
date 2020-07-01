@@ -162,6 +162,9 @@ class UIController {
                 app.levelHistory.save('Updated object state', app);
                 app.ui.updateObjectOptions();
             }
+            else if (action == 'friction') {
+                app.ui.objectOptions.find('[name="friction"]').focus();
+            }
             else if (action == 'rotate') {
                 app.ui.objectOptions.find('[name="rotate"]').focus();
             }
@@ -245,40 +248,40 @@ class UIController {
         }
 
         this.updateCanvas();
-        this.canvas.addClass('disabled'); // Default hide canvas
-        this.controller.find('> *').addClass('disabled'); // Default hide all children
+        this.canvas.addClass('hidden'); // Default hide canvas
+        this.controller.find('> *').addClass('hidden'); // Default hide all children
         this.controller.find('[action]').removeClass('selected'); // Default remove all selected
 
         if (state == 'home') {
-            this.home.removeClass('disabled');
+            this.home.removeClass('hidden');
         }
         else if (state == 'level-picker') {
-            this.levelPicker.removeClass('disabled');
+            this.levelPicker.removeClass('hidden');
         }
         else if (state == 'play') {
-            this.campaign.removeClass('disabled');
-            this.canvas.removeClass('disabled');
+            this.campaign.removeClass('hidden');
+            this.canvas.removeClass('hidden');
         }
         else if (state == 'level-manager') {
-            this.levelManager.removeClass('disabled');
+            this.levelManager.removeClass('hidden');
             this.updateLevelOptions(); // Update top bar
-            this.objectOptions.addClass('disabled'); // Disable bar on default
+            this.objectOptions.addClass('hidden'); // Disable bar on default
         }
         else if (state == 'level-editor') {
             this.updateLevelOptions();
             this.objectType.find('[action="cube"]').addClass('selected'); // Select by default
-            this.canvas.removeClass('disabled');
-            this.levelEditor.removeClass('disabled');
+            this.canvas.removeClass('hidden');
+            this.levelEditor.removeClass('hidden');
         }
     }
 
     showObjectOptions(state) {
-        if (state == true) this.objectOptions.removeClass('disabled');
-        else this.objectOptions.addClass('disabled');
+        if (state == true) this.objectOptions.removeClass('hidden');
+        else this.objectOptions.addClass('hidden');
     }
 
     toggleObjectOptions() {
-        this.objectOptions.toggleClass('disabled');
+        this.objectOptions.toggleClass('hidden');
     }
 
     updateLevelOptions() {
@@ -299,8 +302,8 @@ class UIController {
     updateObjectType() {
         var mode = app.mouse.mode;
         var play = app.play == true ? 'play' : 'pause';
-        this.objectType.removeClass('disabled');
-        if (mode == 'erase' || play == 'play') this.objectType.addClass('disabled');
+        this.objectType.removeClass('hidden');
+        if (mode == 'erase' || play == 'play') this.objectType.addClass('hidden');
     }
 
     updateObjectOptions() {
@@ -308,6 +311,10 @@ class UIController {
         if (app.selectedObject != null) {
             var isStatic = app.selectedObject.isStatic();
             var pinIcon = this.objectOptions.find('[action="pin"]');
+            var frictionIcon = this.objectOptions.find('[action="friction"]');
+            var textIcon = this.objectOptions.find('[action="text"]');
+            var duplicateIcon = this.objectOptions.find('[action="duplicate"]');
+            var trashIcon = this.objectOptions.find('[action="trash"]');
             var rotation = -app.selectedObject.getRotation('degrees');
             var scaleX = app.selectedObject.scale.x;
             var scaleY = app.selectedObject.scale.y;
@@ -317,23 +324,31 @@ class UIController {
             this.objectOptions.find('[action*="scale-x"] ~ .slider input').val(scaleX);
             this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
             
-            // Enable/Disable the trash icon for player
+            // Enable/Disable the icons for player
             if (isPlayer == true) {
-                this.objectOptions.find('[action*="trash"]').addClass('disabled');
-                this.objectOptions.find('[action*="duplicate"]').addClass('disabled');
+                pinIcon.addClass('disabled');
+                trashIcon.addClass('disabled');
+                duplicateIcon.addClass('disabled');
             }
             else {
-                this.objectOptions.find('[action*="trash"]').removeClass('disabled');
-                this.objectOptions.find('[action*="duplicate"]').removeClass('disabled');
+                pinIcon.removeClass('disabled');
+                trashIcon.removeClass('disabled');
+                duplicateIcon.removeClass('disabled');
             }
             
             // Enable/Disable the tip icon for tip block
-            if (isTip == true) this.objectOptions.find('[action*="text"]').removeClass('disabled');
-            else this.objectOptions.find('[action*="text"]').addClass('disabled');
+            if (isTip == true) textIcon.removeClass('disabled');
+            else textIcon.addClass('disabled');
             
             // Update selected pin status
-            if (isStatic == true) pinIcon.addClass('selected');
-            else pinIcon.removeClass('selected');
+            if (isStatic == true) {
+                pinIcon.addClass('selected');
+                frictionIcon.addClass('disabled');
+            }
+            else {
+                pinIcon.removeClass('selected');
+                frictionIcon.removeClass('disabled');
+            }
         }
     }
 
