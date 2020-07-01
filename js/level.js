@@ -84,8 +84,12 @@ class Level extends THREE.Group {
     }
 
     createNewLevel(a) {
-        a.player.setPosition(); // Reset player position
+        // Reset player properties
+        a.player.setPosition();
         a.player.setScale({ x: 16, y: 16, z: 16 });
+        a.player.setFriction(0);
+
+        // Prepare level with a single floor
         this.clearLevel(a);
         this.add(a.player); // Add player object
         var floor = new Cube({ x: 0, y: -64, z: 0 });
@@ -120,11 +124,16 @@ class Level extends THREE.Group {
 
     exportObjectToJSON(object) {
         var objectJSON = {};
-        objectJSON.isStatic = object.isStatic();
         objectJSON.class = object.getClass();
         objectJSON.position = { x: object.position.x, y: object.position.y, z: object.position.z };
         objectJSON.rotation = { x: object.rotation.x, y: object.rotation.y, z: object.rotation.z };
         objectJSON.scale = { x: object.scale.x, y: object.scale.y, z: object.scale.z };
+
+        // Conditionally add attributes
+        if (object.isStatic() == false) {
+            objectJSON.isStatic = object.isStatic();
+            objectJSON.friction = object.getFriction();
+        }
         if (object.text != null) objectJSON.text = object.text; // Tip text
         return objectJSON;
     }
@@ -178,5 +187,6 @@ class Level extends THREE.Group {
         object.setRotation(objectData.rotation.z);
         object.setStatic(objectData.isStatic);
         object.setText(objectData.text);
+        object.setFriction(objectData.friction);
     }
 }

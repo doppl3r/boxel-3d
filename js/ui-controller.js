@@ -162,9 +162,6 @@ class UIController {
                 app.levelHistory.save('Updated object state', app);
                 app.ui.updateObjectOptions();
             }
-            else if (action == 'friction') {
-                app.ui.objectOptions.find('[name="friction"]').focus();
-            }
             else if (action == 'rotate') {
                 app.ui.objectOptions.find('[name="rotate"]').focus();
             }
@@ -173,6 +170,10 @@ class UIController {
             }
             else if (action == 'scale-y') {
                 app.ui.objectOptions.find('[name="scale-y"]').focus();
+            }
+            
+            else if (action == 'friction') {
+                app.ui.objectOptions.find('[name="friction"]').focus();
             }
             else if (action == 'text') {
                 app.ui.addDialog({
@@ -208,6 +209,7 @@ class UIController {
             if (name == 'rotate') { app.selectedObject.setRotation(-val * Math.PI / 180); }
             else if (name == 'scale-x') { app.selectedObject.setScale({ x: val, y: null, z: null }); }
             else if (name == 'scale-y') { app.selectedObject.setScale({ x: null, y: val, z: null }); }
+            else if (name == 'friction') { app.selectedObject.setFriction(val); }
         });
 
         // Save level history when input slider is updated
@@ -319,10 +321,12 @@ class UIController {
             var scaleX = app.selectedObject.scale.x;
             var scaleY = app.selectedObject.scale.y;
             var isPlayer = (app.selectedObject.getClass() == 'player');
+            var friction = app.selectedObject.getFriction();
             var isTip = (app.selectedObject.getClass() == 'tip');
             this.objectOptions.find('[action*="rotate"] ~ .slider input').val(rotation);
             this.objectOptions.find('[action*="scale-x"] ~ .slider input').val(scaleX);
             this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
+            this.objectOptions.find('[action*="friction"] ~ .slider input').val(friction);
             
             // Enable/Disable the icons for player
             if (isPlayer == true) {
