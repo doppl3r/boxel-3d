@@ -43,7 +43,7 @@ class StorageManager {
     getSettings() {
         var settings = localStorage.getItem('settings');
         if (settings == null) {
-            settings = { 'volume': 5, 'quality': 10, 'theme': 0, 'snap': 8 };
+            settings = { 'volume': 0, 'quality': 10, 'theme': 0, 'snap': 8 };
             this.setSettings(settings);
             return settings;
         }
