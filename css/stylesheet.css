@@ -1,5 +1,5 @@
 * { box-sizing: border-box; user-select: none; }
-body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; }
+body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; animation: fade-in 1s ease-in; animation-fill-mode: forwards; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
@@ -100,6 +100,7 @@ body.background-8 { background: linear-gradient(180deg, #EFC626 0%, #B12A13 50%,
 
 /* Dialog window styling */
 body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background-color: rgba(0, 0, 0, 0.5); }
+body .dialog .disabled { opacity: 0.25; pointer-events: none; }
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; }
 body .dialog .wrapper p { margin: 0; font-size: 16px; line-height: 24px; padding: 0 0 24px; }
 body .dialog .wrapper p em { position: relative; }
@@ -117,6 +118,7 @@ body.loading:before { content: ''; position: absolute; top: 0; right: 0; bottom:
 body.loading:after { content: ''; position: absolute; box-sizing: border-box; border: 8px solid rgba(0, 0, 0, 0.05); border-radius: 50%; border-top: 8px solid #dc265a; width: 64px; height: 64px; animation: spin 1s linear infinite; top: 50%; left: 50%; margin: -32px 0 0 -32px; z-index: 1; }
 
 /* Animation keyframes */
+@keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes shrink { 0% { transform: scale(1); } 50% { transform: scale(0.90); } 100% { transform: scale(1); } }
 @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(5deg); } 66% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
 @keyframes wave-delay { 0% { transform: translate(0px, 0px); } 5% { transform: translate(0px, -5px); } 10% { transform: translate(0px, 5px); } 15% { transform: translate(0px, 0px); } }

@@ -137,7 +137,7 @@ class UIController {
                 app.ui.updateLevelOptions();
             }
             else if (action == 'play') {
-                app.ui.play();
+                app.ui.play(true);
                 app.ui.updateLevelOptions();
             }
             else if (action == 'toggle-theme') {
@@ -405,7 +405,7 @@ class UIController {
             '<div class="item">' +
                 '<input type="text" key="' + listItem.key + '" value="' + listItem.level.name + '">' +
                 '<a action="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
-                '<a action="upload-level" title="Upload level"><img src="img/svg/upload.svg"></a>' +
+                '<a action="upload-level" class="disabled" title="Upload level"><img src="img/svg/upload.svg"></a>' +
                 '<a action="delete-level" title="Delete level"><img src="img/svg/trash.svg"></a>' +
             '</div>'
         );
@@ -525,7 +525,7 @@ class UIController {
         app.ui.addDialog({
             text: text,
             inputs: [
-                { attributes: { value: 'Continue', type: 'button' }, function: app.ui.play, parameter: true }
+                { attributes: { value: 'Continue', type: 'button' }, function: app.ui.play }
             ]
         });
     }
@@ -538,9 +538,9 @@ class UIController {
         app.ui.levelOptions.find('[action="pause"]').addClass('selected');
     }
     
-    play() {
-        app.play = true;
+    play(refresh = false) {
         app.level.deselectLevel(app);
+        app.play = true;
         app.ui.showObjectOptions(false);
         app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
