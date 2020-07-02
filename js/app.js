@@ -9,6 +9,7 @@ class App {
         a.screenHeight = a.window.innerHeight;
         a.stats = new Stats();
         a.ui = new UIController();
+        a.timer = new Timer();
         a.mouse = new Mouse();
         a.audio = new Audio();
         a.storage = new StorageManager();
@@ -19,7 +20,7 @@ class App {
         a.play = false;
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
         a.camera.tilt = 50;
-        a.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        a.renderer = new THREE.WebGLRenderer({ alpha: true/* , antialias: true */ });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', '#000000', 1);
         a.targetFPS = 60;
@@ -86,6 +87,7 @@ class App {
 
     update(e, a) {
         a.updateCamera(a);
+        a.timer.render(a);
 
         // Loop through scene for all children
         var index = a.level.children.length - 1;

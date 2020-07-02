@@ -55,7 +55,7 @@ class UIController {
 
             // Main game UI
             if (action == 'pause-campaign') {
-                app.play = false;
+                app.ui.pause();
                 app.ui.addDialog({
                     text: 'Paused',
                     inputs: [
@@ -137,7 +137,7 @@ class UIController {
                 app.ui.updateLevelOptions();
             }
             else if (action == 'play') {
-                app.ui.play(true);
+                app.ui.play();
                 app.ui.updateLevelOptions();
             }
             else if (action == 'toggle-theme') {
@@ -420,6 +420,7 @@ class UIController {
 
     loadLevel(button) {
         var levelData = JSON.parse(button.find('data').html());
+        app.timer.reset();
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
         app.play = true;
@@ -531,14 +532,18 @@ class UIController {
     }
 
     pause() {
+        app.timer.pause();
         app.play = false;
-        app.level.deselectLevel(app);
-        app.ui.showObjectOptions(false);
-        app.ui.levelOptions.find('[action="play"]').removeClass('selected');
-        app.ui.levelOptions.find('[action="pause"]').addClass('selected');
+        if (app.ui.state == 'level-editor') {
+            app.level.deselectLevel(app);
+            app.ui.showObjectOptions(false);
+            app.ui.levelOptions.find('[action="play"]').removeClass('selected');
+            app.ui.levelOptions.find('[action="pause"]').addClass('selected');
+        }
     }
     
-    play(refresh = false) {
+    play() {
+        app.timer.start();
         app.camera.position.z = 200;
         app.level.deselectLevel(app);
         app.play = true;
@@ -557,6 +562,7 @@ class UIController {
     }
 
     resumeCampaign() {
+        app.timer.start();
         app.play = true;
     }
 

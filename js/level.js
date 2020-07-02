@@ -164,12 +164,14 @@ class Level extends THREE.Group {
 
     retryLevel(a) {
         a.play = true;
+        a.timer.reset();
         a.level.removeParticles(a);
         a.player.removeCheckpoint();
         a.resetScene(a);
     }
 
     exitLevel(a) {
+        a.timer.reset();
         a.player.removeCheckpoint();
         a.level.removeParticles(a);
 
