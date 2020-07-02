@@ -181,11 +181,13 @@ class Mouse {
     }
 
     wheel(e, a) {
-        var zoom = a.camera.position.z + e.deltaY;
-        if (zoom < 100) zoom = 100;
-        else if (zoom > 1000) zoom = 1000;
-        this.tolerance = 1000 / zoom;
-        a.camera.position.z = zoom;
+        if (app.ui.state == 'level-editor') {
+            var zoom = a.camera.position.z + e.deltaY;
+            if (zoom < 100) zoom = 100;
+            else if (zoom > 1000) zoom = 1000;
+            this.tolerance = 1000 / zoom;
+            a.camera.position.z = zoom;
+        }
     }
 
     setPosition(state, position) {

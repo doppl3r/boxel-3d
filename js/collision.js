@@ -23,9 +23,9 @@ class Collision {
 
                     // Check if player is falling
                     if (objectA.body.class == 'player') {
-                        if (a.player.body.velocity.y >= 0) {
+                        //if (a.player.body.velocity.y >= 0) {
                             a.player.allowJump = true; 
-                        }
+                        //}
                     }
 
                     // Check sensor points

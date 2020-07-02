@@ -539,6 +539,7 @@ class UIController {
     }
     
     play(refresh = false) {
+        app.camera.position.z = 200;
         app.level.deselectLevel(app);
         app.play = true;
         app.ui.showObjectOptions(false);

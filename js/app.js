@@ -19,7 +19,7 @@ class App {
         a.play = false;
         a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
         a.camera.tilt = 50;
-        a.renderer = new THREE.WebGLRenderer({ alpha: true, /* antialias: true */ });
+        a.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', '#000000', 1);
         a.targetFPS = 60;
