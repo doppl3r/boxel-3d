@@ -42,13 +42,14 @@ class Player extends Cube {
                             z: 0
                         },
                         rotation: { x: 0, y: 0, z: randAngle },
-                        scale: { x: scale.x, y: scale.y, z: scale.z }
+                        scale: { x: scale.x, y: scale.y, z: scale.z },
+                        isStatic: false,
+                        friction: 0
                     };
                     var particle = app.level.createObject('cube');
                     app.level.setObjectProperties(particle, particleData);
                     app.level.addObject(particle, app);
                     particle.isParticle = true;
-                    particle.body.isStatic = false;
                     particle.setColors(this.color);
                     Matter.Body.setVelocity(particle.body, this.body.velocity);
                 }
