@@ -49,8 +49,8 @@ body .ui-controller .level-picker .buttons .button img { max-width: 24px; filter
 
 /* Campaign */
 body .ui-controller .campaign { position: absolute; top: 16px; left: 16px; z-index: 1; }
-body .ui-controller .campaign #timer { position: fixed; top: 16px; right: 16px; text-align: center; }
-body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 24px; color: #fff; background-color: #1e1e1e; border-radius: 4px; margin: 0 2px; padding: 4px 0; }
+body .ui-controller .campaign #timer { background-color: #1e1e1e; padding: 2px 4px 0; position: fixed; top: 16px; right: 16px; text-align: center; overflow: hidden; border-radius: 4px; }
+body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 24px; color: #fff; padding: 4px 0; }
 body .ui-controller .campaign .buttons { display: flex; justify-content: center; }
 body .ui-controller .campaign .buttons .button { background-color: #1e1e1e; border-radius: 4px; color: #fff; padding: 0 12px; width: auto; }
 body .ui-controller .campaign .buttons .button img { max-width: 24px; filter: invert(0%); }
