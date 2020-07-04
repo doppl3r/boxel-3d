@@ -57,7 +57,8 @@ class StorageManager {
         var hasNewScore = false;
 
         // Update old score if it exists
-        if (isNaN(scores[levelName]) == false) oldScore = parseInt(scores[levelName].replace(/[^\d]/g, ''));
+        if (scores[levelName] != null) oldScore = parseInt(scores[levelName].replace(/[^\d]/g, ''));
+
 
         // Check high score
         if (newScore < oldScore) {
