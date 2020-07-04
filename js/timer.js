@@ -10,7 +10,6 @@ class Timer {
 
     pause() {
         this.pauseTime = Date.now();
-        console.log('paused', this.pauseTime);
     }
 
     reset() {
@@ -18,12 +17,10 @@ class Timer {
         this.startTime = now;
         this.pauseTime = now;
         this.playTime = 0;
-        console.log('reset', this.playTime);
     }
 
     resume() { 
         this.playTime += Date.now() - this.pauseTime;
-        console.log('resumed', this.toString());
     }
 
     getPlayTime() {

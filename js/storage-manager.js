@@ -51,30 +51,30 @@ class StorageManager {
     }
 
     saveScore(levelName, score) {
-        var record = this.getRecord();
-        var oldScore = parseInt(record[levelName]);
-        var newScore = parseInt(score);
-        var hasNewRecord = false;
+        var scores = this.getScores();
+        var oldScore = parseInt(scores[levelName].replace(/[^\d]/g, ''), 10);
+        var newScore = parseInt(score.replace(/[^\d]/g, ''), 10);
+        var hasNewScore = false;
 
         // Resolve null score
         if (isNaN(oldScore)) oldScore = 999999;
 
         // Check high score
         if (newScore < oldScore) {
-            hasNewRecord = true;
-            record[levelName] = score;
-            localStorage.setItem('record', JSON.stringify(record));
+            hasNewScore = true;
+            scores[levelName] = score;
+            localStorage.setItem('scores', JSON.stringify(scores));
         }
-        return hasNewRecord;
+        return hasNewScore;
     }
 
-    getRecord() {
-        var record = localStorage.getItem('record');
-        if (record == null) {
-            record = '{}';
-            localStorage.setItem('record', JSON.stringify(record));
+    getScores() {
+        var scores = localStorage.getItem('scores');
+        if (scores == null) {
+            scores = '{}';
+            localStorage.setItem('scores', JSON.stringify(scores));
         }
-        return JSON.parse(record); // Return player record
+        return JSON.parse(scores); // Return player scores
     }
 
     setSettings(settings) {
