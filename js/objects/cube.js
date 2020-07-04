@@ -30,8 +30,6 @@ class Cube extends THREE.Mesh {
             class: 'cube'
         });
         this.name = this.uuid;
-        this.castShadow = true;
-        this.receiveShadow = true;
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
@@ -242,5 +240,14 @@ class Cube extends THREE.Mesh {
 
     isFrozen() {
         return this.body.collisionFilter.category == 0;
+    }
+
+    addLight(color, intensity, distance, castShadow = false) {
+        if (this.light == null) {
+            this.light = new THREE.PointLight(color, intensity, distance);
+            this.light.position.set(0, 0, 0);
+            this.light.castShadow = castShadow;
+            this.add(this.light);
+        }
     }
 }

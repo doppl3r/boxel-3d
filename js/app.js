@@ -18,7 +18,7 @@ class App {
         a.levelHistory = new LevelHistory();
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
-        a.fov = 90; // Default 75
+        a.fov = 110; // Default 75
         a.camera = new THREE.PerspectiveCamera(a.fov, a.screenWidth / a.screenHeight, 1, 2000);
         a.camera.tilt = 0;
         a.renderer = new THREE.WebGLRenderer({ alpha: true/* , antialias: true */ });
@@ -42,6 +42,7 @@ class App {
         // Update scene settings
         a.renderer.setSize(a.screenWidth, a.screenHeight);
         a.renderer.powerPreference = 'high-performance';
+        a.renderer.shadowMap.enabled = true;
         a.camera.position.x = 0;
         a.camera.position.y = 0;
         a.camera.position.zDefault = 100;

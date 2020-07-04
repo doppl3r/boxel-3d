@@ -9,6 +9,7 @@ class Player extends Cube {
         this.setColors('#dc265a');
         this.mass = 5;
         this.allowJump = true;
+        this.addLight('#dc265a', 2, 256, false);
     }
 
     jump() {
