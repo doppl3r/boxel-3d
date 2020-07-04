@@ -91,9 +91,17 @@ class Player extends Cube {
     }
 
     finish() {
+        var levelName = app.level.name;
+        var time = app.timer.toString();
+        var hasNewRecord = app.storage.saveScore(levelName, time);
+        var text = 'Finished!<br>Score: ' + time;
+
+        // Show new record text
+        if (hasNewRecord == true) text += '<br><em>New record!</em>';
+
         app.play = false;
         app.ui.addDialog({
-            text: 'Finished!',
+            text: text,
             inputs: [
                 { attributes: { value: 'Retry', type: 'button' }, function: app.level.retryLevel, parameter: app },
                 { attributes: { value: 'Continue', type: 'button' }, function: app.level.exitLevel, parameter: app }
