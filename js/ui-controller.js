@@ -391,7 +391,9 @@ class UIController {
         $.each(scores, function(key, value) {
             if (key.includes(prefix)) {
                 var level_id = 'level_' + key.split(prefix)[1];
-                $('.levels [action="' + level_id + '"] .score').html(value);
+                var level_item = $('.levels [action="' + level_id + '"]');
+                level_item.addClass('completed');
+                level_item.find('.score').html(value);
             }
         });
     }
