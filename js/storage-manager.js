@@ -52,12 +52,12 @@ class StorageManager {
 
     saveScore(levelName, score) {
         var scores = this.getScores();
-        var oldScore = parseInt(scores[levelName].replace(/[^\d]/g, ''), 10);
-        var newScore = parseInt(score.replace(/[^\d]/g, ''), 10);
+        var oldScore = 999999; // Default bad score
+        var newScore = parseInt(score.replace(/[^\d]/g, ''));
         var hasNewScore = false;
 
-        // Resolve null score
-        if (isNaN(oldScore)) oldScore = 999999;
+        // Update old score if it exists
+        if (isNaN(scores[levelName]) == false) oldScore = parseInt(scores[levelName].replace(/[^\d]/g, ''));
 
         // Check high score
         if (newScore < oldScore) {
@@ -72,7 +72,7 @@ class StorageManager {
         var scores = localStorage.getItem('scores');
         if (scores == null) {
             scores = '{}';
-            localStorage.setItem('scores', JSON.stringify(scores));
+            localStorage.setItem('scores', scores);
         }
         return JSON.parse(scores); // Return player scores
     }

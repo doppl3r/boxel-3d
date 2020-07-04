@@ -39,8 +39,9 @@ body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert
 /* Level Picker Styling */
 body .ui-controller .level-picker { align-items: center; /* background-color: #fff */; display: flex; height: 100vh; justify-content: center; }
 body .ui-controller .level-picker .levels { display: flex; justify-content: center; flex-wrap: wrap; }
-body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 36px; margin: 8px; width: 64px; height: 64px; }
+body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 24px; margin: 8px; width: 64px; height: 64px; position: relative; }
 body .ui-controller .level-picker .levels level:hover > * { animation: shake 0.25s; }
+body .ui-controller .level-picker .levels level .score { font-size: 12px; position: absolute; bottom: 2px; left: 0; right: 0; text-align: center; }
 body .ui-controller .level-picker .buttons { display: flex; justify-content: center; }
 body .ui-controller .level-picker .buttons .button { background-color: #1e1e1e; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 12px; width: auto; }
 body .ui-controller .level-picker .buttons .button[action='settings'] { position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }

@@ -23,7 +23,7 @@ class UIController {
             
             // Home page actions
             if (action == 'level-picker') {
-                app.ui.appendLevels();
+                app.ui.appendCampaignLevels();
                 app.ui.updateUI('level-picker');
             }
             else if (action == 'level-manager') {
@@ -258,6 +258,7 @@ class UIController {
             this.home.removeClass('hidden');
         }
         else if (state == 'level-picker') {
+            app.ui.updateCampaignScores();
             this.levelPicker.removeClass('hidden');
         }
         else if (state == 'play') {
@@ -360,7 +361,7 @@ class UIController {
         this.levelList.empty();
     }
 
-    appendLevels() {
+    appendCampaignLevels() {
         // Restructure HTML level data
         var levels = $('.levels');
         var loaded = (levels.hasClass('loaded'));
@@ -373,11 +374,26 @@ class UIController {
                 var levelIndex = i + 1;
                 var levelName = 'level_' + levelIndex;
                 level.attr('action', levelName);
-                level.html('<span>' + levelIndex + '</span>' + '<data style="display: none;">' + levelData + '</data>');
+                level.html(
+                    '<span>' + levelIndex + '</span>' + 
+                    '<span class="score"></span>' + 
+                    '<data style="display: none;">' + levelData + '</data>'
+                );
             });
             levels.show();
             levels.addClass('loaded');
         }
+    }
+
+    updateCampaignScores() {
+        var prefix = 'Campaign Level ';
+        var scores = app.storage.getScores();
+        $.each(scores, function(key, value) {
+            if (key.includes(prefix)) {
+                var level_id = 'level_' + key.split(prefix)[1];
+                $('.levels [action="' + level_id + '"] .score').html(value);
+            }
+        });
     }
 
     appendEditorLevels(a) {
