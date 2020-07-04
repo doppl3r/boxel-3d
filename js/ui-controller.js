@@ -560,7 +560,7 @@ class UIController {
     
     play() {
         app.timer.start();
-        app.camera.position.z = 200;
+        app.camera.position.z = app.camera.position.zDefault;
         app.level.deselectLevel(app);
         app.play = true;
         app.ui.showObjectOptions(false);

@@ -18,8 +18,9 @@ class App {
         a.levelHistory = new LevelHistory();
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
-        a.camera = new THREE.PerspectiveCamera(75, a.screenWidth / a.screenHeight, 1, 2000);
-        a.camera.tilt = 50;
+        a.fov = 90; // Default 75
+        a.camera = new THREE.PerspectiveCamera(a.fov, a.screenWidth / a.screenHeight, 1, 2000);
+        a.camera.tilt = 0;
         a.renderer = new THREE.WebGLRenderer({ alpha: true/* , antialias: true */ });
         a.scene = new THREE.Scene();
         a.light = new THREE.HemisphereLight('#ffffff', '#000000', 1);
@@ -43,11 +44,14 @@ class App {
         a.renderer.powerPreference = 'high-performance';
         a.camera.position.x = 0;
         a.camera.position.y = 0;
-        a.camera.position.z = 200;
+        a.camera.position.zDefault = 100;
+        a.camera.position.z = a.camera.position.zDefault;
         a.document.body.appendChild(a.renderer.domElement);
 
         // Get list of levels
         a.ui.appendEditorLevels(a);
+        //a.scene.fog = new THREE.Fog('#ee95af', 92, 108);
+
 
         // Add level to scene
         a.scene.add(a.level);
