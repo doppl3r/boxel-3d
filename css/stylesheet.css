@@ -1,6 +1,6 @@
 * { box-sizing: border-box; user-select: none; }
 html { -ms-touch-action: manipulation; touch-action: manipulation; }
-body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; }
+body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; background-size: cover; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
@@ -26,12 +26,12 @@ body .ui-controller .row .col { pointer-events: all; }
 /* Home Styling */
 body .ui-controller .home { align-items: center; /* background-color: #ffffff; */ display: flex; height: 100vh; justify-content: center; }
 body .ui-controller .home > * { animation: fade-in 2s ease-in; animation-fill-mode: forwards; }
-body .ui-controller .home .version { position: absolute; top: 16px; left: 16px; }
+body .ui-controller .home .version { color: #ffffff; position: absolute; top: 16px; left: 16px; }
 body .ui-controller .home .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
 body .ui-controller .home .buttons { display: flex; justify-content: center; }
-body .ui-controller .home .buttons .button { animation: wave-delay 5s infinite; background-color: #1e1e1e; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
+body .ui-controller .home .buttons .button { animation: wave-delay 5s infinite; background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
 body .ui-controller .home .buttons .button span + img { margin-left: 8px; }
-body .ui-controller .home .buttons .button[action='level-picker'] { background-color: #dc265a; animation-delay: 1s; }
+body .ui-controller .home .buttons .button[action='level-picker'] { /* background-color: #dc265a; */ animation-delay: 1s; }
 body .ui-controller .home .buttons .button[action='level-manager'] { animation-delay: 2s; }
 body .ui-controller .home .buttons .button[action='settings'] { animation: none; position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert(0%); }
@@ -39,22 +39,22 @@ body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert
 /* Level Picker Styling */
 body .ui-controller .level-picker { align-items: center; /* background-color: #fff */; display: flex; height: 100vh; justify-content: center; }
 body .ui-controller .level-picker .levels { display: flex; justify-content: center; flex-wrap: wrap; }
-body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #1e1e1e; color: #fff; font-size: 56px; margin: 8px; width: 80px; height: 80px; position: relative; }
+body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 56px; margin: 8px; width: 80px; height: 80px; position: relative; }
 body .ui-controller .level-picker .levels level.completed { background-color: #dc265a; }
 body .ui-controller .level-picker .levels level:hover > * { animation: shake 0.25s; }
 body .ui-controller .level-picker .levels level .score { font-size: 12px; position: absolute; bottom: 2px; left: 0; right: 0; text-align: center; }
 body .ui-controller .level-picker .buttons { display: flex; justify-content: center; }
-body .ui-controller .level-picker .buttons .button { background-color: #1e1e1e; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 12px; width: auto; }
+body .ui-controller .level-picker .buttons .button { background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 12px; width: auto; }
 body .ui-controller .level-picker .buttons .button[action='settings'] { position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .level-picker .buttons .button[action='exit-to-home'] { position: absolute; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .level-picker .buttons .button img { max-width: 24px; filter: invert(0%); }
 
 /* Campaign */
 body .ui-controller .campaign { position: absolute; top: 16px; left: 16px; z-index: 1; }
-body .ui-controller .campaign #timer { background-color: #1e1e1e; padding: 2px 4px 0; position: fixed; top: 16px; right: 16px; text-align: center; overflow: hidden; border-radius: 4px; }
+body .ui-controller .campaign #timer { background-color: #dc265a; padding: 2px 4px 0; position: fixed; top: 16px; right: 16px; text-align: center; overflow: hidden; border-radius: 4px; }
 body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 24px; color: #fff; padding: 4px 0; }
 body .ui-controller .campaign .buttons { display: flex; justify-content: center; }
-body .ui-controller .campaign .buttons .button { background-color: #1e1e1e; border-radius: 4px; color: #fff; padding: 0 12px; width: auto; }
+body .ui-controller .campaign .buttons .button { background-color: #dc265a; border-radius: 4px; color: #fff; padding: 0 12px; width: auto; }
 body .ui-controller .campaign .buttons .button img { max-width: 24px; filter: invert(0%); }
 
 /* Navigation defaults */
@@ -116,6 +116,7 @@ body.light .ui-controller .level-editor { background-color: #e6e6e6; }
 .background-6 { background: linear-gradient(180deg, #002939 0%, #5D1D2C 25%, #CB6C17 50%, #034C63 75%, #002939 100%); }
 .background-7 { background: linear-gradient(180deg, #279DCF 0%, #00EDFE 50%, #E5A29C 100%); }
 .background-8 { background: linear-gradient(180deg, #EFC626 0%, #B12A13 50%, #100730 100%); }
+.background-9 { background-image: url('../img/jpg/background-stars.jpg'); background-color: #1b1829; }
 
 /* Dialog window styling */
 body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background-color: rgba(0, 0, 0, 0.5); }
