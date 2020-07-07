@@ -76,10 +76,12 @@ class UIController {
                 app.ui.appendEditorLevel({ key: key, level: levelData });
             }
             else if (action == 'download') {
-                app.level.key = null; // Reset key for saving later
+                app.level.clearLevel(app);
+                app.level.key = null; // Reset key to generate new save key
                 app.storage.loadLevelFromFile();
                 app.ui.updateUI('level-editor');
-                app.levelHistory.save('Edited level', app);
+                app.levelHistory.save('Downloaded level', app);
+                app.levelHistory.save('Loaded level', app); // Force dialog check to save
                 app.resetScene(app);
             }
             else if (action == 'share') {
