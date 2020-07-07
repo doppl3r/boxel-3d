@@ -93,6 +93,7 @@ class App {
     update(e, a) {
         a.updateCamera(a);
         a.timer.render(a);
+        a.player.renderSpeed(a);
 
         // Loop through scene for all children
         var index = a.level.children.length - 1;

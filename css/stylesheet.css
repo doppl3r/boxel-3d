@@ -53,6 +53,8 @@ body .ui-controller .level-picker .buttons .button img { max-width: 24px; filter
 body .ui-controller .campaign { position: absolute; top: 16px; left: 16px; z-index: 1; }
 body .ui-controller .campaign #timer { background-color: #dc265a; padding: 2px 4px 0; position: fixed; top: 16px; right: 16px; text-align: center; overflow: hidden; border-radius: 4px; }
 body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 24px; color: #fff; padding: 4px 0; }
+body .ui-controller .campaign #speedometer { background-color: #dc265a; position: fixed; top: 64px; right: 16px; border-radius: 4px; width: 100px; height: 9px; }
+body .ui-controller .campaign #speedometer #speed { background-color: #fff; position: absolute; height: 3px; left: 4px; top: 3px; transition: width 0.125s linear; border-radius: 3px; }
 body .ui-controller .campaign .buttons { display: flex; justify-content: center; }
 body .ui-controller .campaign .buttons .button { background-color: #dc265a; border-radius: 4px; color: #fff; padding: 0 12px; width: auto; }
 body .ui-controller .campaign .buttons .button img { max-width: 24px; filter: invert(0%); }

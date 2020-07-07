@@ -125,4 +125,17 @@ class Player extends Cube {
             z: this.scale.z * 2 
         }, false);
     }
+
+    renderSpeed(a) {
+        var speed = this.body.speed;
+        var maxSpeed = 10;
+        var newSpeed = 0;
+        var width = newSpeed + '%;';
+
+        // Clamp speed and update style attribute
+        if (speed > maxSpeed) speed = maxSpeed;
+        newSpeed = (speed / maxSpeed) * 100;
+        width = 'width: calc(' + newSpeed + '% - 8px)';
+        a.document.getElementById('speed').setAttribute('style', width);
+    }
 }

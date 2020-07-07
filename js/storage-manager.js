@@ -59,7 +59,6 @@ class StorageManager {
         // Update old score if it exists
         if (scores[levelName] != null) oldScore = parseInt(scores[levelName].replace(/[^\d]/g, ''));
 
-
         // Check high score
         if (newScore < oldScore) {
             hasNewScore = true;
