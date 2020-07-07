@@ -33,6 +33,7 @@ class App {
         // Add lighting to scene
         a.light.position.set(0.25, 0.5, 1);
         a.scene.add(a.light);
+        //a.scene.fog = new THREE.Fog('#ee95af', 92, 108);
 
         // Update stats
         a.stats.setMode(0);
@@ -48,11 +49,6 @@ class App {
         a.camera.position.zDefault = 100;
         a.camera.position.z = a.camera.position.zDefault;
         a.document.body.appendChild(a.renderer.domElement);
-
-        // Get list of levels
-        a.ui.appendEditorLevels(a);
-        //a.scene.fog = new THREE.Fog('#ee95af', 92, 108);
-
 
         // Add level to scene
         a.scene.add(a.level);

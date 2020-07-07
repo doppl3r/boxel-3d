@@ -75,6 +75,18 @@ class UIController {
                 key = app.storage.setLevelData(null, levelData); // Store data and generate new key
                 app.ui.appendEditorLevel({ key: key, level: levelData });
             }
+            else if (action == 'download') {
+                app.level.key = null; // Reset key for saving later
+                app.storage.loadLevelFromFile();
+                app.ui.updateUI('level-editor');
+                app.levelHistory.save('Edited level', app);
+                app.resetScene(app);
+            }
+            else if (action == 'share') {
+                if ($(this).parent().hasClass('item')) app.ui.loadEditorLevel($(this));
+                app.resetScene(app);
+                app.storage.saveLevelToFile();
+            }
             else if (action == 'edit-level') {
                 app.ui.loadEditorLevel($(this));
                 app.ui.updateUI('level-editor');
@@ -266,6 +278,8 @@ class UIController {
             this.canvas.removeClass('hidden');
         }
         else if (state == 'level-manager') {
+            this.levelList.empty();
+            this.appendEditorLevels(app)
             this.levelManager.removeClass('hidden');
             this.updateLevelOptions(); // Update top bar
             this.objectOptions.addClass('hidden'); // Disable bar on default
@@ -423,7 +437,7 @@ class UIController {
             '<div class="item">' +
                 '<input type="text" key="' + listItem.key + '" value="' + listItem.level.name + '">' +
                 '<a action="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
-                '<a action="upload-level" class="disabled" title="Upload level"><img src="img/svg/upload.svg"></a>' +
+                '<a action="share" title="Share level"><img src="img/svg/upload.svg"></a>' +
                 '<a action="delete-level" title="Delete level"><img src="img/svg/trash.svg"></a>' +
             '</div>'
         );

@@ -55,9 +55,13 @@ class StorageManager {
         var oldScore = 999999; // Default bad score
         var newScore = parseInt(score.replace(/[^\d]/g, ''));
         var hasNewScore = false;
+        var data = scores[levelName];
 
         // Update old score if it exists
-        if (scores[levelName] != null) oldScore = parseInt(scores[levelName].replace(/[^\d]/g, ''));
+        if (data != null) {
+            if (data.indexOf(':') >= 0) data += '0'; // Resolve deprecated ##:##
+            oldScore = parseInt(data.replace(/[^\d]/g, ''));
+        }
 
         // Check high score
         if (newScore < oldScore) {
@@ -79,5 +83,42 @@ class StorageManager {
 
     setSettings(settings) {
         localStorage.setItem('settings', JSON.stringify(settings));
+    }
+
+    saveLevelToFile() {
+        app.resetScene(app);
+        app.level.deselectLevel(app);
+        app.level.saveLevelData(app);
+        var levelData = app.level.exportToJSON(app);
+        var blob = new Blob([JSON.stringify(levelData)], { type: "application/json" });
+        saveAs(blob, levelData.name);
+    }
+
+    loadLevelFromFile() {
+        var input = document.createElement("input");
+        input.setAttribute('type', 'file');
+        input.setAttribute('id', 'theFile');
+        input.addEventListener('change', handleFileSelect, false);
+        function performClick() {
+            var evt = document.createEvent("MouseEvents");
+            evt.initEvent("click", true, false);
+            input.dispatchEvent(evt);
+        }
+        function handleFileSelect(evt) {
+            var files = evt.target.files;
+            var f = files[0];
+            var reader = new FileReader();
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    var name = theFile.name.split('.').slice(0, -1).join('.');
+                    var levelData = JSON.parse(e.target.result);
+                    levelData.name = name; // Rename level name to file name
+                    app.level.clearLevel(app);
+                    app.level.importFromJSON(levelData, app);
+                };
+            })(f);
+            reader.readAsText(f);
+        }
+        performClick();
     }
 }
