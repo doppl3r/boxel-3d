@@ -179,13 +179,9 @@ class UIController {
             else if (action == 'rotate') {
                 app.ui.objectOptions.find('[name="rotate"]').focus();
             }
-            else if (action == 'scale-x') {
-                app.ui.objectOptions.find('[name="scale-x"]').focus();
-            }
-            else if (action == 'scale-y') {
-                app.ui.objectOptions.find('[name="scale-y"]').focus();
-            }
-            
+            else if (action == 'scale-x') { app.ui.objectOptions.find('[name="scale-x"]').focus(); }
+            else if (action == 'scale-y') { app.ui.objectOptions.find('[name="scale-y"]').focus(); }
+            else if (action == 'scale-z') { app.ui.objectOptions.find('[name="scale-z"]').focus(); }
             else if (action == 'friction') {
                 app.ui.objectOptions.find('[name="friction"]').focus();
             }
@@ -223,6 +219,7 @@ class UIController {
             if (name == 'rotate') { app.selectedObject.setRotation(-val * Math.PI / 180); }
             else if (name == 'scale-x') { app.selectedObject.setScale({ x: val, y: null, z: null }); }
             else if (name == 'scale-y') { app.selectedObject.setScale({ x: null, y: val, z: null }); }
+            else if (name == 'scale-z') { app.selectedObject.setScale({ x: null, y: null, z: val }); }
             else if (name == 'friction') { app.selectedObject.setFriction(val); }
         });
 
@@ -337,12 +334,14 @@ class UIController {
             var rotation = -app.selectedObject.getRotation('degrees');
             var scaleX = app.selectedObject.scale.x;
             var scaleY = app.selectedObject.scale.y;
+            var scaleZ = app.selectedObject.scale.z;
             var isPlayer = (app.selectedObject.getClass() == 'player');
             var friction = app.selectedObject.getFriction();
             var isTip = (app.selectedObject.getClass() == 'tip');
             this.objectOptions.find('[action*="rotate"] ~ .slider input').val(rotation);
             this.objectOptions.find('[action*="scale-x"] ~ .slider input').val(scaleX);
             this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
+            this.objectOptions.find('[action*="scale-z"] ~ .slider input').val(scaleZ);
             this.objectOptions.find('[action*="friction"] ~ .slider input').val(friction);
             
             // Enable/Disable the icons for player
