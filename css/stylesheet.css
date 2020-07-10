@@ -32,7 +32,8 @@ body .ui-controller .home .buttons { display: flex; justify-content: center; }
 body .ui-controller .home .buttons .button { animation: wave-delay 5s infinite; background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
 body .ui-controller .home .buttons .button span + img { margin-left: 8px; }
 body .ui-controller .home .buttons .button[action='level-picker'] { /* background-color: #dc265a; */ animation-delay: 1s; }
-body .ui-controller .home .buttons .button[action='level-manager'] { animation-delay: 2s; }
+body .ui-controller .home .buttons .button[action='skins'] { animation-delay: 2s; }
+body .ui-controller .home .buttons .button[action='level-manager'] { animation-delay: 3s; }
 body .ui-controller .home .buttons .button[action='settings'] { animation: none; position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert(0%); }
 
