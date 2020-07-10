@@ -87,19 +87,16 @@ class StorageManager {
 
     addLicense(license) {
         var licenses = this.getLicenses();
-        var licenseKey = license['licenseKey'];
         var licenseExists = false;
 
-        // Loop through local license array
-        for (var i = 0; i < licenses.length; i++) {
-            var license = licenses[i];
-            if (license['licenseKey'] == licenseKey) {
+        // Loop through local storage object and check if key exists
+        Object.keys(licenses).forEach(function(key) {
+            if (licenses[key]['key'] == license['key']) {
                 licenseExists = true;
-                break; // End the search
             }
-        }
+        });
 
-        // Add to local storage if it does not exist
+        // Add to local storage if license does not exist
         if (licenseExists == false) {
             licenses.push(license)
             localStorage.setItem('licenses', JSON.stringify(licenses));
