@@ -4,6 +4,7 @@ class UIController {
         this.home = this.controller.find('.home');
         this.campaign = this.controller.find('.campaign');
         this.levelPicker = this.controller.find('.level-picker');
+        this.shop = this.controller.find('.shop');
         this.levelManager = this.controller.find('.level-manager');
         this.levelEditor = this.controller.find('.level-editor');
         this.levelList = this.levelManager.find('.list');
@@ -28,6 +29,9 @@ class UIController {
             }
             else if (action == 'level-manager') {
                 app.ui.updateUI('level-manager');
+            }
+            else if (action == 'shop') {
+                app.ui.updateUI('shop');
             }
             else if (action == 'settings') {
                 var settings = app.storage.getSettings();
@@ -62,6 +66,18 @@ class UIController {
                         { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
                         { attributes: { value: 'Retry', type: 'button' }, function: app.level.retryLevel, parameter: app },
                         { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
+                    ]
+                });
+            }
+
+            // Shop game UI
+            if (action == 'add-license') {
+                app.ui.addDialog({
+                    text: 'Add your license key',
+                    inputs: [
+                        { attributes: { placeholder: 'Ex: BXL-ABC123-DEF456-GHI789-ABC123-DEF456', type: 'text' } },
+                        { attributes: { value: 'Cancel', type: 'button' } },
+                        { attributes: { value: 'Accept', type: 'button' }, function: app.ui.checkLicense },
                     ]
                 });
             }
@@ -191,7 +207,7 @@ class UIController {
                     inputs: [
                         { attributes: { value: app.selectedObject.text, type: 'text' } },
                         { attributes: { value: 'Cancel', type: 'button' } },
-                        { attributes: { value: 'Accept', type: 'button' }, function: app.ui.updateTip, parameter: $(this) },
+                        { attributes: { value: 'Accept', type: 'button' }, function: app.ui.updateTip },
                     ]
                 });
             }
@@ -271,6 +287,9 @@ class UIController {
         else if (state == 'level-picker') {
             app.ui.updateCampaignScores();
             this.levelPicker.removeClass('hidden');
+        }
+        else if (state == 'shop') {
+            this.shop.removeClass('hidden');
         }
         else if (state == 'play') {
             this.campaign.removeClass('hidden');
@@ -606,5 +625,14 @@ class UIController {
         app.player.removeCheckpoint();
         app.player.setPosition({ x: 0, y: 0, z: 0 });
         app.ui.updateUI('level-picker');
+    }
+
+    checkLicense() {
+        var input = $('.dialog .inputs input[type="text"]');
+        app.shop.checkRemoteLicense(input.val(), app.ui.getLicenseResponse);
+    }
+
+    getLicenseResponse(response) {
+        console.log(response);
     }
 }
