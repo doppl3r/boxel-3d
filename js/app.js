@@ -13,6 +13,7 @@ class App {
         a.mouse = new Mouse();
         a.audio = new Audio();
         a.storage = new StorageManager();
+        a.shop = new Shop();
         a.collision = new Collision();
         a.level = new Level();
         a.levelHistory = new LevelHistory();

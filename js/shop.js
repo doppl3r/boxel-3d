@@ -1,19 +1,39 @@
-const key = 'ck_0afcb61f6b31020dfafc1a289ef312e796913a6a';
-const secret = 'cs_59a7807df521714ab500a63052df521a5fcb5cef';
-const url = 'https://boxel3d.com/wp-json/wc/v3/products';
+class Shop {
+    constructor() {
+        this.getBoxelProducts();
+    }
+    
+    getBoxelProducts() {
+        var url  = 'https://boxel3d.com/wp-json/boxel/products/';
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function(response) {
+                app.shop.addProductsToShop(response);
+            }
+        });
+    }
+    
+    addProductsToShop(response) {
+        app.shop.checkLocalLicenses();
+        app.shop.checkRemoteLicense();
+    }
 
-function getData(url) {
-    $.ajax({
-        url: url,
-        method: 'GET',
-        beforeSend: function (req) {
-            req.setRequestHeader('Authorization', 'Basic ' + btoa(key + ':' + secret));
-        }
-    })
-    .done(function (data) {
-        console.log(data);
-        return data;
-    });
+    checkLocalLicenses() {
+        var licenses = app.storage.getLicenses();
+        console.log(licenses);
+    }
+
+    checkRemoteLicense(license) {
+        var url  = 'https://boxel3d.com/wp-json/boxel/products/';
+        var params = { 'license': license }
+        $.ajax({
+            url: url,
+            method: 'GET',
+            data: params,
+            success: function(response) {
+                console.log(response);
+            }
+        });
+    }
 }
-
-getData(url);

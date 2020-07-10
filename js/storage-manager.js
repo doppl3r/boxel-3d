@@ -85,6 +85,38 @@ class StorageManager {
         localStorage.setItem('settings', JSON.stringify(settings));
     }
 
+    addLicense(license) {
+        var licenses = this.getLicenses();
+        var licenseKey = license['licenseKey'];
+        var licenseExists = false;
+
+        // Loop through local license array
+        for (var i = 0; i < licenses.length; i++) {
+            var license = licenses[i];
+            if (license['licenseKey'] == licenseKey) {
+                licenseExists = true;
+                break; // End the search
+            }
+        }
+
+        // Add to local storage if it does not exist
+        if (licenseExists == false) {
+            licenses.push(license)
+            localStorage.setItem('licenses', JSON.stringify(licenses));
+        }
+        
+        return !licenseExists; // Returns 'true' if added
+    }
+
+    getLicenses() {
+        var licenses = localStorage.getItem('licenses');
+        if (licenses == null) {
+            licenses = '[]';
+            localStorage.setItem('licenses', licenses);
+        }
+        return JSON.parse(licenses); // Return licenses
+    }
+
     saveLevelToFile() {
         app.resetScene(app);
         app.level.deselectLevel(app);
