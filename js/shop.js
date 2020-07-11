@@ -45,7 +45,11 @@ class Shop {
 
     checkLocalLicenses() {
         var licenses = app.storage.getLicenses();
-        //console.log(licenses);
+        console.log(licenses);
+        for (var i = 0; i < licenses.length; i++) {
+            var license = licenses[i];
+            app.shop.activateProduct(license.product.id);
+        }
     }
 
     checkRemoteLicense(license, callback = function(){}) {
@@ -57,5 +61,10 @@ class Shop {
             data: params,
             success: callback
         });
+    }
+
+    activateProduct(productId) {
+        $('#'+productId).addClass('enabled');
+        // TODO update buttons and active skin
     }
 }

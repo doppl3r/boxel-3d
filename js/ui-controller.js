@@ -77,7 +77,7 @@ class UIController {
                     inputs: [
                         { attributes: { placeholder: 'Ex: BXL-ABC123-DEF456-GHI789-ABC123-DEF456', type: 'text' } },
                         { attributes: { value: 'Cancel', type: 'button' } },
-                        { attributes: { value: 'Accept', type: 'button' }, function: app.ui.checkLicense },
+                        { attributes: { value: 'Submit', type: 'button' }, function: app.ui.checkLicense },
                     ]
                 });
             }
@@ -633,6 +633,16 @@ class UIController {
     }
 
     getLicenseResponse(response) {
-        console.log(response);
+        var text = 'An error has occured. Please try again later'; // Default error
+        if (response.data == null) text = response.error;
+        else {
+            text = 'License has been activated';
+            app.storage.addLicense(response.data);
+            app.shop.activateProduct(response.data.product.id);
+        }
+        app.ui.addDialog({
+            text: text,
+            inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
+        });
     }
 }
