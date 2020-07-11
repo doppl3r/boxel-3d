@@ -40,16 +40,6 @@ class StorageManager {
         this.setLevelData(key, levelData);
     }
 
-    getSettings() {
-        var settings = localStorage.getItem('settings');
-        if (settings == null) {
-            settings = { 'volume': 0, 'quality': 5, 'theme': 0, 'snap': 8 };
-            this.setSettings(settings);
-            return settings;
-        }
-        return JSON.parse(settings);
-    }
-
     saveScore(levelName, score) {
         var scores = this.getScores();
         var oldScore = 999999; // Default bad score
@@ -83,6 +73,25 @@ class StorageManager {
 
     setSettings(settings) {
         localStorage.setItem('settings', JSON.stringify(settings));
+    }
+
+    getSettings() {
+        var storageSettings = localStorage.getItem('settings');
+        var defaultSettings = { 'volume': 0, 'quality': 5, 'theme': 0, 'snap': 8, 'skin': 1 };
+        var settings = defaultSettings; // Use default
+
+        // Replace with local storage settings
+        if (storageSettings != null) {
+            settings = JSON.parse(storageSettings);
+        }
+
+        // Check if new child settings are null by looping through default
+        for (var key in defaultSettings) {
+            if (settings[key] == null) {
+                settings[key] = defaultSettings[key];
+            }
+        }
+        return settings;
     }
 
     addLicense(license) {
