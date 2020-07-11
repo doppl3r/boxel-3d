@@ -62,7 +62,7 @@ body .ui-controller .campaign .buttons .button img { max-width: 24px; filter: in
 
 /* Shop */
 body .ui-controller .shop { color: #fff; font-size: 16px; display: flex; align-items: center; height: 100vh; justify-content: center; text-align: center; padding: 64px 0; overflow-y: auto; }
-body .ui-controller .shop h1 { font-size: 92px; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 36px; }
+body .ui-controller .shop h1 { font-size: 92px; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 36px; animation: shrink 20s infinite; animation-delay: -10s; }
 body .ui-controller .shop h1 strong { color: #dc265a; }
 body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; }
 body .ui-controller .shop .skins .product { margin: 12px; position: relative; }
