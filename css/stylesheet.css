@@ -66,9 +66,13 @@ body .ui-controller .shop h1 { font-size: 92px; text-transform: uppercase; lette
 body .ui-controller .shop h1 strong { color: #dc265a; }
 body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; }
 body .ui-controller .shop .skins .product { margin: 12px; position: relative; }
+body .ui-controller .shop .skins .product.enabled { cursor: pointer; }
+body .ui-controller .shop .skins .product.enabled .link { display: none; }
 body .ui-controller .shop .skins .product.enabled:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; }
-body .ui-controller .shop .skins .product.enabled:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
-body .ui-controller .shop .skins .product.enabled a { opacity: 0.5; pointer-events: none; }
+body .ui-controller .shop .skins .product.enabled:hover:after,
+body .ui-controller .shop .skins .product.selected:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
+body .ui-controller .shop .skins .product.selected { pointer-events: none; }
+body .ui-controller .shop .skins .product.selected .link { opacity: 0.5; pointer-events: none; }
 body .ui-controller .shop .skins .product .image { background-size: cover; width: 120px; height: 120px; border-radius: 4px; }
 body .ui-controller .shop .skins .product .title { padding: 8px 0; }
 body .ui-controller .shop .skins .product .link { width: 100%; height: auto; background-color: #dc265a; color: #fff; border-radius: 4px; padding: 8px 0; text-decoration: none; }

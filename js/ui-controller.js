@@ -639,7 +639,7 @@ class UIController {
         else {
             text = 'License has been activated';
             app.storage.addLicense(response.data);
-            app.shop.activateProduct(response.data.product.id);
+            app.shop.enableProduct(response.data.product.id);
         }
         app.ui.addDialog({
             text: text,

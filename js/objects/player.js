@@ -139,4 +139,15 @@ class Player extends Cube {
         width = 'width: calc(' + newSpeed + '% - 8px)';
         a.document.getElementById('speed').setAttribute('style', width);
     }
+
+    setSkin(id, a = app) {
+        var settings = a.storage.getSettings();
+        var license = null;
+        if (id == null) id = 1; // Use default skin
+        license = a.storage.getLicenseById(id);
+        this.loadTexture(license['product']['image']);
+        this.updateTexture(this.texture);
+        settings['skin'] = id;
+        a.storage.setSettings(settings);
+    }
 }

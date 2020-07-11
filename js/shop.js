@@ -1,17 +1,12 @@
 class Shop {
     constructor() {
-        var defaultProduct = {
-            'id': 1,
-            'title': 'Default',
-            'currency': '',
-            'regular_price': 'Free',
-            'is_on_sale': '',
-            'sale_price': '',
-            'image': 'img/png/favicon.png',
-            'permalink': '#'
-        }
+        var defaultProducts = [
+            { 'id': 1, 'title': 'Default', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/1.png', 'permalink': '#' },
+            { 'id': 2, 'title': 'Blue', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/2.png', 'permalink': '#' }
+        ];
         this.state = 'loading'; // Default unloaded
-        this.addProductToShop(defaultProduct);
+        this.addProductToShop(defaultProducts[0]);
+        this.addProductToShop(defaultProducts[1]);
     }
     
     getBoxelProducts() {
@@ -53,8 +48,12 @@ class Shop {
         var licenses = app.storage.getLicenses();
         for (var i = 0; i < licenses.length; i++) {
             var license = licenses[i];
-            app.shop.activateProduct(license.product.id);
+            app.shop.enableProduct(license.product.id);
         }
+
+        // Selected active skin
+        var settings = app.storage.getSettings();
+        app.shop.selectProduct(settings['skin']);
     }
 
     checkRemoteLicense(license, callback = function(){}) {
@@ -68,9 +67,25 @@ class Shop {
         });
     }
 
-    activateProduct(productId) {
-        $('#'+productId).addClass('enabled');
-        // TODO update buttons and active skin
+    enableProduct(productId) {
+        var product = $('#'+productId);
+        var link = product.find('.link');
+        product.addClass('enabled');
+        link.html('<span>Select</span>');
+        link.attr('href', '#');
+        link.attr('target', '_self');
+
+        // Add click listener
+        product.on('click', function(e){
+            app.shop.selectProduct($(this).attr('id'));
+            app.player.setSkin($(this).attr('id'));
+        });
+    }
+
+    selectProduct(productId) {
+        $('.skins .product').removeClass('selected') // Reset selected
+        var product = $('#'+productId);
+        product.addClass('selected');
     }
 
     load() {

@@ -154,11 +154,23 @@ class App {
     }
 
     updateSettings(settings, a) {
-        if (settings == null) settings = a.storage.getSettings();
+        // Compare new settings with local storage
+        var storageSettings = a.storage.getSettings();
+        if (settings == null) settings = storageSettings;
+
+        // Add missing keys from storage
+        Object.keys(storageSettings).forEach(function (key) {
+            if (settings[key] == null) {
+                settings[key] = storageSettings[key];
+            }
+        });
+
+        // Update application from settings
         a.audio.setVolume(settings.audio);
         a.updateQuality(settings.quality, a);
         a.ui.toggleTheme(settings.theme);
         a.mouse.setSnap(settings.snap);
+        a.player.setSkin(settings.skin, a);
         a.storage.setSettings(settings); // Store locally
     }
 

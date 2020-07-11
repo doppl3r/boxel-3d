@@ -116,11 +116,25 @@ class StorageManager {
 
     getLicenses() {
         var licenses = localStorage.getItem('licenses');
+        var defaultLicenses = [
+            { 'key': 1, 'product': { 'id': 1, 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/1.png' }},
+            { 'key': 2, 'product': { 'id': 2, 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/2.png' }}
+        ];
         if (licenses == null) {
-            licenses = '[]';
+            licenses = JSON.stringify(defaultLicenses);
             localStorage.setItem('licenses', licenses);
         }
         return JSON.parse(licenses); // Return licenses
+    }
+
+    getLicenseById(id) {
+        var licenses = this.getLicenses();
+        var license = null;
+        for (var i = 0; i < licenses.length; i++) {
+            license = licenses[i];
+            if (license['product']['id'] == id) break;
+        }
+        return license;
     }
 
     saveLevelToFile() {
