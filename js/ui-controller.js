@@ -290,6 +290,7 @@ class UIController {
         }
         else if (state == 'shop') {
             this.shop.removeClass('hidden');
+            app.shop.load(); // Gets products
         }
         else if (state == 'play') {
             this.campaign.removeClass('hidden');

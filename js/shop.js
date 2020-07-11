@@ -6,8 +6,8 @@ class Shop {
             'regular_price': 'Active',
             'permalink': '#'
         }
+        this.state = 'loading'; // Default unloaded
         this.addProductToShop(defaultProduct);
-        this.getBoxelProducts();
     }
     
     getBoxelProducts() {
@@ -27,7 +27,8 @@ class Shop {
             app.shop.addProductToShop(product);
         }
         app.shop.checkLocalLicenses();
-        app.shop.checkRemoteLicense();
+        app.shop.state = 'loaded';
+        app.shop.load();
     }
 
     addProductToShop(product, selector) {
@@ -45,7 +46,6 @@ class Shop {
 
     checkLocalLicenses() {
         var licenses = app.storage.getLicenses();
-        console.log(licenses);
         for (var i = 0; i < licenses.length; i++) {
             var license = licenses[i];
             app.shop.activateProduct(license.product.id);
@@ -66,5 +66,15 @@ class Shop {
     activateProduct(productId) {
         $('#'+productId).addClass('enabled');
         // TODO update buttons and active skin
+    }
+
+    load() {
+        if (this.state == 'loading') {
+            this.getBoxelProducts(); // Request products
+            $('body').addClass('loading');
+        }
+        else {
+            $('body').removeClass('loading');
+        }
     }
 }
