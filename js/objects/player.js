@@ -52,6 +52,7 @@ class Player extends Cube {
                     app.level.addObject(particle, app);
                     particle.isParticle = true;
                     particle.setColors(this.color);
+                    particle.updateTexture(this.texture);
                     Matter.Body.setVelocity(particle.body, this.body.velocity);
                 }
             }

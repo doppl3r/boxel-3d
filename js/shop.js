@@ -3,10 +3,11 @@ class Shop {
         var defaultProduct = {
             'id': 1,
             'title': 'Default',
-            'regular_price': 'Active',
+            'currency': '',
+            'regular_price': 'Free',
             'is_on_sale': '',
             'sale_price': '',
-            'image': '',
+            'image': 'img/png/favicon.png',
             'permalink': '#'
         }
         this.state = 'loading'; // Default unloaded
@@ -40,9 +41,9 @@ class Shop {
             '<div class="product" id="' + product.id + '">' +
                 '<div class="image" style="background-image: url(' + product.image + ')"></div>' +
                 '<div class="title">' + product.title + '</div>' +
-                '<a class="link' + (product.is_on_sale == true ? ' sale' : '') + '" href="' + product.permalink + '">' +
-                    '<span class="regular_price">' + product.regular_price + '</span>' +
-                    '<span class="sale_price">' + product.sale_price + '</span>' +
+                '<a class="link' + (product.is_on_sale == true ? ' sale' : '') + '" href="' + product.permalink + '" target="_blank">' +
+                    '<span class="regular_price">' + product.currency + product.regular_price + '</span>' +
+                    '<span class="sale_price">' + product.currency + product.sale_price + '</span>' +
                 '</a>' +
             '</div>'
         );
