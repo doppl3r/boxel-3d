@@ -64,7 +64,7 @@ body .ui-controller .campaign .buttons .button img { max-width: 24px; filter: in
 body .ui-controller .shop { color: #fff; font-size: 16px; display: flex; align-items: center; height: 100vh; justify-content: center; text-align: center; padding: 64px 0; overflow-y: auto; }
 body .ui-controller .shop h1 { font-size: 92px; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 36px; }
 body .ui-controller .shop h1 strong { color: #dc265a; }
-body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; }
+body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; }
 body .ui-controller .shop .skins .product { margin: 12px; position: relative; }
 body .ui-controller .shop .skins .product.enabled:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; }
 body .ui-controller .shop .skins .product.enabled:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
@@ -159,8 +159,8 @@ body .dialog .wrapper input[type="button"]:hover { animation: shake 0.25s; }
 body .dialog .wrapper input[type="button"]:last-of-type { background-color: #27A0FF; }
 
 /* Loading animation */
-body.loading:before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1; }
-body.loading:after { content: ''; position: absolute; box-sizing: border-box; border: 8px solid rgba(0, 0, 0, 0.5); border-radius: 50%; border-top: 8px solid #dc265a; width: 64px; height: 64px; animation: spin 1s linear infinite; top: 50%; left: 50%; margin: -32px 0 0 -32px; z-index: 1; }
+.loading:before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1; }
+.loading:after { content: ''; position: absolute; box-sizing: border-box; border: 8px solid rgba(0, 0, 0, 0.5); border-radius: 50%; border-top: 8px solid #dc265a; width: 64px; height: 64px; animation: spin 1s linear infinite; top: 50%; left: 50%; margin: -32px 0 0 -32px; z-index: 1; }
 
 /* Animation keyframes */
 @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }

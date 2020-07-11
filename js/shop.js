@@ -4,6 +4,9 @@ class Shop {
             'id': 1,
             'title': 'Default',
             'regular_price': 'Active',
+            'is_on_sale': '',
+            'sale_price': '',
+            'image': '',
             'permalink': '#'
         }
         this.state = 'loading'; // Default unloaded
@@ -31,7 +34,8 @@ class Shop {
         app.shop.load();
     }
 
-    addProductToShop(product, selector) {
+    addProductToShop(product) {
+        // Add product to parent
         $('.skins').append(
             '<div class="product" id="' + product.id + '">' +
                 '<div class="image" style="background-image: url(' + product.image + ')"></div>' +
@@ -71,10 +75,10 @@ class Shop {
     load() {
         if (this.state == 'loading') {
             this.getBoxelProducts(); // Request products
-            $('body').addClass('loading');
+            $('.skins').addClass('loading');
         }
         else {
-            $('body').removeClass('loading');
+            $('.skins').removeClass('loading');
         }
     }
 }

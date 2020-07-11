@@ -75,7 +75,7 @@ class UIController {
                 app.ui.addDialog({
                     text: 'Add your license key',
                     inputs: [
-                        { attributes: { placeholder: 'Ex: BXL-ABC123-DEF456-GHI789-ABC123-DEF456', type: 'text' } },
+                        { attributes: { placeholder: 'Ex: BXL-ABC123-DEF456-GHI789', type: 'text' } },
                         { attributes: { value: 'Cancel', type: 'button' } },
                         { attributes: { value: 'Submit', type: 'button' }, function: app.ui.checkLicense },
                     ]
