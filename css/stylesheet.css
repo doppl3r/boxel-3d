@@ -32,7 +32,7 @@ body .ui-controller .home .buttons { display: flex; justify-content: center; }
 body .ui-controller .home .buttons .button { animation: wave-delay 5s infinite; background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
 body .ui-controller .home .buttons .button span + img { margin-left: 8px; }
 body .ui-controller .home .buttons .button[action='level-picker'] { /* background-color: #dc265a; */ animation-delay: 1s; }
-body .ui-controller .home .buttons .button[action='skins'] { animation-delay: 2s; }
+body .ui-controller .home .buttons .button[action='shop'] { animation-delay: 2s; }
 body .ui-controller .home .buttons .button[action='level-manager'] { animation-delay: 3s; }
 body .ui-controller .home .buttons .button[action='settings'] { animation: none; position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert(0%); }
@@ -66,9 +66,9 @@ body .ui-controller .shop h1 { font-size: 92px; text-transform: uppercase; lette
 body .ui-controller .shop h1 strong { color: #dc265a; }
 body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; }
 body .ui-controller .shop .skins .product { margin: 12px; position: relative; }
-body .ui-controller .shop .skins .product.active:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; }
-body .ui-controller .shop .skins .product.active:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
-body .ui-controller .shop .skins .product.active a { opacity: 0.5; pointer-events: none; }
+body .ui-controller .shop .skins .product.enabled:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; }
+body .ui-controller .shop .skins .product.enabled:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
+body .ui-controller .shop .skins .product.enabled a { opacity: 0.5; pointer-events: none; }
 body .ui-controller .shop .skins .product .image { background-color: #dc265a; background-size: cover; width: 120px; height: 120px; border-radius: 4px; }
 body .ui-controller .shop .skins .product .title { padding: 8px 0; }
 body .ui-controller .shop .skins .product .link { width: 100%; height: auto; background-color: #dc265a; color: #fff; border-radius: 4px; padding: 8px 0; text-decoration: none; }
