@@ -1,0 +1,34 @@
+v0.1.1 – July 13, 2020
+- Added keyboard shortcuts (ex: R to restart, ESC to pause/return)
+
+v0.1.0 – July 11, 2020
+- Added “MySkins” shop
+- Added 3 skins
+
+v0.0.7 – July 7, 2020
+- Added level sharing (file only)
+- Added level downloading (file only)
+- Added level 11
+- Fixed level 6 wall glitch
+- Fixed old score value from preventing new records
+
+v0.0.6 – July 6, 2020
+- Added speedometer
+- Updated time format from 12:34 to 12.345
+
+v0.0.5 – July 6, 2020
+- Added background artwork
+
+v0.0.4 – July 4, 2020
+- Added lighting for player
+
+v0.0.3 – July 3, 2020
+- Added score saving system
+
+v0.0.2 – July 2, 2020
+- Added timer to campaign
+
+v0.0.1 – July 2, 2020
+- 10 levels
+- 8 block types
+- 3D Level Editor
