@@ -60,14 +60,6 @@ class UIController {
             // Main game UI
             if (action == 'pause-campaign') {
                 app.ui.pause();
-                app.ui.addDialog({
-                    text: 'Paused',
-                    inputs: [
-                        { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
-                        { attributes: { value: 'Retry', type: 'button' }, function: app.level.retryLevel, parameter: app },
-                        { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
-                    ]
-                });
             }
 
             // Shop game UI
@@ -164,7 +156,6 @@ class UIController {
             }
             else if (action == 'pause') {
                 app.ui.pause();
-                app.ui.updateLevelOptions();
             }
             else if (action == 'play') {
                 app.ui.play();
@@ -554,10 +545,14 @@ class UIController {
         dialog.find('input:last-of-type').focus();
     }
 
-    removeDialog() {
+    removeDialog(duration = 100) {
         var dialog = $('.dialog');
         dialog.find('a').off();
-        dialog.fadeOut(100, function(){ dialog.remove(); });
+        dialog.fadeOut(duration, function(){ dialog.remove(); });
+    }
+
+    dialogIsOpen() {
+        return $('.dialog').length > 0;
     }
 
     updateTip() {
@@ -588,12 +583,25 @@ class UIController {
         app.timer.pause();
         app.play = false;
         if (app.ui.state == 'level-editor') {
+            app.ui.updateLevelOptions();
             app.level.deselectLevel(app);
             app.ui.showObjectOptions(false);
             app.ui.levelOptions.find('[action="play"]').removeClass('selected');
             app.ui.levelOptions.find('[action="pause"]').addClass('selected');
         }
+        else {
+            app.ui.addDialog({
+                text: 'Paused',
+                inputs: [
+                    { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
+                    { attributes: { value: 'Retry (R)', type: 'button' }, function: app.level.retryLevel, parameter: app },
+                    { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
+                ]
+            });
+        }
     }
+
+    
     
     play() {
         app.timer.start();

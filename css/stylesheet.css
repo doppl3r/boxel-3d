@@ -155,15 +155,16 @@ body .dialog .disabled { opacity: 0.25; pointer-events: none; }
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; }
 body .dialog .wrapper p { margin: 0; font-size: 16px; line-height: 24px; padding: 0 0 24px; }
 body .dialog .wrapper p em { position: relative; }
-body .dialog .wrapper label { display: block; font-size: 14px; }
-body .dialog .wrapper label img { max-width: 24px; height: auto; margin-left: 8px; vertical-align: middle; }
-body .dialog .wrapper input { border-radius: 4px; background-color: transparent; color: #fff; font-family: 'Comfortaa-Bold'; font-size: 12px; margin: 0 0 16px; outline: none; padding: 16px; }
-body .dialog .wrapper input[type="text"] { width: 100%; border: 2px solid #fff; }
-body .dialog .wrapper input[type="text"]::placeholder { color: rgba(255, 255, 255, 0.5); }
-body .dialog .wrapper input[type="range"] { padding: 16px 0; width: 100%; }
-body .dialog .wrapper input[type="button"] { border: none; border-radius: 4px; cursor: pointer; display: inline-block; font-size: 16px; padding: 12px 24px; margin-bottom: 0; }
-body .dialog .wrapper input[type="button"]:hover { animation: shake 0.25s; }
-body .dialog .wrapper input[type="button"]:last-of-type { background-color: #27A0FF; }
+body .dialog .wrapper .inputs { display: flex; justify-content: space-evenly; flex-wrap: wrap; }
+body .dialog .wrapper .inputs label { display: block; font-size: 14px; }
+body .dialog .wrapper .inputs label img { max-width: 24px; height: auto; margin-left: 8px; vertical-align: middle; }
+body .dialog .wrapper .inputs input { border-radius: 4px; background-color: transparent; color: #fff; font-family: 'Comfortaa-Bold'; font-size: 12px; margin: 0 0 16px; outline: none; padding: 16px; }
+body .dialog .wrapper .inputs input[type="text"] { width: 100%; border: 2px solid #fff; }
+body .dialog .wrapper .inputs input[type="text"]::placeholder { color: rgba(255, 255, 255, 0.5); }
+body .dialog .wrapper .inputs input[type="range"] { padding: 16px 0; width: 100%; }
+body .dialog .wrapper .inputs input[type="button"] { border: none; border-radius: 4px; cursor: pointer; display: inline-block; font-size: 16px; padding: 12px; margin-bottom: 0; }
+body .dialog .wrapper .inputs input[type="button"]:hover { animation: shake 0.25s; }
+body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-color: #27A0FF; }
 
 /* Loading animation */
 .loading:before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1; }

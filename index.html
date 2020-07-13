@@ -13,7 +13,7 @@
 	<body class="dark background-9">
 		<div class="ui-controller">
 			<div class="home">
-				<div class="version">0.1.0</div>
+				<div class="version">0.1.1</div>
 				<div class="wrapper">
 					<img src="img/svg/logo-alpha-white.svg" class="logo">
 					<div class="buttons">
@@ -45,7 +45,7 @@
 					</div>
 					<div class="buttons">
 						<a class="button" action="settings" title="settings"><img src="img/svg/gear.svg"></a>
-						<a class="button" action="exit-to-home" title="Exit to home"><img src="img/svg/home.svg"></a>
+						<a class="button" action="exit-to-home" title="Exit to home (ESC)"><img src="img/svg/home.svg"></a>
 					</div>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 				<div id="timer"></div>
 				<div id="speedometer"><span id="speed"></span></div>
 				<div class="buttons">
-					<a class="button" action="pause-campaign" title="Pause"><img src="img/svg/pause.svg"></a>
+					<a class="button" action="pause-campaign" title="Pause (ESC)"><img src="img/svg/pause.svg"></a>
 				</div>
 			</div>
 			<div class="level-manager hidden">
@@ -61,7 +61,7 @@
 					<div class="col">
 						<a class="item" action="add-level" title="Add level"><img src="img/svg/add.svg"></a>
 						<a class="item" action="download" title="Download level"><img src="img/svg/download.svg"></a>
-						<a class="item" action="exit-to-home" title="Exit level manager"><img src="img/svg/home.svg"></a>
+						<a class="item" action="exit-to-home" title="Exit level manager (ESC)"><img src="img/svg/home.svg"></a>
 						<a class="item" action="settings" title="Settings"><img src="img/svg/gear.svg"></a>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 					<h1>My<strong>Skins</strong></h1>
 					<div class="skins"></div>
 					<div class="buttons">
-						<a class="button" action="exit-to-home" title="Exit to home"><img src="img/svg/home.svg"></a>
+						<a class="button" action="exit-to-home" title="Exit to home (ESC)"><img src="img/svg/home.svg"></a>
 						<a class="button" action="add-license" title="Add license"><img src="img/svg/duplicate.svg"></a>
 					</div>
 					<p>Already purchased a skin? Check your email for your <a href="https://boxel3d.com/shop/account/view-license-keys/" target="_blank">license</a>, then add <img src="img/svg/duplicate.svg"> your key <a action="add-license">here</a></p>
@@ -85,7 +85,7 @@
 					<div class="col options-level">
 						<a class="item" action="draw" title="Draw cubes"><img src="img/svg/pencil.svg"></a>
 						<a class="item" action="erase" title="Erase cubes"><img src="img/svg/eraser.svg"></a>
-						<a class="item" action="exit-to-level-manager" title="Exit level editor"><img src="img/svg/home.svg"></a>
+						<a class="item" action="exit-to-level-manager" title="Exit level editor (ESC)"><img src="img/svg/home.svg"></a>
 						<a class="item" action="save" title="Save level"><img src="img/svg/save.svg"></a>
 						<a class="item" action="share" title="Share level"><img src="img/svg/upload.svg"></a>
 						<a class="item" action="undo" title="Undo edit"><img src="img/svg/undo.svg"></a>
@@ -161,6 +161,7 @@
 		<script src="js/objects/finish.js"></script>
 		<script src="js/ui-controller.js"></script>
 		<script src="js/mouse.js"></script>
+		<script src="js/keyboard.js"></script>
 		<script src="js/audio.js"></script>
 		<script src="js/app.js"></script>
 	</body>

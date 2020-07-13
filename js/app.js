@@ -11,6 +11,7 @@ class App {
         a.ui = new UIController();
         a.timer = new Timer();
         a.mouse = new Mouse();
+        a.keyboard = new Keyboard();
         a.audio = new Audio();
         a.storage = new StorageManager();
         a.shop = new Shop();
@@ -63,8 +64,8 @@ class App {
         a.canvas.addEventListener('mouseup', function(e){ a.mouse.mouseUp(e, a); }, false);
         a.canvas.addEventListener('wheel', function(e){ a.mouse.wheel(e, a); }, false);
         a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
-        a.window.addEventListener('keydown', function(e) { a.keyDown(e, a); });
-        a.window.addEventListener('keyup', function(e) { a.keyUp(e, a); });
+        a.window.addEventListener('keydown', function(e) { a.keyboard.keyDown(e, a); });
+        a.window.addEventListener('keyup', function(e) { a.keyboard.keyUp(e, a); });
         Matter.Events.on(a.engine, 'collisionStart', function(e) { a.collision.checkPlayerCollision(e, a); });
         a.update(null, a);
         a.render(null, a);
@@ -124,20 +125,6 @@ class App {
         a.camera.aspect = screenWidth / screenHeight;
         a.camera.updateProjectionMatrix();
         a.renderer.setSize(screenWidth, screenHeight);
-    }
-
-    keyDown(e, a) {
-        switch (e.keyCode) {
-            case 16: break; //  Shift
-            case 17: break; // Ctrl
-            case 27: break; // Esc
-            case 32: a.player.jump(); break; // Space
-            case 38: break; // Up
-        }
-    }
-
-    keyUp(e, a) {
-
     }
 
     resetScene(a) {
