@@ -20,6 +20,9 @@ class Keyboard {
                 else if (state == 'level-picker') {
                     $('[action="exit-to-home"]').click();
                 }
+                else if (state == 'shop') {
+                    $('[action="exit-to-home"]').click();
+                }
                 else if (state == 'play') {
                     // Resume or pause game
                     if (a.ui.dialogIsOpen()) {
