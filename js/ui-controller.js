@@ -273,6 +273,12 @@ class UIController {
         this.controller.find('[action]').removeClass('selected'); // Default remove all selected
 
         if (state == 'home') {
+            // Update home page version
+            if (window.location.href.includes('file://') == false) {
+                $.getJSON("../manifest.json", function(json) {
+                    $('.version').text(json.version);
+                });
+            }
             this.home.removeClass('hidden');
         }
         else if (state == 'level-picker') {

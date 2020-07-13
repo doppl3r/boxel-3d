@@ -1,6 +1,6 @@
 * { box-sizing: border-box; user-select: none; }
 html { -ms-touch-action: manipulation; touch-action: manipulation; }
-body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; background-size: cover; background-position: center center; }
+body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; min-width: 640px; min-height: 360px; background-size: cover; background-position: center center; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
