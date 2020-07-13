@@ -35,7 +35,14 @@ class Keyboard {
                 }
             break;
             case 32: 
-                a.player.jump();
+                if (a.ui.state == 'play' || a.ui.state == 'level-editor') {
+                    if (a.play == true) {
+                        a.player.jump();
+                    }
+                }
+                else {
+                    $(':focus').click();
+                }
             break; // Space
             case 38: break; // Up
             case 82: // 'r'

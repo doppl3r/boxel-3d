@@ -114,9 +114,6 @@ class Cube extends THREE.Mesh {
         this.setFriction(this.frictionOrigin, false);
         Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.body, 0);
-        if (this.getClass() == 'player') {
-            this.allowJump = true;
-        }
     }
 
     setStatic(isStatic = true, updateOrigin = true) {

@@ -24,7 +24,6 @@ class UIController {
             
             // Home page actions
             if (action == 'level-picker') {
-                app.ui.appendCampaignLevels();
                 app.ui.updateUI('level-picker');
             }
             else if (action == 'level-manager') {
@@ -275,13 +274,16 @@ class UIController {
         if (state == 'home') {
             // Update home page version
             if (window.location.href.includes('file://') == false) {
-                $.getJSON("../manifest.json", function(json) {
+                $.getJSON("manifest.json", function(json) {
                     $('.version').text(json.version);
                 });
             }
             this.home.removeClass('hidden');
+            this.home.find('[action="level-picker"]').focus();
+            setTimeout(function() { app.ui.home.find('[action="level-picker"]').focus(); }, 100);
         }
         else if (state == 'level-picker') {
+            app.ui.appendCampaignLevels();
             app.ui.updateCampaignScores();
             this.levelPicker.removeClass('hidden');
         }
@@ -400,11 +402,18 @@ class UIController {
 
         // Append levels if data elements have not been loaded
         if (loaded == false) {
+            // Predefine level focus
+            app.level.currentLevel = 1;
+            app.level.maxLevels = levels.find('level').length;
+
+            // Loop through each level
             $.each(levels.find('level'), function(i) {
                 var level = $(this);
                 var levelData = level.html();
                 var levelIndex = i + 1;
                 var levelName = 'level_' + levelIndex;
+                level.addClass('level');
+                level.attr('tabindex', '0');
                 level.attr('action', levelName);
                 level.html(
                     '<span class="title">' + levelIndex + '</span>' + 
@@ -415,6 +424,11 @@ class UIController {
             levels.show();
             levels.addClass('loaded');
         }
+
+        // Focus into level
+        setTimeout(function() { 
+            levels.find('level:nth-of-type(' + app.level.currentLevel + ')').focus();
+        }, 100);
     }
 
     updateCampaignScores() {
@@ -422,7 +436,8 @@ class UIController {
         var scores = app.storage.getScores();
         $.each(scores, function(key, value) {
             if (key.includes(prefix)) {
-                var level_id = 'level_' + key.split(prefix)[1];
+                var index = key.split(prefix)[1];
+                var level_id = 'level_' + index;
                 var level_item = $('.levels [action="' + level_id + '"]');
                 level_item.addClass('completed');
                 level_item.find('.score').html(value);
@@ -473,6 +488,7 @@ class UIController {
         app.timer.reset();
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
+        app.level.currentLevel = button.attr('action').split('_')[1];
         app.play = true;
     }
 

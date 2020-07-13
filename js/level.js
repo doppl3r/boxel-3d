@@ -177,7 +177,9 @@ class Level extends THREE.Group {
         a.level.removeParticles(a);
 
         if (a.ui.state == 'play') {
-            app.ui.updateUI('level-picker');
+            a.level.currentLevel++;
+            if (a.level.currentLevel > a.level.maxLevels) a.level.currentLevel--;
+            a.ui.updateUI('level-picker');
         }
         else if (a.ui.state == 'level-editor') {
             a.resetScene(a);

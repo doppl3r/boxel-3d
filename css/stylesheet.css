@@ -22,6 +22,9 @@ body .ui-controller .disabled { opacity: 0.25; pointer-events: none; }
 body .ui-controller .hidden { display: none !important; }
 body .ui-controller .row { display: flex; position: absolute; z-index: 1; pointer-events: none; }
 body .ui-controller .row .col { pointer-events: all; }
+body a { position: relative; }
+body :focus { outline: none; }
+body :focus:before { content: ''; border: 2px solid #fff; width: calc(100% + 8px); height: calc(100% + 8px); position: absolute; border-radius: 8px; animation: fade-in 0.25s ease-in; animation-fill-mode: forwards; }
 
 /* Dashboard global styles */
 body .ui-controller .dashboard .buttons { display: flex; justify-content: center; }
@@ -44,7 +47,7 @@ body .ui-controller .home .logo { animation: shrink 20s infinite; animation-dela
 body .ui-controller .level-picker { align-items: center; /* background-color: #fff */; display: flex; height: 100vh; justify-content: center; }
 body .ui-controller .level-picker .wrapper { max-width: 480px; }
 body .ui-controller .level-picker .levels { display: flex; justify-content: center; flex-wrap: wrap; }
-body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 3em; margin: 8px; width: 80px; height: 80px; position: relative; }
+body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 3em; margin: 8px; width: 80px; height: 80px; position: relative; text-decoration: none; }
 body .ui-controller .level-picker .levels level.completed { background-color: #dc265a; }
 body .ui-controller .level-picker .levels level:hover > * { animation: shake 0.25s; }
 body .ui-controller .level-picker .levels level .score { font-size: 0.25em; position: absolute; bottom: 2px; left: 0; right: 0; text-align: center; }
@@ -146,10 +149,11 @@ body .dialog .disabled { opacity: 0.25; pointer-events: none; }
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; }
 body .dialog .wrapper p { margin: 0; font-size: 1em; line-height: 24px; padding: 0 0 24px; }
 body .dialog .wrapper p em { position: relative; }
-body .dialog .wrapper .inputs { display: flex; justify-content: space-evenly; flex-wrap: wrap; }
+body .dialog .wrapper .inputs { display: flex; justify-content: space-evenly; flex-wrap: wrap; position: relative; }
 body .dialog .wrapper .inputs label { display: block; font-size: 0.875em; }
 body .dialog .wrapper .inputs label img { max-width: 24px; height: auto; margin-left: 8px; vertical-align: middle; }
 body .dialog .wrapper .inputs input { border-radius: 4px; background-color: transparent; color: #fff; font-family: 'Comfortaa-Bold'; font-size: 0.75em; margin: 0 0 16px; outline: none; padding: 16px; }
+body .dialog .wrapper .inputs input:focus:before { border: none; }
 body .dialog .wrapper .inputs input[type="text"] { width: 100%; border: 2px solid #fff; }
 body .dialog .wrapper .inputs input[type="text"]::placeholder { color: rgba(255, 255, 255, 0.5); }
 body .dialog .wrapper .inputs input[type="range"] { padding: 16px 0; width: 100%; }
