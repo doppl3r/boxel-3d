@@ -1,6 +1,6 @@
 * { box-sizing: border-box; user-select: none; }
 html { -ms-touch-action: manipulation; touch-action: manipulation; }
-body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; min-width: 640px; min-height: 360px; background-size: cover; background-position: center center; }
+body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; min-width: 640px; min-height: 360px; background-size: cover; background-position: center center; font-size: 100%; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
@@ -23,46 +23,42 @@ body .ui-controller .hidden { display: none !important; }
 body .ui-controller .row { display: flex; position: absolute; z-index: 1; pointer-events: none; }
 body .ui-controller .row .col { pointer-events: all; }
 
+/* Dashboard global styles */
+body .ui-controller .dashboard .buttons { display: flex; justify-content: center; }
+body .ui-controller .dashboard .buttons .button { animation: wave-delay 5s infinite; background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
+body .ui-controller .dashboard .buttons .button span + img { margin-left: 8px; }
+body .ui-controller .dashboard .buttons .button.top-right { animation: none; position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
+body .ui-controller .dashboard .buttons .button.top-left { animation: none; position: absolute; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
+body .ui-controller .dashboard .buttons .button img { max-width: 24px; filter: invert(0%); }
+body .ui-controller .dashboard .buttons .button:nth-last-child(1) { animation-delay: 1s; }
+body .ui-controller .dashboard .buttons .button:nth-last-child(2) { animation-delay: 2s; }
+body .ui-controller .dashboard .buttons .button:nth-last-child(3) { animation-delay: 3s; }
+
 /* Home Styling */
 body .ui-controller .home { align-items: center; /* background-color: #ffffff; */ display: flex; height: 100vh; justify-content: center; }
 body .ui-controller .home > * { animation: fade-in 2s ease-in; animation-fill-mode: forwards; }
 body .ui-controller .home .version { color: #ffffff; position: absolute; top: 16px; left: 16px; }
 body .ui-controller .home .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
-body .ui-controller .home .buttons { display: flex; justify-content: center; }
-body .ui-controller .home .buttons .button { animation: wave-delay 5s infinite; background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
-body .ui-controller .home .buttons .button span + img { margin-left: 8px; }
-body .ui-controller .home .buttons .button[action='level-picker'] { /* background-color: #dc265a; */ animation-delay: 1s; }
-body .ui-controller .home .buttons .button[action='shop'] { animation-delay: 2s; }
-body .ui-controller .home .buttons .button[action='level-manager'] { animation-delay: 3s; }
-body .ui-controller .home .buttons .button[action='settings'] { animation: none; position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
-body .ui-controller .home .buttons .button img { max-width: 24px; filter: invert(0%); }
 
 /* Level Picker Styling */
 body .ui-controller .level-picker { align-items: center; /* background-color: #fff */; display: flex; height: 100vh; justify-content: center; }
+body .ui-controller .level-picker .wrapper { max-width: 480px; }
 body .ui-controller .level-picker .levels { display: flex; justify-content: center; flex-wrap: wrap; }
-body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 56px; margin: 8px; width: 80px; height: 80px; position: relative; }
+body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 3em; margin: 8px; width: 80px; height: 80px; position: relative; }
 body .ui-controller .level-picker .levels level.completed { background-color: #dc265a; }
 body .ui-controller .level-picker .levels level:hover > * { animation: shake 0.25s; }
-body .ui-controller .level-picker .levels level .score { font-size: 12px; position: absolute; bottom: 2px; left: 0; right: 0; text-align: center; }
-body .ui-controller .level-picker .buttons { display: flex; justify-content: center; }
-body .ui-controller .level-picker .buttons .button { background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 12px; width: auto; }
-body .ui-controller .level-picker .buttons .button[action='settings'] { position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
-body .ui-controller .level-picker .buttons .button[action='exit-to-home'] { position: absolute; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
-body .ui-controller .level-picker .buttons .button img { max-width: 24px; filter: invert(0%); }
+body .ui-controller .level-picker .levels level .score { font-size: 0.25em; position: absolute; bottom: 2px; left: 0; right: 0; text-align: center; }
 
 /* Campaign */
-body .ui-controller .campaign { position: absolute; top: 16px; left: 16px; z-index: 1; }
+body .ui-controller .campaign { position: absolute; z-index: 1; }
 body .ui-controller .campaign #timer { background-color: #dc265a; padding: 2px 4px 0; position: fixed; top: 16px; right: 16px; text-align: center; overflow: hidden; border-radius: 4px; }
-body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 24px; color: #fff; padding: 4px 0; }
+body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 1.5em; color: #fff; padding: 4px 0; }
 body .ui-controller .campaign #speedometer { background-color: #dc265a; position: fixed; top: 64px; right: 16px; border-radius: 4px; width: 100px; height: 9px; }
 body .ui-controller .campaign #speedometer #speed { background-color: #fff; position: absolute; height: 3px; left: 4px; top: 3px; transition: width 0.125s linear; border-radius: 3px; }
-body .ui-controller .campaign .buttons { display: flex; justify-content: center; }
-body .ui-controller .campaign .buttons .button { background-color: #dc265a; border-radius: 4px; color: #fff; padding: 0 12px; width: auto; }
-body .ui-controller .campaign .buttons .button img { max-width: 24px; filter: invert(0%); }
 
 /* Shop */
-body .ui-controller .shop { color: #fff; font-size: 16px; display: flex; align-items: center; height: 100vh; justify-content: center; text-align: center; padding: 64px 0; overflow-y: auto; }
-body .ui-controller .shop h1 { font-size: 92px; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 36px; animation: shrink 20s infinite; animation-delay: -10s; }
+body .ui-controller .shop { color: #fff; font-size: 1em; display: flex; align-items: center; height: 100vh; justify-content: center; text-align: center; padding: 64px 0; overflow-y: auto; }
+body .ui-controller .shop h1 { font-size: 5.75em; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 36px; animation: shrink 20s infinite; animation-delay: -10s; }
 body .ui-controller .shop h1 strong { color: #dc265a; }
 body .ui-controller .shop p { max-width: 400px; margin: 32px auto; }
 body .ui-controller .shop p a { width: auto; height: auto; display: inline; font-weight: bold; color: #dc265a; text-decoration: none; }
@@ -76,17 +72,12 @@ body .ui-controller .shop .skins .product.enabled:hover:after,
 body .ui-controller .shop .skins .product.selected:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
 body .ui-controller .shop .skins .product.selected { pointer-events: none; }
 body .ui-controller .shop .skins .product.selected .link { opacity: 0.5; pointer-events: none; }
-body .ui-controller .shop .skins .product .image { background-size: cover; width: 120px; height: 120px; border-radius: 4px; }
+body .ui-controller .shop .skins .product .image { background-size: cover; width: 120px; height: 120px; margin: auto; border-radius: 4px; }
 body .ui-controller .shop .skins .product .title { padding: 8px 0; }
 body .ui-controller .shop .skins .product .link { width: 100%; height: auto; background-color: #dc265a; color: #fff; border-radius: 4px; padding: 8px 0; text-decoration: none; }
 body .ui-controller .shop .skins .product .link .sale_price { display: none; }
 body .ui-controller .shop .skins .product .link.sale .regular_price { text-decoration: line-through; opacity: 0.5; padding-right: 4px; }
 body .ui-controller .shop .skins .product .link.sale .sale_price { display: inline-block; }
-body .ui-controller .shop .buttons { display: flex; justify-content: center; }
-body .ui-controller .shop .buttons .button { background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 12px; width: auto; }
-body .ui-controller .shop .buttons .button[action='exit-to-home'] { position: absolute; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
-body .ui-controller .shop .buttons .button[action='add-license'] { position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
-body .ui-controller .shop .buttons .button img { max-width: 24px; filter: invert(0%); }
 
 /* Navigation defaults */
 body .ui-controller .row .col .item { position: relative; display: flex; }
@@ -101,7 +92,7 @@ body .ui-controller .row.left { bottom: 0; top: 48px; left: 0; }
 body .ui-controller .row.left .col { display: flex; flex-direction: column; }
 body .ui-controller a { cursor: pointer; display: flex; flex-shrink: 0; justify-content: center; align-items: center; width: 48px; height: 48px; }
 body .ui-controller a:hover > * { animation: shake 0.25s; }
-body .ui-controller input { font-family: 'Comfortaa-Bold'; background-color: transparent; border: none; font-size: 16px; padding: 0 16px; width: 240px; }
+body .ui-controller input { font-family: 'Comfortaa-Bold'; background-color: transparent; border: none; font-size: 1em; padding: 0 16px; width: 240px; }
 body .ui-controller input:focus { border: none; outline: none; }
 body .ui-controller .slider { /* default hidden */ display: none; align-items: center; position: relative; height: 48px; width: 144px; position: absolute; left: 100%; padding: 0 16px; top: 0; }
 body .ui-controller .slider input[type="range"] { width: 100%; height: 100%; padding: 0; margin: 0; cursor: pointer; }
@@ -153,16 +144,16 @@ body.light .ui-controller .level-editor { background-color: #e6e6e6; }
 body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background-color: rgba(0, 0, 0, 0.5); }
 body .dialog .disabled { opacity: 0.25; pointer-events: none; }
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; }
-body .dialog .wrapper p { margin: 0; font-size: 16px; line-height: 24px; padding: 0 0 24px; }
+body .dialog .wrapper p { margin: 0; font-size: 1em; line-height: 24px; padding: 0 0 24px; }
 body .dialog .wrapper p em { position: relative; }
 body .dialog .wrapper .inputs { display: flex; justify-content: space-evenly; flex-wrap: wrap; }
-body .dialog .wrapper .inputs label { display: block; font-size: 14px; }
+body .dialog .wrapper .inputs label { display: block; font-size: 0.875em; }
 body .dialog .wrapper .inputs label img { max-width: 24px; height: auto; margin-left: 8px; vertical-align: middle; }
-body .dialog .wrapper .inputs input { border-radius: 4px; background-color: transparent; color: #fff; font-family: 'Comfortaa-Bold'; font-size: 12px; margin: 0 0 16px; outline: none; padding: 16px; }
+body .dialog .wrapper .inputs input { border-radius: 4px; background-color: transparent; color: #fff; font-family: 'Comfortaa-Bold'; font-size: 0.75em; margin: 0 0 16px; outline: none; padding: 16px; }
 body .dialog .wrapper .inputs input[type="text"] { width: 100%; border: 2px solid #fff; }
 body .dialog .wrapper .inputs input[type="text"]::placeholder { color: rgba(255, 255, 255, 0.5); }
 body .dialog .wrapper .inputs input[type="range"] { padding: 16px 0; width: 100%; }
-body .dialog .wrapper .inputs input[type="button"] { border: none; border-radius: 4px; cursor: pointer; display: inline-block; font-size: 16px; padding: 12px; margin-bottom: 0; }
+body .dialog .wrapper .inputs input[type="button"] { border: none; border-radius: 4px; cursor: pointer; display: inline-block; font-size: 1em; padding: 12px; margin-bottom: 0; }
 body .dialog .wrapper .inputs input[type="button"]:hover { animation: shake 0.25s; }
 body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-color: #27A0FF; }
 
@@ -187,3 +178,28 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     font-style: normal;
 }
 
+@media (max-width: 640px) {
+    body { font-size: 75%; }
+    body .ui-controller a { height: 32px; width: 32px; }
+    body .ui-controller a img { transform: scale(0.75); }
+    body .ui-controller a:hover img { animation: none; }
+    body .ui-controller .dashboard .buttons .button { padding: 0 12px; }
+    body .ui-controller .dashboard .buttons .button.top-left { width: 32px; }
+    body .ui-controller .dashboard .buttons .button.top-right { width: 32px; }
+    body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
+    body .ui-controller .home .logo { width: 480px; }
+    body .ui-controller .level-picker .wrapper { max-width: 320px; }
+    body .ui-controller .shop { padding: 24px 0; }
+    body .ui-controller .shop h1 { font-size: 2em; margin: 0 0 12px; }
+    body .ui-controller .shop p { margin: 16px auto 0; max-width: 320px; }
+    body .ui-controller .shop p img { max-width: 16px; }
+    body .ui-controller .shop .skins .product .image { width: 64px; height: 64px; }
+    body .ui-controller .row.left { top: 32px; }
+    body .ui-controller .level-picker .levels level { width: 48px; height: 48px; margin: 4px; font-size: 2em; }
+    body .ui-controller .level-picker .levels level .title { padding-bottom: 8px; }
+    body .ui-controller .level-picker .levels level .score { font-size: 0.5em; }
+    body .dialog .wrapper { max-width: 240px; }
+    body .dialog .wrapper p { line-height: 16px; }
+    body .dialog .wrapper .inputs input { margin: 0 0 8px; }
+    body .dialog .wrapper .inputs input[type="range"] { padding: 8px 0; }
+}

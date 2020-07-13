@@ -407,8 +407,8 @@ class UIController {
                 var levelName = 'level_' + levelIndex;
                 level.attr('action', levelName);
                 level.html(
-                    '<span>' + levelIndex + '</span>' + 
-                    '<span class="score"></span>' + 
+                    '<span class="title">' + levelIndex + '</span>' + 
+                    '<span class="score">--.---</span>' + 
                     '<data style="display: none;">' + levelData + '</data>'
                 );
             });
