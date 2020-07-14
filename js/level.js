@@ -85,7 +85,7 @@ class Level extends THREE.Group {
 
     createNewLevel(a) {
         // Reset player properties
-        a.player.setPosition();
+        a.player.setPosition({ x: 0, y: 0, z: 0 });
         a.player.setScale({ x: 16, y: 16, z: 16 });
         a.player.setFriction(0);
 
@@ -174,11 +174,13 @@ class Level extends THREE.Group {
     exitLevel(a) {
         a.timer.reset();
         a.player.removeCheckpoint();
-        a.level.removeParticles(a);
 
+        // Check current state
         if (a.ui.state == 'play') {
-            a.level.currentLevel++;
-            if (a.level.currentLevel > a.level.maxLevels) a.level.currentLevel--;
+            var settings = a.storage.getSettings();
+            settings.progress++; // Increase level progress
+            if (settings.progress > a.ui.maxLevels) settings.progress--;
+            a.updateSettings(settings, a);
             a.ui.updateUI('level-picker');
         }
         else if (a.ui.state == 'level-editor') {

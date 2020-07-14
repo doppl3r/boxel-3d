@@ -128,6 +128,7 @@ class App {
     }
 
     resetScene(a) {
+        app.camera.position.z = app.camera.position.zDefault;
         a.ui.showObjectOptions(false);
         a.level.removeParticles(a);
         a.level.resetLevel(a);

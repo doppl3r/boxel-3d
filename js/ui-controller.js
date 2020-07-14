@@ -399,12 +399,14 @@ class UIController {
         // Restructure HTML level data
         var levels = $('.levels');
         var loaded = (levels.hasClass('loaded'));
+        var settings = app.storage.getSettings();
+        var currentLevel = settings.progress;
+
+        // Predefine level focus
+        app.ui.maxLevels = levels.find('level').length;
 
         // Append levels if data elements have not been loaded
         if (loaded == false) {
-            // Predefine level focus
-            app.level.currentLevel = 1;
-            app.level.maxLevels = levels.find('level').length;
 
             // Loop through each level
             $.each(levels.find('level'), function(i) {
@@ -427,7 +429,7 @@ class UIController {
 
         // Focus into level
         setTimeout(function() { 
-            levels.find('level:nth-of-type(' + app.level.currentLevel + ')').focus();
+            levels.find('level:nth-of-type(' + currentLevel + ')').focus();
         }, 100);
     }
 
@@ -485,11 +487,13 @@ class UIController {
 
     loadLevel(button) {
         var levelData = JSON.parse(button.find('data').html());
+        var settings = app.storage.getSettings();
+        app.play = true;
         app.timer.reset();
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
-        app.level.currentLevel = button.attr('action').split('_')[1];
-        app.play = true;
+        settings.progress = button.attr('action').split('_')[1];
+        app.updateSettings(settings, app);
     }
 
     loadEditorLevel(button) {
@@ -584,10 +588,10 @@ class UIController {
     }
 
     updateSettings() {
-        var volume = $('.dialog input[name="volume"]').val();
-        var quality = $('.dialog input[name="quality"]').val();
-        var theme = $('.dialog input[name="theme"]').val();
-        var snap = $('.dialog input[name="snap"]').val();
+        var volume = parseInt($('.dialog input[name="volume"]').val());
+        var quality = parseInt($('.dialog input[name="quality"]').val());
+        var theme = parseInt($('.dialog input[name="theme"]').val());
+        var snap = parseInt($('.dialog input[name="snap"]').val());
         app.updateSettings({ 'volume': volume, 'quality': quality, 'theme': theme, 'snap': snap }, app);
     }
 
@@ -623,13 +627,10 @@ class UIController {
         }
     }
 
-    
-    
     play() {
-        app.timer.start();
-        app.camera.position.z = app.camera.position.zDefault;
-        app.level.deselectLevel(app);
         app.play = true;
+        app.timer.start();
+        app.level.deselectLevel(app);
         app.ui.showObjectOptions(false);
         app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
         app.ui.levelOptions.find('[action="play"]').addClass('selected');

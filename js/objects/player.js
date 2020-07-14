@@ -147,7 +147,7 @@ class Player extends Cube {
         license = a.storage.getLicenseById(id);
         this.loadTexture(license['product']['image']);
         this.updateTexture(this.texture);
-        settings['skin'] = id;
+        settings['skin'] = parseInt(id);
         a.storage.setSettings(settings);
     }
 }

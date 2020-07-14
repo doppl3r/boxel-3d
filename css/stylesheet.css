@@ -186,6 +186,7 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
 @media (max-width: 640px) {
     body { font-size: 75%; }
     body :focus:before { width: calc(100% + 6px); height: calc(100% + 6px); }
+    body .ui-controller input { width: 120px; }
     body .ui-controller a { height: 32px; width: 32px; }
     body .ui-controller a img { transform: scale(0.75); }
     body .ui-controller a:hover img { animation: none; }
