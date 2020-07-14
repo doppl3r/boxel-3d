@@ -1,7 +1,7 @@
 * { box-sizing: border-box; user-select: none; }
 html { -ms-touch-action: manipulation; touch-action: manipulation; }
 body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; min-width: 640px; min-height: 360px; background-size: cover; background-position: center center; font-size: 100%; }
-body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; }
+body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; animation: fade-in 0.25s ease-in; animation-fill-mode: forwards; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
 body input[type="range"]:focus { outline: none; }
@@ -26,6 +26,7 @@ body a { position: relative; }
 body :focus { outline: none; }
 body :focus:before { content: ''; border: 2px solid #fff; width: calc(100% + 8px); height: calc(100% + 8px); position: absolute; border-radius: 8px; animation: fade-in 0.25s ease-in; animation-fill-mode: forwards; }
 body input:before { display: none; }
+body .fade-in { animation: fade-in 0.25s ease-in; animation-fill-mode: forwards; }
 
 /* Dashboard global styles */
 body .ui-controller .dashboard .buttons { display: flex; justify-content: center; }
@@ -40,7 +41,6 @@ body .ui-controller .dashboard .buttons .button:nth-last-child(3) { animation-de
 
 /* Home Styling */
 body .ui-controller .home { align-items: center; /* background-color: #ffffff; */ display: flex; height: 100vh; justify-content: center; }
-body .ui-controller .home > * { animation: fade-in 2s ease-in; animation-fill-mode: forwards; }
 body .ui-controller .home .version { color: #ffffff; position: absolute; top: 16px; left: 16px; }
 body .ui-controller .home .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
 
