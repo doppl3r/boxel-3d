@@ -583,6 +583,7 @@ class UIController {
         dialog.append(wrapper);
         dialog.hide().fadeIn(100);
         $('body').append(dialog);
+        $('body').addClass('has-dialog');
         dialog.find('input:last-of-type').focus();
     }
 
@@ -590,6 +591,7 @@ class UIController {
         var dialog = $('.dialog');
         dialog.find('a').off();
         dialog.fadeOut(duration, function(){ dialog.remove(); });
+        $('body').removeClass('has-dialog');
     }
 
     dialogIsOpen() {

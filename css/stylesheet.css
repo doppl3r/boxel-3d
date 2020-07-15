@@ -1,6 +1,7 @@
 * { box-sizing: border-box; user-select: none; }
 html { -ms-touch-action: manipulation; touch-action: manipulation; }
-body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; min-width: 640px; min-height: 360px; background-size: cover; background-position: center center; font-size: 100%; }
+body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; background-size: cover; background-position: center center; font-size: 100%; }
+body.chrome { min-width: 640px; min-height: 360px; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; animation: fade-in 0.25s ease-in; animation-fill-mode: forwards; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
@@ -16,8 +17,9 @@ body input[type="range"]::-ms-fill-upper { background: #27a0ff; border-radius: 8
 body input[type="range"]::-ms-thumb { height: 24px; width: 24px; border-radius: 4px; background: #ffffff; cursor: pointer; }
 body input[type="range"]:focus::-ms-fill-lower { background: #27a0ff; }
 body input[type="range"]:focus::-ms-fill-upper { background: #27a0ff; }
-body .stats { position: absolute; top: initial !important; right: 16px !important; bottom: 16px !important; left: initial !important; }
+body .stats { display: none; position: absolute; top: initial !important; right: 16px !important; bottom: 16px !important; left: initial !important; }
 body .stats canvas { position: relative; }
+body.has-dialog .stats { display: block; /* only show when dialog is open */ }
 body .ui-controller .disabled { opacity: 0.25; pointer-events: none; }
 body .ui-controller .hidden { display: none !important; }
 body .ui-controller .row { display: flex; position: absolute; z-index: 1; pointer-events: none; }
@@ -62,13 +64,13 @@ body .ui-controller .campaign #speedometer #speed { background-color: #fff; posi
 
 /* Shop */
 body .ui-controller .shop { color: #fff; font-size: 1em; display: flex; align-items: center; height: 100vh; justify-content: center; text-align: center; padding: 64px 0; overflow-y: auto; }
-body .ui-controller .shop h1 { font-size: 5.75em; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 36px; animation: shrink 20s infinite; animation-delay: -10s; }
+body .ui-controller .shop h1 { font-size: 5.75em; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 12px; animation: shrink 20s infinite; animation-delay: -10s; }
 body .ui-controller .shop h1 strong { color: #dc265a; }
-body .ui-controller .shop p { max-width: 400px; margin: 32px auto; }
+body .ui-controller .shop p { max-width: 400px; margin: 0 auto 32px; }
 body .ui-controller .shop p a { width: auto; height: auto; display: inline; font-weight: bold; color: #dc265a; text-decoration: none; }
 body .ui-controller .shop p img { vertical-align: bottom; }
-body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; }
-body .ui-controller .shop .skins .product { margin: 12px; position: relative; }
+body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; max-width: 640px; }
+body .ui-controller .shop .skins .product { margin: 12px; position: relative; width: 120px; }
 body .ui-controller .shop .skins .product.enabled { cursor: pointer; }
 body .ui-controller .shop .skins .product.enabled .link { display: none; }
 body .ui-controller .shop .skins .product.enabled:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; }
@@ -76,7 +78,7 @@ body .ui-controller .shop .skins .product.enabled:hover:after,
 body .ui-controller .shop .skins .product.selected:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
 body .ui-controller .shop .skins .product.selected { pointer-events: none; }
 body .ui-controller .shop .skins .product.selected .link { opacity: 0.5; pointer-events: none; }
-body .ui-controller .shop .skins .product .image { background-size: cover; width: 120px; height: 120px; margin: auto; border-radius: 4px; }
+body .ui-controller .shop .skins .product .image { background-size: cover; padding-bottom: 100%; height: auto; margin: auto; border-radius: 4px; }
 body .ui-controller .shop .skins .product .title { padding: 8px 0; }
 body .ui-controller .shop .skins .product .link { width: 100%; height: auto; background-color: #dc265a; color: #fff; border-radius: 4px; padding: 8px 0; text-decoration: none; }
 body .ui-controller .shop .skins .product .link .sale_price { display: none; }
@@ -195,11 +197,13 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .dashboard .buttons .button.top-right { width: 32px; }
     body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
     body .ui-controller .home .logo { width: 480px; }
-    body .ui-controller .shop { padding: 24px 0; }
+    body .ui-controller .shop { padding: 64px 0; align-items: flex-start; }
     body .ui-controller .shop h1 { font-size: 2em; margin: 0 0 12px; }
-    body .ui-controller .shop p { margin: 16px auto 0; max-width: 320px; }
+    body .ui-controller .shop .skins { max-width: 480px; }
+    body .ui-controller .shop .skins .product { width: 80px; }
+    body .ui-controller .shop .skins .product .title { font-size: 0.9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    body .ui-controller .shop p { max-width: 320px; }
     body .ui-controller .shop p img { max-width: 16px; }
-    body .ui-controller .shop .skins .product .image { width: 64px; height: 64px; }
     body .ui-controller .row.left { top: 32px; }
     body .ui-controller .level-picker .wrapper { max-width: 320px; }
     body .ui-controller .level-picker .levels level { width: 48px; height: 48px; margin: 4px; font-size: 2em; }
