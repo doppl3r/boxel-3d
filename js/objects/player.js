@@ -154,14 +154,22 @@ class Player extends Cube {
     }
 
     addTexture(url) {
-        this.remove(this.skin); // Reset skin
-        this.remove(this.shapes); // Permanently remove shapes mesh
         var loader = new THREE.TextureLoader();
-        var texture = loader.load(url);
-        var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshPhongMaterial({ map: texture, transparent: true, opacity: 1 });
-        this.shapes.setOpacities(0);
-        this.skin = new THREE.Mesh(geometry, material);
-        this.add(this.skin);
-    }w
+        loader.load(url, 
+            function(texture){
+                app.player.remove(app.player.skin); // Reset skin
+                app.player.shapes.visible = false;
+                //app.player.remove(app.player.shapes); // Permanently remove shapes mesh
+                var geometry = new THREE.BoxGeometry(1, 1, 1);
+                var material = new THREE.MeshPhongMaterial({ map: texture, transparent: true, opacity: 1 });
+                app.player.shapes.setOpacities(0);
+                app.player.skin = new THREE.Mesh(geometry, material);
+                app.player.add(app.player.skin);
+            },
+            undefined,
+            function(err) {
+                console.error( 'An error happened: ' + err );
+            }
+        );
+    }
 }

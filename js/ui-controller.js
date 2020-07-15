@@ -671,6 +671,8 @@ class UIController {
             text = 'License has been activated';
             app.storage.addLicense(response.data);
             app.shop.enableProduct(response.data.product.id);
+            app.shop.selectProduct(response.data.product.id);
+            app.player.setSkin(response.data.product.id);
         }
         app.ui.addDialog({
             text: text,
