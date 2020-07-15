@@ -247,18 +247,4 @@ class Cube extends THREE.Mesh {
             this.add(this.light);
         }
     }
-
-    loadTexture(url) {
-        var loader = new THREE.TextureLoader();
-        this.texture = loader.load(url);
-    }
-
-    updateTexture(texture) {
-        var shapes = this.shapes.children;
-        this.setColors('#ffffff');
-        for (var i = 0; i < shapes.length; i++) {
-            var shape = shapes[i];
-            shape.material.map = texture;
-        }
-    }
 }

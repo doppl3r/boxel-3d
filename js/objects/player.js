@@ -52,7 +52,6 @@ class Player extends Cube {
                     app.level.addObject(particle, app);
                     particle.isParticle = true;
                     particle.setColors(this.color);
-                    particle.updateTexture(this.texture);
                     Matter.Body.setVelocity(particle.body, this.body.velocity);
                 }
             }
@@ -145,9 +144,24 @@ class Player extends Cube {
         var license = null;
         if (id == null) id = 1; // Use default skin
         license = a.storage.getLicenseById(id);
-        this.loadTexture(license['product']['image']);
-        this.updateTexture(this.texture);
+
+        // Add texture
+        this.addTexture(license['product']['image']);
+
+        // Save skin preferences
         settings['skin'] = parseInt(id);
         a.storage.setSettings(settings);
     }
+
+    addTexture(url) {
+        this.remove(this.skin); // Reset skin
+        this.remove(this.shapes); // Permanently remove shapes mesh
+        var loader = new THREE.TextureLoader();
+        var texture = loader.load(url);
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        var material = new THREE.MeshPhongMaterial({ map: texture, transparent: true, opacity: 1 });
+        this.shapes.setOpacities(0);
+        this.skin = new THREE.Mesh(geometry, material);
+        this.add(this.skin);
+    }w
 }
