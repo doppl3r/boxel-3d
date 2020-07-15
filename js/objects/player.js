@@ -88,7 +88,10 @@ class Player extends Cube {
     }
 
     restart() {
-        app.level.retryLevel(app);
+        if (app.ui.dialogIsOpen() == false) {
+            // Retry level if not in dialog window
+            app.level.retryLevel(app);
+        }
     }
 
     finish() {

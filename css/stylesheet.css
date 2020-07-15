@@ -32,8 +32,8 @@ body .fade-in { animation: fade-in 0.25s ease-in; animation-fill-mode: forwards;
 body .ui-controller .dashboard .buttons { display: flex; justify-content: center; }
 body .ui-controller .dashboard .buttons .button { animation: wave-delay 5s infinite; background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
 body .ui-controller .dashboard .buttons .button span + img { margin-left: 8px; }
-body .ui-controller .dashboard .buttons .button.top-right { animation: none; position: absolute; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
-body .ui-controller .dashboard .buttons .button.top-left { animation: none; position: absolute; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
+body .ui-controller .dashboard .buttons .button.top-right { animation: none; position: fixed; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
+body .ui-controller .dashboard .buttons .button.top-left { animation: none; position: fixed; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .dashboard .buttons .button img { max-width: 24px; filter: invert(0%); }
 body .ui-controller .dashboard .buttons .button:nth-last-child(1) { animation-delay: 1s; }
 body .ui-controller .dashboard .buttons .button:nth-last-child(2) { animation-delay: 2s; }
@@ -55,9 +55,9 @@ body .ui-controller .level-picker .levels level .score { font-size: 0.25em; posi
 
 /* Campaign */
 body .ui-controller .campaign { position: absolute; z-index: 1; }
-body .ui-controller .campaign #timer { background-color: #dc265a; padding: 2px 4px 0; position: fixed; top: 16px; right: 16px; text-align: center; overflow: hidden; border-radius: 4px; }
+body .ui-controller .campaign #timer { align-items: center; display: flex; background-color: #dc265a; padding: 2px 4px 0; position: fixed; top: 16px; left: 68px; height: 35px; text-align: center; overflow: hidden; border-radius: 4px; }
 body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 1.5em; color: #fff; padding: 4px 0; }
-body .ui-controller .campaign #speedometer { background-color: #dc265a; position: fixed; top: 64px; right: 16px; border-radius: 4px; width: 100px; height: 9px; }
+body .ui-controller .campaign #speedometer { background-color: #dc265a; position: fixed; top: 55px; left: 68px; border-radius: 4px; width: 128px; height: 9px; }
 body .ui-controller .campaign #speedometer #speed { background-color: #fff; position: absolute; height: 3px; left: 4px; top: 3px; transition: width 0.125s linear; border-radius: 3px; }
 
 /* Shop */
@@ -195,16 +195,19 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .dashboard .buttons .button.top-right { width: 32px; }
     body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
     body .ui-controller .home .logo { width: 480px; }
-    body .ui-controller .level-picker .wrapper { max-width: 320px; }
     body .ui-controller .shop { padding: 24px 0; }
     body .ui-controller .shop h1 { font-size: 2em; margin: 0 0 12px; }
     body .ui-controller .shop p { margin: 16px auto 0; max-width: 320px; }
     body .ui-controller .shop p img { max-width: 16px; }
     body .ui-controller .shop .skins .product .image { width: 64px; height: 64px; }
     body .ui-controller .row.left { top: 32px; }
+    body .ui-controller .level-picker .wrapper { max-width: 320px; }
     body .ui-controller .level-picker .levels level { width: 48px; height: 48px; margin: 4px; font-size: 2em; }
     body .ui-controller .level-picker .levels level .title { padding-bottom: 8px; }
     body .ui-controller .level-picker .levels level .score { font-size: 0.5em; }
+    body .ui-controller .campaign #timer { left: 52px; height: 19px; padding: 0 4px; }
+    body .ui-controller .campaign #timer span { width: 20px; }
+    body .ui-controller .campaign #speedometer { left: 52px; top: 39px; width: 108px; }
     body .dialog .wrapper { max-width: 240px; }
     body .dialog .wrapper p { line-height: 16px; }
     body .dialog .wrapper .inputs input { margin: 0 0 8px; }

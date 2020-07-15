@@ -34,16 +34,29 @@ class UIController {
             }
             else if (action == 'settings') {
                 var settings = app.storage.getSettings();
-                app.ui.addDialog({
-                    inputs: [
-                        { label: 'Master Volume <img src="img/svg/audio.svg">', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: settings.volume, class: 'disabled' } },
-                        { label: 'Graphic Quality <img src="img/svg/eye.svg">', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } },
+                var inputs = [
+                    { label: 'Master Volume <img src="img/svg/audio.svg">', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: settings.volume, class: 'disabled' } },
+                    { label: 'Graphic Quality <img src="img/svg/eye.svg">', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } }
+                ];
+
+                // Add more options for the level maker
+                if (app.ui.state == 'level-manager' || app.ui.state == 'level-editor') {
+                    inputs.push(
                         { label: 'Editor Theme <img src="img/svg/color.svg">', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
                         { label: 'Editor Snap <img src="img/svg/drag.svg">', attributes: { name: 'snap', type: 'range', min: 1, max: 8, step: 7, value: settings.snap } },
-                        { attributes: { value: 'Cancel', type: 'button' } },
-                        { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
-                    ]
-                });
+                    );
+                }
+                else if (app.ui.state == 'play') {
+                    app.timer.pause();
+                    app.play = false;
+                }
+
+                // Append default buttons
+                inputs.push(
+                    { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.resumeCampaign },
+                    { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
+                )
+                app.ui.addDialog({ inputs: inputs });
             }
 
             // Level picker UI
@@ -502,12 +515,14 @@ class UIController {
         var key = item.find('input').attr('key');
         var name = item.find('input').val();
         var levelData = app.storage.getLevelData(key);
+        var settings = app.storage.getSettings();
 
         // Update current level with selected attributes
         levelData.name = name;
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
         app.level.key = key; // Update key value for saving the level
+        app.updateSettings(settings, app);
     }
     
     updateEditorLevelName(input) {
@@ -593,6 +608,11 @@ class UIController {
         var theme = parseInt($('.dialog input[name="theme"]').val());
         var snap = parseInt($('.dialog input[name="snap"]').val());
         app.updateSettings({ 'volume': volume, 'quality': quality, 'theme': theme, 'snap': snap }, app);
+
+        // Resume campaign if settings was selected during gameplay
+        if (app.ui.state == 'play') {
+            app.ui.resumeCampaign();
+        }
     }
 
     showTip(text) {
@@ -608,6 +628,7 @@ class UIController {
     pause() {
         app.timer.pause();
         app.play = false;
+        
         if (app.ui.state == 'level-editor') {
             app.ui.updateLevelOptions();
             app.level.deselectLevel(app);
@@ -615,7 +636,7 @@ class UIController {
             app.ui.levelOptions.find('[action="play"]').removeClass('selected');
             app.ui.levelOptions.find('[action="pause"]').addClass('selected');
         }
-        else {
+        else if (app.ui.state == 'play') {
             app.ui.addDialog({
                 text: 'Paused',
                 inputs: [
@@ -646,8 +667,10 @@ class UIController {
     }
 
     resumeCampaign() {
-        app.timer.start();
-        app.play = true;
+        if (app.ui.state == 'play') {
+            app.timer.start();
+            app.play = true;
+        }
     }
 
     exitCampaign() {
