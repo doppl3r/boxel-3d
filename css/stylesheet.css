@@ -214,6 +214,6 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .campaign #speedometer { left: 52px; top: 39px; width: 108px; }
     body .dialog .wrapper { max-width: 240px; }
     body .dialog .wrapper p { line-height: 16px; }
-    body .dialog .wrapper .inputs input { margin: 0 0 8px; }
+    body .dialog .wrapper .inputs input { margin: 0 0 8px; font-size: 1em; }
     body .dialog .wrapper .inputs input[type="range"] { padding: 8px 0; }
 }
