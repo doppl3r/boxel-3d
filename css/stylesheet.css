@@ -35,6 +35,7 @@ body .ui-controller .dashboard .buttons { display: flex; justify-content: center
 body .ui-controller .dashboard .buttons .button { animation: wave-delay 5s infinite; background-color: #dc265a; border-radius: 4px; color: #fff; margin: 0 8px; padding: 0 24px; width: auto; }
 body .ui-controller .dashboard .buttons .button span + img { margin-left: 8px; }
 body .ui-controller .dashboard .buttons .button.top-right { animation: none; position: fixed; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
+body .ui-controller .dashboard .buttons .button.top-right.two { right: 80px; }
 body .ui-controller .dashboard .buttons .button.top-left { animation: none; position: fixed; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .dashboard .buttons .button img { max-width: 24px; filter: invert(0%); }
 body .ui-controller .dashboard .buttons .button:nth-last-child(1) { animation-delay: 1s; }
@@ -193,8 +194,9 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller a img { transform: scale(0.75); }
     body .ui-controller a:hover img { animation: none; }
     body .ui-controller .dashboard .buttons .button { padding: 0 12px; }
-    body .ui-controller .dashboard .buttons .button.top-left { width: 32px; }
     body .ui-controller .dashboard .buttons .button.top-right { width: 32px; }
+    body .ui-controller .dashboard .buttons .button.top-right.two { right: 64px; }
+    body .ui-controller .dashboard .buttons .button.top-left { width: 32px; }
     body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
     body .ui-controller .home .logo { width: 480px; }
     body .ui-controller .shop { padding: 64px 0; align-items: flex-start; }

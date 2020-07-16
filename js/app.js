@@ -18,6 +18,7 @@ class App {
         a.collision = new Collision();
         a.level = new Level();
         a.levelHistory = new LevelHistory();
+        a.extension = new Extension();
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
         a.fov = 110; // Default 75
@@ -35,7 +36,6 @@ class App {
         // Add lighting to scene
         a.light.position.set(0.25, 0.5, 1);
         a.scene.add(a.light);
-        //a.scene.fog = new THREE.Fog('#ee95af', 92, 108);
 
         // Update stats
         a.stats.setMode(0);
