@@ -77,7 +77,18 @@ class StorageManager {
 
     getSettings() {
         var storageSettings = localStorage.getItem('settings');
-        var defaultSettings = { 'volume': 0, 'quality': 10, 'theme': 0, 'snap': 8, 'skin': 1, 'progress': 1 };
+        var defaultSettings = { 
+            'volume': 0,
+            'quality': 10,
+            'theme': 0,
+            'snap': 8,
+            'skin': 1,
+            'progress': 1,
+            'credentials' : {
+                'username': '',
+                'password': ''
+            }
+        };
         var settings = defaultSettings; // Use default
 
         // Replace with local storage settings

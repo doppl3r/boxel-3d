@@ -19,6 +19,7 @@ class App {
         a.level = new Level();
         a.levelHistory = new LevelHistory();
         a.extension = new Extension();
+        a.account = new Account();
         a.player = new Player({ x: 0, y: 0, z: 0 });
         a.play = false;
         a.fov = 110; // Default 75

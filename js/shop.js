@@ -11,13 +11,17 @@ class Shop {
     
     getBoxelProducts() {
         var url  = 'https://boxel3d.com/wp-json/boxel/products/';
+        var params = {};
         $.ajax({
             url: url,
-            method: 'GET',
+            method: 'POST',
+            data: params,
             success: function(response) {
                 app.shop.addProductsToShop(response);
             }
         });
+
+        //app.account.checkCredentials();
     }
     
     addProductsToShop(products) {
@@ -61,7 +65,7 @@ class Shop {
         var params = { 'license': license }
         $.ajax({
             url: url,
-            method: 'GET',
+            method: 'POST',
             data: params,
             success: callback
         });
