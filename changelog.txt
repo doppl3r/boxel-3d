@@ -1,3 +1,7 @@
+v0.1.5 - July 17, 2020
+- Added theme music
+- Update skin render behavior
+
 v0.1.1 – July 13, 2020
 - Added keyboard shortcuts (ex: R to restart, ESC to pause/return)
 

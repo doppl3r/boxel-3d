@@ -5,7 +5,7 @@ class Extension {
     
     updateUI() {
         // Check if the program is running on an extension
-        if (chrome.extension != null) {
+        if (this.isChromeExtension() == true) {
             var url = location.href;
             var fullscreen_enabled = url.indexOf('fullscreen') >= 0; 
             var fullscreen_button = $('[action="fullscreen"]');
@@ -26,5 +26,9 @@ class Extension {
     openFullScreen() {
         var url = location.href + '?fullscreen=true';
         chrome.tabs.create({ url: url });
+    }
+
+    isChromeExtension() {
+        return chrome.extension != null;
     }
 }
