@@ -35,7 +35,7 @@ class UIController {
             else if (action == 'settings') {
                 var settings = app.storage.getSettings();
                 var inputs = [
-                    { label: 'Master Volume <img src="img/svg/audio.svg">', attributes: { name: 'volume', type: 'range', min: 0, max: 10, value: settings.volume, class: 'disabled' } },
+                    { label: 'Master Volume <img src="img/svg/audio.svg">', attributes: { name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume } },
                     { label: 'Graphic Quality <img src="img/svg/eye.svg">', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } }
                 ];
 
@@ -605,7 +605,7 @@ class UIController {
     }
 
     updateSettings() {
-        var volume = parseInt($('.dialog input[name="volume"]').val());
+        var volume = parseFloat($('.dialog input[name="volume"]').val());
         var quality = parseInt($('.dialog input[name="quality"]').val());
         var theme = parseInt($('.dialog input[name="theme"]').val());
         var snap = parseInt($('.dialog input[name="snap"]').val());

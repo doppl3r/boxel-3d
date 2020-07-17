@@ -34,6 +34,9 @@ class App {
         a.now = a.then;
         a.delta = 0;
 
+        // Add music to camera
+        a.camera.add(a.audio);
+
         // Add lighting to scene
         a.light.position.set(0.25, 0.5, 1);
         a.scene.add(a.light);
@@ -155,7 +158,7 @@ class App {
         });
 
         // Update application from settings
-        a.audio.setVolume(settings.audio);
+        a.audio.setVolume(settings.volume);
         a.updateQuality(settings.quality, a);
         a.ui.toggleTheme(settings.theme);
         a.mouse.setSnap(settings.snap);
