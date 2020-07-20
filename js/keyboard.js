@@ -5,7 +5,9 @@ class Keyboard {
     
     keyDown(e, a) {
         var state = a.ui.state;
+        console.log(e.keyCode);
         switch (e.keyCode) {
+            case 13: a.keyboard.spaceBarDown(a); break; // Enter (same as space)
             case 16: break; //  Shift
             case 17: break; // Ctrl
             case 27: // Esc
@@ -34,20 +36,22 @@ class Keyboard {
                     }
                 }
             break;
-            case 32: 
-                if (a.ui.state == 'play' || a.ui.state == 'level-editor') {
-                    if (a.play == true) {
-                        a.player.jump();
-                    }
-                }
-                else {
-                    $(':focus').click();
-                }
-            break; // Space
+            case 32: a.keyboard.spaceBarDown(a); break; // Space
             case 38: break; // Up
             case 82: // 'r'
                 if (a.ui.state == 'play' || a.ui.state == 'level-editor') a.level.retryLevel(a);
             break;
+        }
+    }
+
+    spaceBarDown(a) {
+        if (a.ui.state == 'play' || a.ui.state == 'level-editor') {
+            if (a.play == true) {
+                a.player.jump();
+            }
+        }
+        else {
+            $(':focus').click();
         }
     }
 

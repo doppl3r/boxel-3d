@@ -9,7 +9,8 @@ class Extension {
             var url = location.href;
             var fullscreen_enabled = url.indexOf('fullscreen') >= 0; 
             var fullscreen_button = $('[action="fullscreen"]');
-            
+            var review_button = $('.review');
+
             // Check if extension is NOT in fullscreen mode
             if (fullscreen_enabled == false) {
                 fullscreen_button.removeClass('hidden');
@@ -17,6 +18,12 @@ class Extension {
                     app.extension.openFullScreen();
                 });
             }
+
+            // Add link to review
+            review_button.removeClass('hidden');
+            review_button.on('click', function() {
+                chrome.tabs.create({ url: 'https://chrome.google.com/webstore/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews' });
+            });
 
             // Append class for styling
             $('body').addClass('chrome');
