@@ -290,6 +290,18 @@ class UIController {
             if (window.location.href.includes('file://') == false) {
                 $.getJSON("manifest.json", function(json) {
                     $('.version').text(json.version);
+                    $('.version').on('click', function() {
+                        $.get("changelog.txt", function(data) {
+                            app.ui.addDialog({
+                                attributes: { class: 'align-left' },
+                                text: data,
+                                inputs: [
+                                    { attributes: { value: 'Close', type: 'button' }}
+                                ]
+                            });
+                            $('.dialog .wrapper').scrollTop(0);
+                        });
+                    });
                 });
             }
             this.home.removeClass('hidden');
