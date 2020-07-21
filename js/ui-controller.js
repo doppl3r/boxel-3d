@@ -260,6 +260,7 @@ class UIController {
         if (app.selectedObject != null && checkNull == true) {
             app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
             app.selectedObject.select(true);
+            app.ui.updateObjectOptions();
             app.levelHistory.save('Changed object to ' + type, app);
         }
 
@@ -389,8 +390,14 @@ class UIController {
             }
             
             // Enable/Disable the tip icon for tip block
-            if (isTip == true) textIcon.removeClass('disabled');
-            else textIcon.addClass('disabled');
+            if (isTip == true) {
+                pinIcon.addClass('disabled');
+                textIcon.removeClass('disabled');
+            }
+            else {
+                pinIcon.removeClass('disabled');
+                textIcon.addClass('disabled');
+            }
             
             // Update selected pin status
             if (isStatic == true) {

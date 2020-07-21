@@ -23,17 +23,17 @@ class Collision {
 
                     // Check if player is falling
                     if (objectA.body.class == 'player') {
-                        //if (a.player.body.velocity.y >= 0) {
-                            a.player.allowJump = true; 
-                        //}
+                        a.player.allowJump = true;
                     }
 
                     // Check sensor points
                     if (bodyA.class == 'sensor') {
                         if (objectA.body.class == 'tip') {
-                            var tip = objectA.text;
-                            app.ui.showTip(tip);
-                            //objectA.hide();
+                            if (objectB.body.class == 'player') {
+                                var tip = objectA.text;
+                                app.ui.showTip(tip);
+                                objectA.hide(true);
+                            }
                         }
                         else if (objectA.body.class == 'bounce') {
                             var force = objectA.scale.y / 2; // Use bounce height
@@ -47,10 +47,16 @@ class Collision {
                             if (objectB.body.class ==  'player') { app.player.kill(); }
                         }
                         else if (objectA.body.class == 'shrink') {
-                            if (objectB.body.class ==  'player') { app.player.shrink(); }
+                            if (objectB.body.class ==  'player') {
+                                app.player.shrink();
+                                objectA.hide(true);
+                            }
                         }
                         else if (objectA.body.class == 'grow') {
-                            if (objectB.body.class ==  'player') { app.player.grow(); }
+                            if (objectB.body.class ==  'player') {
+                                app.player.grow();
+                                objectA.hide(true);
+                            }
                         }
                         else if (objectA.body.class == 'finish') {
                             if (objectB.body.class ==  'player') { app.player.finish(); }

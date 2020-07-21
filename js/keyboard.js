@@ -5,7 +5,6 @@ class Keyboard {
     
     keyDown(e, a) {
         var state = a.ui.state;
-        console.log(e.keyCode);
         switch (e.keyCode) {
             case 13: a.keyboard.spaceBarDown(a); break; // Enter (same as space)
             case 16: break; //  Shift
@@ -39,7 +38,9 @@ class Keyboard {
             case 32: a.keyboard.spaceBarDown(a); break; // Space
             case 38: break; // Up
             case 82: // 'r'
-                if (a.ui.state == 'play' || a.ui.state == 'level-editor') a.level.retryLevel(a);
+                if (a.play == true && (a.ui.state == 'play' || a.ui.state == 'level-editor')) {
+                    a.level.retryLevel(a);
+                }
             break;
         }
     }
