@@ -290,6 +290,7 @@ class UIController {
             if (window.location.href.includes('file://') == false) {
                 $.getJSON("manifest.json", function(json) {
                     $('.version').text(json.version);
+                    $('.version').off();
                     $('.version').on('click', function() {
                         $.get("changelog.txt", function(data) {
                             app.ui.addDialog({
