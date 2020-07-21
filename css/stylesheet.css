@@ -66,7 +66,7 @@ body .ui-controller .campaign #speedometer { background-color: #dc265a; position
 body .ui-controller .campaign #speedometer #speed { background-color: #fff; position: absolute; height: 3px; left: 4px; top: 3px; transition: width 0.125s linear; border-radius: 3px; }
 
 /* Shop */
-body .ui-controller .shop { color: #fff; font-size: 1em; display: flex; align-items: center; height: 100vh; justify-content: center; text-align: center; padding: 64px 0; overflow-y: auto; }
+body .ui-controller .shop { color: #fff; font-size: 1em; display: flex; height: 100vh; align-items: flex-start; justify-content: center; text-align: center; padding: 128px 0; overflow-y: auto; }
 body .ui-controller .shop h1 { font-size: 5.75em; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 12px; animation: shrink 20s infinite; animation-delay: -10s; }
 body .ui-controller .shop h1 strong { color: #dc265a; }
 body .ui-controller .shop p { max-width: 400px; margin: 0 auto 32px; }
@@ -204,7 +204,7 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
     body .ui-controller .home .logo { width: 480px; }
     body .ui-controller .shop { padding: 64px 0; align-items: flex-start; }
-    body .ui-controller .shop h1 { font-size: 2em; margin: 0 0 12px; }
+    body .ui-controller .shop h1 { font-size: 4em; margin: 0 0 12px; }
     body .ui-controller .shop .skins { max-width: 480px; }
     body .ui-controller .shop .skins .product { width: 80px; }
     body .ui-controller .shop .skins .product .title { font-size: 0.9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
