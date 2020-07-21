@@ -44,7 +44,7 @@ body .ui-controller .dashboard .buttons .button:nth-last-child(3) { animation-de
 
 /* Home Styling */
 body .ui-controller .home { align-items: center; /* background-color: #ffffff; */ display: flex; height: 100vh; justify-content: center; }
-body .ui-controller .home .version { color: #ffffff; position: absolute; top: 16px; left: 16px; }
+body .ui-controller .home .version { color: #ffffff; position: absolute; top: 16px; left: 16px; cursor: pointer; width: auto; height: auto; }
 body .ui-controller .home .review { color: #ffffff; position: absolute; bottom: 16px; right: 16px; width: auto; height: auto; }
 body .ui-controller .home .review img { max-width: 16px; margin-right: 4px; vertical-align: bottom; filter: invert(0%); transform: scale(1); }
 body .ui-controller .home .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
@@ -150,10 +150,12 @@ body.light .ui-controller .level-editor { background-color: #e6e6e6; }
 .background-9 { background-image: url('../img/jpg/background-stars.jpg'); background-color: #1b1829; }
 
 /* Dialog window styling */
-body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; background-color: rgba(0, 0, 0, 0.5); }
+body .dialog { color: #fff; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; text-align: center; }
+body .dialog.align-left { text-align: left; }
+body .dialog .background { background-color: rgb(0, 0, 0, 0.5); position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 0; }
 body .dialog .disabled { opacity: 0.25; pointer-events: none; }
-body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; }
-body .dialog .wrapper p { margin: 0; font-size: 1em; line-height: 24px; padding: 0 0 24px; }
+body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; max-height: 80vh; overflow-y: auto; z-index: 1; }
+body .dialog .wrapper p { margin: 0; font-size: 1em; line-height: 24px; padding: 0 0 24px; white-space: pre-line; }
 body .dialog .wrapper p em { position: relative; }
 body .dialog .wrapper .inputs { display: flex; justify-content: space-evenly; flex-wrap: wrap; position: relative; }
 body .dialog .wrapper .inputs label { display: block; font-size: 0.875em; }

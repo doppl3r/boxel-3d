@@ -119,8 +119,8 @@ class UIController {
                 app.ui.addDialog({
                     text: 'Are you sure you want to <em>delete</em> this level?',
                     inputs: [
-                        { attributes: { value: 'No', type: 'button' } },
                         { attributes: { value: 'Yes', type: 'button' }, function: app.ui.removeEditorLevel, parameter: $(this) },
+                        { attributes: { value: 'No', type: 'button' } }
                     ]
                 });
             }
@@ -558,9 +558,16 @@ class UIController {
 
     addDialog(options) {
         var dialog = $('<div class="dialog">');
+        var background = $('<div class="background">');
         var wrapper = $('<div class="wrapper">');
         var inputs = $('<div class="inputs">');
-        
+
+        // Add attributes to dialog
+        if (options.attributes != null) {
+            dialog.attr(options.attributes);
+            dialog.addClass('dialog')
+        }
+
         // Include copy
         if (options.text != null) wrapper.append('<p>' + options.text + '</p>');
         
@@ -587,6 +594,11 @@ class UIController {
             wrapper.append(inputs);
         }
         
+        // Select last option if the background is clicked
+        background.on('click', function() { dialog.find('input:last-of-type').click(); });
+
+        // Append dialog
+        dialog.append(background);
         dialog.append(wrapper);
         dialog.hide().fadeIn(100);
         $('body').append(dialog);
