@@ -18,13 +18,14 @@ class Collision {
                 var objectA = a.level.getObjectByName(bodyA.parent.name);
                 var objectB = a.level.getObjectByName(bodyB.parent.name);
 
+                // Check if player is falling
+                if (objectA.body.class == 'player') {
+                    a.player.allowJump = true;
+                }
+                
                 // Check bodies if bodyB is not a sensor. This prevents sensors reacting to each other.
                 if (bodyB.class != 'sensor') {
 
-                    // Check if player is falling
-                    if (objectA.body.class == 'player') {
-                        a.player.allowJump = true;
-                    }
 
                     // Check sensor points
                     if (bodyA.class == 'sensor') {
