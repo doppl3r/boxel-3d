@@ -1,3 +1,8 @@
+v0.1.7 - July 22, 2020
+- Add resize block
+- Remove shrink block
+- Remove grow block
+
 v0.1.6 - July 20, 2020
 - Update Tip cube behavior - now disappears when selected
 - Update level 1, 5, 12 & 14

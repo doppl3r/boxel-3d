@@ -62,8 +62,6 @@ class Collision {
                         else if (objectA.body.class == 'resize') {
                             if (objectB.body.class ==  'player') {
                                 objectB.setScale(objectA.scale, false);
-                                objectB.setRotation(objectA.getRotation(), false);
-                                //objectB.setPosition(objectA.position, false);
                             }
                         }
                         else if (objectA.body.class == 'finish') {
