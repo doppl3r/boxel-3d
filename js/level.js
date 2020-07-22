@@ -162,14 +162,17 @@ class Level extends THREE.Group {
         }
     }
 
-    retryLevel(a) {
+    retryLevel(a, keepCheckpoint = false) {
         a.play = true;
         a.timer.reset();
         a.level.removeParticles(a);
         a.player.cancelRestart();
-        a.player.removeCheckpoint();
         a.ui.dialog.remove();
         a.resetScene(a);
+        
+        // Remove checkpoint, or respawn to checkpoint
+        if (keepCheckpoint == false) a.player.removeCheckpoint();
+        else a.player.respawn(true);
     }
 
     exitLevel(a) {

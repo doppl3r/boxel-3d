@@ -29,7 +29,7 @@ class Player extends Cube {
         if (this.isFrozen() == false) {
             this.freeze(true);
             this.visible = false;
-            this.killTimeout = setTimeout(this.restart, 1000); // Respawn in 1 second
+            this.killTimeout = setTimeout(function() { app.player.restart(); }, 1000); // Respawn in 1 second
             var rows = 4, cols = 4, layers = 4;
             var scale = { x: this.scale.x / cols, y: this.scale.y / rows, z: this.scale.z / layers }
             for (var row = -rows / 2; row < rows / 2; row++) {
@@ -84,8 +84,9 @@ class Player extends Cube {
         }
     }
 
-    respawn() {
-        if (app.player.isFrozen() == true) {
+    respawn(override = false) {
+        // Override is used when a checkpoint set
+        if (app.player.isFrozen() == true || override == true) {
             app.level.removeParticles(app);
             app.player.resetToOrigin();
             app.player.setPositionToCheckpoint();
@@ -93,10 +94,7 @@ class Player extends Cube {
     }
 
     restart() {
-        if (app.ui.dialog.isOpen() == false) {
-            // Retry level if not in dialog window
-            app.level.retryLevel(app);
-        }
+        app.level.retryLevel(app, true);
     }
 
     finish() {
