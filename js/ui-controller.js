@@ -186,6 +186,7 @@ class UIController {
             else if (action == 'spike') { app.ui.selectObjectType(action); }
             else if (action == 'shrink') { app.ui.selectObjectType(action); }
             else if (action == 'grow') { app.ui.selectObjectType(action); }
+            else if (action == 'resize') { app.ui.selectObjectType(action); }
             else if (action == 'finish') { app.ui.selectObjectType(action); }
 
             // Object options listener

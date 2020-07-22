@@ -19,6 +19,7 @@ class Level extends THREE.Group {
             case('spike'): object = new Spike(options); break;
             case('shrink'): object = new Shrink(options); break;
             case('grow'): object = new Grow(options); break;
+            case('resize'): object = new Resize(options); break;
             case('finish'): object = new Finish(options); break;
             default: object = new Cube(options);
         }

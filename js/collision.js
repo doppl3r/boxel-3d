@@ -22,7 +22,7 @@ class Collision {
                 if (objectA.body.class == 'player') {
                     a.player.allowJump = true;
                 }
-                
+
                 // Check bodies if bodyB is not a sensor. This prevents sensors reacting to each other.
                 if (bodyB.class != 'sensor') {
 
@@ -57,6 +57,13 @@ class Collision {
                             if (objectB.body.class ==  'player') {
                                 app.player.grow();
                                 objectA.hide(true);
+                            }
+                        }
+                        else if (objectA.body.class == 'resize') {
+                            if (objectB.body.class ==  'player') {
+                                objectB.setScale(objectA.scale, false);
+                                objectB.setPosition(objectA.position, false);
+                                objectB.setRotation(objectA.getRotation(), false);
                             }
                         }
                         else if (objectA.body.class == 'finish') {
