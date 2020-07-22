@@ -166,6 +166,7 @@ class Level extends THREE.Group {
         a.play = true;
         a.timer.reset();
         a.level.removeParticles(a);
+        a.player.cancelRestart();
         a.player.removeCheckpoint();
         a.ui.dialog.remove();
         a.resetScene(a);

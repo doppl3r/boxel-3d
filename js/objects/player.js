@@ -29,9 +29,9 @@ class Player extends Cube {
         if (this.isFrozen() == false) {
             this.freeze(true);
             this.visible = false;
+            this.killTimeout = setTimeout(this.restart, 1000); // Respawn in 1 second
             var rows = 4, cols = 4, layers = 4;
             var scale = { x: this.scale.x / cols, y: this.scale.y / rows, z: this.scale.z / layers }
-            setTimeout(this.restart, 1000); // Respawn in 1 second
             for (var row = -rows / 2; row < rows / 2; row++) {
                 for (var col = -cols / 2; col < cols / 2; col++) {
                     var randAngle = randomNumber(0, 360 * (Math.PI / 180));
@@ -56,6 +56,11 @@ class Player extends Cube {
                 }
             }
         }
+    }
+
+    cancelRestart() {
+        // Clear potential timeout from player kill
+        clearTimeout(this.killTimeout);
     }
 
     saveCheckpoint(position) {
