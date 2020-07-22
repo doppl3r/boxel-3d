@@ -88,7 +88,7 @@ class Player extends Cube {
     }
 
     restart() {
-        if (app.ui.dialogIsOpen() == false) {
+        if (app.ui.dialog.isOpen() == false) {
             // Retry level if not in dialog window
             app.level.retryLevel(app);
         }
@@ -104,7 +104,7 @@ class Player extends Cube {
         if (hasNewScore == true) text += '<br><em>New record!</em>';
 
         app.play = false;
-        app.ui.addDialog({
+        app.ui.dialog.add({
             text: text,
             inputs: [
                 { attributes: { value: 'Retry', type: 'button' }, function: app.level.retryLevel, parameter: app },

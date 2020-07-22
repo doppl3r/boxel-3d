@@ -1,5 +1,6 @@
 class UIController {
     constructor() {
+        this.dialog = new Dialog();
         this.controller = $('.ui-controller');
         this.home = this.controller.find('.home');
         this.campaign = this.controller.find('.campaign');
@@ -56,7 +57,7 @@ class UIController {
                     { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.resumeCampaign },
                     { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
                 )
-                app.ui.addDialog({ inputs: inputs });
+                app.ui.dialog.add({ inputs: inputs });
             }
 
             // Level picker UI
@@ -76,7 +77,7 @@ class UIController {
 
             // Shop game UI
             if (action == 'add-license') {
-                app.ui.addDialog({
+                app.ui.dialog.add({
                     text: 'Add your license key',
                     inputs: [
                         { attributes: { placeholder: 'Ex: BXL-ABC123', type: 'text' } },
@@ -116,7 +117,7 @@ class UIController {
                 app.resetScene(app);
             }
             else if (action == 'delete-level') {
-                app.ui.addDialog({
+                app.ui.dialog.add({
                     text: 'Are you sure you want to <em>delete</em> this level?',
                     inputs: [
                         { attributes: { value: 'Yes', type: 'button' }, function: app.ui.removeEditorLevel, parameter: $(this) },
@@ -136,7 +137,7 @@ class UIController {
             }
             else if (action == 'exit-to-level-manager') {
                 if (app.levelHistory.history.length > 2) {
-                    app.ui.addDialog({
+                    app.ui.dialog.add({
                         text: 'Would you like to <em>save</em> your level?',
                         inputs: [
                             { attributes: { value: 'No', type: 'button' }, function: app.ui.saveAndExitLevelEditor, parameter: false },
@@ -205,7 +206,7 @@ class UIController {
                 app.ui.objectOptions.find('[name="friction"]').focus();
             }
             else if (action == 'text') {
-                app.ui.addDialog({
+                app.ui.dialog.add({
                     text: 'Share a tip!',
                     inputs: [
                         { attributes: { value: app.selectedObject.text, type: 'text' } },
@@ -293,7 +294,7 @@ class UIController {
                     $('.version').off();
                     $('.version').on('click', function() {
                         $.get("changelog.txt", function(data) {
-                            app.ui.addDialog({
+                            app.ui.dialog.add({
                                 attributes: { class: 'align-left' },
                                 text: data,
                                 inputs: [
@@ -569,69 +570,9 @@ class UIController {
         app.ui.updateUI('level-manager');
     }
 
-    addDialog(options) {
-        var dialog = $('<div class="dialog">');
-        var background = $('<div class="background">');
-        var wrapper = $('<div class="wrapper">');
-        var inputs = $('<div class="inputs">');
-
-        // Add attributes to dialog
-        if (options.attributes != null) {
-            dialog.attr(options.attributes);
-            dialog.addClass('dialog')
-        }
-
-        // Include copy
-        if (options.text != null) wrapper.append('<p>' + options.text + '</p>');
-        
-        // Bind functions
-        if (options.inputs != null) {
-            for (var i = 0; i < options.inputs.length; i++) {
-                var data = options.inputs[i];
-                var input = $('<input>', data.attributes);
-
-                // Add default functionality
-                input[0]._function = function(){};
-                input[0]._parameter = input;
-                input[0]._attributes = data.attributes;
-                if (data.function != null) input[0]._function = data.function;
-                if (data.parameter != null) input[0]._parameter = data.parameter;
-                input.on('click', function() {
-                    var self = $(this)[0];
-                    self._function(self._parameter);
-                    if (self._attributes.type == 'button') app.ui.removeDialog(); // Always close dialog
-                });
-                if (data.label != null) inputs.append('<label>' + data.label + '</label>');
-                inputs.append(input);
-            }
-            wrapper.append(inputs);
-        }
-        
-        // Select last option if the background is clicked
-        background.on('click', function() { dialog.find('input:last-of-type').click(); });
-
-        // Append dialog
-        dialog.append(background);
-        dialog.append(wrapper);
-        dialog.hide().fadeIn(100);
-        $('body').append(dialog);
-        $('body').addClass('has-dialog');
-        dialog.find('input:last-of-type').focus();
-    }
-
-    removeDialog(duration = 100) {
-        var dialog = $('.dialog');
-        dialog.find('a').off();
-        dialog.fadeOut(duration, function(){ dialog.remove(); });
-        $('body').removeClass('has-dialog');
-    }
-
-    dialogIsOpen() {
-        return $('.dialog').length > 0;
-    }
-
     updateTip() {
-        var input = $('.dialog .inputs input[type="text"]');
+        var dialog = app.ui.dialog.get();
+        var input = dialog.find('input[type="text"]');
         app.selectedObject.text = input.val();
         app.levelHistory.save('Updated tip', app);
     }
@@ -651,7 +592,7 @@ class UIController {
 
     showTip(text) {
         app.play = false;
-        app.ui.addDialog({
+        app.ui.dialog.add({
             text: text,
             inputs: [
                 { attributes: { value: 'Continue', type: 'button' }, function: app.ui.play }
@@ -671,7 +612,7 @@ class UIController {
             app.ui.levelOptions.find('[action="pause"]').addClass('selected');
         }
         else if (app.ui.state == 'play') {
-            app.ui.addDialog({
+            app.ui.dialog.add({
                 text: 'Paused',
                 inputs: [
                     { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
@@ -731,7 +672,7 @@ class UIController {
             app.shop.selectProduct(response.data.product.id);
             app.player.setSkin(response.data.product.id);
         }
-        app.ui.addDialog({
+        app.ui.dialog.add({
             text: text,
             inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
         });

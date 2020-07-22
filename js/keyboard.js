@@ -15,7 +15,7 @@ class Keyboard {
                     $('[action="exit-to-home"]').click();
                 }
                 else if (state == 'level-editor') {
-                    a.ui.removeDialog(0);
+                    a.ui.dialog.remove(0);
                     $('[action="exit-to-level-manager"]').click();
                 }
                 else if (state == 'level-picker') {
@@ -26,8 +26,8 @@ class Keyboard {
                 }
                 else if (state == 'play') {
                     // Resume or pause game
-                    if (a.ui.dialogIsOpen()) {
-                        a.ui.removeDialog(0);
+                    if (a.ui.dialog.isOpen()) {
+                        a.ui.dialog.remove(0);
                         a.ui.resumeCampaign();
                     }
                     else {

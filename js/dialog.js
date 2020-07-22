@@ -1,10 +1,11 @@
 class Dialog {
     constructor() {
-
+        this.class = 'dialog';
+        this.element = this.get();
     }
 
     add(options) {
-        var dialog = $('<div class="dialog">');
+        var dialog = $('<div class="' + this.class + '">');
         var background = $('<div class="background">');
         var wrapper = $('<div class="wrapper">');
         var inputs = $('<div class="inputs">');
@@ -33,7 +34,7 @@ class Dialog {
                 input.on('click', function() {
                     var self = $(this)[0];
                     self._function(self._parameter);
-                    if (self._attributes.type == 'button') app.ui.removeDialog(); // Always close dialog
+                    if (self._attributes.type == 'button') app.ui.dialog.remove(); // Always close dialog
                 });
                 if (data.label != null) inputs.append('<label>' + data.label + '</label>');
                 inputs.append(input);
@@ -51,5 +52,20 @@ class Dialog {
         $('body').append(dialog);
         $('body').addClass('has-dialog');
         dialog.find('input:last-of-type').focus();
+    }
+
+    remove(duration = 100) {
+        var dialog = this.get();
+        dialog.find('a').off();
+        dialog.fadeOut(duration, function(){ dialog.remove(); });
+        $('body').removeClass('has-dialog');
+    }
+
+    isOpen() {
+        return this.get().length > 0;
+    }
+
+    get() {
+        return $('.' + this.class);
     }
 }

@@ -167,7 +167,7 @@ class Level extends THREE.Group {
         a.timer.reset();
         a.level.removeParticles(a);
         a.player.removeCheckpoint();
-        a.ui.removeDialog();
+        a.ui.dialog.remove();
         a.resetScene(a);
     }
 
@@ -182,7 +182,7 @@ class Level extends THREE.Group {
             if (settings.progress > a.ui.maxLevels) { // Add last level dialog
                 settings.progress--;
                 setTimeout(function() { 
-                    app.ui.addDialog({
+                    app.ui.dialog.add({
                         text: 'Thank you for playing!<br>Go beat your high scores while we make more levels!',
                         inputs: [
                             { attributes: { value: 'No', type: 'button' }},
