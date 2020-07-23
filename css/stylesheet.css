@@ -84,8 +84,9 @@ body .ui-controller .shop .skins .product.selected .link { opacity: 0.5; pointer
 body .ui-controller .shop .skins .product .image { background-size: cover; padding-bottom: 100%; height: auto; margin: auto; border-radius: 4px; }
 body .ui-controller .shop .skins .product .title { padding: 8px 0; }
 body .ui-controller .shop .skins .product .link { width: 100%; height: auto; background-color: #dc265a; color: #fff; border-radius: 4px; padding: 8px 0; text-decoration: none; }
+body .ui-controller .shop .skins .product .link img { filter: invert(0%); }
 body .ui-controller .shop .skins .product .link .sale_price { display: none; }
-body .ui-controller .shop .skins .product .link.sale .regular_price { text-decoration: line-through; opacity: 0.5; padding-right: 4px; }
+body .ui-controller .shop .skins .product .link.sale .regular_price { text-decoration: line-through; opacity: 0.5; padding: 0 4px; }
 body .ui-controller .shop .skins .product .link.sale .sale_price { display: inline-block; }
 
 /* Navigation defaults */

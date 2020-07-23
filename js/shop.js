@@ -1,8 +1,8 @@
 class Shop {
     constructor() {
         var defaultProducts = [
-            { 'id': 1, 'title': 'Default', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/1.png', 'permalink': '#' },
-            { 'id': 2, 'title': 'Blue', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/2.png', 'permalink': '#' }
+            { 'id': 1, 'title': 'Default', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'regular_points': '', 'sale_points': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/1.png', 'permalink': '#' },
+            { 'id': 2, 'title': 'Blue', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'regular_points': '', 'sale_points': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/2.png', 'permalink': '#' }
         ];
         this.state = 'loading'; // Default unloaded
         this.addProductToShop(defaultProducts[0]);
@@ -41,8 +41,9 @@ class Shop {
                 '<div class="image" style="background-image: url(' + product.image + ')"></div>' +
                 '<div class="title">' + product.title + '</div>' +
                 '<a class="link' + (product.is_on_sale == true ? ' sale' : '') + '" href="' + product.permalink + '" target="_blank">' +
-                    '<span class="regular_price">' + product.currency + product.regular_price + '</span>' +
-                    '<span class="sale_price">' + product.currency + product.sale_price + '</span>' +
+                    '<span class="regular_price">' + product.regular_points + '</span>' +
+                    '<span class="sale_price">' + product.sale_points + '</span>' +
+                    '<img src="../img/svg/coin-square.svg">' +
                 '</a>' +
             '</div>'
         );
