@@ -181,6 +181,7 @@ class Mouse {
     }
 
     wheel(e, a) {
+        e.preventDefault();
         if (app.ui.state == 'level-editor') {
             var zoom = a.camera.position.z + e.deltaY;
             if (zoom < 100) zoom = 100;
