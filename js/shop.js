@@ -43,7 +43,7 @@ class Shop {
                 '<a class="link' + (product.is_on_sale == true ? ' sale' : '') + '" href="' + product.permalink + '" target="_blank">' +
                     '<span class="regular_price">' + product.regular_points + '</span>' +
                     '<span class="sale_price">' + product.sale_points + '</span>' +
-                    '<img src="../img/svg/coin-square.svg">' +
+                    '<img src="img/svg/coin-square.svg">' +
                 '</a>' +
             '</div>'
         );
