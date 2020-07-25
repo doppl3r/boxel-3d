@@ -3,6 +3,14 @@ class StorageManager {
         this.levelPrefix = 'level_';
     }
 
+    getLocalStorage() {
+        return JSON.parse(JSON.stringify(localStorage));
+    }
+
+    setLocalStorage(data) {
+        Object.keys(data).forEach(function(key) { localStorage.setItem(key, data[key])})
+    }
+
     getListOfLevels() {
         var levels = [];
         var length = localStorage.length;
