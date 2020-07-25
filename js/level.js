@@ -169,8 +169,6 @@ class Level extends THREE.Group {
         a.player.cancelRestart();
         a.ui.dialog.remove();
         a.resetScene(a);
-
-        console.log(keepCheckpoint);
         
         // Remove checkpoint, or respawn to checkpoint
         if (keepCheckpoint == false || a.player.checkpoint == null) {

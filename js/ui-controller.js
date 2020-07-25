@@ -596,6 +596,7 @@ class UIController {
 
     showTip(text) {
         app.play = false;
+        app.timer.pause();
         app.ui.dialog.add({
             text: text,
             inputs: [
