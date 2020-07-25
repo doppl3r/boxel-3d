@@ -33,6 +33,9 @@ class UIController {
             else if (action == 'shop') {
                 app.ui.updateUI('shop');
             }
+            else if (action == 'account') {
+                app.ui.showCredentialsDialog();
+            }
             else if (action == 'settings') {
                 var settings = app.storage.getSettings();
                 var inputs = [
@@ -677,5 +680,25 @@ class UIController {
             text: text,
             inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
         });
+    }
+
+    showCredentialsDialog() {
+        var credentials = app.account.getCredentials();
+        app.ui.dialog.add({
+            text: 'Login Information',
+            inputs: [
+                { label: 'Username', attributes: { type: 'text', name: 'username', value: credentials.username } },
+                { label: 'Password', attributes: { type: 'password', name: 'password', value: credentials.password } },
+                { attributes: { value: 'Cancel', type: 'button' } },
+                { attributes: { value: 'Save', type: 'button' }, function: app.ui.saveCredentials }
+            ]
+        });
+    }
+
+    saveCredentials(clear = false) {
+        var username = $('.dialog .inputs input[name="username"]').val();
+        var password = $('.dialog .inputs input[name="password"]').val();
+        if (clear == true) app.account.setCredentials('', '');
+        else app.account.setCredentials(username, password);
     }
 }

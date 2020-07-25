@@ -3,8 +3,19 @@ class Account {
         
     }
 
-    setCredentials(credentials) {
+    setCredentials(username, password) {
+        var settings = app.storage.getSettings();
+        settings['credentials']['username'] = btoa(username);
+        settings['credentials']['password'] = btoa(password);
+        app.storage.setSettings(settings);
+    }
 
+    getCredentials() {
+        var settings = app.storage.getSettings();
+        return {
+            'username': atob(settings['credentials']['username']),
+            'password': atob(settings['credentials']['password'])
+        }
     }
 
     checkCredentials() {

@@ -44,7 +44,7 @@ body .ui-controller .dashboard .buttons .button:nth-last-child(3) { animation-de
 
 /* Home Styling */
 body .ui-controller .home { align-items: center; /* background-color: #ffffff; */ display: flex; height: 100vh; justify-content: center; }
-body .ui-controller .home .version { color: #ffffff; position: absolute; top: 16px; left: 16px; cursor: pointer; width: auto; height: auto; }
+body .ui-controller .home .version { color: #ffffff; position: absolute; bottom: 16px; left: 16px; cursor: pointer; width: auto; height: auto; }
 body .ui-controller .home .review { color: #ffffff; position: absolute; bottom: 16px; right: 16px; width: auto; height: auto; }
 body .ui-controller .home .review img { max-width: 16px; margin-right: 4px; vertical-align: bottom; filter: invert(0%); transform: scale(1); }
 body .ui-controller .home .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
@@ -163,7 +163,8 @@ body .dialog .wrapper .inputs label { display: block; font-size: 0.875em; }
 body .dialog .wrapper .inputs label img { max-width: 24px; height: auto; margin-left: 8px; vertical-align: middle; }
 body .dialog .wrapper .inputs input { border-radius: 4px; background-color: transparent; color: #fff; font-family: 'Comfortaa-Bold'; font-size: 0.75em; margin: 0 0 16px; outline: none; padding: 16px; }
 body .dialog .wrapper .inputs input:focus:before { border: none; }
-body .dialog .wrapper .inputs input[type="text"] { width: 100%; border: 2px solid #fff; }
+body .dialog .wrapper .inputs input[type="text"],
+body .dialog .wrapper .inputs input[type="password"] { width: 100%; border: 2px solid #fff; }
 body .dialog .wrapper .inputs input[type="text"]::placeholder { color: rgba(255, 255, 255, 0.5); }
 body .dialog .wrapper .inputs input[type="range"] { padding: 16px 0; width: 100%; }
 body .dialog .wrapper .inputs input[type="button"] { border: none; border-radius: 4px; cursor: pointer; display: inline-block; font-size: 1em; padding: 12px; margin-bottom: 0; }
