@@ -63,7 +63,7 @@ class Account {
                         error: function(data) {
                             app.ui.dialog.add({
                                 text: 'Error: Incorrect login',
-                                inputs: [{ attributes: { value: 'Close', type: 'button' }}]
+                                inputs: [{ attributes: { value: 'Close', type: 'button' }, function: app.ui.showAccountOptions }]
                             });
                         }
                     });
@@ -101,7 +101,7 @@ class Account {
                         error: function(data) {
                             app.ui.dialog.add({
                                 text: 'Error: Incorrect login',
-                                inputs: [{ attributes: { value: 'Close', type: 'button' }}]
+                                inputs: [{ attributes: { value: 'Close', type: 'button' }, function: app.ui.showAccountOptions }]
                             });
                         }
                     });

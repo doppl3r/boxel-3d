@@ -700,8 +700,8 @@ class UIController {
         app.ui.dialog.add({
             text: 'Login Information',
             inputs: [
-                { label: 'Username', attributes: { type: 'text', name: 'username', value: credentials.username } },
-                { label: 'Password', attributes: { type: 'password', name: 'password', value: credentials.password } },
+                { label: 'Username', attributes: { type: 'text', name: 'username', value: credentials.username, autocomplete: 'off' } },
+                { label: 'Password', attributes: { type: 'password', name: 'password', value: credentials.password, autocomplete: 'off' } },
                 { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions },
                 { attributes: { value: 'Save', type: 'button' }, function: app.ui.saveCredentials }
             ]
