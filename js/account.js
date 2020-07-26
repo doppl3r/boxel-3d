@@ -62,7 +62,7 @@ class Account {
                         },
                         error: function(data) {
                             app.ui.dialog.add({
-                                text: 'Error: Incorrect login',
+                                text: 'Error: Incorrect login. <br><a href="https://boxel3d.com/shop/account/lost-password/" target="_blank">Lost password?</a>',
                                 inputs: [{ attributes: { value: 'Close', type: 'button' }, function: app.ui.showAccountOptions }]
                             });
                         }
@@ -100,7 +100,7 @@ class Account {
                         },
                         error: function(data) {
                             app.ui.dialog.add({
-                                text: 'Error: Incorrect login',
+                                text: 'Error: Incorrect login. <br><a href="https://boxel3d.com/shop/account/lost-password/" target="_blank">Lost password?</a>',
                                 inputs: [{ attributes: { value: 'Close', type: 'button' }, function: app.ui.showAccountOptions }]
                             });
                         }
