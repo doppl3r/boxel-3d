@@ -687,9 +687,10 @@ class UIController {
         app.ui.dialog.add({
             text: 'Account Options',
             inputs: [
-                { attributes: { value: 'Backup', type: 'button' }, function: app.account.backup },
-                { attributes: { value: 'Restore', type: 'button' }, function: app.account.restore },
-                { attributes: { value: 'Edit', type: 'button' }, function: app.ui.showCredentialsDialog }
+                { attributes: { value: 'Backup', type: 'button', width: '50%' }, function: app.account.backup },
+                { attributes: { value: 'Edit Login', type: 'button', width: '50%' }, function: app.ui.showCredentialsDialog },
+                { attributes: { value: 'Restore', type: 'button', width: '50%' }, function: app.account.restore },
+                { attributes: { value: 'Close', type: 'button', width: '50%' } }
             ]
         });
     }
