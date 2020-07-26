@@ -1,3 +1,7 @@
+v0.1.8 - July 26, 2020
+- Added option to backup data
+- Added option to restore data
+
 v0.1.7 - July 22, 2020
 - Add resize block
 - Remove shrink block

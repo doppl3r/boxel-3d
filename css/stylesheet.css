@@ -156,6 +156,7 @@ body .dialog.align-left { text-align: left; }
 body .dialog .background { background-color: rgb(0, 0, 0, 0.5); position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 0; }
 body .dialog .disabled { opacity: 0.25; pointer-events: none; }
 body .dialog .wrapper { border-radius: 4px; background-color: #0287EF; max-width: 320px; padding: 24px; width: 100%; max-height: 80vh; overflow-y: auto; z-index: 1; }
+body .dialog .wrapper > *:last-child { padding: 0; }
 body .dialog .wrapper p { margin: 0; font-size: 1em; line-height: 24px; padding: 0 0 24px; white-space: pre-line; }
 body .dialog .wrapper p em { position: relative; }
 body .dialog .wrapper .inputs { display: flex; justify-content: space-evenly; flex-wrap: wrap; position: relative; }

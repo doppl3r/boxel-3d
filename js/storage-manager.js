@@ -3,7 +3,7 @@ class StorageManager {
         this.levelPrefix = 'level_';
     }
 
-    getLocalStorage() {
+    getAllLocalStorage() {
         var a = {};
         for (var i = 0; i < localStorage.length; i++) {
             var k = localStorage.key(i);
@@ -13,7 +13,8 @@ class StorageManager {
         return a;
     }
 
-    setLocalStorage(data) {
+    setAllLocalStorage(data) {
+        localStorage.clear(); // Empty out old data
         Object.keys(data).forEach(function(key) { localStorage.setItem(key, data[key])})
     }
 

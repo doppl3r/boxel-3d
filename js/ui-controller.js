@@ -305,7 +305,7 @@ class UIController {
                                     { attributes: { value: 'Close', type: 'button' }}
                                 ]
                             });
-                            $('.dialog .wrapper').scrollTop(0);
+                            setTimeout(function(){ $('.dialog .wrapper').animate({ scrollTop: 0 }, 500); }, 100);
                         });
                     });
                 });
@@ -687,10 +687,10 @@ class UIController {
         app.ui.dialog.add({
             text: 'Account Options',
             inputs: [
-                { attributes: { value: 'Backup', type: 'button', width: '50%' }, function: app.account.backup },
-                { attributes: { value: 'Edit Login', type: 'button', width: '50%' }, function: app.ui.showCredentialsDialog },
-                { attributes: { value: 'Restore', type: 'button', width: '50%' }, function: app.account.restore },
-                { attributes: { value: 'Close', type: 'button', width: '50%' } }
+                { attributes: { value: 'Login', type: 'button', width: '33%' }, function: app.ui.showCredentialsDialog },
+                { attributes: { value: 'Backup', type: 'button', width: '33%' }, function: app.account.backup },
+                { attributes: { value: 'Restore', type: 'button', width: '33%' }, function: app.account.restore },
+                { attributes: { value: 'Continue', type: 'button', width: '50%' } }
             ]
         });
     }
@@ -702,7 +702,7 @@ class UIController {
             inputs: [
                 { label: 'Username', attributes: { type: 'text', name: 'username', value: credentials.username } },
                 { label: 'Password', attributes: { type: 'password', name: 'password', value: credentials.password } },
-                { attributes: { value: 'Cancel', type: 'button' } },
+                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions },
                 { attributes: { value: 'Save', type: 'button' }, function: app.ui.saveCredentials }
             ]
         });
@@ -713,5 +713,6 @@ class UIController {
         var password = $('.dialog .inputs input[name="password"]').val();
         if (clear == true) app.account.setCredentials('', '');
         else app.account.setCredentials(username, password);
+        app.ui.showAccountOptions(); // Reopen main account dialog
     }
 }
