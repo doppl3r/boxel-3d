@@ -72,6 +72,7 @@ body .ui-controller .shop h1 strong { color: #dc265a; }
 body .ui-controller .shop p { max-width: 400px; margin: 0 auto 32px; }
 body .ui-controller .shop p a { width: auto; height: auto; display: inline; font-weight: bold; color: #dc265a; text-decoration: none; }
 body .ui-controller .shop p img { vertical-align: bottom; }
+body .ui-controller .shop .buttons { margin-bottom: 24px; }
 body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; max-width: 640px; }
 body .ui-controller .shop .skins .product { margin: 12px; position: relative; width: 120px; }
 body .ui-controller .shop .skins .product.enabled { cursor: pointer; }
