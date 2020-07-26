@@ -34,7 +34,7 @@ class UIController {
                 app.ui.updateUI('shop');
             }
             else if (action == 'account') {
-                app.ui.showCredentialsDialog();
+                app.ui.showAccountOptions();
             }
             else if (action == 'settings') {
                 var settings = app.storage.getSettings();
@@ -680,6 +680,17 @@ class UIController {
         app.ui.dialog.add({
             text: text,
             inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
+        });
+    }
+
+    showAccountOptions() {
+        app.ui.dialog.add({
+            text: 'Account Options',
+            inputs: [
+                { attributes: { value: 'Backup', type: 'button' }, function: app.account.backup },
+                { attributes: { value: 'Restore', type: 'button' }, function: app.account.restore },
+                { attributes: { value: 'Edit', type: 'button' }, function: app.ui.showCredentialsDialog }
+            ]
         });
     }
 

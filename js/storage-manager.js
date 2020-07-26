@@ -4,7 +4,13 @@ class StorageManager {
     }
 
     getLocalStorage() {
-        return JSON.parse(JSON.stringify(localStorage));
+        var a = {};
+        for (var i = 0; i < localStorage.length; i++) {
+            var k = localStorage.key(i);
+            var v = localStorage.getItem(k);
+            a[k] = v;
+        }
+        return a;
     }
 
     setLocalStorage(data) {
