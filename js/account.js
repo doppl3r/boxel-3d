@@ -43,9 +43,9 @@ class Account {
         var backup = app.storage.getAllLocalStorage();
 
         app.ui.dialog.add({
-            text: 'Are you sure you want to send your current data to the server? This will override any previous data (scores, levels etc.)',
+            text: 'Save all data to the server?<br><em>(scores, levels, etc.)</em>',
             inputs: [
-                { attributes: { value: 'Yes', type: 'button' }, function: function() {
+                { attributes: { value: 'Backup', type: 'button' }, function: function() {
                     // Add loading dialog
                     app.ui.dialog.add({ text: 'Backing up data...' });
 
@@ -64,14 +64,14 @@ class Account {
                             app.ui.dialog.add({
                                 text: 'Error: Incorrect login. <br><a href="https://boxel3d.com/shop/account/lost-password/" target="_blank"><em>Forgot password?</em></a>',
                                 inputs: [
-                                    { attributes: { value: 'Create Account', type: 'button' }, function: function() { window.open('https://boxel3d.com/shop/account/'); }},
+                                    { attributes: { value: 'Edit Login', type: 'button' }, function: app.ui.showCredentialsDialog },
                                     { attributes: { value: 'Close', type: 'button' }, function: app.ui.showAccountOptions }
                                 ]
                             });
                         }
                     });
                 } },
-                { attributes: { value: 'No', type: 'button' }, function: app.ui.showAccountOptions }
+                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
             ]
         });
     }
@@ -83,9 +83,9 @@ class Account {
         var restore = '';
 
         app.ui.dialog.add({
-            text: 'Are you sure you want to download your data from the server? This will override any current data (scores, levels, etc.)',
+            text: 'Download all data from the server? This will override your local data (scores, levels etc.)<br><br><em>If you have not backed up your data, please cancel and backup your data first.</em>',
             inputs: [
-                { attributes: { value: 'Yes', type: 'button' }, function: function() {
+                { attributes: { value: 'Restore', type: 'button' }, function: function() {
                     // Add loading dialog
                     app.ui.dialog.add({ text: 'Restoring data...' });
                     
@@ -96,6 +96,7 @@ class Account {
                         data: { username: username, password: password, restore: restore },
                         success: function(data) {
                             app.storage.setAllLocalStorage(data);
+                            app.shop.checkLocalLicenses();
                             app.ui.dialog.add({
                                 text: 'Success! Your data was restored from your account.',
                                 inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
@@ -105,14 +106,14 @@ class Account {
                             app.ui.dialog.add({
                                 text: 'Error: Incorrect login. <br><a href="https://boxel3d.com/shop/account/lost-password/" target="_blank"><em>Forgot password?</em></a>',
                                 inputs: [
-                                    { attributes: { value: 'Create Account', type: 'button' }, function: function() { window.open('https://boxel3d.com/shop/account/'); }},
+                                    { attributes: { value: 'Edit Login', type: 'button' }, function: app.ui.showCredentialsDialog },
                                     { attributes: { value: 'Close', type: 'button' }, function: app.ui.showAccountOptions }
                                 ]
                             });
                         }
                     });
                 }},
-                { attributes: { value: 'No', type: 'button' }, function: app.ui.showAccountOptions }
+                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
             ]
         });
     }
