@@ -43,7 +43,7 @@ class Account {
         var backup = app.storage.getAllLocalStorage();
 
         app.ui.dialog.add({
-            text: 'Are you sure you want to send your data to the server? This will override any previous data.',
+            text: 'Are you sure you want to send your current data to the server? This will override any previous data (scores, levels etc.)',
             inputs: [
                 { attributes: { value: 'Yes', type: 'button' }, function: function() {
                     // Add loading dialog
@@ -80,10 +80,10 @@ class Account {
         var settings = app.storage.getSettings();
         var username = settings['credentials']['username'];
         var password = settings['credentials']['password'];
-        var restore = true;
+        var restore = '';
 
         app.ui.dialog.add({
-            text: 'Are you sure you want to download your data from the server? This will override any current data.',
+            text: 'Are you sure you want to download your data from the server? This will override any current data (scores, levels, etc.)',
             inputs: [
                 { attributes: { value: 'Yes', type: 'button' }, function: function() {
                     // Add loading dialog

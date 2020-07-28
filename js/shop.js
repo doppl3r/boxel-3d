@@ -1,12 +1,16 @@
 class Shop {
     constructor() {
-        var defaultProducts = [
+        this.defaultProducts = [
             { 'id': 1, 'title': 'Default', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'regular_points': '', 'sale_points': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/1.png', 'permalink': '#' },
             { 'id': 2, 'title': 'Blue', 'currency': '', 'regular_price': 'Loading', 'is_on_sale': '', 'sale_price': '', 'regular_points': '', 'sale_points': '', 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/2.png', 'permalink': '#' }
         ];
+        this.defaultLicenses = [
+            { 'key': 1, 'product': { 'id': 1, 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/1.png' }},
+            { 'key': 2, 'product': { 'id': 2, 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/2.png' }}
+        ];
         this.state = 'loading'; // Default unloaded
-        this.addProductToShop(defaultProducts[0]);
-        this.addProductToShop(defaultProducts[1]);
+        this.addProductToShop(this.defaultProducts[0]);
+        this.addProductToShop(this.defaultProducts[1]);
     }
     
     getBoxelProducts() {

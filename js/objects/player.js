@@ -149,7 +149,7 @@ class Player extends Cube {
         var settings = a.storage.getSettings();
         var license = null;
         if (id == null) id = 1; // Use default skin
-        license = a.storage.getLicenseById(id);
+        license = a.storage.getLicenseById(id, a);
 
         // Add texture
         this.addTexture(license['product']['image']);

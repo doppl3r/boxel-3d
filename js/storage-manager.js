@@ -134,27 +134,29 @@ class StorageManager {
         // Add to local storage if license does not exist
         if (licenseExists == false) {
             licenses.push(license)
-            localStorage.setItem('licenses', JSON.stringify(licenses));
+            this.setLicenses(licenses);
         }
         
         return !licenseExists; // Returns 'true' if added
     }
 
-    getLicenses() {
+    setLicenses(licenses) {
+        if (typeof licenses !== 'string') licenses = JSON.stringify(licenses);
+        localStorage.setItem('licenses', licenses);
+    }
+
+    getLicenses(a) {
         var licenses = localStorage.getItem('licenses');
-        var defaultLicenses = [
-            { 'key': 1, 'product': { 'id': 1, 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/1.png' }},
-            { 'key': 2, 'product': { 'id': 2, 'image': 'https://boxel3d.com/wp-content/themes/avada-boxel3d/skins/2.png' }}
-        ];
-        if (licenses == null) {
-            licenses = JSON.stringify(defaultLicenses);
+        
+        if (licenses == null || licenses == 'null') {
+            licenses = JSON.stringify(a.shop.defaultLicenses);
             localStorage.setItem('licenses', licenses);
         }
         return JSON.parse(licenses); // Return licenses
     }
 
-    getLicenseById(id) {
-        var licenses = this.getLicenses();
+    getLicenseById(id, a) {
+        var licenses = this.getLicenses(a);
         var license = null;
         for (var i = 0; i < licenses.length; i++) {
             license = licenses[i];
