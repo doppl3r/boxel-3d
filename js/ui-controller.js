@@ -685,11 +685,11 @@ class UIController {
 
     showAccountOptions() {
         app.ui.dialog.add({
-            text: 'Account Options',
+            text: 'Account Data',
             inputs: [
-                { attributes: { value: 'Login', type: 'button', width: '33%' }, function: app.ui.showCredentialsDialog },
-                { attributes: { value: 'Backup', type: 'button', width: '33%' }, function: app.account.backup },
-                { attributes: { value: 'Restore', type: 'button', width: '33%' }, function: app.account.restore },
+                { attributes: { value: 'Edit Login', type: 'button', width: '50%' }, function: app.ui.showCredentialsDialog },
+                { attributes: { value: 'Backup', type: 'button', width: '50%' }, function: app.account.backup },
+                { attributes: { value: 'Restore', type: 'button', width: '50%' }, function: app.account.restore },
                 { attributes: { value: 'Continue', type: 'button', width: '50%' } }
             ]
         });
@@ -698,7 +698,7 @@ class UIController {
     showCredentialsDialog() {
         var credentials = app.account.getCredentials();
         app.ui.dialog.add({
-            text: 'Login Information',
+            text: 'Login Information<br><a href="https://boxel3d.com/shop/account/" target="_blank"><em>Need an account?</em></a>',
             inputs: [
                 { label: 'Username', attributes: { type: 'text', name: 'username', value: credentials.username, autocomplete: 'off' } },
                 { label: 'Password', attributes: { type: 'password', name: 'password', value: credentials.password, autocomplete: 'off' } },
