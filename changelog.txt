@@ -1,3 +1,6 @@
+v0.1.9 - July 28, 2020
+- Added gravity cube (experimental)
+
 v0.1.8 - July 26, 2020
 - Added option to backup data
 - Added option to restore data
