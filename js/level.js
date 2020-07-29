@@ -20,6 +20,7 @@ class Level extends THREE.Group {
             case('shrink'): object = new Shrink(options); break;
             case('grow'): object = new Grow(options); break;
             case('resize'): object = new Resize(options); break;
+            case('gravity'): object = new Gravity(options); break;
             case('finish'): object = new Finish(options); break;
             default: object = new Cube(options);
         }
@@ -164,6 +165,7 @@ class Level extends THREE.Group {
     }
 
     retryLevel(a, keepCheckpoint = false) {
+        a.updateGravity();
         a.play = true;
         a.level.removeParticles(a);
         a.player.cancelRestart();

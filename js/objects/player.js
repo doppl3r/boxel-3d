@@ -15,10 +15,11 @@ class Player extends Cube {
     jump() {
         if (this.allowJump == true) {
             this.allowJump = false;
-            var xForce = 0;
-            var yForce = -0.025 * this.body.mass; // Scale force by mass
-            var direction = this.body.velocity.x >= 0 ? 1 : -1;
-            var angularVelocity = (Math.PI / 20) * direction;
+            var gravity = app.engine.world.gravity;
+            var xForce = gravity.x * -0.025 * this.body.mass;
+            var yForce = gravity.y * -0.025 * this.body.mass;
+            var spinDirection = this.body.velocity.x >= 0 ? 1 : -1;
+            var angularVelocity = (Math.PI / 20) * spinDirection;
             Matter.Body.setVelocity(this.body, { x: this.body.velocity.x, y: 0 });
             Matter.Body.setAngularVelocity(this.body, angularVelocity);
             Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });

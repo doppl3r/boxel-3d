@@ -190,6 +190,7 @@ class UIController {
             else if (action == 'shrink') { app.ui.selectObjectType(action); }
             else if (action == 'grow') { app.ui.selectObjectType(action); }
             else if (action == 'resize') { app.ui.selectObjectType(action); }
+            else if (action == 'gravity') { app.ui.selectObjectType(action); }
             else if (action == 'finish') { app.ui.selectObjectType(action); }
 
             // Object options listener
@@ -389,6 +390,7 @@ class UIController {
             var isPlayer = (app.selectedObject.getClass() == 'player');
             var friction = app.selectedObject.getFriction();
             var isTip = (app.selectedObject.getClass() == 'tip');
+            var isGravity = (app.selectedObject.getClass() == 'gravity');
             this.objectOptions.find('[action*="rotate"] ~ .slider input').val(rotation);
             this.objectOptions.find('[action*="scale-x"] ~ .slider input').val(scaleX);
             this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
@@ -415,6 +417,14 @@ class UIController {
             else {
                 pinIcon.removeClass('disabled');
                 textIcon.addClass('disabled');
+            }
+
+            // Enable/Disable the gravity icon for tip block
+            if (isGravity == true) {
+                pinIcon.addClass('disabled');
+            }
+            else {
+                pinIcon.removeClass('disabled');
             }
             
             // Update selected pin status

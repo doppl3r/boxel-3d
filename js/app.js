@@ -166,6 +166,15 @@ class App {
         a.storage.setSettings(settings); // Store locally
     }
 
+    updateGravity(angle = 0) { // between -1, and 1 directionally
+        var pi = Math.PI;
+        var degrees = -angle * (180/pi);
+        var x = Math.cos((90 - degrees) * (pi / 180));
+        var y = Math.sin((90 - degrees) * (pi / 180));
+        app.engine.world.gravity.x = x;
+        app.engine.world.gravity.y = y;
+    }
+
     updateQuality(quality, a) {
         if (quality <= 0) quality = 1;
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
