@@ -24,8 +24,6 @@ class Shop {
                 app.shop.addProductsToShop(response);
             }
         });
-
-        //app.account.checkCredentials();
     }
     
     addProductsToShop(products) {

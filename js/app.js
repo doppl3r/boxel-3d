@@ -167,12 +167,9 @@ class App {
     }
 
     updateGravity(angle = 0) { // between -1, and 1 directionally
-        var pi = Math.PI;
-        var degrees = -angle * (180/pi);
-        var x = Math.cos((90 - degrees) * (pi / 180));
-        var y = Math.sin((90 - degrees) * (pi / 180));
-        app.engine.world.gravity.x = x;
-        app.engine.world.gravity.y = y;
+        var vector = getVectorFromAngle(angle);
+        app.engine.world.gravity.x = vector.x;
+        app.engine.world.gravity.y = vector.y;
     }
 
     updateQuality(quality, a) {

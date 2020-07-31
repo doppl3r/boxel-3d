@@ -14,23 +14,31 @@ class Player extends Cube {
 
     jump() {
         if (this.allowJump == true) {
-            var pi = Math.PI;
             this.allowJump = false;
+            var velocity = { x: this.body.velocity.x, y: 0 };
             var gravity = app.engine.world.gravity;
-            var xForce = gravity.x * -0.025 * this.body.mass;
-            var yForce = gravity.y * -0.025 * this.body.mass;
-            var spinDirection = this.body.velocity.x >= this.body.velocity.y ? 1 : -1;
-            var angle = Math.atan2(gravity.x, gravity.y);
-            var angularVelocity = (pi / 20) * spinDirection;
-            var degrees = -angle * (180/pi);
-            var x = Math.cos((90 - degrees) * (pi / 180));
-            var y = Math.sin((90 - degrees) * (pi / 180));
-            if (x >= y) angularVelocity *= -1; // Reverse angular velocity
+            var gravityA = (Math.PI / 2) - Matter.Vector.angle({ x: 0, y: 0 }, gravity);
+            
+            //var velocity = this.body.velocity;
+            var velocityR = Matter.Vector.rotate(this.body.velocity, -gravityA);
+            var velocityP = Matter.Vector.perp(this.body.velocity);
+            var velocityN = Matter.Vector.neg(velocityP);
+            var spinDirection = this.body.velocity.x >= 0 ? 1 : -1;
+            var angularVelocity = (Math.PI / 20) * spinDirection;
 
-            // Force player object, TODO: resolve "setVelocity" for different gravity direction
-            Matter.Body.setVelocity(this.body, { x: this.body.velocity.x, y: 0 });
+            console.log('velocity: ', velocity);
+            console.log('velocityR: ', velocityR);
+            console.log('velocityP: ', velocityP);
+            console.log('velocityN: ', velocityN);
+
+            var force = {
+                x: -(gravity.x * 0.025 * this.body.mass),
+                y: -(gravity.y * 0.025 * this.body.mass)
+            };
+
+            Matter.Body.setVelocity(this.body, velocity);
             Matter.Body.setAngularVelocity(this.body, angularVelocity);
-            Matter.Body.applyForce(this.body, this.body.position, { x: xForce, y: yForce });
+            Matter.Body.applyForce(this.body, this.body.position, force);
         }
     }
 
