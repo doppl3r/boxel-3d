@@ -15,27 +15,26 @@ class Player extends Cube {
     jump() {
         if (this.allowJump == true) {
             this.allowJump = false;
-            var velocity = { x: this.body.velocity.x, y: 0 };
+
+            // Define jump conditions
             var gravity = app.engine.world.gravity;
-            var gravityA = (Math.PI / 2) - Matter.Vector.angle({ x: 0, y: 0 }, gravity);
-            
-            //var velocity = this.body.velocity;
-            var velocityR = Matter.Vector.rotate(this.body.velocity, -gravityA);
-            var velocityP = Matter.Vector.perp(this.body.velocity);
-            var velocityN = Matter.Vector.neg(velocityP);
-            var spinDirection = this.body.velocity.x >= 0 ? 1 : -1;
-            var angularVelocity = (Math.PI / 20) * spinDirection;
-
-            console.log('velocity: ', velocity);
-            console.log('velocityR: ', velocityR);
-            console.log('velocityP: ', velocityP);
-            console.log('velocityN: ', velocityN);
-
+            var gravityAngle = (Math.PI / 2) - Matter.Vector.angle({ x: 0, y: 0 }, gravity);
+            var velocity = this.body.velocity;
+            var spinDirection = 1; // Default clockwise
+            var angularVelocity = (Math.PI / 20);
             var force = {
                 x: -(gravity.x * 0.025 * this.body.mass),
                 y: -(gravity.y * 0.025 * this.body.mass)
             };
 
+            // Rotate velocity angle back to 0 degrees, remove y velocity, then rotate back to gravity angle
+            velocity = Matter.Vector.rotate(velocity, gravityAngle);
+            velocity.y = 0; // Reset vertical velocity to 0
+            spinDirection = velocity.x >= 0 ? 1 : -1;
+            angularVelocity *= spinDirection;
+            velocity = Matter.Vector.rotate(velocity, -gravityAngle);
+
+            // Use engine to modulate object
             Matter.Body.setVelocity(this.body, velocity);
             Matter.Body.setAngularVelocity(this.body, angularVelocity);
             Matter.Body.applyForce(this.body, this.body.position, force);

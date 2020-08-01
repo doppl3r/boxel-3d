@@ -2,7 +2,7 @@ function randomNumber(min, max) {
     return Math.random() * (max - min) + min; 
 }
 
-function getVectorFromAngle(angle, decimal = 1e3) {
+function getVectorFromAngle(angle, decimal = 1) {
     var pi = Math.PI;
     var decimal = 1e3;
     var degrees = -angle * (180/pi);
