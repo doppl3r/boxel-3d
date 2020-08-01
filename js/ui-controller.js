@@ -536,6 +536,7 @@ class UIController {
     loadLevel(button) {
         var levelData = JSON.parse(button.find('data').html());
         var settings = app.storage.getSettings();
+        app.updateGravity();
         app.play = true;
         app.timer.reset();
         app.level.clearLevel(app);
