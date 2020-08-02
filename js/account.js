@@ -42,6 +42,9 @@ class Account {
         var password = settings['credentials']['password'];
         var backup = app.storage.getAllLocalStorage();
 
+        // Strip credentials from backup
+        delete backup.credentials;
+
         app.ui.dialog.add({
             text: 'Save all data to the server?<br><em>(scores, levels, etc.)</em>',
             inputs: [
