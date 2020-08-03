@@ -50,7 +50,7 @@ body .ui-controller .home .review img { max-width: 16px; margin-right: 4px; vert
 body .ui-controller .home .logo { animation: shrink 20s infinite; animation-delay: -10s; width: 640px; height: auto; max-width: 100%; }
 
 /* Level Picker Styling */
-body .ui-controller .level-picker { align-items: center; /* background-color: #fff */; display: flex; height: 100vh; justify-content: center; }
+body .ui-controller .level-picker { display: flex; height: 100vh; align-items: flex-start; justify-content: center; padding: 128px 0; overflow-y: auto; }
 body .ui-controller .level-picker .wrapper { max-width: 480px; }
 body .ui-controller .level-picker .levels { display: flex; justify-content: center; flex-wrap: wrap; }
 body .ui-controller .level-picker .levels level { border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; background-color: #dc265a; color: #fff; font-size: 3em; margin: 8px; width: 80px; height: 80px; position: relative; text-decoration: none; }
@@ -216,6 +216,7 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .shop p { max-width: 320px; }
     body .ui-controller .shop p img { max-width: 16px; }
     body .ui-controller .row.left { top: 32px; }
+    body .ui-controller .level-picker { padding: 64px 0; }
     body .ui-controller .level-picker .wrapper { max-width: 320px; }
     body .ui-controller .level-picker .levels level { width: 48px; height: 48px; margin: 4px; font-size: 2em; }
     body .ui-controller .level-picker .levels level .title { padding-bottom: 8px; }
