@@ -1,3 +1,7 @@
+v0.2.0 - August 3, 2020
+- Added gravity cube
+- Added 5 new levels
+
 v0.1.9 - July 28, 2020
 - Added gravity cube (experimental)
 
