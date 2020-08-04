@@ -3,10 +3,16 @@ class Account {
         
     }
 
-    setCredentials(username, password) {
+    setCredentials(username, password, encode = true) {
         var settings = app.storage.getSettings();
-        settings['credentials']['username'] = btoa(username);
-        settings['credentials']['password'] = btoa(password);
+        if (encode == true) {
+            settings['credentials']['username'] = btoa(username);
+            settings['credentials']['password'] = btoa(password);
+        }
+        else {
+            settings['credentials']['username'] = username;
+            settings['credentials']['password'] = password;
+        }
         app.storage.setSettings(settings);
     }
 
@@ -43,7 +49,8 @@ class Account {
         var backup = app.storage.getAllLocalStorage();
 
         // Strip credentials from backup
-        delete backup.credentials;
+        delete settings['credentials']
+        backup.settings = JSON.stringify(settings);
 
         app.ui.dialog.add({
             text: 'Save all data to the server?<br><em>(scores, levels, etc.)</em>',
@@ -99,6 +106,7 @@ class Account {
                         data: { username: username, password: password, restore: restore },
                         success: function(data) {
                             app.storage.setAllLocalStorage(data);
+                            app.account.setCredentials(username, password, false); // Restore raw credentials
                             app.shop.checkLocalLicenses();
                             app.ui.dialog.add({
                                 text: 'Success! Your data was restored from your account.',
