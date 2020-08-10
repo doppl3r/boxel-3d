@@ -36,6 +36,9 @@ class UIController {
             else if (action == 'account') {
                 app.ui.showAccountOptions();
             }
+            else if (action == 'restore') {
+                app.account.restore();
+            }
             else if (action == 'settings') {
                 var settings = app.storage.getSettings();
                 var inputs = [
