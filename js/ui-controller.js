@@ -462,16 +462,20 @@ class UIController {
             // Loop through each level
             $.each(levels.find('level'), function(i) {
                 var level = $(this);
-                var levelData = level.html();
+                var levelString = level.html();
+                var levelData = JSON.parse(levelString);
                 var levelIndex = i + 1;
-                var levelName = 'level_' + levelIndex;
+                var levelDescription = levelData.description;
+                var actionValue = 'level_' + levelIndex;
                 level.addClass('level');
                 level.attr('tabindex', '0');
-                level.attr('action', levelName);
+                level.attr('action', actionValue);
+                level.attr('description', levelDescription);
                 level.html(
+                    '<img class="icon" src="img/svg/play.svg">' +
                     '<span class="title">' + levelIndex + '</span>' + 
                     '<span class="score">--.---</span>' + 
-                    '<data style="display: none;">' + levelData + '</data>'
+                    '<data style="display: none;">' + levelString + '</data>'
                 );
             });
             levels.show();
@@ -480,7 +484,10 @@ class UIController {
 
         // Focus into level
         setTimeout(function() { 
-            levels.find('level:nth-of-type(' + currentLevel + ')').focus();
+            var level = levels.find('level:nth-of-type(' + currentLevel + ')');
+            level.focus();
+            //app.ui.levelPicker.scrollTop(level.offset().top - 136);
+            app.ui.levelPicker.animate({ scrollTop: level.offset().top - 136 }, 500);
         }, 100);
     }
 
