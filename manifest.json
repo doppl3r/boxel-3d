@@ -3,7 +3,7 @@
 
   "name": "Boxel 3D",
   "description": "Boxel 3D is the 3rd release of your favorite box jumping game made by the developers of Boxel Rebound.",
-  "version": "0.2.0.3",
+  "version": "0.2.1.0",
   "browser_action": {
     "default_popup": "index.html",
     "default_title": "Boxel 3D"

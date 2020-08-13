@@ -1,3 +1,6 @@
+v0.2.1 - August 13, 2020
+- Added custom skin option to shop
+
 v0.2.0 - August 3, 2020
 - Added gravity cube
 - Added 5 new levels

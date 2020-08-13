@@ -95,6 +95,51 @@ class Shop {
         product.addClass('selected');
     }
 
+    addCustomSkinListener() {
+        var productId = 680; // Predefined in WordPress
+        var skinURL = this.getSkinURL(productId);
+        app.ui.controller.on('click', '.product.enabled#' + productId, function(event) {
+            app.ui.dialog.add({
+                text: 'Paste your image url',
+                inputs: [
+                    { attributes: { value: skinURL, type: 'text', placeholder: 'https://i.imgur.com/KmZHGlE.png' } },
+                    { attributes: { value: 'Cancel', type: 'button' } },
+                    { attributes: { value: 'Accept', type: 'button' }, function: app.shop.updateCustomSkin },
+                ]
+            });
+        });
+    }
+
+    updateCustomSkin() {
+        var productId = 680; // Predefined in WordPress
+        var licenses = app.storage.getLicenses();
+        var dialog = app.ui.dialog.get();
+        var input = dialog.find('input[type="text"]');
+        for (var i = 0; i < licenses.length; i++) {
+            var license = licenses[i];
+            if (productId == license.key) {
+                license.product.image = input.val();
+                licenses[i] = license;
+                app.storage.setLicenses(licenses);
+                app.player.setSkin(productId);
+                break;
+            }
+        }
+    }
+
+    getSkinURL(productId) {
+        var url = '';
+        var licenses = app.storage.getLicenses();
+        for (var i = 0; i < licenses.length; i++) {
+            var license = licenses[i];
+            if (productId == license.key) {
+                url = license.product.image;
+                break;
+            }
+        }
+        return url;
+    }
+
     load() {
         if (this.state == 'loading') {
             this.getBoxelProducts(); // Request products
@@ -102,6 +147,7 @@ class Shop {
         }
         else {
             $('.skins').removeClass('loading');
+            this.addCustomSkinListener();
         }
     }
 }

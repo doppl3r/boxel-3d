@@ -85,7 +85,7 @@ body .ui-controller .shop .skins .product.enabled .link { display: none; }
 body .ui-controller .shop .skins .product.enabled:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; }
 body .ui-controller .shop .skins .product.enabled:hover:after,
 body .ui-controller .shop .skins .product.selected:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
-body .ui-controller .shop .skins .product.selected { pointer-events: none; }
+body .ui-controller .shop .skins .product.selected { pointer-events: all; }
 body .ui-controller .shop .skins .product.selected .link { opacity: 0.5; pointer-events: none; }
 body .ui-controller .shop .skins .product .image { background-size: cover; padding-bottom: 100%; height: auto; margin: auto; border-radius: 4px; }
 body .ui-controller .shop .skins .product .title { padding: 8px 0; }
