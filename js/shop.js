@@ -97,8 +97,9 @@ class Shop {
 
     addCustomSkinListener() {
         var productId = 680; // Predefined in WordPress
-        var skinURL = this.getSkinURL(productId);
+        app.ui.controller.off('click', '.product.enabled#' + productId);
         app.ui.controller.on('click', '.product.enabled#' + productId, function(event) {
+            var skinURL = app.shop.getSkinURL(productId);
             app.ui.dialog.add({
                 text: 'Paste your image url',
                 inputs: [
