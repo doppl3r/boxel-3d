@@ -10,8 +10,12 @@ class Extension {
                 var url = location.href;
                 var fullscreen_enabled = url.indexOf('fullscreen') >= 0; 
                 var fullscreen_button = $('[action="fullscreen"]');
+                var account_button = $('[action="account"]');
                 var review_button = $('.review');
     
+                // Reveal account button
+                account_button.removeClass('hidden');
+
                 // Check if extension is NOT in fullscreen mode
                 if (fullscreen_enabled == false) {
                     fullscreen_button.removeClass('hidden');

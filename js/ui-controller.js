@@ -36,9 +36,6 @@ class UIController {
             else if (action == 'account') {
                 app.ui.showAccountOptions();
             }
-            else if (action == 'restore') {
-                app.account.restore();
-            }
             else if (action == 'settings') {
                 var settings = app.storage.getSettings(app);
                 var inputs = [
@@ -673,25 +670,10 @@ class UIController {
 
     showAccountOptions() {
         app.ui.dialog.add({
-            text: 'Account Data',
             inputs: [
-                { attributes: { value: 'Edit Login', type: 'button', width: '100%' }, function: app.ui.showCredentialsDialog },
-                { attributes: { value: 'Backup Data', type: 'button', width: '100%' }, function: app.account.backup },
-                { attributes: { value: 'Restore Data', type: 'button', width: '100%' }, function: app.account.restore },
+                { attributes: { value: 'Backup Data', type: 'button', width: '100%' }, function: app.storage.backupToChrome },
+                { attributes: { value: 'Restore Data', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome },
                 { attributes: { value: 'Close', type: 'button', width: '100%' } }
-            ]
-        });
-    }
-
-    showCredentialsDialog() {
-        var credentials = app.account.getCredentials();
-        app.ui.dialog.add({
-            text: 'Login Information<br><a href="https://boxel3d.com/shop/account/" target="_blank"><em>Need an account?</em></a>',
-            inputs: [
-                { label: 'Username', attributes: { type: 'text', name: 'username', value: credentials.username, autocomplete: 'off' } },
-                { label: 'Password', attributes: { type: 'password', name: 'password', value: credentials.password, autocomplete: 'off' } },
-                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions },
-                { attributes: { value: 'Save', type: 'button' }, function: app.ui.saveCredentials }
             ]
         });
     }
