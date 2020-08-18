@@ -210,4 +210,13 @@ class StorageManager {
             ]
         });
     }
+
+    setLicense(license) {
+        localStorage.setItem('license', license);
+    }
+
+    hasLicense = function(){
+        var hasLicense = localStorage.getItem('license') == 'boxel_3d_pro';
+        return hasLicense;
+    }
 }

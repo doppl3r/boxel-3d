@@ -1,0 +1,21 @@
+{
+  "kind": "chromewebstore#inAppProduct",
+  "sku": "boxel_3d_pro",
+  "item_id": "mjjgmlmpeaikcaajghilhnioimmaibon",
+  "type": "inapp",
+  "state": "ACTIVE",
+  "prices": [
+    {
+      "valueMicros": "990000",
+      "currencyCode": "USD",
+      "regionCode": "US"
+    }
+  ],
+  "localeData": [
+    {
+      "title": "Boxel 3D Pro",
+      "description": "Unlock all features when you upgrade to Boxel 3D Pro.",
+      "languageCode": "en-US"
+    }
+  ]
+}

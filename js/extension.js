@@ -74,11 +74,12 @@ class Extension {
     onSkuDetailsFailed(response) {
         console.log("onSkuDetailsFailed", response);
         var reason = response.response.errorType;
-        // update user with error and solution
-        if (reason == 'TOKEN_MISSING_ERROR') $(".subtitle").html('Store is not available. Please log in to Google Chrome and turn on sync.');
-        else if (reason == 'INVALID_RESPONSE_ERROR') $(".subtitle").html('Store is not available in your region.');
-        else $(".subtitle").html('Store is not available. Error: ' + reason);
-        $("#boxel_3d_pro").remove(); //hide button for pro players
+        // Update user with error and solution
+        if (reason == 'TOKEN_MISSING_ERROR') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Please login to Google Chrome and turn on sync.');
+        else if (reason == 'INVALID_RESPONSE_ERROR') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>PRO</strong> is not available in your region.');
+        else $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>PRO</strong> is not available. Error: ' + reason);
+        $(".chrome-store").removeClass('hidden'); // Reveal chrome store
+        $(".upgrade").addClass('hidden'); // Hide button
     }
 
     getLicenses() {
@@ -106,8 +107,9 @@ class Extension {
     onLicenseUpdateFailed(response) {
         console.log("onLicenseUpdateFailed", resonse);
         var reason = response.response.errorType;
-        $("#boxel_3d_pro").remove(); //hide button for pro players
-        $(".subtitle").html('Failed to update license. Error: ' + reason);
+        $(".chrome-store").removeClass('hidden'); // Reveal chrome store
+        $(".upgrade").addClass('hidden'); // Hide button
+        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Failed to update license. Error: ' + reason);
     }
 
     buyProduct(sku) {
@@ -128,9 +130,10 @@ class Extension {
     onPurchaseFailed(purchase) {
         console.log("onPurchaseFailed", purchase);
         var reason = purchase.response.errorType;
-        if (reason == 'PURCHASE_CANCELED') $(".subtitle").html('Purchase canceled.');
-        else $(".subtitle").html('Failed to purchase product. Error: ' + reason);
-        $("#boxel_3d_pro").remove(); //hide button for pro players
+        if (reason == 'PURCHASE_CANCELED') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Purchase canceled.');
+        else $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Failed to purchase product. Error: ' + reason);
+        $(".chrome-store").removeClass('hidden'); // Reveal chrome store
+        $(".upgrade").addClass('hidden'); //hide button for pro players
     }
 
     addProductToUI(product) {
@@ -139,33 +142,31 @@ class Extension {
         var currencyChar = currency_symbols[currencyCode];
         var currency = (currencyChar != null) ? currencyChar : "";
         var price = Math.round((parseInt(product.prices[0].valueMicros, 10) / 1000000) * 100) / 100;
-        var button = $('<a href="#" class="md-btn"></a>')
-            .data('sku', product.sku)
-            .attr('id', product.sku)
-            .click(app.extension.onActionButton)
-            .append('<span class="strike">' + currency + (price + 1) + '</span> ' + currency + price);
-        $(".subtitle").html('<img class="google-icon" src="img/icons/google-icon.svg" />Upgrade to <strong>PRO</strong>');
-        $('.ad').append(button);
-        $('.ad').append('<div class="caption" id="caption-link">+8 Player skins<br>+Unlimited uploads<br>+Unlimited downloads<br>+Cloud backups</div>');
+        $('.upgrade').removeClass('hidden');
+        $('.upgrade').data('sku', product.sku).attr('id', product.sku).click(app.extension.onActionButton).html('<span class="strike">' + currency + (price + 1) + '</span> <span>' + currency + price + '</span>');
+        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Upgrade to <strong>PRO</strong>');
+        $('.chrome-store').removeClass('hidden');
     }
 
     addLicenseDataToProduct(license) {
-        $("#boxel_3d_pro").remove(); //hide button for pro players
-        $(".subtitle").html('<img class="google-icon" src="img/icons/google-icon.svg" />Your account has been activated. Thank you for supporting Boxel Rebound!');
-        window.storageManager.setLicense(license.sku);
+        $(".chrome-store").removeClass('hidden'); // Reveal chrome store
+        $(".upgrade").addClass('hidden'); // Hide button for pro players
+        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>PRO</strong> Account');
+        app.storage.setLicense(license.sku);
     }
 
     addPendingInfo(license) {
         console.log('addPendingInfo');
-        $("#boxel_3d_pro").remove(); //hide button for pro players
-        $(".subtitle").html('Your purchase is pending and will be available soon.');
+        $(".chrome-store").removeClass('hidden'); // Reveal chrome store
+        $(".upgrade").addClass('hidden'); // Hide button for pro players
+        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Your purchase is pending and will be available soon.');
     }
 
     onActionButton(evt) {
         var actionButton = $(evt.currentTarget);
         if (actionButton.data("license")) {
             console.log('license: ' + actionButton.data("license"));
-            //TODO: Show that the user purchased the game
+            // TODO: Show that the user purchased the game
         } 
         else {
             var sku = actionButton.data("sku");
