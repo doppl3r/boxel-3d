@@ -90,14 +90,14 @@ class StorageManager {
         localStorage.setItem('settings', JSON.stringify(settings));
     }
 
-    getSettings() {
+    getSettings(a = app) {
         var storageSettings = localStorage.getItem('settings');
         var defaultSettings = { 
             'volume': 0,
             'quality': 10,
             'theme': 0,
             'snap': 8,
-            'skin': 1,
+            'skin': a.skins.default,
             'progress': 1,
             'credentials' : {
                 'username': '',
@@ -118,51 +118,6 @@ class StorageManager {
             }
         }
         return settings;
-    }
-
-    addLicense(license) {
-        var licenses = this.getLicenses();
-        var licenseExists = false;
-
-        // Loop through local storage object and check if key exists
-        Object.keys(licenses).forEach(function(key) {
-            if (licenses[key]['key'] == license['key']) {
-                licenseExists = true;
-            }
-        });
-
-        // Add to local storage if license does not exist
-        if (licenseExists == false) {
-            licenses.push(license)
-            this.setLicenses(licenses);
-        }
-        
-        return !licenseExists; // Returns 'true' if added
-    }
-
-    setLicenses(licenses) {
-        if (typeof licenses !== 'string') licenses = JSON.stringify(licenses);
-        localStorage.setItem('licenses', licenses);
-    }
-
-    getLicenses(a) {
-        var licenses = localStorage.getItem('licenses');
-        
-        if (licenses == null || licenses == 'null') {
-            licenses = JSON.stringify(a.shop.defaultLicenses);
-            localStorage.setItem('licenses', licenses);
-        }
-        return JSON.parse(licenses); // Return licenses
-    }
-
-    getLicenseById(id, a) {
-        var licenses = this.getLicenses(a);
-        var license = null;
-        for (var i = 0; i < licenses.length; i++) {
-            license = licenses[i];
-            if (license['product']['id'] == id) break;
-        }
-        return license;
     }
 
     saveLevelToFile() {
@@ -200,5 +155,28 @@ class StorageManager {
             reader.readAsText(f);
         }
         performClick();
+    }
+
+    restoreFromChrome(clearLocalStorage = false) {
+        chrome.storage.sync.get(null, function(items) {
+            if (clearLocalStorage == true) localStorage.clear(); // Empty out old data
+            var keys = Object.keys(items);
+            for (var i = 0; i < keys.length; i++){
+                var key = keys[i];
+                var value = items[key];
+                localStorage.setItem(key, value);
+            }
+        });
+    }
+
+    backupToChrome(clearChromeStorage = false) {
+        if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
+        for (var i=0; i < localStorage.length; i++){
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            var obj = {};
+            obj[key] = value;
+            chrome.storage.sync.set(obj);
+        }
     }
 }

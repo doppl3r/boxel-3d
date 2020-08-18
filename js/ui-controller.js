@@ -5,7 +5,7 @@ class UIController {
         this.home = this.controller.find('.home');
         this.campaign = this.controller.find('.campaign');
         this.levelPicker = this.controller.find('.level-picker');
-        this.shop = this.controller.find('.shop');
+        this.skins = this.controller.find('.skins');
         this.levelManager = this.controller.find('.level-manager');
         this.levelEditor = this.controller.find('.level-editor');
         this.levelList = this.levelManager.find('.list');
@@ -40,7 +40,7 @@ class UIController {
                 app.account.restore();
             }
             else if (action == 'settings') {
-                var settings = app.storage.getSettings();
+                var settings = app.storage.getSettings(app);
                 var inputs = [
                     { label: 'Master Volume <img src="img/svg/audio.svg">', attributes: { name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume } },
                     { label: 'Graphic Quality <img src="img/svg/eye.svg">', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } }
@@ -79,18 +79,6 @@ class UIController {
             // Main game UI
             if (action == 'pause-campaign') {
                 app.ui.pause();
-            }
-
-            // Shop game UI
-            if (action == 'add-license') {
-                app.ui.dialog.add({
-                    text: 'Add your license key',
-                    inputs: [
-                        { attributes: { placeholder: 'Ex: BXL-ABC123', type: 'text' } },
-                        { attributes: { value: 'Cancel', type: 'button' } },
-                        { attributes: { value: 'Submit', type: 'button' }, function: app.ui.checkLicense },
-                    ]
-                });
             }
 
             // Level manager actions
@@ -285,7 +273,7 @@ class UIController {
         this.state = state;
         // Update theme
         if (app != null) {
-            var settings = app.storage.getSettings();
+            var settings = app.storage.getSettings(app);
             this.toggleTheme(settings.theme);
         }
 
@@ -324,8 +312,8 @@ class UIController {
             this.levelPicker.removeClass('hidden');
         }
         else if (state == 'shop') {
-            this.shop.removeClass('hidden');
-            app.shop.load(); // Gets products
+            this.skins.removeClass('hidden');
+            app.skins.load(); // Gets skins
         }
         else if (state == 'play') {
             this.campaign.removeClass('hidden');
@@ -450,7 +438,7 @@ class UIController {
         // Restructure HTML level data
         var levels = $('.levels');
         var loaded = (levels.hasClass('loaded'));
-        var settings = app.storage.getSettings();
+        var settings = app.storage.getSettings(app);
         var currentLevel = settings.progress;
 
         // Predefine level focus
@@ -561,7 +549,7 @@ class UIController {
         var key = item.find('input').attr('key');
         var name = item.find('input').val();
         var levelData = app.storage.getLevelData(key);
-        var settings = app.storage.getSettings();
+        var settings = app.storage.getSettings(app);
 
         // Update current level with selected attributes
         levelData.name = name;
@@ -681,27 +669,6 @@ class UIController {
         app.player.removeCheckpoint();
         app.player.setPosition({ x: 0, y: 0, z: 0 });
         app.ui.updateUI('level-picker');
-    }
-
-    checkLicense() {
-        var input = $('.dialog .inputs input[type="text"]');
-        app.shop.checkRemoteLicense(input.val(), app.ui.getLicenseResponse);
-    }
-
-    getLicenseResponse(response) {
-        var text = 'An error has occured. Please try again later'; // Default error
-        if (response.data == null) text = response.error;
-        else {
-            text = 'License has been activated';
-            app.storage.addLicense(response.data);
-            app.shop.enableProduct(response.data.product.id);
-            app.shop.selectProduct(response.data.product.id);
-            app.player.setSkin(response.data.product.id);
-        }
-        app.ui.dialog.add({
-            text: text,
-            inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
-        });
     }
 
     showAccountOptions() {

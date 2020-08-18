@@ -107,7 +107,6 @@ class Account {
                         success: function(data) {
                             app.storage.setAllLocalStorage(data);
                             app.account.setCredentials(username, password, false); // Restore raw credentials
-                            app.shop.checkLocalLicenses();
                             app.ui.dialog.add({
                                 text: 'Success! Your data was restored from your account.',
                                 inputs: [{ attributes: { value: 'Continue', type: 'button' }}]

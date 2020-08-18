@@ -186,7 +186,7 @@ class Level extends THREE.Group {
 
         // Check current state
         if (a.ui.state == 'play') {
-            var settings = a.storage.getSettings();
+            var settings = a.storage.getSettings(a);
             settings.progress++; // Increase level progress
             if (settings.progress > a.ui.maxLevels) { // Add last level dialog
                 settings.progress--;

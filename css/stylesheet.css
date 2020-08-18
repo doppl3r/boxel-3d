@@ -71,29 +71,27 @@ body .ui-controller .campaign #speedometer { background-color: #dc265a; position
 body .ui-controller .campaign #speedometer #speed { background-color: #fff; position: absolute; height: 3px; left: 4px; top: 3px; transition: width 0.125s linear; border-radius: 3px; }
 
 /* Shop */
-body .ui-controller .shop { color: #fff; font-size: 1em; display: flex; height: 100vh; align-items: flex-start; justify-content: center; text-align: center; padding: 128px 0; overflow-y: auto; }
-body .ui-controller .shop h1 { font-size: 5.75em; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 12px; animation: shrink 20s infinite; animation-delay: -10s; }
-body .ui-controller .shop h1 strong { color: #dc265a; }
-body .ui-controller .shop p { max-width: 400px; margin: 0 auto 32px; }
-body .ui-controller .shop p a { width: auto; height: auto; display: inline; font-weight: bold; color: #dc265a; text-decoration: none; }
-body .ui-controller .shop p img { vertical-align: bottom; }
-body .ui-controller .shop .buttons { margin-bottom: 24px; }
-body .ui-controller .shop .skins { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; max-width: 640px; }
-body .ui-controller .shop .skins .product { margin: 12px; position: relative; width: 120px; }
-body .ui-controller .shop .skins .product.enabled { cursor: pointer; }
-body .ui-controller .shop .skins .product.enabled .link { display: none; }
-body .ui-controller .shop .skins .product.enabled:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; }
-body .ui-controller .shop .skins .product.enabled:hover:after,
-body .ui-controller .shop .skins .product.selected:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; }
-body .ui-controller .shop .skins .product.selected { pointer-events: all; }
-body .ui-controller .shop .skins .product.selected .link { opacity: 0.5; pointer-events: none; }
-body .ui-controller .shop .skins .product .image { background-size: cover; padding-bottom: 100%; height: auto; margin: auto; border-radius: 4px; }
-body .ui-controller .shop .skins .product .title { padding: 8px 0; }
-body .ui-controller .shop .skins .product .link { width: 100%; height: auto; background-color: #dc265a; color: #fff; border-radius: 4px; padding: 8px 0; text-decoration: none; }
-body .ui-controller .shop .skins .product .link img { filter: invert(0%); }
-body .ui-controller .shop .skins .product .link .sale_price { display: none; }
-body .ui-controller .shop .skins .product .link.sale .regular_price { text-decoration: line-through; opacity: 0.5; padding: 0 4px; }
-body .ui-controller .shop .skins .product .link.sale .sale_price { display: inline-block; }
+body .ui-controller .skins { color: #fff; font-size: 1em; display: flex; height: 100vh; align-items: flex-start; justify-content: center; text-align: center; padding: 128px 0; overflow-y: auto; }
+body .ui-controller .skins h1 { font-size: 5.75em; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 12px; animation: shrink 20s infinite; animation-delay: -10s; }
+body .ui-controller .skins h1 strong { color: #dc265a; }
+body .ui-controller .skins p { max-width: 400px; margin: 0 auto 32px; }
+body .ui-controller .skins p a { width: auto; height: auto; display: inline; font-weight: bold; color: #dc265a; text-decoration: none; }
+body .ui-controller .skins p img { vertical-align: bottom; }
+body .ui-controller .skins .buttons { margin-bottom: 24px; }
+body .ui-controller .skins .skin-group { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; max-width: 640px; }
+body .ui-controller .skins .skin-group .skin { margin: 12px; position: relative; width: 128px; cursor: pointer; }
+body .ui-controller .skins .skin-group .skin:before { box-sizing: border-box; content: ''; display: block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 8px; position: absolute; top: 4px; left: 4px; box-shadow: 0 2px 0px rgba(0, 0, 0, 0.15); }
+body .ui-controller .skins .skin-group .skin:hover:after,
+body .ui-controller .skins .skin-group .skin.selected:after { content: ''; display: block; position: absolute; width: 8px; height: 8px; top: 8px; left: 8px; border-radius: 8px; background-color: #fff; box-shadow: 0 2px 0px rgba(0, 0, 0, 0.15); }
+body .ui-controller .skins .skin-group .skin.selected { pointer-events: all; }
+body .ui-controller .skins .skin-group .skin.selected .link { opacity: 0.5; pointer-events: none; }
+body .ui-controller .skins .skin-group .skin .image { background-size: cover; padding-bottom: 100%; height: auto; margin: auto; border-radius: 4px; }
+body .ui-controller .skins .skin-group .skin .title { padding: 8px 0; }
+body .ui-controller .skins .skin-group .skin .link { width: 100%; height: auto; background-color: #dc265a; color: #fff; border-radius: 4px; padding: 8px 0; text-decoration: none; }
+body .ui-controller .skins .skin-group .skin .link img { filter: invert(0%); }
+body .ui-controller .skins .skin-group .skin .link .sale_price { display: none; }
+body .ui-controller .skins .skin-group .skin .link.sale .regular_price { text-decoration: line-through; opacity: 0.5; padding: 0 4px; }
+body .ui-controller .skins .skin-group .skin .link.sale .sale_price { display: inline-block; }
 
 /* Navigation defaults */
 body .ui-controller .row .col .item { position: relative; display: flex; }
@@ -213,13 +211,13 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .dashboard .buttons .button.top-left { width: 32px; }
     body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
     body .ui-controller .home .logo { width: 480px; }
-    body .ui-controller .shop { padding: 64px 0; align-items: flex-start; }
-    body .ui-controller .shop h1 { font-size: 4em; margin: 0 0 12px; }
-    body .ui-controller .shop .skins { max-width: 480px; }
-    body .ui-controller .shop .skins .product { width: 80px; }
-    body .ui-controller .shop .skins .product .title { font-size: 0.9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    body .ui-controller .shop p { max-width: 320px; }
-    body .ui-controller .shop p img { max-width: 16px; }
+    body .ui-controller .skins { padding: 64px 0; align-items: flex-start; }
+    body .ui-controller .skins h1 { font-size: 4em; margin: 0 0 12px; }
+    body .ui-controller .skins .skin-group { max-width: 480px; }
+    body .ui-controller .skins .skin-group .skin { width: 80px; }
+    body .ui-controller .skins .skin-group .skin .title { font-size: 0.9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    body .ui-controller .skins p { max-width: 320px; }
+    body .ui-controller .skins p img { max-width: 16px; }
     body .ui-controller .row.left { top: 32px; }
     body .ui-controller .level-picker { padding: 64px 0; }
     body .ui-controller .level-picker .wrapper { max-width: 320px; }

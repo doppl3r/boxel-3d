@@ -11,6 +11,7 @@ gulp.src(
         'css/**/*',
         'fonts/**/*',
         'img/**/*',
+        'json/**/*',
         'js/**/*'
     ], { base: './' }
 ).pipe(

@@ -14,7 +14,7 @@ class App {
         a.keyboard = new Keyboard();
         a.audio = new Audio();
         a.storage = new StorageManager();
-        a.shop = new Shop();
+        a.skins = new Skins();
         a.collision = new Collision();
         a.level = new Level();
         a.levelHistory = new LevelHistory();
@@ -147,7 +147,7 @@ class App {
 
     updateSettings(settings, a) {
         // Compare new settings with local storage
-        var storageSettings = a.storage.getSettings();
+        var storageSettings = a.storage.getSettings(a);
         if (settings == null) settings = storageSettings;
 
         // Add missing keys from storage

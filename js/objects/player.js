@@ -161,17 +161,16 @@ class Player extends Cube {
         a.document.getElementById('speed').setAttribute('style', width);
     }
 
-    setSkin(id, a = app) {
-        var settings = a.storage.getSettings();
-        var license = null;
-        if (id == null) id = 1; // Use default skin
-        license = a.storage.getLicenseById(id, a);
+    setSkin(skin, a = app) {
+        var settings = a.storage.getSettings(a);
+        if (skin.id == null) skin.id = 1;
+        if (skin.url == null) skin.url = app.skins.getSkinURL(skin.id);
 
         // Add texture
-        this.addTexture(license['product']['image']);
+        this.addTexture(skin.url);
 
         // Save skin preferences
-        settings['skin'] = parseInt(id);
+        settings['skin'] = skin;
         a.storage.setSettings(settings);
     }
 
