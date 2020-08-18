@@ -35,6 +35,7 @@ class Extension {
     
                 // Add chrome products
                 app.extension.getProductList();
+                app.storage.checkLicense();
             }
         });
     }
@@ -153,6 +154,7 @@ class Extension {
         $(".upgrade").addClass('hidden'); // Hide button for pro players
         $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>PRO</strong> Account');
         app.storage.setLicense(license.sku);
+        app.storage.checkLicense();
     }
 
     addPendingInfo(license) {

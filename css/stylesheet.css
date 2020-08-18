@@ -2,6 +2,7 @@
 html { -ms-touch-action: manipulation; touch-action: manipulation; }
 body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; background-size: cover; background-position: center center; font-size: 100%; }
 body.chrome { min-width: 640px; min-height: 360px; }
+body.has-license .chrome-warning { display: none; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; animation: fade-in 0.25s ease-in; animation-fill-mode: forwards; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
@@ -53,6 +54,10 @@ body .ui-controller .home .logo { animation: shrink 20s infinite; animation-dela
 /* Level Picker Styling */
 body .ui-controller .level-picker { display: flex; height: 100vh; align-items: flex-start; justify-content: center; padding: 128px 0; overflow-y: auto; }
 body .ui-controller .level-picker .wrapper { max-width: 480px; }
+body .ui-controller .level-picker h1 { color: #fff; font-size: 3em; text-transform: uppercase; text-align: center; letter-spacing: 5px; margin: 0 0 24px; animation: shrink 20s infinite; animation-delay: -10s; }
+body .ui-controller .level-picker h1 strong { color: #dc265a; }
+body .ui-controller .level-picker p { color: #fff; text-align: center; margin-bottom: 36px; }
+body .ui-controller .level-picker p a { display: inline-block; color: inherit; width: auto; height: auto; font-style: italic; }
 body .ui-controller .level-picker .levels { display: flex; justify-content: center; flex-wrap: wrap; }
 body .ui-controller .level-picker .levels level { border-radius: 4px; background-color: #620460; cursor: pointer; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 3em; margin: 8px; width: 80px; height: 80px; position: relative; text-decoration: none; }
 body .ui-controller .level-picker .levels level:after { background-color: #dc265a; padding: 12px; border-radius: 4px; content: 'Play "' attr(description) '"'; font-size: 0.25em; position: fixed; z-index: 1; bottom: 16px; right: 32px; opacity: 0; transition: all 0.1s ease-in-out; pointer-events: none; }
@@ -76,7 +81,7 @@ body .ui-controller .skins { color: #fff; font-size: 1em; display: flex; height:
 body .ui-controller .skins h1 { font-size: 5.75em; text-transform: uppercase; letter-spacing: 20px; margin: 0 0 12px; animation: shrink 20s infinite; animation-delay: -10s; }
 body .ui-controller .skins h1 strong { color: #dc265a; }
 body .ui-controller .skins p { max-width: 400px; margin: 0 auto 32px; }
-body .ui-controller .skins p a { width: auto; height: auto; display: inline; font-weight: bold; color: #dc265a; text-decoration: none; }
+body .ui-controller .skins p a { color: inherit; width: auto; height: auto; display: inline; text-decoration: underline; }
 body .ui-controller .skins p img { vertical-align: bottom; }
 body .ui-controller .skins .buttons { margin-bottom: 24px; }
 body .ui-controller .skins .skin-group { display: flex; justify-content: center; flex-wrap: wrap; position: relative; border-radius: 24px; overflow: hidden; max-width: 640px; }
@@ -231,6 +236,7 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .dashboard .buttons .button.top-left { width: 32px; }
     body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
     body .ui-controller .home .logo { width: 480px; }
+    body .ui-controller .home .review img { max-width: 12px; }
     body .ui-controller .skins { padding: 64px 0; align-items: flex-start; }
     body .ui-controller .skins h1 { font-size: 4em; margin: 0 0 12px; }
     body .ui-controller .skins .skin-group { max-width: 480px; }

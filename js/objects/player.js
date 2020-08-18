@@ -119,6 +119,8 @@ class Player extends Cube {
         var hasNewScore = app.storage.saveScore(levelName, time);
         var text = 'Finished!<br>Score: ' + time;
 
+        if (app.storage.hasLicense() == false) text += '<br><br><em>Upgrade to PRO to<br>save your scores!</em>';
+
         // Show new record text
         if (hasNewScore == true) text += '<br><em>New record!</em>';
 

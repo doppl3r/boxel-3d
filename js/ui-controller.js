@@ -80,21 +80,39 @@ class UIController {
 
             // Level manager actions
             if (action == 'add-level') {
-                var levelData = {};
-                var key = null;
-                app.level.createNewLevel(app);
-                levelData = app.level.exportToJSON(app); // Init default data
-                key = app.storage.setLevelData(null, levelData); // Store data and generate new key
-                app.ui.appendEditorLevel({ key: key, level: levelData });
+                var levelCount = app.storage.getListOfLevels().length;
+                // Allow multiple levels for licensed users
+                if (app.storage.hasLicense() || levelCount < 1) {
+                    var levelData = {};
+                    var key = null;
+                    app.level.createNewLevel(app);
+                    levelData = app.level.exportToJSON(app); // Init default data
+                    key = app.storage.setLevelData(null, levelData); // Store data and generate new key
+                    app.ui.appendEditorLevel({ key: key, level: levelData });
+                }
+                else {
+                    app.ui.dialog.add({
+                        text: 'Please upgrade to <strong>PRO</strong> to add more levels',
+                        inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
+                    });
+                }
             }
             else if (action == 'download') {
-                app.level.clearLevel(app);
-                app.level.key = null; // Reset key to generate new save key
-                app.storage.loadLevelFromFile();
-                app.ui.updateUI('level-editor');
-                app.levelHistory.save('Downloaded level', app);
-                app.levelHistory.save('Loaded level', app); // Force dialog check to save
-                app.resetScene(app);
+                if (app.storage.hasLicense() || levelCount < 1) {
+                    app.level.clearLevel(app);
+                    app.level.key = null; // Reset key to generate new save key
+                    app.storage.loadLevelFromFile();
+                    app.ui.updateUI('level-editor');
+                    app.levelHistory.save('Downloaded level', app);
+                    app.levelHistory.save('Loaded level', app); // Force dialog check to save
+                    app.resetScene(app);
+                }
+                else {
+                    app.ui.dialog.add({
+                        text: 'Please upgrade to <strong>PRO</strong> to download levels',
+                        inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
+                    });
+                }
             }
             else if (action == 'share') {
                 if ($(this).parent().hasClass('item')) app.ui.loadEditorLevel($(this));
@@ -670,10 +688,10 @@ class UIController {
 
     showAccountOptions() {
         app.ui.dialog.add({
-            text: '<img src="img/svg/profile.svg">',
+            text: '<img src="img/svg/cloud-check.svg">',
             inputs: [
-                { attributes: { value: 'Backup Data', type: 'button', width: '100%' }, function: app.storage.backupToChrome },
-                { attributes: { value: 'Restore Data', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome },
+                { attributes: { value: 'Backup data to Google', type: 'button', width: '100%' }, function: app.storage.backupToChrome, parameter: true },
+                { attributes: { value: 'Restore data from Google', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome, parameter: true },
                 { attributes: { value: 'Close', type: 'button', width: '100%', style: 'margin-top: 24px;' } }
             ]
         });

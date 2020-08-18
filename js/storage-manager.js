@@ -68,11 +68,13 @@ class StorageManager {
             oldScore = parseInt(data.replace(/[^\d]/g, ''));
         }
 
-        // Check high score
-        if (newScore < oldScore) {
-            hasNewScore = true;
-            scores[levelName] = score;
-            localStorage.setItem('scores', JSON.stringify(scores));
+        // Check high score for licensed users
+        if (app.storage.hasLicense()) {
+            if (newScore < oldScore) {
+                hasNewScore = true;
+                scores[levelName] = score;
+                localStorage.setItem('scores', JSON.stringify(scores));
+            }
         }
         return hasNewScore;
     }
@@ -164,19 +166,30 @@ class StorageManager {
                 {
                     attributes: { value: 'Restore', type: 'button' }, 
                     function: function() {
-                        chrome.storage.sync.get(null, function(items) {
-                            if (clearLocalStorage == true) localStorage.clear(); // Empty out old data
-                            var keys = Object.keys(items);
-                            for (var i = 0; i < keys.length; i++){
-                                var key = keys[i];
-                                var value = items[key];
-                                localStorage.setItem(key, value);
-                            }
-                            app.ui.dialog.add({
-                                text: 'Success! Your data was restored from your account.',
-                                inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
+                        // Restore only if user has license
+                        if (app.storage.hasLicense()) {
+                            chrome.storage.sync.get(null, function(items) {
+                                if (clearLocalStorage == true) localStorage.clear(); // Empty out old data
+                                var keys = Object.keys(items);
+                                for (var i = 0; i < keys.length; i++){
+                                    var key = keys[i];
+                                    var value = items[key];
+                                    localStorage.setItem(key, value);
+                                }
+                                app.ui.dialog.add({
+                                    text: 'Success! Your data was restored from your account.',
+                                    inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
+                                });
                             });
-                        });
+                        }
+                        else {
+                            app.ui.dialog.add({
+                                text: 'Please upgrade to <strong>PRO</strong> to restore data',
+                                inputs: [
+                                    { attributes: { value: 'Continue', type: 'button' } }
+                                ]
+                            });
+                        }
                     }
                 },
                 { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
@@ -191,19 +204,23 @@ class StorageManager {
                 {
                     attributes: { value: 'Backup', type: 'button' },
                     function: function() {
-                            if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
-                            for (var i=0; i < localStorage.length; i++){
-                                var key = localStorage.key(i);
-                                var value = localStorage.getItem(key);
-                                var obj = {};
-                                obj[key] = value;
-                                chrome.storage.sync.set(obj, function(){
+                        var index = 0;
+                        if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
+                        for (var i = 0; i < localStorage.length; i++){
+                            var key = localStorage.key(i);
+                            var value = localStorage.getItem(key);
+                            var obj = {};
+                            obj[key] = value;
+                            chrome.storage.sync.set(obj, function(){
+                                index++; // Show message on last item
+                                if (index == localStorage.length) {
                                     app.ui.dialog.add({
                                         text: 'Success! Your data was backed up to your account.',
                                         inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
                                     });
-                                });
-                            }
+                                }
+                            });
+                        }
                     }
                 },
                 { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
@@ -215,8 +232,14 @@ class StorageManager {
         localStorage.setItem('license', license);
     }
 
-    hasLicense = function(){
+    hasLicense() {
         var hasLicense = localStorage.getItem('license') == 'boxel_3d_pro';
         return hasLicense;
+    }
+
+    checkLicense() {
+        if (app.storage.hasLicense()) {
+            $("body").addClass('has-license');
+        }
     }
 }
