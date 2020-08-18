@@ -36,6 +36,7 @@ body .ui-controller .dashboard .buttons .button { animation: wave-delay 5s infin
 body .ui-controller .dashboard .buttons .button span + img { margin-left: 8px; }
 body .ui-controller .dashboard .buttons .button.top-right { animation: none; position: fixed; top: 16px; right: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .dashboard .buttons .button.top-right.two { right: 80px; }
+body .ui-controller .dashboard .buttons .button.top-right.three { right: 144px; }
 body .ui-controller .dashboard .buttons .button.top-left { animation: none; position: fixed; top: 16px; left: 16px; margin: 0; padding: 0; width: 48px; }
 body .ui-controller .dashboard .buttons .button img { max-width: 24px; filter: invert(0%); }
 body .ui-controller .dashboard .buttons .button:nth-last-child(1) { animation-delay: 1s; }
@@ -208,6 +209,7 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller .dashboard .buttons .button { padding: 0 12px; }
     body .ui-controller .dashboard .buttons .button.top-right { width: 32px; }
     body .ui-controller .dashboard .buttons .button.top-right.two { right: 64px; }
+    body .ui-controller .dashboard .buttons .button.top-right.three { right: 112px; }
     body .ui-controller .dashboard .buttons .button.top-left { width: 32px; }
     body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
     body .ui-controller .home .logo { width: 480px; }

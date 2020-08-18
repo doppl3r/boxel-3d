@@ -159,7 +159,7 @@ class StorageManager {
 
     restoreFromChrome(clearLocalStorage = false) {
         app.ui.dialog.add({
-            text: 'Download all data from the server? This will override your local data (scores, levels etc.)<br><br><em>If you have not backed up your data, please cancel and backup your data first.</em>',
+            text: 'Download all data from the cloud? This will override your local data (scores, levels etc.)<br><br><em>If you have not backed up your data, please cancel and backup your data first.</em>',
             inputs: [
                 {
                     attributes: { value: 'Restore', type: 'button' }, 

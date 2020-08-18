@@ -39,15 +39,15 @@ class UIController {
             else if (action == 'settings') {
                 var settings = app.storage.getSettings(app);
                 var inputs = [
-                    { label: 'Master Volume <img src="img/svg/audio.svg">', attributes: { name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume } },
-                    { label: 'Graphic Quality <img src="img/svg/eye.svg">', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } }
+                    { label: 'Master Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume } },
+                    { label: 'Graphic Quality', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } }
                 ];
 
                 // Add more options for the level maker
                 if (app.ui.state == 'level-manager' || app.ui.state == 'level-editor') {
                     inputs.push(
-                        { label: 'Editor Theme <img src="img/svg/color.svg">', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
-                        { label: 'Editor Snap <img src="img/svg/drag.svg">', attributes: { name: 'snap', type: 'range', min: 1, max: 8, step: 7, value: settings.snap } },
+                        { label: 'Editor Theme', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
+                        { label: 'Editor Snap', attributes: { name: 'snap', type: 'range', min: 1, max: 8, step: 7, value: settings.snap } },
                     );
                 }
                 else if (app.ui.state == 'play') {
@@ -60,7 +60,7 @@ class UIController {
                     { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.resumeCampaign },
                     { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
                 )
-                app.ui.dialog.add({ inputs: inputs });
+                app.ui.dialog.add({ text: '<img src="img/svg/gear.svg">', inputs: inputs });
             }
 
             // Level picker UI
@@ -670,10 +670,11 @@ class UIController {
 
     showAccountOptions() {
         app.ui.dialog.add({
+            text: '<img src="img/svg/profile.svg">',
             inputs: [
                 { attributes: { value: 'Backup Data', type: 'button', width: '100%' }, function: app.storage.backupToChrome },
                 { attributes: { value: 'Restore Data', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome },
-                { attributes: { value: 'Close', type: 'button', width: '100%' } }
+                { attributes: { value: 'Close', type: 'button', width: '100%', style: 'margin-top: 24px;' } }
             ]
         });
     }
