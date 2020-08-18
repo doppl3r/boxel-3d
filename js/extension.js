@@ -77,8 +77,8 @@ class Extension {
         var reason = response.response.errorType;
         // Update user with error and solution
         if (reason == 'TOKEN_MISSING_ERROR') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Please login to Google Chrome and turn on sync.');
-        else if (reason == 'INVALID_RESPONSE_ERROR') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>PRO</strong> is not available in your region.');
-        else $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>PRO</strong> is not available. Error: ' + reason);
+        else if (reason == 'INVALID_RESPONSE_ERROR') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>Pro</strong> is not available in your region.');
+        else $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>Pro</strong> is not available. Error: ' + reason);
         $(".chrome-store").removeClass('hidden'); // Reveal chrome store
         $(".upgrade").addClass('hidden'); // Hide button
     }
@@ -145,14 +145,14 @@ class Extension {
         var price = Math.round((parseInt(product.prices[0].valueMicros, 10) / 1000000) * 100) / 100;
         $('.upgrade').removeClass('hidden');
         $('.upgrade').data('sku', product.sku).attr('id', product.sku).click(app.extension.onActionButton).html('<span class="strike">' + currency + (price + 1) + '</span> <span>' + currency + price + '</span>');
-        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Upgrade to <strong>PRO</strong>');
+        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Upgrade to <strong>Pro</strong>');
         $('.chrome-store').removeClass('hidden');
     }
 
     addLicenseDataToProduct(license) {
         $(".chrome-store").removeClass('hidden'); // Reveal chrome store
         $(".upgrade").addClass('hidden'); // Hide button for pro players
-        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>PRO</strong> Account');
+        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>Pro</strong> Account');
         app.storage.setLicense(license.sku);
         app.storage.checkLicense();
     }
