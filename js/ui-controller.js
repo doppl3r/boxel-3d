@@ -690,7 +690,7 @@ class UIController {
         var inputs = [
             { attributes: { value: 'Backup to file', type: 'button', width: '100%' }, function: app.storage.backupToFile },
             { attributes: { value: 'Restore from file', type: 'button', width: '100%' }, function: app.storage.restoreFromFile },
-            { attributes: { value: 'Close', type: 'button', width: '100%', style: 'margin-top: 12px;' } }
+            { attributes: { value: 'Close', type: 'button', width: '100%' } }
         ]
         if (app.extension.isChromeExtension()) {
             inputs.unshift(
@@ -698,7 +698,7 @@ class UIController {
                 { attributes: { value: 'Restore from Google', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome, parameter: true }
             )
         }
-        app.ui.dialog.add({ inputs: inputs });
+        app.ui.dialog.add({ text: '<img src="img/svg/cloud-check.svg">', inputs: inputs });
     }
 
     saveCredentials(clear = false) {
