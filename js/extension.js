@@ -167,7 +167,7 @@ class Extension {
         $(".upgrade").addClass('hidden'); // Hide button for pro players
         
         // Update license status
-        if (license.sku == 'boxel_3d_tester') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> You are an <strong>Alpha</strong> tester. All features are unlocked!');
+        if (license.sku == 'boxel_3d_tester') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> You are an <strong>Alpha</strong> tester. All features are temporarily unlocked!');
         else $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>Pro</strong> Account');
         
         // Re-register license and update extension dialog
