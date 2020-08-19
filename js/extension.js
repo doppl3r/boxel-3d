@@ -1,11 +1,15 @@
 class Extension {
     constructor() {
         this.updateUI();
+        this.proSKU = 'boxel_3d_pro';
     }
     
     updateUI() {
-        // Check if the program is running on an extension
         $(document).ready(function(){
+            // TEMPORARY - give tester license
+            if (app.storage.hasLicense() == false) app.storage.setLicense({ sku: 'boxel_3d_tester' });
+
+            // Check if the program is running on an extension
             if (app.extension.isChromeExtension() == true) {
                 var url = location.href;
                 var fullscreen_enabled = url.indexOf('fullscreen') >= 0; 
@@ -32,10 +36,12 @@ class Extension {
     
                 // Append class for styling
                 $('body').addClass('chrome');
-    
+
                 // Add chrome products
                 app.extension.getProductList();
-                app.storage.checkLicense();
+            }
+            else {
+                app.storage.applyLicenseToExtension();
             }
         });
     }
@@ -51,11 +57,18 @@ class Extension {
 
     getProductList() {
         console.log("google.payments.inapp.getSkuDetails");
-        google.payments.inapp.getSkuDetails({
-            'parameters': {env: "prod"},
-            'success': app.extension.onSkuDetails,
-            'failure': app.extension.onSkuDetailsFailed
-        });
+        // Check local license
+        if (app.storage.hasLicense()) {
+            var license = app.storage.getLicense(app);
+            app.extension.addLicenseDataToProduct(license);
+        }
+        else {
+            google.payments.inapp.getSkuDetails({
+                'parameters': {env: "prod"},
+                'success': app.extension.onSkuDetails,
+                'failure': app.extension.onSkuDetailsFailed
+            });
+        }
     }
 
     onSkuDetails(response) {
@@ -65,7 +78,7 @@ class Extension {
         for (var i = 0; i < count; i++) {
             var product = products[i];
             console.log('product: ', product);
-            if (product.sku == "boxel_3d_pro"){
+            if (product.sku == app.extension.proSKU){
                 app.extension.addProductToUI(product);
             }
         }
@@ -98,7 +111,7 @@ class Extension {
         var count = licenses.length;
         for (var i = 0; i < count; i++) {
             var license = licenses[i];
-            if (license.sku == "boxel_3d_pro"){
+            if (license.sku == app.extension.proSKU){
                 if (license.state == "ACTIVE") app.extension.addLicenseDataToProduct(license);
                 else if (license.state == "PENDING") app.extension.addPendingInfo(license);
             }
@@ -152,9 +165,14 @@ class Extension {
     addLicenseDataToProduct(license) {
         $(".chrome-store").removeClass('hidden'); // Reveal chrome store
         $(".upgrade").addClass('hidden'); // Hide button for pro players
-        $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>Pro</strong> Account');
-        app.storage.setLicense(license.sku);
-        app.storage.checkLicense();
+        
+        // Update license status
+        if (license.sku == 'boxel_3d_tester') $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> You are an <strong>Alpha</strong> tester. All features are unlocked!');
+        else $(".status").html('<img class="google-icon" src="img/svg/google-icon.svg" /> Boxel 3D <strong>Pro</strong> Account');
+        
+        // Re-register license and update extension dialog
+        app.storage.setLicense(license);
+        app.storage.applyLicenseToExtension();
     }
 
     addPendingInfo(license) {

@@ -164,16 +164,10 @@ class Player extends Cube {
     }
 
     setSkin(skin, a = app) {
-        var settings = a.storage.getSettings(a);
-        if (skin.id == null) skin.id = 1;
-        if (skin.url == null) skin.url = app.skins.getSkinURL(skin.id);
-
+        if (skin.id == null || skin.url == null) skin = a.skins.default;
+        
         // Add texture
         this.addTexture(skin.url);
-
-        // Save skin preferences
-        settings['skin'] = skin;
-        a.storage.setSettings(settings);
     }
 
     addTexture(url) {

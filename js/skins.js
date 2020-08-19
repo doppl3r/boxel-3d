@@ -47,11 +47,12 @@ class Skins {
         skinHTML.on('click', function(e){
             // Check if user has license and open dialog
             if (app.storage.hasLicense()) {
+                // Generate settings object from setSkin() function
+                var settings = app.storage.getSettings();
+                settings.skin = skin;
+                app.player.setSkin({ id: skin.id, url: skin.url });
                 app.skins.selectSkin(skin);
-                app.player.setSkin({
-                    id: skin.id,
-                    url: skin.url
-                });
+                app.updateSettings(settings);
             }
             else {
                 app.ui.dialog.add({
@@ -92,7 +93,11 @@ class Skins {
         var skinId = 680; // Predefined in WordPress
         var dialog = app.ui.dialog.get();
         var input = dialog.find('input[type="text"]');
-        app.player.setSkin({ id: skinId, url: input.val() });
+        var settings = app.storage.getSettings();
+        var skin = { id: skinId, url: input.val() };
+        settings.skin = skin;
+        app.player.setSkin(skin, app);
+        app.updateSettings(settings);
     }
 
     getSkinURL(skinId, a = app) {

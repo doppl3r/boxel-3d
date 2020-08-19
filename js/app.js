@@ -144,18 +144,18 @@ class App {
         a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
     }
 
-    updateSettings(settings, a) {
+    updateSettings(settings, a = app) {
         // Compare new settings with local storage
         var storageSettings = a.storage.getSettings(a);
         if (settings == null) settings = storageSettings;
-
+        
         // Add missing keys from storage
         Object.keys(storageSettings).forEach(function (key) {
             if (settings[key] == null) {
                 settings[key] = storageSettings[key];
             }
         });
-
+        
         // Update application from settings
         a.audio.setVolume(settings.volume);
         a.updateQuality(settings.quality, a);

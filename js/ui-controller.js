@@ -554,7 +554,7 @@ class UIController {
         app.timer.reset();
         app.level.clearLevel(app);
         app.level.importFromJSON(levelData, app);
-        settings.progress = button.attr('action').split('_')[1];
+        settings.progress = parseInt(button.attr('action').split('_')[1]);
         app.updateSettings(settings, app);
     }
 
@@ -687,14 +687,18 @@ class UIController {
     }
 
     showAccountOptions() {
-        app.ui.dialog.add({
-            text: '<img src="img/svg/cloud-check.svg">',
-            inputs: [
-                { attributes: { value: 'Backup data to Google', type: 'button', width: '100%' }, function: app.storage.backupToChrome, parameter: true },
-                { attributes: { value: 'Restore data from Google', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome, parameter: true },
-                { attributes: { value: 'Close', type: 'button', width: '100%', style: 'margin-top: 24px;' } }
-            ]
-        });
+        var inputs = [
+            { attributes: { value: 'Backup to file', type: 'button', width: '100%' }, function: app.storage.backupToFile },
+            { attributes: { value: 'Restore from file', type: 'button', width: '100%' }, function: app.storage.restoreFromFile },
+            { attributes: { value: 'Close', type: 'button', width: '100%', style: 'margin-top: 12px;' } }
+        ]
+        if (app.extension.isChromeExtension()) {
+            inputs.unshift(
+                { attributes: { value: 'Backup to Google', type: 'button', width: '100%' }, function: app.storage.backupToChrome, parameter: true },
+                { attributes: { value: 'Restore from Google', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome, parameter: true }
+            )
+        }
+        app.ui.dialog.add({ inputs: inputs });
     }
 
     saveCredentials(clear = false) {

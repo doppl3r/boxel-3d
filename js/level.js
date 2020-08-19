@@ -187,9 +187,10 @@ class Level extends THREE.Group {
         // Check current state
         if (a.ui.state == 'play') {
             var settings = a.storage.getSettings(a);
-            settings.progress++; // Increase level progress
-            if (settings.progress > a.ui.maxLevels) { // Add last level dialog
-                settings.progress--;
+            var progress = parseInt(settings.progress)
+            progress++; // Increase level progress
+            if (progress > a.ui.maxLevels) { // Add last level dialog
+                progress--;
                 setTimeout(function() { 
                     app.ui.dialog.add({
                         text: 'Thank you for playing!<br>Go beat your high scores while we make more levels!',
@@ -200,6 +201,7 @@ class Level extends THREE.Group {
                     });
                 }, 100);
             }
+            settings.progress = progress;
             a.updateSettings(settings, a);
             a.ui.updateUI('level-picker');
         }

@@ -112,7 +112,7 @@ class StorageManager {
         if (storageSettings != null) {
             settings = JSON.parse(storageSettings);
         }
-
+        
         // Check if new child settings are null by looping through default
         for (var key in defaultSettings) {
             if (settings[key] == null) {
@@ -159,6 +159,68 @@ class StorageManager {
         performClick();
     }
 
+    backupToFile() {
+        var local = app.storage.getAllLocalStorage();
+        var blob = new Blob([JSON.stringify(local)], { type: "application/json" });
+        saveAs(blob, 'boxel_3d_backup');
+    }
+
+    restoreFromFile() {
+        var input = document.createElement("input");
+        input.setAttribute('type', 'file');
+        input.setAttribute('id', 'theFile');
+        input.addEventListener('change', handleFileSelect, false);
+        function performClick() {
+            var evt = document.createEvent("MouseEvents");
+            evt.initEvent("click", true, false);
+            input.dispatchEvent(evt);
+        }
+        function handleFileSelect(evt) {
+            var files = evt.target.files;
+            var f = files[0];
+            var reader = new FileReader();
+            reader.onload = (function() {
+                return function(e) {
+                    var data = JSON.parse(e.target.result);
+                    app.storage.setAllLocalStorage(data);
+                };
+            })(f);
+            reader.readAsText(f);
+        }
+        performClick();
+    }
+
+    backupToChrome(clearChromeStorage = false) {
+        app.ui.dialog.add({
+            text: 'Save all data to the cloud?<br><em>(scores, levels, etc.)</em>',
+            inputs: [
+                {
+                    attributes: { value: 'Backup', type: 'button' },
+                    function: function() {
+                        var index = 0;
+                        if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
+                        for (var i = 0; i < localStorage.length; i++){
+                            var key = localStorage.key(i);
+                            var value = localStorage.getItem(key);
+                            var obj = {};
+                            obj[key] = value;
+                            chrome.storage.sync.set(obj, function(){
+                                index++; // Show message on last item
+                                if (index == localStorage.length) {
+                                    app.ui.dialog.add({
+                                        text: 'Success! Your data was backed up to your account.',
+                                        inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
+                                    });
+                                }
+                            });
+                        }
+                    }
+                },
+                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
+            ]
+        });
+    }
+
     restoreFromChrome(clearLocalStorage = false) {
         app.ui.dialog.add({
             text: 'Download all data from the cloud? This will override your local data (scores, levels etc.)<br><br><em>If you have not backed up your data, please cancel and backup your data first.</em>',
@@ -197,48 +259,35 @@ class StorageManager {
         });
     }
 
-    backupToChrome(clearChromeStorage = false) {
-        app.ui.dialog.add({
-            text: 'Save all data to the cloud?<br><em>(scores, levels, etc.)</em>',
-            inputs: [
-                {
-                    attributes: { value: 'Backup', type: 'button' },
-                    function: function() {
-                        var index = 0;
-                        if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
-                        for (var i = 0; i < localStorage.length; i++){
-                            var key = localStorage.key(i);
-                            var value = localStorage.getItem(key);
-                            var obj = {};
-                            obj[key] = value;
-                            chrome.storage.sync.set(obj, function(){
-                                index++; // Show message on last item
-                                if (index == localStorage.length) {
-                                    app.ui.dialog.add({
-                                        text: 'Success! Your data was backed up to your account.',
-                                        inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
-                                    });
-                                }
-                            });
-                        }
-                    }
-                },
-                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
-            ]
-        });
-    }
-
     setLicense(license) {
-        localStorage.setItem('license', license);
+        localStorage.setItem('license', JSON.stringify(license));
     }
 
-    hasLicense() {
-        var hasLicense = localStorage.getItem('license') == 'boxel_3d_pro';
+    getLicense(a = app) {
+        var license = localStorage.getItem('license');
+        if (isJSON(license)) license = JSON.parse(license);
+        else {
+            // Reformat license if single string
+            license = { sku: license };
+            a.storage.setLicense(license);
+        }
+        return license;
+    }
+
+    hasLicense(a = app) {
+        var license = a.storage.getLicense(a);
+        var hasLicense = false;
+        if (license != null) {
+            if (license.sku == a.extension.proSKU || license.sku == 'boxel_3d_tester') {
+                hasLicense = true;
+            }
+        }
         return hasLicense;
     }
 
-    checkLicense() {
+    applyLicenseToExtension() {
         if (app.storage.hasLicense()) {
+            // Update extension UI
             $("body").addClass('has-license');
         }
     }

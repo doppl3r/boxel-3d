@@ -18,3 +18,9 @@ function radiansToDegrees(radians) {
 function degreesToRadians(degrees) {
     return degrees * (Math.PI / 180);
 }
+
+function isJSON(str) {
+    try { JSON.parse(str); }
+    catch (e) { return false; }
+    return true;
+}
