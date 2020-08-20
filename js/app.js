@@ -173,7 +173,7 @@ class App {
         app.engine.world.gravity.y = vector.y;
     }
 
-    updateQuality(quality, a) {
+    updateQuality(quality, a = app) {
         if (quality <= 0) quality = 1;
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
     }
