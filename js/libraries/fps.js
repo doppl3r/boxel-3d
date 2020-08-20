@@ -1,6 +1,6 @@
 class FPS {
     constructor() {
-        // create an AudioListener and add it to the camera
+        // Initialize class
         this.start = 0;
         this.end = 0;
         this.average = [];
@@ -13,10 +13,10 @@ class FPS {
         if (this.delta == 0) this.delta = 1000;
         this.fps = parseInt(1000 / (this.delta));
         this.start = this.end;
-        this.addToAverage(this.fps);
+        this.updateAverage(this.fps);
     }
 
-    addToAverage(fps) {
+    updateAverage(fps) {
         this.average.unshift(fps);
         this.average = this.average.slice(0, this.averageSize);
     }
