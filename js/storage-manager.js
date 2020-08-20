@@ -96,7 +96,7 @@ class StorageManager {
         var storageSettings = localStorage.getItem('settings');
         var defaultSettings = { 
             'volume': 0,
-            'quality': 10,
+            'quality': 5,
             'theme': 0,
             'snap': 8,
             'skin': a.skins.default,

@@ -8,6 +8,7 @@ class App {
         a.screenWidth = a.window.innerWidth;
         a.screenHeight = a.window.innerHeight;
         a.stats = new Stats();
+        a.fps = new FPS();
         a.ui = new UIController();
         a.timer = new Timer();
         a.mouse = new Mouse();
@@ -86,6 +87,7 @@ class App {
             }
             a.then = a.now - (a.delta % a.interval);
             a.stats.update();
+            a.fps.update();
         }
         a.renderer.render(a.scene, a.camera);
         requestAnimationFrame(function(e) { a.render(e, a); });
