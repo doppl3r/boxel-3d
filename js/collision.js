@@ -64,6 +64,11 @@ class Collision {
                                 objectB.setScale(objectA.scale, false);
                             }
                         }
+                        else if (objectA.body.class == 'direction') {
+                            /* if (objectB.body.class ==  'player') {
+                                objectB.setScale(objectA.scale, false);
+                            } */
+                        }
                         else if (objectA.body.class == 'gravity') {
                             if (objectB.body.class ==  'player') {
                                 app.updateGravity(objectA.body.angle);
