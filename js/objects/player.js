@@ -33,6 +33,7 @@ class Player extends Cube {
             spinDirection = velocity.x >= 0 ? 1 : -1;
             angularVelocity *= spinDirection;
             velocity = Matter.Vector.rotate(velocity, -gravityAngle);
+            if (this.body.speed < 1) angularVelocity = 0;
 
             // Use engine to modulate object
             Matter.Body.setVelocity(this.body, velocity);

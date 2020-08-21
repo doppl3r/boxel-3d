@@ -33,6 +33,14 @@ class Cube extends THREE.Mesh {
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
+        this.setForceDirection();
+    }
+
+    update() {
+        // Apply force to body until it reaches 5 (generic)
+        if (this.body.speed < 3) {
+            Matter.Body.applyForce(this.body, this.body.position, { x: this.force.x, y: this.force.y });
+        }
     }
 
     setColors(color) {
@@ -105,11 +113,34 @@ class Cube extends THREE.Mesh {
         this.scaleOrigin.z = scale.z;
     }
 
+    setForceDirection(force = { x: 0, y: 0 }, updateOrigin = true) {
+        // Resolve null values
+        this.force = force;
+        if (updateOrigin == true) { this.setForceDirectionOrigin(force); }
+    }
+
+    setForceDirectionOrigin(force) {
+        this.forceOrigin = force;
+    }
+
+    getForce() {
+        return this.force;
+    }
+
+    calculateForceDirection(bodyA, bodyB) {
+        var force = { x: 0.00025 * bodyB.mass, y: 0 }; // Left-to-right
+        force = Matter.Vector.rotate(force, bodyA.angle);
+
+        //return force;
+        return force;
+    }
+
     resetToOrigin() {
         this.hide(false); // reveal
         this.setPosition(this.positionOrigin, false);
         this.setRotation(this.rotationOrigin, false);
         this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
+        this.setForceDirection(this.forceOrigin, false);
         this.setStatic(this.isStaticOrigin, false);
         this.setFriction(this.frictionOrigin, false);
         Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
@@ -176,7 +207,7 @@ class Cube extends THREE.Mesh {
         return this.selected;
     }
 
-    force(force, object, relativeAngle = false) {
+    setForce(force, object, relativeAngle = false) {
         // Vector of this cube
         var x1 = this.body.positionPrev.x;
         var x2 = this.body.position.x;

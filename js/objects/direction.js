@@ -2,6 +2,10 @@ class Direction extends Cube {
     constructor(options = {}) {
         super(options);
         this.body.class = 'direction';
+
+        // Add bounce sensor
+        this.sensor = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
+        Matter.Body.setParts(this.body, [this.hitbox, this.sensor]);
         
         // Update body properties
         this.setScale({ x: 16, y: 16, z: 16 });

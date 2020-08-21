@@ -38,8 +38,8 @@ class Collision {
                         }
                         else if (objectA.body.class == 'bounce') {
                             var force = objectA.scale.y / 2; // Use bounce height
-                            if (objectA.body.isStatic == false) { objectA.force(force, objectB, true); } // Yeet bounce cube backwards
-                            if (objectB.body.isStatic == false) { objectB.force(force, objectA); }
+                            if (objectA.body.isStatic == false) { objectA.setForce(force, objectB, true); } // Yeet bounce cube backwards
+                            if (objectB.body.isStatic == false) { objectB.setForce(force, objectA); }
                         }
                         else if (objectA.body.class == 'checkpoint') {
                             if (objectB.body.class ==  'player') { app.player.saveCheckpoint(objectA.position); }
@@ -65,9 +65,8 @@ class Collision {
                             }
                         }
                         else if (objectA.body.class == 'direction') {
-                            /* if (objectB.body.class ==  'player') {
-                                objectB.setScale(objectA.scale, false);
-                            } */
+                            var force = objectB.calculateForceDirection(objectA.body, objectB.body);
+                            objectB.setForceDirection(force, false);
                         }
                         else if (objectA.body.class == 'gravity') {
                             if (objectB.body.class ==  'player') {
