@@ -229,6 +229,7 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .ui-controller a { height: 32px; width: 32px; }
     body .ui-controller a img { transform: scale(0.75); }
     body .ui-controller a:hover img { animation: none; }
+    body .ui-controller .slider { height: 32px; }
     body .ui-controller .dashboard .buttons .button { padding: 0 12px; }
     body .ui-controller .dashboard .buttons .button.top-right { width: 32px; }
     body .ui-controller .dashboard .buttons .button.top-right.two { right: 64px; }

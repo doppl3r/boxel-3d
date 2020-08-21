@@ -30,6 +30,7 @@ class Cube extends THREE.Mesh {
             class: 'cube'
         });
         this.name = this.uuid;
+        this.maxSpeed = 3;
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
@@ -37,8 +38,8 @@ class Cube extends THREE.Mesh {
     }
 
     update() {
-        // Apply force to body until it reaches 5 (generic)
-        if (this.body.speed < 3) {
+        // Apply force to body until it reaches it's max speed (generic)
+        if (this.body.speed < this.maxSpeed) {
             Matter.Body.applyForce(this.body, this.body.position, { x: this.force.x, y: this.force.y });
         }
     }

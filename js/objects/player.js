@@ -22,9 +22,10 @@ class Player extends Cube {
             var velocity = this.body.velocity;
             var spinDirection = 1; // Default clockwise
             var angularVelocity = (Math.PI / 20);
+            var forceScale = 0.025; // Default 0.025
             var force = {
-                x: -(gravity.x * 0.025 * this.body.mass),
-                y: -(gravity.y * 0.025 * this.body.mass)
+                x: -(gravity.x * forceScale * this.body.mass),
+                y: -(gravity.y * forceScale * this.body.mass)
             };
 
             // Rotate velocity angle back to 0 degrees, remove y velocity, then rotate back to gravity angle
@@ -33,7 +34,9 @@ class Player extends Cube {
             spinDirection = velocity.x >= 0 ? 1 : -1;
             angularVelocity *= spinDirection;
             velocity = Matter.Vector.rotate(velocity, -gravityAngle);
-            if (this.body.speed < 1) angularVelocity = 0;
+
+            // Disable angular velocity at slower speeds
+            if (this.body.speed < this.maxSpeed * 0.25) angularVelocity = 0;
 
             // Use engine to modulate object
             Matter.Body.setVelocity(this.body, velocity);
