@@ -37,6 +37,11 @@ class Keyboard {
             break;
             case 32: a.keyboard.spaceBarDown(a); break; // Space
             case 38: break; // Up
+            case 69: // 'e'
+                if (a.play == true && (a.ui.state == 'play')) {
+                    a.ui.exitCampaign();
+                }
+            break;
             case 82: // 'r'
                 if (a.play == true && (a.ui.state == 'play' || a.ui.state == 'level-editor')) {
                     a.level.retryLevel(a);

@@ -18,7 +18,7 @@ class Direction extends Cube {
         this.shapes.addCube({ x: 0, y: 0, z: -(u * 0.5), scaleX: 1, scaleY: 1, scaleZ: (u * 4), color: '#0287ef' }); // Blue Box
         this.shapes.addExtrusion({
             position: { x: -0.5, y: -0.5, z: (u * 1.5) },
-            points: [{ x: u, y: u }, { x: u * 4, y: 0.5 }, { x: u, y: u * 4 }],
+            points: [{ x: u, y: u }, { x: u * 4, y: 0.5 }, { x: u, y: u * 4 }, { x: 0.4, y: 0.5 }],
             depth: u,
             color: '#fff'
         });

@@ -30,7 +30,7 @@ class Cube extends THREE.Mesh {
             class: 'cube'
         });
         this.name = this.uuid;
-        this.maxSpeed = 3;
+        this.maxSpeed = 4;
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
