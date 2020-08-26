@@ -46,15 +46,9 @@ class Skins {
         // Add click listener
         skinHTML.on('click', function(e){
             // Check if user has license and open dialog
-            if (app.storage.hasLicense()) {
-                // Generate settings object from setSkin() function
-                var settings = app.storage.getSettings();
-                settings.skin = skin;
-                app.player.setSkin({ id: skin.id, url: skin.url });
-                app.skins.selectSkin(skin);
-                app.updateSettings(settings);
-            }
-            else {
+            var settings = app.storage.getSettings();
+            if (app.storage.hasLicense() == false) {
+                skin = app.skins.default; // Reset to default skin
                 app.ui.dialog.add({
                     text: 'Please upgrade to Pro to unlock all skins',
                     inputs: [
@@ -62,6 +56,10 @@ class Skins {
                     ]
                 });
             }
+            settings.skin = skin;
+            app.player.setSkin({ id: skin.id, url: skin.url });
+            app.skins.selectSkin(skin);
+            app.updateSettings(settings);
         });
     }
 
