@@ -63,8 +63,6 @@ body .ui-controller .level-picker .levels level { border-radius: 4px; background
 body .ui-controller .level-picker .levels level:after { background-color: #dc265a; padding: 12px; border-radius: 4px; content: 'Play "' attr(description) '"'; font-size: 0.25em; position: fixed; z-index: 1; bottom: 16px; right: 32px; opacity: 0; transition: all 0.1s ease-in-out; pointer-events: none; }
 body .ui-controller .level-picker .levels level:focus:after { opacity: 1; right: 16px; pointer-events: all; }
 body .ui-controller .level-picker .levels level.completed { background-color: none; background: linear-gradient(315deg, #620460 0%, #dc265a 100%); }
-body .ui-controller .level-picker .levels level + level { display: none; /* Default hide incomplete levels */ }
-body .ui-controller .level-picker .levels level.completed + level { display: inline-flex; }
 body .ui-controller .level-picker .levels level.completed .score { display: block; }
 body .ui-controller .level-picker .levels level:hover > * { animation: shake 0.25s; }
 body .ui-controller .level-picker .levels level .icon { display: none; }
