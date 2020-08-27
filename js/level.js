@@ -207,6 +207,7 @@ class Level extends THREE.Group {
             a.ui.updateUI('level-picker');
         }
         else if (a.ui.state == 'level-editor') {
+            a.updateGravity();
             a.resetScene(a);
         }
     }

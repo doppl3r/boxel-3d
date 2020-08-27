@@ -166,28 +166,38 @@ class StorageManager {
     }
 
     restoreFromFile() {
-        var input = document.createElement("input");
-        input.setAttribute('type', 'file');
-        input.setAttribute('id', 'theFile');
-        input.addEventListener('change', handleFileSelect, false);
-        function performClick() {
-            var evt = document.createEvent("MouseEvents");
-            evt.initEvent("click", true, false);
-            input.dispatchEvent(evt);
+        if (app.storage.hasLicense() == false) {
+            app.ui.dialog.add({
+                text: 'Please upgrade to <strong>PRO</strong> to restore data',
+                inputs: [
+                    { attributes: { value: 'Continue', type: 'button' } }
+                ]
+            });
         }
-        function handleFileSelect(evt) {
-            var files = evt.target.files;
-            var f = files[0];
-            var reader = new FileReader();
-            reader.onload = (function() {
-                return function(e) {
-                    var data = JSON.parse(e.target.result);
-                    app.storage.setAllLocalStorage(data);
-                };
-            })(f);
-            reader.readAsText(f);
+        else {
+            var input = document.createElement("input");
+            input.setAttribute('type', 'file');
+            input.setAttribute('id', 'theFile');
+            input.addEventListener('change', handleFileSelect, false);
+            function performClick() {
+                var evt = document.createEvent("MouseEvents");
+                evt.initEvent("click", true, false);
+                input.dispatchEvent(evt);
+            }
+            function handleFileSelect(evt) {
+                var files = evt.target.files;
+                var f = files[0];
+                var reader = new FileReader();
+                reader.onload = (function() {
+                    return function(e) {
+                        var data = JSON.parse(e.target.result);
+                        app.storage.setAllLocalStorage(data);
+                    };
+                })(f);
+                reader.readAsText(f);
+            }
+            performClick();
         }
-        performClick();
     }
 
     backupToChrome(clearChromeStorage = false) {
