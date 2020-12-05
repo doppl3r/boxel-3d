@@ -44,18 +44,8 @@ class Skins {
         var skinHTML = $('#' + skin.id);
 
         // Add click listener
-        skinHTML.on('click', function(e){
-            // Check if user has license and open dialog
+        skinHTML.on('click', function(e) {
             var settings = app.storage.getSettings();
-            if (app.storage.hasLicense() == false) {
-                skin = app.skins.default; // Reset to default skin
-                app.ui.dialog.add({
-                    text: 'Please upgrade to Pro to unlock all skins',
-                    inputs: [
-                        { attributes: { value: 'Continue', type: 'button' } }
-                    ]
-                });
-            }
             settings.skin = skin;
             app.player.setSkin({ id: skin.id, url: skin.url });
             app.skins.selectSkin(skin);
@@ -74,16 +64,14 @@ class Skins {
         app.ui.controller.off('click', '.skin#' + skinId);
         app.ui.controller.on('click', '.skin#' + skinId, function(event) {
             var skinURL = app.skins.getSkinURL(skinId);
-            if (app.storage.hasLicense()) {
-                app.ui.dialog.add({
-                    text: 'Paste your image url',
-                    inputs: [
-                        { attributes: { value: skinURL, type: 'text', placeholder: 'https://i.imgur.com/KmZHGlE.png' } },
-                        { attributes: { value: 'Cancel', type: 'button' } },
-                        { attributes: { value: 'Accept', type: 'button' }, function: app.skins.updateCustomSkin },
-                    ]
-                });
-            }
+            app.ui.dialog.add({
+                text: 'Paste your image url',
+                inputs: [
+                    { attributes: { value: skinURL, type: 'text', placeholder: 'https://i.imgur.com/KmZHGlE.png' } },
+                    { attributes: { value: 'Cancel', type: 'button' } },
+                    { attributes: { value: 'Accept', type: 'button' }, function: app.skins.updateCustomSkin },
+                ]
+            });
         });
     }
 

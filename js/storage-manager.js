@@ -68,13 +68,11 @@ class StorageManager {
             oldScore = parseInt(data.replace(/[^\d]/g, ''));
         }
 
-        // Check high score for licensed users
-        if (app.storage.hasLicense()) {
-            if (newScore < oldScore) {
-                hasNewScore = true;
-                scores[levelName] = score;
-                localStorage.setItem('scores', JSON.stringify(scores));
-            }
+        // Check high score
+        if (newScore < oldScore) {
+            hasNewScore = true;
+            scores[levelName] = score;
+            localStorage.setItem('scores', JSON.stringify(scores));
         }
         return hasNewScore;
     }
@@ -96,15 +94,11 @@ class StorageManager {
         var storageSettings = localStorage.getItem('settings');
         var defaultSettings = { 
             'volume': 0,
-            'quality': 5,
+            'quality': 6,
             'theme': 0,
             'snap': 8,
             'skin': a.skins.default,
-            'progress': 1,
-            'credentials' : {
-                'username': '',
-                'password': ''
-            }
+            'progress': 1
         };
         var settings = defaultSettings; // Use default
 
@@ -166,38 +160,28 @@ class StorageManager {
     }
 
     restoreFromFile() {
-        if (app.storage.hasLicense() == false) {
-            app.ui.dialog.add({
-                text: 'Please upgrade to <strong>PRO</strong> to restore data',
-                inputs: [
-                    { attributes: { value: 'Continue', type: 'button' } }
-                ]
-            });
+        var input = document.createElement("input");
+        input.setAttribute('type', 'file');
+        input.setAttribute('id', 'theFile');
+        input.addEventListener('change', handleFileSelect, false);
+        function performClick() {
+            var evt = document.createEvent("MouseEvents");
+            evt.initEvent("click", true, false);
+            input.dispatchEvent(evt);
         }
-        else {
-            var input = document.createElement("input");
-            input.setAttribute('type', 'file');
-            input.setAttribute('id', 'theFile');
-            input.addEventListener('change', handleFileSelect, false);
-            function performClick() {
-                var evt = document.createEvent("MouseEvents");
-                evt.initEvent("click", true, false);
-                input.dispatchEvent(evt);
-            }
-            function handleFileSelect(evt) {
-                var files = evt.target.files;
-                var f = files[0];
-                var reader = new FileReader();
-                reader.onload = (function() {
-                    return function(e) {
-                        var data = JSON.parse(e.target.result);
-                        app.storage.setAllLocalStorage(data);
-                    };
-                })(f);
-                reader.readAsText(f);
-            }
-            performClick();
+        function handleFileSelect(evt) {
+            var files = evt.target.files;
+            var f = files[0];
+            var reader = new FileReader();
+            reader.onload = (function() {
+                return function(e) {
+                    var data = JSON.parse(e.target.result);
+                    app.storage.setAllLocalStorage(data);
+                };
+            })(f);
+            reader.readAsText(f);
         }
+        performClick();
     }
 
     backupToChrome(clearChromeStorage = false) {
@@ -238,67 +222,24 @@ class StorageManager {
                 {
                     attributes: { value: 'Restore', type: 'button' }, 
                     function: function() {
-                        // Restore only if user has license
-                        if (app.storage.hasLicense()) {
-                            chrome.storage.sync.get(null, function(items) {
-                                if (clearLocalStorage == true) localStorage.clear(); // Empty out old data
-                                var keys = Object.keys(items);
-                                for (var i = 0; i < keys.length; i++){
-                                    var key = keys[i];
-                                    var value = items[key];
-                                    localStorage.setItem(key, value);
-                                }
-                                app.ui.dialog.add({
-                                    text: 'Success! Your data was restored from your account.',
-                                    inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
-                                });
-                            });
-                        }
-                        else {
+                        // Restore
+                        chrome.storage.sync.get(null, function(items) {
+                            if (clearLocalStorage == true) localStorage.clear(); // Empty out old data
+                            var keys = Object.keys(items);
+                            for (var i = 0; i < keys.length; i++){
+                                var key = keys[i];
+                                var value = items[key];
+                                localStorage.setItem(key, value);
+                            }
                             app.ui.dialog.add({
-                                text: 'Please upgrade to <strong>PRO</strong> to restore data',
-                                inputs: [
-                                    { attributes: { value: 'Continue', type: 'button' } }
-                                ]
+                                text: 'Success! Your data was restored from your account.',
+                                inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
                             });
-                        }
+                        });
                     }
                 },
                 { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
             ]
         });
-    }
-
-    setLicense(license) {
-        localStorage.setItem('license', JSON.stringify(license));
-    }
-
-    getLicense(a = app) {
-        var license = localStorage.getItem('license');
-        if (isJSON(license)) license = JSON.parse(license);
-        else {
-            // Reformat license if single string
-            license = { sku: license };
-            a.storage.setLicense(license);
-        }
-        return license;
-    }
-
-    hasLicense(a = app) {
-        var license = a.storage.getLicense(a);
-        var hasLicense = false;
-        if (license != null) {
-            if (license.sku == a.extension.proSKU || license.sku == 'boxel_3d_tester') {
-                hasLicense = true;
-            }
-        }
-        return hasLicense;
-    }
-
-    applyLicenseToExtension() {
-        if (app.storage.hasLicense()) {
-            // Update extension UI
-            $("body").addClass('has-license');
-        }
     }
 }

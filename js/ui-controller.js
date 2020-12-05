@@ -40,7 +40,7 @@ class UIController {
                 var settings = app.storage.getSettings(app);
                 var inputs = [
                     { label: 'Master Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume } },
-                    { label: 'Graphic Quality', attributes: { name: 'quality', type: 'range', min: 1, max: 10, value: settings.quality } }
+                    { label: 'Graphic Quality', attributes: { name: 'quality', type: 'range', min: 2, max: 10, value: settings.quality } }
                 ];
 
                 // Add more options for the level maker
@@ -80,39 +80,21 @@ class UIController {
 
             // Level manager actions
             if (action == 'add-level') {
-                var levelCount = app.storage.getListOfLevels().length;
-                // Allow multiple levels for licensed users
-                if (app.storage.hasLicense() || levelCount < 1) {
-                    var levelData = {};
-                    var key = null;
-                    app.level.createNewLevel(app);
-                    levelData = app.level.exportToJSON(app); // Init default data
-                    key = app.storage.setLevelData(null, levelData); // Store data and generate new key
-                    app.ui.appendEditorLevel({ key: key, level: levelData });
-                }
-                else {
-                    app.ui.dialog.add({
-                        text: 'Please upgrade to <strong>PRO</strong> to add more levels',
-                        inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
-                    });
-                }
+                var levelData = {};
+                var key = null;
+                app.level.createNewLevel(app);
+                levelData = app.level.exportToJSON(app); // Init default data
+                key = app.storage.setLevelData(null, levelData); // Store data and generate new key
+                app.ui.appendEditorLevel({ key: key, level: levelData });
             }
             else if (action == 'download') {
-                if (app.storage.hasLicense() || levelCount < 1) {
-                    app.level.clearLevel(app);
-                    app.level.key = null; // Reset key to generate new save key
-                    app.storage.loadLevelFromFile();
-                    app.ui.updateUI('level-editor');
-                    app.levelHistory.save('Downloaded level', app);
-                    app.levelHistory.save('Loaded level', app); // Force dialog check to save
-                    app.resetScene(app);
-                }
-                else {
-                    app.ui.dialog.add({
-                        text: 'Please upgrade to <strong>PRO</strong> to download levels',
-                        inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
-                    });
-                }
+                app.level.clearLevel(app);
+                app.level.key = null; // Reset key to generate new save key
+                app.storage.loadLevelFromFile();
+                app.ui.updateUI('level-editor');
+                app.levelHistory.save('Downloaded level', app);
+                app.levelHistory.save('Loaded level', app); // Force dialog check to save
+                app.resetScene(app);
             }
             else if (action == 'share') {
                 if ($(this).parent().hasClass('item')) app.ui.loadEditorLevel($(this));
@@ -299,10 +281,10 @@ class UIController {
         this.controller.find('[action]').removeClass('selected'); // Default remove all selected
 
         if (state == 'home') {
-            // Update home page version
             if (window.location.href.includes('file://') == false) {
+                // Update version
                 $.getJSON("manifest.json", function(json) {
-                    $('.version').text(json.version);
+                    $('.version').text("v" + json.version);
                     $('.version').off();
                     $('.version').on('click', function() {
                         $.get("changelog.txt", function(data) {
@@ -316,6 +298,14 @@ class UIController {
                             setTimeout(function(){ $('.dialog .wrapper').animate({ scrollTop: 0 }, 500); }, 100);
                         });
                     });
+                });
+
+                // Update Status
+                $.getJSON("json/status.json", function(json) {
+                    // Generate random tip
+                    var statusLength = json.status.length;
+                    var statusIndex = Math.floor(Math.random() * statusLength);
+                    $('.status-text').text(json.status[statusIndex]);
                 });
             }
             this.home.removeClass('hidden');
@@ -700,13 +690,5 @@ class UIController {
             )
         }
         app.ui.dialog.add({ text: '<img src="img/svg/cloud-check.svg">', inputs: inputs });
-    }
-
-    saveCredentials(clear = false) {
-        var username = $('.dialog .inputs input[name="username"]').val();
-        var password = $('.dialog .inputs input[name="password"]').val();
-        if (clear == true) app.account.setCredentials('', '');
-        else app.account.setCredentials(username, password);
-        app.ui.showAccountOptions(); // Reopen main account dialog
     }
 }

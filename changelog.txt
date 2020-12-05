@@ -1,3 +1,7 @@
+v1.0.0 - December 5, 2020
+- Remove licenses, everything is free
+- Update logo
+
 v0.3.0 - August 19, 2020
 - Add tester license for everyone
 - Add Google integration (backup, restore, etc.)

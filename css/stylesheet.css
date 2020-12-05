@@ -2,7 +2,6 @@
 html { -ms-touch-action: manipulation; touch-action: manipulation; }
 body { font-family: 'Comfortaa-Bold'; margin: 0; overflow: hidden; width: 100vw; height: 100vh; background-size: cover; background-position: center center; font-size: 100%; }
 body.chrome { min-width: 640px; min-height: 360px; }
-body.has-license .chrome-warning { display: none; }
 body canvas { width: 100vw; height: 100vh; image-rendering: pixelated; position: absolute; top: 0; left: 0; animation: fade-in 0.25s ease-in; animation-fill-mode: forwards; }
 body canvas.hidden { display: none; }
 body input[type="range"] { border: none; -webkit-appearance: none; margin: 10px 0; width: 100%; }
@@ -121,22 +120,10 @@ body .ui-controller .item:hover a ~ .slider { /* show */ display: inline-flex; }
 body .ui-controller .item:hover a.disabled ~ .slider { display: none; }
 
 /* Chrome extension styling */
-body .ui-controller .chrome-store { color: #fff; display: flex; position: absolute; top: 12px; left: 12px; transition: all 1s ease-in-out; opacity: 1; }
-body .ui-controller .chrome-store.hidden { opacity: 0; display: block !important; }
-body .ui-controller .chrome-store .upgrade { display: inline-flex; height: 48px; width: auto; background-color: #db2559; border-radius: 4px; padding: 0 24px; margin: 0 12px 0 0; }
-body .ui-controller .chrome-store .upgrade:focus > *,
-body .ui-controller .chrome-store .upgrade:hover > * { animation: shake 0.25s; }
-body .ui-controller .chrome-store .upgrade:focus ~ .features,
-body .ui-controller .chrome-store .upgrade:hover ~ .features { opacity: 1; transform: translateY(0); }
-body .ui-controller .chrome-store .upgrade .strike { position: relative; opacity: 0.5; margin-right: 4px;}
-body .ui-controller .chrome-store .upgrade .strike:after { content: ''; border-bottom: 1px solid #fff; display: block; position: absolute; top: 45%; left: 0; width: 100%; }
-body .ui-controller .chrome-store .features { opacity: 0; position: absolute; top: 56px; background-color: #db2458; margin: 0; border-radius: 4px; padding: 12px 16px; font-size: 0.75em; line-height: 21px; white-space: nowrap; transition: all 0.1s ease-in-out; transform: translateY(-20px); pointer-events: none; }
-body .ui-controller .chrome-store .features:before { content: ''; width: 8px; height:8px; background-color: #db2458; position: absolute; top: -4px; left: 15%; transform: rotate(45deg); }
-body .ui-controller .chrome-store .features span { display: flex; align-items: center; padding: 4px 0; }
-body .ui-controller .chrome-store .features span img { max-width: 21px; margin-right: 8px; }
-body .ui-controller .chrome-store .status { display: inline-flex; margin: 0; align-items: center; white-space: nowrap; }
-body .ui-controller .chrome-store .status img { display: inline-block; max-width: 16px; max-height: 16px; margin-right: 4px; }
-body .ui-controller .chrome-store .status strong { font-style: italic; padding: 0 4px; }
+body .ui-controller .status-bar { color: #fff; display: flex; position: absolute; top: 12px; left: 12px; transition: all 1s ease-in-out; opacity: 1; }
+body .ui-controller .status-bar .status { display: inline-flex; margin: 0; align-items: center; white-space: nowrap; }
+body .ui-controller .status-bar .status img { display: inline-block; max-width: 16px; max-height: 16px; margin-right: 4px; }
+body .ui-controller .status-bar .status strong { font-style: italic; padding: 0 4px; }
 
 /* Level Editor styling */
 body .ui-controller .level-editor { height: 100vh; }
@@ -260,8 +247,4 @@ body .dialog .wrapper .inputs input[type="button"]:last-of-type { background-col
     body .dialog .wrapper p { line-height: 16px; }
     body .dialog .wrapper .inputs input { margin: 0 0 8px; font-size: 1em; }
     body .dialog .wrapper .inputs input[type="range"] { padding: 8px 0; }
-
-    /* Chrome extension styling */
-    body .ui-controller .chrome-store .upgrade { height: 36px; padding: 0 12px; }
-    body .ui-controller .chrome-store .features { top: 48px; font-size: 1em; }
 }
