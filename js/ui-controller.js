@@ -305,7 +305,7 @@ class UIController {
                     // Generate random tip
                     var statusLength = json.status.length;
                     var statusIndex = Math.floor(Math.random() * statusLength);
-                    $('.status-text').text(json.status[statusIndex]);
+                    $('.status-text').html(json.status[statusIndex]);
                 });
             }
             this.home.removeClass('hidden');
