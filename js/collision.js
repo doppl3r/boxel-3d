@@ -18,7 +18,7 @@ class Collision {
                 var objectA = a.level.getObjectByName(bodyA.parent.name);
                 var objectB = a.level.getObjectByName(bodyB.parent.name);
 
-                // Check if player is falling
+                // Check if any collision is related to the player
                 if (objectA.body.class == 'player') {
                     a.player.allowJump = true;
                 }

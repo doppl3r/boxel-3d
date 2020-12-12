@@ -159,6 +159,7 @@ class Level extends THREE.Group {
     }
 
     resetLevel(a) {
+        // Gets called every time the level starts (including checkpoints)
         for (var i = 0; i < this.children.length; i++) {
             var child = this.children[i];
             child.resetToOrigin();

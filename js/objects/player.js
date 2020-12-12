@@ -7,42 +7,77 @@ class Player extends Cube {
         this.setScale({ x: 16, y: 16, z: 16 });
         this.setStatic(false);
         this.setColors('#dc265a');
+        this.setMode('jump'); // Default 'jump'
         this.mass = 5;
         this.allowJump = false;
         this.addLight('#dc265a', 2, 256, false);
+
+        // Add grapple object
+        this.grapple = new Grapple();
+    }
+
+    setMode(mode, updateOrigin = true) {
+        mode = (mode == null) ? 'jump' : mode;
+        this.mode = mode;
+        if (updateOrigin == true) this.setModeOrigin(mode);
+    }
+
+    setModeOrigin(mode) {
+        this.modeOrigin = mode;
     }
 
     jump() {
-        if (this.allowJump == true) {
-            this.allowJump = false;
-
-            // Define jump conditions
-            var gravity = app.engine.world.gravity;
-            var gravityAngle = (Math.PI / 2) - Matter.Vector.angle({ x: 0, y: 0 }, gravity);
-            var velocity = this.body.velocity;
-            var spinDirection = 1; // Default clockwise
-            var angularVelocity = (Math.PI / 20);
-            var forceScale = 0.025; // Default 0.025
-            var force = {
-                x: -(gravity.x * forceScale * this.body.mass),
-                y: -(gravity.y * forceScale * this.body.mass)
-            };
-
-            // Rotate velocity angle back to 0 degrees, remove y velocity, then rotate back to gravity angle
-            velocity = Matter.Vector.rotate(velocity, gravityAngle);
-            velocity.y = 0; // Reset vertical velocity to 0
-            spinDirection = velocity.x >= 0 ? 1 : -1;
-            angularVelocity *= spinDirection;
-            velocity = Matter.Vector.rotate(velocity, -gravityAngle);
-
-            // Disable angular velocity at slower speeds
-            if (this.body.speed < this.maxSpeed * 0.25) angularVelocity = 0;
-
-            // Use engine to modulate object
-            Matter.Body.setVelocity(this.body, velocity);
-            Matter.Body.setAngularVelocity(this.body, angularVelocity);
-            Matter.Body.applyForce(this.body, this.body.position, force);
+        if (this.mode == 'jump') {
+            if (this.allowJump == true) {
+                this.allowJump = false;
+    
+                // Define jump conditions
+                var gravity = app.engine.world.gravity;
+                var gravityAngle = (Math.PI / 2) - Matter.Vector.angle({ x: 0, y: 0 }, gravity);
+                var velocity = this.body.velocity;
+                var spinDirection = 1; // Default clockwise
+                var angularVelocity = (Math.PI / 20);
+                var forceScale = 0.025; // Default 0.025
+                var force = {
+                    x: -(gravity.x * forceScale * this.body.mass),
+                    y: -(gravity.y * forceScale * this.body.mass)
+                };
+    
+                // Rotate velocity angle back to 0 degrees, remove y velocity, then rotate back to gravity angle
+                velocity = Matter.Vector.rotate(velocity, gravityAngle);
+                velocity.y = 0; // Reset vertical velocity to 0
+                spinDirection = velocity.x >= 0 ? 1 : -1;
+                angularVelocity *= spinDirection;
+                velocity = Matter.Vector.rotate(velocity, -gravityAngle);
+    
+                // Disable angular velocity at slower speeds
+                if (this.body.speed < this.maxSpeed * 0.25) angularVelocity = 0;
+    
+                // Use engine to modulate object
+                Matter.Body.setVelocity(this.body, velocity);
+                Matter.Body.setAngularVelocity(this.body, angularVelocity);
+                Matter.Body.applyForce(this.body, this.body.position, force);
+            }
         }
+    }
+
+    addGrapple(mouse) {
+        // Add constraint
+        if (this.mode == 'grapple'){
+            this.mouse = mouse;
+            this.grapple.add({ x: mouse.x, y: -mouse.y }, this.body)
+            this.updateGrapple();
+        }
+    }
+
+    removeGrapple() {
+        if (this.mode == 'grapple') {
+            this.grapple.remove();
+        }
+    }
+
+    updateGrapple() {
+        this.grapple.update(this.mouse, this.body);
     }
 
     kill() {

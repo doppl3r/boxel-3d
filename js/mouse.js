@@ -48,7 +48,8 @@ class Mouse {
             }
         }
         else {
-            a.player.jump();
+            a.player.jump(a.mouse.getPosition(e, a));
+            a.player.addGrapple(a.mouse.getPosition(e, a));
         }
     }
 
@@ -147,6 +148,9 @@ class Mouse {
                 a.mouse.mode = a.mouse.prevMode;
                 a.ui.updateLevelOptions()
             }
+        }
+        else {
+            a.player.removeGrapple();
         }
     }
 

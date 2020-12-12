@@ -121,6 +121,9 @@ class App {
                     }
                 }
             }
+            else {
+                a.player.updateGrapple();
+            }
             index--; // Update iterator
         }
     }
