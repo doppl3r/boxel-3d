@@ -29,7 +29,7 @@ class Grapple {
     update(pointA, bodyB) {
         var points = [];
         this.constraint.length -= this.speed;
-        this.speed += 0.1;
+        this.speed += 0.025;
         if (this.constraint.length <= 8) this.remove();
         
         points.push(new THREE.Vector3(pointA.x, pointA.y, 0));

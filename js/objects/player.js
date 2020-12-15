@@ -13,7 +13,8 @@ class Player extends Cube {
         this.addLight('#dc265a', 2, 256, false);
 
         // Add grapple object
-        this.grapple = new Grapple();
+        this.grapple = new Grapple(); // TODO: remove
+        this.chain = new Chain();
     }
 
     setMode(mode, updateOrigin = true) {
