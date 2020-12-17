@@ -81,6 +81,25 @@ class Player extends Cube {
         this.grapple.update(this.mouse, this.body);
     }
 
+    addChain(mouse) {
+        // Add constraint
+        if (this.mode == 'chain'){
+            this.mouse = mouse;
+            this.chain.addLinks(this.body, { x: mouse.x, y: -mouse.y });
+            this.updateChain();
+        }
+    }
+
+    updateChain() {
+        this.chain.updateLinks();
+    }
+
+    removeChain() {
+        if (this.mode == 'chain') {
+            this.chain.removeLinks();
+        }
+    }
+
     kill() {
         if (this.isFrozen() == false) {
             this.freeze(true);

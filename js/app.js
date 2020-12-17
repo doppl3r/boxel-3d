@@ -122,7 +122,8 @@ class App {
                 }
             }
             else {
-                a.player.updateGrapple();
+                a.player.updateGrapple(); // TODO: remove
+                a.player.updateChain();
             }
             index--; // Update iterator
         }
