@@ -11,9 +11,6 @@ class Player extends Cube {
         this.mass = 5;
         this.allowJump = false;
         this.addLight('#dc265a', 2, 256, false);
-
-        // Add grapple object
-        this.grapple = new Grapple(); // TODO: remove
         this.chain = new Chain();
     }
 
@@ -60,25 +57,6 @@ class Player extends Cube {
                 Matter.Body.applyForce(this.body, this.body.position, force);
             }
         }
-    }
-
-    addGrapple(mouse) {
-        // Add constraint
-        if (this.mode == 'grapple'){
-            this.mouse = mouse;
-            this.grapple.add({ x: mouse.x, y: -mouse.y }, this.body)
-            this.updateGrapple();
-        }
-    }
-
-    removeGrapple() {
-        if (this.mode == 'grapple') {
-            this.grapple.remove();
-        }
-    }
-
-    updateGrapple() {
-        this.grapple.update(this.mouse, this.body);
     }
 
     addChain(mouse) {

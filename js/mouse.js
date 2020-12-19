@@ -49,7 +49,6 @@ class Mouse {
         }
         else {
             a.player.jump(a.mouse.getPosition(e, a));
-            a.player.addGrapple(a.mouse.getPosition(e, a)); // TODO: remove
             a.player.addChain(a.mouse.getPosition(e, a));
         }
     }
@@ -151,7 +150,6 @@ class Mouse {
             }
         }
         else {
-            a.player.removeGrapple(); // TODO: remove
             a.player.removeChain();
         }
     }
