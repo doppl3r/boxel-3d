@@ -180,6 +180,7 @@ class UIController {
             else if (action == 'resize') { app.ui.selectObjectType(action); }
             else if (action == 'direction') { app.ui.selectObjectType(action); }
             else if (action == 'gravity') { app.ui.selectObjectType(action); }
+            else if (action == 'grapple') { app.ui.selectObjectType(action); }
             else if (action == 'finish') { app.ui.selectObjectType(action); }
 
             // Object options listener

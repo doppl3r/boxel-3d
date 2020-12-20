@@ -11,7 +11,7 @@ class Player extends Cube {
         this.mass = 5;
         this.allowJump = false;
         this.addLight('#dc265a', 2, 256, false);
-        this.chain = new Chain();
+        this.rope = new Rope();
     }
 
     setMode(mode, updateOrigin = true) {
@@ -59,22 +59,22 @@ class Player extends Cube {
         }
     }
 
-    addChain(mouse) {
+    addRope(mouse) {
         // Add constraint
-        if (this.mode == 'chain'){
+        if (this.mode == 'grapple'){
             this.mouse = mouse;
-            this.chain.addLinks(this.body, { x: mouse.x, y: -mouse.y });
-            this.updateChain();
+            this.rope.addJoints(this.body, { x: mouse.x, y: -mouse.y });
+            this.updateRope();
         }
     }
 
-    updateChain() {
-        this.chain.updateLinks();
+    updateRope() {
+        this.rope.updateJoints();
     }
 
-    removeChain() {
-        if (this.mode == 'chain') {
-            this.chain.removeLinks();
+    removeRope() {
+        if (this.mode == 'grapple') {
+            this.rope.removeJoints();
         }
     }
 

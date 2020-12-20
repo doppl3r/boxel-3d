@@ -1,4 +1,4 @@
-class Chain extends THREE.Group {
+class Rope extends THREE.Group {
     constructor() {
         super();
         this.radius = 8;
@@ -6,41 +6,41 @@ class Chain extends THREE.Group {
         this.speed = 1 / this.joints;
     }
 
-    addLinks(bodyA, pointB) {
+    addJoints(bodyA, pointB) {
         var p1 = bodyA.position;
         var p2 = pointB;
 
         for (var i = 1; i <= this.joints; i++) {
             var percent = i / this.joints;
-            var linkPosition = { 
+            var jointPosition = { 
                 x: p1.x + ((p2.x - p1.x) * percent),
                 y: p1.y + ((p2.y - p1.y) * percent)
             };
             
-            // Update bodyA to previous link
+            // Update bodyA to previous joint
             if (i > 1) { bodyA = this.children[this.children.length - 1].body; }
 
-            // Update link options
+            // Update joint options
             var options = {
-                position: linkPosition,
+                position: jointPosition,
                 bodyA: bodyA,
                 radius: this.radius,
                 speed: this.speed
             };
 
-            // Add new link to chain
-            var link = new Link(options);
-            this.add(link);
+            // Add new joint
+            var joint = new Joint(options);
+            this.add(joint);
         }
 
-        // Add chain to level group
+        // Add joints to level group
         app.level.add(this);
 
         // Set last body to static
         Matter.Body.setStatic(this.children[this.children.length - 1].body, true);
     }
     
-    removeLinks() {
+    removeJoints() {
         var length = this.children.length;
         var index = length - 1;
 
@@ -54,14 +54,14 @@ class Chain extends THREE.Group {
         }
     }
     
-    updateLinks() {
+    updateJoints() {
         for (var i = 0; i < this.children.length; i++) {
             var points = [];
             var child = this.children[i];
             var pointA = child.constraint.bodyA.position;
             var pointB = child.constraint.bodyB.position;
             
-            // Shrink every link
+            // Shrink every joint
             //child.shrink();
 
             // Update line mesh
@@ -75,7 +75,7 @@ class Chain extends THREE.Group {
     }
 }
 
-class Link extends THREE.Group {
+class Joint extends THREE.Group {
     constructor(options) {
         super();
         this.addLineMesh(options);

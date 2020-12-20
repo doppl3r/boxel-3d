@@ -73,6 +73,11 @@ class Collision {
                                 app.updateGravity(objectA.body.angle);
                             }
                         }
+                        else if (objectA.body.class == 'grapple') {
+                            if (objectB.body.class ==  'player') {
+                                app.player.setMode('grapple');
+                            }
+                        }
                         else if (objectA.body.class == 'finish') {
                             if (objectB.body.class ==  'player') { app.player.finish(); }
                         }

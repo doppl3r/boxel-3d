@@ -122,7 +122,7 @@ class App {
                 }
             }
             else {
-                a.player.updateChain();
+                a.player.updateRope();
             }
             index--; // Update iterator
         }

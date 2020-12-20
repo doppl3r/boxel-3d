@@ -49,7 +49,7 @@ class Mouse {
         }
         else {
             a.player.jump(a.mouse.getPosition(e, a));
-            a.player.addChain(a.mouse.getPosition(e, a));
+            a.player.addRope(a.mouse.getPosition(e, a));
         }
     }
 
@@ -150,7 +150,7 @@ class Mouse {
             }
         }
         else {
-            a.player.removeChain();
+            a.player.removeRope();
         }
     }
 
