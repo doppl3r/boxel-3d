@@ -1,17 +1,18 @@
 class Rope extends THREE.Group {
     constructor() {
         super();
-        this.radius = 8;
-        this.joints = 4;
-        this.speed = 1 / this.joints;
+        this.radius = 2;
     }
 
     addJoints(bodyA, pointB) {
         var p1 = bodyA.position;
         var p2 = pointB;
+        var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
+        var joints = Math.floor(length / (this.radius * 2)) / 8;
+        var speed = 1 / joints;
 
-        for (var i = 1; i <= this.joints; i++) {
-            var percent = i / this.joints;
+        for (var i = 1; i <= joints; i++) {
+            var percent = i / joints;
             var jointPosition = { 
                 x: p1.x + ((p2.x - p1.x) * percent),
                 y: p1.y + ((p2.y - p1.y) * percent)
@@ -25,7 +26,7 @@ class Rope extends THREE.Group {
                 position: jointPosition,
                 bodyA: bodyA,
                 radius: this.radius,
-                speed: this.speed
+                speed: speed
             };
 
             // Add new joint
@@ -105,7 +106,9 @@ class Joint extends THREE.Group {
     addBody(options) {
         // Physical body
         this.part = Matter.Bodies.circle(options.position.x, options.position.y, options.radius);
-        this.body = Matter.Body.create({ parts: [this.part], friction: 0, frictionAir: 0, frictionStatic: 0, restitution: 0, mass: 0 });
+        this.body = Matter.Body.create({ parts: [this.part], friction: 0, frictionAir: 0, frictionStatic: 0, restitution: 0 });
+        this.body.collisionFilter.category = 1;
+        Matter.World.add(app.engine.world, this.body);
     }
 
     removeBody() {
@@ -114,10 +117,7 @@ class Joint extends THREE.Group {
 
     addConstraint(options) {
         // Constraint
-        this.constraint = Matter.Constraint.create({
-            bodyA: options.bodyA,
-            bodyB: this.body
-        });
+        this.constraint = Matter.Constraint.create({ bodyA: options.bodyA, bodyB: this.body, radius: options.radius, shrink: true, mass: 0 });
         Matter.World.add(app.engine.world, this.constraint);
     }
 
@@ -126,10 +126,15 @@ class Joint extends THREE.Group {
     }
 
     shrink() {
-        if (this.constraint.length > 0) {
-            this.constraint.length -= this.speed;
-            this.speed += 0.0125;
+        if (this.constraint.shrink == true) {
+            if (this.constraint.length > this.constraint.radius) {
+                this.constraint.length -= this.speed;
+                //this.speed += 0.0125;
+            }
+            else {
+                this.constraint.length = this.constraint.radius;
+                this.constraint.shrink = false;
+            }
         }
-        else this.constraint.length = 0;
     }
 }
