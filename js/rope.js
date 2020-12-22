@@ -1,14 +1,15 @@
 class Rope extends THREE.Group {
     constructor() {
         super();
-        this.radius = 2;
+        this.radius = 8;
     }
 
     addJoints(bodyA, pointB) {
         var p1 = bodyA.position;
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
-        var joints = Math.floor(length / (this.radius * 2)) / 8;
+        //var joints = Math.floor(length / (this.radius * 2)) / 2;
+        var joints = 1;
         var speed = 1 / joints;
 
         for (var i = 1; i <= joints; i++) {
@@ -35,7 +36,9 @@ class Rope extends THREE.Group {
         }
 
         // Set last body to static
-        Matter.Body.setStatic(this.children[this.children.length - 1].body, true);
+        if (this.children.length > 0) {
+            Matter.Body.setStatic(this.children[this.children.length - 1].body, true);
+        }
     }
     
     removeJoints() {
@@ -90,7 +93,7 @@ class Joint extends THREE.Group {
         // Line mesh
         this.speed = options.speed; // Shrink speed
         this.line = new MeshLine();
-        this.lineMaterial = new MeshLineMaterial({ color: '#ffffff', lineWidth: options.radius * 2, opacity: 0.5, transparent: true });
+        this.lineMaterial = new MeshLineMaterial({ color: '#ffffff', lineWidth: options.radius * 2, opacity: 1, transparent: true });
         this.lineMesh = new THREE.Mesh(this.line, this.lineMaterial);
         this.add(this.lineMesh);
     }
@@ -98,7 +101,7 @@ class Joint extends THREE.Group {
     addCircleMesh(options) {
         // Circle mesh
         this.circle = new THREE.CircleGeometry(options.radius, 12); // radius, segments
-        this.circleMaterial = new THREE.MeshBasicMaterial({ color: '#ff0000' });
+        this.circleMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', opacity: 1, transparent: true });
         this.circleMesh = new THREE.Mesh(this.circle, this.circleMaterial);
         this.add(this.circleMesh);
     }
@@ -117,7 +120,7 @@ class Joint extends THREE.Group {
 
     addConstraint(options) {
         // Constraint
-        this.constraint = Matter.Constraint.create({ bodyA: options.bodyA, bodyB: this.body, radius: options.radius, shrink: true, mass: 0 });
+        this.constraint = Matter.Constraint.create({ bodyA: options.bodyA, bodyB: this.body, radius: options.radius, shrink: true, mass: 0, stiffness: 1.5 });
         Matter.World.add(app.engine.world, this.constraint);
     }
 
@@ -127,12 +130,12 @@ class Joint extends THREE.Group {
 
     shrink() {
         if (this.constraint.shrink == true) {
-            if (this.constraint.length > this.constraint.radius) {
+            if (this.constraint.length > this.constraint.radius * 2) {
                 this.constraint.length -= this.speed;
                 //this.speed += 0.0125;
             }
             else {
-                this.constraint.length = this.constraint.radius;
+                this.constraint.length = this.constraint.radius * 2;
                 this.constraint.shrink = false;
             }
         }
