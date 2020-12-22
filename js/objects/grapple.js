@@ -14,11 +14,29 @@ class Grapple extends Cube {
     }
 
     addShapes(options) {
-        var u = (options.scaleZ * 0.2); // unit size
-        this.shapes.addCube({ x: 0, y: 0, z: -(u * 0.5), scaleX: 1, scaleY: 1, scaleZ: (u * 4), color: '#0287ef' }); // Blue Box
+        var u = (options.scaleZ / 8); // unit size
+        this.shapes.addCube({ x: 0, y: 0, z: -u, scaleX: 1, scaleY: 1, scaleZ: (u * 7), color: '#0287ef' }); // Blue Box
+        
+        // Box bottom left
         this.shapes.addExtrusion({
-            position: { x: -0.5, y: -0.5, z: (u * 1.5) },
-            points: [{ x: u, y: u }, { x: u * 4, y: 0.5 }, { x: u, y: u * 4 }, { x: 0.4, y: 0.5 }],
+            position: { x: 0, y: 0, z: (u * 3) },
+            points: [{ x: 0, y: 0 }, { x: 0, y: -(u * 3) }, { x: -(u * 3), y: -(u * 3) }, { x: -(u * 3), y: 0 }],
+            depth: u,
+            color: '#fff'
+        });
+
+        // Box diagonal center
+        this.shapes.addExtrusion({
+            position: { x: 0, y: 0, z: (u * 3) },
+            points: [{ x: -(u * 1), y: 0 }, { x: 0, y: -(u * 1) }, { x: (u * 2), y: (u * 1) }, { x: (u * 1), y: (u * 2) }],
+            depth: u,
+            color: '#fff'
+        });
+
+        // Triangle top right
+        this.shapes.addExtrusion({
+            position: { x: 0, y: 0, z: (u * 3) },
+            points: [{ x: 0, y: (u * 3) }, { x: (u * 3), y: (u * 3) }, { x: (u * 3), y: 0 }],
             depth: u,
             color: '#fff'
         });

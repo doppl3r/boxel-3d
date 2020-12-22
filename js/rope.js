@@ -33,9 +33,6 @@ class Rope extends THREE.Group {
             this.add(joint);
         }
 
-        // Add joints to level group
-        app.level.add(this);
-
         // Set last body to static
         Matter.Body.setStatic(this.children[this.children.length - 1].body, true);
     }
@@ -53,6 +50,10 @@ class Rope extends THREE.Group {
             index--;
         }
     }
+
+    resetToOrigin() {
+        this.removeJoints();
+    }
     
     updateJoints() {
         for (var i = 0; i < this.children.length; i++) {
@@ -62,7 +63,7 @@ class Rope extends THREE.Group {
             var pointB = child.constraint.bodyB.position;
             
             // Shrink every joint
-            //child.shrink();
+            child.shrink();
 
             // Update line mesh
             points.push(new THREE.Vector3(pointA.x,- pointA.y, 0));

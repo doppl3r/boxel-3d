@@ -14,16 +14,6 @@ class Player extends Cube {
         this.rope = new Rope();
     }
 
-    setMode(mode, updateOrigin = true) {
-        mode = (mode == null) ? 'jump' : mode;
-        this.mode = mode;
-        if (updateOrigin == true) this.setModeOrigin(mode);
-    }
-
-    setModeOrigin(mode) {
-        this.modeOrigin = mode;
-    }
-
     jump() {
         if (this.mode == 'jump') {
             if (this.allowJump == true) {
@@ -62,6 +52,7 @@ class Player extends Cube {
     addRope(mouse) {
         // Add constraint
         if (this.mode == 'grapple'){
+            app.level.add(this.rope);
             this.mouse = mouse;
             this.rope.addJoints(this.body, { x: mouse.x, y: -mouse.y });
             this.updateRope();
@@ -73,9 +64,8 @@ class Player extends Cube {
     }
 
     removeRope() {
-        if (this.mode == 'grapple') {
-            this.rope.removeJoints();
-        }
+        this.rope.removeJoints();
+        app.level.remove(this.rope);
     }
 
     kill() {

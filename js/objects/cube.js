@@ -34,6 +34,7 @@ class Cube extends THREE.Mesh {
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
+        this.setMode();
         this.setForceDirection();
     }
 
@@ -144,6 +145,7 @@ class Cube extends THREE.Mesh {
         this.setForceDirection(this.forceOrigin, false);
         this.setStatic(this.isStaticOrigin, false);
         this.setFriction(this.frictionOrigin, false);
+        this.setMode(this.modeOrigin, false);
         Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
         Matter.Body.setAngularVelocity(this.body, 0);
     }
@@ -178,6 +180,16 @@ class Cube extends THREE.Mesh {
 
     getFriction() {
         return this.body.friction;
+    }
+
+    setMode(mode, updateOrigin = true) {
+        mode = (mode == null) ? 'default' : mode;
+        this.mode = mode;
+        if (updateOrigin == true) this.setModeOrigin(mode);
+    }
+
+    setModeOrigin(mode) {
+        this.modeOrigin = mode;
     }
 
     getClass() {

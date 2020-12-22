@@ -32,15 +32,18 @@ class Level extends THREE.Group {
     removeObject(object, a, override = false) {
         // Prevent deleting the player
         if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
-            Matter.World.remove(a.engine.world, object.body);
-            this.remove(object);
-            a.level.deselectLevel(a);
+            if (object != undefined) {
+                Matter.World.remove(a.engine.world, object.body);
+                this.remove(object);
+                a.level.deselectLevel(a);
+            }
         }
     }
 
     clearLevel(a) {
-        this.name = this.defaultName;
         var length = a.level.children.length;
+        this.name = this.defaultName;
+        a.player.removeRope();
         for (var i=0; i < length; i++) {
             var child = a.level.children[0];
             this.removeObject(child, a, true);
@@ -120,8 +123,10 @@ class Level extends THREE.Group {
         // Loop through THREE.js group children
         for (var i = 0; i < a.level.children.length; i++) {
             var object = a.level.children[i];
-            var objectData = this.exportObjectToJSON(object);
-            levelJSON.children.push(objectData);
+            if (object.type == "Mesh") {
+                var objectData = this.exportObjectToJSON(object);
+                levelJSON.children.push(objectData);
+            }
         }
         return levelJSON;
     }

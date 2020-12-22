@@ -75,7 +75,7 @@ class Collision {
                         }
                         else if (objectA.body.class == 'grapple') {
                             if (objectB.body.class ==  'player') {
-                                app.player.setMode('grapple');
+                                app.player.setMode('grapple', false);
                             }
                         }
                         else if (objectA.body.class == 'finish') {

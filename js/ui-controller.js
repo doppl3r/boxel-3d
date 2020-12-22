@@ -63,7 +63,7 @@ class UIController {
                 app.ui.dialog.add({ text: '<img src="img/svg/gear.svg">', inputs: inputs });
             }
 
-            // Level picker UI
+            // Campaign level picker UI
             if (action.includes('level_')) {
                 app.ui.loadLevel($(this));
                 app.ui.updateUI('play');

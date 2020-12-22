@@ -149,9 +149,7 @@ class Mouse {
                 a.ui.updateLevelOptions()
             }
         }
-        else {
-            a.player.removeRope();
-        }
+        a.player.removeRope(); // Always remove rope
     }
 
     getPosition(e, a) {
