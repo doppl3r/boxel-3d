@@ -1,15 +1,15 @@
 class Rope extends THREE.Group {
     constructor() {
         super();
-        this.radius = 8;
+        this.radius = 2;
     }
 
     addJoints(bodyA, pointB) {
         var p1 = bodyA.position;
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
-        //var joints = Math.floor(length / (this.radius * 2)) / 2;
         var joints = 1;
+        //var joints = Math.floor(length / (this.radius * 2)) / 4;
         var speed = 1 / joints;
 
         for (var i = 1; i <= joints; i++) {
@@ -93,7 +93,7 @@ class Joint extends THREE.Group {
         // Line mesh
         this.speed = options.speed; // Shrink speed
         this.line = new MeshLine();
-        this.lineMaterial = new MeshLineMaterial({ color: '#ffffff', lineWidth: options.radius * 2, opacity: 1, transparent: true });
+        this.lineMaterial = new MeshLineMaterial({ color: '#ffffff', lineWidth: options.radius * 2, opacity: 0.5, transparent: true });
         this.lineMesh = new THREE.Mesh(this.line, this.lineMaterial);
         this.add(this.lineMesh);
     }
@@ -101,7 +101,7 @@ class Joint extends THREE.Group {
     addCircleMesh(options) {
         // Circle mesh
         this.circle = new THREE.CircleGeometry(options.radius, 12); // radius, segments
-        this.circleMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', opacity: 1, transparent: true });
+        this.circleMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', opacity: 0.5, transparent: true });
         this.circleMesh = new THREE.Mesh(this.circle, this.circleMaterial);
         this.add(this.circleMesh);
     }
