@@ -1,7 +1,8 @@
 class Rope extends THREE.Group {
     constructor() {
         super();
-        this.radius = 2;
+        this.radius = 4;
+        this.setTexture(this);
     }
 
     addJoints(bodyA, pointB) {
@@ -9,7 +10,7 @@ class Rope extends THREE.Group {
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
         var joints = 1;
-        var joints = Math.floor(length / (this.radius * 2)) / 4;
+        var joints = Math.floor(length / (this.radius * 2));
         var speed = 1 / joints;
 
         for (var i = 1; i <= joints; i++) {
@@ -27,7 +28,8 @@ class Rope extends THREE.Group {
                 bodyA: bodyA,
                 position: jointPosition,
                 radius: this.radius,
-                speed: speed
+                speed: speed,
+                texture: this.texture
             };
 
             // Add new joint
@@ -70,13 +72,22 @@ class Rope extends THREE.Group {
             child.shrink();
 
             // Update line mesh
-            points.push(new THREE.Vector3(pointA.x,- pointA.y, 0));
-            points.push(new THREE.Vector3(pointB.x, -pointB.y, 0));
-            child.line.setPoints(points);
+            if (child.line != null) {
+                points.push(new THREE.Vector3(pointA.x,- pointA.y, 0));
+                points.push(new THREE.Vector3(pointB.x, -pointB.y, 0));
+                child.line.setPoints(points);
+            }
 
             // Update circle mesh
-            child.circleMesh.position.set(pointB.x, -pointB.y, 0);
+            if (child.circleMesh != null) {
+                child.circleMesh.position.set(pointB.x, -pointB.y, 0);
+            }
         }
+    }
+
+    setTexture(self) {
+        this.loader = new THREE.TextureLoader();
+        this.loader.load('../img/png/textures/texture-chain.png', function(texture) { self.texture = texture });
     }
 }
 
@@ -84,7 +95,7 @@ class Joint extends THREE.Group {
     constructor(options) {
         super();
         this.addLineMesh(options);
-        this.addCircleMesh(options);
+        //this.addCircleMesh(options);
         this.addBody(options);
         this.addConstraint(options);
     }
@@ -93,7 +104,14 @@ class Joint extends THREE.Group {
         // Line mesh
         this.speed = options.speed; // Shrink speed
         this.line = new MeshLine();
-        this.lineMaterial = new MeshLineMaterial({ color: '#ffffff', lineWidth: options.radius * 2, opacity: 0.5, transparent: true });
+        this.lineMaterial = new MeshLineMaterial({ 
+            color: '#ffffff',
+            lineWidth: options.radius * 2,
+            map: options.texture,
+            opacity: 1.0,
+            useMap: true,
+            transparent: true
+        });
         this.lineMesh = new THREE.Mesh(this.line, this.lineMaterial);
         this.add(this.lineMesh);
     }
@@ -101,7 +119,7 @@ class Joint extends THREE.Group {
     addCircleMesh(options) {
         // Circle mesh
         this.circle = new THREE.CircleGeometry(options.radius, 12); // radius, segments
-        this.circleMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', opacity: 0.5, transparent: true });
+        this.circleMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', opacity: 1.0, transparent: true });
         this.circleMesh = new THREE.Mesh(this.circle, this.circleMaterial);
         this.add(this.circleMesh);
     }
