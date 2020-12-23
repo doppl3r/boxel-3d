@@ -9,7 +9,7 @@ class Rope extends THREE.Group {
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
         var joints = 1;
-        //var joints = Math.floor(length / (this.radius * 2)) / 4;
+        var joints = Math.floor(length / (this.radius * 2)) / 4;
         var speed = 1 / joints;
 
         for (var i = 1; i <= joints; i++) {
@@ -24,8 +24,8 @@ class Rope extends THREE.Group {
 
             // Update joint options
             var options = {
-                position: jointPosition,
                 bodyA: bodyA,
+                position: jointPosition,
                 radius: this.radius,
                 speed: speed
             };
@@ -108,9 +108,8 @@ class Joint extends THREE.Group {
 
     addBody(options) {
         // Physical body
-        this.part = Matter.Bodies.circle(options.position.x, options.position.y, options.radius);
+        this.part = Matter.Bodies.circle(options.position.x, options.position.y, options.radius, { isSensor: true });
         this.body = Matter.Body.create({ parts: [this.part], friction: 0, frictionAir: 0, frictionStatic: 0, restitution: 0 });
-        this.body.collisionFilter.category = 1;
         Matter.World.add(app.engine.world, this.body);
     }
 
@@ -130,12 +129,11 @@ class Joint extends THREE.Group {
 
     shrink() {
         if (this.constraint.shrink == true) {
-            if (this.constraint.length > this.constraint.radius * 2) {
+            if (this.constraint.length > 0) {
                 this.constraint.length -= this.speed;
-                //this.speed += 0.0125;
             }
             else {
-                this.constraint.length = this.constraint.radius * 2;
+                this.constraint.length = 0;
                 this.constraint.shrink = false;
             }
         }
