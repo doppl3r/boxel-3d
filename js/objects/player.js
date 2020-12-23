@@ -52,10 +52,33 @@ class Player extends Cube {
     addRope(mouse) {
         // Add constraint
         if (this.mode == 'grapple'){
-            app.level.add(this.rope);
-            this.mouse = mouse;
-            this.rope.addJoints(this.body, { x: mouse.x, y: -mouse.y });
-            this.updateRope();
+            var spacing = 4; // Smaller = more precise
+            var length = 400; // How far to check for objects beyond p2
+            var dx = mouse.x - this.position.x;
+            var dy = mouse.y - this.position.y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            var p1 = { x: this.position.x, y: -this.position.y };
+            var p2 = { 
+                x: (this.position.x + (mouse.x - this.position.x) * length / distance),
+                y: -(this.position.y + (mouse.y - this.position.y) * length / distance)
+            };
+
+            for (var i = 0; i < length; i += spacing) {
+                var percent = i / (length);
+                var point = { 
+                    x: p1.x + ((p2.x - p1.x) * percent),
+                    y: p1.y + ((p2.y - p1.y) * percent)
+                };
+                var collision = Matter.Query.point(app.engine.world.bodies, point);
+                
+                // Add rope if collision detected
+                if (collision.length > 0 && collision[0].class != "player") {
+                    app.level.add(this.rope);
+                    this.rope.addJoints(this.body, point);
+                    this.updateRope();
+                    break;
+                }
+            }
         }
     }
 
