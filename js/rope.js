@@ -6,15 +6,15 @@ class Rope extends THREE.Group {
         this.setTexture(this);
     }
 
-    addJoints(bodyA, pointB) {
+    addJoints(bodyA, bodyB, pointB) {
         var p1 = bodyA.position;
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
-        var joints = 1;
-        var joints = Math.floor(length / (this.radius * 2) / this.spacing);
+        var joints = Math.ceil(length / (this.radius * 2) / this.spacing);
         var speed = 1 / joints;
 
         for (var i = 1; i <= joints; i++) {
+            var lastJoint = (i == joints);
             var percent = i / joints;
             var jointPosition = { 
                 x: p1.x + ((p2.x - p1.x) * percent),
@@ -27,6 +27,8 @@ class Rope extends THREE.Group {
             // Update joint options
             var options = {
                 bodyA: bodyA,
+                bodyB: bodyB,
+                lastJoint: lastJoint,
                 position: jointPosition,
                 radius: this.radius,
                 spacing: this.spacing,
@@ -37,11 +39,6 @@ class Rope extends THREE.Group {
             // Add new joint
             var joint = new Joint(options);
             this.add(joint);
-        }
-
-        // Set last body to static
-        if (this.children.length > 0) {
-            Matter.Body.setStatic(this.children[this.children.length - 1].body, true);
         }
     }
     
@@ -75,8 +72,8 @@ class Rope extends THREE.Group {
 
             // Update line mesh
             if (child.line != null) {
-                points.push(new THREE.Vector3(pointA.x,- pointA.y, 0));
-                points.push(new THREE.Vector3(pointB.x, -pointB.y, 0));
+                points.push(new THREE.Vector3(pointA.x, -pointA.y, 0));
+                points.push(new THREE.Vector3(pointB.x + child.offset.x, -(pointB.y + child.offset.y), 0));
                 child.line.setPoints(points);
             }
 
@@ -143,7 +140,21 @@ class Joint extends THREE.Group {
 
     addConstraint(options) {
         // Constraint
-        this.constraint = Matter.Constraint.create({ bodyA: options.bodyA, bodyB: this.body, radius: options.radius, shrink: true, mass: 0, stiffness: 1.5 });
+        var bodyB = this.body;
+        var pointB = { x: 0, y: 0 };
+
+        // Update last joint properties
+        if (options.lastJoint == true) {
+            bodyB = options.bodyB;
+            pointB = {
+                x: -(bodyB.position.x - options.position.x),
+                y: -(bodyB.position.y - options.position.y)
+            };
+        }
+
+        // Configure constraint options
+        this.offset = pointB; // Used for last joint
+        this.constraint = Matter.Constraint.create({ bodyA: options.bodyA, bodyB: bodyB, mass: 0, pointB: pointB, stiffness: 1.5, shrink: true });
         Matter.World.add(app.engine.world, this.constraint);
     }
 

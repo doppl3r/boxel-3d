@@ -74,7 +74,7 @@ class Player extends Cube {
                 // Add rope if collision detected
                 if (collision.length > 0 && collision[0].class != "player") {
                     app.level.add(this.rope);
-                    this.rope.addJoints(this.body, point);
+                    this.rope.addJoints(this.body, collision[0], point); // bodyA, bodyB, point
                     this.updateRope();
                     break;
                 }
