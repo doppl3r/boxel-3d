@@ -1,7 +1,8 @@
 class Rope extends THREE.Group {
     constructor() {
         super();
-        this.radius = 4;
+        this.radius = 4; // controls width and joint body size
+        this.spacing = 4; // distance between joints, more = better performance
         this.setTexture(this);
     }
 
@@ -10,7 +11,7 @@ class Rope extends THREE.Group {
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
         var joints = 1;
-        var joints = Math.floor(length / (this.radius * 2));
+        var joints = Math.floor(length / (this.radius * 2) / this.spacing);
         var speed = 1 / joints;
 
         for (var i = 1; i <= joints; i++) {
@@ -28,6 +29,7 @@ class Rope extends THREE.Group {
                 bodyA: bodyA,
                 position: jointPosition,
                 radius: this.radius,
+                spacing: this.spacing,
                 speed: speed,
                 texture: this.texture
             };
@@ -87,7 +89,10 @@ class Rope extends THREE.Group {
 
     setTexture(self) {
         this.loader = new THREE.TextureLoader();
-        this.loader.load('../img/png/textures/texture-chain.png', function(texture) { self.texture = texture });
+        this.loader.load('../img/png/textures/texture-chain.png', function(texture) { 
+            texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+            self.texture = texture;
+        });
     }
 }
 
@@ -110,6 +115,7 @@ class Joint extends THREE.Group {
             map: options.texture,
             opacity: 1.0,
             useMap: true,
+            repeat: new THREE.Vector2(options.spacing, 1),
             transparent: true
         });
         this.lineMesh = new THREE.Mesh(this.line, this.lineMaterial);
