@@ -11,10 +11,11 @@ class Rope extends THREE.Group {
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
         var joints = Math.ceil(length / (this.radius * 2) / this.spacing);
+        var minLength = 16 / joints;
         var speed = 1 / joints;
 
         for (var i = 1; i <= joints; i++) {
-            var lastJoint = (i == joints);
+            var isLastJoint = (i == joints);
             var percent = i / joints;
             var jointPosition = { 
                 x: p1.x + ((p2.x - p1.x) * percent),
@@ -28,7 +29,8 @@ class Rope extends THREE.Group {
             var options = {
                 bodyA: bodyA,
                 bodyB: bodyB,
-                lastJoint: lastJoint,
+                isLastJoint: isLastJoint,
+                minLength: minLength,
                 position: jointPosition,
                 radius: this.radius,
                 spacing: this.spacing,
@@ -105,6 +107,7 @@ class Joint extends THREE.Group {
     addLineMesh(options) {
         // Line mesh
         this.speed = options.speed; // Shrink speed
+        this.minLength = options.minLength;
         this.line = new MeshLine();
         this.lineMaterial = new MeshLineMaterial({ 
             color: '#ffffff',
@@ -127,6 +130,10 @@ class Joint extends THREE.Group {
         this.add(this.circleMesh);
     }
 
+    removeCircleMesh() {
+        this.remove(this.circleMesh);
+    }
+
     addBody(options) {
         // Physical body
         this.part = Matter.Bodies.circle(options.position.x, options.position.y, options.radius, { isSensor: true });
@@ -144,7 +151,9 @@ class Joint extends THREE.Group {
         var pointB = { x: 0, y: 0 };
 
         // Update last joint properties
-        if (options.lastJoint == true) {
+        if (options.isLastJoint == true) {
+            this.removeBody();
+            this.removeCircleMesh();
             bodyB = options.bodyB;
             pointB = {
                 x: -(bodyB.position.x - options.position.x),
@@ -164,11 +173,11 @@ class Joint extends THREE.Group {
 
     shrink() {
         if (this.constraint.shrink == true) {
-            if (this.constraint.length > 0) {
+            if (this.constraint.length > this.minLength) {
                 this.constraint.length -= this.speed;
             }
             else {
-                this.constraint.length = 0;
+                this.constraint.length = this.minLength;
                 this.constraint.shrink = false;
             }
         }
