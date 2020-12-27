@@ -2,7 +2,6 @@ class Rope extends THREE.Group {
     constructor() {
         super();
         this.radius = 4; // controls width and joint body size
-        this.spacing = 4; // distance between joints, more = better performance
         this.setTexture(this);
     }
 
@@ -10,7 +9,8 @@ class Rope extends THREE.Group {
         var p1 = bodyA.position;
         var p2 = pointB;
         var length = Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2));
-        var joints = Math.ceil(length / (this.radius * 2) / this.spacing);
+        var joints = 4;
+        var spacing = Math.ceil(length / (this.radius * 2) / joints);
         var minLength = 16 / joints;
         var speed = 1 / joints;
 
@@ -33,7 +33,7 @@ class Rope extends THREE.Group {
                 minLength: minLength,
                 position: jointPosition,
                 radius: this.radius,
-                spacing: this.spacing,
+                spacing: spacing,
                 speed: speed,
                 texture: this.texture
             };
