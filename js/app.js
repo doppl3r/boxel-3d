@@ -96,7 +96,10 @@ class App {
     update(e, a) {
         a.updateCamera(a);
         a.timer.render(a);
+
+        // Update player object
         a.player.renderSpeed(a);
+        a.player.updateRope();
 
         // Loop through scene for all children
         var index = a.level.children.length - 1;
@@ -120,9 +123,6 @@ class App {
                         //child.resetToOrigin();
                     }
                 }
-            }
-            else {
-                a.player.updateRope();
             }
             index--; // Update iterator
         }
