@@ -449,28 +449,22 @@ class UIController {
         var currentLevel = settings.progress;
 
         // Predefine level focus
-        app.ui.maxLevels = levels.find('level').length;
+        app.ui.maxLevels = levels.children().length;
 
         // Append levels if data elements have not been loaded
         if (loaded == false) {
 
             // Loop through each level
-            $.each(levels.find('level'), function(i) {
+            $.each(levels.children(), function(i) {
                 var level = $(this);
-                var levelString = level.html();
-                var levelData = JSON.parse(levelString);
                 var levelIndex = i + 1;
-                var levelDescription = levelData.description;
                 var actionValue = 'level_' + levelIndex;
                 level.addClass('level');
                 level.attr('tabindex', '0');
                 level.attr('action', actionValue);
-                level.attr('description', levelDescription);
                 level.html(
-                    '<img class="icon" src="img/svg/play.svg">' +
                     '<span class="title">' + levelIndex + '</span>' + 
-                    '<span class="score">--.---</span>' + 
-                    '<data style="display: none;">' + levelString + '</data>'
+                    '<span class="score">--.---</span>'
                 );
             });
             levels.show();
@@ -479,7 +473,7 @@ class UIController {
 
         // Focus into level
         setTimeout(function() { 
-            var level = levels.find('level:nth-of-type(' + currentLevel + ')');
+            var level = levels.find('.level:nth-of-type(' + currentLevel + ')');
             level.focus();
             //app.ui.levelPicker.scrollTop(level.offset().top - 136);
             app.ui.levelPicker.animate({ scrollTop: level.offset().top - 136 }, 500);
@@ -539,15 +533,16 @@ class UIController {
     }
 
     loadLevel(button) {
-        var levelData = JSON.parse(button.find('data').html());
-        var settings = app.storage.getSettings();
-        app.updateGravity();
-        app.play = true;
-        app.timer.reset();
-        app.level.clearLevel(app);
-        app.level.importFromJSON(levelData, app);
-        settings.progress = parseInt(button.attr('action').split('_')[1]);
-        app.updateSettings(settings, app);
+        $.getJSON('json/campaign/' + button.attr('file'), function(json) {
+            var settings = app.storage.getSettings();
+            app.updateGravity();
+            app.play = true;
+            app.timer.reset();
+            app.level.clearLevel(app);
+            app.level.importFromJSON(json, app);
+            settings.progress = parseInt(button.attr('action').split('_')[1]);
+            app.updateSettings(settings, app);
+        });
     }
 
     loadEditorLevel(button) {
