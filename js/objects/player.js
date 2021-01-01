@@ -51,7 +51,7 @@ class Player extends Cube {
 
     addRope(mouse) {
         // Add constraint
-        if (this.mode == 'grapple'){
+        if (this.mode == 'grapple' && this.isFrozen() == false){
             var spacing = 4; // Smaller = more precise
             var length = 400; // How far to check for objects beyond p2
             var dx = mouse.x - this.position.x;

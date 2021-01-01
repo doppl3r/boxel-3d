@@ -107,7 +107,7 @@ class App {
             var child = a.level.children[index];
 
             // Update child if it has a collision box
-            if (child.body != null) {
+            if (child.body != null && child.isFrozen() == false) {
                 var rect = child.body;
                 var x = rect.position.x;
                 var y = rect.position.y;
