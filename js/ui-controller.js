@@ -455,7 +455,7 @@ class UIController {
         if (loaded == false) {
 
             // Loop through each level
-            $.each(levels.children(), function(i) {
+            $.each(levels.find('[file]'), function(i) {
                 var level = $(this);
                 var levelIndex = i + 1;
                 var actionValue = 'level_' + levelIndex;
@@ -475,8 +475,7 @@ class UIController {
         setTimeout(function() { 
             var level = levels.find('.level:nth-of-type(' + currentLevel + ')');
             level.focus();
-            //app.ui.levelPicker.scrollTop(level.offset().top - 136);
-            app.ui.levelPicker.animate({ scrollTop: level.offset().top - 136 }, 500);
+            app.ui.levelPicker.animate({ scrollTop: level.offset().top - levels.offset().top }, 500);
         }, 100);
     }
 

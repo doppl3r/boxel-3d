@@ -54,6 +54,7 @@ body .ui-controller .home .logo { animation: shrink 20s infinite; animation-dela
 body .ui-controller .level-picker { display: flex; height: 100vh; align-items: flex-start; justify-content: center; padding: 128px 0; overflow-y: auto; }
 body .ui-controller .level-picker .wrapper { max-width: 480px; }
 body .ui-controller .level-picker h1 { color: #fff; font-size: 3em; text-transform: uppercase; text-align: center; letter-spacing: 5px; margin: 0 0 24px; animation: shrink 20s infinite; animation-delay: -10s; }
+body .ui-controller .level-picker h2 { color: #fff; font-size: 1em; text-transform: uppercase; text-align: center; letter-spacing: 3px; margin: 24px 0 8px; width: 100%; }
 body .ui-controller .level-picker h1 strong { color: #dc265a; }
 body .ui-controller .level-picker p { color: #fff; text-align: center; margin-bottom: 36px; }
 body .ui-controller .level-picker p a { display: inline-block; color: inherit; width: auto; height: auto; font-style: italic; }
