@@ -449,7 +449,7 @@ class UIController {
         var currentLevel = settings.progress;
 
         // Predefine level focus
-        app.ui.maxLevels = levels.children().length;
+        app.ui.maxLevels = levels.find('[file]').length;
 
         // Append levels if data elements have not been loaded
         if (loaded == false) {
