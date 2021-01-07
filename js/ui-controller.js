@@ -457,15 +457,22 @@ class UIController {
             // Loop through each level
             $.each(levels.find('[file]'), function(i) {
                 var level = $(this);
-                var levelIndex = i + 1;
-                var actionValue = 'level_' + levelIndex;
-                level.addClass('level');
-                level.attr('tabindex', '0');
-                level.attr('action', actionValue);
-                level.html(
-                    '<span class="title">' + levelIndex + '</span>' + 
-                    '<span class="score">--.---</span>'
-                );
+
+                // Load all level data into html
+                $.getJSON('json/campaign/' + level.attr('file'), function(json) {
+                    level.addClass('level');
+                    level.attr('tabindex', '0');
+                    level.attr('action', 'level_' + (i + 1));
+                    level.attr('name', json.name);
+                    level.html(
+                        '<span class="title">' + (i + 1) + '</span>' + 
+                        '<span class="score">--.---</span>' +
+                        '<span class="data" style="display: none">' + JSON.stringify(json) + '</span>'
+                    );
+
+                    // Update scores if last level item
+                    if (i == app.ui.maxLevels - 1) app.ui.updateCampaignScores();
+                });
             });
             levels.show();
             levels.addClass('loaded');
@@ -480,15 +487,12 @@ class UIController {
     }
 
     updateCampaignScores() {
-        var prefix = 'Campaign Level ';
         var scores = app.storage.getScores();
         $.each(scores, function(key, value) {
-            if (key.includes(prefix)) {
-                var index = key.split(prefix)[1];
-                var level_id = 'level_' + index;
-                var level_item = $('.levels [action="' + level_id + '"]');
-                level_item.addClass('completed');
-                level_item.find('.score').html(value);
+            var level = $('.levels .level[name="' + key + '"]');
+            if (level.length > 0) {
+                level.addClass('completed');
+                level.find('.score').html(value);
             }
         });
     }
@@ -532,16 +536,15 @@ class UIController {
     }
 
     loadLevel(button) {
-        $.getJSON('json/campaign/' + button.attr('file'), function(json) {
-            var settings = app.storage.getSettings();
-            app.updateGravity();
-            app.play = true;
-            app.timer.reset();
-            app.level.clearLevel(app);
-            app.level.importFromJSON(json, app);
-            settings.progress = parseInt(button.attr('action').split('_')[1]);
-            app.updateSettings(settings, app);
-        });
+        var settings = app.storage.getSettings();
+        var json = JSON.parse(button.find('.data').text());
+        app.updateGravity();
+        app.play = true;
+        app.timer.reset();
+        app.level.clearLevel(app);
+        app.level.importFromJSON(json, app);
+        settings.progress = parseInt(button.attr('action').split('_')[1]);
+        app.updateSettings(settings, app);
     }
 
     loadEditorLevel(button) {
