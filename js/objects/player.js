@@ -63,6 +63,9 @@ class Player extends Cube {
                 y: -(this.position.y + (mouse.y - this.position.y) * length / distance)
             };
 
+            // Clear existing rope to prevent duplicate chains
+            this.removeRope();
+
             for (var i = 0; i < length; i += spacing) {
                 var percent = i / (length);
                 var point = { 
