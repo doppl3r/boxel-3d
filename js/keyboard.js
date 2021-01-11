@@ -46,6 +46,7 @@ class Keyboard {
                 if (a.play == true && (a.ui.state == 'play' || a.ui.state == 'level-editor')) {
                     a.level.retryLevel(a);
                 }
+            break;
             case 87: a.keyboard.spaceBarDown(a); break; // 'w'
         }
     }
