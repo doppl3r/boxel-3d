@@ -27,8 +27,14 @@ class Keyboard {
                 else if (state == 'play') {
                     // Resume or pause game
                     if (a.ui.dialog.isOpen()) {
-                        a.ui.dialog.remove(0);
-                        a.ui.resumeCampaign();
+                        if (a.ui.dialog.getId() != 'finished') {
+                            a.ui.dialog.remove(0);
+                            a.ui.resumeCampaign();
+                        }
+                        else {
+                            // Continue if level is finished
+                            a.ui.dialog.get().find('input[type="button"]:last-of-type').click();
+                        }
                     }
                     else {
                         a.ui.pause();

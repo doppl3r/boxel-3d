@@ -76,4 +76,8 @@ class Dialog {
     get() {
         return $('.dialog');
     }
+
+    getId() {
+        return this.get().attr('id');
+    }
 }

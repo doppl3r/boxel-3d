@@ -177,6 +177,7 @@ class Player extends Cube {
 
         app.play = false;
         app.ui.dialog.add({
+            attributes: { id: 'finished' },
             text: text,
             inputs: [
                 { attributes: { value: 'Retry', type: 'button' }, function: app.level.retryLevel, parameter: app },
