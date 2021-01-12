@@ -166,7 +166,7 @@ body.light .ui-controller .level-editor { background-color: #e6e6e6; }
 .background-7 { background-image: linear-gradient(180deg, #279DCF 0%, #00EDFE 50%, #E5A29C 100%); }
 .background-8 { background-image: linear-gradient(180deg, #EFC626 0%, #B12A13 50%, #100730 100%); }
 .background-9 { background-image: url('../img/jpg/background-stars.jpg'); background-color: #1b1829; }
-.background-10 { background-image: url('https://cdn.dribbble.com/users/507921/screenshots/5312758/light-map.png'); }
+.background-10 { background-image: url('../img/jpg/background-cubes.jpg'); background-color: #490348 !important; }
 .background-11 { background-image: linear-gradient(180deg, #490348 0%, #310231 100%); }
 
 /* Dialog window styling */

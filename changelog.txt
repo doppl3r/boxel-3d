@@ -1,3 +1,7 @@
+v1.1.4 - January 12, 2021
+- Fix ESC key exploit when finishing level
+- Update background
+
 v1.1.3 - January 11, 2021
 - Fixed jump bug when pressing 'r'
 - Fixed duplicate ropes
