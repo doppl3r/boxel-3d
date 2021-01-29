@@ -1,3 +1,6 @@
+v1.1.4.2 - January 29, 2021
+- Fixed rope attaching to invisible blocks
+
 v1.1.4.1 - January 25, 2021
 - Added 2 new test levels
 
