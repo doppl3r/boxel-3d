@@ -633,7 +633,7 @@ class UIController {
             app.ui.dialog.add({
                 text: 'Paused',
                 inputs: [
-                    { attributes: { value: 'Exit', type: 'button' }, function: app.ui.exitCampaign },
+                    { attributes: { value: 'Exit (E)', type: 'button' }, function: app.ui.exitCampaign },
                     { attributes: { value: 'Retry (R)', type: 'button' }, function: app.level.retryLevel, parameter: app },
                     { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
                 ]
