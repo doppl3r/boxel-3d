@@ -242,4 +242,34 @@ class StorageManager {
             ]
         });
     }
+
+    encodeImageFile() {
+        // TODO, use dialog input ID
+        // https://stackoverflow.com/a/23669825
+        // <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
+        // <div id="imgTest"></div>
+
+        var filesSelected = document.getElementById("inputFileToLoad").files;
+        if (filesSelected.length > 0) {
+            var fileToLoad = filesSelected[0];
+            var fileReader = new FileReader();
+
+            // Add listener for file when loaded
+            fileReader.onload = function (fileLoadedEvent) {
+                var srcData = fileLoadedEvent.target.result; // data: base64
+                var newImage = document.createElement('img');
+                newImage.src = srcData;
+                document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+                console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+            }
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
+
+    decodeImage(data) {
+        // TODO: test
+        var image = new Image();
+        image.src = data; // data: base64
+        return image;
+    }
 }
