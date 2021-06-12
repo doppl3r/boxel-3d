@@ -18,6 +18,7 @@ class App {
         a.skins = new Skins();
         a.collision = new Collision();
         a.level = new Level();
+        a.levelEditor = new LevelEditor();
         a.levelHistory = new LevelHistory();
         a.extension = new Extension();
         a.player = new Player({ x: 0, y: 0, z: 0 });
