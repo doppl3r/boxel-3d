@@ -4,7 +4,6 @@ class Mouse {
         this.move = new THREE.Vector3();
         this.offset = new THREE.Vector3();
         this.up = new THREE.Vector3();
-        this.tolerance = 5; // Default = 1000 / zoom
         this.drag = false;
         this.mode = 'draw';
         this.snap = 1; // Drag snapping
@@ -12,9 +11,8 @@ class Mouse {
     }
     
     mouseDown(e, a) {
-        if (a.play == false) {
-            a.levelEditor.mouseDown(e, a);
-        }
+        this.setTolerance();
+        if (a.play == false) { a.levelEditor.mouseDown(e, a); }
         else {
             a.player.jump(a.mouse.getPosition(e, a));
             a.player.addRope(a.mouse.getPosition(e, a));
@@ -22,15 +20,11 @@ class Mouse {
     }
 
     mouseMove(e, a) {
-        if (a.play == false) {
-            a.levelEditor.mouseMove(e, a);
-        }
+        if (a.play == false) { a.levelEditor.mouseMove(e, a); }
     }
 
     mouseUp(e, a) {
-        if (a.play == false) {
-            a.levelEditor.mouseUp(e, a);
-        }
+        if (a.play == false) { a.levelEditor.mouseUp(e, a); }
         a.player.removeRope(); // Always remove rope
     }
 
@@ -70,9 +64,13 @@ class Mouse {
             var zoom = a.camera.position.z + e.deltaY;
             if (zoom < 100) zoom = 100;
             else if (zoom > 1000) zoom = 1000;
-            this.tolerance = 1000 / zoom;
             a.camera.position.z = zoom;
+            a.mouse.setTolerance();
         }
+    }
+
+    setTolerance(value = 0.05) {
+        this.tolerance = app.camera.position.z * value;
     }
 
     setPosition(state, position) {
