@@ -108,6 +108,10 @@ class Cube extends THREE.Mesh {
         return this.scale;
     }
 
+    getScaleOrigin() {
+        return this.scaleOrigin;
+    }
+
     setScaleOrigin(scale) {
         if (this.scaleOrigin == null) this.scaleOrigin = {};
         this.scaleOrigin.x = scale.x;

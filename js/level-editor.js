@@ -49,25 +49,38 @@ class LevelEditor {
                     // Update camera position
                     var down = a.mouse.down;
                     var diff = a.mouse.getDragDifference();
-                    var camTolerance = a.camera.position.z / 2;
-                    if (a.camera.allowMovement == true) {
-                        // Resolve camera ray miscalculations
-                        if (Math.abs(diff.x) > camTolerance || Math.abs(diff.y) > camTolerance || Math.abs(diff.z) > camTolerance) {
-                            diff = { x: 0, y: 0, z: 0 };
+                    
+                    // If 's' is not selected, begin moving camera or object
+                    if (a.levelEditor.isScaling != true) {
+                        if (a.camera.allowMovement == true) {
+                            // Resolve camera ray miscalculations
+                            var camTolerance = a.camera.position.z / 2;
+                            if (Math.abs(diff.x) > camTolerance || Math.abs(diff.y) > camTolerance || Math.abs(diff.z) > camTolerance) {
+                                diff = { x: 0, y: 0, z: 0 };
+                            }
+                            // Update camera position
+                            a.camera.position.x += diff.x;
+                            a.camera.position.y += diff.y;
+                            a.camera.moved = true;
                         }
-                        // Update camera position
-                        a.camera.position.x += diff.x;
-                        a.camera.position.y += diff.y;
-                        a.camera.moved = true;
+                        else { // Update object position
+                            if (a.selectedObject != null) {
+                                a.camera.allowMovement = false;
+                                a.selectedObject.setPosition({
+                                    x: a.mouse.snapToValue(down.x - diff.x, a.mouse.snap),
+                                    y: a.mouse.snapToValue(down.y - diff.y, a.mouse.snap)
+                                });
+                            }
+                        }
                     }
-                    else { // Update object position
-                        if (a.selectedObject != null) {
-                            a.camera.allowMovement = false;
-                            a.selectedObject.setPosition({
-                                x: a.mouse.snapToValue(down.x - diff.x, a.mouse.snap),
-                                y: a.mouse.snapToValue(down.y - diff.y, a.mouse.snap)
-                            });
-                        }
+                    else {
+                        // Start scaling object
+                        var s = a.selectedObject.getScaleOrigin();
+                        var x = a.mouse.snapToValue(s.x - diff.x, a.mouse.snap);
+                        var y = a.mouse.snapToValue(s.y - diff.y, a.mouse.snap);
+                        if (x == 0) x = 16;
+                        if (y == 0) y = 16;
+                        a.selectedObject.setScale({ x: x, y: y }, false);
                     }
                 }
             }
@@ -80,6 +93,11 @@ class LevelEditor {
     mouseUp(e, a) {
         var target = a.mouse.clickObject(e, a);
         a.mouse.setPosition('up', a.mouse.getPosition(e, a));
+        
+        // Store selected object scale origin
+        if (a.selectedObject != null) {
+            a.selectedObject.setScale(a.selectedObject.getScale());
+        }
 
         // Check if drawing or erasing
         if (a.mouse.mode == 'draw') {
@@ -131,6 +149,8 @@ class LevelEditor {
             a.mouse.mode = a.mouse.prevMode;
             a.ui.updateLevelOptions()
         }
+        //if (a.selectedObject == null) a.levelEditor.setScalingState(a, false);
+        a.levelEditor.setScalingState(a, false);
     }
 
     eraseTarget(e, a) {
@@ -142,5 +162,9 @@ class LevelEditor {
                 a.mouse.erased = true; // Used for saving history
             }
         }
+    }
+
+    setScalingState(a, isScaling) {
+        a.levelEditor.isScaling = isScaling;
     }
 }
