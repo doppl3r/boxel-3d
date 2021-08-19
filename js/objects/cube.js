@@ -85,6 +85,10 @@ class Cube extends THREE.Mesh {
         return value;
     }
 
+    getRotationOrigin() {
+        return this.rotationOrigin;
+    }
+
     setScale(scale = {}, updateOrigin = true) {
         // Resolve null values
         scale.x = (scale.x == null) ? this.scale.x : scale.x;

@@ -51,7 +51,7 @@ class LevelEditor {
                     var diff = a.mouse.getDragDifference();
                     
                     // If 's' is not selected, begin moving camera or object
-                    if (a.levelEditor.isScaling != true) {
+                    if (a.levelEditor.isScaling != true && a.levelEditor.isRotating != true) {
                         if (a.camera.allowMovement == true) {
                             // Resolve camera ray miscalculations
                             var camTolerance = a.camera.position.z / 2;
@@ -74,13 +74,26 @@ class LevelEditor {
                         }
                     }
                     else {
-                        // Start scaling object
-                        var s = a.selectedObject.getScaleOrigin();
-                        var x = a.mouse.snapToValue(s.x - diff.x, a.mouse.snap);
-                        var y = a.mouse.snapToValue(s.y - diff.y, a.mouse.snap);
-                        if (x == 0) x = 16;
-                        if (y == 0) y = 16;
-                        a.selectedObject.setScale({ x: x, y: y }, false);
+                        if (a.levelEditor.isScaling == true) {
+                            // Start scaling object
+                            var s = a.selectedObject.getScaleOrigin();
+                            var x = a.mouse.snapToValue(s.x - diff.x, a.mouse.snap);
+                            var y = a.mouse.snapToValue(s.y - diff.y, a.mouse.snap);
+                            if (x < 16) x = 16;
+                            if (y < 16) y = 16;
+                            a.selectedObject.setScale({ x: x, y: y }, false);
+                        }
+                        if (a.levelEditor.isRotating == true) {
+                            // Start rotating object
+                            var d = a.mouse.down;
+                            var m = a.mouse.move;
+                            var o = a.selectedObject.position;
+                            var angle_down = Math.atan2(d.y - o.y, d.x - o.x);
+                            var angle_move = Math.atan2(m.y - o.y, m.x - o.x);
+                            var angle_diff = angle_move - angle_down;
+                            var angle_orig = a.selectedObject.getRotationOrigin();
+                            a.selectedObject.setRotation((angle_orig + angle_diff) % Math.PI, false);
+                        }
                     }
                 }
             }
@@ -94,9 +107,10 @@ class LevelEditor {
         var target = a.mouse.clickObject(e, a);
         a.mouse.setPosition('up', a.mouse.getPosition(e, a));
         
-        // Store selected object scale origin
+        // Store selected object origin
         if (a.selectedObject != null) {
             a.selectedObject.setScale(a.selectedObject.getScale());
+            a.selectedObject.setRotation(a.selectedObject.getRotation());
         }
 
         // Check if drawing or erasing
@@ -151,6 +165,7 @@ class LevelEditor {
         }
         //if (a.selectedObject == null) a.levelEditor.setScalingState(a, false);
         a.levelEditor.setScalingState(a, false);
+        a.levelEditor.setRotatingState(a, false);
     }
 
     eraseTarget(e, a) {
@@ -166,5 +181,9 @@ class LevelEditor {
 
     setScalingState(a, isScaling) {
         a.levelEditor.isScaling = isScaling;
+    }
+
+    setRotatingState(a, isRotating) {
+        a.levelEditor.isRotating = isRotating;
     }
 }

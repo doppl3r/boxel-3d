@@ -52,6 +52,9 @@ class Keyboard {
                 if (a.play == true && (a.ui.state == 'play' || a.ui.state == 'level-editor')) {
                     a.level.retryLevel(a);
                 }
+                else if (a.play == false && a.ui.state == 'level-editor') {
+                    a.levelEditor.setRotatingState(a, true);
+                }
             break;
             case 83: // 's'
                 if (a.ui.state == 'level-editor') {
