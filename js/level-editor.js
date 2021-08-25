@@ -92,7 +92,7 @@ class LevelEditor {
                             var angle_move = Math.atan2(m.y - o.y, m.x - o.x);
                             var angle_diff = angle_move - angle_down;
                             var angle_orig = a.selectedObject.getRotationOrigin();
-                            a.selectedObject.setRotation((angle_orig + angle_diff) % Math.PI, false);
+                            a.selectedObject.setRotation((angle_orig + angle_diff) % (Math.PI * 2), false);
                         }
                     }
                 }
@@ -185,5 +185,29 @@ class LevelEditor {
 
     setRotatingState(a, isRotating) {
         a.levelEditor.isRotating = isRotating;
+    }
+
+    duplicateSelected(a) {
+        if (a.selectedObject != null) {
+            $('[action="duplicate"]').click();
+        }
+    }
+
+    deleteSelected(a) {
+        if (a.selectedObject != null) {
+            $('[action="trash"]').click();
+        }
+    }
+
+    undoEdit() {
+        $('[action="undo"]').click();
+    }
+
+    redoEdit() {
+        $('[action="redo"]').click();
+    }
+
+    saveLevel() {
+        $('[action="save"]').click();
     }
 }
