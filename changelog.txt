@@ -1,3 +1,14 @@
+v1.1.5.1
+- Fixed level 27 slip glitch
+
+v1.1.5.0
+- Added level 35
+- Added shortcuts to Level Maker (Undo, Redo, Save, Rotate, Scale, Delete)
+
+v1.1.4.4
+- Fixed menu height issue
+- Update manifest version from 2 to 3
+
 v1.1.4.2 - January 29, 2021
 - Fixed rope attaching to invisible blocks
 
