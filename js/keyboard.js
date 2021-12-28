@@ -8,7 +8,7 @@ class Keyboard {
         var state = a.ui.state;
 
         // Only add shortcuts when not typing
-        if (a.ui.dialog.isOpen() == false) {
+        if (a.ui.dialog.isOpen() == false && $('input:focus').length <= 0) {
             e.preventDefault();
             switch (e.keyCode) {
                 case 13: a.keyboard.spaceBarDown(a); break; // Enter (same as space)

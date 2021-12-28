@@ -118,5 +118,10 @@
         "id": 484,
         "title": "Prism",
         "url": "img/png/skins/prism.png"
+    },
+    {
+        "id": 500,
+        "title": "Boxel Golf",
+        "url": "img/png/skins/boxel-golf.png"
     }
 ]
