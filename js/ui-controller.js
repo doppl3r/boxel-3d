@@ -459,7 +459,7 @@ class UIController {
                 var level = $(this);
 
                 // Load all level data into html
-                $.getJSON('json/campaign/' + level.attr('file'), function(json) {
+                $.getJSON('json/' + level.attr('file'), function(json) {
                     level.addClass('level');
                     level.attr('tabindex', '0');
                     level.attr('action', 'level_' + (i + 1));
@@ -541,6 +541,7 @@ class UIController {
         app.updateGravity();
         app.play = true;
         app.timer.reset();
+        app.ui.campaign.find('#credit').html((json.author) ? 'Level by ' + json.author : '');
         app.level.clearLevel(app);
         app.level.importFromJSON(json, app);
         settings.progress = parseInt(button.attr('action').split('_')[1]);
