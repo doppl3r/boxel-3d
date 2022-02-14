@@ -81,6 +81,9 @@ class Collision {
                             else if (objectA.body.class == 'finish') {
                                 if (objectB.body.class ==  'player') { app.player.finish(); }
                             }
+                            else if (objectA.body.class == 'reset') {
+                                if (objectB.body.class ==  'player') { app.player.reset(); }
+                            }
                         }
                     }
                 }

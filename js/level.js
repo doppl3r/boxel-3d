@@ -24,6 +24,7 @@ class Level extends THREE.Group {
             case('gravity'): object = new Gravity(options); break;
             case('grapple'): object = new Grapple(options); break;
             case('finish'): object = new Finish(options); break;
+            case('reset'): object = new Reset(options); break;
             default: object = new Cube(options);
         }
         return object;

@@ -225,6 +225,12 @@ class Player extends Cube {
         this.addTexture(skin.url);
     }
 
+    reset() {
+        app.updateGravity();
+        this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
+        this.setMode(this.modeOrigin, false);
+    }
+
     addTexture(url) {
         var loader = new THREE.TextureLoader();
         loader.load(url, 
