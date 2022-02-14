@@ -64,10 +64,11 @@ body .ui-controller .level-picker .levels .level { border-radius: 4px; backgroun
 body .ui-controller .level-picker .levels .level:after { background-color: #dc265a; padding: 12px; border-radius: 4px; content: 'Play'; font-size: 0.25em; position: fixed; z-index: 1; bottom: 16px; right: 32px; opacity: 0; transition: all 0.1s ease-in-out; pointer-events: none; }
 body .ui-controller .level-picker .levels .level:focus:after { opacity: 1; right: 32px; pointer-events: all; }
 body .ui-controller .level-picker .levels .level.completed { background-color: transparent; background: linear-gradient(315deg, #620460 0%, #dc265a 100%); }
+body .ui-controller .level-picker .levels .level.completed .index { background-color: #dc265a; }
 body .ui-controller .level-picker .levels .level.completed .score { display: inline-block; }
 body .ui-controller .level-picker .levels .level:hover > * { animation: shake 0.25s; }
 body .ui-controller .level-picker .levels .level .icon { display: none; }
-body .ui-controller .level-picker .levels .level .index { font-size: 10px; border-radius: 999px; background-color: #dc265a; color: #ffffff; position: absolute; top: 0; left: 0; margin: -6px 0px 0px -6px; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+body .ui-controller .level-picker .levels .level .index { font-size: 10px; border-radius: 999px; background-color: #620460; color: #ffffff; position: absolute; top: 0; left: 0; margin: -8px 0px 0px -8px; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
 body .ui-controller .level-picker .levels .level .score { display: none; font-size: 0.25em; }
 body .ui-controller .level-picker .levels .level .title { font-size: 0.25em; text-align: center; width: 100%; }
 
