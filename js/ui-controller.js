@@ -466,8 +466,9 @@ class UIController {
                     level.attr('action', 'level_' + (i + 1));
                     level.attr('name', json.name);
                     level.html(
-                        '<span class="title">' + (i + 1) + '</span>' + 
+                        '<span class="index">' + (i + 1) + '</span>' +
                         '<span class="score">--.---</span>' +
+                        '<span class="title">' + json.description + '</span>' +
                         '<span class="data" style="display: none">' + JSON.stringify(json) + '</span>'
                     );
 
