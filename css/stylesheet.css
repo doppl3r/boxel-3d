@@ -75,7 +75,8 @@ body .ui-controller .level-picker .levels .level .title { font-size: 0.25em; tex
 /* Campaign */
 body .ui-controller .campaign { position: absolute; z-index: 1; }
 body .ui-controller .campaign #timer { align-items: center; display: flex; background-color: #dc265a; padding: 2px 4px 0; position: fixed; top: 16px; left: 68px; height: 35px; text-align: center; overflow: hidden; border-radius: 4px; }
-body .ui-controller .campaign #credit { color: #ffffff; position: fixed; bottom: 16px; left: 16px; cursor: pointer; width: auto; height: auto; }
+body .ui-controller .campaign #credit { align-items: center; display: flex; color: #ffffff; position: fixed; bottom: 16px; left: 16px; width: auto; height: auto; }
+body .ui-controller .campaign #credit img { width: 24px; height: 24px; margin-right: 4px; }
 body .ui-controller .campaign #timer span { display: inline-block; width: 24px; font-size: 1.5em; color: #fff; padding: 4px 0; }
 body .ui-controller .campaign #speedometer { background-color: #dc265a; position: fixed; top: 55px; left: 68px; border-radius: 4px; width: 128px; height: 9px; }
 body .ui-controller .campaign #speedometer #speed { background-color: #fff; position: absolute; height: 3px; left: 4px; top: 3px; transition: width 0.125s linear; border-radius: 3px; }

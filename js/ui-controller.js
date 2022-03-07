@@ -540,10 +540,12 @@ class UIController {
     loadLevel(button) {
         var settings = app.storage.getSettings();
         var json = JSON.parse(button.find('.data').text());
+        var credit = app.ui.campaign.find('#credit');
         app.updateGravity();
         app.play = true;
         app.timer.reset();
-        app.ui.campaign.find('#credit').html((json.author) ? 'Level by ' + json.author : '');
+        credit.html((json.author) ? 'Level by ' + json.author : '');
+        if (json.star) credit.prepend('<img src="/img/svg/star.svg" title="Event winner"> ');
         app.level.clearLevel(app);
         app.level.importFromJSON(json, app);
         settings.progress = parseInt(button.attr('action').split('_')[1]);
