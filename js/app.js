@@ -10,6 +10,7 @@ class App {
         a.stats = new Stats();
         a.fps = new FPS();
         a.ui = new UIController();
+        a.animation = new Animation();
         a.timer = new Timer();
         a.mouse = new Mouse();
         a.keyboard = new Keyboard();
@@ -148,7 +149,7 @@ class App {
     updateCamera(a) {
         a.camera.position.x = a.player.position.x;
         a.camera.position.y = a.player.position.y + a.camera.tilt;
-        a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
+        //a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
     }
 
     updateSettings(settings, a = app) {
@@ -172,10 +173,19 @@ class App {
         a.storage.setSettings(settings); // Store locally
     }
 
-    updateGravity(angle = 0) { // between -1, and 1 directionally
+    updateGravity(angle) { // between -1, and 1 directionally
         var vector = getVectorFromAngle(angle);
-        app.engine.world.gravity.x = vector.x;
-        app.engine.world.gravity.y = vector.y;
+        var gravity = app.engine.world.gravity;
+        gravity.x = vector.x;
+        gravity.y = vector.y;
+
+        // Animate camera
+        if (angle != null) {
+            angle *= -1;
+            if (angle < 0) app.camera.rotation.z = (app.camera.rotation.z - (Math.PI * 2)) % (Math.PI * 2);
+            app.animation.tween(app.camera.rotation, { z: angle });
+        }
+        else app.camera.rotation.z = 0;
     }
 
     updateQuality(quality, a = app) {
