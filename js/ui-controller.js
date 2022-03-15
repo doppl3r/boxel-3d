@@ -40,7 +40,8 @@ class UIController {
                 var settings = app.storage.getSettings(app);
                 var inputs = [
                     { label: 'Master Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume } },
-                    { label: 'Graphic Quality', attributes: { name: 'quality', type: 'range', min: 2, max: 10, value: settings.quality } }
+                    { label: 'Graphic Quality', attributes: { name: 'quality', type: 'range', min: 2, max: 10, value: settings.quality } },
+                    { label: 'Camera Rotation', attributes: { name: 'motion', type: 'range', min: 0, max: 1, value: settings.motion } }
                 ];
 
                 // Add more options for the level maker
@@ -604,7 +605,8 @@ class UIController {
         var quality = parseInt($('.dialog input[name="quality"]').val());
         var theme = parseInt($('.dialog input[name="theme"]').val());
         var snap = parseInt($('.dialog input[name="snap"]').val());
-        app.updateSettings({ 'volume': volume, 'quality': quality, 'theme': theme, 'snap': snap }, app);
+        var motion = parseInt($('.dialog input[name="motion"]').val());
+        app.updateSettings({ 'volume': volume, 'quality': quality, 'theme': theme, 'snap': snap, 'motion': motion }, app);
 
         // Resume campaign if settings was selected during gameplay
         if (app.ui.state == 'play') {

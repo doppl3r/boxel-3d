@@ -98,6 +98,7 @@ class StorageManager {
             'theme': 0,
             'snap': 8,
             'skin': a.skins.default,
+            'motion': 1,
             'progress': 1
         };
         var settings = defaultSettings; // Use default

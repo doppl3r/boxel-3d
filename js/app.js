@@ -171,6 +171,7 @@ class App {
         a.mouse.setSnap(settings.snap);
         a.player.setSkin(settings.skin, a);
         a.storage.setSettings(settings); // Store locally
+        a.updateCameraMotion(settings.motion, a);
     }
 
     updateGravity(angle) { // between -1, and 1 directionally
@@ -180,7 +181,7 @@ class App {
         gravity.y = vector.y;
 
         // Animate camera
-        if (angle != null) {
+        if (angle != null && app.motion == true) {
             angle *= -1;
             if (angle < 0) app.camera.rotation.z = (app.camera.rotation.z - (Math.PI * 2)) % (Math.PI * 2);
             app.animation.tween(app.camera.rotation, { z: angle });
@@ -191,6 +192,10 @@ class App {
     updateQuality(quality, a = app) {
         if (quality <= 0) quality = 1;
         a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
+    }
+
+    updateCameraMotion(motion, a = app) {
+        a.motion = motion;
     }
 }
 var app = new App();
