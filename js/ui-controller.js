@@ -70,6 +70,18 @@ class UIController {
                 app.ui.updateUI('play');
                 app.resetScene(app);
             }
+            else if (action == 'show-campaign') {
+                $('[action*="show-"]').addClass('purple');
+                $('[action="' + action + '"]').removeClass('purple');
+                $('.levels .list').hide();
+                $('.levels .list.levels-campaign').show();
+            }
+            else if (action == 'show-community') {
+                $('[action*="show-"]').addClass('purple');
+                $('[action="' + action + '"]').removeClass('purple');
+                $('.levels .list').hide();
+                $('.levels .list.levels-community').show();
+            }
             else if (action == 'exit-to-home') {
                 app.ui.updateUI('home');
             }
@@ -448,7 +460,8 @@ class UIController {
         var levels = $('.levels');
         var loaded = (levels.hasClass('loaded'));
         var settings = app.storage.getSettings(app);
-        var currentLevel = settings.progress;
+        var progress = settings.progress;
+        var currentLevel;
 
         // Predefine level focus
         app.ui.maxLevels = levels.find('[file]').length;
@@ -477,16 +490,19 @@ class UIController {
                     if (i == app.ui.maxLevels - 1) app.ui.updateCampaignScores();
                 });
             });
-            levels.show();
             levels.addClass('loaded');
         }
 
         // Focus into level
-        setTimeout(function() { 
-            var level = levels.find('.level:nth-of-type(' + currentLevel + ')');
-            level.focus();
-            app.ui.levelPicker.animate({ scrollTop: level.offset().top - levels.offset().top }, 500);
-        }, 100);
+        setTimeout(function() {
+            currentLevel = levels.find('.level').eq(progress - 1);
+            if (currentLevel.parent(':hidden')) {
+                console.log($('.show-' + currentLevel.parent().attr('for')));
+                $('[action="show-' + currentLevel.parent().attr('for') + '"]').click();
+            }
+            currentLevel.focus();
+            app.ui.levelPicker.animate({ scrollTop: currentLevel.offset().top - levels.offset().top }, 500);
+        }, 250);
     }
 
     updateCampaignScores() {
