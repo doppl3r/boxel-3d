@@ -18,13 +18,14 @@ class Skins {
     
     addSkins(skins) {
         this.skins = skins; // Local JSON to global object
+        var settings = app.storage.getSettings();
         for (var i = 0; i < skins.length; i++) {
             var skin = skins[i];
+            if (skin.id == settings['skin']['id']) skin.url = settings['skin']['url'];
             app.skins.addSkin(skin);
             app.skins.enableSkin(skin);
         }
         // Selected active skin
-        var settings = app.storage.getSettings(app);
         app.skins.selectSkin(settings['skin']);
         app.skins.state = 'loaded';
         app.skins.load();
@@ -34,7 +35,7 @@ class Skins {
         // Add skin to parent
         $('.skin-group').append(
             '<div class="skin" id="' + skin.id + '">' +
-                '<div class="image" style="background-image: url(' + skin.url + ')"></div>' +
+                '<div class="image" style="background-image: url(\'' + skin.url + '\')"></div>' +
                 '<div class="title">' + skin.title + '</div>' +
             '</div>'
         );
@@ -64,10 +65,11 @@ class Skins {
         app.ui.controller.off('click', '.skin#' + skinId);
         app.ui.controller.on('click', '.skin#' + skinId, function(event) {
             var skinURL = app.skins.getSkinURL(skinId);
+            app.storage.loadSkinFromFile(function(e) { $('#custom-skin').val(e); });
             app.ui.dialog.add({
-                text: 'Paste your image url',
+                text: 'Custom Skin',
                 inputs: [
-                    { attributes: { value: skinURL, type: 'text', placeholder: 'https://i.imgur.com/KmZHGlE.png' } },
+                    { attributes: { value: skinURL, type: 'text', id: 'custom-skin' } },
                     { attributes: { value: 'Cancel', type: 'button' } },
                     { attributes: { value: 'Accept', type: 'button' }, function: app.skins.updateCustomSkin },
                 ]
@@ -81,6 +83,7 @@ class Skins {
         var input = dialog.find('input[type="text"]');
         var settings = app.storage.getSettings();
         var skin = { id: skinId, url: input.val() };
+        $('.skin#' + skin.id + ' .image').attr('style', 'background-image: url(\'' + skin.url  + '\');')
         settings.skin = skin;
         app.player.setSkin(skin, app);
         app.updateSettings(settings);
@@ -89,11 +92,13 @@ class Skins {
     getSkinURL(skinId, a = app) {
         var url = a.skins.default.url; // Default
         var skins = a.skins.skins;
+        var settings = app.storage.getSettings(app);
         if (skins != null) {
             for (var i = 0; i < skins.length; i++) {
                 var skin = skins[i];
                 if (skinId == skin.id) {
-                    url = skin.url;
+                    if (skin.title == 'Custom Skin') { url = settings['skin']['url']; }
+                    else { url = skin.url; }
                     break;
                 }
             }

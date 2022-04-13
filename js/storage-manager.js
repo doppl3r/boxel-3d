@@ -154,6 +154,17 @@ class StorageManager {
         performClick();
     }
 
+    loadSkinFromFile(callback = function(e) { console.log(e); }) {
+        var input = $('<input>', { type: 'file', accept: '.jpg,.png,.webp,.gif', multiple: true });
+        input.on('change', function(evt) {
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) { callback(e.target.result); };
+            reader.readAsDataURL(file);
+        });
+        input.click();
+    }
+
     backupToFile() {
         var local = app.storage.getAllLocalStorage();
         var blob = new Blob([JSON.stringify(local)], { type: "application/json" });
