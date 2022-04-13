@@ -1,3 +1,32 @@
+v1.1.9.1
+- Added new community levels
+
+v1.1.9.0
+- Added tab buttons for campaign and community levels
+
+v1.1.8.0
+- Added camera rotation when the gravity cube is triggered
+- Added camera motion option (default on)
+
+v1.1.7.2
+- Added new community levels
+
+v1.1.7.0
+- Added new "Reset Cube", this resets your scale, gravity direction, and removes the rope mode when touched
+- Added 3 new community levels
+- Updated minimum scale from 16 to 8 (small cubes)
+
+v1.1.6.1
+- Added 5 new community levels
+
+v1.1.6
+- Added level 36
+- Added free Boxel Golf skin
+- Fixed level name editor
+
+v1.1.5.2
+- Upgraded physics engine (matter.js) from 0.14.2 to v0.18.0. This can improve performance up to 40%
+
 v1.1.5.1
 - Fixed level 27 slip glitch
 
