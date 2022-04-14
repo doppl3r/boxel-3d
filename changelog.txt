@@ -1,3 +1,6 @@
+v1.1.9.2
+- Added the option to upload custom skins (.jpg, .png, .webp)
+
 v1.1.9.1
 - Added new community levels
 
