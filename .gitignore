@@ -3,5 +3,4 @@ node_modules/
 build/
 dist/
 debug.log
-package.json
 package-lock.json
