@@ -320,7 +320,8 @@ class UIController {
                     // Generate random tip
                     var statusLength = json.status.length;
                     var statusIndex = Math.floor(Math.random() * statusLength);
-                    $('.status-text').html(json.status[statusIndex]);
+                    //$('.status-text').html(json.status[statusIndex]);
+                    $('.status-text').html('<span style="cursor: pointer;">Boxel Golf is now available on Google Chrome!</span>').on('click', function() { chrome.tabs.create({ url: 'https://chrome.google.com/webstore/detail/boxel-golf/mmgjkfjlmdkmoipndaeombfnomjfgeff/' }); });
                 });
             }
             this.home.removeClass('hidden');
