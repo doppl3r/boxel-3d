@@ -22,7 +22,32 @@ class Extension {
     
                 // Add link to review
                 review_button.on('click', function() {
-                    chrome.tabs.create({ url: 'https://chrome.google.com/webstore/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews' });
+                    if (chrome.extension) {
+                        if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
+                            
+                        }
+                        else if(navigator.userAgent.indexOf("Edg") != -1) {
+                            chrome.tabs.create({ url: 'https://microsoftedge.microsoft.com/addons/detail/boxel-3d/gcklngphfijejfnnicbadhghhdifidek' });
+                        }
+                        else if(navigator.userAgent.indexOf("Chrome") != -1) {
+                            chrome.tabs.create({ url: 'https://chrome.google.com/webstore/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews' });
+                        }
+                        else if(navigator.userAgent.indexOf("Safari") != -1) {
+                            
+                        }
+                        else if(navigator.userAgent.indexOf("Firefox") != -1) {
+                            
+                        }
+                        else if((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) {
+                            
+                        }  
+                        else {
+                            
+                        }
+                    }
+                    else {
+                        // Open for non-extension version
+                    }
                 });
     
                 // Append platform class for styling
