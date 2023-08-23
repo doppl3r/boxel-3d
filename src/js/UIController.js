@@ -320,7 +320,7 @@ class UIController {
                 });
 
                 // Update Status
-                $.getJSON("json/status.json", function(json) {
+                $.getJSON("/json/status.json", function(json) {
                     // Generate random tip
                     var statusLength = json.status.length;
                     var statusIndex = Math.floor(Math.random() * statusLength);

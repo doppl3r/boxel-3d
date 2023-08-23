@@ -92,7 +92,7 @@ class Rope extends Group {
 
     setTexture(self) {
         this.loader = new TextureLoader();
-        this.loader.load('../img/png/textures/texture-chain.png', function(texture) { 
+        this.loader.load('/img/png/textures/texture-chain.png', function(texture) {
             texture.wrapS = texture.wrapT = RepeatWrapping;
             self.texture = texture;
         });

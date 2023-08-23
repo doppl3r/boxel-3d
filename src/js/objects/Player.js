@@ -17,7 +17,7 @@ class Player extends Cube {
         this.util = new Utility();
         this.mass = 5;
         this.allowJump = false;
-        this.addLight('#dc265a', 2, 256, false);
+        //this.addLight('#dc265a', 2, 256, false);
         this.rope = new Rope();
     }
 
