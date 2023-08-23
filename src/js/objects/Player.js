@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader, SRGBColorSpace } from 'three';
 import { Body, Query, Vector } from 'matter-js';
 import { Utility } from '../Utility.js';
 import { Cube } from './Cube.js';
@@ -17,7 +17,7 @@ class Player extends Cube {
         this.util = new Utility();
         this.mass = 5;
         this.allowJump = false;
-        //this.addLight('#dc265a', 2, 256, false);
+        this.addLight('#dc265a', 2, 256, false);
         this.rope = new Rope();
     }
 
@@ -242,6 +242,7 @@ class Player extends Cube {
         var loader = new TextureLoader();
         loader.load(url, 
             function(texture){
+                texture.colorSpace = SRGBColorSpace;
                 app.player.remove(app.player.skin); // Reset skin
                 app.player.shapes.visible = false;
                 //app.player.remove(app.player.shapes); // Permanently remove shapes mesh
