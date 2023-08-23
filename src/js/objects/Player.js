@@ -1,4 +1,5 @@
 import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
+import { Body, Query, Vector } from 'matter-js';
 import { Utility } from '../Utility.js';
 import { Cube } from './Cube.js';
 import { Rope } from './Rope.js';
@@ -13,6 +14,7 @@ class Player extends Cube {
         this.setStatic(false);
         this.setColors('#dc265a');
         this.setMode('jump'); // Default 'jump'
+        this.util = new Utility();
         this.mass = 5;
         this.allowJump = false;
         this.addLight('#dc265a', 2, 256, false);
@@ -26,7 +28,7 @@ class Player extends Cube {
     
                 // Define jump conditions
                 var gravity = app.engine.world.gravity;
-                var gravityAngle = (Math.PI / 2) - Matter.Vector.angle({ x: 0, y: 0 }, gravity);
+                var gravityAngle = (Math.PI / 2) - Vector.angle({ x: 0, y: 0 }, gravity);
                 var velocity = this.body.velocity;
                 var spinDirection = 1; // Default clockwise
                 var angularVelocity = (Math.PI / 20);
@@ -37,19 +39,19 @@ class Player extends Cube {
                 };
     
                 // Rotate velocity angle back to 0 degrees, remove y velocity, then rotate back to gravity angle
-                velocity = Matter.Vector.rotate(velocity, gravityAngle);
+                velocity = Vector.rotate(velocity, gravityAngle);
                 velocity.y = 0; // Reset vertical velocity to 0
                 spinDirection = velocity.x >= 0 ? 1 : -1;
                 angularVelocity *= spinDirection;
-                velocity = Matter.Vector.rotate(velocity, -gravityAngle);
+                velocity = Vector.rotate(velocity, -gravityAngle);
     
                 // Disable angular velocity at slower speeds
                 if (this.body.speed < this.maxSpeed * 0.25) angularVelocity = 0;
     
                 // Use engine to modulate object
-                Matter.Body.setVelocity(this.body, velocity);
-                Matter.Body.setAngularVelocity(this.body, angularVelocity);
-                Matter.Body.applyForce(this.body, this.body.position, force);
+                Body.setVelocity(this.body, velocity);
+                Body.setAngularVelocity(this.body, angularVelocity);
+                Body.applyForce(this.body, this.body.position, force);
             }
         }
     }
@@ -77,7 +79,7 @@ class Player extends Cube {
                     x: p1.x + ((p2.x - p1.x) * percent),
                     y: p1.y + ((p2.y - p1.y) * percent)
                 };
-                var collision = Matter.Query.point(app.engine.world.bodies, point);
+                var collision = Query.point(app.engine.world.bodies, point);
                 
                 // Add rope if collision detected
                 if (collision.length > 0 && collision[0].class != "player") {
@@ -111,7 +113,7 @@ class Player extends Cube {
             var scale = { x: this.scale.x / cols, y: this.scale.y / rows, z: this.scale.z / layers }
             for (var row = -rows / 2; row < rows / 2; row++) {
                 for (var col = -cols / 2; col < cols / 2; col++) {
-                    var randAngle = Utility.randomNumber(0, 360 * (Math.PI / 180));
+                    var randAngle = this.util.randomNumber(0, 360 * (Math.PI / 180));
                     var particleData = {
                         color: this.color,
                         position: { 
@@ -129,7 +131,7 @@ class Player extends Cube {
                     app.level.addObject(particle, app);
                     particle.isParticle = true;
                     particle.setColors(this.color);
-                    Matter.Body.setVelocity(particle.body, this.body.velocity);
+                    Body.setVelocity(particle.body, this.body.velocity);
                 }
             }
         }

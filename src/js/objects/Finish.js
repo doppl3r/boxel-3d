@@ -1,3 +1,4 @@
+import { Bodies, Body } from 'matter-js';
 import { Cube } from './Cube.js';
 
 class Finish extends Cube {
@@ -6,8 +7,8 @@ class Finish extends Cube {
         this.body.class = 'finish';
 
         // Add bounce sensor
-        this.sensor = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
-        Matter.Body.setParts(this.body, [this.hitbox, this.sensor]);
+        this.sensor = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
+        Body.setParts(this.body, [this.hitbox, this.sensor]);
 
         this.setScale({ x: 16, y: 16, z: 16 });
         this.shapes.removeAllShapes();

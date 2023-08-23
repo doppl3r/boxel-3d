@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { Dialog } from './Dialog.js';
 
 class UIController {
-    constructor() {
+    constructor(app) {
         this.dialog = new Dialog();
         this.controller = $('.ui-controller');
         this.home = this.controller.find('.home');
@@ -17,7 +17,7 @@ class UIController {
         this.objectOptions = this.levelEditor.find('.object-options');
         this.updateCanvas();
         this.bindActions();
-        this.updateUI('home');
+        this.updateUI('home', app);
     }
 
     bindActions() {
@@ -285,7 +285,7 @@ class UIController {
         return app.ui.objectType.find('.selected').attr('action');
     }
 
-    updateUI(state) {
+    updateUI(state, app) {
         this.state = state;
         // Update theme
         if (app != null) {
@@ -299,6 +299,7 @@ class UIController {
         this.controller.find('[action]').removeClass('selected'); // Default remove all selected
 
         if (state == 'home') {
+            var home = this.home;
             if (window.location.href.includes('file://') == false) {
                 // Update version
                 $.getJSON("manifest.json", function(json) {
@@ -327,13 +328,15 @@ class UIController {
                     $('.status-text').html('<span style="cursor: pointer;">Tiny Tycoon is now available on Google Chrome!</span>').on('click', function() { chrome.tabs.create({ url: 'https://chrome.google.com/webstore/detail/tiny-tycoon/bamdkjfjhhnjcgcjmmjdnncpglihepoi' }); });
                 });
             }
-            this.home.removeClass('hidden');
-            this.home.find('[action="level-picker"]').focus();
-            setTimeout(function() { app.ui.home.find('[action="level-picker"]').focus(); }, 100);
+            home.removeClass('hidden');
+            home.find('[action="level-picker"]').focus();
+            setTimeout(function() {
+                home.find('[action="level-picker"]').focus();
+            }, 100);
         }
         else if (state == 'level-picker') {
-            app.ui.appendCampaignLevels();
-            app.ui.updateCampaignScores();
+            this.appendCampaignLevels();
+            this.updateCampaignScores();
             this.levelPicker.removeClass('hidden');
         }
         else if (state == 'shop') {
@@ -501,7 +504,7 @@ class UIController {
         setTimeout(function() {
             currentLevel = levels.find('.level').eq(progress - 1);
             if (currentLevel.parent(':hidden')) {
-                console.log($('.show-' + currentLevel.parent().attr('for')));
+                //console.log($('.show-' + currentLevel.parent().attr('for')));
                 $('[action="show-' + currentLevel.parent().attr('for') + '"]').click();
             }
             currentLevel.focus();

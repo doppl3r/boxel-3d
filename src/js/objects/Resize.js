@@ -1,3 +1,4 @@
+import { Bodies, Body } from 'matter-js';
 import { Cube } from './Cube.js';
 
 class Resize extends Cube {
@@ -7,8 +8,8 @@ class Resize extends Cube {
         
         // Set sensor the same size as rectangle
         this.hitbox.isSensor = true;
-        this.sensor = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
-        Matter.Body.setParts(this.body, [this.hitbox, this.sensor]);
+        this.sensor = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
+        Body.setParts(this.body, [this.hitbox, this.sensor]);
 
         // Update body properties
         this.setScale({ x: 16, y: 16, z: 16 });

@@ -1,4 +1,5 @@
 import { Group } from 'three';
+import { World } from 'matter-js';
 import { Cube } from './objects/Cube.js';
 import { Player } from './objects/Player.js';
 import { Tip } from './objects/Tip.js';
@@ -21,7 +22,7 @@ class Level extends Group {
     }
 
     addObject(object, a) {
-        Matter.World.add(a.engine.world, object.body); // Add hitbox to world
+        World.add(a.engine.world, object.body); // Add hitbox to world
         this.add(object); // Add to group
     }
 
@@ -50,7 +51,7 @@ class Level extends Group {
         // Prevent deleting the player
         if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
             if (object != undefined) {
-                Matter.World.remove(a.engine.world, object.body);
+                World.remove(a.engine.world, object.body);
                 this.remove(object);
                 a.level.deselectLevel(a);
             }

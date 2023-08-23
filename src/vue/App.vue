@@ -7,10 +7,8 @@
 	var canvas = ref();
 	var app = window.app = new App();
 
-	console.log(app);
-
 	onMounted(function() {
-		//game.init(canvas.value);
+		app.init(canvas.value);
 	});
 </script>
 

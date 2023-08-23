@@ -1,5 +1,6 @@
 import { CircleGeometry, Group, Mesh, MeshBasicMaterial, RepeatWrapping, TextureLoader, Vector2, Vector3 } from 'three';
 import { MeshLine, MeshLineMaterial } from 'three.meshline';
+import { Bodies, Body, Constraint, World } from 'matter-js';
 
 class Rope extends Group {
     constructor() {
@@ -139,13 +140,13 @@ class Joint extends Group {
 
     addBody(options) {
         // Physical body
-        this.part = Matter.Bodies.circle(options.position.x, options.position.y, options.radius, { isSensor: true });
-        this.body = Matter.Body.create({ parts: [this.part], friction: 0, frictionAir: 0, frictionStatic: 0, restitution: 0 });
-        Matter.World.add(app.engine.world, this.body);
+        this.part = Bodies.circle(options.position.x, options.position.y, options.radius, { isSensor: true });
+        this.body = Body.create({ parts: [this.part], friction: 0, frictionAir: 0, frictionStatic: 0, restitution: 0 });
+        World.add(app.engine.world, this.body);
     }
 
     removeBody() {
-        Matter.World.remove(app.engine.world, this.body);
+        World.remove(app.engine.world, this.body);
     }
 
     addConstraint(options) {
@@ -166,12 +167,12 @@ class Joint extends Group {
 
         // Configure constraint options
         this.offset = pointB; // Used for last joint
-        this.constraint = Matter.Constraint.create({ bodyA: options.bodyA, bodyB: bodyB, mass: 0, pointB: pointB, stiffness: 1.5, shrink: true });
-        Matter.World.add(app.engine.world, this.constraint);
+        this.constraint = Constraint.create({ bodyA: options.bodyA, bodyB: bodyB, mass: 0, pointB: pointB, stiffness: 1.5, shrink: true });
+        World.add(app.engine.world, this.constraint);
     }
 
     removeConstraint() {
-        Matter.World.remove(app.engine.world, this.constraint);
+        World.remove(app.engine.world, this.constraint);
     }
 
     shrink() {

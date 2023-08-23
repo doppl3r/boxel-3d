@@ -1,4 +1,5 @@
 import { Mesh, PointLight } from 'three';
+import { Bodies, Body, Sleeping, Vector } from 'matter-js';
 import { Shapes } from './Shapes.js';
 
 class Cube extends Mesh {
@@ -20,8 +21,8 @@ class Cube extends Mesh {
         this.shapes.addCube();
         this.setColors(options.color);
         this.add(this.shapes);
-        this.hitbox = Matter.Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
-        this.body = Matter.Body.create({
+        this.hitbox = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
+        this.body = Body.create({
             parts: [this.hitbox],
             friction: 0.0, // Default 0.1
             frictionAir: 0.0, // Default 0.1
@@ -44,7 +45,7 @@ class Cube extends Mesh {
     update() {
         // Apply force to body until it reaches it's max speed (generic)
         if (this.body.speed < this.maxSpeed) {
-            Matter.Body.applyForce(this.body, this.body.position, { x: this.force.x, y: this.force.y });
+            Body.applyForce(this.body, this.body.position, { x: this.force.x, y: this.force.y });
         }
     }
 
@@ -61,7 +62,7 @@ class Cube extends Mesh {
 
         // Update position
         this.position.set(position.x, position.y, position.z);
-        Matter.Body.setPosition(this.body, { x: position.x, y: -position.y });
+        Body.setPosition(this.body, { x: position.x, y: -position.y });
         if (updateOrigin == true) this.setPositionOrigin(position);
     }
 
@@ -74,7 +75,7 @@ class Cube extends Mesh {
 
     setRotation(angle, updateOrigin = true) {
         this.rotation.z = angle;
-        Matter.Body.setAngle(this.body, -angle);
+        Body.setAngle(this.body, -angle);
         if (updateOrigin == true) { this.setRotationOrigin(angle); }
     }
 
@@ -103,7 +104,7 @@ class Cube extends Mesh {
         this.setRotation(0, false);
 
         // Scale rectangle by previous scale, then update mesh scale ratio
-        Matter.Body.scale(this.body, scale.x / this.scale.x, scale.y / this.scale.y);
+        Body.scale(this.body, scale.x / this.scale.x, scale.y / this.scale.y);
         this.scale.x = scale.x;
         this.scale.y = scale.y;
         this.scale.z = scale.z;
@@ -142,7 +143,7 @@ class Cube extends Mesh {
 
     calculateForceDirection(bodyA, bodyB) {
         var force = { x: 0.00025 * bodyB.mass, y: 0 }; // Left-to-right
-        force = Matter.Vector.rotate(force, bodyA.angle);
+        force = Vector.rotate(force, bodyA.angle);
 
         //return force;
         return force;
@@ -157,12 +158,12 @@ class Cube extends Mesh {
         this.setStatic(this.isStaticOrigin, false);
         this.setFriction(this.frictionOrigin, false);
         this.setMode(this.modeOrigin, false);
-        Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
-        Matter.Body.setAngularVelocity(this.body, 0);
+        Body.setVelocity(this.body, { x: 0, y: 0 });
+        Body.setAngularVelocity(this.body, 0);
     }
 
     setStatic(isStatic = true, updateOrigin = true) {
-        Matter.Body.setStatic(this.body, isStatic);
+        Body.setStatic(this.body, isStatic);
         if (updateOrigin == true) this.setStaticOrigin(isStatic);
     }
 
@@ -218,8 +219,8 @@ class Cube extends Mesh {
         if (state == true) {
             this.shapes.setColors('#ffffff', false);
             this.shapes.setOpacities(0.9);
-            Matter.Body.setVelocity(this.body, { x: 0, y: 0 });
-            Matter.Body.setAngularVelocity(this.body, 0);
+            Body.setVelocity(this.body, { x: 0, y: 0 });
+            Body.setAngularVelocity(this.body, 0);
         }
         else {
             this.shapes.resetColors();
@@ -265,7 +266,7 @@ class Cube extends Mesh {
         // Reverse force if dot product is negative
         if (dot < 0 && (Math.abs(vnewx) == 1 || Math.abs(vnewy) == 1)) { force *= -1; }
 
-        Matter.Body.setVelocity(this.body, { 
+        Body.setVelocity(this.body, { 
             x: vnewx * force,
             y: vnewy * force
         });
@@ -281,7 +282,7 @@ class Cube extends Mesh {
 
     freeze(state = true) {
         this.body.collisionFilter.category = (state == true) ? 0 : 1;
-        Matter.Sleeping.set(this.body, state);
+        Sleeping.set(this.body, state);
     }
 
     hide(state = true) {

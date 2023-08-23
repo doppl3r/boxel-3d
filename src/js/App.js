@@ -8,6 +8,8 @@ import { StorageManager } from './StorageManager.js';
 import { Skins } from './Skins.js';
 import { Collision } from './Collision.js';
 import { Level } from './Level.js';
+import { LevelHistory } from './LevelHistory.js';
+import { Player } from './objects/Player.js';
 import { UIController } from './UIController.js';
 import { Mouse } from './Mouse.js';
 import { Keyboard } from './Keyboard.js';
@@ -17,11 +19,16 @@ import { Extension } from './Extension.js';
 
 class App {
     constructor() {
+        
+    }
+
+    init(canvas) {
         var a = this;
         a.window = window;
         a.document = document;
         a.BOX_SIZE = 16;
         a.engine = Engine.create();
+        a.util = new Utility();
         a.screenWidth = a.window.innerWidth;
         a.screenHeight = a.window.innerHeight;
         a.stats = new Stats();
@@ -43,7 +50,7 @@ class App {
         a.fov = 110; // Default 75
         a.camera = new PerspectiveCamera(a.fov, a.screenWidth / a.screenHeight, 1, 2000);
         a.camera.tilt = 0;
-        a.renderer = new WebGLRenderer({ alpha: true, antialias: false });
+        a.renderer = new WebGLRenderer({ alpha: true, antialias: false, canvas: canvas });
         a.scene = new Scene();
         a.light = new HemisphereLight('#ffffff', '#000000', 1);
         a.targetFPS = 60;
@@ -101,7 +108,7 @@ class App {
             // Update if play is true
             if (a.play == true) {
                 a.update(null, a);
-                Matter.Engine.update(a.engine);
+                Engine.update(a.engine);
             }
             a.then = a.now - (a.delta % a.interval);
             a.stats.update();
@@ -190,7 +197,7 @@ class App {
     }
 
     updateGravity(angle) { // between -1, and 1 directionally
-        var vector = Utility.getVectorFromAngle(angle);
+        var vector = this.util.getVectorFromAngle(angle);
         var gravity = app.engine.world.gravity;
         gravity.x = vector.x;
         gravity.y = vector.y;
