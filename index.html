@@ -2,13 +2,10 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="0" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 		<title>Boxel 3D</title>
 		<link rel='shortcut icon' type='image/x-icon' href='img/png/favicon.png' />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 	</head>
 	<body class="dark background-10">
 		<div class="ui-controller">
@@ -199,46 +196,7 @@
 				</div>
 			</div>
 		</div>
-		<script src="js/libraries/jquery-3.5.0.min.js"></script>
-		<script src="js/libraries/three.min.js"></script>
-		<script src="js/libraries/THREE.MeshLine.js"></script>
-		<script src="js/libraries/tween.js"></script>
-		<script src="js/libraries/matter.min.js"></script>
-		<script src="js/libraries/stats.min.js"></script>
-		<script src="js/libraries/fps.js"></script>
-		<script src="js/libraries/filesaver.min.js"></script>
-		<script src="js/libraries/buy.js"></script>
-		<script src="js/animation.js"></script>
-		<script src="js/utility.js"></script>
-		<script src="js/timer.js"></script>
-		<script src="js/storage-manager.js"></script>
-		<script src="js/skins.js"></script>
-		<script src="js/collision.js"></script>
-		<script src="js/level.js"></script>
-		<script src="js/rope.js"></script>
-		<script src="js/level-history.js"></script>
-		<script src="js/objects/shapes.js"></script>
-		<script src="js/objects/cube.js"></script>
-		<script src="js/objects/player.js"></script>
-		<script src="js/objects/tip.js"></script>
-		<script src="js/objects/bounce.js"></script>
-		<script src="js/objects/checkpoint.js"></script>
-		<script src="js/objects/spike.js"></script>
-		<script src="js/objects/shrink.js"></script>
-		<script src="js/objects/grow.js"></script>
-		<script src="js/objects/resize.js"></script>
-		<script src="js/objects/direction.js"></script>
-		<script src="js/objects/gravity.js"></script>
-		<script src="js/objects/grapple.js"></script>
-		<script src="js/objects/finish.js"></script>
-		<script src="js/objects/reset.js"></script>
-		<script src="js/ui-controller.js"></script>
-		<script src="js/dialog.js"></script>
-		<script src="js/mouse.js"></script>
-		<script src="js/keyboard.js"></script>
-		<script src="js/audio.js"></script>
-		<script src="js/level-editor.js"></script>
-		<script src="js/extension.js"></script>
-		<script src="js/app.js"></script>
+		<div id="app"></div>
+		<script type="module" src="/src/js/Main.js"></script>
 	</body>
 </html>
