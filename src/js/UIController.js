@@ -349,7 +349,7 @@ class UIController {
         }
         else if (state == 'level-manager') {
             this.levelList.empty();
-            this.appendEditorLevels(app)
+            this.appendEditorLevels(window.app)
             this.levelManager.removeClass('hidden');
             this.updateLevelOptions(); // Update top bar
             this.objectOptions.addClass('hidden'); // Disable bar on default
