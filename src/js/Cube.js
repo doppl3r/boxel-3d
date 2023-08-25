@@ -43,6 +43,18 @@ class Cube extends Mesh {
     }
 
     update(delta, alpha) {
+        if (delta) {
+            // TODO: Remove alpha override
+            //alpha = 1;
+
+            // Interpolate position and rotation
+            //this.position.x = this.body.position.x;
+            //this.position.y = -this.body.position.y;
+            this.position.x = (this.body.positionPrev.x + (this.body.position.x - this.body.positionPrev.x) * alpha);
+            this.position.y = -(this.body.positionPrev.y + (this.body.position.y - this.body.positionPrev.y) * alpha);
+            this.rotation.z = -(this.body.anglePrev + (this.body.angle - this.body.anglePrev) * alpha)
+        }
+
         if (this.position.y < -1000) {
             if (this.getClass() == 'player') this.kill();
             else {
@@ -54,16 +66,6 @@ class Cube extends Mesh {
         // Apply force to body until it reaches it's max speed (generic)
         if (this.body.speed < this.maxSpeed) {
             Body.applyForce(this.body, this.body.position, { x: this.force.x, y: this.force.y });
-        }
-
-        
-        
-        if (delta) {
-            // Interpolate position and rotation
-            this.position.x = (this.body.positionPrev.x + (this.body.position.x - this.body.positionPrev.x) * alpha);
-            this.position.y = -(this.body.positionPrev.y + (this.body.position.y - this.body.positionPrev.y) * alpha);
-            this.position.lerpVectors({ x: this.body.positionPrev.x, y: -this.body.positionPrev.y, z: 0 }, { x: this.body.position.x, y: -this.body.position.y, z: 0 }, alpha);
-            this.rotation.z = -(this.body.anglePrev + (this.body.angle - this.body.anglePrev) * alpha)
         }
     }
 

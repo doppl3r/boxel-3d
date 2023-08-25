@@ -11,7 +11,7 @@ import { Skins } from './Skins.js';
 import { Collision } from './Collision.js';
 import { Level } from './Level.js';
 import { LevelHistory } from './LevelHistory.js';
-import { Player } from './objects/Player.js';
+import { Player } from './Player.js';
 import { UIController } from './UIController.js';
 import { Mouse } from './Mouse.js';
 import { Keyboard } from './Keyboard.js';
@@ -121,24 +121,25 @@ class App {
     }
 
     updateRender(delta, alpha) {
-        var a = this;
-        a.updateCamera(a);
-        a.timer.render(a);
-
-        // Update player object
-        a.player.renderSpeed(a);
-        a.player.updateRope();
-
         // Loop through scene for all children
-        var index = a.level.children.length - 1;
-        while (index >= 0) {
-            var child = a.level.children[index];
+        if (this.play == true) {
+            this.updateCamera(this);
+            this.timer.render(this);
+    
+            // Update player object
+            this.player.renderSpeed(this);
+            this.player.updateRope();
+            // Update engine to loop engine rate
+            var index = this.level.children.length - 1;
+            while (index >= 0) {
+                var child = this.level.children[index];
 
-            // Update child if it has a collision box
-            if (child.body != null && child.isFrozen() == false) {
-                child.update(delta, alpha);
+                // Update child if it has a collision box
+                if (child.body != null && child.isFrozen() == false) {
+                    child.update(delta, alpha);
+                }
+                index--; // Update iterator
             }
-            index--; // Update iterator
         }
     }
 

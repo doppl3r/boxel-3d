@@ -1,6 +1,6 @@
 import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader, SRGBColorSpace } from 'three';
 import { Body, Query, Vector } from 'matter-js';
-import { Utility } from '../Utility.js';
+import { Utility } from './Utility.js';
 import { Cube } from './Cube.js';
 import { Rope } from './Rope.js';
 

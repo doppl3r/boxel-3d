@@ -1,19 +1,19 @@
 import { Group } from 'three';
 import { World } from 'matter-js';
-import { Cube } from './objects/Cube.js';
-import { Player } from './objects/Player.js';
-import { Tip } from './objects/Tip.js';
-import { Bounce } from './objects/Bounce.js';
-import { Checkpoint } from './objects/Checkpoint.js';
-import { Spike } from './objects/Spike.js';
-import { Shrink } from './objects/Shrink.js';
-import { Grow } from './objects/Grow.js';
-import { Resize } from './objects/Resize.js';
-import { Direction } from './objects/Direction.js';
-import { Gravity } from './objects/Gravity.js';
-import { Grapple } from './objects/Grapple.js';
-import { Finish } from './objects/Finish.js';
-import { Reset } from './objects/Reset.js';
+import { Cube } from './Cube.js';
+import { Player } from './Player.js';
+import { Tip } from './Tip.js';
+import { Bounce } from './Bounce.js';
+import { Checkpoint } from './Checkpoint.js';
+import { Spike } from './Spike.js';
+import { Shrink } from './Shrink.js';
+import { Grow } from './Grow.js';
+import { Resize } from './Resize.js';
+import { Direction } from './Direction.js';
+import { Gravity } from './Gravity.js';
+import { Grapple } from './Grapple.js';
+import { Finish } from './Finish.js';
+import { Reset } from './Reset.js';
 
 class Level extends Group {
     constructor() {
