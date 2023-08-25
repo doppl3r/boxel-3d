@@ -107,7 +107,7 @@ class App {
         this.loop.setRenderCallback(function(delta, alpha) { _this.updateRender(delta, alpha); });
 		this.loop.setEngineCallback(function(delta, alpha) { _this.updateEngine(delta, alpha); });
 		this.loop.setRenderFPS(-1);
-		this.loop.setEngineFPS(30);
+		this.loop.setEngineFPS(60);
 		this.loop.start();
 		this.resizeWindow(null, this);
 
@@ -118,12 +118,6 @@ class App {
     updateRender(delta, alpha) {
         // Loop through scene for all children
         if (this.play == true) {
-            this.updateCamera(this);
-            this.timer.render(this);
-    
-            // Update player object
-            this.player.renderSpeed(this);
-            this.player.updateRope();
             // Update engine to loop engine rate
             var index = this.level.children.length - 1;
             while (index >= 0) {
@@ -135,6 +129,14 @@ class App {
                 }
                 index--; // Update iterator
             }
+
+            // Update from new position
+            this.updateCamera(this);
+            this.timer.render(this);
+    
+            // Update player object
+            this.player.renderSpeed(this);
+            this.player.updateRope();
         }
     }
 

@@ -62,8 +62,8 @@ class Loop {
 		this.renderDeltaSum += delta;
         if (this.renderDeltaSum > this.renderInterval) {
             this.renderDeltaSum %= this.renderInterval;
-			this.renderCallback(this.renderInterval == -1 ? delta : this.renderInterval, alpha);
             this.composer.render(); // Similar to this.renderer.render(this.scene, this.camera);
+			this.renderCallback(this.renderInterval == -1 ? delta : this.renderInterval, alpha);
 
 			// End FPS counter
 			this.stats.end();
