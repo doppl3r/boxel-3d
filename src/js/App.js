@@ -1,4 +1,4 @@
-import { HemisphereLight, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { HemisphereLight, PerspectiveCamera, Scene } from 'three';
 import { Engine, Events } from 'matter-js';
 import Stats from './Stats.js';
 import { Animation } from './Animation.js';
@@ -52,7 +52,6 @@ class App {
         a.fov = 110; // Default 75
         a.camera = new PerspectiveCamera(a.fov, a.screenWidth / a.screenHeight, 1, 2000);
         a.camera.tilt = 0;
-        a.renderer = new WebGLRenderer({ alpha: true, antialias: false, canvas: canvas });
         a.scene = new Scene();
         a.loop = new Loop(a.scene, a.camera, canvas);
         a.light = new HemisphereLight('#ffffff', '#000000', 1);
@@ -73,20 +72,16 @@ class App {
         a.document.body.appendChild(a.stats.domElement);
 
         // Update scene settings
-        a.renderer.setSize(a.screenWidth, a.screenHeight);
-        a.renderer.powerPreference = 'high-performance';
-        a.renderer.shadowMap.enabled = true;
         a.camera.position.x = 0;
         a.camera.position.y = 0;
         a.camera.position.zDefault = 100;
         a.camera.position.z = a.camera.position.zDefault;
-        a.document.body.appendChild(a.renderer.domElement);
 
         // Add level to scene
         a.scene.add(a.level);
 
         // Add event listeners and render app
-        a.canvas = a.renderer.domElement;
+        a.canvas = canvas;
         a.canvas.classList.add('hidden'); // Default hidden with CSS
         a.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
         a.canvas.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
@@ -155,7 +150,7 @@ class App {
         var screenHeight = a.window.innerHeight;
         a.camera.aspect = screenWidth / screenHeight;
         a.camera.updateProjectionMatrix();
-        a.renderer.setSize(screenWidth, screenHeight);
+        a.loop.setSize(screenWidth, screenHeight);
     }
 
     resetScene(a) {
@@ -211,7 +206,7 @@ class App {
 
     updateQuality(quality, a = app) {
         if (quality <= 0) quality = 1;
-        a.renderer.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
+        a.loop.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
     }
 
     updateCameraMotion(motion, a = app) {
