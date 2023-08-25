@@ -1,0 +1,9 @@
+{
+    "theme": {
+        "url": "./audio/theme.mp3",
+        "userData": {
+            "loop": true,
+            "volume": 0.1
+        }
+    }
+}

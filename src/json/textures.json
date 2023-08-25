@@ -1,0 +1,10 @@
+{
+    "chain": {
+        "url": "./img/png/textures/texture-chain.png",
+        "magFilter": 1003
+    },
+    "rope": {
+        "url": "./img/png/textures/texture-rope.png",
+        "magFilter": 1003
+    }
+}

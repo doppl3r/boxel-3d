@@ -4,6 +4,8 @@ import Stats from './Stats.js';
 import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
 import { Timer } from './Timer.js';
+import { Assets } from './Assets.js';
+import { Loop } from './Loop.js';
 import { StorageManager } from './StorageManager.js';
 import { Skins } from './Skins.js';
 import { Collision } from './Collision.js';
@@ -13,7 +15,7 @@ import { Player } from './objects/Player.js';
 import { UIController } from './UIController.js';
 import { Mouse } from './Mouse.js';
 import { Keyboard } from './Keyboard.js';
-import { Audio } from './Audio.js';
+import { Music } from './Music.js';
 import { LevelEditor } from './LevelEditor.js';
 import { Extension } from './Extension.js';
 
@@ -22,7 +24,7 @@ class App {
         
     }
 
-    init(canvas) {
+    init(canvas, callback = function(){}) {
         var a = this;
         a.window = window;
         a.document = document;
@@ -37,7 +39,7 @@ class App {
         a.timer = new Timer();
         a.mouse = new Mouse();
         a.keyboard = new Keyboard();
-        a.audio = new Audio();
+        a.audio = new Music();
         a.storage = new StorageManager();
         a.skins = new Skins();
         a.collision = new Collision();
@@ -52,9 +54,8 @@ class App {
         a.camera.tilt = 0;
         a.renderer = new WebGLRenderer({ alpha: true, antialias: false, canvas: canvas });
         a.scene = new Scene();
+        a.loop = new Loop(a.scene, a.camera, canvas);
         a.light = new HemisphereLight('#ffffff', '#000000', 1);
-        a.targetFPS = 60;
-        a.interval = 1000 / a.targetFPS;
         a.then = new Date().getTime();
         a.now = a.then;
         a.delta = 0;
@@ -96,28 +97,31 @@ class App {
         a.window.addEventListener('keydown', function(e) { a.keyboard.keyDown(e, a); });
         a.window.addEventListener('keyup', function(e) { a.keyboard.keyUp(e, a); });
         Events.on(a.engine, 'collisionStart', function(e) { a.collision.checkPlayerCollision(e, a); });
-        a.update(null, a);
-        a.render(null, a);
         a.updateSettings(null, a); // Update settings
+
+        var _this = this;
+        a.assets = new Assets();
+		a.assets.load(function() {
+			_this.load(callback);
+		});
     }
 
-    render(e, a) {
-        a.now = new Date().getTime();
-        a.delta = a.now - a.then;
-        if (a.delta > a.interval) {
-            // Update if play is true
-            if (a.play == true) {
-                a.update(null, a);
-                Engine.update(a.engine);
-            }
-            a.then = a.now - (a.delta % a.interval);
-            a.stats.update();
-        }
-        a.renderer.render(a.scene, a.camera);
-        requestAnimationFrame(function(e) { a.render(e, a); });
+    load(callback = function(){}) {
+        // Start game loop
+		var _this = this;
+        this.loop.setRenderCallback(function(delta, alpha) { _this.updateRender(delta, alpha); });
+		this.loop.setEngineCallback(function(delta, alpha) { _this.updateEngine(delta, alpha); });
+		this.loop.setRenderFPS(-1);
+		this.loop.setEngineFPS(30);
+		this.loop.start();
+		this.resizeWindow(null, this);
+
+        // Run game callback
+		callback();
     }
 
-    update(e, a) {
+    updateRender(delta, alpha) {
+        var a = this;
         a.updateCamera(a);
         a.timer.render(a);
 
@@ -132,23 +136,16 @@ class App {
 
             // Update child if it has a collision box
             if (child.body != null && child.isFrozen() == false) {
-                var rect = child.body;
-                var x = rect.position.x;
-                var y = rect.position.y;
-                var z = child.position.z;
-                var rotation = rect.angle;
-                child.setPosition({ x: x, y: -y, z: z }, false);
-                child.setRotation(-rotation, false);
-                child.update();
-                if (child.position.y < -1000) {
-                    if (child.getClass() == 'player') child.kill();
-                    else {
-                        a.level.removeObject(child, a);
-                        //child.resetToOrigin();
-                    }
-                }
+                child.update(delta, alpha);
             }
             index--; // Update iterator
+        }
+    }
+
+    updateEngine(delta, alpha) {
+        // Update engine to loop engine rate
+        if (this.play == true) {
+            Engine.update(this.engine, this.loop.engineInterval * 1000);
         }
     }
 
@@ -165,7 +162,7 @@ class App {
         a.ui.showObjectOptions(false);
         a.level.removeParticles(a);
         a.level.resetLevel(a);
-        a.update(null, a);
+        a.updateRender(null, a);
     }
 
     updateCamera(a) {

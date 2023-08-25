@@ -42,10 +42,28 @@ class Cube extends Mesh {
         this.setForceDirection();
     }
 
-    update() {
+    update(delta, alpha) {
+        if (this.position.y < -1000) {
+            if (this.getClass() == 'player') this.kill();
+            else {
+                app.level.removeObject(this, app);
+                //this.resetToOrigin();
+            }
+        }
+
         // Apply force to body until it reaches it's max speed (generic)
         if (this.body.speed < this.maxSpeed) {
             Body.applyForce(this.body, this.body.position, { x: this.force.x, y: this.force.y });
+        }
+
+        
+        
+        if (delta) {
+            // Interpolate position and rotation
+            this.position.x = (this.body.positionPrev.x + (this.body.position.x - this.body.positionPrev.x) * alpha);
+            this.position.y = -(this.body.positionPrev.y + (this.body.position.y - this.body.positionPrev.y) * alpha);
+            this.position.lerpVectors({ x: this.body.positionPrev.x, y: -this.body.positionPrev.y, z: 0 }, { x: this.body.position.x, y: -this.body.position.y, z: 0 }, alpha);
+            this.rotation.z = -(this.body.anglePrev + (this.body.angle - this.body.anglePrev) * alpha)
         }
     }
 
