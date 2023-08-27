@@ -32,7 +32,7 @@ class Player extends Cube {
                 var velocity = this.body.velocity;
                 var spinDirection = 1; // Default clockwise
                 var angularVelocity = (Math.PI / 20);
-                var forceScale = 0.025; // Default 0.025
+                var forceScale = 0.025 * app.loop.engineScale; // Default 0.025
                 //var forceScale = 0.025 * 0.5; // Default 0.025
                 var force = {
                     x: -(gravity.x * forceScale * this.body.mass),

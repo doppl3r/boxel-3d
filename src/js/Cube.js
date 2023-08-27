@@ -65,7 +65,7 @@ class Cube extends Mesh {
 
         // Apply force to body until it reaches it's max speed (generic)
         if (this.body.speed < this.maxSpeed) {
-            Body.applyForce(this.body, this.body.position, { x: this.force.x, y: this.force.y });
+            Body.applyForce(this.body, this.body.position, { x: this.force.x * app.loop.engineScale, y: this.force.y * app.loop.engineScale });
         }
     }
 
@@ -265,7 +265,7 @@ class Cube extends Mesh {
         if (relativeAngle == true) {
             angleA = this.body.angle;
             angleB = this.body.angle + (Math.PI / 2);
-            force *= -1; // Newtons 3rd law of pizza
+            force *= -1 * app.loop.engineScale; // Newtons 3rd law of pizza
         }
 
         // Normalize velocity

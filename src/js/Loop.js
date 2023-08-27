@@ -104,6 +104,7 @@ class Loop {
 		this.engineDeltaSum = 0;
 		this.engineTickRate = fps; // Calculations per second
 		this.engineInterval = 1 / this.engineTickRate;
+		this.engineScale = fps / 60; // MatterJS default = 60
 	}
 
     pause(play = false) {
