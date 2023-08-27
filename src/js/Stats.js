@@ -7,6 +7,7 @@
 	var mode = 0;
 
 	var container = document.createElement( 'div' );
+	container.classList.add('stats');
 	container.style.cssText = 'position:fixed;bottom:0;right:0;cursor:pointer;opacity:0.9;z-index:10000';
 	container.addEventListener( 'click', function ( event ) {
 
