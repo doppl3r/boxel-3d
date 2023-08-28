@@ -108,7 +108,6 @@ class Background extends Group {
 			// Update scale + position
 			if (object.position.y < -this.options.radius * range || object.position.y > this.options.radius * range) {
 				var scale = ((Math.random() * 0.5) + 0.5) * (this.options.radius * 0.125); // Range = 0.5 to 1.0 scale
-				var rotation = new Vector3().random().multiplyScalar(Math.PI);
 				object.scale.set(scale, scale, scale);
 				object.lookAt(new Vector3(0, 0, 0));
 				object.rotateOnAxis({ x: 1, y: 0, z: 0 }, Math.PI / 4)

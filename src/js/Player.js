@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader, SRGBColorSpace } from 'three';
+import { BoxGeometry, LineSegments, Mesh, MeshPhongMaterial, TextureLoader, SRGBColorSpace } from 'three';
 import { Body, Query, Vector } from 'matter-js';
 import { Utility } from './Utility.js';
 import { Cube } from './Cube.js';
@@ -8,6 +8,12 @@ class Player extends Cube {
     constructor(options = {}) {
         super(options);
         this.body.class = 'player';
+
+        // Debug helper
+        this.helper = new LineSegments(
+            this.shapes.children[0].geometry,
+            new MeshPhongMaterial({ color: '#00ff00', wireframe: true })
+        );
 
         // Update body
         this.setScale({ x: 16, y: 16, z: 16 });
@@ -19,6 +25,10 @@ class Player extends Cube {
         this.allowJump = false;
         this.addLight('#dc265a', 5, 256, false);
         this.rope = new Rope();
+    }
+
+    setScale(scale = {}, updateOrigin = true) {
+        super.setScale(scale, updateOrigin);
     }
 
     jump() {
@@ -108,6 +118,15 @@ class Player extends Cube {
 
     updateRope() {
         this.rope.updateJoints();
+    }
+
+    updateHelper() {
+        if (this.helper) {
+            this.helper.position.x = this.body.positionPrev.x;
+            this.helper.position.y = -this.body.positionPrev.y;
+            this.helper.rotation.z = -this.body.anglePrev;
+            this.helper.scale.copy(this.scale).multiplyScalar(0.9);
+        }
     }
 
     removeRope() {

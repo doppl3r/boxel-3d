@@ -65,6 +65,12 @@ class App {
         this.now = this.then;
         this.delta = 0;
 
+        // Add debug option
+        this.debug = false;
+        if (this.debug == true) {
+            this.scene.add(this.player.helper);
+        }
+
         // Add lighting to scene
         this.light.position.set(0.25, 0.5, 1);
         this.scene.add(this.light);
@@ -145,7 +151,12 @@ class App {
     updateEngine(delta, alpha) {
         // Update engine to loop engine rate
         if (this.play == true) {
+            // Update option player helper
+            if (this.debug == true) this.player.updateHelper();
+
+            // Update world engine
             Engine.update(this.engine, this.loop.engineInterval * 1000);
+            
             // Update player object
             this.player.updateForce();
             this.player.renderSpeed(this);
