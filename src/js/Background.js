@@ -32,7 +32,7 @@ class Background extends Group {
 	update(delta, alpha) {
 		// Update rotation and position
 		if (this.target){
-			this.rotation.y = this.target.position.x / 2000;
+			this.rotation.y = this.target.position.x / 1000;
 			//this.rotation.y += delta * 0.125;
 			this.position.copy(this.target.position);
 		}
@@ -86,8 +86,8 @@ class Background extends Group {
 		var mesh = this.getObjectByName('background-mesh');
 		var sampler = new MeshSurfaceSampler(mesh);
 		var object = new Group();
-		var count = 50;
-		var range = 0.5;
+		var count = 100;
+		var range = 0.4;
 
 		// Create noise from alea seed
 		sampler.build();
@@ -109,8 +109,9 @@ class Background extends Group {
 			if (object.position.y < -this.options.radius * range || object.position.y > this.options.radius * range) {
 				var scale = ((Math.random() * 0.5) + 0.5) * (this.options.radius * 0.125); // Range = 0.5 to 1.0 scale
 				var rotation = new Vector3().random().multiplyScalar(Math.PI);
-				object.scale.set(scale * 4, scale, scale);
-				object.rotation.set(rotation.x, rotation.y, rotation.z);
+				object.scale.set(scale, scale, scale);
+				object.lookAt(new Vector3(0, 0, 0));
+				object.rotateOnAxis({ x: 1, y: 0, z: 0 }, Math.PI / 4)
 				object.updateMatrix();
 				clouds.setMatrixAt(i, object.matrix);
 			}

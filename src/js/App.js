@@ -49,16 +49,16 @@ class App {
         this.extension = new Extension();
         this.player = new Player({ x: 0, y: 0, z: 0 });
         this.play = false;
-        this.fov = 110; // Default 75
+        this.fov = 75; // Default 75
         this.camera = new PerspectiveCamera(this.fov, this.screenWidth / this.screenHeight, 1, 2000);
         this.camera.tilt = 0;
         this.camera.position.x = 0;
         this.camera.position.y = 0;
-        this.camera.position.zDefault = 100;
+        this.camera.position.zDefault = 180;
         this.camera.position.z = this.camera.position.zDefault;
         this.camera.add(this.audio);
         this.scene = new Scene();
-        this.scene.fog = new Fog('#dc265a', 100, 1250);
+        this.scene.fog = new Fog('#dc265a', 400, 1000);
         this.loop = new Loop(this.scene, this.camera, canvas);
         this.light = new HemisphereLight('#ffffff', '#000000', 1);
         this.then = new Date().getTime();
