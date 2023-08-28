@@ -1,4 +1,4 @@
-import { HemisphereLight, PerspectiveCamera, Scene } from 'three';
+import { Fog, HemisphereLight, PerspectiveCamera, Scene } from 'three';
 import { Engine, Events } from 'matter-js';
 import Stats from './Stats.js';
 import { Animation } from './Animation.js';
@@ -9,6 +9,7 @@ import { Loop } from './Loop.js';
 import { StorageManager } from './StorageManager.js';
 import { Skins } from './Skins.js';
 import { Collision } from './Collision.js';
+import { Background } from './Background.js';
 import { Level } from './Level.js';
 import { LevelHistory } from './LevelHistory.js';
 import { Player } from './Player.js';
@@ -25,78 +26,80 @@ class App {
     }
 
     init(canvas, callback = function(){}) {
-        var a = this;
-        a.window = window;
-        a.document = document;
-        a.BOX_SIZE = 16;
-        a.engine = Engine.create();
-        a.util = new Utility();
-        a.screenWidth = a.window.innerWidth;
-        a.screenHeight = a.window.innerHeight;
-        a.stats = new Stats();
-        a.ui = new UIController();
-        a.animation = new Animation();
-        a.timer = new Timer();
-        a.mouse = new Mouse();
-        a.keyboard = new Keyboard();
-        a.audio = new Music();
-        a.storage = new StorageManager();
-        a.skins = new Skins();
-        a.collision = new Collision();
-        a.level = new Level();
-        a.levelEditor = new LevelEditor();
-        a.levelHistory = new LevelHistory();
-        a.extension = new Extension();
-        a.player = new Player({ x: 0, y: 0, z: 0 });
-        a.play = false;
-        a.fov = 110; // Default 75
-        a.camera = new PerspectiveCamera(a.fov, a.screenWidth / a.screenHeight, 1, 2000);
-        a.camera.tilt = 0;
-        a.scene = new Scene();
-        a.loop = new Loop(a.scene, a.camera, canvas);
-        a.light = new HemisphereLight('#ffffff', '#000000', 1);
-        a.then = new Date().getTime();
-        a.now = a.then;
-        a.delta = 0;
-
-        // Add music to camera
-        a.camera.add(a.audio);
+        this.window = window;
+        this.document = document;
+        this.BOX_SIZE = 16;
+        this.engine = Engine.create();
+        this.util = new Utility();
+        this.screenWidth = this.window.innerWidth;
+        this.screenHeight = this.window.innerHeight;
+        this.stats = new Stats();
+        this.ui = new UIController();
+        this.animation = new Animation();
+        this.timer = new Timer();
+        this.mouse = new Mouse();
+        this.keyboard = new Keyboard();
+        this.audio = new Music();
+        this.storage = new StorageManager();
+        this.skins = new Skins();
+        this.collision = new Collision();
+        this.level = new Level();
+        this.levelEditor = new LevelEditor();
+        this.levelHistory = new LevelHistory();
+        this.extension = new Extension();
+        this.player = new Player({ x: 0, y: 0, z: 0 });
+        this.play = false;
+        this.fov = 110; // Default 75
+        this.camera = new PerspectiveCamera(this.fov, this.screenWidth / this.screenHeight, 1, 2000);
+        this.camera.tilt = 0;
+        this.camera.position.x = 0;
+        this.camera.position.y = 0;
+        this.camera.position.zDefault = 100;
+        this.camera.position.z = this.camera.position.zDefault;
+        this.camera.add(this.audio);
+        this.scene = new Scene();
+        this.scene.fog = new Fog('#dc265a', 100, 1250);
+        this.loop = new Loop(this.scene, this.camera, canvas);
+        this.light = new HemisphereLight('#ffffff', '#000000', 1);
+        this.then = new Date().getTime();
+        this.now = this.then;
+        this.delta = 0;
 
         // Add lighting to scene
-        a.light.position.set(0.25, 0.5, 1);
-        a.scene.add(a.light);
+        this.light.position.set(0.25, 0.5, 1);
+        this.scene.add(this.light);
 
         // Update stats
-        a.stats.setMode(0);
-        a.stats.domElement.classList.add('stats');
-        a.document.body.appendChild(a.stats.domElement);
-
-        // Update scene settings
-        a.camera.position.x = 0;
-        a.camera.position.y = 0;
-        a.camera.position.zDefault = 100;
-        a.camera.position.z = a.camera.position.zDefault;
+        this.stats.setMode(0);
+        this.stats.domElement.classList.add('stats');
+        this.document.body.appendChild(this.stats.domElement);
 
         // Add level to scene
-        a.scene.add(a.level);
+        this.scene.add(this.level);
+
+        // Add background
+        this.background = new Background({ radius: 1000 });
+        this.background.setTarget(this.player);
+        this.scene.add(this.background);
 
         // Add event listeners and render app
-        a.canvas = canvas;
-        a.canvas.classList.add('hidden'); // Default hidden with CSS
-        a.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
-        a.canvas.addEventListener('mousedown', function(e){ a.mouse.mouseDown(e, a); }, false);
-        a.canvas.addEventListener('mousemove', function(e){ a.mouse.mouseMove(e, a); }, false);
-        a.canvas.addEventListener('mouseup', function(e){ a.mouse.mouseUp(e, a); }, false);
-        a.canvas.addEventListener('wheel', function(e){ a.mouse.wheel(e, a); }, false);
-        a.window.addEventListener('resize', function(e) { a.resizeWindow(e, a); });
-        a.window.addEventListener('keydown', function(e) { a.keyboard.keyDown(e, a); });
-        a.window.addEventListener('keyup', function(e) { a.keyboard.keyUp(e, a); });
-        Events.on(a.engine, 'collisionStart', function(e) { a.collision.checkPlayerCollision(e, a); });
-        a.updateSettings(null, a); // Update settings
+        var _this = this;
+        this.canvas = canvas;
+        this.canvas.classList.add('hidden'); // Default hidden with CSS
+        this.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
+        this.canvas.addEventListener('mousedown', function(e){ _this.mouse.mouseDown(e, _this); }, false);
+        this.canvas.addEventListener('mousemove', function(e){ _this.mouse.mouseMove(e, _this); }, false);
+        this.canvas.addEventListener('mouseup', function(e){ _this.mouse.mouseUp(e, _this); }, false);
+        this.canvas.addEventListener('wheel', function(e){ _this.mouse.wheel(e, _this); }, false);
+        this.window.addEventListener('resize', function(e) { _this.resizeWindow(e, _this); });
+        this.window.addEventListener('keydown', function(e) { _this.keyboard.keyDown(e, _this); });
+        this.window.addEventListener('keyup', function(e) { _this.keyboard.keyUp(e, _this); });
+        Events.on(this.engine, 'collisionStart', function(e) { _this.collision.checkPlayerCollision(e, _this); });
+        this.updateSettings(null, this); // Update settings
 
         var _this = this;
-        a.assets = new Assets();
-		a.assets.load(function() {
+        this.assets = new Assets();
+		this.assets.load(function() {
 			_this.load(callback);
 		});
     }
@@ -133,10 +136,9 @@ class App {
             // Update from new position
             this.updateCamera(this);
             this.timer.render(this);
-    
-            // Update player object
-            this.player.renderSpeed(this);
-            this.player.updateRope();
+
+            // Update background
+            this.background.update(delta, alpha);
         }
     }
 
@@ -144,7 +146,10 @@ class App {
         // Update engine to loop engine rate
         if (this.play == true) {
             Engine.update(this.engine, this.loop.engineInterval * 1000);
+            // Update player object
             this.player.updateForce();
+            this.player.renderSpeed(this);
+            this.player.updateRope();
         }
     }
 

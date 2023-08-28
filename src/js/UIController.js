@@ -341,7 +341,7 @@ class UIController {
         }
         else if (state == 'shop') {
             this.skins.removeClass('hidden');
-            app.skins.load(); // Gets skins
+            window.app.skins.load(); // Gets skins
         }
         else if (state == 'play') {
             this.campaign.removeClass('hidden');

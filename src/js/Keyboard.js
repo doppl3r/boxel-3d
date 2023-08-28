@@ -11,13 +11,13 @@ class Keyboard {
 
         // Only add shortcuts when not typing
         if (a.ui.dialog.isOpen() == false && $('input:focus').length <= 0) {
-            e.preventDefault();
             switch (e.keyCode) {
                 case 13: a.keyboard.spaceBarDown(a); break; // Enter (same as space)
                 case 16: this.shift = true; break; // Shift
                 case 17: this.ctrl = true; break; // Ctrl
                 case 27: // Esc
                     // Add 'go back' behavior
+                    e.preventDefault();
                     if (state == 'level-manager') {
                         $('[action="exit-to-home"]').click();
                     }
