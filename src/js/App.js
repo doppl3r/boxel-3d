@@ -144,6 +144,7 @@ class App {
         // Update engine to loop engine rate
         if (this.play == true) {
             Engine.update(this.engine, this.loop.engineInterval * 1000);
+            this.player.updateForce();
         }
     }
 

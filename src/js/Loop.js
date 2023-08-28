@@ -25,6 +25,7 @@ class Loop {
 		this.pixelatedPass = new RenderPixelatedPass(2, scene, camera);
 		this.pixelatedPass.normalEdgeStrength = 1; // 0.0 to 2.0, Default = 0.3
 		this.pixelatedPass.depthEdgeStrength = 1; // 0.0 to 1.0, Default = 0.4
+		this.pixelatedPass.enabled = false;
 
 		// Add effects to composer
 		this.composer = new EffectComposer(this.renderer);
@@ -61,7 +62,7 @@ class Loop {
 		// Refresh renderer on a higher interval
 		this.renderDeltaSum += delta;
         if (this.renderDeltaSum > this.renderInterval) {
-            this.renderDeltaSum %= this.renderInterval;
+			this.renderDeltaSum %= this.renderInterval;
             this.composer.render(); // Similar to this.renderer.render(this.scene, this.camera);
 			this.renderCallback(this.renderInterval == -1 ? delta : this.renderInterval, alpha);
 

@@ -96,6 +96,16 @@ class Player extends Cube {
         }
     }
 
+    updateForce() {
+        // Apply force to body until it reaches it's max speed (generic)
+        if (this.body.speed < this.maxSpeed) {
+            Body.applyForce(this.body, this.body.position, {
+                x: this.force.x * app.loop.engineScale,
+                y: this.force.y * app.loop.engineScale
+            });
+        }
+    }
+
     updateRope() {
         this.rope.updateJoints();
     }
