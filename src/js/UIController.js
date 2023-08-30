@@ -307,7 +307,7 @@ class UIController {
                     $('.version').off();
                     $('.version').on('click', function() {
                         $.get("changelog.txt", function(data) {
-                            app.ui.dialog.add({
+                            window.app.ui.dialog.add({
                                 attributes: { class: 'align-left' },
                                 text: data,
                                 inputs: [

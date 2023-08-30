@@ -1,12 +1,13 @@
-import { CircleGeometry, Group, Mesh, MeshBasicMaterial, RepeatWrapping, TextureLoader, Vector2, Vector3 } from 'three';
-import { MeshLine, MeshLineMaterial } from 'three.meshline';
+import { CircleGeometry, Group, Mesh, MeshBasicMaterial } from 'three';
+import { Line2 } from 'three/examples/jsm/lines/Line2.js';
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
 import { Bodies, Body, Constraint, World } from 'matter-js';
 
 class Rope extends Group {
     constructor() {
         super();
         this.radius = 4; // controls width and joint body size
-        this.setTexture(this);
     }
 
     addJoints(bodyA, bodyB, pointB) {
@@ -77,10 +78,11 @@ class Rope extends Group {
             child.shrink();
 
             // Update line mesh
-            if (child.line != null) {
-                points.push(new Vector3(pointA.x, -pointA.y, 0));
-                points.push(new Vector3(pointB.x + child.offset.x, -(pointB.y + child.offset.y), 0));
-                child.line.setPoints(points);
+            if (child.line2 != null) {
+                points.push(pointA.x, -pointA.y, 0);
+                points.push(pointB.x + child.offset.x, -(pointB.y + child.offset.y), 0);
+                child.line2Geometry.setPositions(points);
+                child.line2.computeLineDistances();
             }
 
             // Update circle mesh
@@ -88,14 +90,6 @@ class Rope extends Group {
                 child.circleMesh.position.set(pointB.x, -pointB.y, 0);
             }
         }
-    }
-
-    setTexture(self) {
-        this.loader = new TextureLoader();
-        this.loader.load('/img/png/textures/texture-chain.png', function(texture) {
-            texture.wrapS = texture.wrapT = RepeatWrapping;
-            self.texture = texture;
-        });
     }
 }
 
@@ -112,18 +106,12 @@ class Joint extends Group {
         // Line mesh
         this.speed = options.speed; // Shrink speed
         this.minLength = options.minLength;
-        this.line = new MeshLine();
-        this.lineMaterial = new MeshLineMaterial({ 
-            color: '#ffffff',
-            lineWidth: options.radius * 2,
-            map: options.texture,
-            opacity: 1.0,
-            useMap: true,
-            repeat: new Vector2(options.spacing, 1),
-            transparent: true
-        });
-        this.lineMesh = new Mesh(this.line, this.lineMaterial);
-        this.add(this.lineMesh);
+        
+        // Add new fat line
+        this.line2Geometry = new LineGeometry();
+        this.line2Material = new LineMaterial({ color: '#dc265a', dashed: false, linewidth: 1 / 128, dashScale: 1, dashSize: 8, gapSize: 2 });
+        this.line2 = new Line2(this.line2Geometry, this.line2Material);
+        this.add(this.line2);
     }
 
     addCircleMesh(options) {

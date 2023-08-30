@@ -1,3 +1,8 @@
+v1.2.0
+- Added 3D background
+- Improved performance
+- Update rope design
+
 v1.1.9.2
 - Added the option to upload custom skins (.jpg, .png, .webp)
 
