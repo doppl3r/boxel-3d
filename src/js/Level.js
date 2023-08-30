@@ -24,6 +24,7 @@ class Level extends Group {
     addObject(object, a) {
         World.add(a.engine.world, object.body); // Add hitbox to world
         this.add(object); // Add to group
+        this.parent.add(object.helper);
     }
 
     createObject(type, options) {
@@ -52,6 +53,7 @@ class Level extends Group {
         if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
             if (object != undefined) {
                 World.remove(a.engine.world, object.body);
+                this.parent.remove(object.helper);
                 this.remove(object);
                 a.level.deselectLevel(a);
             }

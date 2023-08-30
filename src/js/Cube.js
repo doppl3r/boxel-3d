@@ -1,4 +1,4 @@
-import { Mesh, PointLight } from 'three';
+import { LineSegments, Mesh, MeshPhongMaterial, PointLight } from 'three';
 import { Bodies, Body, Sleeping, Vector } from 'matter-js';
 import { Shapes } from './Shapes.js';
 
@@ -19,6 +19,8 @@ class Cube extends Mesh {
         // Set default properties
         this.shapes = new Shapes();
         this.shapes.addCube();
+        this.helper = new LineSegments(this.shapes.children[0].geometry, new MeshPhongMaterial({ color: '#00ff00', wireframe: true }));
+        this.helper.visible = false;
         this.setColors(options.color);
         this.add(this.shapes);
         this.hitbox = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
@@ -56,6 +58,18 @@ class Cube extends Mesh {
                 app.level.removeObject(this, app);
                 //this.resetToOrigin();
             }
+        }
+
+        // Update helper
+        this.updateHelper();
+    }
+
+    updateHelper() {
+        if (this.helper.visible == true) {
+            this.helper.position.x = this.body.positionPrev.x;
+            this.helper.position.y = -this.body.positionPrev.y;
+            this.helper.rotation.z = -this.body.anglePrev;
+            this.helper.scale.copy(this.scale).multiplyScalar(1);
         }
     }
 
