@@ -302,11 +302,11 @@ class UIController {
             var home = this.home;
             if (window.location.href.includes('file://') == false) {
                 // Update version
-                $.getJSON("manifest.json", function(json) {
-                    $('.version').text("v" + json.version);
+                $.getJSON('./manifest.json', function(json) {
+                    $('.version').text('v' + json.version);
                     $('.version').off();
                     $('.version').on('click', function() {
-                        $.get("changelog.txt", function(data) {
+                        $.get('./txt/changelog.txt', function(data) {
                             window.app.ui.dialog.add({
                                 attributes: { class: 'align-left' },
                                 text: data,
@@ -320,7 +320,7 @@ class UIController {
                 });
 
                 // Update Status
-                $.getJSON("/json/status.json", function(json) {
+                $.getJSON('./json/status.json', function(json) {
                     // Generate random tip
                     var statusLength = json.status.length;
                     var statusIndex = Math.floor(Math.random() * statusLength);

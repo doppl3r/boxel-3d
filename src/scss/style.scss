@@ -357,7 +357,7 @@ body .ui-controller .item:hover a.disabled ~ .slider { display: none; }
 /* Chrome extension styling */
 body .ui-controller .status-bar { color: #fff; display: flex; position: absolute; top: 12px; left: 12px; opacity: 1; }
 body .ui-controller .status-bar .status { display: inline-flex; margin: 0; align-items: center; white-space: nowrap; }
-body .ui-controller .status-bar .status img { display: inline-block; max-width: 16px; max-height: 16px; margin-right: 4px; }
+body .ui-controller .status-bar .status img { display: inline-block; width: 100%; max-width: 16px; max-height: 16px; margin-right: 4px; }
 body .ui-controller .status-bar .status strong { font-style: italic; padding: 0 4px; }
 body .ui-controller .status-bar .status a { width: initial; height: initial; display: inline; color: inherit; }
 

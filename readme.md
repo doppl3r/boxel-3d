@@ -1,11 +1,26 @@
 # Boxel 3D
 
-## Instructions
+## Local Development
 
-### Building Google Extension Release
-  - Update release version in manifest.json
-  - Install 'gulp': ```npm install --save-dev gulp```
-  - Install 'gulp-zip': ```npm install --save-dev gulp-zip```
-  - Run gulp-build: ```node gulp-build.js```
-  - Run gulp-dist: ```node gulp-dist.js```
-  - Upload boxel3d-version.zip located under ```/dist``
+- Install NodeJS package libraries: `npm install`
+- Run development libraries `npm run dev`
+- Use the link it provides
+
+## Build for release
+
+- Run build with `npm run build` to create a fresh `/dist` folder
+- Compress `/dist` folder into a `.zip` file format
+- Upload to Chrome Webstore
+
+## Test Chrome Extension
+
+- Rebuild extension and open Google Chrome
+- Click Extensions > Manage Extensions
+- Enable Developer mode (top right)
+- Click `Load unpacked` and navigate to the `/dist` folder
+- Open extension within Chrome
+
+## Update NPM libraries
+
+- Run `npm outdated`
+- Run `npm i package-name@latest` (replace "package-name" for each package listed)
