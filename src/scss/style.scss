@@ -152,7 +152,7 @@ html {
         }
 
         .stats {
-            display: none;
+            display: none !important;
             position: absolute;
             top: initial !important;
             right: 16px !important;
@@ -165,7 +165,7 @@ html {
         }
     
         &.has-dialog .stats {
-            display: block;
+            display: block !important;
         }
     
         .ui-controller {

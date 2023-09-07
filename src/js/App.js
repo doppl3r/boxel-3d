@@ -1,6 +1,5 @@
 import { Fog, HemisphereLight, PerspectiveCamera, Scene } from 'three';
 import { Engine, Events } from 'matter-js';
-import Stats from './Stats.js';
 import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
 import { Timer } from './Timer.js';
@@ -33,7 +32,6 @@ class App {
         this.util = new Utility();
         this.screenWidth = this.window.innerWidth;
         this.screenHeight = this.window.innerHeight;
-        this.stats = new Stats();
         this.ui = new UIController();
         this.animation = new Animation();
         this.timer = new Timer();
@@ -68,11 +66,6 @@ class App {
         // Add lighting to scene
         this.light.position.set(0.25, 0.5, 1);
         this.scene.add(this.light);
-
-        // Update stats
-        this.stats.setMode(0);
-        this.stats.domElement.classList.add('stats');
-        this.document.body.appendChild(this.stats.domElement);
 
         // Add level to scene
         this.scene.add(this.level);
