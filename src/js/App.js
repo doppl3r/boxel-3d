@@ -145,13 +145,13 @@ class App {
     updateEngine(delta, alpha) {
         // Update engine to loop engine rate
         if (this.play == true) {
-            // Update world engine
-            Engine.update(this.engine, this.loop.engineInterval * 1000);
-            
             // Update player object
             this.player.updateForce();
             this.player.renderSpeed(this);
             this.player.updateRope();
+
+            // Update world engine
+            Engine.update(this.engine, this.loop.engineInterval * 1000);
         }
     }
 
