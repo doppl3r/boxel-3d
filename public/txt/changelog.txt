@@ -1,7 +1,9 @@
 v1.2.0
 - Added 3D background
-- Improved performance
-- Update rope design
+- Updated 3D Engine from r116 to r156 (3 years old)
+- Updated rope design (white)
+- Updated all game files
+- Removed FPS limit
 
 v1.1.9.2
 - Added the option to upload custom skins (.jpg, .png, .webp)

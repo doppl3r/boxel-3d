@@ -59,6 +59,7 @@ class App {
         this.scene.fog = new Fog('#dc265a', 400, 1000);
         this.loop = new Loop(this.scene, this.camera, canvas);
         this.light = new HemisphereLight('#ffffff', '#000000', 1);
+        this.light.intensity = 1 * Math.PI; // PI was added after three.js r155
         this.then = new Date().getTime();
         this.now = this.then;
         this.delta = 0;
