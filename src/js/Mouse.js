@@ -16,8 +16,9 @@ class Mouse {
         this.setTolerance();
         if (a.play == false) { a.levelEditor.mouseDown(e, a); }
         else {
-            a.player.jump(a.mouse.getPosition(e, a));
-            a.player.addRope(a.mouse.getPosition(e, a));
+            var position = a.mouse.getPosition(e, a);
+            a.player.jump(position);
+            a.player.addRope(position);
         }
     }
 
@@ -31,16 +32,16 @@ class Mouse {
     }
 
     getPosition(e, a) {
-        var vec = new Vector3(); // create once and reuse
+        var raycaster = new Raycaster();
         var pos = new Vector3(); // create once and reuse
-        var distance = 0;
-        var x = (e.clientX / a.window.innerWidth) * 2 - 1;
-        var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
-        vec.set(x, y, 0.5);
-        vec.unproject(a.camera);
-        vec.sub(a.camera.position).normalize();
-        distance = -a.camera.position.z / vec.z;
-        pos.copy(a.camera.position).add(vec.multiplyScalar(distance));
+        var intersects = [];
+
+        // Check intersection with player "plane" for rope collision
+        raycaster.setFromCamera(a.mouse.getMouse(e, a), a.camera);
+        intersects = raycaster.intersectObject(a.player, true);
+
+        // Copy and return position
+        if (intersects.length > 0) pos.copy(intersects[0].point);
         return(pos);
     }
 
@@ -124,6 +125,14 @@ class Mouse {
     getMode() {
         return this.mode;
     }
+
+    getMouse(e, a) {
+		return {
+            x: (e.clientX / a.window.innerWidth) * 2 - 1,
+            y: -(e.clientY / a.window.innerHeight) * 2 + 1,
+            z: 0.5
+        };
+	}
 }
 
 export { Mouse };
