@@ -658,6 +658,8 @@ class UIController {
             app.ui.showObjectOptions(false);
             app.ui.levelOptions.find('[action="play"]').removeClass('selected');
             app.ui.levelOptions.find('[action="pause"]').addClass('selected');
+            app.levelEditor.controlsOrbit.enabled = true;
+            app.levelEditor.controlsOrbit.reset();
         }
         else if (app.ui.state == 'play') {
             app.ui.dialog.add({
@@ -678,6 +680,7 @@ class UIController {
         app.ui.showObjectOptions(false);
         app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
+        app.levelEditor.controlsOrbit.enabled = false;
         if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
     }
 

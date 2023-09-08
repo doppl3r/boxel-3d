@@ -54,22 +54,20 @@ class Mouse {
         vec.set(x, y, 0);
         raycaster.setFromCamera(vec, a.camera);
         var intersects = raycaster.intersectObjects(a.scene.children, true);
-        if (intersects.length > 0) {
-            // Parent #1 = Shapes, Parent #2 = Cube
-            object = intersects[0].object.parent.parent;
+
+        // Loop through objects selected
+        for (var i = 0; i < intersects.length; i++) {
+            var obj = intersects[i].object;
+            if (obj.parent.parent.isCube) {
+                object = obj.parent.parent;
+                break;
+            }
         }
         return(object);
     }
 
     wheel(e, a) {
         e.preventDefault();
-        if (app.ui.state == 'level-editor') {
-            var zoom = a.camera.position.z + e.deltaY;
-            if (zoom < 100) zoom = 100;
-            else if (zoom > 1000) zoom = 1000;
-            a.camera.position.z = zoom;
-            a.mouse.setTolerance();
-        }
     }
 
     setTolerance(value = 0.05) {

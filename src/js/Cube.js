@@ -37,6 +37,7 @@ class Cube extends Mesh {
         });
         this.name = this.uuid;
         this.maxSpeed = 4;
+        this.isCube = true; // Used for level editor
         this.setPosition({ x: options.x, y: options.y, z: options.z });
         this.setRotation(options.angle);
         this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });

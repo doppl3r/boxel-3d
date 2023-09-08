@@ -41,9 +41,6 @@ class App {
         this.storage = new StorageManager();
         this.skins = new Skins();
         this.collision = new Collision();
-        this.level = new Level();
-        this.levelEditor = new LevelEditor();
-        this.levelHistory = new LevelHistory();
         this.extension = new Extension();
         this.player = new Player({ x: 0, y: 0, z: 0 });
         this.play = false;
@@ -63,6 +60,13 @@ class App {
         this.then = new Date().getTime();
         this.now = this.then;
         this.delta = 0;
+
+        // Initialize level editor
+        this.level = new Level();
+        this.levelHistory = new LevelHistory();
+        this.levelEditor = new LevelEditor(this.camera, this.loop.renderer.domElement);
+        this.levelEditor.controlsTransform.enabled = false;
+        this.scene.add(this.levelEditor.controlsTransform);
 
         // Add lighting to scene
         this.light.position.set(0.25, 0.5, 1);

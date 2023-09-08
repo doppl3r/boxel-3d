@@ -1,8 +1,17 @@
 import $ from 'jquery';
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 class LevelEditor {
-    constructor() {
-
+    constructor(camera, domElement) {
+        this.controlsTransform = new TransformControls(camera, domElement);
+        this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
+        this.controlsOrbit = new OrbitControls(camera, domElement);
+        this.controlsOrbit.enableRotate = false;
+		this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 2 };
+		this.controlsOrbit.zoomSpeed = 3;
+		this.controlsOrbit.minDistance = 10;
+		this.controlsOrbit.maxDistance = 1000;
     }
 
     mouseDown(e, a) {
@@ -18,8 +27,9 @@ class LevelEditor {
             var target = a.mouse.clickObject(e, a);
             a.camera.moved = false;
             a.mouse.setOffset(a.mouse.down);
+            
             // Select a new object on start click
-            if (target != null) {
+            if (target) {
                 a.mouse.setOffset(target.position);
                 a.level.deselectLevel(a);
                 a.ui.showObjectOptions(true);
@@ -47,6 +57,7 @@ class LevelEditor {
         if (a.mouse.drag == true) {
             if (a.mouse.mode == 'draw') {
                 // Update object or camera position if tolerance is true
+                console.log(a.mouse.getDragDifference())
                 if (a.mouse.getTolerance() == true) {
                     // Update camera position
                     var down = a.mouse.down;
@@ -54,18 +65,8 @@ class LevelEditor {
                     
                     // If 's' is not selected, begin moving camera or object
                     if (a.levelEditor.isScaling != true && a.levelEditor.isRotating != true) {
-                        if (a.camera.allowMovement == true) {
-                            // Resolve camera ray miscalculations
-                            var camTolerance = a.camera.position.z / 2;
-                            if (Math.abs(diff.x) > camTolerance || Math.abs(diff.y) > camTolerance || Math.abs(diff.z) > camTolerance) {
-                                diff = { x: 0, y: 0, z: 0 };
-                            }
-                            // Update camera position
-                            a.camera.position.x += diff.x;
-                            a.camera.position.y += diff.y;
-                            a.camera.moved = true;
-                        }
-                        else { // Update object position
+                        if (a.camera.allowMovement == false) {
+                            // Update object position
                             if (a.selectedObject != null) {
                                 a.camera.allowMovement = false;
                                 a.selectedObject.setPosition({
