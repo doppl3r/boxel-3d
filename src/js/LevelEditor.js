@@ -57,7 +57,6 @@ class LevelEditor {
         if (a.mouse.drag == true) {
             if (a.mouse.mode == 'draw') {
                 // Update object or camera position if tolerance is true
-                console.log(a.mouse.getDragDifference())
                 if (a.mouse.getTolerance() == true) {
                     // Update camera position
                     var down = a.mouse.down;
