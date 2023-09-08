@@ -65,7 +65,6 @@ class App {
         this.level = new Level();
         this.levelHistory = new LevelHistory();
         this.levelEditor = new LevelEditor(this.camera, this.loop.renderer.domElement);
-        this.levelEditor.controlsTransform.enabled = false;
         this.scene.add(this.levelEditor.controlsTransform);
 
         // Add lighting to scene

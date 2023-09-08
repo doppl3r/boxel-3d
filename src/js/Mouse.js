@@ -117,7 +117,7 @@ class Mouse {
     }
 
     setMode(mode) {
-        this.mode = this.prevMode =  mode;
+        this.mode = this.prevMode = mode;
     }
 
     getMode() {

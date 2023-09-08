@@ -5,6 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 class LevelEditor {
     constructor(camera, domElement) {
         this.controlsTransform = new TransformControls(camera, domElement);
+        this.controlsTransform.showZ = false;
         this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
         this.controlsOrbit = new OrbitControls(camera, domElement);
         this.controlsOrbit.enableRotate = false;
@@ -12,117 +13,49 @@ class LevelEditor {
 		this.controlsOrbit.zoomSpeed = 3;
 		this.controlsOrbit.minDistance = 10;
 		this.controlsOrbit.maxDistance = 1000;
+
+        // Set events
+        var _this = this;
+        this.controlsTransform.addEventListener('mouseDown', function() { _this.controlsOrbit.enabled = false; });
+        this.controlsTransform.addEventListener('mouseUp', function() { _this.controlsOrbit.enabled = true; _this.updateSelectedObject(); });
+        this.controlsTransform.addEventListener('objectChange', function() { _this.controlsTransform.moved = true; });
+        this.controlsOrbit.addEventListener('start', function() { _this.controlsOrbit.moved = false; })
+        this.controlsOrbit.addEventListener('change', function() { _this.controlsOrbit.moved = true; })
     }
 
     mouseDown(e, a) {
-        // Allow right click toggle to erase
-        if (e.button == 2) {
-            a.mouse.mode = 'erase';
-            a.ui.updateLevelOptions()
-        }
-
-        // Check if drawing or erasing
         a.mouse.setPosition('down', a.mouse.getPosition(e, a));
-        if (a.mouse.mode == 'draw') {
-            var target = a.mouse.clickObject(e, a);
-            a.camera.moved = false;
-            a.mouse.setOffset(a.mouse.down);
-            
-            // Select a new object on start click
-            if (target) {
-                a.mouse.setOffset(target.position);
-                a.level.deselectLevel(a);
-                a.ui.showObjectOptions(true);
-                a.selectedObject = target;
-                a.selectedObject.select(true);
-                a.ui.updateObjectOptions();
-                a.ui.selectObjectType(a.selectedObject.getClass(), false);
-                a.camera.allowMovement = false;
-            }
-            else {
-                // Enable camera dragging
-                a.camera.allowMovement = true;
-            }
-        }
-        else if (a.mouse.mode == 'erase') {
-            a.levelEditor.eraseTarget(e, a);
-            a.level.deselectLevel(a); // Deselect everything
-            a.ui.showObjectOptions(false);
-        }
+        this.controlsTransform.moved = false;
     }
 
     mouseMove(e, a) {
         a.mouse.setPosition('move', a.mouse.getPosition(e, a));
-        // Update selected object if drag is true
-        if (a.mouse.drag == true) {
-            if (a.mouse.mode == 'draw') {
-                // Update object or camera position if tolerance is true
-                if (a.mouse.getTolerance() == true) {
-                    // Update camera position
-                    var down = a.mouse.down;
-                    var diff = a.mouse.getDragDifference();
-                    
-                    // If 's' is not selected, begin moving camera or object
-                    if (a.levelEditor.isScaling != true && a.levelEditor.isRotating != true) {
-                        if (a.camera.allowMovement == false) {
-                            // Update object position
-                            if (a.selectedObject != null) {
-                                a.camera.allowMovement = false;
-                                a.selectedObject.setPosition({
-                                    x: a.mouse.snapToValue(down.x - diff.x, a.mouse.snap),
-                                    y: a.mouse.snapToValue(down.y - diff.y, a.mouse.snap)
-                                });
-                            }
-                        }
-                    }
-                    else {
-                        if (a.levelEditor.isScaling == true) {
-                            // Start scaling object
-                            var s = a.selectedObject.getScaleOrigin();
-                            var x = a.mouse.snapToValue(s.x - diff.x, a.mouse.snap);
-                            var y = a.mouse.snapToValue(s.y - diff.y, a.mouse.snap);
-                            if (x < 16) x = 16;
-                            if (y < 16) y = 16;
-                            a.selectedObject.setScale({ x: x, y: y }, false);
-                        }
-                        if (a.levelEditor.isRotating == true) {
-                            // Start rotating object
-                            var d = a.mouse.down;
-                            var m = a.mouse.move;
-                            var o = a.selectedObject.position;
-                            var angle_down = Math.atan2(d.y - o.y, d.x - o.x);
-                            var angle_move = Math.atan2(m.y - o.y, m.x - o.x);
-                            var angle_diff = angle_move - angle_down;
-                            var angle_orig = a.selectedObject.getRotationOrigin();
-                            a.selectedObject.setRotation((angle_orig + angle_diff) % (Math.PI * 2), false);
-                        }
-                    }
-                }
-            }
-            else if (a.mouse.mode == 'erase') {
-                a.levelEditor.eraseTarget(e, a);
-            }
-        }
     }
 
     mouseUp(e, a) {
         var target = a.mouse.clickObject(e, a);
         a.mouse.setPosition('up', a.mouse.getPosition(e, a));
-        
-        // Store selected object origin
-        if (a.selectedObject != null) {
-            a.selectedObject.setScale(a.selectedObject.getScale());
-            a.selectedObject.setRotation(a.selectedObject.getRotation());
-        }
+
+        // Allow quick erase
+        if (e.button == 2) a.mouse.mode = 'erase';
 
         // Check if drawing or erasing
         if (a.mouse.mode == 'draw') {
-            // Add cube if nothing is selected
-            if (target == null) {
-                // Check if mouse moved more than tolerance
-                if (a.mouse.getTolerance() == false) {
-                    // Check if the camera was not moved when given permission to add cube
-                    if (a.camera.moved != true) {
+            // Check if object is not selected
+            if (a.selectedObject == null || target) {
+                // Select a new object on start click
+                if (target) {
+                    a.level.deselectLevel(a);
+                    a.ui.showObjectOptions(true);
+                    a.selectedObject = target;
+                    a.selectedObject.select(true);
+                    a.ui.updateObjectOptions();
+                    a.ui.selectObjectType(a.selectedObject.getClass(), false);
+                    this.controlsTransform.attach(target);
+                }
+                else {
+                    // Add a new object if camera did not move
+                    if (this.controlsOrbit.moved == false) {
                         var objectType = a.ui.getSelectedObjectType();
                         var objectData = {
                             class: objectType,
@@ -143,31 +76,28 @@ class LevelEditor {
                         a.selectedObject.select(true);
                         a.ui.showObjectOptions(true);
                         a.ui.updateObjectOptions();
+                        this.controlsTransform.attach(a.selectedObject);
                     }
                 }
             }
             else {
-                // Save history if object was moved
-                if (a.mouse.getTolerance() != false) {
-                    a.levelHistory.save('Moved object', a);
+                // Deselect if object and camera was not moved
+                if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
+                    a.level.deselectLevel(app);
+                    a.ui.showObjectOptions(false);
+                    this.controlsTransform.detach();
                 }
             }
         }
         else if (a.mouse.mode == 'erase') {
-            if (a.mouse.erased == true) {
-                a.levelHistory.save('Erased object', a);
-                a.mouse.erased = false; // Reset state
-            }
-        }
-        
-        // Reset right click toggle to erase
-        if (e.button == 2) {
+            a.levelEditor.eraseTarget(e, a);
+            a.level.deselectLevel(a); // Deselect everything
+            a.ui.showObjectOptions(false);
+            a.levelHistory.save('Erased object', a);
             a.mouse.mode = a.mouse.prevMode;
-            a.ui.updateLevelOptions()
+            a.ui.updateLevelOptions();
+            this.controlsTransform.detach();
         }
-        //if (a.selectedObject == null) a.levelEditor.setScalingState(a, false);
-        a.levelEditor.setScalingState(a, false);
-        a.levelEditor.setRotatingState(a, false);
     }
 
     eraseTarget(e, a) {
@@ -176,7 +106,6 @@ class LevelEditor {
             if (target.getClass() != 'player') {
                 target.select(true);
                 a.level.removeObject(target, a, true);
-                a.mouse.erased = true; // Used for saving history
             }
         }
     }
@@ -198,6 +127,7 @@ class LevelEditor {
     deleteSelected(a) {
         if (a.selectedObject != null) {
             $('[action="trash"]').click();
+            this.controlsTransform.detach();
         }
     }
 
@@ -211,6 +141,34 @@ class LevelEditor {
 
     saveLevel() {
         $('[action="save"]').click();
+    }
+
+    updateSelectedObject() {
+        // Store selected object origin
+        if (app.selectedObject != null) {
+            app.selectedObject.setScale(app.selectedObject.getScale());
+            app.selectedObject.setRotation(app.selectedObject.getRotation());
+            app.levelHistory.save('Object updated', app);
+        }
+    }
+
+    setMode(mode) {
+        this.controlsTransform.setMode(mode);
+        if (mode == 'translate') {
+            this.controlsTransform.showX = true;
+            this.controlsTransform.showY = true;
+            this.controlsTransform.showZ = false;
+        }
+        else if (mode == 'scale') {
+            this.controlsTransform.showX = true;
+            this.controlsTransform.showY = true;
+            this.controlsTransform.showZ = false;
+        }
+        else if (mode == 'rotate') {
+            this.controlsTransform.showX = false;
+            this.controlsTransform.showY = false;
+            this.controlsTransform.showZ = true;
+        }
     }
 }
 
