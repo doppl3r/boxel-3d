@@ -122,6 +122,8 @@ class UIController {
                 app.ui.updateUI('level-editor');
                 app.levelHistory.save('Edited level', app);
                 app.resetScene(app);
+                app.levelEditor.controlsOrbit.enabled = true;
+                app.levelEditor.controlsOrbit.reset();
             }
             else if (action == 'delete-level') {
                 app.ui.dialog.add({
@@ -614,6 +616,7 @@ class UIController {
         app.player.removeCheckpoint();
         app.player.setPosition({ x: 0, y: 0, z: 0 });
         app.ui.updateUI('level-manager');
+        app.levelEditor.controlsOrbit.enabled = false;
     }
 
     updateTip() {

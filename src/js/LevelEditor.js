@@ -8,6 +8,7 @@ class LevelEditor {
         this.controlsTransform.showZ = false;
         this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
         this.controlsOrbit = new OrbitControls(camera, domElement);
+        this.controlsOrbit.enabled = false; // Default disabled for campaign
         this.controlsOrbit.enableRotate = false;
 		this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 2 };
 		this.controlsOrbit.zoomSpeed = 3;
