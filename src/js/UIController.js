@@ -210,12 +210,10 @@ class UIController {
                 app.levelHistory.save('Updated object state', app);
                 app.ui.updateObjectOptions();
             }
-            else if (action == 'rotate') {
-                app.ui.objectOptions.find('[name="rotate"]').focus();
-            }
-            else if (action == 'scale-x') { app.ui.objectOptions.find('[name="scale-x"]').focus(); }
-            else if (action == 'scale-y') { app.ui.objectOptions.find('[name="scale-y"]').focus(); }
-            else if (action == 'scale-z') { app.ui.objectOptions.find('[name="scale-z"]').focus(); }
+            else if (action == 'rotate') { app.ui.objectOptions.find('[name="rotate"]').focus(); app.levelEditor.setMode('rotate'); }
+            else if (action == 'scale-x') { app.ui.objectOptions.find('[name="scale-x"]').focus(); app.levelEditor.setMode('scale'); }
+            else if (action == 'scale-y') { app.ui.objectOptions.find('[name="scale-y"]').focus(); app.levelEditor.setMode('scale'); }
+            else if (action == 'scale-z') { app.ui.objectOptions.find('[name="scale-z"]').focus(); app.levelEditor.setMode('scale'); }
             else if (action == 'friction') {
                 app.ui.objectOptions.find('[name="friction"]').focus();
             }

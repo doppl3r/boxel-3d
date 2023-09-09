@@ -60,12 +60,17 @@ class Keyboard {
                         a.ui.exitCampaign();
                     }
                 break;
+                case 71: // 'g'
+                    if (state == 'level-editor') {
+                        a.levelEditor.setMode('translate')
+                    }
+                break;
                 case 82: // 'r'
                     if (a.play == true && (state == 'play' || state == 'level-editor')) {
                         a.level.retryLevel(a);
                     }
                     else if (a.play == false && state == 'level-editor') {
-                        a.levelEditor.setRotatingState(a, true);
+                        a.levelEditor.setMode('rotate')
                     }
                 break;
                 case 83: // 's'
@@ -74,7 +79,7 @@ class Keyboard {
                             a.levelEditor.saveLevel();
                         }
                         else {
-                            a.levelEditor.setScalingState(a, true);
+                            a.levelEditor.setMode('scale')
                         }
                     }
                 break;

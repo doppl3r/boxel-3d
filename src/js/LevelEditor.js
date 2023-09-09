@@ -27,6 +27,9 @@ class LevelEditor {
     mouseDown(e, a) {
         a.mouse.setPosition('down', a.mouse.getPosition(e, a));
         this.controlsTransform.moved = false;
+        this.controlsTransform.setTranslationSnap(a.mouse.snap);
+        this.controlsTransform.setScaleSnap(a.mouse.snap);
+        this.controlsTransform.setRotationSnap(a.mouse.snap > 1 ? (Math.PI / 24) : null); // 15 degrees or granular (null)
     }
 
     mouseMove(e, a) {
@@ -109,14 +112,6 @@ class LevelEditor {
                 a.level.removeObject(target, a, true);
             }
         }
-    }
-
-    setScalingState(a, isScaling) {
-        a.levelEditor.isScaling = isScaling;
-    }
-
-    setRotatingState(a, isRotating) {
-        a.levelEditor.isRotating = isRotating;
     }
 
     duplicateSelected(a) {
