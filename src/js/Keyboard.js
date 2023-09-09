@@ -62,7 +62,7 @@ class Keyboard {
                 break;
                 case 71: // 'g'
                     if (state == 'level-editor') {
-                        a.levelEditor.setMode('translate')
+                        $('[action="translate"]').click();
                     }
                 break;
                 case 82: // 'r'
@@ -70,7 +70,7 @@ class Keyboard {
                         a.level.retryLevel(a);
                     }
                     else if (a.play == false && state == 'level-editor') {
-                        a.levelEditor.setMode('rotate')
+                        $('[action="rotate"]').click();
                     }
                 break;
                 case 83: // 's'
@@ -79,7 +79,7 @@ class Keyboard {
                             a.levelEditor.saveLevel();
                         }
                         else {
-                            a.levelEditor.setMode('scale')
+                            $('[action="scale"]').click();
                         }
                     }
                 break;
