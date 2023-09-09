@@ -17,7 +17,7 @@ class LevelEditor {
 
         // Set events
         var _this = this;
-        this.controlsTransform.addEventListener('mouseDown', function() { _this.controlsOrbit.enabled = false; });
+        this.controlsTransform.addEventListener('mouseDown', function() { _this.controlsOrbit.enabled = false; _this.saveSelectedObject(); });
         this.controlsTransform.addEventListener('mouseUp', function() { _this.controlsOrbit.enabled = true; _this.updateSelectedObject(); });
         this.controlsTransform.addEventListener('objectChange', function() { _this.controlsTransform.moved = true; });
         this.controlsOrbit.addEventListener('start', function() { _this.controlsOrbit.moved = false; })
@@ -144,13 +144,29 @@ class LevelEditor {
         $('[action="save"]').click();
     }
 
+    saveSelectedObject() {
+        var target = app.selectedObject;
+        target.position0 = target.position.clone();
+        target.scale0 = target.scale.clone();
+        target.rotation0 = target.rotation.clone();
+    }
+
     updateSelectedObject() {
-        // Store selected object origin
-        if (app.selectedObject != null) {
-            app.selectedObject.setScale(app.selectedObject.getScale());
-            app.selectedObject.setRotation(app.selectedObject.getRotation());
-            app.levelHistory.save('Object updated', app);
-        }
+        var target = app.selectedObject;
+
+        // Update body position
+        target.setPosition(target.getPosition());
+
+        // Update body scale (reset transformation first)
+        var tempAngle = target.rotation.z;
+        target.setRotation(0, false);
+        target.setBodyScale(target.scale.x / target.scale0.x, target.scale.y / target.scale0.y);
+        target.setRotation(tempAngle, false); // Revert angle
+        target.setScale(target.getScale());
+
+        // Refresh body rotation
+        target.setRotation(target.getRotation());
+        app.levelHistory.save('Object updated', app);
     }
 
     setMode(mode) {
@@ -163,7 +179,7 @@ class LevelEditor {
         else if (mode == 'scale') {
             this.controlsTransform.showX = true;
             this.controlsTransform.showY = true;
-            this.controlsTransform.showZ = false;
+            this.controlsTransform.showZ = true;
         }
         else if (mode == 'rotate') {
             this.controlsTransform.showX = false;

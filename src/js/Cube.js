@@ -98,6 +98,10 @@ class Cube extends Mesh {
         this.positionOrigin.z = position.z;
     }
 
+    getPosition() {
+        return this.position;
+    }
+
     setRotation(angle, updateOrigin = true) {
         this.rotation.z = angle;
         Body.setAngle(this.body, -angle);
@@ -129,12 +133,16 @@ class Cube extends Mesh {
         this.setRotation(0, false);
 
         // Scale rectangle by previous scale, then update mesh scale ratio
-        Body.scale(this.body, scale.x / this.scale.x, scale.y / this.scale.y);
+        this.setBodyScale(scale.x / this.scale.x, scale.y / this.scale.y);
         this.scale.x = scale.x;
         this.scale.y = scale.y;
         this.scale.z = scale.z;
         this.setRotation(tempAngle, false); // Revert angle
         if (updateOrigin == true) this.setScaleOrigin({ x: scale.x, y: scale.y, z: scale.z });
+    }
+
+    setBodyScale(x, y) {
+        Body.scale(this.body, x, y);
     }
 
     getScale() {
