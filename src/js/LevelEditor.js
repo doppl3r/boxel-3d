@@ -6,7 +6,7 @@ class LevelEditor {
     constructor(camera, domElement) {
         this.controlsTransform = new TransformControls(camera, domElement);
         this.controlsTransform.showZ = false;
-        this.controlsTransform.space = 'local';
+        this.controlsTransform.space = 'world';
         this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
         this.controlsOrbit = new OrbitControls(camera, domElement);
         this.controlsOrbit.enabled = false; // Default disabled for campaign
@@ -30,7 +30,7 @@ class LevelEditor {
         this.controlsTransform.moved = false;
         this.controlsTransform.setTranslationSnap(a.mouse.snap);
         this.controlsTransform.setScaleSnap(a.mouse.snap);
-        this.controlsTransform.setRotationSnap(a.mouse.snap > 1 ? (Math.PI / 24) : null); // 15 degrees or granular (null)
+        this.controlsTransform.setRotationSnap(a.mouse.snap > 1 ? (Math.PI / 12) : null); // 15 degrees or granular (null)
     }
 
     mouseMove(e, a) {
