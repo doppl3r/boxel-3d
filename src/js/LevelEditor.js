@@ -6,6 +6,7 @@ class LevelEditor {
     constructor(camera, domElement) {
         this.controlsTransform = new TransformControls(camera, domElement);
         this.controlsTransform.showZ = false;
+        this.controlsTransform.space = 'local';
         this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
         this.controlsOrbit = new OrbitControls(camera, domElement);
         this.controlsOrbit.enabled = false; // Default disabled for campaign
@@ -49,7 +50,7 @@ class LevelEditor {
             if (a.selectedObject == null || target) {
                 // Select a new object on start click
                 if (target) {
-                    if (this.controlsTransform.moved == false) {
+                    if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
                         a.level.deselectLevel(a);
                         a.ui.showObjectOptions(true);
                         a.selectedObject = target;
