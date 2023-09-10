@@ -1,6 +1,7 @@
 v1.2.0
 - Added 3D background
 - Updated 3D Engine from r116 to r156 (3 years old)
+- Updated level editor
 - Updated rope design (white)
 - Updated all game files
 - Removed FPS limit
