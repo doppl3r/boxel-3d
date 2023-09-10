@@ -27,7 +27,11 @@ class Mouse {
     }
 
     mouseUp(e, a) {
-        if (a.play == false) { a.levelEditor.mouseUp(e, a); }
+        if (a.play == false) {
+            if (app.ui.state == 'level-editor') {
+                a.levelEditor.mouseUp(e, a);
+            }
+        }
         a.player.removeRope(); // Always remove rope
     }
 

@@ -145,6 +145,7 @@ class UIController {
                 app.ui.updateLevelOptions();
             }
             else if (action == 'exit-to-level-manager') {
+                app.levelEditor.controlsTransform.detach();
                 if (app.levelHistory.history.length > 2) {
                     app.ui.dialog.add({
                         text: 'Would you like to <em>save</em> your level?',
@@ -162,6 +163,7 @@ class UIController {
                 app.level.saveLevelData(app);
             }
             else if (action == 'undo') {
+                app.levelEditor.controlsTransform.detach();
                 app.levelHistory.undo(app);
                 app.ui.showObjectOptions(false);
             }
@@ -207,6 +209,7 @@ class UIController {
                 app.selectedObject.toggleStatic();
                 app.selectedObject = app.level.refreshObject(app.selectedObject, app);
                 app.selectedObject.select(true);
+                app.levelEditor.controlsTransform.attach(app.selectedObject);
                 app.levelHistory.save('Updated object state', app);
                 app.ui.updateObjectOptions();
             }
@@ -227,8 +230,10 @@ class UIController {
                 });
             }
             else if (action == 'duplicate') {
+                app.selectedObject.select(false);
                 app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
                 app.selectedObject.select(true);
+                app.levelEditor.controlsTransform.attach(app.selectedObject);
                 app.levelHistory.save('Duplicated object', app);
             }
             else if (action == 'accept') {
@@ -237,6 +242,7 @@ class UIController {
             }
             else if (action == 'trash') {
                 app.level.removeObject(app.selectedObject, app);
+                app.levelEditor.controlsTransform.detach();
                 app.levelHistory.save('Deleted object', app);
                 app.ui.showObjectOptions(false);
             }
@@ -273,6 +279,7 @@ class UIController {
             app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
             app.selectedObject.select(true);
             app.ui.updateObjectOptions();
+            app.levelEditor.controlsTransform.attach(app.selectedObject);
             app.levelHistory.save('Changed object to ' + type, app);
         }
 
