@@ -232,8 +232,10 @@ class UIController {
             else if (action == 'duplicate') {
                 app.selectedObject.select(false);
                 app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
+                app.selectedObject.position.y += 16;
                 app.selectedObject.select(true);
                 app.levelEditor.controlsTransform.attach(app.selectedObject);
+                app.levelEditor.setMode('translate');
                 app.levelHistory.save('Duplicated object', app);
             }
             else if (action == 'accept') {

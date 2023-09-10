@@ -49,13 +49,15 @@ class LevelEditor {
             if (a.selectedObject == null || target) {
                 // Select a new object on start click
                 if (target) {
-                    a.level.deselectLevel(a);
-                    a.ui.showObjectOptions(true);
-                    a.selectedObject = target;
-                    a.selectedObject.select(true);
-                    a.ui.updateObjectOptions();
-                    a.ui.selectObjectType(a.selectedObject.getClass(), false);
-                    this.controlsTransform.attach(target);
+                    if (this.controlsTransform.moved == false) {
+                        a.level.deselectLevel(a);
+                        a.ui.showObjectOptions(true);
+                        a.selectedObject = target;
+                        a.selectedObject.select(true);
+                        a.ui.updateObjectOptions();
+                        a.ui.selectObjectType(a.selectedObject.getClass(), false);
+                        this.controlsTransform.attach(target);
+                    }
                 }
                 else {
                     // Add a new object if camera did not move
