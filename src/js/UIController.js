@@ -213,9 +213,9 @@ class UIController {
                 app.levelHistory.save('Updated object state', app);
                 app.ui.updateObjectOptions();
             }
-            else if (action == 'translate') { app.levelEditor.setMode('translate'); }
-            else if (action == 'rotate') { app.levelEditor.setMode('rotate'); }
-            else if (action == 'scale') { app.levelEditor.setMode('scale'); }
+            else if (action == 'translate') { app.levelEditor.setMode('translate'); app.ui.updateEditorTransformUI(); }
+            else if (action == 'rotate') { app.levelEditor.setMode('rotate'); app.ui.updateEditorTransformUI(); }
+            else if (action == 'scale') { app.levelEditor.setMode('scale'); app.ui.updateEditorTransformUI(); }
             else if (action == 'friction') {
                 app.ui.objectOptions.find('[name="friction"]').focus();
             }
@@ -236,6 +236,7 @@ class UIController {
                 app.selectedObject.select(true);
                 app.levelEditor.controlsTransform.attach(app.selectedObject);
                 app.levelEditor.setMode('translate');
+                app.ui.updateEditorTransformUI();
                 app.levelHistory.save('Duplicated object', app);
             }
             else if (action == 'accept') {
@@ -423,6 +424,9 @@ class UIController {
             this.objectOptions.find('[action*="scale-y"] ~ .slider input').val(scaleY);
             this.objectOptions.find('[action*="scale-z"] ~ .slider input').val(scaleZ);
             this.objectOptions.find('[action*="friction"] ~ .slider input').val(friction);
+
+            // Update editor transform UI
+            this.updateEditorTransformUI();
             
             // Enable/Disable the icons for player
             if (isPlayer == true) {
@@ -464,6 +468,14 @@ class UIController {
                 frictionIcon.removeClass('disabled');
             }
         }
+    }
+
+    updateEditorTransformUI() {
+        var transformMode = app.levelEditor.controlsTransform.mode;
+        this.objectOptions.find('[action="translate"]').removeClass('selected');
+        this.objectOptions.find('[action="scale"]').removeClass('selected');
+        this.objectOptions.find('[action="rotate"]').removeClass('selected');
+        this.objectOptions.find('[action*="' + transformMode + '"]').addClass('selected');
     }
 
     removeListOfLevels() {

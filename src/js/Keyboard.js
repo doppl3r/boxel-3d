@@ -83,6 +83,11 @@ class Keyboard {
                         }
                     }
                 break;
+                case 84: // 't'
+                    if (state == 'level-editor') {
+                        $('[action="translate"]').click();
+                    }
+                break;
                 case 87: a.keyboard.spaceBarDown(a); break; // 'w'
                 case 88: // 'x'
                     if (state == 'level-editor') {
