@@ -86,8 +86,8 @@ class Background extends Group {
 		var mesh = this.getObjectByName('background-mesh');
 		var sampler = new MeshSurfaceSampler(mesh);
 		var object = new Group();
-		var count = 100;
-		var range = 0.4;
+		var count = 500;
+		var range = 0.5;
 
 		// Create noise from alea seed
 		sampler.build();
@@ -95,7 +95,7 @@ class Background extends Group {
 		// Create geometry and material
 		var geometry = new BoxGeometry(1, 1, 1); // radius, width segments, height segments
 		var material = new MeshStandardMaterial({
-			color: '#620460',
+			color: '#4A0941',
 			flatShading: true
 		});
 
@@ -107,7 +107,7 @@ class Background extends Group {
 
 			// Update scale + position
 			if (object.position.y < -this.options.radius * range || object.position.y > this.options.radius * range) {
-				var scale = ((Math.random() * 0.5) + 0.5) * (this.options.radius * 0.125); // Range = 0.5 to 1.0 scale
+				var scale = ((Math.random() * 0.75) + 0.25) * (this.options.radius * 0.125); // Range = 0.5 to 1.0 scale
 				object.scale.set(scale, scale, scale);
 				object.lookAt(new Vector3(0, 0, 0));
 				object.rotateOnAxis({ x: 1, y: 0, z: 0 }, Math.PI / 4)

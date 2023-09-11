@@ -177,7 +177,7 @@ class LevelEditor {
         else if (mode == 'scale') {
             this.controlsTransform.showX = true;
             this.controlsTransform.showY = true;
-            this.controlsTransform.showZ = false;
+            this.controlsTransform.showZ = true;
         }
         else if (mode == 'rotate') {
             this.controlsTransform.showX = false;
