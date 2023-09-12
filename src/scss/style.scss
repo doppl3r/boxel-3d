@@ -690,6 +690,7 @@ html {
 
                 h1 {
                     font-size: 5.75em;
+                    line-height: 1em;
                     text-transform: uppercase;
                     letter-spacing: 20px;
                     margin: 0 0 12px;
@@ -981,42 +982,153 @@ html {
 }
 
 @media (max-width: 640px) {
-    html body :focus:before { width: calc(100% + 6px); height: calc(100% + 6px); }
-    html body .ui-controller input { width: 120px; }
-    html body .ui-controller a { height: 32px; width: 32px; }
-    html body .ui-controller a img { transform: scale(0.75); }
-    html body .ui-controller a:hover img { animation: none; }
-    html body .ui-controller .slider { height: 32px; }
-    html body .ui-controller .dashboard .buttons .button { padding: 0 12px; }
-    html body .ui-controller .dashboard .buttons .button.top-right { width: 32px; }
-    html body .ui-controller .dashboard .buttons .button.top-right.two { right: 64px; }
-    html body .ui-controller .dashboard .buttons .button.top-right.three { right: 112px; }
-    html body .ui-controller .dashboard .buttons .button.top-left { width: 32px; }
-    html body .ui-controller .dashboard .buttons .button img { max-width: 16px; transform: scale(1); }
-    html body .ui-controller .home .logo { width: 480px; }
-    html body .ui-controller .home .review img { max-width: 12px; }
-    html body .ui-controller .skins { padding: 64px 0; align-items: flex-start; }
-    html body .ui-controller .skins h1 { font-size: 4em; margin: 0 0 12px; }
-    html body .ui-controller .skins .skin-group { max-width: 480px; }
-    html body .ui-controller .skins .skin-group .skin { width: 80px; }
-    html body .ui-controller .skins .skin-group .skin .title { font-size: 0.9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    html body .ui-controller .skins p { max-width: 320px; }
-    html body .ui-controller .skins p img { max-width: 16px; }
-    html body .ui-controller .row.left { top: 32px; }
-    html body .ui-controller .level-picker { padding: 64px 0; }
-    html body .ui-controller .level-picker .wrapper { max-width: 360px; }
-    html body .ui-controller .level-picker .levels .list .level { width: 64px; height: 64px; margin: 4px; font-size: 2em; }
-    html body .ui-controller .level-picker .levels .list .level:after { font-size: 0.5em; }
-    html body .ui-controller .level-picker .levels .list .level .icon { width: 16px; height: auto; margin-bottom: 12px; }
-    html body .ui-controller .level-picker .levels .list .level .score { font-size: 0.6em; }
-    html body .ui-controller .level-picker .levels .list .level .title { font-size: 0.4em; }
-    html body .ui-controller .campaign #timer { left: 52px; height: 19px; padding: 0 4px; }
-    html body .ui-controller .campaign #timer span { width: 20px; }
-    html body .ui-controller .campaign #speedometer { left: 52px; top: 39px; width: 108px; }
-    html body .dialog .wrapper { max-width: 240px; }
-    html body .dialog .wrapper p { line-height: 16px; }
-    html body .dialog .wrapper .inputs input { margin: 0 0 8px; font-size: 1em; }
-    html body .dialog .wrapper .inputs input[type="range"] { padding: 8px 0; }
+    html {
+        body {
+            :focus {
+                &:before { width: calc(100% + 6px); height: calc(100% + 6px); }
+            }
+
+            .ui-controller {
+                input { width: 120px; }
+
+                a {
+                    height: 32px;
+                    width: 32px;
+
+                    &:hover {
+                        img { animation: none; }
+                    }
+
+                    img { transform: scale(0.75); }
+                }
+
+                .slider { height: 32px; }
+
+                .dashboard {
+                    .buttons {
+                        .button {
+                            padding: 0 12px;
+
+                            &.top-right {
+                                width: 32px;
+
+                                &.two { right: 64px; }
+                                &.three { right: 112px; }
+                            }
+
+                            &.top-left { width: 32px; }
+
+                            img { max-width: 16px; transform: scale(1); }
+                        }
+                    }
+                }
+
+                .home {
+                    .logo { width: 480px; }
+
+                    .review {
+                        img { max-width: 12px; }
+                    }
+                }
+
+                .skins {
+                    padding: 64px 0;
+                    align-items: flex-start;
+
+                    h1 {
+                        font-size: 4em;
+                        margin: 0 0 12px;
+                    }
+
+                    p {
+                        max-width: 320px;
+
+                        img { max-width: 16px; }
+                    }
+
+                    .skin-group {
+                        max-width: 480px;
+
+                        .skin {
+                            width: 80px;
+
+                            .title {
+                                font-size: 0.9em;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+                        }
+                    }
+                }
+
+                .row {
+                    &.left { top: 32px; }
+                }
+
+                .level-picker {
+                    padding: 64px 0;
+
+                    .wrapper { max-width: 360px; }
+
+                    .levels {
+                        .list {
+                            .level {
+                                width: 64px;
+                                height: 64px;
+                                margin: 4px;
+                                font-size: 2em;
+
+                                &:after { font-size: 0.5em; }
+
+                                .icon {
+                                    width: 16px;
+                                    height: auto;
+                                    margin-bottom: 12px;
+                                }
+
+                                .score { font-size: 0.6em; }
+                                .title { font-size: 0.4em; }
+                            }
+                        }
+                    }
+                }
+
+                .campaign {
+                    #timer {
+                        left: 52px;
+                        height: 19px;
+                        padding: 0 4px;
+
+                        span { width: 20px; }
+                    }
+
+                    #speedometer {
+                        left: 52px;
+                        top: 39px;
+                        width: 108px;
+                    }
+                }
+            }
+
+            .dialog {
+                .wrapper {
+                    max-width: 240px;
+
+                    p { line-height: 16px; }
+
+                    .inputs {
+                        input {
+                            margin: 0 0 8px;
+                            font-size: 1em;
+
+                            &[type="range"] { padding: 8px 0; }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 /* Background Gradients */
