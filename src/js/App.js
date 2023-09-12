@@ -53,7 +53,7 @@ class App {
         this.camera.position.z = this.camera.position.zDefault;
         this.camera.add(this.audio);
         this.scene = new Scene();
-        this.scene.fog = new Fog('#dc265a', 400, 1000);
+        this.scene.fog = new Fog('#dc265a', 400, 1250);
         this.loop = new Loop(this.scene, this.camera, canvas);
         this.light = new HemisphereLight('#ffffff', '#000000', 1);
         this.light.intensity = 1 * Math.PI; // PI was added after three.js r155
