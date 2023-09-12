@@ -283,6 +283,7 @@ body .ui-controller .level-picker p a { display: inline-block; color: inherit; w
 body .ui-controller .level-picker .levels .list { display: flex; justify-content: center; flex-wrap: wrap; }
 body .ui-controller .level-picker .levels .list .level { border-radius: 4px; background-color: #620460; cursor: pointer; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; color: #fff; font-size: 3em; margin: 8px; width: 80px; height: 80px; position: relative; text-decoration: none; }
 body .ui-controller .level-picker .levels .list .level:after { background-color: #dc265a; padding: 12px; border-radius: 4px; content: 'Play'; font-size: 0.25em; position: fixed; z-index: 1; bottom: 16px; right: 32px; opacity: 0; transition: all 0.1s ease-in-out; pointer-events: none; }
+body .ui-controller .level-picker .levels .list .level:focus { outline: 2px solid #ffffff; outline-offset: 2px; }
 body .ui-controller .level-picker .levels .list .level:focus:after { opacity: 1; right: 32px; pointer-events: all; }
 body .ui-controller .level-picker .levels .list .level.completed { background-color: transparent; background: linear-gradient(315deg, #620460 0%, #dc265a 100%); }
 body .ui-controller .level-picker .levels .list .level.completed .index { background-color: #dc265a; }
