@@ -120,6 +120,7 @@ class UIController {
             else if (action == 'edit-level') {
                 app.ui.loadEditorLevel($(this));
                 app.ui.updateUI('level-editor');
+                app.background.visible = false;
                 app.levelHistory.save('Edited level', app);
                 app.resetScene(app);
                 app.levelEditor.controlsOrbit.enabled = true;
@@ -681,6 +682,7 @@ class UIController {
             app.ui.levelOptions.find('[action="pause"]').addClass('selected');
             app.levelEditor.controlsOrbit.enabled = true;
             app.levelEditor.controlsOrbit.reset();
+            app.background.visible = false;
         }
         else if (app.ui.state == 'play') {
             app.ui.dialog.add({
@@ -703,6 +705,7 @@ class UIController {
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
         app.levelEditor.controlsOrbit.enabled = false;
         app.levelEditor.controlsTransform.detach();
+        app.background.visible = true;
         if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
     }
 
