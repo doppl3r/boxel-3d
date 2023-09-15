@@ -22,11 +22,14 @@ class Reset extends Cube {
         var start = -Math.floor(count / 2);
         var end = Math.ceil(count / 2);
         var index = 0;
+        var color = '#0287ef';
         for (var z = start; z < end; z++) {
             for (var y = start; y < end; y++) {
                 for (var x = start; x < end; x++) {
                     if (index % 2 != 0) {
-                        this.shapes.addCube({ x: (u * x), y: (u * y), z: (u * z), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#0287ef' });
+                        if (z == 0 && y == 0) color = '#ffffff';
+                        else color = '#0287ef';
+                        this.shapes.addCube({ x: (u * x), y: (u * y), z: (u * z), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: color });
                     }
                     index++;
                 }

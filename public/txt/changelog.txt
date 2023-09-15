@@ -1,3 +1,6 @@
+v1.2.0.2
+- Reset cube now resets the player direction
+
 v1.2.0.1
 - Updated level editor background
 

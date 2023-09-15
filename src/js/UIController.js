@@ -106,11 +106,14 @@ class UIController {
             else if (action == 'download') {
                 app.level.clearLevel(app);
                 app.level.key = null; // Reset key to generate new save key
+                app.background.visible = false;
                 app.storage.loadLevelFromFile();
                 app.ui.updateUI('level-editor');
                 app.levelHistory.save('Downloaded level', app);
                 app.levelHistory.save('Loaded level', app); // Force dialog check to save
                 app.resetScene(app);
+                app.levelEditor.controlsOrbit.enabled = true;
+                app.levelEditor.controlsOrbit.reset();
             }
             else if (action == 'share') {
                 if ($(this).parent().hasClass('item')) app.ui.loadEditorLevel($(this));

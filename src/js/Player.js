@@ -253,6 +253,7 @@ class Player extends Cube {
 
     reset() {
         app.updateGravity();
+        this.setForceDirection();
         this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
         this.setMode(this.modeOrigin, false);
     }
