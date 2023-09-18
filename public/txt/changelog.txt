@@ -1,3 +1,6 @@
+v1.2.0.3
+- Added "z-axis" option to level editor
+
 v1.2.0.2
 - Reset cube now resets the player direction
 
