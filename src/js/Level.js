@@ -23,7 +23,13 @@ class Level extends Group {
 
     addObject(object, a) {
         World.add(a.engine.world, object.body); // Add hitbox to world
-        this.add(object); // Add to group
+
+        // Update body state (-1 == active physics)
+        if (object.position.z == 0) object.body.collisionFilter.mask = -1;
+        else object.body.collisionFilter.mask = 0; // Disable physics
+
+        // Add to group
+        this.add(object);
         this.parent.add(object.helper);
     }
 
@@ -236,6 +242,9 @@ class Level extends Group {
         else if (a.ui.state == 'level-editor') {
             a.updateGravity();
             a.resetScene(a);
+            app.levelEditor.controlsOrbit.enabled = true;
+            app.levelEditor.controlsOrbit.reset();
+            app.background.visible = false;
         }
     }
 

@@ -5,7 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 class LevelEditor {
     constructor(camera, domElement) {
         this.controlsTransform = new TransformControls(camera, domElement);
-        this.controlsTransform.showZ = false;
+        this.controlsTransform.showZ = true;
         this.controlsTransform.space = 'world';
         this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
         this.controlsOrbit = new OrbitControls(camera, domElement);
@@ -152,6 +152,10 @@ class LevelEditor {
     updateSelectedObject() {
         var target = app.selectedObject;
 
+        // Update body state (-1 == active physics)
+        if (target.position.z == 0) target.body.collisionFilter.mask = -1;
+        else target.body.collisionFilter.mask = 0; // Disable physics
+
         // Update body position
         target.setPosition(target.getPosition());
 
@@ -172,7 +176,7 @@ class LevelEditor {
         if (mode == 'translate') {
             this.controlsTransform.showX = true;
             this.controlsTransform.showY = true;
-            this.controlsTransform.showZ = false;
+            this.controlsTransform.showZ = true;
         }
         else if (mode == 'scale') {
             this.controlsTransform.showX = true;
