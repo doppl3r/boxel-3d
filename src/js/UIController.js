@@ -149,6 +149,8 @@ class UIController {
                 app.ui.updateLevelOptions();
             }
             else if (action == 'exit-to-level-manager') {
+                app.levelEditor.controlsOrbit.enabled = false;
+                app.levelEditor.controlsOrbit.reset();
                 app.levelEditor.controlsTransform.detach();
                 if (app.levelHistory.history.length > 2) {
                     app.ui.dialog.add({
