@@ -1,3 +1,7 @@
+v1.2.0.4
+- Added camera rotation to level editor (right-click)
+- Added shortcut to reset selected object z-axis ("0" key)
+
 v1.2.0.3
 - Added "z-axis" option to level editor
 

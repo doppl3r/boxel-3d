@@ -707,6 +707,7 @@ class UIController {
         app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
         app.ui.levelOptions.find('[action="play"]').addClass('selected');
         app.levelEditor.controlsOrbit.enabled = false;
+        app.levelEditor.controlsOrbit.reset();
         app.levelEditor.controlsTransform.detach();
         app.background.visible = true;
         if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning

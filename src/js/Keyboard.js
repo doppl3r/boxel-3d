@@ -50,6 +50,11 @@ class Keyboard {
                 break;
                 case 32: a.keyboard.spaceBarDown(a); break; // Space Bar
                 case 38: a.keyboard.spaceBarDown(a); break; // Up
+                case 48: // 0 (zero)
+                    if (state == 'level-editor') {
+                        a.levelEditor.resetZAxis(a);
+                    }
+                break; // Up
                 case 68: // 'd'
                     if (state == 'level-editor') {
                         a.levelEditor.duplicateSelected(a);

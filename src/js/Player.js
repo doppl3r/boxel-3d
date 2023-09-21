@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader, SRGBColorSpace } from 'three';
+import { BoxGeometry, DoubleSide, Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader, SRGBColorSpace } from 'three';
 import { Body, Query, Vector } from 'matter-js';
 import { Utility } from './Utility.js';
 import { Cube } from './Cube.js';
@@ -21,7 +21,7 @@ class Player extends Cube {
         this.rope = new Rope();
 
         // Add an invisible plane to player for rope raycaster mechanics
-        this.plane = new Mesh(new PlaneGeometry(1000, 1000), new MeshPhongMaterial({ visible: false }));
+        this.plane = new Mesh(new PlaneGeometry(1000, 1000), new MeshPhongMaterial({ visible: false, side: DoubleSide }));
         this.add(this.plane);
     }
 

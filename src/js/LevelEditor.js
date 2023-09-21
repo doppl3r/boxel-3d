@@ -10,8 +10,7 @@ class LevelEditor {
         this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
         this.controlsOrbit = new OrbitControls(camera, domElement);
         this.controlsOrbit.enabled = false; // Default disabled for campaign
-        this.controlsOrbit.enableRotate = false;
-		this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 2 };
+		this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 };
 		this.controlsOrbit.zoomSpeed = 3;
 		this.controlsOrbit.minDistance = 10;
 		this.controlsOrbit.maxDistance = 1000;
@@ -97,13 +96,15 @@ class LevelEditor {
             }
         }
         else if (a.mouse.mode == 'erase') {
-            a.levelEditor.eraseTarget(e, a);
-            a.level.deselectLevel(a); // Deselect everything
-            a.ui.showObjectOptions(false);
-            a.levelHistory.save('Erased object', a);
+            if (this.controlsOrbit.moved == false) {
+                a.levelEditor.eraseTarget(e, a);
+                a.level.deselectLevel(a); // Deselect everything
+                a.ui.showObjectOptions(false);
+                a.levelHistory.save('Erased object', a);
+                a.ui.updateLevelOptions();
+                this.controlsTransform.detach();
+            }
             a.mouse.mode = a.mouse.prevMode;
-            a.ui.updateLevelOptions();
-            this.controlsTransform.detach();
         }
     }
 
@@ -147,6 +148,13 @@ class LevelEditor {
         target.position0 = target.position.clone();
         target.scale0 = target.scale.clone();
         target.rotation0 = target.rotation.clone();
+    }
+
+    resetZAxis() {
+        if (app.selectedObject) {
+            app.selectedObject.position.z = 0;
+            this.updateSelectedObject();
+        }
     }
 
     updateSelectedObject() {
