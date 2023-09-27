@@ -8,8 +8,9 @@
     "default_title": "Boxel 3D"
   },
   "icons": { 
-    "16": "img/png/icon16.png", 
-    "48": "img/png/icon48.png", 
+    "16": "img/png/icon16.png",
+    "32": "img/png/icon32.png",
+    "48": "img/png/icon48.png",
     "128": "img/png/icon128.png"
   },
   "permissions": [
