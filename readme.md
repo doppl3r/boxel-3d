@@ -10,6 +10,7 @@
 
 - Run build with `npm run build` to create a fresh `/dist` folder
 - Compress `/dist` folder into a `.zip` file format
+- (Optional) Replace the manifest.json data from manifest-[browser].json
 - Upload to Chrome Webstore
 
 ## Test Chrome Extension
