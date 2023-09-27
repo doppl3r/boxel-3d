@@ -38,7 +38,7 @@ class Extension {
                             
                         }
                         else if(navigator.userAgent.indexOf("Firefox") != -1) {
-                            chrome.tabs.create({ url: 'https://addons.mozilla.org/en-US/firefox/addon/boxel-3d-game/reviews' });
+                            chrome.tabs.create({ url: 'https://addons.mozilla.org/en-US/firefox/addon/boxel-3d-game/' });
                         }
                         else if((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) {
                             
