@@ -129,12 +129,12 @@ class Mouse {
     }
 
     getMouse(e, a) {
-		return {
+        return {
             x: (e.clientX / a.window.innerWidth) * 2 - 1,
             y: -(e.clientY / a.window.innerHeight) * 2 + 1,
             z: 0.5
         };
-	}
+    }
 }
 
 export { Mouse };

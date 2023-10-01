@@ -10,10 +10,10 @@ class LevelEditor {
         this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
         this.controlsOrbit = new OrbitControls(camera, domElement);
         this.controlsOrbit.enabled = false; // Default disabled for campaign
-		this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 };
-		this.controlsOrbit.zoomSpeed = 3;
-		this.controlsOrbit.minDistance = 10;
-		this.controlsOrbit.maxDistance = 1000;
+        this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 };
+        this.controlsOrbit.zoomSpeed = 3;
+        this.controlsOrbit.minDistance = 10;
+        this.controlsOrbit.maxDistance = 1000;
 
         // Set events
         var _this = this;

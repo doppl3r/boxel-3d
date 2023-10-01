@@ -96,23 +96,23 @@ class App {
 
         var _this = this;
         this.assets = new Assets();
-		this.assets.load(function() {
-			_this.load(callback);
-		});
+        this.assets.load(function() {
+            _this.load(callback);
+        });
     }
 
     load(callback = function(){}) {
         // Start game loop
-		var _this = this;
+        var _this = this;
         this.loop.setRenderCallback(function(delta, alpha) { _this.updateRender(delta, alpha); });
-		this.loop.setEngineCallback(function(delta, alpha) { _this.updateEngine(delta, alpha); });
-		this.loop.setRenderFPS(-1);
-		this.loop.setEngineFPS(60);
-		this.loop.start();
-		this.resizeWindow(null, this);
+        this.loop.setEngineCallback(function(delta, alpha) { _this.updateEngine(delta, alpha); });
+        this.loop.setRenderFPS(-1);
+        this.loop.setEngineFPS(60);
+        this.loop.start();
+        this.resizeWindow(null, this);
 
         // Run game callback
-		callback();
+        callback();
     }
 
     updateRender(delta, alpha) {
