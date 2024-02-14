@@ -1,6 +1,6 @@
 import { LineSegments, Mesh, MeshPhongMaterial, PointLight } from 'three';
 import { Bodies, Body, Sleeping, Vector } from 'matter-js';
-import { Shapes } from './Shapes.js';
+import { Shapes } from '../Shapes.js';
 
 class Cube extends Mesh {
     constructor(options = {}) {

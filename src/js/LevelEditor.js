@@ -75,7 +75,7 @@ class LevelEditor {
                             scale: { x: a.BOX_SIZE, y: a.BOX_SIZE, z: a.BOX_SIZE }
                         };
                         a.level.deselectLevel(a); // Deselect everything
-                        a.selectedObject = a.level.createObject(objectType);
+                        a.selectedObject = a.level.entityFactory.createObject(objectType);
                         a.level.setObjectProperties(a.selectedObject, objectData);
                         a.level.addObject(a.selectedObject, a);
                         a.levelHistory.save('Added ' + objectType, a);

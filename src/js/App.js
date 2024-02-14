@@ -11,7 +11,7 @@ import { Collision } from './Collision.js';
 import { Background } from './Background.js';
 import { Level } from './Level.js';
 import { LevelHistory } from './LevelHistory.js';
-import { Player } from './Player.js';
+import { Player } from './entities/Player.js';
 import { UIController } from './UIController.js';
 import { Mouse } from './Mouse.js';
 import { Keyboard } from './Keyboard.js';

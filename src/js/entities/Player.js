@@ -1,8 +1,8 @@
 import { BoxGeometry, DoubleSide, Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader, SRGBColorSpace } from 'three';
 import { Body, Query, Vector } from 'matter-js';
-import { Utility } from './Utility.js';
+import { Utility } from '../Utility.js';
 import { Cube } from './Cube.js';
-import { Rope } from './Rope.js';
+import { Rope } from '../Rope.js';
 
 class Player extends Cube {
     constructor(options = {}) {
@@ -145,7 +145,7 @@ class Player extends Cube {
                         isStatic: false,
                         friction: 0
                     };
-                    var particle = app.level.createObject('cube');
+                    var particle = app.level.entityFactory.createObject('cube');
                     app.level.setObjectProperties(particle, particleData);
                     app.level.addObject(particle, app);
                     particle.isParticle = true;

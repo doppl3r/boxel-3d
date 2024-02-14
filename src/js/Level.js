@@ -1,24 +1,12 @@
 import { Group } from 'three';
 import { World } from 'matter-js';
-import { Cube } from './Cube.js';
-import { Player } from './Player.js';
-import { Tip } from './Tip.js';
-import { Bounce } from './Bounce.js';
-import { Checkpoint } from './Checkpoint.js';
-import { Spike } from './Spike.js';
-import { Shrink } from './Shrink.js';
-import { Grow } from './Grow.js';
-import { Resize } from './Resize.js';
-import { Direction } from './Direction.js';
-import { Gravity } from './Gravity.js';
-import { Grapple } from './Grapple.js';
-import { Finish } from './Finish.js';
-import { Reset } from './Reset.js';
+import { EntityFactory } from './entities/EntityFactory.js';
 
 class Level extends Group {
     constructor() {
         super();
         this.name = this.defaultName = 'My Level';
+        this.entityFactory = new EntityFactory();
     }
 
     addObject(object, a) {
@@ -31,27 +19,6 @@ class Level extends Group {
         // Add to group
         this.add(object);
         this.parent.add(object.helper);
-    }
-
-    createObject(type, options) {
-        var object;
-        switch(type) {
-            case('player'): object = new Player(options); break;
-            case('tip'): object = new Tip(options); break;
-            case('bounce'): object = new Bounce(options); break;
-            case('checkpoint'): object = new Checkpoint(options); break;
-            case('spike'): object = new Spike(options); break;
-            case('shrink'): object = new Shrink(options); break;
-            case('grow'): object = new Grow(options); break;
-            case('resize'): object = new Resize(options); break;
-            case('direction'): object = new Direction(options); break;
-            case('gravity'): object = new Gravity(options); break;
-            case('grapple'): object = new Grapple(options); break;
-            case('finish'): object = new Finish(options); break;
-            case('reset'): object = new Reset(options); break;
-            default: object = new Cube(options);
-        }
-        return object;
     }
 
     removeObject(object, a, override = false) {
@@ -110,7 +77,7 @@ class Level extends Group {
 
     duplicateObject(object, a) {
         var objectData = this.exportObjectToJSON(object);
-        var newObject = this.createObject(objectData.class);
+        var newObject = this.entityFactory.createObject(objectData.class);
         this.setObjectProperties(newObject, objectData);
         this.addObject(newObject, a);
         return newObject;
@@ -183,7 +150,7 @@ class Level extends Group {
         // Loop through JSON level data
         for (var i = 0; i < levelData.children.length; i++) {
             var objectData = levelData.children[i];
-            var object = this.createObject(objectData.class);
+            var object = this.entityFactory.createObject(objectData.class);
             if (objectData.class == 'player') object = a.player;
             this.setObjectProperties(object, objectData);
             this.addObject(object, a);
