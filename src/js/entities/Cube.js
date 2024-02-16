@@ -278,7 +278,7 @@ class Cube extends Mesh {
         if (relativeAngle == true) {
             angleA = this.body.angle;
             angleB = this.body.angle + (Math.PI / 2);
-            force *= -1 * app.loop.engineScale; // Newtons 3rd law of pizza
+            force *= -1 * app.loop.speed; // Newtons 3rd law of pizza
         }
 
         // Normalize velocity

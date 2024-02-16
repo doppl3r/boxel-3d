@@ -5,6 +5,7 @@ import { Utility } from './Utility.js';
 import { Timer } from './Timer.js';
 import { Assets } from './Assets.js';
 import { Loop } from './Loop.js';
+import { Graphics } from './Graphics.js';
 import { StorageManager } from './StorageManager.js';
 import { Skins } from './Skins.js';
 import { Collision } from './Collision.js';
@@ -54,7 +55,10 @@ class App {
         this.camera.add(this.audio);
         this.scene = new Scene();
         this.scene.fog = new Fog('#dc265a', 400, 1250);
-        this.loop = new Loop(this.scene, this.camera, canvas);
+        this.graphics = new Graphics(canvas);
+        this.graphics.setCamera(this.camera);
+        this.graphics.setScene(this.scene);
+        this.loop = new Loop();
         this.light = new HemisphereLight('#ffffff', '#000000', 1);
         this.light.intensity = 1 * Math.PI; // PI was added after three.js r155
         this.then = new Date().getTime();
@@ -64,7 +68,7 @@ class App {
         // Initialize level editor
         this.level = new Level();
         this.levelHistory = new LevelHistory();
-        this.levelEditor = new LevelEditor(this.camera, this.loop.renderer.domElement);
+        this.levelEditor = new LevelEditor(this.camera, this.graphics.renderer.domElement);
         this.scene.add(this.levelEditor.controlsTransform);
 
         // Add lighting to scene
@@ -103,13 +107,20 @@ class App {
 
     load(callback = function(){}) {
         // Start game loop
-        var _this = this;
-        this.loop.setRenderCallback(function(delta, alpha) { _this.updateRender(delta, alpha); });
-        this.loop.setEngineCallback(function(delta, alpha) { _this.updateEngine(delta, alpha); });
-        this.loop.setRenderFPS(-1);
-        this.loop.setEngineFPS(60);
-        this.loop.start();
         this.resizeWindow(null, this);
+
+        // Add physics loop
+        this.loop.add(60, function(data) {
+            this.updateEngine(data.delta, data.alpha);
+        }.bind(this));
+
+        // Add graphic loop
+        this.loop.add(-1, function(data) {
+            this.updateRender(data.delta, data.alpha);
+        }.bind(this));
+
+        // Start loop
+        this.loop.start();
 
         // Run game callback
         callback();
@@ -136,10 +147,13 @@ class App {
 
             // Update background
             this.background.update(delta, alpha);
+
+            // Update 3D renderer
+            this.graphics.update(delta);
         }
     }
 
-    updateEngine(delta, alpha) {
+    updateEngine(delta) {
         // Update engine to loop engine rate
         if (this.play == true) {
             // Update player object
@@ -148,7 +162,7 @@ class App {
             this.player.updateRope();
 
             // Update world engine
-            Engine.update(this.engine, this.loop.engineInterval * 1000);
+            Engine.update(this.engine, delta * 1000);
         }
     }
 
@@ -157,7 +171,7 @@ class App {
         var screenHeight = a.window.innerHeight;
         a.camera.aspect = screenWidth / screenHeight;
         a.camera.updateProjectionMatrix();
-        a.loop.setSize(screenWidth, screenHeight);
+        a.graphics.setSize(screenWidth, screenHeight);
     }
 
     resetScene(a) {
@@ -213,7 +227,7 @@ class App {
 
     updateQuality(quality, a = app) {
         if (quality <= 0) quality = 1;
-        a.loop.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
+        a.graphics.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
     }
 
     updateCameraMotion(motion, a = app) {

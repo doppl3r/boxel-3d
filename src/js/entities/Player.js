@@ -40,7 +40,7 @@ class Player extends Cube {
                 var velocity = this.body.velocity;
                 var spinDirection = 1; // Default clockwise
                 var angularVelocity = (Math.PI / 20);
-                var forceScale = 0.025 * app.loop.engineScale; // Default 0.025
+                var forceScale = 0.025 * app.loop.speed; // Default 0.025
                 //var forceScale = 0.025 * 0.5; // Default 0.025
                 var force = {
                     x: -(gravity.x * forceScale * this.body.mass),
@@ -111,8 +111,8 @@ class Player extends Cube {
         // Apply force to body until it reaches it's max speed (generic)
         if (this.body.speed < this.maxSpeed) {
             Body.applyForce(this.body, this.body.position, {
-                x: this.force.x * app.loop.engineScale,
-                y: this.force.y * app.loop.engineScale
+                x: this.force.x * app.loop.speed,
+                y: this.force.y * app.loop.speed
             });
         }
     }
