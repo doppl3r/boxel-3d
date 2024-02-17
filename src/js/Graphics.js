@@ -31,6 +31,9 @@ class Graphics {
 		this.outlinePass.visibleEdgeColor.set('#000000');
 		this.outlinePass.hiddenEdgeColor.set('#dc265a');
     this.smaaPass = new SMAAPass(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+    
+    // Disable passes by default
+    this.outlinePass.enabled = false;
     this.smaaPass.enabled = false;
 
     // Add effects to composer
