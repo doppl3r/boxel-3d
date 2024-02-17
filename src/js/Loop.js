@@ -11,7 +11,7 @@
 
 class Loop {
   constructor() {
-    this.actions = [];
+    this.callbacks = [];
     this.startTime = 0;
     this.oldTime = 0;
     this.elapsedTime = 0;
@@ -21,7 +21,7 @@ class Loop {
 
   add(tick = 60, callback = function(){}) {
     // Add callback function to array of functions
-    this.actions.push({
+    this.callbacks.push({
       rate: 1 / tick,
       sum: 1 / tick,
       alpha: 0,
@@ -35,19 +35,19 @@ class Loop {
       requestAnimationFrame(function(){ loop.update(loop); });
 
       // Check if functions exist
-      if (this.actions.length > 0) {
+      if (this.callbacks.length > 0) {
         var delta = this.getDelta();
-        var alpha = this.actions[0].sum / this.actions[0].rate; // Set alpha relative to first interval
+        var alpha = this.callbacks[0].sum / this.callbacks[0].rate; // Set alpha relative to first interval
 
         // Loop through array of functions (descending order)
-        for (var i = this.actions.length - 1; i >= 0; i--) {
-          this.actions[i].sum += delta;
+        for (var i = this.callbacks.length - 1; i >= 0; i--) {
+          this.callbacks[i].sum += delta;
 
-          // Trigger this.actions[i] callback
-          if (this.actions[i].sum >= this.actions[i].rate || this.actions[i].rate == -1) {
-            this.actions[i].sum %= this.actions[i].rate;
-            this.actions[i].callback({
-              delta: (this.actions[i].rate == -1) ? delta : this.actions[i].rate,
+          // Trigger this.callbacks[i] callback
+          if (this.callbacks[i].sum >= this.callbacks[i].rate || this.callbacks[i].rate == -1) {
+            this.callbacks[i].sum %= this.callbacks[i].rate;
+            this.callbacks[i].callback({
+              delta: (this.callbacks[i].rate == -1) ? delta : this.callbacks[i].rate,
               alpha: alpha
             });
           }

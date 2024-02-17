@@ -58,6 +58,7 @@ class App {
         this.graphics = new Graphics(canvas);
         this.graphics.setCamera(this.camera);
         this.graphics.setScene(this.scene);
+        this.graphics.setSelectedObjects([this.player]);
         this.loop = new Loop();
         this.light = new HemisphereLight('#ffffff', '#000000', 1);
         this.light.intensity = 1 * Math.PI; // PI was added after three.js r155
@@ -148,9 +149,10 @@ class App {
             // Update background
             this.background.update(delta, alpha);
 
-            // Update 3D renderer
-            this.graphics.update(delta);
         }
+
+        // Update 3D renderer
+        this.graphics.update(delta);
     }
 
     updateEngine(delta) {
@@ -228,6 +230,7 @@ class App {
     updateQuality(quality, a = app) {
         if (quality <= 0) quality = 1;
         a.graphics.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
+        //a.graphics.smaaPass.enabled = (quality == 10); // Enable if max graphics
     }
 
     updateCameraMotion(motion, a = app) {

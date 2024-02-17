@@ -3,7 +3,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
-import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
+import { OutlinePass } from './postprocessing/OutlinePass.js';
 
 class Graphics {
   constructor(canvas) {
@@ -29,9 +29,9 @@ class Graphics {
 		this.outlinePass.edgeThickness = 1; // Default 1
     this.outlinePass.enabled = true;
 		this.outlinePass.visibleEdgeColor.set('#000000');
-		this.outlinePass.hiddenEdgeColor.set('#ffffff');
+		this.outlinePass.hiddenEdgeColor.set('#dc265a');
     this.smaaPass = new SMAAPass(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
-    this.smaaPass.enabled = true;
+    this.smaaPass.enabled = false;
 
     // Add effects to composer
     this.composer = new EffectComposer(this.renderer);

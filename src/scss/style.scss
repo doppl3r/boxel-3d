@@ -357,7 +357,8 @@ html {
 
             .dashboard {
                 .buttons {
-                    display: flex; justify-content: center;
+                    display: flex;
+                    justify-content: center;
 
                     .button {
                         animation: wave-delay 5s infinite;
@@ -366,6 +367,7 @@ html {
                         color: #fff;
                         margin: 0 8px;
                         padding: 0 24px;
+                        text-decoration: none;
                         width: auto;
 
                         &.purple {
@@ -501,6 +503,8 @@ html {
 
                 p {
                     color: #fff;
+                    font-size: 1rem;
+                    line-height: 1.25rem;
                     text-align: center;
                     margin: 0 0 8px;
                     width: 100%;
@@ -523,6 +527,22 @@ html {
                         &.levels-community {
                             .level {
                                 .index { display: none; }
+                            }
+
+                            .buttons {
+                                margin-bottom: 1.5rem;
+                                width: 100%;
+
+                                .button {
+                                    &.discord {
+                                        background-color: #5865F2;
+
+                                        img {
+                                            filter: none;
+                                            margin-left: 0.5rem;
+                                        }
+                                    }
+                                }
                             }
                         }
 

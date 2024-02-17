@@ -92,7 +92,7 @@ class Level extends Group {
         // Prepare level with a single floor
         this.clearLevel(a);
         this.add(a.player); // Add player object
-        var floor = new Cube({ x: 0, y: -64, z: 0 });
+        var floor = this.entityFactory.createObject('cube', { x: 0, y: -64, z: 0 });
         floor.setScale({ x: 64, y: 16, z: 16 });
         floor.setStatic(true);
         this.add(floor);
