@@ -1,4 +1,5 @@
-import { BoxGeometry, DoubleSide, Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader, SRGBColorSpace } from 'three';
+import { DoubleSide, Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader, SRGBColorSpace } from 'three';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Body, Query, Vector } from 'matter-js';
 import { Utility } from '../Utility.js';
 import { Cube } from './Cube.js';
@@ -266,8 +267,7 @@ class Player extends Cube {
                 texture.colorSpace = SRGBColorSpace;
                 app.player.remove(app.player.skin); // Reset skin
                 app.player.shapes.visible = false;
-                //app.player.remove(app.player.shapes); // Permanently remove shapes mesh
-                var geometry = new BoxGeometry(1, 1, 1);
+                var geometry = new RoundedBoxGeometry(1, 1, 1, 1, 0.1); // width, height, depth, segments, radius
                 var material = new MeshPhongMaterial({ map: texture, transparent: true, opacity: 1 });
                 app.player.shapes.setOpacities(0);
                 app.player.skin = new Mesh(geometry, material);

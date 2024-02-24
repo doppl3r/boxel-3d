@@ -32,7 +32,7 @@ class Extension {
                             chrome.tabs.create({ url: 'https://microsoftedge.microsoft.com/addons/detail/boxel-3d/gcklngphfijejfnnicbadhghhdifidek' });
                         }
                         else if(navigator.userAgent.indexOf("Chrome") != -1) {
-                            chrome.tabs.create({ url: 'https://chrome.google.com/webstore/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews' });
+                            chrome.tabs.create({ url: 'https://chromewebstore.google.com/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews' });
                         }
                         else if(navigator.userAgent.indexOf("Safari") != -1) {
                             

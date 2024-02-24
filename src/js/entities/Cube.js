@@ -1,6 +1,6 @@
 import { LineSegments, Mesh, MeshPhongMaterial, PointLight } from 'three';
 import { Bodies, Body, Sleeping, Vector } from 'matter-js';
-import { Shapes } from '../Shapes.js';
+import { Shapes } from './Shapes.js';
 
 class Cube extends Mesh {
     constructor(options = {}) {
@@ -13,12 +13,14 @@ class Cube extends Mesh {
         options.scaleX = (options.scaleX == null) ? 1 : options.scaleX;
         options.scaleY = (options.scaleY == null) ? 1 : options.scaleY;
         options.scaleZ = (options.scaleZ == null) ? 1 : options.scaleZ;
+        options.segments = (options.segments == null) ? 1 : options.segments;
+        options.radius = (options.radius == null) ? 0 : options.radius;
         options.angle = (options.angle == null) ? 0 : options.angle;
         options.color = (options.color == null) ? '#620460' : options.color;
 
         // Set default properties
         this.shapes = new Shapes();
-        this.shapes.addCube();
+        this.shapes.addCube(options);
         this.helper = new LineSegments(this.shapes.children[0].geometry, new MeshPhongMaterial({ color: '#00ff00', wireframe: true }));
         this.helper.visible = false;
         this.setColors(options.color);

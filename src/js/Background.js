@@ -1,4 +1,5 @@
-import { BackSide, BoxGeometry, Color, Group, InstancedMesh, Mesh, MeshStandardMaterial, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
+import { BackSide, Color, Group, InstancedMesh, Mesh, MeshStandardMaterial, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js';
 
 class Background extends Group {
@@ -93,10 +94,10 @@ class Background extends Group {
         sampler.build();
 
         // Create geometry and material
-        var geometry = new BoxGeometry(1, 1, 1); // radius, width segments, height segments
+        var geometry = new RoundedBoxGeometry(1, 1, 1, 1, 0.1); // radius, width segments, height segments, segments (radius), radius
         var material = new MeshStandardMaterial({
             color: '#4A0941',
-            flatShading: true
+            flatShading: false
         });
 
         // Generate cloud instanced meshes (great for performance)
