@@ -58,8 +58,8 @@ class Dialog {
             dialog.append(background);
             dialog.append(wrapper);
             dialog.hide().fadeIn(100);
-            $('body').append(dialog);
-            $('body').addClass('has-dialog');
+            $('.ui-controller').append(dialog);
+            $('.ui-controller').addClass('has-dialog');
             dialog.find('input:last-of-type').focus();
         }, delay);
     }
@@ -68,7 +68,7 @@ class Dialog {
         var dialog = this.get();
         dialog.find('a').off();
         dialog.fadeOut(duration, function(){ dialog.remove(); });
-        $('body').removeClass('has-dialog');
+        $('.ui-controller').removeClass('has-dialog');
     }
 
     isOpen() {

@@ -14,5 +14,185 @@
 
 <template>
 	<canvas ref="canvas"></canvas>
-	<div class="ui"></div>
+	<div class="ui">
+		<div class="ui-controller">
+			<div class="home dashboard">
+				<a class="version" tabindex="0"></a>
+				<div class="wrapper fade-in">
+					<img src="/img/svg/logo-white.svg" class="logo">
+					<div class="status-bar">
+						<p class="status"><img class="google-icon" src="/img/svg/google-icon.svg" /> <span class="status-text"></span></p>
+					</div>
+					<div class="buttons">
+						<a class="button top-right three hidden" action="fullscreen" title="Enable fullscreen" tabindex="0"><img src="/img/svg/grow.svg"></a>
+						<a class="button top-right two" action="account" title="Account" tabindex="0"><img src="/img/svg/cloud-check.svg"></a>
+						<a class="button top-right" action="settings" title="Settings" tabindex="0"><img src="/img/svg/gear.svg"></a>
+						<a class="button" action="level-manager" tabindex="0"><span>Level Maker</span> <img src="/img/svg/pencil.svg"></a>
+						<a class="button" action="shop" tabindex="0"><span>Skins</span> <img src="/img/svg/smile.svg"></a>
+						<a class="button" action="level-picker" tabindex="0"><span>Play</span> <img src="/img/svg/play.svg"></a>
+					</div>
+				</div>
+				<a class="review" tabindex="0"><img src="/img/svg/heart.svg">Write a review</a>
+			</div>
+			<div class="level-picker dashboard hidden">
+				<div class="wrapper fade-in">
+					<h1>Level<strong>Packs</strong></h1>
+					<div class="buttons">
+						<a class="button top-left" action="exit-to-home" title="Exit to home (ESC)" tabindex="0"><img src="/img/svg/home.svg"></a>
+						<a class="button purple" action="show-campaign">Campaign</a>
+						<a class="button purple" action="show-community">Community</a>
+					</div>
+					<div class="levels">
+						<div class="list levels-campaign" for="campaign" style="display: none;">
+							<h2>Easy Peasy</h2>
+							<div file="campaign/Campaign Level 1.json"></div>
+							<div file="campaign/Campaign Level 2.json"></div>
+							<div file="campaign/Campaign Level 3.json"></div>
+							<div file="campaign/Campaign Level 4.json"></div>
+							<div file="campaign/Campaign Level 5.json"></div>
+							<h2>Lemon Difficult</h2>
+							<div file="campaign/Campaign Level 6.json"></div>
+							<div file="campaign/Campaign Level 7.json"></div>
+							<div file="campaign/Campaign Level 8.json"></div>
+							<div file="campaign/Campaign Level 9.json"></div>
+							<div file="campaign/Campaign Level 10.json"></div>
+							<h2>Zack's Level Pack</h2>
+							<div file="campaign/Campaign Level 11.json"></div>
+							<div file="campaign/Campaign Level 12.json"></div>
+							<div file="campaign/Campaign Level 13.json"></div>
+							<div file="campaign/Campaign Level 14.json"></div>
+							<div file="campaign/Campaign Level 15.json"></div>
+							<h2>Kargoh's Level Pack</h2>
+							<div file="campaign/Campaign Level 16.json"></div>
+							<div file="campaign/Campaign Level 17.json"></div>
+							<div file="campaign/Campaign Level 18.json"></div>
+							<div file="campaign/Campaign Level 19.json"></div>
+							<div file="campaign/Campaign Level 20.json"></div>
+							<h2>Gravity Hell</h2>
+							<div file="campaign/Campaign Level 21.json"></div>
+							<div file="campaign/Campaign Level 22.json"></div>
+							<div file="campaign/Campaign Level 23.json"></div>
+							<div file="campaign/Campaign Level 24.json"></div>
+							<div file="campaign/Campaign Level 25.json"></div>
+							<h2>Boxel Classics</h2>
+							<div file="campaign/Campaign Level 26.json"></div>
+							<div file="campaign/Campaign Level 27.json"></div>
+							<div file="campaign/Campaign Level 28.json"></div>
+							<div file="campaign/Campaign Level 29.json"></div>
+							<div file="campaign/Campaign Level 30.json"></div>
+							<h2>Spider Cube</h2>
+							<div file="campaign/Campaign Level 31.json"></div>
+							<div file="campaign/Campaign Level 32.json"></div>
+							<div file="campaign/Campaign Level 33.json"></div>
+							<div file="campaign/Campaign Level 34.json"></div>
+							<div file="campaign/Campaign Level 35.json"></div>
+							<h2>Alpha Testing Levels</h2>
+							<p>Test out levels before they are officially released</p>
+							<div file="campaign/Campaign Level 36.json"></div>
+							<div file="campaign/Campaign Level 37.json"></div>
+						</div>
+						<div class="list levels-community" for="community" style="display: none;">
+							<h2>Community Levels</h2>
+							<p>Levels are made by the Boxel Community and are picked by the developer.</p>
+							<div class="buttons">
+								<a class="button discord" href="https://discord.gg/j8fvd4UvbE" target="_blank">Join the Discord <img src="/img/svg/discord.svg" /></a>
+							</div>
+							<div file="community/Junsie.json"></div>
+							<div file="community/Junsie 2.json"></div>
+							<div file="community/Metal Machine.json"></div>
+							<div file="community/0123xrulez.json"></div>
+							<div file="community/Jack TVYT.json"></div>
+							<div file="community/16BitPlayer.json"></div>
+							<div file="community/uncoho3.json"></div>
+							<div file="community/Metal Machine 2.json"></div>
+							<div file="community/Vyom.json"></div>
+							<div file="community/0123xrulez 2.json"></div>
+							<div file="community/16BitPlayer 2.json"></div>
+							<div file="community/0123xrulez 3.json"></div>
+							<div file="community/Zozo.json"></div>
+							<div file="community/Junsie 3.json"></div>
+							<div file="community/! __kf.json"></div>
+							<div file="community/ice_dodo.json"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="campaign dashboard hidden">
+				<div id="timer"></div>
+				<div id="credit"></div>
+				<div id="speedometer"><span id="speed"></span></div>
+				<div class="buttons">
+					<a class="button top-left" action="pause-campaign" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
+					<a class="button top-right" action="settings" title="Settings" tabindex="0"><img src="/img/svg/gear.svg"></a>
+				</div>
+			</div>
+			<div class="level-manager hidden">
+				<div class="row top">
+					<div class="col">
+						<a class="item" action="add-level" title="Add level"><img src="/img/svg/add.svg"></a>
+						<a class="item" action="download" title="Download level"><img src="/img/svg/download.svg"></a>
+						<a class="item" action="exit-to-home" title="Exit level manager (ESC)"><img src="/img/svg/home.svg"></a>
+						<a class="item" action="settings" title="Settings"><img src="/img/svg/gear.svg"></a>
+					</div>
+				</div>
+				<div class="row left">
+					<div class="col list"></div>
+				</div>
+			</div>
+			<div class="skins dashboard hidden">
+				<div class="wrapper fade-in">
+					<h1>My<strong>Skins</strong></h1>
+					<div class="skin-group"></div>
+					<div class="buttons">
+						<a class="button top-left" action="exit-to-home" title="Exit to home (ESC)" tabindex="0"><img src="/img/svg/home.svg"></a>
+					</div>
+				</div>
+			</div>
+			<div class="level-editor hidden">
+				<div class="row top">
+					<div class="col options-level">
+						<a class="item" action="draw" title="Draw cubes"><img src="/img/svg/pencil.svg"></a>
+						<a class="item" action="erase" title="Erase cubes"><img src="/img/svg/eraser.svg"></a>
+						<a class="item" action="exit-to-level-manager" title="Exit level editor (ESC)"><img src="/img/svg/home.svg"></a>
+						<a class="item" action="save" title="Save level (Ctrl + S)"><img src="/img/svg/save.svg"></a>
+						<a class="item" action="share" title="Share level"><img src="/img/svg/upload.svg"></a>
+						<a class="item" action="undo" title="Undo edit (Ctrl + Z)"><img src="/img/svg/undo.svg"></a>
+						<a class="item" action="redo" title="Redo edit (Ctrl + Shift + Z)"><img src="/img/svg/redo.svg"></a>
+						<a class="item" action="rewind" title="Restart level"><img src="/img/svg/rewind.svg"></a>
+						<a class="item" action="pause" title="Pause level"><img src="/img/svg/pause.svg"></a>
+						<a class="item" action="play" title="Play level"><img src="/img/svg/play.svg"></a>
+						<a class="item" action="settings" title="Settings"><img src="/img/svg/gear.svg"></a>
+					</div>
+				</div>
+				<div class="row left">
+					<div class="col object-type">
+						<a class="item" action="cube" title="Basic cube"><img src="/img/svg/cube.svg"></a>
+						<a class="item" action="tip" title="Tip cube"><img src="/img/svg/tip.svg"></a>
+						<a class="item" action="bounce" title="Bounce cube"><img src="/img/svg/bounce.svg"></a>
+						<a class="item" action="checkpoint" title="Checkpoint cube"><img src="/img/svg/checkpoint.svg"></a>
+						<a class="item" action="spike" title="Spike cube"><img src="/img/svg/spike.svg"></a>
+						<a class="item" action="resize" title="Resize cube"><img src="/img/svg/grow.svg"></a>
+						<a class="item" action="direction" title="Direction cube"><img src="/img/svg/direction.svg"></a>
+						<a class="item" action="gravity" title="Gravity cube"><img src="/img/svg/gravity.svg"></a>
+						<a class="item" action="grapple" title="Grapple cube"><img src="/img/svg/grapple.svg"></a>
+						<a class="item" action="finish" title="Finish cube"><img src="/img/svg/finish.svg"></a>
+						<a class="item" action="reset" title="Reset cube"><img src="/img/svg/reset.svg"></a>
+					</div>
+					<div class="col object-options hidden">
+						<a class="item" action="translate" title="Move (T or G)"><img src="/img/svg/move.svg"></a>
+						<a class="item" action="scale" title="Scale (S)"><img src="/img/svg/scale-out-x.svg"></a>
+						<a class="item" action="rotate" title="Rotate (R)"><img src="/img/svg/rotate-clockwise.svg"></a>
+						<div class="item">
+							<a action="friction" title="Friction"><img src="/img/svg/friction.svg"></a>
+							<div class="slider"><input name="friction" type="range" min="0" max="1" step="0.25" value="0"></div>
+						</div>
+						<a class="item" action="text" title="Text"><img src="/img/svg/type.svg"></a>
+						<a class="item" action="duplicate" title="Duplicate (D)"><img src="/img/svg/duplicate.svg"></a>
+						<a class="item" action="pin" title="Pin"><img src="/img/svg/pin.svg"></a>
+						<a class="item" action="trash" title="Delete (X)"><img src="/img/svg/trash.svg"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>

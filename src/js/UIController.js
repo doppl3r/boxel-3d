@@ -64,7 +64,7 @@ class UIController {
                     { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.resumeCampaign },
                     { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
                 )
-                app.ui.dialog.add({ text: '<img src="img/svg/gear.svg">', inputs: inputs });
+                app.ui.dialog.add({ text: '<img src=" /img/svg/gear.svg">', inputs: inputs });
             }
 
             // Campaign level picker UI
@@ -573,9 +573,9 @@ class UIController {
         this.levelList.append(
             '<div class="item">' +
                 '<input type="text" key="' + listItem.key + '" value="' + listItem.level.name + '">' +
-                '<a action="edit-level" title="Edit level"><img src="img/svg/pencil.svg"></a>' +
-                '<a action="share" title="Share level"><img src="img/svg/upload.svg"></a>' +
-                '<a action="delete-level" title="Delete level"><img src="img/svg/trash.svg"></a>' +
+                '<a action="edit-level" title="Edit level"><img src="/img/svg/pencil.svg"></a>' +
+                '<a action="share" title="Share level"><img src="/img/svg/upload.svg"></a>' +
+                '<a action="delete-level" title="Delete level"><img src="/img/svg/trash.svg"></a>' +
             '</div>'
         );
     }
