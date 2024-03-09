@@ -717,10 +717,10 @@ class UIController {
 
     toggleTheme(themeID) {
         var themes = ['dark', 'light'];
-        var newTheme = $('body').hasClass('dark') ? themes[1] : themes[0];
+        var newTheme = $('.ui-origin').hasClass('dark') ? themes[1] : themes[0];
         if (themeID != null) newTheme = themes[themeID];
-        $('body').removeClass(themes);
-        $('body').addClass(newTheme);
+        $('.ui-origin').removeClass(themes);
+        $('.ui-origin').addClass(newTheme);
     }
 
     resumeCampaign() {

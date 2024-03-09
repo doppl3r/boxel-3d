@@ -8,6 +8,7 @@
 <template>
   <div class="ui-origin">
     <div class="home dashboard">
+      <div class="background"></div>
       <a class="version" tabindex="0"></a>
       <div class="wrapper fade-in">
         <img src="/img/svg/logo-white.svg" class="logo">
@@ -26,6 +27,7 @@
       <a class="review" tabindex="0"><img src="/img/svg/heart.svg">Write a review</a>
     </div>
     <div class="level-picker dashboard hidden">
+      <div class="background"></div>
       <div class="wrapper fade-in">
         <h1>Level<strong>Packs</strong></h1>
         <div class="buttons">
@@ -109,6 +111,7 @@
       </div>
     </div>
     <div class="campaign dashboard hidden">
+      <div class="background"></div>
       <div id="timer"></div>
       <div id="credit"></div>
       <div id="speedometer"><span id="speed"></span></div>
@@ -131,6 +134,7 @@
       </div>
     </div>
     <div class="skins dashboard hidden">
+      <div class="background"></div>
       <div class="wrapper fade-in">
         <h1>My<strong>Skins</strong></h1>
         <div class="skin-group"></div>

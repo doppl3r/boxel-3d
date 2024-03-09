@@ -13,7 +13,7 @@ class Graphics {
     this.canvas = canvas;
 
     // Initialize renderer components
-    this.renderer = new WebGLRenderer({ alpha: true, canvas: canvas });
+    this.renderer = new WebGLRenderer({ alpha: false, canvas: canvas });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.shadowMap.enabled = false;
     this.renderer.shadowMap.type = PCFSoftShadowMap;

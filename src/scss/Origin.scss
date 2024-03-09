@@ -1,10 +1,33 @@
 html {
   body {
-    &.dark {
-      background-color: #1e1e1e;
+    #app {
+      height: inherit;
+      width: inherit;
 
-      #app {
-        .ui-origin {
+      canvas {
+        width: inherit;
+        height: inherit;
+        image-rendering: pixelated;
+        z-index: 0;
+  
+        &.hidden { display: none; }
+      }
+
+      .ui-origin {
+        font-size: clamp(12px, 3vh, 16px);
+        line-height: clamp(12px, 3vh, 16px);
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        width: inherit;
+        height: inherit;
+
+        > * {
+          pointer-events: all;
+        }
+
+        &.dark {
           a {
             img { filter: invert(50%); }
   
@@ -35,14 +58,8 @@ html {
   
           .level-manager { background-color: #1e1e1e; }
         }
-      }
-    }
-
-    &.light {
-      background-color: #ffffff;
-
-      #app {
-        .ui-origin {
+    
+        &.light {
           a {
             img { filter: invert(50%); }
   
@@ -73,31 +90,18 @@ html {
   
           .level-manager { background-color: #e6e6e6; }
         }
-      }
-    }
 
-    #app {
-      height: inherit;
-      width: inherit;
-
-      canvas {
-        width: inherit;
-        height: inherit;
-        image-rendering: pixelated;
-        z-index: 0;
-  
-        &.hidden { display: none; }
-      }
-
-      .ui-origin {
-        font-size: clamp(12px, 3vh, 16px);
-        line-height: clamp(12px, 3vh, 16px);
-        pointer-events: none;
-        width: inherit;
-        height: inherit;
-
-        > * {
-          pointer-events: all;
+        .background {
+          background-image: url('/img/jpg/background-cubes.jpg');
+          background-color: #490348;
+          background-size: cover;
+          background-position: center center;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
         }
 
         a {
@@ -882,6 +886,7 @@ html {
     
           .background {
             background-color: rgb(0, 0, 0, 0.5);
+            background-image: initial;
             position: absolute;
             top: 0;
             right: 0;
