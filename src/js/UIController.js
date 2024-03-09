@@ -4,7 +4,7 @@ import { Dialog } from './Dialog.js';
 class UIController {
     constructor(app) {
         this.dialog = new Dialog();
-        this.controller = $('.ui-controller');
+        this.controller = $('.ui-origin');
         this.home = this.controller.find('.home');
         this.campaign = this.controller.find('.campaign');
         this.levelPicker = this.controller.find('.level-picker');
