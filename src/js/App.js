@@ -1,4 +1,4 @@
-import { Fog, HemisphereLight, PerspectiveCamera, Scene } from 'three';
+import { Color, Fog, HemisphereLight, PerspectiveCamera, Scene } from 'three';
 import { Engine, Events } from 'matter-js';
 import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
@@ -55,6 +55,7 @@ class App {
         this.camera.add(this.audio);
         this.scene = new Scene();
         this.scene.fog = new Fog('#dc265a', 400, 1250);
+        this.scene.background = new Color('#1a1a1a');
         this.graphics = new Graphics(canvas);
         this.graphics.setCamera(this.camera);
         this.graphics.setScene(this.scene);
