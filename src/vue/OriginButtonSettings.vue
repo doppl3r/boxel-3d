@@ -22,7 +22,12 @@
     }
 
     // Add bottom button(s)
-    inputs.push({ type: 'button', value: 'Close' });
+    inputs.push({ type: 'button', value: 'Close', callback: function(e) {
+        // Resume campaign if settings was selected during gameplay
+        if (app.ui.state == 'play') app.ui.resumeCampaign();
+        window.dispatchEvent(new CustomEvent('closePopup'));
+      }
+    });
 
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('addPopup', {
