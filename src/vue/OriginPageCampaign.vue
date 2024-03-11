@@ -1,6 +1,26 @@
 <script setup>
   import { ref } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
+
+  // Add event listener(s)
+  window.addEventListener('showTip', function(e) { showTip(e.detail.text) });
+
+  // Show tip from custom event
+  function showTip(text) {
+    app.play = false;
+    app.timer.pause();
+
+    // Dispatch new popup from event
+    window.dispatchEvent(new CustomEvent('addPopup', {
+      detail: {
+        text: text,
+        inputs: [{ type: 'button', value: 'Continue', callback: function() {
+          app.ui.play();
+          window.dispatchEvent(new CustomEvent('closePopup'));
+        }}]
+      }
+    }));
+  }
 </script>
 
 <template>
