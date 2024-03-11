@@ -316,24 +316,6 @@ class UIController {
         if (state == 'home') {
             var home = this.home;
             if (window.location.href.includes('file://') == false) {
-                // Update version
-                $.getJSON('./manifest.json', function(json) {
-                    $('.version').text('v' + json.version);
-                    $('.version').off();
-                    $('.version').on('click', function() {
-                        $.get('./txt/changelog.txt', function(data) {
-                            window.app.ui.dialog.add({
-                                attributes: { class: 'align-left' },
-                                text: data,
-                                inputs: [
-                                    { attributes: { value: 'Close', type: 'button' }}
-                                ]
-                            });
-                            setTimeout(function(){ $('.dialog .wrapper').animate({ scrollTop: 0 }, 500); }, 100);
-                        });
-                    });
-                });
-
                 // Update Status
                 $.getJSON('./json/status.json', function(json) {
                     // Generate random tip
