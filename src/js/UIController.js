@@ -315,16 +315,6 @@ class UIController {
 
         if (state == 'home') {
             var home = this.home;
-            if (window.location.href.includes('file://') == false) {
-                // Update Status
-                $.getJSON('./json/status.json', function(json) {
-                    // Generate random tip
-                    var statusLength = json.status.length;
-                    var statusIndex = Math.floor(Math.random() * statusLength);
-                    //$('.status-text').html(json.status[statusIndex]);
-                    $('.status-text').html('<span style="cursor: pointer;">Tiny Tycoon is now available on Google Chrome!</span>').on('click', function() { chrome.tabs.create({ url: 'https://chrome.google.com/webstore/detail/tiny-tycoon/bamdkjfjhhnjcgcjmmjdnncpglihepoi' }); });
-                });
-            }
             home.removeClass('hidden');
             home.find('[action="level-picker"]').focus();
             setTimeout(function() {

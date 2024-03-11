@@ -824,15 +824,16 @@ html {
           }
         }
   
-        .status-bar {
+        .message-bar {
           color: #fff;
+          cursor: pointer;
           display: flex;
           position: absolute;
           top: 12px;
           left: 12px;
           opacity: 1;
   
-          .status {
+          .message {
             display: inline-flex;
             margin: 0;
             align-items: center;
@@ -840,6 +841,7 @@ html {
   
             img {
               display: inline-block;
+              flex-shrink: 0; // Fix for Firefox
               width: 100%;
               max-width: 16px;
               max-height: 16px;

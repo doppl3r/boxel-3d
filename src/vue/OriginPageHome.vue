@@ -1,13 +1,42 @@
 <script setup>
   import { ref } from 'vue';
   import changelog from '../json/changelog.json';
+  import messages from '../json/messages.json';
 
   // Initialize attributes
   var version = ref(getVersion());
+  var message = ref('Tiny Tycoon is now available on Google Chrome!'); // Optional: getRandomMessage()
+  
+  // Update changelog to descending order
   changelog.reverse();
 
   function getVersion() {
     return changelog[changelog.length - 1].version;
+  }
+
+  function getRandomMessage() {
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+  function openLink(url) {
+    if (chrome.tabs) chrome.tabs.create({ url: url });
+    else window.open(url, '_blank');
+  }
+
+  function openMessageLink() {
+    openLink('https://chrome.google.com/webstore/detail/tiny-tycoon/bamdkjfjhhnjcgcjmmjdnncpglihepoi');
+  }
+
+  function openReviewLink() {
+    var url = '';
+
+    // Other userAgents: https://stackoverflow.com/a/26358856/2510368
+    if (navigator.userAgent.indexOf("Edg") != -1) { url = 'https://microsoftedge.microsoft.com/addons/detail/boxel-3d/gcklngphfijejfnnicbadhghhdifidek'; }
+    else if (navigator.userAgent.indexOf("Chrome") != -1) { url = 'https://chromewebstore.google.com/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews'; }
+    else if (navigator.userAgent.indexOf("Firefox") != -1) { url = 'https://addons.mozilla.org/en-US/firefox/addon/boxel-3d-game/'; }
+
+    // Open the link
+    openLink(url);
   }
 
   function showChangelog() {
@@ -38,8 +67,8 @@
     <a class="version" @click="showChangelog">v{{ version }}</a>
     <div class="wrapper fade-in">
       <img src="/img/svg/logo-white.svg" class="logo">
-      <div class="status-bar">
-        <p class="status"><img class="google-icon" src="/img/svg/google-icon.svg" /> <span class="status-text"></span></p>
+      <div class="message-bar" @click="openMessageLink">
+        <div class="message"><img class="google-icon" src="/img/svg/google-icon.svg" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
         <a class="button top-right three hidden" action="fullscreen" title="Enable fullscreen"><img src="/img/svg/grow.svg"></a>
@@ -50,6 +79,6 @@
         <a class="button" action="level-picker"><span>Play</span> <img src="/img/svg/play.svg"></a>
       </div>
     </div>
-    <a class="review"><img src="/img/svg/heart.svg">Write a review</a>
+    <a class="review" @click="openReviewLink"><img src="/img/svg/heart.svg">Write a review</a>
   </div>
 </template>
