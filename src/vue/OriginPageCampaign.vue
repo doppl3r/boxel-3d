@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import OriginButtonSettings from './OriginButtonSettings.vue';
 </script>
 
 <template>
@@ -10,7 +11,7 @@
     <div id="speedometer"><span id="speed"></span></div>
     <div class="buttons">
       <a class="button top-left" action="pause-campaign" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
-      <a class="button top-right" action="settings" title="Settings" tabindex="0"><img src="/img/svg/gear.svg"></a>
+      <OriginButtonSettings class="button top-right" />
     </div>
   </div>
 </template>

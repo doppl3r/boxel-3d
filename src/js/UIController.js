@@ -39,33 +39,6 @@ class UIController {
             else if (action == 'account') {
                 app.ui.showAccountOptions();
             }
-            else if (action == 'settings') {
-                var settings = app.storage.getSettings(app);
-                var inputs = [
-                    { label: 'Master Volume', attributes: { name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume } },
-                    { label: 'Graphic Quality', attributes: { name: 'quality', type: 'range', min: 2, max: 10, value: settings.quality } },
-                    { label: 'Camera Rotation', attributes: { name: 'motion', type: 'range', min: 0, max: 1, value: settings.motion } }
-                ];
-
-                // Add more options for the level maker
-                if (app.ui.state == 'level-manager' || app.ui.state == 'level-editor') {
-                    inputs.push(
-                        { label: 'Editor Theme', attributes: { name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme } },
-                        { label: 'Editor Snap', attributes: { name: 'snap', type: 'range', min: 1, max: 8, step: 7, value: settings.snap } },
-                    );
-                }
-                else if (app.ui.state == 'play') {
-                    app.timer.pause();
-                    app.play = false;
-                }
-
-                // Append default buttons
-                inputs.push(
-                    { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.resumeCampaign },
-                    { attributes: { value: 'Save', type: 'button' }, function: app.ui.updateSettings }
-                )
-                app.ui.dialog.add({ text: '<img src=" /img/svg/gear.svg">', inputs: inputs });
-            }
 
             // Campaign level picker UI
             if (action.includes('level_')) {

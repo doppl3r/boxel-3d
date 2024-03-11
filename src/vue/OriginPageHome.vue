@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import OriginButtonSettings from './OriginButtonSettings.vue';
   import changelog from '../json/changelog.json';
   import messages from '../json/messages.json';
 
@@ -73,7 +74,7 @@
       <div class="buttons">
         <a class="button top-right three hidden" action="fullscreen" title="Enable fullscreen"><img src="/img/svg/grow.svg"></a>
         <a class="button top-right two" action="account" title="Account"><img src="/img/svg/cloud-check.svg"></a>
-        <a class="button top-right" action="settings" title="Settings"><img src="/img/svg/gear.svg"></a>
+        <OriginButtonSettings class="button top-right" />
         <a class="button" action="level-manager"><span>Level Maker</span> <img src="/img/svg/pencil.svg"></a>
         <a class="button" action="shop"><span>Skins</span> <img src="/img/svg/smile.svg"></a>
         <a class="button" action="level-picker"><span>Play</span> <img src="/img/svg/play.svg"></a>

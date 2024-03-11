@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import OriginButtonSettings from './OriginButtonSettings.vue';
 </script>
 
 <template>
@@ -16,7 +17,7 @@
         <a class="item" action="rewind" title="Restart level"><img src="/img/svg/rewind.svg"></a>
         <a class="item" action="pause" title="Pause level"><img src="/img/svg/pause.svg"></a>
         <a class="item" action="play" title="Play level"><img src="/img/svg/play.svg"></a>
-        <a class="item" action="settings" title="Settings"><img src="/img/svg/gear.svg"></a>
+        <OriginButtonSettings class="item" />
       </div>
     </div>
     <div class="row left">

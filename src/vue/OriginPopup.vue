@@ -6,10 +6,9 @@
   var inputs = ref([]);
   var isOpen = ref(false);
   
-  // Add event listener
-	window.addEventListener('addPopup', function(e) {
-		addPopup(e);
-	});
+  // Add event listeners
+	window.addEventListener('addPopup', function(e) { addPopup(e); });
+	window.addEventListener('closePopup', function(e) { closePopup(e); });
 
   function addPopup(e) {
     // Assign values from custom event detail
@@ -17,10 +16,6 @@
       isOpen.value = true;
       if (e.detail.text) text.value = e.detail.text;
       if (e.detail.inputs) inputs.value = e.detail.inputs;
-      else {
-        // Add default close input option
-        inputs.value = [{ value: 'Close', type: 'button' }]
-      }
     }
   }
 
@@ -28,15 +23,14 @@
     isOpen.value = false;
   }
 
-  function runCallback(callback = function(e){}) {
-    callback();
-    closePopup();
+  function runCallback(callback, $event) {
+    if (callback == null) callback = closePopup;
+    callback($event);
   }
 
   function runLastInputCallback() {
     var lastInput = inputs.value[inputs.value.length - 1];
     if (lastInput) runCallback(lastInput.callback);
-    else closePopup();
   }
 </script>
 
@@ -48,7 +42,8 @@
         <p v-html="text"></p>
         <div class="inputs">
           <template v-for="(input, index) of inputs">
-            <input :type="input.type" :value="input.value" @click="runCallback(input.callback)">
+            <label v-if="input.label" :for="'popup-' + input.type + '-' + index">{{ input.label }}</label>
+            <input :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" @click="runCallback(input.callback, $event)">
           </template>
         </div>
       </div>

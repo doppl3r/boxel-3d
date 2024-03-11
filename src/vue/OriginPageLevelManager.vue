@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import OriginButtonSettings from './OriginButtonSettings.vue';
 </script>
 
 <template>
@@ -9,7 +10,7 @@
         <a class="item" action="add-level" title="Add level"><img src="/img/svg/add.svg"></a>
         <a class="item" action="download" title="Download level"><img src="/img/svg/download.svg"></a>
         <a class="item" action="exit-to-home" title="Exit level manager (ESC)"><img src="/img/svg/home.svg"></a>
-        <a class="item" action="settings" title="Settings"><img src="/img/svg/gear.svg"></a>
+        <OriginButtonSettings class="item" />
       </div>
     </div>
     <div class="row left">
