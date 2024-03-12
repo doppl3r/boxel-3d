@@ -1,6 +1,14 @@
 <script setup>
   import { ref } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
+
+  // Run function after being mounted (visible)
+  onMounted(function() {
+    app.ui.updateLevelOptions();
+    app.ui.objectType.find('[action="cube"]').addClass('selected'); // Select by default
+    app.ui.canvas.removeClass('hidden');
+    app.ui.levelEditor.removeClass('hidden');
+  })
 </script>
 
 <template>

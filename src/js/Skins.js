@@ -8,6 +8,7 @@ class Skins {
     }
     
     getSkins() {
+        app.ui.updateSelectors();
         var url  = 'json/skins.json';
         $.ajax({
             url: url,

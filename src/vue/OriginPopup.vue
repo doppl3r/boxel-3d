@@ -43,7 +43,7 @@
         <div class="inputs">
           <template v-for="(input, index) of inputs">
             <label v-if="input.label" :for="'popup-' + input.type + '-' + index">{{ input.label }}</label>
-            <input :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" @click="runCallback(input.callback, $event)">
+            <input :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :style="{ width: input.width }" @click="runCallback(input.callback, $event)">
           </template>
         </div>
       </div>

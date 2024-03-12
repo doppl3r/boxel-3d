@@ -4,6 +4,13 @@ import { Dialog } from './Dialog.js';
 class UIController {
   constructor(app) {
     this.dialog = new Dialog();
+    this.updateSelectors();
+    this.updateCanvas();
+    this.bindActions();
+    this.updateUI('home', app);
+  }
+
+  updateSelectors() {
     this.controller = $('.ui-origin');
     this.home = this.controller.find('.home');
     this.campaign = this.controller.find('.campaign');
@@ -15,9 +22,6 @@ class UIController {
     this.levelOptions = this.levelEditor.find('.options-level');
     this.objectType = this.levelEditor.find('.object-type');
     this.objectOptions = this.levelEditor.find('.object-options');
-    this.updateCanvas();
-    this.bindActions();
-    this.updateUI('home', app);
   }
 
   bindActions() {
@@ -35,9 +39,6 @@ class UIController {
       }
       else if (action == 'shop') {
         app.ui.updateUI('shop');
-      }
-      else if (action == 'account') {
-        app.ui.showAccountOptions();
       }
 
       // Campaign level picker UI
@@ -283,43 +284,7 @@ class UIController {
 
     this.updateCanvas();
     this.canvas.addClass('hidden'); // Default hide canvas
-    this.controller.find('> *').addClass('hidden'); // Default hide all children
     this.controller.find('[action]').removeClass('selected'); // Default remove all selected
-
-    if (state == 'home') {
-      var home = this.home;
-      home.removeClass('hidden');
-      home.find('[action="level-picker"]').focus();
-      setTimeout(function() {
-        home.find('[action="level-picker"]').focus();
-      }, 100);
-    }
-    else if (state == 'level-picker') {
-      this.appendCampaignLevels();
-      this.updateCampaignScores();
-      this.levelPicker.removeClass('hidden');
-    }
-    else if (state == 'shop') {
-      this.skins.removeClass('hidden');
-      window.app.skins.load(); // Gets skins
-    }
-    else if (state == 'play') {
-      this.campaign.removeClass('hidden');
-      this.canvas.removeClass('hidden');
-    }
-    else if (state == 'level-manager') {
-      this.levelList.empty();
-      this.appendEditorLevels(window.app)
-      this.levelManager.removeClass('hidden');
-      this.updateLevelOptions(); // Update top bar
-      this.objectOptions.addClass('hidden'); // Disable bar on default
-    }
-    else if (state == 'level-editor') {
-      this.updateLevelOptions();
-      this.objectType.find('[action="cube"]').addClass('selected'); // Select by default
-      this.canvas.removeClass('hidden');
-      this.levelEditor.removeClass('hidden');
-    }
   }
 
   showObjectOptions(state) {
@@ -657,21 +622,6 @@ class UIController {
     app.player.removeCheckpoint();
     app.player.setPosition({ x: 0, y: 0, z: 0 });
     app.ui.updateUI('level-picker');
-  }
-
-  showAccountOptions() {
-    var inputs = [
-      { attributes: { value: 'Backup to file', type: 'button', width: '100%' }, function: app.storage.backupToFile },
-      { attributes: { value: 'Restore from file', type: 'button', width: '100%' }, function: app.storage.restoreFromFile },
-      { attributes: { value: 'Close', type: 'button', width: '100%' } }
-    ]
-    if (app.extension.isChromeExtension()) {
-      inputs.unshift(
-        { attributes: { value: 'Backup to Google', type: 'button', width: '100%' }, function: app.storage.backupToChrome, parameter: true },
-        { attributes: { value: 'Restore from Google', type: 'button', width: '100%' }, function: app.storage.restoreFromChrome, parameter: true }
-      )
-    }
-    app.ui.dialog.add({ text: '<img src="img/svg/cloud-check.svg">', inputs: inputs });
   }
 }
 

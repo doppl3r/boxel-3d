@@ -199,65 +199,6 @@ class StorageManager {
         performClick();
     }
 
-    backupToChrome(clearChromeStorage = false) {
-        app.ui.dialog.add({
-            text: 'Save all data to the cloud?<br><em>(scores, levels, etc.)</em>',
-            inputs: [
-                {
-                    attributes: { value: 'Backup', type: 'button' },
-                    function: function() {
-                        var index = 0;
-                        if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
-                        for (var i = 0; i < localStorage.length; i++){
-                            var key = localStorage.key(i);
-                            var value = localStorage.getItem(key);
-                            var obj = {};
-                            obj[key] = value;
-                            chrome.storage.sync.set(obj, function(){
-                                index++; // Show message on last item
-                                if (index == localStorage.length) {
-                                    app.ui.dialog.add({
-                                        text: 'Success! Your data was backed up to your account.',
-                                        inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
-                                    });
-                                }
-                            });
-                        }
-                    }
-                },
-                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
-            ]
-        });
-    }
-
-    restoreFromChrome(clearLocalStorage = false) {
-        app.ui.dialog.add({
-            text: 'Download all data from the cloud? This will override your local data (scores, levels etc.)<br><br><em>If you have not backed up your data, please cancel and backup your data first.</em>',
-            inputs: [
-                {
-                    attributes: { value: 'Restore', type: 'button' }, 
-                    function: function() {
-                        // Restore
-                        chrome.storage.sync.get(null, function(items) {
-                            if (clearLocalStorage == true) localStorage.clear(); // Empty out old data
-                            var keys = Object.keys(items);
-                            for (var i = 0; i < keys.length; i++){
-                                var key = keys[i];
-                                var value = items[key];
-                                localStorage.setItem(key, value);
-                            }
-                            app.ui.dialog.add({
-                                text: 'Success! Your data was restored from your account.',
-                                inputs: [{ attributes: { value: 'Continue', type: 'button' }}]
-                            });
-                        });
-                    }
-                },
-                { attributes: { value: 'Cancel', type: 'button' }, function: app.ui.showAccountOptions }
-            ]
-        });
-    }
-
     encodeImageFile() {
         // TODO, use dialog input ID
         // https://stackoverflow.com/a/23669825

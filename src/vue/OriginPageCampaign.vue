@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
   // Add event listener(s)
@@ -21,10 +21,15 @@
       }
     }));
   }
+
+  // Run function after being mounted (visible)
+  onMounted(function() {
+    app.ui.canvas.removeClass('hidden');
+  })
 </script>
 
 <template>
-  <div class="campaign dashboard hidden">
+  <div class="campaign dashboard">
     <div class="background"></div>
     <div id="timer"></div>
     <div id="credit"></div>

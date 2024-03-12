@@ -1,14 +1,20 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
+
+  // Run function after being mounted (visible)
+  onMounted(function() {
+    app.ui.appendCampaignLevels();
+    app.ui.updateCampaignScores();
+  })
 </script>
 
 <template>
-  <div class="level-picker dashboard hidden">
+  <div class="level-picker dashboard">
     <div class="background"></div>
     <div class="wrapper fade-in">
       <h1>Level<strong>Packs</strong></h1>
       <div class="buttons">
-        <a class="button top-left" action="exit-to-home" title="Exit to home (ESC)" tabindex="0"><img src="/img/svg/home.svg"></a>
+        <a class="button top-left" @click="$emit('setPage', 'home')" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
         <a class="button purple" action="show-campaign">Campaign</a>
         <a class="button purple" action="show-community">Community</a>
       </div>
