@@ -1,5 +1,19 @@
 <script setup>
   import { ref, onMounted } from 'vue';
+  import levels from '../json/levels.json';
+
+  // TODO: Import all levels here
+
+  // Initialize variables
+  var pack_group = ref('campaign');
+
+  function setPackGroup(name) {
+    pack_group.value = name;
+  }
+
+  function playLevel(name) {
+    console.log(name);
+  }
 
   // Run function after being mounted (visible)
   onMounted(function() {
@@ -15,10 +29,18 @@
       <h1>Level<strong>Packs</strong></h1>
       <div class="buttons">
         <a class="button top-left" @click="$emit('setPage', 'home')" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
-        <a class="button purple" action="show-campaign">Campaign</a>
-        <a class="button purple" action="show-community">Community</a>
+        <a class="button" :class="{ purple: pack_group != 'campaign' }" action="show-campaign" @click="setPackGroup('campaign')">Campaign</a>
+        <a class="button" :class="{ purple: pack_group != 'community' }" action="show-community" @click="setPackGroup('community')">Community</a>
       </div>
       <div class="levels">
+        <div class="list levels-campaign" v-if="pack_group == 'campaign'">
+          <template v-for="(pack, i) of levels.campaign.packs">
+            <h2>{{ pack.name }}</h2>
+            <template  v-for="(level, j) of pack.levels">
+              <div class="level" :name="level" @click="playLevel(level)"></div>
+            </template>
+          </template>
+        </div>
         <div class="list levels-campaign" for="campaign" style="display: none;">
           <h2>Easy Peasy</h2>
           <div file="campaign/Campaign Level 1.json"></div>

@@ -1,0 +1,117 @@
+{
+  "campaign": {
+    "packs": [
+      {
+        "name": "Easy Peasy",
+        "levels": [
+          "Campaign Level 1",
+          "Campaign Level 2",
+          "Campaign Level 3",
+          "Campaign Level 4",
+          "Campaign Level 5"
+        ]
+      },
+      {
+        "name": "Lemon Difficult",
+        "levels": [
+          "Campaign Level 6",
+          "Campaign Level 7",
+          "Campaign Level 8",
+          "Campaign Level 9",
+          "Campaign Level 10"
+        ]
+      },
+      {
+        "name": "Zack's Level Pack",
+        "levels": [
+          "Campaign Level 11",
+          "Campaign Level 12",
+          "Campaign Level 13",
+          "Campaign Level 14",
+          "Campaign Level 15"
+        ]
+      },
+      {
+        "name": "Kargoh's Level Pack",
+        "levels": [
+          "Campaign Level 16",
+          "Campaign Level 17",
+          "Campaign Level 18",
+          "Campaign Level 19",
+          "Campaign Level 20"
+        ]
+      },
+      {
+        "name": "Gravity Hell",
+        "levels": [
+          "Campaign Level 21",
+          "Campaign Level 22",
+          "Campaign Level 23",
+          "Campaign Level 24",
+          "Campaign Level 25"
+        ]
+      },
+      {
+        "name": "Boxel Classics",
+        "levels": [
+          "Campaign Level 26",
+          "Campaign Level 27",
+          "Campaign Level 28",
+          "Campaign Level 29",
+          "Campaign Level 30"
+        ]
+      },
+      {
+        "name": "Spider Cube",
+        "levels": [
+          "Campaign Level 31",
+          "Campaign Level 32",
+          "Campaign Level 33",
+          "Campaign Level 34",
+          "Campaign Level 35"
+        ]
+      },
+      {
+        "name": "Alpha Testing Levels",
+        "description": "Test out levels before they are officially released",
+        "levels": [
+          "Campaign Level 36",
+          "Campaign Level 37"
+        ]
+      }
+    ]
+  },
+  "community": {
+    "packs": [
+      {
+        "name": "Community Levels",
+        "description": "Levels are made by the Boxel Community and are picked by the developer.",
+        "links": [
+          {
+            "name": "discord",
+            "icon": "/img/svg/discord.svg",
+            "url": "https://discord.gg/j8fvd4UvbE"
+          }
+        ],
+        "levels": [
+          "Junsie",
+          "Junsie 2",
+          "Metal Machine",
+          "0123xrulez",
+          "Jack TVYT",
+          "16BitPlayer",
+          "uncoho3",
+          "Metal Machine 2",
+          "Vyom",
+          "0123xrulez 2",
+          "16BitPlayer 2",
+          "0123xrulez 3",
+          "Zozo",
+          "Junsie 3",
+          "! __kf",
+          "ice_dodo"
+        ]
+      }
+    ]
+  }
+}
