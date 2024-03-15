@@ -37,7 +37,10 @@
           <template v-for="(pack, i) of levels.campaign.packs">
             <h2>{{ pack.name }}</h2>
             <template  v-for="(level, j) of pack.levels">
-              <div class="level" :name="level" @click="playLevel(level)"></div>
+              <div class="level" :name="level.name" @click="playLevel(level.name)">
+                <span class="score"></span>
+                <span class="title">{{ level.description }}</span>
+              </div>
             </template>
           </template>
         </div>

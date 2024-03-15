@@ -4,79 +4,190 @@
       {
         "name": "Easy Peasy",
         "levels": [
-          "Campaign Level 1",
-          "Campaign Level 2",
-          "Campaign Level 3",
-          "Campaign Level 4",
-          "Campaign Level 5"
+          {
+            "name": "Campaign Level 1",
+            "description": "Slip & Slide"
+          },
+          {
+            "name": "Campaign Level 2",
+            "description": "Olympic Ramp"
+          },
+          {
+            "name": "Campaign Level 3",
+            "description": "Easy Hop"
+          },
+          {
+            "name": "Campaign Level 4",
+            "description": "Spike Hurdles"
+          },
+          {
+            "name": "Campaign Level 5",
+            "description": "Air Jump"
+          }
         ]
       },
       {
         "name": "Lemon Difficult",
         "levels": [
-          "Campaign Level 6",
-          "Campaign Level 7",
-          "Campaign Level 8",
-          "Campaign Level 9",
-          "Campaign Level 10"
+          {
+            "name": "Campaign Level 6",
+            "description": "Secret Agent"
+          },
+          {
+            "name": "Campaign Level 7",
+            "description": "Long Boi"
+          },
+          {
+            "name": "Campaign Level 8",
+            "description": "Bigger Boi"
+          },
+          {
+            "name": "Campaign Level 9",
+            "description": "Spider Box"
+          },
+          {
+            "name": "Campaign Level 10",
+            "description": "Rock Climber"
+          }
         ]
       },
       {
         "name": "Zack's Level Pack",
         "levels": [
-          "Campaign Level 11",
-          "Campaign Level 12",
-          "Campaign Level 13",
-          "Campaign Level 14",
-          "Campaign Level 15"
+          {
+            "name": "Campaign Level 11",
+            "description": "Tippy Tap"
+          },
+          {
+            "name": "Campaign Level 12",
+            "description": "Agility Jumps"
+          },
+          {
+            "name": "Campaign Level 13",
+            "description": "Zack's Coaster"
+          },
+          {
+            "name": "Campaign Level 14",
+            "description": "Simon Says"
+          },
+          {
+            "name": "Campaign Level 15",
+            "description": "Wall of Finish"
+          }
         ]
       },
       {
         "name": "Kargoh's Level Pack",
         "levels": [
-          "Campaign Level 16",
-          "Campaign Level 17",
-          "Campaign Level 18",
-          "Campaign Level 19",
-          "Campaign Level 20"
+          {
+            "name": "Campaign Level 16",
+            "description": "Kargoh's World"
+          },
+          {
+            "name": "Campaign Level 17",
+            "description": "Kargoh's Bobsled"
+          },
+          {
+            "name": "Campaign Level 18",
+            "description": "Kargoh's Plinko"
+          },
+          {
+            "name": "Campaign Level 19",
+            "description": "Kargoh's Obstacles"
+          },
+          {
+            "name": "Campaign Level 20",
+            "description": "Kargoh's Ramp"
+          }
         ]
       },
       {
         "name": "Gravity Hell",
         "levels": [
-          "Campaign Level 21",
-          "Campaign Level 22",
-          "Campaign Level 23",
-          "Campaign Level 24",
-          "Campaign Level 25"
+          {
+            "name":"Campaign Level 21",
+            "description": "Gravity Loop"
+          },
+          {
+            "name":"Campaign Level 22",
+            "description": "Gravity Sewer"
+          },
+          {
+            "name":"Campaign Level 23",
+            "description": "Gravity Twist"
+          },
+          {
+            "name":"Campaign Level 24",
+            "description": "Gravity Ramps"
+          },
+          {
+            "name":"Campaign Level 25",
+            "description": "Gravity Spikes"
+          }
         ]
       },
       {
         "name": "Boxel Classics",
         "levels": [
-          "Campaign Level 26",
-          "Campaign Level 27",
-          "Campaign Level 28",
-          "Campaign Level 29",
-          "Campaign Level 30"
+          {
+            "name": "Campaign Level 26",
+            "description": "Stairway to Stairs"
+          },
+          {
+            "name": "Campaign Level 27",
+            "description": "Extra Hops"
+          },
+          {
+            "name": "Campaign Level 28",
+            "description": "Butterfly Knot"
+          },
+          {
+            "name": "Campaign Level 29",
+            "description": "Jericho"
+          },
+          {
+            "name": "Campaign Level 30",
+            "description": "Rock Climber 2"
+          }
         ]
       },
       {
         "name": "Spider Cube",
         "levels": [
-          "Campaign Level 31",
-          "Campaign Level 32",
-          "Campaign Level 33",
-          "Campaign Level 34",
-          "Campaign Level 35"
+          {
+            "name": "Campaign Level 31",
+            "description": "Escape Room"
+          },
+          {
+            "name": "Campaign Level 32",
+            "description": "Spider Room"
+          },
+          {
+            "name": "Campaign Level 33",
+            "description": "Kargoh's Spider"
+          },
+          {
+            "name": "Campaign Level 34",
+            "description": "Spider Tower"
+          },
+          {
+            "name": "Campaign Level 35",
+            "description": "Spider Cave"
+          }
         ]
       },
       {
         "name": "Alpha Testing Levels",
         "description": "Test out levels before they are officially released",
         "levels": [
-          "Campaign Level 36",
-          "Campaign Level 37"
+          {
+            "name": "Campaign Level 36",
+            "description": "Small Boi"
+          },
+          {
+            "name": "Campaign Level 37",
+            "description": "Doppler's Plinko"
+          }
         ]
       }
     ]
@@ -94,22 +205,70 @@
           }
         ],
         "levels": [
-          "Junsie",
-          "Junsie 2",
-          "Metal Machine",
-          "0123xrulez",
-          "Jack TVYT",
-          "16BitPlayer",
-          "uncoho3",
-          "Metal Machine 2",
-          "Vyom",
-          "0123xrulez 2",
-          "16BitPlayer 2",
-          "0123xrulez 3",
-          "Zozo",
-          "Junsie 3",
-          "! __kf",
-          "ice_dodo"
+          {
+            "name": "Junsie",
+            "description": "Junsie"
+          },
+          {
+            "name": "Junsie 2",
+            "description": "Junsie 2"
+          },
+          {
+            "name": "Metal Machine",
+            "description": "Metal Machine"
+          },
+          {
+            "name": "0123xrulez",
+            "description": "0123xrulez"
+          },
+          {
+            "name": "Jack TVYT",
+            "description": "Jack TVYT"
+          },
+          {
+            "name": "16BitPlayer",
+            "description": "16BitPlayer"
+          },
+          {
+            "name": "uncoho3",
+            "description": "uncoho3"
+          },
+          {
+            "name": "Metal Machine 2",
+            "description": "Metal Machine 2"
+          },
+          {
+            "name": "Vyom",
+            "description": "Vyom"
+          },
+          {
+            "name": "0123xrulez 2",
+            "description": "0123xrulez 2"
+          },
+          {
+            "name": "16BitPlayer 2",
+            "description": "16BitPlayer 2"
+          },
+          {
+            "name": "0123xrulez 3",
+            "description": "0123xrulez 3"
+          },
+          {
+            "name": "Zozo",
+            "description": "Zozo"
+          },
+          {
+            "name": "Junsie 3",
+            "description": "Junsie 3"
+          },
+          {
+            "name": "! __kf",
+            "description": "! __kf"
+          },
+          {
+            "name": "ice_dodo",
+            "description": "Ice Dodo"
+          }
         ]
       }
     ]
