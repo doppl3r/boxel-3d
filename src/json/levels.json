@@ -199,8 +199,10 @@
         "description": "Levels are made by the Boxel Community and are picked by the developer.",
         "links": [
           {
-            "name": "discord",
+            "class": "discord",
             "icon": "/img/svg/discord.svg",
+            "target": "_blank",
+            "text": "Join the Discord",
             "url": "https://discord.gg/j8fvd4UvbE"
           }
         ],

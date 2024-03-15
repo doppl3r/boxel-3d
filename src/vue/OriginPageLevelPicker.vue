@@ -8,7 +8,6 @@
 
   function setPackGroup(name) {
     pack_group.value = name;
-    console.log(name);
   }
 
   function playLevel(name) {
@@ -24,7 +23,7 @@
 
   // Run function after being mounted (visible)
   onMounted(function() {
-    
+    // TODO: Scroll to settings.progress level
   });
 </script>
 
@@ -43,6 +42,12 @@
           <div class="list" v-show="pack_group == key">
             <template v-for="(pack, i) of group.packs">
               <h2>{{ pack.name }}</h2>
+              <p v-if="pack.description">{{ pack.description }}</p>
+              <div class="buttons" v-if="pack.links">
+                <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target">
+                  {{ link.text }} <img v-if="link.icon" :src="link.icon" />
+                </a>
+              </div>
               <template  v-for="(level, j) of pack.levels">
                 <div class="level" :class="{ completed: getScore(level.name) }" :name="level.name" @click="playLevel(level.name)">
                   <span class="score" v-if="getScore(level.name)">{{ scores[level.name] }}</span>
