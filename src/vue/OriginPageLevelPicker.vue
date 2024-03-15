@@ -5,6 +5,8 @@
   // Initialize variables
   var pack_group = ref('campaign');
   var scores = app.storage.getScores();
+  var settings = app.storage.getSettings();
+  var progress = parseInt(settings.progress);
 
   function setPackGroup(name) {
     pack_group.value = name;
@@ -21,9 +23,49 @@
     return scores[name];
   }
 
+  function getLevelIndex(name) {
+    var count = 0;
+    var index = -1;
+    
+    // Loop through level groups (ex: campaign vs community)
+    for (var group in levels) {
+      // Loop through packs array
+      levels[group].packs.forEach(function(pack) {
+        // Loop through each levels array
+        pack.levels.forEach(function(level) {
+          // Set level index and increment count
+          if (name == level.name) index = count;
+          count++;
+        });
+      });
+    }
+    return index;
+  }
+
+  function getLevelName(index) {
+    var name;
+    var count = 0;
+
+    // Loop through level groups (ex: campaign vs community)
+    for (var group in levels) {
+      // Loop through packs array
+      levels[group].packs.forEach(function(pack) {
+        // Loop through each levels array
+        pack.levels.forEach(function(level) {
+          // Set name and increment count
+          if (index == count) name = level.name;
+          count++;
+        });
+      });
+    }
+    return name;
+  }
+
+  
   // Run function after being mounted (visible)
   onMounted(function() {
     // TODO: Scroll to settings.progress level
+    console.log(getLevelName(progress));
   });
 </script>
 
@@ -48,7 +90,7 @@
                   {{ link.text }} <img v-if="link.icon" :src="link.icon" />
                 </a>
               </div>
-              <template  v-for="(level, j) of pack.levels">
+              <template v-for="(level, j) of pack.levels">
                 <div class="level" :class="{ completed: getScore(level.name) }" :name="level.name" @click="playLevel(level.name)">
                   <span class="score" v-if="getScore(level.name)">{{ scores[level.name] }}</span>
                   <span class="title">{{ level.description }}</span>
