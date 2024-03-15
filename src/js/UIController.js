@@ -41,28 +41,6 @@ class UIController {
         app.ui.updateUI('shop');
       }
 
-      // Campaign level picker UI
-      if (action.includes('level_')) {
-        app.ui.loadLevel($(this));
-        app.ui.updateUI('play');
-        app.resetScene(app);
-      }
-      else if (action == 'show-campaign') {
-        $('[action*="show-"]').addClass('purple');
-        $('[action="' + action + '"]').removeClass('purple');
-        $('.levels .list').hide();
-        $('.levels .list.levels-campaign').show();
-      }
-      else if (action == 'show-community') {
-        $('[action*="show-"]').addClass('purple');
-        $('[action="' + action + '"]').removeClass('purple');
-        $('.levels .list').hide();
-        $('.levels .list.levels-community').show();
-      }
-      else if (action == 'exit-to-home') {
-        app.ui.updateUI('home');
-      }
-
       // Main game UI
       if (action == 'pause-campaign') {
         app.ui.pause();
@@ -446,17 +424,6 @@ class UIController {
       currentLevel.focus();
       app.ui.levelPicker.animate({ scrollTop: currentLevel.offset().top - levels.offset().top }, 500);
     }, 250);
-  }
-
-  updateCampaignScores() {
-    var scores = app.storage.getScores();
-    $.each(scores, function(key, value) {
-      var level = $('.levels .level[name="' + key + '"]');
-      if (level.length > 0) {
-        level.addClass('completed');
-        level.find('.score').html(value);
-      }
-    });
   }
 
   appendEditorLevels(a) {
