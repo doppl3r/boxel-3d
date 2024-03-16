@@ -1,6 +1,6 @@
 <script setup>
   import '../scss/Origin.scss';
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import OriginPageHome from './OriginPageHome.vue';
   import OriginPageLevelPicker from './OriginPageLevelPicker.vue';
   import OriginPageCampaign from './OriginPageCampaign.vue';
@@ -12,14 +12,31 @@
   // TODO: Conditionally render components
   var page = ref('home');
 
+  function addEventListeners() {
+    window.addEventListener('setPage', setPageFromEvent);
+  }
+
+  function removeEventListeners() {
+    window.removeEventListener('setPage', setPageFromEvent);
+  }
+
+  function setPageFromEvent(e) {
+    if (e.detail.page) setPage(e.detail.page);
+  }
+
   function setPage(name) {
     page.value = name;
+    app.state = name;
   }
 
   // Run function after being mounted (visible)
   onMounted(function() {
-    
+    addEventListeners();
   });
+
+  onUnmounted(function() {
+    removeEventListeners();
+  })
 </script>
 
 <template>

@@ -7,7 +7,7 @@ class Keyboard {
     }
     
     keyDown(e, a) {
-        var state = a.ui.state;
+        var state = a.state;
 
         // Only add shortcuts when not typing
         if (a.ui.dialog.isOpen() == false && $('input:focus').length <= 0) {
@@ -31,7 +31,7 @@ class Keyboard {
                     else if (state == 'shop') {
                         $('[action="exit-to-home"]').click();
                     }
-                    else if (state == 'play') {
+                    else if (state == 'campaign') {
                         // Resume or pause game
                         if (a.ui.dialog.isOpen()) {
                             if (a.ui.dialog.getId() != 'finished') {
@@ -61,8 +61,8 @@ class Keyboard {
                     }
                 break;
                 case 69: // 'e'
-                    if (a.play == true && (state == 'play')) {
-                        a.ui.exitCampaign();
+                    if (a.play == true && state == 'campaign') {
+                        a.exitCampaign();
                     }
                 break;
                 case 71: // 'g'
@@ -71,7 +71,7 @@ class Keyboard {
                     }
                 break;
                 case 82: // 'r'
-                    if (a.play == true && (state == 'play' || state == 'level-editor')) {
+                    if (a.play == true && (state == 'campaign' || state == 'level-editor')) {
                         a.level.retryLevel(a);
                     }
                     else if (a.play == false && state == 'level-editor') {
@@ -114,7 +114,7 @@ class Keyboard {
     }
 
     spaceBarDown(a) {
-        if (a.ui.state == 'play' || a.ui.state == 'level-editor') {
+        if (a.state == 'campaign' || a.state == 'level-editor') {
             if (a.play == true) {
                 a.player.jump();
             }

@@ -165,7 +165,7 @@ class Level extends Group {
         }
     }
 
-    retryLevel(a, keepCheckpoint = false) {
+    retryLevel(a = app, keepCheckpoint = false) {
         a.updateGravity();
         a.play = true;
         a.level.removeParticles(a);
@@ -186,7 +186,7 @@ class Level extends Group {
         a.player.removeCheckpoint();
 
         // Check current state
-        if (a.ui.state == 'play') {
+        if (a.state == 'campaign') {
             var settings = a.storage.getSettings(a);
             var progress = parseInt(settings.progress)
             progress++; // Increase level progress
@@ -206,7 +206,7 @@ class Level extends Group {
             a.updateSettings(settings, a);
             a.ui.updateUI('level-picker');
         }
-        else if (a.ui.state == 'level-editor') {
+        else if (a.state == 'level-editor') {
             a.updateGravity();
             a.resetScene(a);
             app.levelEditor.controlsOrbit.enabled = true;

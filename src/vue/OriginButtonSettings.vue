@@ -10,13 +10,13 @@
     ];
 
     // Add more options for the level maker
-    if (app.ui.state == 'level-manager' || app.ui.state == 'level-editor') {
+    if (app.state == 'level-manager' || app.state == 'level-editor') {
       inputs.push(
         { label: 'Editor Theme', name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme, callback: function(e) { updateSettings('theme', e.target.value); }},
         { label: 'Editor Snap', name: 'snap', type: 'range', min: 1, max: 8, step: 7, value: settings.snap, callback: function(e) { updateSettings('snap', e.target.value); }},
       );
     }
-    else if (app.ui.state == 'play') {
+    else if (app.state == 'campaign') {
       app.timer.pause();
       app.play = false;
     }
@@ -24,7 +24,7 @@
     // Add bottom button(s)
     inputs.push({ type: 'button', value: 'Close', callback: function(e) {
         // Resume campaign if settings was selected during gameplay
-        if (app.ui.state == 'play') app.ui.resumeCampaign();
+        if (app.state == 'campaign') app.ui.resumeCampaign();
         window.dispatchEvent(new CustomEvent('closePopup'));
       }
     });

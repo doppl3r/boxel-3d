@@ -43,7 +43,7 @@ class UIController {
 
       // Main game UI
       if (action == 'pause-campaign') {
-        app.ui.pause();
+        app.pause();
       }
 
       // Level manager actions
@@ -132,12 +132,12 @@ class UIController {
       else if (action == 'rewind') {
         app.level.retryLevel(app);
         app.level.deselectLevel(app);
-        app.ui.pause();
+        app.pause();
         app.ui.updateLevelOptions();
         app.ui.showObjectOptions(false);
       }
       else if (action == 'pause') {
-        app.ui.pause();
+        app.pause();
       }
       else if (action == 'toggle-theme') {
         app.ui.toggleTheme();
@@ -249,11 +249,11 @@ class UIController {
   }
 
   updateUI(state, app) {
-    this.state = state;
     // Update theme
     if (app != null) {
       var settings = app.storage.getSettings(app);
       this.toggleTheme(settings.theme);
+      app.state = state;
     }
 
     this.updateCanvas();
@@ -508,32 +508,6 @@ class UIController {
     app.levelHistory.save('Updated tip', app);
   }
 
-  pause() {
-    app.timer.pause();
-    app.play = false;
-    
-    if (app.ui.state == 'level-editor') {
-      app.ui.updateLevelOptions();
-      app.level.deselectLevel(app);
-      app.ui.showObjectOptions(false);
-      app.ui.levelOptions.find('[action="play"]').removeClass('selected');
-      app.ui.levelOptions.find('[action="pause"]').addClass('selected');
-      app.levelEditor.controlsOrbit.enabled = true;
-      app.levelEditor.controlsOrbit.reset();
-      app.background.visible = false;
-    }
-    else if (app.ui.state == 'play') {
-      app.ui.dialog.add({
-        text: 'Paused',
-        inputs: [
-          { attributes: { value: 'Exit (E)', type: 'button' }, function: app.ui.exitCampaign },
-          { attributes: { value: 'Retry (R)', type: 'button' }, function: app.level.retryLevel, parameter: app },
-          { attributes: { value: 'Play', type: 'button' }, function: app.ui.resumeCampaign },
-        ]
-      });
-    }
-  }
-
   play() {
     app.play = true;
     app.timer.start();
@@ -557,19 +531,10 @@ class UIController {
   }
 
   resumeCampaign() {
-    if (app.ui.state == 'play') {
+    if (app.state == 'campaign') {
       app.timer.start();
       app.play = true;
     }
-  }
-
-  exitCampaign() {
-    app.play = false;
-    app.resetScene(app);
-    app.level.clearLevel(app);
-    app.player.removeCheckpoint();
-    app.player.setPosition({ x: 0, y: 0, z: 0 });
-    app.ui.updateUI('level-picker');
   }
 }
 

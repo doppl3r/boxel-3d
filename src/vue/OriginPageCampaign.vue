@@ -1,19 +1,26 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
   // Add event listener(s)
-  window.addEventListener('showTip', function(e) { showTip(e.detail.text) });
+  function addEventListeners() {
+    window.addEventListener('showTip', showTip);
+  }
+
+  // Remove event listeners
+  function removeEventListeners() {
+    window.removeEventListener('showTip', showTip);
+  }
 
   // Show tip from custom event
-  function showTip(text) {
+  function showTip(e) {
     app.play = false;
     app.timer.pause();
 
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('addPopup', {
       detail: {
-        text: text,
+        text: e.detail.text,
         inputs: [{ type: 'button', value: 'Continue', callback: function() {
           app.ui.play();
           window.dispatchEvent(new CustomEvent('closePopup'));
@@ -22,10 +29,19 @@
     }));
   }
 
+  function pause() {
+    app.pause();
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     app.ui.canvas.removeClass('hidden');
+    addEventListeners();
   })
+
+  onUnmounted(function() {
+    removeEventListeners();
+  });
 </script>
 
 <template>
@@ -35,7 +51,7 @@
     <div id="credit"></div>
     <div id="speedometer"><span id="speed"></span></div>
     <div class="buttons">
-      <a class="button top-left" action="pause-campaign" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
+      <a class="button top-left" @click="pause" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
       <OriginButtonSettings class="button top-right" />
     </div>
   </div>

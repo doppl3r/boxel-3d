@@ -28,7 +28,7 @@ class Mouse {
 
     mouseUp(e, a) {
         if (a.play == false) {
-            if (app.ui.state == 'level-editor') {
+            if (app.state == 'level-editor') {
                 a.levelEditor.mouseUp(e, a);
             }
         }
