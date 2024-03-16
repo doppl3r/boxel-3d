@@ -558,7 +558,7 @@ html {
                   padding: 12px;
                   border-radius: 4px;
                   content: 'Play';
-                  font-size: 0.25rem;
+                  font-size: 1rem;
                   position: fixed;
                   z-index: 1;
                   bottom: 16px;
@@ -1102,8 +1102,6 @@ html {
                   height: 64px;
                   margin: 4px;
                   font-size: 2rem;
-
-                  &:after { font-size: 0.5rem; }
 
                   .icon {
                     width: 16px;

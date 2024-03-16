@@ -40,9 +40,10 @@ class Timer {
         return '<span>' + time.split('').join('</span><span>') + '</span>';
     }
 
-    render(a) {
+    render(a = app) {
         var time = a.timer.toString();
-        a.document.getElementById('timer').innerHTML = a.timer.toHTML(time);
+        var elem = a.document.getElementById('timer');
+        if (elem) elem.innerHTML = a.timer.toHTML(time);
     }
 }
 

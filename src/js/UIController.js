@@ -139,10 +139,6 @@ class UIController {
       else if (action == 'pause') {
         app.ui.pause();
       }
-      else if (action == 'play') {
-        app.ui.play();
-        app.ui.updateLevelOptions();
-      }
       else if (action == 'toggle-theme') {
         app.ui.toggleTheme();
       }
@@ -462,21 +458,6 @@ class UIController {
     var key = item.find('input').attr('key');
     app.storage.removeLevelData(key);
     item.remove();
-  }
-
-  loadLevel(button) {
-    var settings = app.storage.getSettings();
-    var json = JSON.parse(button.find('.data').text());
-    var credit = app.ui.campaign.find('#credit');
-    app.updateGravity();
-    app.play = true;
-    app.timer.reset();
-    credit.html((json.author) ? 'Level by ' + json.author : '');
-    if (json.star) credit.prepend('<img src="/img/svg/star.svg" title="Event winner"> ');
-    app.level.clearLevel(app);
-    app.level.importFromJSON(json, app);
-    settings.progress = parseInt(button.attr('action').split('_')[1]);
-    app.updateSettings(settings, app);
   }
 
   loadEditorLevel(button) {

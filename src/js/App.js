@@ -169,7 +169,7 @@ class App {
         }
     }
 
-    resizeWindow(e, a) {
+    resizeWindow(e, a = app) {
         var screenWidth = a.window.innerWidth;
         var screenHeight = a.window.innerHeight;
         a.camera.aspect = screenWidth / screenHeight;
@@ -177,7 +177,7 @@ class App {
         a.graphics.setSize(screenWidth, screenHeight);
     }
 
-    resetScene(a) {
+    resetScene(a = app) {
         app.camera.position.z = app.camera.position.zDefault;
         a.ui.showObjectOptions(false);
         a.level.removeParticles(a);
