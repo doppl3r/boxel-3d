@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onBeforeMount, onMounted } from 'vue';
+  import { ref, onMounted } from 'vue';
   import levels from '../json/levels.json';
 
   // Initialize variables
@@ -14,25 +14,23 @@
     packGroup.value = name;
   }
 
-  function playLevel(name) {
-    // Import level data
-    import('../json/' + packGroup.value + '/' + name + '.json').then(function(json) {
-      emit('setPage', 'campaign');
-      var credit = app.ui.campaign.find('#credit');
-      app.updateGravity();
-      app.play = true;
-      app.timer.reset();
-      credit.html((json.author) ? 'Level by ' + json.author : '');
-      if (json.star) credit.prepend('<img src="/img/svg/star.svg" title="Event winner"> ');
-      app.level.clearLevel(app);
-      app.level.importFromJSON(json, app);
-      settings.progress = getLevelIndex(name) + 1;
-      app.updateSettings(settings);
-      app.ui.play();
-      app.ui.updateLevelOptions();
-      app.resetScene();
-    });
-
+  async function playLevel(name) {
+    var response = await fetch('/json/' + packGroup.value + '/' + name + '.json');
+    var json = await response.json();
+    var credit = app.ui.campaign.find('#credit');
+    emit('setPage', 'campaign');
+    app.updateGravity();
+    app.play = true;
+    app.timer.reset();
+    credit.html((json.author) ? 'Level by ' + json.author : '');
+    if (json.star) credit.prepend('<img src="/img/svg/star.svg" title="Event winner"> ');
+    app.level.clearLevel(app);
+    app.level.importFromJSON(json, app);
+    settings.progress = getLevelIndex(name) + 1;
+    app.updateSettings(settings);
+    app.ui.play();
+    app.ui.updateLevelOptions();
+    app.resetScene();
   }
 
   function getScore(name) {

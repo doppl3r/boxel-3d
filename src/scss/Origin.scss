@@ -1,6 +1,8 @@
 html {
   font-size: clamp(12px, 3vh, 16px);
   line-height: clamp(12px, 3vh, 16px);
+  min-width: 640px; // 640px
+  min-height: 360px; // 360px
   
   body {
     #app {
