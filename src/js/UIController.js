@@ -372,56 +372,6 @@ class UIController {
     this.levelList.empty();
   }
 
-  appendCampaignLevels() {
-    // Restructure HTML level data
-    var levels = $('.levels');
-    var loaded = (levels.hasClass('loaded'));
-    var settings = app.storage.getSettings(app);
-    var progress = settings.progress;
-    var currentLevel;
-
-    // Predefine level focus
-    app.ui.maxLevels = levels.find('[file]').length;
-
-    // Append levels if data elements have not been loaded
-    if (loaded == false) {
-
-      // Loop through each level
-      $.each(levels.find('[file]'), function(i) {
-        var level = $(this);
-
-        // Load all level data into html
-        $.getJSON('json/' + level.attr('file'), function(json) {
-          level.addClass('level');
-          level.attr('tabindex', '0');
-          level.attr('action', 'level_' + (i + 1));
-          level.attr('name', json.name);
-          level.html(
-            '<span class="index">' + (i + 1) + '</span>' +
-            '<span class="score">--.---</span>' +
-            '<span class="title">' + json.description + '</span>' +
-            '<span class="data" style="display: none">' + JSON.stringify(json) + '</span>'
-          );
-
-          // Update scores if last level item
-          if (i == app.ui.maxLevels - 1) app.ui.updateCampaignScores();
-        });
-      });
-      levels.addClass('loaded');
-    }
-
-    // Focus into level
-    setTimeout(function() {
-      currentLevel = levels.find('.level').eq(progress - 1);
-      if (currentLevel.parent(':hidden')) {
-        //console.log($('.show-' + currentLevel.parent().attr('for')));
-        $('[action="show-' + currentLevel.parent().attr('for') + '"]').click();
-      }
-      currentLevel.focus();
-      app.ui.levelPicker.animate({ scrollTop: currentLevel.offset().top - levels.offset().top }, 500);
-    }, 250);
-  }
-
   appendEditorLevels(a) {
     var list = a.storage.getListOfLevels(); // return format = [{ key: '', level: '' }, ...]
     var levelData = {};
