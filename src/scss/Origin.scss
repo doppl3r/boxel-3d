@@ -10,9 +10,12 @@ html {
       width: inherit;
 
       canvas {
+        image-rendering: pixelated;
         width: inherit;
         height: inherit;
-        image-rendering: pixelated;
+        position: absolute;
+        top: 0;
+        left: 0;
         z-index: 0;
   
         &.hidden { display: none; }
