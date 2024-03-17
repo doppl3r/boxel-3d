@@ -24,6 +24,9 @@
       app.player.setSkin({ id: skin.id, url: skin.url });
       app.updateSettings(settings.value);
     }
+
+    // Scroll to element
+    scrollToSkin(e.target);
   }
 
   function changeImage(e) {
@@ -45,9 +48,14 @@
     return skin.id == settings.value.skin.id;
   }
 
+  function scrollToSkin(el) {
+    if (el == null) el = document.querySelector("[class*='selected']");
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
-    
+    scrollToSkin()
   })
 </script>
 

@@ -706,7 +706,7 @@ html {
   
           h1 {
             font-size: 5.75rem;
-            line-height: 1rem;
+            line-height: 5.75rem;
             text-transform: uppercase;
             letter-spacing: 20px;
             margin: 0 0 12px;
@@ -737,6 +737,7 @@ html {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
+            padding-top: 1rem;
             position: relative;
             border-radius: 24px;
             overflow: hidden;
@@ -747,6 +748,7 @@ html {
               position: relative;
               width: 128px;
               cursor: pointer;
+              transition: transform 0.15s ease-out;
   
               &:before {
                 box-sizing: border-box;
@@ -779,6 +781,7 @@ html {
   
               &.selected {
                 pointer-events: all;
+                transform: scale(1.25);
   
                 .link {
                   opacity: 0.5;
