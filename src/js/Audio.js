@@ -32,7 +32,6 @@ class Audio {
         // Add event listener
         window.addEventListener('playAudio', function(e) { _this.play(e.detail.name, e.detail.queue); });
         window.addEventListener('setVolume', function(e) {
-            _this.volume = e.detail;
             _this.setMasterVolume(e.detail);
         });
         window.addEventListener('pointerup', function(e) { _this.playQueue(e.detail); });
@@ -76,11 +75,12 @@ class Audio {
     }
 
     setMasterVolume(volume) {
+        this.volume = volume;
         this.listener.setMasterVolume(volume);
     }
 
     getMasterVolume() {
-        return this.volume
+        return this.volume;
     }
 }
 

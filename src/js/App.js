@@ -15,7 +15,6 @@ import { Player } from './entities/Player.js';
 import { UIController } from './UIController.js';
 import { Mouse } from './Mouse.js';
 import { Keyboard } from './Keyboard.js';
-import { Music } from './Music.js';
 import { LevelEditor } from './LevelEditor.js';
 
 class App {
@@ -37,7 +36,6 @@ class App {
     this.timer = new Timer();
     this.mouse = new Mouse();
     this.keyboard = new Keyboard();
-    this.audio = new Music();
     this.storage = new StorageManager();
     this.collision = new Collision();
     this.player = new Player({ x: 0, y: 0, z: 0 });
@@ -49,7 +47,6 @@ class App {
     this.camera.position.y = 0;
     this.camera.position.zDefault = 180;
     this.camera.position.z = this.camera.position.zDefault;
-    this.camera.add(this.audio);
     this.scene = new Scene();
     this.scene.fog = new Fog('#dc265a', 400, 1250);
     this.scene.background = new Color('#1a1a1a');
@@ -95,16 +92,19 @@ class App {
     this.window.addEventListener('keydown', function(e) { _this.keyboard.keyDown(e, _this); });
     this.window.addEventListener('keyup', function(e) { _this.keyboard.keyUp(e, _this); });
     Events.on(this.engine, 'collisionStart', function(e) { _this.collision.checkPlayerCollision(e, _this); });
-    this.updateSettings(null, this); // Update settings
-
+    
     var _this = this;
     this.assets = new Assets();
     this.assets.load(function() {
       _this.load(callback);
+      _this.updateSettings(null, _this); // Update settings
     });
   }
 
   load(callback = function(){}) {
+    // Start music
+    this.assets.audio.play('theme', true);
+
     // Start game loop
     this.resizeWindow(null, this);
 
@@ -201,7 +201,7 @@ class App {
     });
     
     // Update application from settings
-    a.audio.setVolume(settings.volume);
+    a.assets.audio.setMasterVolume(settings.volume);
     a.updateQuality(settings.quality, a);
     a.ui.toggleTheme(settings.theme);
     a.mouse.setSnap(settings.snap);
