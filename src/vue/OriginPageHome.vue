@@ -28,13 +28,12 @@
     openLink('https://chrome.google.com/webstore/detail/tiny-tycoon/bamdkjfjhhnjcgcjmmjdnncpglihepoi');
   }
 
-  function isChromeExtension() {
-    return chrome.extension != null;
+  function isFullscreen() {
+    return location.href.indexOf('?fullscreen=true') > 0;
   }
 
   function openFullscreen() {
-    var url = location.href + '?fullscreen=true';
-    chrome.tabs.create({ url: url });
+    openLink(location.href + '?fullscreen=true');
   }
 
   function openReviewLink() {
@@ -102,7 +101,7 @@
         <div class="message"><img class="google-icon" src="/img/svg/google-icon.svg" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
-        <a class="button top-right three" @click="openFullscreen" v-if="isChromeExtension()" title="Enable fullscreen"><img src="/img/svg/grow.svg"></a>
+        <a class="button top-right three" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img src="/img/svg/grow.svg"></a>
         <a class="button top-right two" @click="showAccountOptions" title="Account"><img src="/img/svg/save.svg"></a>
         <OriginButtonSettings class="button top-right" />
         <a class="button" @click="$emit('setPage', 'level-manager')"><span>Level Maker</span> <img src="/img/svg/pencil.svg"></a>
