@@ -17,13 +17,13 @@
   async function playLevel(name) {
     var response = await fetch('/json/' + packGroup.value + '/' + name + '.json');
     var json = await response.json();
-    var credit = app.ui.campaign.find('#credit');
+    var credit = '';
     emit('setPage', 'campaign');
     app.updateGravity();
     app.play = true;
     app.timer.reset();
-    credit.html((json.author) ? 'Level by ' + json.author : '');
-    if (json.star) credit.prepend('<img src="/img/svg/star.svg" title="Event winner"> ');
+    if (json.author) credit = 'Level by ' + json.author;
+    if (json.star) credit = '<img src="/img/svg/star.svg" title="Event winner"> ' + credit;
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
     settings.progress = getLevelIndex(name) + 1;
@@ -31,6 +31,11 @@
     app.ui.play();
     app.ui.updateLevelOptions();
     app.resetScene();
+    
+    // Send event to show credits
+    setTimeout(function() {
+      window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: credit }}));
+    }, 500);
   }
 
   function getScore(name) {

@@ -2,14 +2,19 @@
   import { ref, onMounted, onUnmounted } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
+  // Initialize variables
+  var credit = ref('');
+
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('showTip', showTip);
+    window.addEventListener('setCredit', setCredit);
   }
 
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('showTip', showTip);
+    window.removeEventListener('setCredit', setCredit);
   }
 
   // Show tip from custom event
@@ -27,6 +32,10 @@
         }}]
       }
     }));
+  }
+
+  function setCredit(e) {
+    if (e.detail.text) credit.value = e.detail.text;
   }
 
   function pause() {
@@ -48,7 +57,7 @@
   <div class="campaign dashboard">
     <div class="background"></div>
     <div id="timer"></div>
-    <div id="credit"></div>
+    <div id="credit" class="fade-in" v-html="credit" v-if="credit"></div>
     <div id="speedometer"><span id="speed"></span></div>
     <div class="buttons">
       <a class="button top-left" @click="pause" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
