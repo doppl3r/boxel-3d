@@ -15,7 +15,6 @@ class UIController {
     this.home = this.controller.find('.home');
     this.campaign = this.controller.find('.campaign');
     this.levelPicker = this.controller.find('.level-picker');
-    this.skins = this.controller.find('.skins');
     this.levelManager = this.controller.find('.level-manager');
     this.levelEditor = this.controller.find('.level-editor');
     this.levelList = this.levelManager.find('.list');

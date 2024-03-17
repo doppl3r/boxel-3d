@@ -15,7 +15,14 @@
     if (e.detail) {
       isOpen.value = true;
       if (e.detail.text) text.value = e.detail.text;
-      if (e.detail.inputs) inputs.value = e.detail.inputs;
+      if (e.detail.inputs) {
+        inputs.value = e.detail.inputs;
+        inputs.value.forEach(function(input) {
+          // Set input event type (ex: click vs change)
+          if (input.type == 'file' || input.type == 'range') input.event = 'change';
+          else input.event = 'click';
+        })
+      }
     }
   }
 
@@ -23,9 +30,9 @@
     isOpen.value = false;
   }
 
-  function runCallback(callback, $event) {
+  function runCallback(callback, e) {
     if (callback == null) callback = closePopup;
-    callback($event);
+    callback(e);
   }
 
   function runLastInputCallback() {
@@ -43,7 +50,7 @@
         <div class="inputs">
           <template v-for="(input, index) of inputs">
             <label v-if="input.label" :for="'popup-' + input.type + '-' + index">{{ input.label }}</label>
-            <input :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :style="{ width: input.width }" @click="runCallback(input.callback, $event)">
+            <input :class="input.class" :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">
           </template>
         </div>
       </div>

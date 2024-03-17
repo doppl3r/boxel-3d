@@ -100,7 +100,7 @@ class StorageManager {
             'quality': 6,
             'theme': 0,
             'snap': 8,
-            'skin': a.skins.default,
+            'skin': { id: 1, url: 'img/png/skins/pink.png' },
             'motion': 1,
             'progress': 1
         };

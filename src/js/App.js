@@ -7,7 +7,6 @@ import { Assets } from './Assets.js';
 import { Loop } from './Loop.js';
 import { Graphics } from './Graphics.js';
 import { StorageManager } from './StorageManager.js';
-import { Skins } from './Skins.js';
 import { Collision } from './Collision.js';
 import { Background } from './Background.js';
 import { Level } from './Level.js';
@@ -41,7 +40,6 @@ class App {
     this.keyboard = new Keyboard();
     this.audio = new Music();
     this.storage = new StorageManager();
-    this.skins = new Skins();
     this.collision = new Collision();
     this.extension = new Extension();
     this.player = new Player({ x: 0, y: 0, z: 0 });

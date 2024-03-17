@@ -249,7 +249,7 @@ class Player extends Cube {
   }
 
   setSkin(skin, a = app) {
-    if (skin.id == null || skin.url == null) skin = a.skins.default;
+    if (skin.id == null || skin.url == null) skin = { id: 1, url: 'img/png/skins/pink.png' };
     
     // Add texture
     this.addTexture(skin.url);

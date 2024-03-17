@@ -42,8 +42,8 @@
 
   function showAccountOptions() {
     var inputs = [
-      { value: 'Backup to file', type: 'button', width: '100%', callback: app.storage.backupToFile },
-      { value: 'Restore from file', type: 'button', width: '100%', callback: app.storage.restoreFromFile },
+      { value: 'Backup to file', type: 'button', style: 'width: 100%', callback: app.storage.backupToFile },
+      { value: 'Restore from file', type: 'button', style: 'width: 100%', callback: app.storage.restoreFromFile },
       { value: 'Close', type: 'button' }
     ]
 
