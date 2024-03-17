@@ -17,7 +17,6 @@ import { Mouse } from './Mouse.js';
 import { Keyboard } from './Keyboard.js';
 import { Music } from './Music.js';
 import { LevelEditor } from './LevelEditor.js';
-import { Extension } from './Extension.js';
 
 class App {
   constructor() {
@@ -41,7 +40,6 @@ class App {
     this.audio = new Music();
     this.storage = new StorageManager();
     this.collision = new Collision();
-    this.extension = new Extension();
     this.player = new Player({ x: 0, y: 0, z: 0 });
     this.play = false;
     this.fov = 75; // Default 75
