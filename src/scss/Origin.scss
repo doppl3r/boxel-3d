@@ -34,7 +34,7 @@ html {
         }
 
         &.dark {
-          a {
+          .item {
             img { filter: invert(50%); }
   
             &:hover {
@@ -66,7 +66,7 @@ html {
         }
     
         &.light {
-          a {
+          .item {
             img { filter: invert(50%); }
   
             &:hover {
@@ -108,25 +108,6 @@ html {
           width: 100%;
           height: 100%;
           z-index: -1;
-        }
-
-        a {
-          position: relative;
-    
-          &:focus {
-            outline: none;
-    
-            &:before {
-              content: '';
-              border: 2px solid #fff;
-              width: calc(100% + 8px);
-              height: calc(100% + 8px);
-              position: absolute;
-              border-radius: 8px;
-              animation: fade-in 0.25s ease-in;
-              animation-fill-mode: forwards;
-            }
-          }
         }
         
         .fade-in {
@@ -250,14 +231,35 @@ html {
           display: none !important;
         }
   
-        a {
+        .item {
           cursor: pointer;
           display: flex;
           flex-shrink: 0;
           justify-content: center;
           align-items: center;
+          position: relative;
+          overflow: hidden;
           width: 48px;
           height: 48px;
+
+          img {
+            pointer-events: none;
+          }
+    
+          &:focus {
+            outline: none;
+    
+            &:before {
+              content: '';
+              border: 2px solid #fff;
+              width: calc(100% + 8px);
+              height: calc(100% + 8px);
+              position: absolute;
+              border-radius: 8px;
+              animation: fade-in 0.25s ease-in;
+              animation-fill-mode: forwards;
+            }
+          }
   
           &:hover  {
             & > * { animation: shake 0.25s; }
@@ -321,7 +323,7 @@ html {
               &.object-type { overflow-y: auto; }
   
               .item {
-                &:last-of-type { margin-left: auto; }
+                &.last { margin-left: auto; }
               }
             }
           }
@@ -345,6 +347,10 @@ html {
             .item {
               position: relative;
               display: flex;
+
+              > * {
+                pointer-events: none;
+              }
   
               &.highlight { background-color: #0287EF; }
             }
@@ -361,9 +367,14 @@ html {
               background-color: #dc265a;
               border-radius: 4px;
               color: #fff;
-              margin: 0 8px;
-              padding: 0 24px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0px 8px;
+              padding: 0px 24px;
               text-decoration: none;
+              height: 48px;
               width: auto;
   
               &.purple {
@@ -376,7 +387,6 @@ html {
                 top: 16px;
                 right: 16px;
                 margin: 0;
-                padding: 0;
                 width: 48px;
   
                 &.two {
@@ -829,7 +839,13 @@ html {
           height: 100%;
   
           .row {
-            .col { overflow-y: auto; }
+            .col {
+              overflow-y: auto;
+
+              .list-item {
+                display: flex;
+              }
+            }
           }
         }
   
@@ -1023,7 +1039,7 @@ html {
         .ui-origin {
           input { width: 120px; }
 
-          a {
+          .item {
             height: 32px;
             width: 32px;
 
@@ -1039,7 +1055,8 @@ html {
           .dashboard {
             .buttons {
               .button {
-                padding: 0 12px;
+                height: 32px;
+                padding: 0px 12px;
 
                 &.top-right {
                   width: 32px;

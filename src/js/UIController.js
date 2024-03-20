@@ -44,51 +44,6 @@ class UIController {
         app.pause();
       }
 
-      // Level manager actions
-      if (action == 'add-level') {
-        var levelData = {};
-        var key = null;
-        app.level.createNewLevel(app);
-        levelData = app.level.exportToJSON(app); // Init default data
-        key = app.storage.setLevelData(null, levelData); // Store data and generate new key
-        app.ui.appendEditorLevel({ key: key, level: levelData });
-      }
-      else if (action == 'download') {
-        app.level.clearLevel(app);
-        app.level.key = null; // Reset key to generate new save key
-        app.background.visible = false;
-        app.storage.loadLevelFromFile();
-        app.ui.updateUI('level-editor');
-        app.levelHistory.save('Downloaded level', app);
-        app.levelHistory.save('Loaded level', app); // Force dialog check to save
-        app.resetScene(app);
-        app.levelEditor.controlsOrbit.enabled = true;
-        app.levelEditor.controlsOrbit.reset();
-      }
-      else if (action == 'share') {
-        if ($(this).parent().hasClass('item')) app.ui.loadEditorLevel($(this));
-        app.resetScene(app);
-        app.storage.saveLevelToFile();
-      }
-      else if (action == 'edit-level') {
-        app.ui.loadEditorLevel($(this));
-        app.ui.updateUI('level-editor');
-        app.background.visible = false;
-        app.levelHistory.save('Edited level', app);
-        app.resetScene(app);
-        app.levelEditor.controlsOrbit.enabled = true;
-        app.levelEditor.controlsOrbit.reset();
-      }
-      else if (action == 'delete-level') {
-        app.ui.dialog.add({
-          text: 'Are you sure you want to <em>delete</em> this level?',
-          inputs: [
-            { attributes: { value: 'Yes', type: 'button' }, function: app.ui.removeEditorLevel, parameter: $(this) },
-            { attributes: { value: 'No', type: 'button' } }
-          ]
-        });
-      }
-
       // Level editor - level options
       if (action == 'draw') {
         app.mouse.setMode('draw');
@@ -97,21 +52,6 @@ class UIController {
       else if (action == 'erase') {
         app.mouse.setMode('erase');
         app.ui.updateLevelOptions();
-      }
-      else if (action == 'exit-to-level-manager') {
-        app.levelEditor.controlsOrbit.enabled = false;
-        app.levelEditor.controlsOrbit.reset();
-        app.levelEditor.controlsTransform.detach();
-        if (app.levelHistory.history.length > 2) {
-          app.ui.dialog.add({
-            text: 'Would you like to <em>save</em> your level?',
-            inputs: [
-              { attributes: { value: 'No', type: 'button' }, function: app.ui.saveAndExitLevelEditor, parameter: false },
-              { attributes: { value: 'Yes', type: 'button' }, function: app.ui.saveAndExitLevelEditor, parameter: true },
-            ]
-          });
-        }
-        else app.ui.saveAndExitLevelEditor(false);
       }
       else if (action == 'save') {
         app.resetScene(app);
@@ -220,12 +160,6 @@ class UIController {
       event.preventDefault();
       app.levelHistory.save('Updated object properties', app);
     });
-
-    // Add level name change listener
-    this.controller.on('focusout', '.list input', function(event) {
-      event.preventDefault();
-      app.ui.updateEditorLevelName($(this));
-    })
   }
 
   selectObjectType(type, checkNull = true) {
@@ -366,87 +300,10 @@ class UIController {
     this.objectOptions.find('[action*="' + transformMode + '"]').addClass('selected');
   }
 
-  removeListOfLevels() {
-    this.levelList.empty();
-  }
-
-  appendEditorLevels(a) {
-    var list = a.storage.getListOfLevels(); // return format = [{ key: '', level: '' }, ...]
-    var levelData = {};
-    var key = null;
-
-    // Add empty level if none exist
-    if (list.length < 1) {
-      a.level.createNewLevel(a);
-      levelData = a.level.exportToJSON(a);
-      key = a.storage.setLevelData(null, levelData);
-      list.push({ key: key, level: levelData });
-    }
-
-    // Append each list item
-    this.removeListOfLevels(); // Empty list HTML before populating
-    for (var i = 0; i < list.length; i++) {
-      a.ui.appendEditorLevel(list[i]);
-    }
-  }
-
-  appendEditorLevel(listItem) { // listItem = [{ key: '', level: '' }, ...]
-    this.levelList.append(
-      '<div class="item">' +
-        '<input type="text" key="' + listItem.key + '" value="' + listItem.level.name + '">' +
-        '<a action="edit-level" title="Edit level"><img src="/img/svg/pencil.svg"></a>' +
-        '<a action="share" title="Share level"><img src="/img/svg/upload.svg"></a>' +
-        '<a action="delete-level" title="Delete level"><img src="/img/svg/trash.svg"></a>' +
-      '</div>'
-    );
-  }
-
-  removeEditorLevel(button) {
-    var item = button.parent();
-    var key = item.find('input').attr('key');
-    app.storage.removeLevelData(key);
-    item.remove();
-  }
-
-  loadEditorLevel(button) {
-    // Select level details from HTML input attributes & values
-    var item = button.parent();
-    var key = item.find('input').attr('key');
-    var name = item.find('input').val();
-    var levelData = app.storage.getLevelData(key);
-    var settings = app.storage.getSettings(app);
-
-    // Update current level with selected attributes
-    levelData.name = name;
-    app.level.clearLevel(app);
-    app.level.importFromJSON(levelData, app);
-    app.level.key = key; // Update key value for saving the level
-    app.updateSettings(settings, app);
-  }
-  
-  updateEditorLevelName(input) {
-    var key = input.attr('key');
-    var name = input.val();
-    app.storage.updateLevelDataName(key, name);
-  }
-
   updateCanvas() {
     if (this.canvas == null || this.canvas.length <= 0) {
       this.canvas = $('canvas');
     }
-  }
-
-  saveAndExitLevelEditor(saveLevel = true) {
-    app.play = false;
-    app.resetScene(app);
-    app.level.deselectLevel(app);
-    if (saveLevel == true) app.level.saveLevelData(app);
-    app.level.clearLevel(app);
-    app.levelHistory.clear();
-    app.player.removeCheckpoint();
-    app.player.setPosition({ x: 0, y: 0, z: 0 });
-    app.ui.updateUI('level-manager');
-    app.levelEditor.controlsOrbit.enabled = false;
   }
 
   updateTip() {

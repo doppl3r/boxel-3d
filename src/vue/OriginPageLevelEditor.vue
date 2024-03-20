@@ -1,6 +1,40 @@
 <script setup>
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
+
+  var emit = defineEmits(['setPage']);
+
+  function exit() {
+    app.levelEditor.controlsOrbit.enabled = false;
+    app.levelEditor.controlsOrbit.reset();
+    app.levelEditor.controlsTransform.detach();
+    if (app.levelHistory.history.length > 2) {
+      // Dispatch new popup from event
+      window.dispatchEvent(new CustomEvent('addPopup', {
+        detail: {
+          text: 'Would you like to <em>save</em> your level?',
+          inputs: [
+            { value: 'No', type: 'button', callback: function() { saveAndExitLevelEditor(false); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'Yes', type: 'button', callback: function() { saveAndExitLevelEditor(true); window.dispatchEvent(new CustomEvent('closePopup')); }},
+          ]
+        }
+      }));
+    }
+    else saveAndExitLevelEditor(false);
+  }
+
+  function saveAndExitLevelEditor(saveLevel = true) {
+    app.play = false;
+    app.resetScene(app);
+    app.level.deselectLevel(app);
+    if (saveLevel == true) app.level.saveLevelData(app);
+    app.level.clearLevel(app);
+    app.levelHistory.clear();
+    app.player.removeCheckpoint();
+    app.player.setPosition({ x: 0, y: 0, z: 0 });
+    app.levelEditor.controlsOrbit.enabled = false;
+    emit('setPage', 'level-manager');
+  }
 
   // Run function after being mounted (visible)
   onMounted(function() {
@@ -12,12 +46,12 @@
 </script>
 
 <template>
-  <div class="level-editor hidden">
+  <div class="level-editor">
     <div class="row top">
       <div class="col options-level">
         <a class="item" action="draw" title="Draw cubes"><img src="/img/svg/pencil.svg"></a>
         <a class="item" action="erase" title="Erase cubes"><img src="/img/svg/eraser.svg"></a>
-        <a class="item" action="exit-to-level-manager" title="Exit level editor (ESC)"><img src="/img/svg/home.svg"></a>
+        <a class="item" @click="exit" title="Exit level editor (ESC)"><img src="/img/svg/home.svg"></a>
         <a class="item" action="save" title="Save level (Ctrl + S)"><img src="/img/svg/save.svg"></a>
         <a class="item" action="share" title="Share level"><img src="/img/svg/upload.svg"></a>
         <a class="item" action="undo" title="Undo edit (Ctrl + Z)"><img src="/img/svg/undo.svg"></a>
@@ -25,7 +59,7 @@
         <a class="item" action="rewind" title="Restart level"><img src="/img/svg/rewind.svg"></a>
         <a class="item" action="pause" title="Pause level"><img src="/img/svg/pause.svg"></a>
         <a class="item" action="play" title="Play level"><img src="/img/svg/play.svg"></a>
-        <OriginButtonSettings class="item" />
+        <OriginButtonSettings class="item last" />
       </div>
     </div>
     <div class="row left">
