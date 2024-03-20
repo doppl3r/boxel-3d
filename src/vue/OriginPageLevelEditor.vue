@@ -1,8 +1,17 @@
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, onUnmounted, ref } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
   var emit = defineEmits(['setPage']);
+  var objectOptionsVisible = ref(false);
+
+  function addEventListeners() {
+    window.addEventListener('showObjectOptions', showObjectOptions);
+  }
+
+  function removeEventListeners() {
+    window.removeEventListener('showObjectOptions', showObjectOptions);
+  }
 
   function exit() {
     app.levelEditor.controlsOrbit.enabled = false;
@@ -36,13 +45,24 @@
     emit('setPage', 'level-manager');
   }
 
-  // Run function after being mounted (visible)
+  function showObjectOptions(e) {
+    objectOptionsVisible.value = e.detail;
+  }
+
   onMounted(function() {
+    // Run function after being mounted (visible)
+    addEventListeners();
+
     app.ui.updateLevelOptions();
     app.ui.objectType.find('[action="cube"]').addClass('selected'); // Select by default
     app.ui.canvas.removeClass('hidden');
     app.ui.levelEditor.removeClass('hidden');
   })
+
+  onUnmounted(function() {
+    // Run function after being unmounted (removed);
+    removeEventListeners();
+  });
 </script>
 
 <template>
@@ -76,7 +96,7 @@
         <a class="item" action="finish" title="Finish cube"><img src="/img/svg/finish.svg"></a>
         <a class="item" action="reset" title="Reset cube"><img src="/img/svg/reset.svg"></a>
       </div>
-      <div class="col object-options hidden">
+      <div class="col object-options" v-if="objectOptionsVisible == true">
         <a class="item" action="translate" title="Move (T or G)"><img src="/img/svg/move.svg"></a>
         <a class="item" action="scale" title="Scale (S)"><img src="/img/svg/scale-out-x.svg"></a>
         <a class="item" action="rotate" title="Rotate (R)"><img src="/img/svg/rotate-clockwise.svg"></a>

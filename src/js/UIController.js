@@ -61,18 +61,18 @@ class UIController {
       else if (action == 'undo') {
         app.levelEditor.controlsTransform.detach();
         app.levelHistory.undo(app);
-        app.ui.showObjectOptions(false);
+        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
       }
       else if (action == 'redo') {
         app.levelHistory.redo(app);
-        app.ui.showObjectOptions(false);
+        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
       }
       else if (action == 'rewind') {
         app.level.retryLevel(app);
         app.level.deselectLevel(app);
         app.pause();
         app.ui.updateLevelOptions();
-        app.ui.showObjectOptions(false);
+        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
       }
       else if (action == 'pause') {
         app.pause();
@@ -133,13 +133,13 @@ class UIController {
       }
       else if (action == 'accept') {
         app.level.deselectLevel(app);
-        app.ui.showObjectOptions(false);
+        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
       }
       else if (action == 'trash') {
         app.level.removeObject(app.selectedObject, app);
         app.levelEditor.controlsTransform.detach();
         app.levelHistory.save('Deleted object', app);
-        app.ui.showObjectOptions(false);
+        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
       }
     });
 
@@ -317,7 +317,6 @@ class UIController {
     app.play = true;
     app.timer.start();
     app.level.deselectLevel(app);
-    app.ui.showObjectOptions(false);
     app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
     app.ui.levelOptions.find('[action="play"]').addClass('selected');
     app.levelEditor.controlsOrbit.enabled = false;
@@ -325,6 +324,7 @@ class UIController {
     app.levelEditor.controlsTransform.detach();
     app.background.visible = true;
     if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
+    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
   }
 
   toggleTheme(themeID) {

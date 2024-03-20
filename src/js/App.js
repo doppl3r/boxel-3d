@@ -176,10 +176,10 @@ class App {
 
   resetScene(a = app) {
     app.camera.position.z = app.camera.position.zDefault;
-    a.ui.showObjectOptions(false);
     a.level.removeParticles(a);
     a.level.resetLevel(a);
     a.updateRender(null, a);
+    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
   }
 
   updateCamera(a) {
@@ -251,12 +251,12 @@ class App {
     if (app.state == 'level-editor') {
       app.ui.updateLevelOptions();
       app.level.deselectLevel(app);
-      app.ui.showObjectOptions(false);
       app.ui.levelOptions.find('[action="play"]').removeClass('selected');
       app.ui.levelOptions.find('[action="pause"]').addClass('selected');
       app.levelEditor.controlsOrbit.enabled = true;
       app.levelEditor.controlsOrbit.reset();
       app.background.visible = false;
+      window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
     }
     else if (app.state == 'campaign') {
       window.dispatchEvent(new CustomEvent('addPopup', {

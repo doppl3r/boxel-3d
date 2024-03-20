@@ -51,12 +51,12 @@ class LevelEditor {
                 if (target) {
                     if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
                         a.level.deselectLevel(a);
-                        a.ui.showObjectOptions(true);
                         a.selectedObject = target;
                         a.selectedObject.select(true);
                         a.ui.updateObjectOptions();
                         a.ui.selectObjectType(a.selectedObject.getClass(), false);
                         this.controlsTransform.attach(target);
+                        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: true }));
                     }
                 }
                 else {
@@ -80,9 +80,9 @@ class LevelEditor {
                         a.level.addObject(a.selectedObject, a);
                         a.levelHistory.save('Added ' + objectType, a);
                         a.selectedObject.select(true);
-                        a.ui.showObjectOptions(true);
                         a.ui.updateObjectOptions();
                         this.controlsTransform.attach(a.selectedObject);
+                        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: true }));
                     }
                 }
             }
@@ -90,8 +90,8 @@ class LevelEditor {
                 // Deselect if object and camera was not moved
                 if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
                     a.level.deselectLevel(app);
-                    a.ui.showObjectOptions(false);
                     this.controlsTransform.detach();
+                    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
                 }
             }
         }
@@ -99,10 +99,10 @@ class LevelEditor {
             if (this.controlsOrbit.moved == false) {
                 a.levelEditor.eraseTarget(e, a);
                 a.level.deselectLevel(a); // Deselect everything
-                a.ui.showObjectOptions(false);
                 a.levelHistory.save('Erased object', a);
                 a.ui.updateLevelOptions();
                 this.controlsTransform.detach();
+                window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
             }
             a.mouse.mode = a.mouse.prevMode;
         }

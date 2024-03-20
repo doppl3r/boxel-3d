@@ -98,7 +98,7 @@
   <div class="level-manager">
     <div class="row top">
       <div class="col">
-        <a class="item" href="#" @click="addLevel" title="Add level"><img src="/img/svg/add.svg"></a>
+        <a class="item" @click="addLevel" title="Add level"><img src="/img/svg/add.svg"></a>
         <label class="item" title="Download level">
           <input @change="importLevel" class="hidden" type="file" accept="application/JSON">
           <img src="/img/svg/download.svg">
@@ -112,9 +112,9 @@
         <template v-for="(item, key) of items">
           <div class="list-item">
             <input type="text" :value="item.level.name" @input="editLevelName(item, $event)">
-            <a href="#" @click="editLevel(item)" class="item" title="Edit level"><img src="/img/svg/pencil.svg"></a>
-            <a href="#" @click="shareLevel(item)" class="item" title="Share level"><img src="/img/svg/upload.svg"></a>
-            <a href="#" @click="deleteLevel(item)" class="item" title="Delete level"><img src="/img/svg/trash.svg"></a>
+            <a @click="editLevel(item)" class="item" title="Edit level"><img src="/img/svg/pencil.svg"></a>
+            <a @click="shareLevel(item)" class="item" title="Share level"><img src="/img/svg/upload.svg"></a>
+            <a @click="deleteLevel(item)" class="item" title="Delete level"><img src="/img/svg/trash.svg"></a>
           </div>
         </template>
       </div>
