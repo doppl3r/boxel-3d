@@ -3,6 +3,7 @@
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
   var emit = defineEmits(['setPage']);
+  var drawMode = ref('draw');
   var objectOptionsVisible = ref(false);
 
   function addEventListeners() {
@@ -13,36 +14,13 @@
     window.removeEventListener('showObjectOptions', showObjectOptions);
   }
 
-  function exit() {
-    app.levelEditor.controlsOrbit.enabled = false;
-    app.levelEditor.controlsOrbit.reset();
-    app.levelEditor.controlsTransform.detach();
-    if (app.levelHistory.history.length > 2) {
-      // Dispatch new popup from event
-      window.dispatchEvent(new CustomEvent('addPopup', {
-        detail: {
-          text: 'Would you like to <em>save</em> your level?',
-          inputs: [
-            { value: 'No', type: 'button', callback: function() { saveAndExitLevelEditor(false); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'Yes', type: 'button', callback: function() { saveAndExitLevelEditor(true); window.dispatchEvent(new CustomEvent('closePopup')); }},
-          ]
-        }
-      }));
-    }
-    else saveAndExitLevelEditor(false);
+  function setDrawMode(mode) {
+    drawMode.value = mode;
+    app.mouse.setMode(mode);
   }
 
-  function saveAndExitLevelEditor(saveLevel = true) {
-    app.play = false;
-    app.resetScene(app);
-    app.level.deselectLevel(app);
-    if (saveLevel == true) app.level.saveLevelData(app);
-    app.level.clearLevel(app);
-    app.levelHistory.clear();
-    app.player.removeCheckpoint();
-    app.player.setPosition({ x: 0, y: 0, z: 0 });
-    app.levelEditor.controlsOrbit.enabled = false;
-    emit('setPage', 'level-manager');
+  function exit() {
+    app.levelEditor.exit();
   }
 
   function showObjectOptions(e) {
@@ -69,8 +47,8 @@
   <div class="level-editor">
     <div class="row top">
       <div class="col options-level">
-        <a class="item" action="draw" title="Draw cubes"><img src="/img/svg/pencil.svg"></a>
-        <a class="item" action="erase" title="Erase cubes"><img src="/img/svg/eraser.svg"></a>
+        <a class="item" :class="{ selected: drawMode == 'draw' }" @click="setDrawMode('draw')" action="draw" title="Draw cubes"><img src="/img/svg/pencil.svg"></a>
+        <a class="item" :class="{ selected: drawMode == 'erase' }" @click="setDrawMode('erase')" action="erase" title="Erase cubes"><img src="/img/svg/eraser.svg"></a>
         <a class="item" @click="exit" title="Exit level editor (ESC)"><img src="/img/svg/home.svg"></a>
         <a class="item" action="save" title="Save level (Ctrl + S)"><img src="/img/svg/save.svg"></a>
         <a class="item" action="share" title="Share level"><img src="/img/svg/upload.svg"></a>
@@ -82,7 +60,7 @@
         <OriginButtonSettings class="item last" />
       </div>
     </div>
-    <div class="row left">
+    <div class="row left" v-if="drawMode == 'draw'">
       <div class="col object-type">
         <a class="item" action="cube" title="Basic cube"><img src="/img/svg/cube.svg"></a>
         <a class="item" action="tip" title="Tip cube"><img src="/img/svg/tip.svg"></a>

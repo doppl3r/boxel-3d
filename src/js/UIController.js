@@ -45,15 +45,7 @@ class UIController {
       }
 
       // Level editor - level options
-      if (action == 'draw') {
-        app.mouse.setMode('draw');
-        app.ui.updateLevelOptions();
-      }
-      else if (action == 'erase') {
-        app.mouse.setMode('erase');
-        app.ui.updateLevelOptions();
-      }
-      else if (action == 'save') {
+      if (action == 'save') {
         app.resetScene(app);
         app.level.deselectLevel(app);
         app.level.saveLevelData(app);
