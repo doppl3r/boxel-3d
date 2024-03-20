@@ -245,7 +245,9 @@ class Player extends Cube {
     if (speed > maxSpeed) speed = maxSpeed;
     newSpeed = (speed / maxSpeed) * 100;
     width = 'width: calc(' + newSpeed + '% - 8px)';
-    a.document.getElementById('speed').setAttribute('style', width);
+    if (a.document.getElementById('speed')) {
+      a.document.getElementById('speed').setAttribute('style', width);
+    }
   }
 
   setSkin(skin, a = app) {

@@ -44,7 +44,7 @@ class Keyboard {
                             }
                         }
                         else {
-                            a.ui.pause();
+                            a.pauseLevel();
                         }
                     }
                 break;

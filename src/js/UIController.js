@@ -28,51 +28,6 @@ class UIController {
       event.preventDefault();
       var action = $(this).attr('action');
       
-      // Home page actions
-      if (action == 'level-picker') {
-        app.ui.updateUI('level-picker');
-      }
-      else if (action == 'level-manager') {
-        app.ui.updateUI('level-manager');
-      }
-      else if (action == 'shop') {
-        app.ui.updateUI('shop');
-      }
-
-      // Main game UI
-      if (action == 'pause-campaign') {
-        app.pause();
-      }
-
-      // Level editor - level options
-      if (action == 'save') {
-        app.resetScene(app);
-        app.level.deselectLevel(app);
-        app.level.saveLevelData(app);
-      }
-      else if (action == 'undo') {
-        app.levelEditor.controlsTransform.detach();
-        app.levelHistory.undo(app);
-        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
-      }
-      else if (action == 'redo') {
-        app.levelHistory.redo(app);
-        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
-      }
-      else if (action == 'rewind') {
-        app.level.retryLevel(app);
-        app.level.deselectLevel(app);
-        app.pause();
-        app.ui.updateLevelOptions();
-        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
-      }
-      else if (action == 'pause') {
-        app.pause();
-      }
-      else if (action == 'toggle-theme') {
-        app.ui.toggleTheme();
-      }
-      
       // Object type listener
       if (action == 'cube') { app.ui.selectObjectType(action); }
       else if (action == 'tip') { app.ui.selectObjectType(action); }

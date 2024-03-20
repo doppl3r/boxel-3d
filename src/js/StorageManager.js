@@ -121,9 +121,7 @@ class StorageManager {
     }
 
     saveLevelToFile() {
-        app.resetScene(app);
-        app.level.deselectLevel(app);
-        app.level.saveLevelData(app);
+        app.levelEditor.saveLevel();
         var levelData = app.level.exportToJSON(app);
         var blob = new Blob([JSON.stringify(levelData)], { type: "application/json" });
         saveAs(blob, levelData.name);

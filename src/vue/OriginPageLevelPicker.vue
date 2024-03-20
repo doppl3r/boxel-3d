@@ -28,7 +28,7 @@
     app.level.importFromJSON(json, app);
     settings.progress = getLevelIndex(name) + 1;
     app.updateSettings(settings);
-    app.ui.play();
+    app.playLevel();
     app.ui.updateLevelOptions();
     app.resetScene();
     

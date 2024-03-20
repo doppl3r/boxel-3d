@@ -244,7 +244,21 @@ class App {
     window.dispatchEvent(new CustomEvent('setPage', { detail: { page: 'level-picker' }}));
   }
 
-  pause() {
+  playLevel() {
+    app.play = true;
+    app.timer.start();
+    app.level.deselectLevel(app);
+    app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
+    app.ui.levelOptions.find('[action="play"]').addClass('selected');
+    app.levelEditor.controlsOrbit.enabled = false;
+    app.levelEditor.controlsOrbit.reset();
+    app.levelEditor.controlsTransform.detach();
+    app.background.visible = true;
+    if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
+    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+  }
+
+  pauseLevel() {
     app.timer.pause();
     app.play = false;
     

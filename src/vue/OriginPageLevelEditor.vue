@@ -5,6 +5,7 @@
   var emit = defineEmits(['setPage']);
   var drawMode = ref('draw');
   var objectOptionsVisible = ref(false);
+  var objectTypeVisible = ref(true);
 
   function addEventListeners() {
     window.addEventListener('showObjectOptions', showObjectOptions);
@@ -19,8 +20,35 @@
     app.mouse.setMode(mode);
   }
 
-  function exit() {
-    app.levelEditor.exit();
+  function exitLevel() {
+    app.levelEditor.exitLevel();
+  }
+
+  function saveLevel() {
+    app.levelEditor.saveLevel();
+  }
+
+  function undo() {
+    app.levelEditor.undo();
+  }
+
+  function redo() {
+    app.levelEditor.redo();
+  }
+
+  function rewind() {
+    objectTypeVisible.value = true;
+    app.levelEditor.rewind();
+  }
+
+  function pauseLevel() {
+    objectTypeVisible.value = true;
+    app.pauseLevel();
+  }
+
+  function playLevel() {
+    objectTypeVisible.value = false;
+    app.playLevel();
   }
 
   function showObjectOptions(e) {
@@ -49,18 +77,17 @@
       <div class="col options-level">
         <a class="item" :class="{ selected: drawMode == 'draw' }" @click="setDrawMode('draw')" action="draw" title="Draw cubes"><img src="/img/svg/pencil.svg"></a>
         <a class="item" :class="{ selected: drawMode == 'erase' }" @click="setDrawMode('erase')" action="erase" title="Erase cubes"><img src="/img/svg/eraser.svg"></a>
-        <a class="item" @click="exit" title="Exit level editor (ESC)"><img src="/img/svg/home.svg"></a>
-        <a class="item" action="save" title="Save level (Ctrl + S)"><img src="/img/svg/save.svg"></a>
-        <a class="item" action="share" title="Share level"><img src="/img/svg/upload.svg"></a>
-        <a class="item" action="undo" title="Undo edit (Ctrl + Z)"><img src="/img/svg/undo.svg"></a>
-        <a class="item" action="redo" title="Redo edit (Ctrl + Shift + Z)"><img src="/img/svg/redo.svg"></a>
-        <a class="item" action="rewind" title="Restart level"><img src="/img/svg/rewind.svg"></a>
-        <a class="item" action="pause" title="Pause level"><img src="/img/svg/pause.svg"></a>
-        <a class="item" action="play" title="Play level"><img src="/img/svg/play.svg"></a>
+        <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img src="/img/svg/home.svg"></a>
+        <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img src="/img/svg/save.svg"></a>
+        <a class="item" @click="undo" title="Undo edit (Ctrl + Z)"><img src="/img/svg/undo.svg"></a>
+        <a class="item" @click="redo" title="Redo edit (Ctrl + Shift + Z)"><img src="/img/svg/redo.svg"></a>
+        <a class="item" @click="rewind" title="Restart level"><img src="/img/svg/rewind.svg"></a>
+        <a class="item" @click="pauseLevel" title="Pause level"><img src="/img/svg/pause.svg"></a>
+        <a class="item" @click="playLevel" title="Play level"><img src="/img/svg/play.svg"></a>
         <OriginButtonSettings class="item last" />
       </div>
     </div>
-    <div class="row left" v-if="drawMode == 'draw'">
+    <div class="row left" v-if="drawMode == 'draw' && objectTypeVisible == true">
       <div class="col object-type">
         <a class="item" action="cube" title="Basic cube"><img src="/img/svg/cube.svg"></a>
         <a class="item" action="tip" title="Tip cube"><img src="/img/svg/tip.svg"></a>

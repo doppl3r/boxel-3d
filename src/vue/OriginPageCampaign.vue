@@ -27,7 +27,7 @@
       detail: {
         text: e.detail.text,
         inputs: [{ type: 'button', value: 'Continue', callback: function() {
-          app.ui.play();
+          app.playLevel();
           window.dispatchEvent(new CustomEvent('closePopup'));
         }}]
       }
@@ -38,8 +38,8 @@
     if (e.detail.text) credit.value = e.detail.text;
   }
 
-  function pause() {
-    app.pause();
+  function pauseLevel() {
+    app.pauseLevel();
   }
 
   // Run function after being mounted (visible)
@@ -60,7 +60,7 @@
     <div id="credit" class="fade-in" v-html="credit" v-if="credit"></div>
     <div id="speedometer"><span id="speed"></span></div>
     <div class="buttons">
-      <a class="button top-left" @click="pause" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
+      <a class="button top-left" @click="pauseLevel" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
       <OriginButtonSettings class="button top-right" />
     </div>
   </div>

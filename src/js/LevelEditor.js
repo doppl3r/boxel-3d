@@ -145,7 +145,7 @@ class LevelEditor {
     app.level.saveLevelData(app);
   }
 
-  exit() {
+  exitLevel() {
     if (app.levelHistory.history.length > 2) {
       // Dispatch new popup from event
       window.dispatchEvent(new CustomEvent('addPopup', {
@@ -166,15 +166,32 @@ class LevelEditor {
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
     app.play = false;
-    app.resetScene(app);
-    app.level.deselectLevel(app);
-    if (saveLevel == true) app.level.saveLevelData(app);
+    if (saveLevel == true) app.levelEditor.saveLevel();
     app.level.clearLevel(app);
     app.levelHistory.clear();
     app.player.removeCheckpoint();
     app.player.setPosition({ x: 0, y: 0, z: 0 });
     app.levelEditor.controlsOrbit.enabled = false;
     window.dispatchEvent(new CustomEvent('setPage', { detail: { page: 'level-manager' }}));
+  }
+
+  undo() {
+    app.levelEditor.controlsTransform.detach();
+    app.levelHistory.undo(app);
+    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+  }
+
+  redo() {
+    app.levelHistory.redo(app);
+    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+  }
+
+  rewind() {
+    app.level.retryLevel(app);
+    app.level.deselectLevel(app);
+    app.pauseLevel();
+    app.ui.updateLevelOptions();
+    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
   }
 
   saveSelectedObject() {
