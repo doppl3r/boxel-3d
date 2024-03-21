@@ -4,6 +4,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 class LevelEditor {
   constructor(camera, domElement) {
+    // Set initial variables
+    this.selectedObjectType = 'cube';
+
+    // Add controls with camera and active canvas
     this.controlsTransform = new TransformControls(camera, domElement);
     this.controlsTransform.showZ = true;
     this.controlsTransform.space = 'world';
@@ -54,15 +58,17 @@ class LevelEditor {
             a.selectedObject = target;
             a.selectedObject.select(true);
             a.ui.updateObjectOptions();
-            a.ui.selectObjectType(a.selectedObject.getClass(), false);
             this.controlsTransform.attach(target);
+
+            // Update Vue.js UI from custom event
+            if (a.selectedObject.getClass() != 'player') window.dispatchEvent(new CustomEvent('selectObjectType', { detail: { type: a.selectedObject.getClass(), checkNull: false }}));
             window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: true }));
           }
         }
         else {
           // Add a new object if camera did not move
           if (this.controlsOrbit.moved == false) {
-            var objectType = a.ui.getSelectedObjectType();
+            var objectType = app.levelEditor.selectedObjectType;
             var objectData = {
               class: objectType,
               isStatic: true,
@@ -247,6 +253,20 @@ class LevelEditor {
       this.controlsTransform.showY = false;
       this.controlsTransform.showZ = true;
     }
+  }
+
+  selectObjectType(type, checkNull = true) {
+    // Swap object by type
+    if (app.selectedObject != null && checkNull == true) {
+      app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
+      app.selectedObject.select(true);
+      app.ui.updateObjectOptions();
+      app.levelEditor.controlsTransform.attach(app.selectedObject);
+      app.levelHistory.save('Changed object to ' + type, app);
+    }
+
+    // Set new selected object type
+    app.levelEditor.selectedObjectType = type;
   }
 }
 

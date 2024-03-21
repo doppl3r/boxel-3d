@@ -6,13 +6,16 @@
   var drawMode = ref('draw');
   var objectOptionsVisible = ref(false);
   var objectTypeVisible = ref(true);
+  var objectType = ref(app.levelEditor.selectedObjectType || 'cube');
 
   function addEventListeners() {
     window.addEventListener('showObjectOptions', showObjectOptions);
+    window.addEventListener('selectObjectType', selectObjectType);
   }
 
   function removeEventListeners() {
     window.removeEventListener('showObjectOptions', showObjectOptions);
+    window.removeEventListener('selectObjectType', selectObjectType);
   }
 
   function setDrawMode(mode) {
@@ -49,6 +52,11 @@
   function playLevel() {
     objectTypeVisible.value = false;
     app.playLevel();
+  }
+
+  function selectObjectType(e) {
+    objectType.value = e.detail.type;
+    app.levelEditor.selectObjectType(e.detail.type);
   }
 
   function showObjectOptions(e) {
@@ -89,17 +97,17 @@
     </div>
     <div class="row left" v-if="drawMode == 'draw' && objectTypeVisible == true">
       <div class="col object-type">
-        <a class="item" action="cube" title="Basic cube"><img src="/img/svg/cube.svg"></a>
-        <a class="item" action="tip" title="Tip cube"><img src="/img/svg/tip.svg"></a>
-        <a class="item" action="bounce" title="Bounce cube"><img src="/img/svg/bounce.svg"></a>
-        <a class="item" action="checkpoint" title="Checkpoint cube"><img src="/img/svg/checkpoint.svg"></a>
-        <a class="item" action="spike" title="Spike cube"><img src="/img/svg/spike.svg"></a>
-        <a class="item" action="resize" title="Resize cube"><img src="/img/svg/grow.svg"></a>
-        <a class="item" action="direction" title="Direction cube"><img src="/img/svg/direction.svg"></a>
-        <a class="item" action="gravity" title="Gravity cube"><img src="/img/svg/gravity.svg"></a>
-        <a class="item" action="grapple" title="Grapple cube"><img src="/img/svg/grapple.svg"></a>
-        <a class="item" action="finish" title="Finish cube"><img src="/img/svg/finish.svg"></a>
-        <a class="item" action="reset" title="Reset cube"><img src="/img/svg/reset.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'cube' }" @click="selectObjectType({ detail: { type: 'cube'} })" title="Basic cube"><img src="/img/svg/cube.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'tip' }" @click="selectObjectType({ detail: { type: 'tip'} })" title="Tip cube"><img src="/img/svg/tip.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'bounce' }" @click="selectObjectType({ detail: { type: 'bounce'} })" title="Bounce cube"><img src="/img/svg/bounce.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'checkpoint' }" @click="selectObjectType({ detail: { type: 'checkpoint'} })" title="Checkpoint cube"><img src="/img/svg/checkpoint.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'spike' }" @click="selectObjectType({ detail: { type: 'spike'} })" title="Spike cube"><img src="/img/svg/spike.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'resize' }" @click="selectObjectType({ detail: { type: 'resize'} })" title="Resize cube"><img src="/img/svg/grow.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'direction' }" @click="selectObjectType({ detail: { type: 'direction'} })" title="Direction cube"><img src="/img/svg/direction.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'gravity' }" @click="selectObjectType({ detail: { type: 'gravity'} })" title="Gravity cube"><img src="/img/svg/gravity.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'grapple' }" @click="selectObjectType({ detail: { type: 'grapple'} })" title="Grapple cube"><img src="/img/svg/grapple.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'finish' }" @click="selectObjectType({ detail: { type: 'finish'} })" title="Finish cube"><img src="/img/svg/finish.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'reset' }" @click="selectObjectType({ detail: { type: 'reset'} })" title="Reset cube"><img src="/img/svg/reset.svg"></a>
       </div>
       <div class="col object-options" v-if="objectOptionsVisible == true">
         <a class="item" action="translate" title="Move (T or G)"><img src="/img/svg/move.svg"></a>

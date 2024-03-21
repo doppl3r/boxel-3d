@@ -27,21 +27,6 @@ class UIController {
     this.controller.on('click', '[action]', function(event) {
       event.preventDefault();
       var action = $(this).attr('action');
-      
-      // Object type listener
-      if (action == 'cube') { app.ui.selectObjectType(action); }
-      else if (action == 'tip') { app.ui.selectObjectType(action); }
-      else if (action == 'bounce') { app.ui.selectObjectType(action); }
-      else if (action == 'checkpoint') { app.ui.selectObjectType(action); }
-      else if (action == 'spike') { app.ui.selectObjectType(action); }
-      else if (action == 'shrink') { app.ui.selectObjectType(action); }
-      else if (action == 'grow') { app.ui.selectObjectType(action); }
-      else if (action == 'resize') { app.ui.selectObjectType(action); }
-      else if (action == 'direction') { app.ui.selectObjectType(action); }
-      else if (action == 'gravity') { app.ui.selectObjectType(action); }
-      else if (action == 'grapple') { app.ui.selectObjectType(action); }
-      else if (action == 'finish') { app.ui.selectObjectType(action); }
-      else if (action == 'reset') { app.ui.selectObjectType(action); }
 
       // Object options listener
       if (action == 'pin') {
@@ -107,24 +92,6 @@ class UIController {
       event.preventDefault();
       app.levelHistory.save('Updated object properties', app);
     });
-  }
-
-  selectObjectType(type, checkNull = true) {
-    // Swap object by type
-    if (app.selectedObject != null && checkNull == true) {
-      app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
-      app.selectedObject.select(true);
-      app.ui.updateObjectOptions();
-      app.levelEditor.controlsTransform.attach(app.selectedObject);
-      app.levelHistory.save('Changed object to ' + type, app);
-    }
-
-    app.ui.objectType.find('[action]').removeClass('selected');
-    app.ui.objectType.find('[action=' + type + ']').addClass('selected');
-  }
-
-  getSelectedObjectType() {
-    return app.ui.objectType.find('.selected').attr('action');
   }
 
   updateUI(state, app) {
