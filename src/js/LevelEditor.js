@@ -263,6 +263,7 @@ class LevelEditor {
       app.ui.updateObjectOptions();
       app.levelEditor.controlsTransform.attach(app.selectedObject);
       app.levelHistory.save('Changed object to ' + type, app);
+      window.dispatchEvent(new CustomEvent('updateObjectOptions', { detail: app.selectedObject }));
     }
 
     // Set new selected object type

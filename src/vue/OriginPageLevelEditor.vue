@@ -4,10 +4,9 @@
 
   var emit = defineEmits(['setPage']);
   var drawMode = ref('draw');
-  var objectOptionsVisible = ref(false);
-  var objectTypeVisible = ref(true);
   var objectType = ref(app.levelEditor.selectedObjectType || 'cube');
-  var objectData = ref({});
+  var objectTypeVisible = ref(true);
+  var selectedObject = ref();
 
   function addEventListeners() {
     window.addEventListener('updateObjectOptions', updateObjectOptions);
@@ -57,12 +56,12 @@
 
   function selectObjectType(e) {
     objectType.value = e.detail.type;
-    app.levelEditor.selectObjectType(e.detail.type);
+    app.levelEditor.selectObjectType(e.detail.type, e.detail.checkNull);
   }
 
   function updateObjectOptions(e) {
-    objectOptionsVisible.value = (e.detail != null);
-    console.log(e.detail);
+    selectedObject.value = e.detail;
+    console.log(selectedObject.value);
   }
 
   onMounted(function() {
@@ -111,7 +110,7 @@
         <a class="item" :class="{ selected: objectType == 'finish' }" @click="selectObjectType({ detail: { type: 'finish' }})" title="Finish cube"><img src="/img/svg/finish.svg"></a>
         <a class="item" :class="{ selected: objectType == 'reset' }" @click="selectObjectType({ detail: { type: 'reset' }})" title="Reset cube"><img src="/img/svg/reset.svg"></a>
       </div>
-      <div class="col object-options" v-if="objectOptionsVisible == true">
+      <div class="col object-options" v-if="selectedObject != null">
         <a class="item" action="translate" title="Move (T or G)"><img src="/img/svg/move.svg"></a>
         <a class="item" action="scale" title="Scale (S)"><img src="/img/svg/scale-out-x.svg"></a>
         <a class="item" action="rotate" title="Rotate (R)"><img src="/img/svg/rotate-clockwise.svg"></a>
