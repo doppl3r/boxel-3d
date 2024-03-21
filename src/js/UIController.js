@@ -65,13 +65,13 @@ class UIController {
       }
       else if (action == 'accept') {
         app.level.deselectLevel(app);
-        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+        window.dispatchEvent(new CustomEvent('updateObjectOptions'));
       }
       else if (action == 'trash') {
         app.level.removeObject(app.selectedObject, app);
         app.levelEditor.controlsTransform.detach();
         app.levelHistory.save('Deleted object', app);
-        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+        window.dispatchEvent(new CustomEvent('updateObjectOptions'));
       }
     });
 
@@ -105,11 +105,6 @@ class UIController {
     this.updateCanvas();
     this.canvas.addClass('hidden'); // Default hide canvas
     this.controller.find('[action]').removeClass('selected'); // Default remove all selected
-  }
-
-  showObjectOptions(state) {
-    if (state == true) this.objectOptions.removeClass('hidden');
-    else this.objectOptions.addClass('hidden');
   }
 
   toggleObjectOptions() {
@@ -238,7 +233,7 @@ class UIController {
     app.levelEditor.controlsTransform.detach();
     app.background.visible = true;
     if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
-    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
   }
 
   toggleTheme(themeID) {

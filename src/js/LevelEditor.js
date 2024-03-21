@@ -62,7 +62,7 @@ class LevelEditor {
 
             // Update Vue.js UI from custom event
             if (a.selectedObject.getClass() != 'player') window.dispatchEvent(new CustomEvent('selectObjectType', { detail: { type: a.selectedObject.getClass(), checkNull: false }}));
-            window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: true }));
+            window.dispatchEvent(new CustomEvent('updateObjectOptions', { detail: a.selectedObject }));
           }
         }
         else {
@@ -88,7 +88,7 @@ class LevelEditor {
             a.selectedObject.select(true);
             a.ui.updateObjectOptions();
             this.controlsTransform.attach(a.selectedObject);
-            window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: true }));
+            window.dispatchEvent(new CustomEvent('updateObjectOptions', { detail: a.selectedObject }));
           }
         }
       }
@@ -97,7 +97,7 @@ class LevelEditor {
         if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
           a.level.deselectLevel(app);
           this.controlsTransform.detach();
-          window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+          window.dispatchEvent(new CustomEvent('updateObjectOptions'));
         }
       }
     }
@@ -108,7 +108,7 @@ class LevelEditor {
         a.levelHistory.save('Erased object', a);
         a.ui.updateLevelOptions();
         this.controlsTransform.detach();
-        window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+        window.dispatchEvent(new CustomEvent('updateObjectOptions'));
       }
       a.mouse.mode = a.mouse.prevMode;
     }
@@ -184,12 +184,12 @@ class LevelEditor {
   undo() {
     app.levelEditor.controlsTransform.detach();
     app.levelHistory.undo(app);
-    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
   }
 
   redo() {
     app.levelHistory.redo(app);
-    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
   }
 
   rewind() {
@@ -197,7 +197,7 @@ class LevelEditor {
     app.level.deselectLevel(app);
     app.pauseLevel();
     app.ui.updateLevelOptions();
-    window.dispatchEvent(new CustomEvent('showObjectOptions', { detail: false }));
+    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
   }
 
   saveSelectedObject() {

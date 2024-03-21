@@ -238,7 +238,6 @@ html {
           justify-content: center;
           align-items: center;
           position: relative;
-          overflow: hidden;
           width: 48px;
           height: 48px;
 
@@ -286,6 +285,7 @@ html {
           position: relative;
           height: 48px;
           width: 144px;
+          pointer-events: all;
           position: absolute;
           left: 100%;
           padding: 0 16px;
@@ -347,10 +347,6 @@ html {
             .item {
               position: relative;
               display: flex;
-
-              > * {
-                pointer-events: none;
-              }
   
               &.highlight { background-color: #0287EF; }
             }
