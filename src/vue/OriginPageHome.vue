@@ -7,9 +7,6 @@
   // Initialize attributes
   var version = ref(getVersion());
   var message = ref('Tiny Tycoon is now available on Google Chrome!'); // Optional: getRandomMessage()
-  
-  // Update changelog to descending order
-  changelog.reverse();
 
   function getVersion() {
     return changelog[changelog.length - 1].version;
@@ -76,13 +73,14 @@
     var text = '';
 
     // Update text from changelog json file
-    changelog.forEach(function(log) {
+    for (var i = changelog.length - 1; i >= 0; i--) {
+      var log = changelog[i];
       text += 'v' + log.version + '\n';
 
       // Loop through version revisions
       log.revisions.forEach(function(revision) { text += '- ' + revision + '\n'; });
       text += '\n';
-    });
+    }
 
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('addPopup', {
