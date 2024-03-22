@@ -5,11 +5,15 @@
   import messages from '../json/messages.json';
 
   // Initialize attributes
-  var version = ref(getVersion());
+  var manifest = ref();
+  var version = ref();
   var message = ref('Tiny Tycoon is now available on Google Chrome!'); // Optional: getRandomMessage()
 
-  function getVersion() {
-    return changelog[changelog.length - 1].version;
+  async function updateVersion() {
+    var response = await fetch(location.href + 'manifest.json');
+    var json = await response.json();
+    manifest.value = json;
+    version.value = json.version;
   }
 
   function getRandomMessage() {
@@ -98,14 +102,15 @@
 
   // Run function after being mounted (visible)
   onMounted(function() {
-    focus('.focus')
+    updateVersion();
+    focus('.focus');
   });
 </script>
 
 <template>
   <div class="home dashboard">
     <div class="background"></div>
-    <a class="version" @click="showChangelog">v{{ version }}</a>
+    <a class="version fade-in" @click="showChangelog">v{{ version }}</a>
     <div class="wrapper fade-in">
       <img src="/img/svg/logo-white.svg" class="logo">
       <div class="message-bar" @click="openMessageLink">
@@ -120,6 +125,6 @@
         <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img src="/img/svg/play.svg"></a>
       </div>
     </div>
-    <a class="review" @click="openReviewLink"><img src="/img/svg/heart.svg">Write a review</a>
+    <a class="review fade-in" @click="openReviewLink"><img src="/img/svg/heart.svg">Write a review</a>
   </div>
 </template>

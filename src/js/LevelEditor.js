@@ -219,7 +219,7 @@ class LevelEditor {
     // Update body scale (reset transformation first)
     var tempAngle = target.rotation.z;
     target.setRotation(0, false);
-    target.setBodyScale(target.scale.x / target.scale.x, target.scale.y / target.scale0.y);
+    target.setBodyScale(target.scale.x / target.scale0.x, target.scale.y / target.scale0.y);
     target.setRotation(tempAngle, false); // Revert angle
     target.setScale(target.getScale());
 
