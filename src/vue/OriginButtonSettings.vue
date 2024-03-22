@@ -31,7 +31,7 @@
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('addPopup', {
       detail: {
-        text: '<img src="/img/svg/gear.svg">',
+        text: '<img src="img/svg/gear.svg">',
         inputs: inputs
       }
     }));

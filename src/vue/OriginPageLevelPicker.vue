@@ -34,7 +34,7 @@
     app.play = true;
     app.timer.reset();
     if (json.author) credit = 'Level by ' + json.author;
-    if (json.star) credit = '<img src="/img/svg/star.svg" title="Event winner"> ' + credit;
+    if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
     settings.progress = getLevelIndex(name) + 1;
