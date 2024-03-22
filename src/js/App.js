@@ -80,9 +80,9 @@ class App {
     this.canvas = canvas;
     this.canvas.classList.add('hidden'); // Default hidden with CSS
     this.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
-    this.canvas.addEventListener('mousedown', function(e){ _this.mouse.mouseDown(e, _this); }, false);
-    this.canvas.addEventListener('mousemove', function(e){ _this.mouse.mouseMove(e, _this); }, false);
-    this.canvas.addEventListener('mouseup', function(e){ _this.mouse.mouseUp(e, _this); }, false);
+    this.canvas.addEventListener('pointerdown', function(e){ _this.mouse.mouseDown(e, _this); }, false);
+    this.canvas.addEventListener('pointermove', function(e){ _this.mouse.mouseMove(e, _this); }, false);
+    this.canvas.addEventListener('pointerup', function(e){ _this.mouse.mouseUp(e, _this); }, false);
     this.canvas.addEventListener('wheel', function(e){ _this.mouse.wheel(e, _this); }, false);
     this.window.addEventListener('resize', function(e) { _this.resizeWindow(e, _this); });
     Events.on(this.engine, 'collisionStart', function(e) { _this.collision.checkPlayerCollision(e, _this); });
