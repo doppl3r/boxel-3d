@@ -128,22 +128,15 @@ class LevelEditor {
     }
   }
 
-  deleteSelected(a) {
-    if (a.selectedObject != null) {
-      $('[action="trash"]').click();
-      this.controlsTransform.detach();
-    }
-  }
-
-  undoEdit() {
-    $('[action="undo"]').click();
-  }
-
-  redoEdit() {
-    $('[action="redo"]').click();
+  deleteSelectedObject() {
+    app.level.removeObject(app.selectedObject, app);
+    app.levelEditor.controlsTransform.detach();
+    app.levelHistory.save('Deleted object', app);
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   saveLevel() {
+    app.levelEditor.controlsTransform.detach();
     app.resetScene(app);
     app.level.deselectLevel(app);
     app.level.saveLevelData(app);

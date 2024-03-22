@@ -13,12 +13,14 @@
     window.addEventListener('setSelectedObject', setSelectedObject);
     window.addEventListener('selectObjectType', selectObjectType);
     window.addEventListener('setTransformMode', setTransformMode);
+    window.addEventListener('keydown', keydown);
   }
   
   function removeEventListeners() {
     window.removeEventListener('setSelectedObject', setSelectedObject);
     window.removeEventListener('selectObjectType', selectObjectType);
     window.removeEventListener('setTransformMode', setTransformMode);
+    window.removeEventListener('keydown', keydown);
   }
 
   function setDrawMode(mode) {
@@ -106,15 +108,50 @@
   }
 
   function deleteSelectedObject() {
-    app.level.removeObject(app.selectedObject, app);
-    app.levelEditor.controlsTransform.detach();
-    app.levelHistory.save('Deleted object', app);
-    window.dispatchEvent(new CustomEvent('setSelectedObject'));
+    app.levelEditor.deleteSelectedObject();
   }
 
   function updateText(e) {
     app.selectedObject.text = e.target.value;
     app.levelHistory.save('Updated tip', app);
+  }
+
+  function keydown(e) {
+    // Jump if one of the keys is pressed
+    var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
+    if (jumpKeys.indexOf(e.code) > -1) {
+      if (app.play == true) {
+        app.player.jump();
+      }
+    }
+
+    // Add undo/redo logic
+    if (e.code == 'KeyG') {
+      setTransformMode({ detail: 'translate' });
+    }
+    else if (e.code == 'KeyR') {
+      if (app.play == true) app.level.retryLevel();
+      else setTransformMode({ detail: 'rotate' });
+    }
+    else if (e.code == 'KeyS') {
+      if (e.ctrlKey == true) {
+        e.preventDefault();
+        app.levelEditor.saveLevel();
+      }
+      else setTransformMode({ detail: 'scale' });
+    }
+    else if (e.code == 'KeyT') {
+      setTransformMode({ detail: 'translate' });
+    }
+    else if (e.code == 'KeyX') {
+      app.levelEditor.deleteSelectedObject();
+    }
+    else if (e.code == 'KeyZ') {
+      if (e.ctrlKey == true && e.shiftKey == false) app.levelEditor.undo();
+      if (e.ctrlKey == true && e.shiftKey == true) app.levelEditor.redo();
+    }
+
+    console.log(e);
   }
 
   onMounted(function() {

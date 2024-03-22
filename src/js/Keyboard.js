@@ -12,7 +12,6 @@ class Keyboard {
         // Only add shortcuts when not typing
         if (a.ui.dialog.isOpen() == false && $('input:focus').length <= 0) {
             switch (e.keyCode) {
-                case 13: a.keyboard.spaceBarDown(a); break; // Enter (same as space)
                 case 16: this.shift = true; break; // Shift
                 case 17: this.ctrl = true; break; // Ctrl
                 case 27: // Esc
@@ -48,8 +47,6 @@ class Keyboard {
                         }
                     }
                 break;
-                case 32: a.keyboard.spaceBarDown(a); break; // Space Bar
-                case 38: a.keyboard.spaceBarDown(a); break; // Up
                 case 48: // 0 (zero)
                     if (state == 'level-editor') {
                         a.levelEditor.resetZAxis(a);
@@ -65,62 +62,7 @@ class Keyboard {
                         a.exitCampaign();
                     }
                 break;
-                case 71: // 'g'
-                    if (state == 'level-editor') {
-                        $('[action="translate"]').click();
-                    }
-                break;
-                case 82: // 'r'
-                    if (a.play == true && (state == 'campaign' || state == 'level-editor')) {
-                        a.level.retryLevel(a);
-                    }
-                    else if (a.play == false && state == 'level-editor') {
-                        $('[action="rotate"]').click();
-                    }
-                break;
-                case 83: // 's'
-                    if (state == 'level-editor') {
-                        if (this.ctrl == true) {
-                            a.levelEditor.saveLevel();
-                        }
-                        else {
-                            $('[action="scale"]').click();
-                        }
-                    }
-                break;
-                case 84: // 't'
-                    if (state == 'level-editor') {
-                        $('[action="translate"]').click();
-                    }
-                break;
-                case 87: a.keyboard.spaceBarDown(a); break; // 'w'
-                case 88: // 'x'
-                    if (state == 'level-editor') {
-                        a.levelEditor.deleteSelected(a);
-                    }
-                break;
-                case 90: // 'z'
-                    if (state == 'level-editor') {
-                        if (this.ctrl == true && this.shift == false) { // Undo
-                            a.levelEditor.undoEdit();
-                        }
-                        if (this.ctrl == true && this.shift == true) { // Redo
-                            a.levelEditor.redoEdit();
-                        }
-                    }
-                break;
             }
-        }
-    }
-
-    spaceBarDown(a) {
-        if (a.state == 'campaign' || a.state == 'level-editor') {
-            if (a.play == true) {
-                a.player.jump();
-            }
-        }
-        else {
-            $(':focus').click();
         }
     }
 

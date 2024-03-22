@@ -8,11 +8,13 @@
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('setCredit', setCredit);
+    window.addEventListener('keydown', keydown);
   }
-
+  
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('setCredit', setCredit);
+    window.removeEventListener('keydown', keydown);
   }
 
   function setCredit(e) {
@@ -21,6 +23,20 @@
 
   function pauseLevel() {
     app.pauseLevel();
+  }
+
+  function keydown(e) {
+    var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
+    if (jumpKeys.indexOf(e.code) > -1) {
+      // Jump if one of the keys is pressed
+      if (app.play == true) {
+        app.player.jump();
+      }
+    }
+
+    if (e.code == 'KeyR') {
+      app.level.retryLevel();
+    }
   }
 
   // Run function after being mounted (visible)

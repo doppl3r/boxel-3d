@@ -177,7 +177,7 @@ class App {
   resetScene(a = app) {
     app.camera.position.z = app.camera.position.zDefault;
     a.level.removeParticles(a);
-    a.level.resetLevel(a);
+    a.level.resetLevel();
     a.updateRender(null, a);
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }

@@ -157,7 +157,7 @@ class Level extends Group {
     }
   }
 
-  resetLevel(a) {
+  resetLevel() {
     // Gets called every time the level starts (including checkpoints)
     for (var i = 0; i < this.children.length; i++) {
       var child = this.children[i];
@@ -170,7 +170,6 @@ class Level extends Group {
     a.play = true;
     a.level.removeParticles(a);
     a.player.cancelRestart();
-    a.ui.dialog.remove();
     a.resetScene(a);
     
     // Remove checkpoint, or respawn to checkpoint
