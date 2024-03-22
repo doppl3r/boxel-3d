@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
+  import OriginStats from './OriginStats.vue';
 
   // Initialize variables
   var credit = ref('');
@@ -59,7 +60,6 @@
 
 <template>
   <div class="campaign dashboard">
-    <div class="background"></div>
     <div id="timer"></div>
     <div id="credit" class="fade-in" v-html="credit" v-if="credit"></div>
     <div id="speedometer"><span id="speed"></span></div>
@@ -67,5 +67,6 @@
       <a class="button top-left" @click="pauseLevel" title="Pause (ESC)"><img src="/img/svg/pause.svg"></a>
       <OriginButtonSettings class="button top-right" />
     </div>
+    <OriginStats />
   </div>
 </template>

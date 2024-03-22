@@ -4,7 +4,6 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
 import { OutlinePass } from './postprocessing/OutlinePass.js';
-import Stats from '../js/Stats.js';
 
 class Graphics {
   constructor(canvas) {
@@ -44,11 +43,6 @@ class Graphics {
     this.composer.addPass(this.smaaPass); // Anti-aliasing
     this.composer.addPass(this.outputPass); // Gamma/sRGB correction
 
-    // Add statistics
-    this.stats = new Stats();
-    this.stats.dom.classList.add('hidden');
-    document.body.appendChild(this.stats.dom);
-
     // Add window resize logic
     window.addEventListener('resize', function(e) { this.resize(e); }.bind(this));
     this.resize(); // Run resize immediately
@@ -59,9 +53,7 @@ class Graphics {
   }
 
   render() {
-    this.stats.begin();
     this.composer.render();
-    this.stats.end();
   }
 
   resize() {
@@ -107,15 +99,6 @@ class Graphics {
   setSelectedObjects(objects = []) {
     // Set outline selected objects
     this.outlinePass.selectedObjects = objects;
-  }
-
-  showStats(show = true) {
-    if (show) app.graphics.stats.dom.classList.remove('hidden');
-    else this.hideStats();
-  }
-
-  hideStats() {
-    app.graphics.stats.dom.classList.add('hidden');
   }
 }
 

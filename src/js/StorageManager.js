@@ -97,10 +97,11 @@ class StorageManager {
     var defaultSettings = { 
       'volume': 0,
       'quality': 6,
+      'theme': 'origin',
       'snap': 8,
       'skin': { id: 1, url: 'img/png/skins/pink.png' },
-      'motion': 1,
-      'stats': 0,
+      'motion': true,
+      'stats': false,
       'progress': 1
     };
     var settings = defaultSettings; // Use default

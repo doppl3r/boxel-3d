@@ -199,9 +199,9 @@ class App {
     a.updateQuality(settings.quality, a);
     a.mouse.setSnap(settings.snap);
     a.player.setSkin(settings.skin, a);
-    a.graphics.showStats(settings.stats, a);
     a.storage.setSettings(settings); // Store locally
     a.updateCameraMotion(settings.motion, a);
+    window.dispatchEvent(new CustomEvent('updateStatsVisibility'));
   }
 
   updateGravity(angle) { // between -1, and 1 directionally

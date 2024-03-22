@@ -5,17 +5,6 @@ html {
   min-height: 360px; // 360px
   
   body {
-    .stats {
-      top: initial !important;
-      right: initial !important;
-      bottom: 16px !important;
-      left: 16px !important;
-  
-      &.hidden {
-        display: none;
-      }
-    }
-
     #app {
       height: inherit;
       width: inherit;
@@ -39,6 +28,20 @@ html {
         pointer-events: none;
         width: inherit;
         height: inherit;
+
+        .stats {
+          background-color: #dc265a;
+          border-radius: 4px;
+          color: #ffffff;
+          font-size: 1rem;
+          font-family: monospace;
+          font-weight: bold;
+          padding: 0.125rem 0.25rem;
+          position: fixed;
+          bottom: 16px;
+          right: 16px;
+          z-index: 1;
+        }
 
         > * {
           pointer-events: all;
