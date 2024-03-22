@@ -7,15 +7,18 @@
   var objectType = ref(app.levelEditor.selectedObjectType || 'cube');
   var objectTypeVisible = ref(true);
   var selectedObject = ref();
+  var controlsTransform = ref(app.levelEditor.controlsTransform);
 
   function addEventListeners() {
-    window.addEventListener('updateObjectOptions', updateObjectOptions);
+    window.addEventListener('setSelectedObject', setSelectedObject);
     window.addEventListener('selectObjectType', selectObjectType);
+    window.addEventListener('setTransformMode', setTransformMode);
   }
-
+  
   function removeEventListeners() {
-    window.removeEventListener('updateObjectOptions', updateObjectOptions);
+    window.removeEventListener('setSelectedObject', setSelectedObject);
     window.removeEventListener('selectObjectType', selectObjectType);
+    window.removeEventListener('setTransformMode', setTransformMode);
   }
 
   function setDrawMode(mode) {
@@ -59,9 +62,59 @@
     app.levelEditor.selectObjectType(e.detail.type, e.detail.checkNull);
   }
 
-  function updateObjectOptions(e) {
+  function setSelectedObject(e) {
     selectedObject.value = e.detail;
-    console.log(selectedObject.value);
+  }
+
+  function toggleSelectedObjectStaticState() {
+    app.levelEditor.toggleSelectedObjectStaticState();
+  }
+
+  function setTransformMode(e) {
+    controlsTransform.value.mode = e.detail;
+    app.levelEditor.setMode(e.detail);
+  }
+
+  function updateFriction(e) {
+    selectedObject.value.setFriction(e.target.value);
+    app.levelHistory.save('Updated object properties', app);
+  }
+
+  function changeText() {
+    // Dispatch new popup from event
+    window.dispatchEvent(new CustomEvent('addPopup', {
+      detail: {
+        text: 'Share a tip!',
+        inputs: [
+          { value: app.selectedObject.text, type: 'text', callback: updateText },
+          { value: 'Cancel', type: 'button' },
+          { value: 'Close', type: 'button' }
+        ]
+      }
+    }));
+  }
+
+  function duplicateSelectedObject() {
+    app.selectedObject.select(false);
+    app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
+    app.selectedObject.position.y += 16;
+    app.selectedObject.select(true);
+    app.levelEditor.controlsTransform.attach(app.selectedObject);
+    app.levelEditor.setMode('translate');
+    app.levelHistory.save('Duplicated object', app);
+    setSelectedObject({ detail: app.selectedObject });
+  }
+
+  function deleteSelectedObject() {
+    app.level.removeObject(app.selectedObject, app);
+    app.levelEditor.controlsTransform.detach();
+    app.levelHistory.save('Deleted object', app);
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
+  }
+
+  function updateText(e) {
+    app.selectedObject.text = e.target.value;
+    app.levelHistory.save('Updated tip', app);
   }
 
   onMounted(function() {
@@ -111,17 +164,17 @@
         <a class="item" :class="{ selected: objectType == 'reset' }" @click="selectObjectType({ detail: { type: 'reset' }})" title="Reset cube"><img src="/img/svg/reset.svg"></a>
       </div>
       <div class="col object-options" v-if="selectedObject != null">
-        <a class="item" action="translate" title="Move (T or G)"><img src="/img/svg/move.svg"></a>
-        <a class="item" action="scale" title="Scale (S)"><img src="/img/svg/scale-out-x.svg"></a>
-        <a class="item" action="rotate" title="Rotate (R)"><img src="/img/svg/rotate-clockwise.svg"></a>
-        <div class="item">
+        <a class="item" :class="{ selected: controlsTransform.mode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img src="/img/svg/move.svg"></a>
+        <a class="item" :class="{ selected: controlsTransform.mode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img src="/img/svg/scale-out-x.svg"></a>
+        <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="setTransformMode({ detail: 'rotate' })" title="Rotate (R)"><img src="/img/svg/rotate-clockwise.svg"></a>
+        <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img src="/img/svg/pin.svg"></a>
+        <div class="item" :class="{ disabled: selectedObject.isStatic() }">
           <a action="friction" title="Friction"><img src="/img/svg/friction.svg"></a>
-          <div class="slider"><input name="friction" type="range" min="0" max="1" step="0.25" value="0"></div>
+          <div class="slider"><input name="friction" type="range" min="0" max="1" step="0.25" :value="selectedObject.body.friction" @change="updateFriction($event)"></div>
         </div>
-        <a class="item" action="text" title="Text"><img src="/img/svg/type.svg"></a>
-        <a class="item" action="duplicate" title="Duplicate (D)"><img src="/img/svg/duplicate.svg"></a>
-        <a class="item" action="pin" title="Pin"><img src="/img/svg/pin.svg"></a>
-        <a class="item" action="trash" title="Delete (X)"><img src="/img/svg/trash.svg"></a>
+        <a class="item" :class="{ disabled: selectedObject.text == null }" @click="changeText" title="Text"><img src="/img/svg/type.svg"></a>
+        <a class="item" @click="duplicateSelectedObject" title="Duplicate (D)"><img src="/img/svg/duplicate.svg"></a>
+        <a class="item" @click="deleteSelectedObject" title="Delete (X)"><img src="/img/svg/trash.svg"></a>
       </div>
     </div>
   </div>

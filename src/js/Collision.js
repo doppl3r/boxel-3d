@@ -31,8 +31,7 @@ class Collision {
             if (bodyA.class == 'sensor') {
               if (objectA.body.class == 'tip') {
                 if (objectB.body.class == 'player') {
-                  // Dispatch new popup from event
-                  window.dispatchEvent(new CustomEvent('showTip', { detail: { text: objectA.text }}));
+                  app.level.showTip(objectA.text);
                   objectA.hide(true);
                 }
               }

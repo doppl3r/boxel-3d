@@ -7,31 +7,12 @@
 
   // Add event listener(s)
   function addEventListeners() {
-    window.addEventListener('showTip', showTip);
     window.addEventListener('setCredit', setCredit);
   }
 
   // Remove event listeners
   function removeEventListeners() {
-    window.removeEventListener('showTip', showTip);
     window.removeEventListener('setCredit', setCredit);
-  }
-
-  // Show tip from custom event
-  function showTip(e) {
-    app.play = false;
-    app.timer.pause();
-
-    // Dispatch new popup from event
-    window.dispatchEvent(new CustomEvent('addPopup', {
-      detail: {
-        text: e.detail.text,
-        inputs: [{ type: 'button', value: 'Continue', callback: function() {
-          app.playLevel();
-          window.dispatchEvent(new CustomEvent('closePopup'));
-        }}]
-      }
-    }));
   }
 
   function setCredit(e) {

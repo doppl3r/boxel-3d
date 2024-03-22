@@ -57,12 +57,11 @@ class LevelEditor {
             a.level.deselectLevel(a);
             a.selectedObject = target;
             a.selectedObject.select(true);
-            a.ui.updateObjectOptions();
             this.controlsTransform.attach(target);
 
             // Update Vue.js UI from custom event
             if (a.selectedObject.getClass() != 'player') window.dispatchEvent(new CustomEvent('selectObjectType', { detail: { type: a.selectedObject.getClass(), checkNull: false }}));
-            window.dispatchEvent(new CustomEvent('updateObjectOptions', { detail: a.selectedObject }));
+            window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: a.selectedObject }));
           }
         }
         else {
@@ -86,9 +85,8 @@ class LevelEditor {
             a.level.addObject(a.selectedObject, a);
             a.levelHistory.save('Added ' + objectType, a);
             a.selectedObject.select(true);
-            a.ui.updateObjectOptions();
             this.controlsTransform.attach(a.selectedObject);
-            window.dispatchEvent(new CustomEvent('updateObjectOptions', { detail: a.selectedObject }));
+            window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: a.selectedObject }));
           }
         }
       }
@@ -97,7 +95,7 @@ class LevelEditor {
         if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
           a.level.deselectLevel(app);
           this.controlsTransform.detach();
-          window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+          window.dispatchEvent(new CustomEvent('setSelectedObject'));
         }
       }
     }
@@ -108,7 +106,7 @@ class LevelEditor {
         a.levelHistory.save('Erased object', a);
         a.ui.updateLevelOptions();
         this.controlsTransform.detach();
-        window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+        window.dispatchEvent(new CustomEvent('setSelectedObject'));
       }
       a.mouse.mode = a.mouse.prevMode;
     }
@@ -184,12 +182,12 @@ class LevelEditor {
   undo() {
     app.levelEditor.controlsTransform.detach();
     app.levelHistory.undo(app);
-    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   redo() {
     app.levelHistory.redo(app);
-    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   rewind() {
@@ -197,7 +195,7 @@ class LevelEditor {
     app.level.deselectLevel(app);
     app.pauseLevel();
     app.ui.updateLevelOptions();
-    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   saveSelectedObject() {
@@ -260,14 +258,22 @@ class LevelEditor {
     if (app.selectedObject != null && checkNull == true) {
       app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
       app.selectedObject.select(true);
-      app.ui.updateObjectOptions();
       app.levelEditor.controlsTransform.attach(app.selectedObject);
       app.levelHistory.save('Changed object to ' + type, app);
-      window.dispatchEvent(new CustomEvent('updateObjectOptions', { detail: app.selectedObject }));
+      window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
     }
 
     // Set new selected object type
     app.levelEditor.selectedObjectType = type;
+  }
+
+  toggleSelectedObjectStaticState() {
+    app.selectedObject.toggleStatic();
+    app.selectedObject = app.level.refreshObject(app.selectedObject, app);
+    app.selectedObject.select(true);
+    app.levelEditor.controlsTransform.attach(app.selectedObject);
+    app.levelHistory.save('Updated object state', app);
+    window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
   }
 }
 

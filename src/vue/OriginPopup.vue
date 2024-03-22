@@ -19,7 +19,7 @@
         inputs.value = e.detail.inputs;
         inputs.value.forEach(function(input) {
           // Set input event type (ex: click vs change)
-          if (input.type == 'file' || input.type == 'range') input.event = 'change';
+          if (input.type == 'file' || input.type == 'range' || input.type == 'text') input.event = 'change';
           else input.event = 'click';
         })
       }

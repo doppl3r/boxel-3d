@@ -211,6 +211,23 @@ class Level extends Group {
     object.setText(objectData.text);
     object.setFriction(objectData.friction);
   }
+
+  showTip(text) {
+    // Pause game
+    app.play = false;
+    app.timer.pause();
+
+    // Dispatch new popup from event
+    window.dispatchEvent(new CustomEvent('addPopup', {
+      detail: {
+        text: text,
+        inputs: [{ type: 'button', value: 'Continue', callback: function() {
+          app.playLevel();
+          window.dispatchEvent(new CustomEvent('closePopup'));
+        }}]
+      }
+    }));
+  }
 }
 
 export { Level };

@@ -179,7 +179,7 @@ class App {
     a.level.removeParticles(a);
     a.level.resetLevel(a);
     a.updateRender(null, a);
-    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   updateCamera(a) {
@@ -255,7 +255,7 @@ class App {
     app.levelEditor.controlsTransform.detach();
     app.background.visible = true;
     if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
-    window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   pauseLevel() {
@@ -270,7 +270,7 @@ class App {
       app.levelEditor.controlsOrbit.enabled = true;
       app.levelEditor.controlsOrbit.reset();
       app.background.visible = false;
-      window.dispatchEvent(new CustomEvent('updateObjectOptions'));
+      window.dispatchEvent(new CustomEvent('setSelectedObject'));
     }
     else if (app.state == 'campaign') {
       window.dispatchEvent(new CustomEvent('addPopup', {
