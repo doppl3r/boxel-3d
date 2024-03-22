@@ -6,7 +6,8 @@
     var inputs = [
       { label: 'Master Volume', name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume, callback: function(e) { updateSettings('volume', e.target.value); }},
       { label: 'Graphic Quality', name: 'quality', type: 'range', min: 2, max: 10, value: settings.quality, callback: function(e) { updateSettings('quality', e.target.value); }},
-      { label: 'Camera Rotation', name: 'motion', type: 'range', min: 0, max: 1, value: settings.motion, callback: function(e) { updateSettings('motion', e.target.value); }}
+      { label: 'Camera Rotation', name: 'motion', type: 'range', min: 0, max: 1, value: settings.motion, callback: function(e) { updateSettings('motion', e.target.value); }},
+      { label: 'Show Stats', name: 'stats', type: 'range', min: 0, max: 1, value: settings.stats == true ? 1 : 0, callback: function(e) { updateSettings('stats', e.target.value == "1"); }}
     ];
 
     // Add more options for the level maker

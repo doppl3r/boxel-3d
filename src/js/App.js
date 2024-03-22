@@ -199,6 +199,7 @@ class App {
     a.updateQuality(settings.quality, a);
     a.mouse.setSnap(settings.snap);
     a.player.setSkin(settings.skin, a);
+    a.graphics.showStats(settings.stats, a);
     a.storage.setSettings(settings); // Store locally
     a.updateCameraMotion(settings.motion, a);
   }
@@ -279,6 +280,14 @@ class App {
       app.timer.start();
       app.play = true;
     }
+  }
+
+  showCanvas() {
+    app.canvas.classList.remove('hidden');
+  }
+
+  hideCanvas() {
+    app.canvas.classList.add('hidden');
   }
 }
 

@@ -47,12 +47,12 @@
 
   // Run function after being mounted (visible)
   onMounted(function() {
-    app.canvas.classList.remove('hidden');
+    app.showCanvas();
     addEventListeners();
-  })
+  });
 
   onUnmounted(function() {
-    app.canvas.classList.add('hidden');
+    app.hideCanvas();
     removeEventListeners();
   });
 </script>

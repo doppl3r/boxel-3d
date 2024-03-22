@@ -5,6 +5,17 @@ html {
   min-height: 360px; // 360px
   
   body {
+    .stats {
+      top: initial !important;
+      right: initial !important;
+      bottom: 16px !important;
+      left: 16px !important;
+  
+      &.hidden {
+        display: none;
+      }
+    }
+
     #app {
       height: inherit;
       width: inherit;
@@ -140,23 +151,6 @@ html {
             }
           }
         }
-    
-        .stats {
-          display: none !important;
-          position: absolute;
-          top: initial !important;
-          right: 16px !important;
-          bottom: 16px !important;
-          left: initial !important;
-      
-          canvas {
-            position: relative;
-          }
-        }
-      
-        &.has-dialog .stats {
-          display: block !important;
-        }
       
         .disabled {
           opacity: 0.25;
@@ -202,7 +196,7 @@ html {
   
           &:hover  {
             img {
-              animation: fade-in 0.25s ease-in-out, shake 0.25s ease-in-out;
+              animation: shake 0.25s ease-in-out;
               filter: invert(0%);
             }
 
@@ -214,8 +208,6 @@ html {
           }
 
           img {
-            animation: fade-in 0.25s ease-in-out;
-            animation-fill-mode: forwards;
             filter: invert(50%);
             pointer-events: none;
             scale: 1;
@@ -428,6 +420,7 @@ html {
   
           .review {
             color: #ffffff;
+            cursor: pointer;
             position: absolute;
             bottom: 16px;
             right: 16px;

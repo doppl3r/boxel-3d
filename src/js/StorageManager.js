@@ -100,6 +100,7 @@ class StorageManager {
       'snap': 8,
       'skin': { id: 1, url: 'img/png/skins/pink.png' },
       'motion': 1,
+      'stats': 0,
       'progress': 1
     };
     var settings = defaultSettings; // Use default
