@@ -104,7 +104,6 @@ class LevelEditor {
         a.levelEditor.eraseTarget(e, a);
         a.level.deselectLevel(a); // Deselect everything
         a.levelHistory.save('Erased object', a);
-        a.ui.updateLevelOptions();
         this.controlsTransform.detach();
         window.dispatchEvent(new CustomEvent('setSelectedObject'));
       }
@@ -191,7 +190,6 @@ class LevelEditor {
     app.level.retryLevel(app);
     app.level.deselectLevel(app);
     app.pauseLevel();
-    app.ui.updateLevelOptions();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 

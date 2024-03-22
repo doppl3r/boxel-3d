@@ -35,7 +35,7 @@
     }
 
     if (e.code == 'Escape') {
-      if (app.play == true) { pauseLevel();}
+      if (app.play == true) { pauseLevel(); }
     }
     else if (e.code == 'KeyE') {
       if (app.play == true) app.exitCampaign();
@@ -47,11 +47,12 @@
 
   // Run function after being mounted (visible)
   onMounted(function() {
-    app.ui.canvas.removeClass('hidden');
+    app.canvas.classList.remove('hidden');
     addEventListeners();
   })
 
   onUnmounted(function() {
+    app.canvas.classList.add('hidden');
     removeEventListeners();
   });
 </script>

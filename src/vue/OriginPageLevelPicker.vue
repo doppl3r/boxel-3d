@@ -39,7 +39,6 @@
     settings.progress = getLevelIndex(name) + 1;
     app.updateSettings(settings);
     app.playLevel();
-    app.ui.updateLevelOptions();
     app.resetScene();
     
     // Send event to show credits

@@ -124,7 +124,8 @@
       app.levelEditor.resetZAxis();
     }
     else if (e.code == 'Escape') {
-      exitLevel();
+      if (app.play == true) pauseLevel();
+      else exitLevel();
     }
     else if (e.code == 'KeyD') {
       duplicateSelectedObject();
@@ -153,22 +154,17 @@
       if (e.ctrlKey == true && e.shiftKey == false) app.levelEditor.undo();
       if (e.ctrlKey == true && e.shiftKey == true) app.levelEditor.redo();
     }
-
-    console.log(e);
   }
 
   onMounted(function() {
     // Run function after being mounted (visible)
+    app.canvas.classList.remove('hidden');
     addEventListeners();
-
-    app.ui.updateLevelOptions();
-    app.ui.objectType.find('[action="cube"]').addClass('selected'); // Select by default
-    app.ui.canvas.removeClass('hidden');
-    app.ui.levelEditor.removeClass('hidden');
   })
 
   onUnmounted(function() {
     // Run function after being unmounted (removed);
+    app.canvas.classList.add('hidden');
     removeEventListeners();
   });
 </script>

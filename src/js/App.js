@@ -259,7 +259,6 @@ class App {
     app.play = false;
     
     if (app.state == 'level-editor') {
-      app.ui.updateLevelOptions();
       app.level.deselectLevel(app);
       app.ui.levelOptions.find('[action="play"]').removeClass('selected');
       app.ui.levelOptions.find('[action="pause"]').addClass('selected');

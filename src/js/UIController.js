@@ -1,11 +1,8 @@
 import $ from 'jquery';
-import { Dialog } from './Dialog.js';
 
 class UIController {
   constructor(app) {
-    this.dialog = new Dialog();
     this.updateSelectors();
-    this.updateCanvas();
     this.updateUI('home', app);
   }
 
@@ -28,42 +25,10 @@ class UIController {
       this.toggleTheme(settings.theme);
       app.state = state;
     }
-
-    this.updateCanvas();
-    this.canvas.addClass('hidden'); // Default hide canvas
-    this.controller.find('[action]').removeClass('selected'); // Default remove all selected
   }
 
   toggleObjectOptions() {
     this.objectOptions.toggleClass('hidden');
-  }
-
-  updateLevelOptions() {
-    var mode = 'draw';
-    var play = 'pause';
-    if (app != null) {
-      mode = app.mouse.mode;
-      play = app.play == true ? 'play' : 'pause';
-      this.updateObjectType();
-    }
-
-    this.levelOptions.find('[action="pause"], [action="pause"]').removeClass('selected');
-    this.levelOptions.find('[action="draw"], [action="erase"]').removeClass('selected');
-    this.levelOptions.find('[action="' + mode + '"]').addClass('selected');
-    this.levelOptions.find('[action="' + play + '"]').addClass('selected');
-  }
-
-  updateObjectType() {
-    var mode = app.mouse.mode;
-    var play = app.play == true ? 'play' : 'pause';
-    this.objectType.removeClass('hidden');
-    if (mode == 'erase' || play == 'play') this.objectType.addClass('hidden');
-  }
-
-  updateCanvas() {
-    if (this.canvas == null || this.canvas.length <= 0) {
-      this.canvas = $('canvas');
-    }
   }
 
   play() {
