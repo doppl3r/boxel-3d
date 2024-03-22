@@ -12,7 +12,6 @@ import { Background } from './Background.js';
 import { Level } from './Level.js';
 import { LevelHistory } from './LevelHistory.js';
 import { Player } from './entities/Player.js';
-import { UIController } from './UIController.js';
 import { Mouse } from './Mouse.js';
 import { LevelEditor } from './LevelEditor.js';
 
@@ -29,7 +28,6 @@ class App {
     this.util = new Utility();
     this.screenWidth = this.window.innerWidth;
     this.screenHeight = this.window.innerHeight;
-    this.ui = new UIController();
     this.state = 'home';
     this.animation = new Animation();
     this.timer = new Timer();
@@ -199,7 +197,6 @@ class App {
     // Update application from settings
     a.assets.audio.setMasterVolume(settings.volume);
     a.updateQuality(settings.quality, a);
-    a.ui.toggleTheme(settings.theme);
     a.mouse.setSnap(settings.snap);
     a.player.setSkin(settings.skin, a);
     a.storage.setSettings(settings); // Store locally
@@ -244,8 +241,6 @@ class App {
     app.play = true;
     app.timer.start();
     app.level.deselectLevel(app);
-    app.ui.levelOptions.find('[action="pause"]').removeClass('selected');
-    app.ui.levelOptions.find('[action="play"]').addClass('selected');
     app.levelEditor.controlsOrbit.enabled = false;
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
@@ -260,8 +255,6 @@ class App {
     
     if (app.state == 'level-editor') {
       app.level.deselectLevel(app);
-      app.ui.levelOptions.find('[action="play"]').removeClass('selected');
-      app.ui.levelOptions.find('[action="pause"]').addClass('selected');
       app.levelEditor.controlsOrbit.enabled = true;
       app.levelEditor.controlsOrbit.reset();
       app.background.visible = false;

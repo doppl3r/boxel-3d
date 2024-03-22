@@ -33,70 +33,6 @@ html {
           pointer-events: all;
         }
 
-        &.dark {
-          .item {
-            img { filter: invert(50%); }
-  
-            &:hover {
-              img { filter: invert(0%); }
-            }
-          }
-  
-          .selected {
-            img { filter: invert(0%); }
-          }
-  
-          input {
-            color: #808080;
-  
-            &:focus { color: #ffffff; }
-          }
-  
-          .slider { background-color: #252526; }
-  
-          .row {
-            .col {
-              background-color: #333333;
-  
-              &.object-options { background-color: #252526; }
-            }
-          }
-  
-          .level-manager { background-color: #1e1e1e; }
-        }
-    
-        &.light {
-          .item {
-            img { filter: invert(50%); }
-  
-            &:hover {
-              img { filter: invert(100%); }
-            }
-          }
-  
-          .selected {
-            img { filter: invert(100%); }
-          }
-  
-          input {
-            color: #808080;
-  
-            &:focus { color: #000000; }
-          }
-  
-          .slider { background-color: #f1f1f1; }
-  
-          .row {
-            .col {
-              background-color: #ffffff;
-  
-              &.object-options { background-color: #f1f1f1; }
-            }
-          }
-  
-          .level-manager { background-color: #e6e6e6; }
-        }
-
         .background {
           background-image: url('/img/jpg/background-cubes.jpg');
           background-color: #490348;
@@ -242,6 +178,7 @@ html {
           height: 48px;
 
           img {
+            filter: invert(50%);
             pointer-events: none;
           }
     
@@ -262,6 +199,7 @@ html {
   
           &:hover  {
             & > * { animation: shake 0.25s; }
+            img { filter: invert(0%); }
           }
         }
   
@@ -269,17 +207,20 @@ html {
           font-family: 'Comfortaa-Bold';
           background-color: transparent;
           border: none;
+          color: #808080;
           font-size: 1rem;
           padding: 0 16px;
           width: 240px;
   
           &:focus {
             border: none;
+            color: #ffffff;
             outline: none;
           }
         }
   
         .slider {
+          background-color: #252526;
           display: none;
           align-items: center;
           position: relative;
@@ -297,6 +238,12 @@ html {
             padding: 0;
             margin: 0;
             cursor: pointer;
+          }
+        }
+
+        .selected {
+          img {
+            filter: invert(0%);
           }
         }
   
@@ -342,7 +289,12 @@ html {
           }
   
           .col {
+            background-color: #333333;
             pointer-events: all;
+
+            &.object-options {
+              background-color: #252526;
+            }
   
             .item {
               position: relative;
@@ -832,6 +784,7 @@ html {
         }
   
         .level-manager {
+          background-color: #1e1e1e;
           height: 100%;
   
           .row {

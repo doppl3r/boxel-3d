@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { saveAs } from 'file-saver';
 
 class StorageManager {
@@ -98,7 +97,6 @@ class StorageManager {
         var defaultSettings = { 
             'volume': 0,
             'quality': 6,
-            'theme': 0,
             'snap': 8,
             'skin': { id: 1, url: 'img/png/skins/pink.png' },
             'motion': 1,
@@ -153,17 +151,6 @@ class StorageManager {
             reader.readAsText(f);
         }
         performClick();
-    }
-
-    loadSkinFromFile(callback = function(e) { console.log(e); }) {
-        var input = $('<input>', { type: 'file', accept: '.jpg,.png,.webp,.gif', multiple: true });
-        input.on('change', function(evt) {
-            var file = evt.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function(e) { callback(e.target.result); };
-            reader.readAsDataURL(file);
-        });
-        input.click();
     }
 
     backupToFile() {
