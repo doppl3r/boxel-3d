@@ -55,10 +55,18 @@
       { value: 'Close', type: 'button' }
     ]
 
+    // Add Chrome sync options
+    if (chrome.storage) {
+      inputs.unshift(
+        { value: 'Backup to Google', type: 'button', style: 'width: 100%', callback: app.storage.backupToChrome },
+        { value: 'Restore from Google', type: 'button', style: 'width: 100%', callback: app.storage.restoreFromChrome }
+      )
+    }
+
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('addPopup', {
       detail: {
-        text: '<img src="img/svg/save.svg">',
+        text: '<img src="img/svg/cloud-check.svg">',
         inputs: inputs
       }
     }));
@@ -102,7 +110,7 @@
       </div>
       <div class="buttons">
         <a class="button top-right three" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img src="/img/svg/grow.svg"></a>
-        <a class="button top-right two" @click="showAccountOptions" title="Account"><img src="/img/svg/save.svg"></a>
+        <a class="button top-right two" @click="showAccountOptions" title="Account"><img src="/img/svg/cloud-check.svg"></a>
         <OriginButtonSettings class="button top-right" />
         <a class="button" @click="$emit('setPage', 'level-manager')"><span>Level Maker</span> <img src="/img/svg/pencil.svg"></a>
         <a class="button" @click="$emit('setPage', 'skins')"><span>Skins</span> <img src="/img/svg/smile.svg"></a>
