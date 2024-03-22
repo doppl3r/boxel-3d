@@ -171,6 +171,7 @@ class Level extends Group {
     a.level.removeParticles(a);
     a.player.cancelRestart();
     a.resetScene(a);
+    window.dispatchEvent(new CustomEvent('closePopup'));
     
     // Remove checkpoint, or respawn to checkpoint
     if (keepCheckpoint == false || a.player.checkpoint == null) {
