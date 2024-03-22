@@ -1,14 +1,24 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
 
   // Initialize attributes
   var text = ref('');
   var inputs = ref([]);
   var isOpen = ref(false);
+
+  // Add event listener(s)
+  function addEventListeners() {
+    window.addEventListener('addPopup', addPopup);
+	  window.addEventListener('closePopup', closePopup);
+    window.addEventListener('keydown', keydown);
+  }
   
-  // Add event listeners
-	window.addEventListener('addPopup', function(e) { addPopup(e); });
-	window.addEventListener('closePopup', function(e) { closePopup(e); });
+  // Remove event listeners
+  function removeEventListeners() {
+    window.removeEventListener('addPopup', addPopup);
+	  window.removeEventListener('closePopup', closePopup);
+    window.removeEventListener('keydown', keydown);
+  }
 
   function addPopup(e) {
     // Assign values from custom event detail
@@ -39,6 +49,23 @@
     var lastInput = inputs.value[inputs.value.length - 1];
     if (lastInput) runCallback(lastInput.callback);
   }
+
+  function keydown(e) {
+    var jumpKeys = ['Space', 'Enter', 'Escape'];
+    if (jumpKeys.indexOf(e.code) > -1) {
+      // Jump if one of the keys is pressed
+      e.preventDefault();
+      if (isOpen.value == true) runLastInputCallback();
+    }
+  }
+
+  onMounted(function() {
+    addEventListeners();
+  })
+
+  onUnmounted(function() {
+    removeEventListeners();
+  });
 </script>
 
 <template>

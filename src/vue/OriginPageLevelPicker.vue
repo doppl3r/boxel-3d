@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import levels from '../json/levels.json';
 
   // Initialize variables
@@ -9,6 +9,16 @@
   var progress = parseInt(settings.progress);
   var progressName = getLevelName(progress - 1);
   var emit = defineEmits(['setPage']);
+
+  // Add event listener(s)
+  function addEventListeners() {
+    window.addEventListener('keydown', keydown);
+  }
+  
+  // Remove event listeners
+  function removeEventListeners() {
+    window.removeEventListener('keydown', keydown);
+  }
 
   function setPackGroup(name) {
     packGroup.value = name;
@@ -92,10 +102,32 @@
     el.focus();
     el.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
+
+  function exitLevelPicker() {
+    emit('setPage', 'home');
+  }
+
+  function keydown(e) {
+    var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
+    if (jumpKeys.indexOf(e.code) > -1) {
+      e.preventDefault(); // Prevent scrolling
+      var el = document.querySelector("[name='" + progressName + "']");
+      if (el == document.activeElement) el.click();
+    }
+    
+    if (e.code == 'Escape') {
+      exitLevelPicker();
+    }
+  }
   
   // Run function after being mounted (visible)
   onMounted(function() {
     scrollToLevel();
+    addEventListeners();
+  });
+
+  onUnmounted(function() {
+    removeEventListeners();
   });
 </script>
 
@@ -105,7 +137,7 @@
     <div class="wrapper fade-in">
       <h1>Level<strong>Packs</strong></h1>
       <div class="buttons">
-        <a class="button top-left" @click="$emit('setPage', 'home')" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
+        <a class="button top-left" @click="exitLevelPicker" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
         <a class="button" :class="{ purple: packGroup != 'campaign' }" @click="setPackGroup('campaign')">Campaign</a>
         <a class="button" :class="{ purple: packGroup != 'community' }" @click="setPackGroup('community')">Community</a>
       </div>

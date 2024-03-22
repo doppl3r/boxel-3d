@@ -34,7 +34,13 @@
       }
     }
 
-    if (e.code == 'KeyR') {
+    if (e.code == 'Escape') {
+      if (app.play == true) { pauseLevel();}
+    }
+    else if (e.code == 'KeyE') {
+      if (app.play == true) app.exitCampaign();
+    }
+    else if (e.code == 'KeyR') {
       app.level.retryLevel();
     }
   }

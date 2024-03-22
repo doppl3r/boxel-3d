@@ -14,7 +14,6 @@ import { LevelHistory } from './LevelHistory.js';
 import { Player } from './entities/Player.js';
 import { UIController } from './UIController.js';
 import { Mouse } from './Mouse.js';
-import { Keyboard } from './Keyboard.js';
 import { LevelEditor } from './LevelEditor.js';
 
 class App {
@@ -35,7 +34,6 @@ class App {
     this.animation = new Animation();
     this.timer = new Timer();
     this.mouse = new Mouse();
-    this.keyboard = new Keyboard();
     this.storage = new StorageManager();
     this.collision = new Collision();
     this.player = new Player({ x: 0, y: 0, z: 0 });
@@ -89,8 +87,6 @@ class App {
     this.canvas.addEventListener('mouseup', function(e){ _this.mouse.mouseUp(e, _this); }, false);
     this.canvas.addEventListener('wheel', function(e){ _this.mouse.wheel(e, _this); }, false);
     this.window.addEventListener('resize', function(e) { _this.resizeWindow(e, _this); });
-    this.window.addEventListener('keydown', function(e) { _this.keyboard.keyDown(e, _this); });
-    this.window.addEventListener('keyup', function(e) { _this.keyboard.keyUp(e, _this); });
     Events.on(this.engine, 'collisionStart', function(e) { _this.collision.checkPlayerCollision(e, _this); });
     
     var _this = this;
@@ -279,10 +275,17 @@ class App {
           inputs: [
             { value: 'Exit (E)', type: 'button', callback: function(e) { app.exitCampaign(); window.dispatchEvent(new CustomEvent('closePopup')); }},
             { value: 'Retry (R)', type: 'button', callback: function(e) { app.level.retryLevel(); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'Play', type: 'button', callback: function(e) { app.ui.resumeCampaign(); window.dispatchEvent(new CustomEvent('closePopup')); }}
+            { value: 'Play', type: 'button', callback: function(e) { app.resumeLevel(); window.dispatchEvent(new CustomEvent('closePopup')); }}
           ]
         }
       }));
+    }
+  }
+
+  resumeLevel() {
+    if (app.state == 'campaign') {
+      app.timer.start();
+      app.play = true;
     }
   }
 }

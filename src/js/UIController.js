@@ -87,13 +87,6 @@ class UIController {
     $('.ui-origin').removeClass(themes);
     $('.ui-origin').addClass(newTheme);
   }
-
-  resumeCampaign() {
-    if (app.state == 'campaign') {
-      app.timer.start();
-      app.play = true;
-    }
-  }
 }
 
 export { UIController };

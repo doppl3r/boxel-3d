@@ -1,6 +1,18 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import skins from '../json/skins.json';
+
+  var emit = defineEmits(['setPage']);
+
+  // Add event listener(s)
+  function addEventListeners() {
+    window.addEventListener('keydown', keydown);
+  }
+  
+  // Remove event listeners
+  function removeEventListeners() {
+    window.removeEventListener('keydown', keydown);
+  }
 
   // Set initial variables
   var settings = ref(app.storage.getSettings());
@@ -53,10 +65,25 @@
     el.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
+  function exitSkins() {
+    emit('setPage', 'home');
+  }
+
+  function keydown(e) {
+    if (e.code == 'Escape') {
+      exitSkins();
+    }
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     scrollToSkin()
+    addEventListeners();
   })
+
+  onUnmounted(function() {
+    removeEventListeners();
+  });
 </script>
 
 <template>
@@ -73,7 +100,7 @@
         </template>
       </div>
       <div class="buttons">
-        <a class="button top-left" @click="$emit('setPage', 'home')" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
+        <a class="button top-left" @click="exitSkins" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
       </div>
     </div>
   </div>

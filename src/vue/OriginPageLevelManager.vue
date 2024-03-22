@@ -1,9 +1,19 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
   var items = ref([]); // return format = [{ key: '', level: '' }, ...]
   var emit = defineEmits(['setPage']);
+
+  // Add event listener(s)
+  function addEventListeners() {
+    window.addEventListener('keydown', keydown);
+  }
+  
+  // Remove event listeners
+  function removeEventListeners() {
+    window.removeEventListener('keydown', keydown);
+  }
 
   function updateLevelItems() {
     // Add empty level if none exist
@@ -88,9 +98,24 @@
     }));
   }
 
+  function exitLevelManager() {
+    emit('setPage', 'home')
+  }
+
+  function keydown(e) {
+    if (e.code == 'Escape') {
+      exitLevelManager();
+    }
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     updateLevelItems();
+    addEventListeners();
+  });
+
+  onUnmounted(function() {
+    removeEventListeners();
   });
 </script>
 
@@ -103,7 +128,7 @@
           <input @change="importLevel" class="hidden" type="file" accept="application/JSON">
           <img src="/img/svg/download.svg">
         </label>
-        <a class="item" @click="emit('setPage', 'home')" title="Exit level manager (ESC)"><img src="/img/svg/home.svg"></a>
+        <a class="item" @click="exitLevelManager" title="Exit level manager (ESC)"><img src="/img/svg/home.svg"></a>
         <OriginButtonSettings class="item last" />
       </div>
     </div>

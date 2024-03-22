@@ -122,10 +122,14 @@ class LevelEditor {
     }
   }
 
-  duplicateSelected(a) {
-    if (a.selectedObject != null) {
-      $('[action="duplicate"]').click();
-    }
+  duplicateSelectedObject() {
+    app.selectedObject.select(false);
+    app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
+    app.selectedObject.position.y += 16;
+    app.selectedObject.select(true);
+    app.levelEditor.controlsTransform.attach(app.selectedObject);
+    app.levelEditor.setMode('translate');
+    app.levelHistory.save('Duplicated object', app);
   }
 
   deleteSelectedObject() {
@@ -218,7 +222,7 @@ class LevelEditor {
     // Update body scale (reset transformation first)
     var tempAngle = target.rotation.z;
     target.setRotation(0, false);
-    target.setBodyScale(target.scale.x / target.scale0.x, target.scale.y / target.scale0.y);
+    target.setBodyScale(target.scale.x / target.scale.x, target.scale.y / target.scale0.y);
     target.setRotation(tempAngle, false); // Revert angle
     target.setScale(target.getScale());
 

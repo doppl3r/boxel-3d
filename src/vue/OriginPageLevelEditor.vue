@@ -97,13 +97,7 @@
   }
 
   function duplicateSelectedObject() {
-    app.selectedObject.select(false);
-    app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
-    app.selectedObject.position.y += 16;
-    app.selectedObject.select(true);
-    app.levelEditor.controlsTransform.attach(app.selectedObject);
-    app.levelEditor.setMode('translate');
-    app.levelHistory.save('Duplicated object', app);
+    app.levelEditor.duplicateSelectedObject();
     setSelectedObject({ detail: app.selectedObject });
   }
 
@@ -126,7 +120,16 @@
     }
 
     // Add undo/redo logic
-    if (e.code == 'KeyG') {
+    if (e.code == 'Digit0') {
+      app.levelEditor.resetZAxis();
+    }
+    else if (e.code == 'Escape') {
+      exitLevel();
+    }
+    else if (e.code == 'KeyD') {
+      duplicateSelectedObject();
+    }
+    else if (e.code == 'KeyG') {
       setTransformMode({ detail: 'translate' });
     }
     else if (e.code == 'KeyR') {
