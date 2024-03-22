@@ -343,6 +343,11 @@ html {
               text-decoration: none;
               height: 48px;
               width: auto;
+
+              &:focus {
+                outline: 2px solid #ffffff;
+                outline-offset: 4px;
+              }
   
               &.purple {
                 background-color: #620460;

@@ -93,9 +93,14 @@
     }));
   }
 
+  function focus(selector) {
+    var el = document.querySelector(selector);
+    el.focus();
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
-    
+    focus('.focus')
   });
 </script>
 
@@ -112,9 +117,9 @@
         <a class="button top-right three" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img src="/img/svg/grow.svg"></a>
         <a class="button top-right two" @click="showAccountOptions" title="Account"><img src="/img/svg/cloud-check.svg"></a>
         <OriginButtonSettings class="button top-right" />
-        <a class="button" @click="$emit('setPage', 'level-manager')"><span>Level Maker</span> <img src="/img/svg/pencil.svg"></a>
-        <a class="button" @click="$emit('setPage', 'skins')"><span>Skins</span> <img src="/img/svg/smile.svg"></a>
-        <a class="button" @click="$emit('setPage', 'level-picker')"><span>Play</span> <img src="/img/svg/play.svg"></a>
+        <a class="button" @click="$emit('setPage', 'level-manager')" tabindex="0"><span>Level Maker</span> <img src="/img/svg/pencil.svg"></a>
+        <a class="button" @click="$emit('setPage', 'skins')" tabindex="0"><span>Skins</span> <img src="/img/svg/smile.svg"></a>
+        <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img src="/img/svg/play.svg"></a>
       </div>
     </div>
     <a class="review" @click="openReviewLink"><img src="/img/svg/heart.svg">Write a review</a>

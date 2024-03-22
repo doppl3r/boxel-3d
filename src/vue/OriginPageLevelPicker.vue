@@ -8,6 +8,7 @@
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
   var progressName = getLevelName(progress - 1);
+  var href = ref(location.href);
   var emit = defineEmits(['setPage']);
 
   // Add event listener(s)
@@ -25,7 +26,7 @@
   }
 
   async function playLevel(name) {
-    var response = await fetch('/json/' + packGroup.value + '/' + name + '.json');
+    var response = await fetch(location.href + 'json/' + packGroup.value + '/' + name + '.json');
     var json = await response.json();
     var credit = '';
     emit('setPage', 'campaign');
@@ -106,6 +107,10 @@
     emit('setPage', 'home');
   }
 
+  function updateProgressName(e) {
+    progressName = e.target.getAttribute('name');
+  }
+
   function keydown(e) {
     var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
     if (jumpKeys.indexOf(e.code) > -1) {
@@ -137,8 +142,8 @@
       <h1>Level<strong>Packs</strong></h1>
       <div class="buttons">
         <a class="button top-left" @click="exitLevelPicker" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
-        <a class="button" :class="{ purple: packGroup != 'campaign' }" @click="setPackGroup('campaign')">Campaign</a>
-        <a class="button" :class="{ purple: packGroup != 'community' }" @click="setPackGroup('community')">Community</a>
+        <a class="button" :class="{ purple: packGroup != 'campaign' }" @click="setPackGroup('campaign')" tabindex="0"><span>Campaign</span></a>
+        <a class="button" :class="{ purple: packGroup != 'community' }" @click="setPackGroup('community')" tabindex="0"><span>Community</span></a>
       </div>
       <div class="levels">
         <template v-for="(group, key) of levels">
@@ -148,11 +153,11 @@
               <p v-if="pack.description">{{ pack.description }}</p>
               <div class="buttons" v-if="pack.links">
                 <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target">
-                  {{ link.text }} <img v-if="link.icon" :src="link.icon" />
+                  <span>{{ link.text }}</span> <img v-if="link.icon" :src="href + link.icon" />
                 </a>
               </div>
               <template v-for="(level, j) of pack.levels">
-                <div class="level" :class="{ completed: getScore(level.name) }" :name="level.name" @click="playLevel(level.name)" tabindex="0">
+                <div class="level" :class="{ completed: getScore(level.name) }" :name="level.name" @click="playLevel(level.name)" tabindex="0" @focus="updateProgressName($event)">
                   <span class="score" v-if="getScore(level.name)">{{ scores[level.name] }}</span>
                   <span class="title">{{ level.description }}</span>
                 </div>
