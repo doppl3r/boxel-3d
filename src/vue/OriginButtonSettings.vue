@@ -24,7 +24,7 @@
     // Add bottom button(s)
     inputs.push({ type: 'button', value: 'Close', callback: function(e) {
         // Resume campaign if settings was selected during gameplay
-        app.resumeLevel();
+        if (app.state == 'campaign') app.resumeLevel();
         window.dispatchEvent(new CustomEvent('closePopup'));
       }
     });

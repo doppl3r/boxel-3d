@@ -45,13 +45,21 @@
   }
 
   function rewind() {
-    objectTypeVisible.value = true;
+    pauseLevel();
     app.levelEditor.rewind();
+    app.levelEditor.controlsOrbit.target.copy(app.player.position);
   }
 
   function pauseLevel() {
     objectTypeVisible.value = true;
     app.pauseLevel();
+    app.level.deselectLevel(app);
+    app.levelEditor.controlsOrbit.enabled = true;
+    app.levelEditor.controlsOrbit.reset();
+    app.levelEditor.controlsOrbit.target.copy(app.player.position);
+    app.updateCamera(app);
+    app.background.visible = false;
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   function playLevel() {

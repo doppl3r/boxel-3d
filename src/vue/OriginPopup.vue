@@ -45,17 +45,19 @@
     callback(e);
   }
 
-  function runLastInputCallback() {
+  function runLastInputCallback(e) {
     var lastInput = inputs.value[inputs.value.length - 1];
-    if (lastInput) runCallback(lastInput.callback);
+    if (lastInput) runCallback(lastInput.callback, e);
   }
 
   function keydown(e) {
-    var jumpKeys = ['Space', 'Enter', 'Escape'];
-    if (jumpKeys.indexOf(e.code) > -1) {
-      // Jump if one of the keys is pressed
-      e.preventDefault();
-      if (isOpen.value == true) runLastInputCallback();
+    if (isOpen.value == true) {
+      var jumpKeys = ['Space', 'Enter', 'Escape'];
+      if (jumpKeys.indexOf(e.code) > -1) {
+        // Close popup
+        e.preventDefault();
+        runLastInputCallback(e);
+      }
     }
   }
 

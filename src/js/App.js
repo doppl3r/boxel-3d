@@ -236,6 +236,7 @@ class App {
     app.player.removeCheckpoint();
     app.player.setPosition({ x: 0, y: 0, z: 0 });
     window.dispatchEvent(new CustomEvent('setPage', { detail: { page: 'level-picker' }}));
+    window.dispatchEvent(new CustomEvent('closePopup'));
   }
 
   playLevel() {
@@ -253,33 +254,12 @@ class App {
   pauseLevel() {
     app.timer.pause();
     app.play = false;
-    
-    if (app.state == 'level-editor') {
-      app.level.deselectLevel(app);
-      app.levelEditor.controlsOrbit.enabled = true;
-      app.levelEditor.controlsOrbit.reset();
-      app.background.visible = false;
-      window.dispatchEvent(new CustomEvent('setSelectedObject'));
-    }
-    else if (app.state == 'campaign') {
-      window.dispatchEvent(new CustomEvent('addPopup', {
-        detail: {
-          text: 'Paused',
-          inputs: [
-            { value: 'Exit (E)', type: 'button', callback: function(e) { app.exitCampaign(); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'Retry (R)', type: 'button', callback: function(e) { app.level.retryLevel(); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'Play', type: 'button', callback: function(e) { app.resumeLevel(); window.dispatchEvent(new CustomEvent('closePopup')); }}
-          ]
-        }
-      }));
-    }
   }
 
   resumeLevel() {
-    if (app.state == 'campaign') {
-      app.timer.start();
-      app.play = true;
-    }
+    app.timer.start();
+    app.play = true;
+    window.dispatchEvent(new CustomEvent('closePopup'));
   }
 
   showCanvas() {

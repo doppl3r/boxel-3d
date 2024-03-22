@@ -24,6 +24,16 @@
 
   function pauseLevel() {
     app.pauseLevel();
+    window.dispatchEvent(new CustomEvent('addPopup', {
+      detail: {
+        text: 'Paused',
+        inputs: [
+          { value: 'Exit (E)', type: 'button', callback: function(e) { app.exitCampaign(); }},
+          { value: 'Retry (R)', type: 'button', callback: function(e) { app.level.retryLevel(); }},
+          { value: 'Play', type: 'button', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
+        ]
+      }
+    }));
   }
 
   function keydown(e) {
@@ -36,10 +46,12 @@
     }
 
     if (e.code == 'Escape') {
-      if (app.play == true) { pauseLevel(); }
+      if (app.play == true) {
+        pauseLevel();
+      }
     }
     else if (e.code == 'KeyE') {
-      if (app.play == true) app.exitCampaign();
+      app.exitCampaign();
     }
     else if (e.code == 'KeyR') {
       app.level.retryLevel();
