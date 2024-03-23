@@ -8,7 +8,8 @@
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
   var progressName = getLevelName(progress - 1);
-  var href = ref(location.href);
+  var origin = ref(location.origin);
+  var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
   var emit = defineEmits(['setPage']);
 
   // Add event listener(s)
@@ -26,7 +27,7 @@
   }
 
   async function playLevel(name) {
-    var response = await fetch(location.href + 'json/' + packGroup.value + '/' + name + '.json');
+    var response = await fetch(origin.value + pathname.value + '/json/' + packGroup.value + '/' + name + '.json');
     var json = await response.json();
     var credit = '';
     emit('setPage', 'campaign');
@@ -153,7 +154,7 @@
               <p v-if="pack.description">{{ pack.description }}</p>
               <div class="buttons" v-if="pack.links">
                 <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target">
-                  <span>{{ link.text }}</span> <img v-if="link.icon" :src="href + link.icon" />
+                  <span>{{ link.text }}</span> <img v-if="link.icon" :src="origin + pathname + link.icon" />
                 </a>
               </div>
               <template v-for="(level, j) of pack.levels">
