@@ -5,22 +5,22 @@
 
   // Initialize variables
   var credit = ref('');
-  var isClosed = ref(true); // Animation state
+  var isClosed = ref(true); // Popup animation state
 
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('setCredit', setCredit);
-    window.addEventListener('keydown', keydown);
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
+    window.addEventListener('keydown', keydown);
   }
   
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('setCredit', setCredit);
-    window.removeEventListener('keydown', keydown);
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
+    window.removeEventListener('keydown', keydown);
   }
 
   function setCredit(e) {
