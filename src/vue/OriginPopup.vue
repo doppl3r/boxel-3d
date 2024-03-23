@@ -21,9 +21,10 @@
   }
 
   function addPopup(e) {
+    isOpen.value = true;
+
     // Assign values from custom event detail
     if (e.detail) {
-      isOpen.value = true;
       if (e.detail.text) text.value = e.detail.text;
       if (e.detail.inputs) {
         inputs.value = e.detail.inputs;
@@ -34,10 +35,20 @@
         })
       }
     }
+
+    // Trigger opened event
+    setTimeout(function() {
+      window.dispatchEvent(new CustomEvent('popupOpened'));
+    }, 100);
   }
 
   function closePopup() {
     isOpen.value = false;
+
+    // Trigger opened event
+    setTimeout(function() {
+      window.dispatchEvent(new CustomEvent('popupClosed'));
+    }, 100);
   }
 
   function runCallback(callback, e) {

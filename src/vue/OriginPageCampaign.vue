@@ -5,17 +5,22 @@
 
   // Initialize variables
   var credit = ref('');
+  var isClosed = ref(true); // Animation state
 
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('setCredit', setCredit);
     window.addEventListener('keydown', keydown);
+    window.addEventListener('popupOpened', popupOpened);
+    window.addEventListener('popupClosed', popupClosed);
   }
   
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('setCredit', setCredit);
     window.removeEventListener('keydown', keydown);
+    window.removeEventListener('popupOpened', popupOpened);
+    window.removeEventListener('popupClosed', popupClosed);
   }
 
   function setCredit(e) {
@@ -36,25 +41,33 @@
     }));
   }
 
-  function keydown(e) {
-    var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
-    if (jumpKeys.indexOf(e.code) > -1) {
-      // Jump if one of the keys is pressed
-      if (app.play == true) {
-        app.player.jump();
-      }
-    }
+  function popupOpened() {
+    isClosed.value = false;
+  }
+  
+  function popupClosed() {
+    isClosed.value = true;
+  }
 
-    if (e.code == 'Escape') {
-      if (app.play == true) {
+  function keydown(e) {
+    // Make sure popup is closed
+    if (isClosed.value == true) {
+      if (e.code == 'Escape') {
         pauseLevel();
       }
-    }
-    else if (e.code == 'KeyE') {
-      app.exitCampaign();
-    }
-    else if (e.code == 'KeyR') {
-      app.level.retryLevel();
+      else if (e.code == 'KeyE') {
+        app.exitCampaign();
+      }
+      else if (e.code == 'KeyR') {
+        app.level.retryLevel();
+      }
+      else {
+        var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
+        if (jumpKeys.indexOf(e.code) > -1) {
+          // Jump if one of the keys is pressed
+          app.player.jump();
+        }
+      }
     }
   }
 
