@@ -162,35 +162,56 @@ class StorageManager {
   }
 
   restoreFromFile() {
-    var input = document.createElement("input");
-    input.setAttribute('type', 'file');
-    input.setAttribute('id', 'theFile');
-    input.addEventListener('change', handleFileSelect, false);
-    function performClick() {
-      var evt = document.createEvent("MouseEvents");
-      evt.initEvent("click", true, false);
-      input.dispatchEvent(evt);
-    }
-    function handleFileSelect(evt) {
-      var files = evt.target.files;
-      var f = files[0];
-      var reader = new FileReader();
-      reader.onload = (function() {
-        return function(e) {
-          var data = JSON.parse(e.target.result);
-          app.storage.setAllLocalStorage(data);
-        };
-      })(f);
-      reader.readAsText(f);
-    }
-    performClick();
+    // Open confirmation window
+    window.dispatchEvent(new CustomEvent('addPopup', {
+      detail: {
+        text: 'Restore all data from a file?<br><em>(scores, levels, etc.)</em>',
+        inputs: [
+          { value: 'Restore', type: 'button',
+            callback: function() {
+              var input = document.createElement("input");
+              input.setAttribute('type', 'file');
+              input.setAttribute('id', 'theFile');
+              input.addEventListener('change', handleFileSelect, false);
+              function performClick() {
+                var evt = document.createEvent("MouseEvents");
+                evt.initEvent("click", true, false);
+                input.dispatchEvent(evt);
+              }
+              function handleFileSelect(evt) {
+                var files = evt.target.files;
+                var f = files[0];
+                var reader = new FileReader();
+                reader.onload = (function() {
+                  return function(e) {
+                    var data = JSON.parse(e.target.result);
+                    app.storage.setAllLocalStorage(data);
+
+                    // Open confirmation window
+                    window.dispatchEvent(new CustomEvent('addPopup', {
+                      detail: {
+                        text: 'Data restored!',
+                        inputs: [{ value: 'Continue', type: 'button'}]
+                      }
+                    }));
+                  };
+                })(f);
+                reader.readAsText(f);
+              }
+              performClick();
+            }
+          },
+          { value: 'Cancel', type: 'button' }
+        ]
+      }
+    }));
   }
 
   backupToChrome(clearChromeStorage = false) {
     // Open confirmation window
     window.dispatchEvent(new CustomEvent('addPopup', {
       detail: {
-        text: 'Save all data to the cloud?<br><em>(scores, levels, etc.)</em>',
+        text: 'Save all local data to the cloud?<br><em>(scores, levels, etc.)</em>',
         inputs: [
           { value: 'Backup', type: 'button',
             callback: function() {
@@ -226,7 +247,7 @@ class StorageManager {
     // Open confirmation window
     window.dispatchEvent(new CustomEvent('addPopup', {
       detail: {
-        text: 'Save all data to the cloud?<br><em>(scores, levels, etc.)</em>',
+        text: 'Restore all data from the cloud?<br><em>(scores, levels, etc.)</em>',
         inputs: [
           { value: 'Restore', type: 'button',
             callback: function() {
