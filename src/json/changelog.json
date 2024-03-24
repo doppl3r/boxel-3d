@@ -282,9 +282,21 @@
     ]
   },
   {
+    "version": "1.2.1",
+    "revisions": [
+      "Added a new community level",
+      "Added a new community Discord link",
+      "Update render logic"
+    ]
+  },
+  {
     "version": "1.3.0",
     "revisions": [
-      "Replaced jQuery with Vue.js"
+      "Added FPS option",
+      "Updated skins page",
+      "Updated audio system",
+      "Updated new UI framework (Vue.js)",
+      "Removed old UI framework (jQuery)"
     ]
   }
 ]
