@@ -9,7 +9,7 @@
   import OriginPageLevelEditor from './OriginPageLevelEditor.vue';
   import OriginPopup from './OriginPopup.vue';
 
-  // TODO: Conditionally render components
+  // Conditionally render components
   var page = ref('home');
 
   function addEventListeners() {
@@ -36,7 +36,7 @@
 
   onUnmounted(function() {
     removeEventListeners();
-  })
+  });
 </script>
 
 <template>
