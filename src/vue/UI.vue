@@ -4,7 +4,7 @@
   import Bubble from './Bubble.vue'; // v2.0 theme
 
   // TODO: Get active theme from settings
-  var theme = ref('origin');
+  var theme = ref('bubble');
 </script>
 
 <template>

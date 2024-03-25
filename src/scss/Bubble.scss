@@ -1,5 +1,16 @@
 .ui-bubble {
+  font-family: 'Comfortaa-Bold';
+  font-size: clamp(16px, 4vh, 32px);
 
+  h1 {
+    font-size: 4em;
+    margin: 0;
+  }
+
+  p {
+    font-size: 1em;
+    margin: 0;
+  }
 }
 
 @media (max-width: 640px) {

@@ -1,7 +1,7 @@
 <script setup>
   import '../scss/Bubble.scss';
   import { ref, onMounted, onUnmounted } from 'vue';
-  import BubblePageHome from './OriginPageHome.vue';
+  import BubblePageHome from './BubblePageHome.vue';
 
   // Conditionally render components
   var page = ref('home');

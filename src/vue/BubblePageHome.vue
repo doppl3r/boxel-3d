@@ -8,5 +8,8 @@
 </script>
 
 <template>
-  
+  <div class="content">
+    <h1>BOXEL3D</h1>
+    <p>Now includes free cookies!</p>
+  </div>
 </template>
