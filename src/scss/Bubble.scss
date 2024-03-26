@@ -1,15 +1,136 @@
 .ui-bubble {
   font-family: 'Comfortaa-Bold';
   font-size: clamp(16px, 4vh, 32px);
+  width: 100%;
+  height: 100%;
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+
+    .nav {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      padding: 1.5em;
+      position: absolute;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+    }
+
+    .content {
+      text-align: center;
+      position: relative;
+
+      .carousel {
+        display: flex;
+        justify-content: center;
+
+        .item {
+          cursor: pointer;
+          padding: 0.5em;
+          position: relative;
+          
+          img {
+            width: 6.25em;
+            box-shadow: 0em 0.25em 0em rgba(0, 0, 0, 0.25);
+            border-radius: 0.75em;
+          }
+
+          .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+      }
+    }
+
+    .footer {
+      display: flex;
+      padding: 1.5em;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+  }
 
   h1 {
+    color: #ffffff;
     font-size: 4em;
-    margin: 0;
+    margin: 0em 0em 0.125em;
+    text-shadow: 0em 0.0625em 0em rgba(0, 0, 0, 0.25);
   }
 
   p {
+    color: #ffffff;
     font-size: 1em;
-    margin: 0;
+    margin: 0em 0em 1em;
+    text-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
+  }
+
+  .button {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+    text-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
+    
+    &.square {
+      border-radius: 0.75em;
+      width: 2.5em;
+      height: 2.5em;
+    }
+
+    &.wide {
+      border-radius: 99em;
+      height: 2em;
+      padding: 0.5em 1em 0.5em 0em;
+
+      .material-symbols-rounded {
+        box-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25); 
+        border-radius: 99em;
+        width: 1.5em;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.5em;
+  
+        &.blue {
+          background-color: #4CA9FF;
+        }
+      }
+    }
+
+    &.right {
+      margin-left: auto;
+    }
   }
 }
 
@@ -17,11 +138,34 @@
 
 }
 
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.5em;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
 /* Font Family */
 @font-face {
   font-family: 'Comfortaa-Bold';
-  src: url('/fonts/Comfortaa-Bold.woff2') format('woff2'),
-    url('/fonts/Comfortaa-Bold.woff') format('woff');
+  src: url('/fonts/Comfortaa-Bold.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url('/fonts/Material-Symbols-Rounded.woff2') format('woff2');
 }
