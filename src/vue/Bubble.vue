@@ -2,6 +2,7 @@
   import '../scss/Bubble.scss';
   import { ref, onMounted, onUnmounted } from 'vue';
   import BubblePageHome from './BubblePageHome.vue';
+  import BubblePageSkins from './BubblePageSkins.vue';
 
   // Conditionally render components
   var page = ref('home');
@@ -36,5 +37,6 @@
 <template>
   <div class="ui-bubble">
     <BubblePageHome v-if="page == 'home'" @set-page="setPage" />
+    <BubblePageSkins v-if="page == 'skins'" @set-page="setPage" />
   </div>
 </template>

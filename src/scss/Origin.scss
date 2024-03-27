@@ -979,6 +979,28 @@
       }
     }
   }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.5); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); border-radius: 999px; }
+  
+  /* Animation keyframes */
+  @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+  @keyframes shrink { 0% { transform: scale(1); } 50% { transform: scale(0.90); } 100% { transform: scale(1); } }
+  @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(5deg); } 66% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
+  @keyframes wave-delay { 0% { transform: translate(0px, 0px); } 5% { transform: translate(0px, -5px); } 10% { transform: translate(0px, 5px); } 15% { transform: translate(0px, 0px); } }
+  @keyframes shake-delay { 0% { transform: rotate(0); } 5% { transform: rotate(5deg); } 10% { transform: rotate(-5deg); } 15% { transform: rotate(0deg); } }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}
+
+  /* Font Family */
+  @font-face {
+    font-family: 'Comfortaa-Bold';
+    src: url('/fonts/Comfortaa-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1122,26 +1144,4 @@
       }
     }
   }
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); border-radius: 999px; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.5); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); border-radius: 999px; }
-
-/* Animation keyframes */
-@keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-@keyframes shrink { 0% { transform: scale(1); } 50% { transform: scale(0.90); } 100% { transform: scale(1); } }
-@keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(5deg); } 66% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
-@keyframes wave-delay { 0% { transform: translate(0px, 0px); } 5% { transform: translate(0px, -5px); } 10% { transform: translate(0px, 5px); } 15% { transform: translate(0px, 0px); } }
-@keyframes shake-delay { 0% { transform: rotate(0); } 5% { transform: rotate(5deg); } 10% { transform: rotate(-5deg); } 15% { transform: rotate(0deg); } }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}
-
-/* Font Family */
-@font-face {
-  font-family: 'Comfortaa-Bold';
-  src: url('/fonts/Comfortaa-Bold.woff2') format('woff2');
-  font-weight: bold;
-  font-style: normal;
 }

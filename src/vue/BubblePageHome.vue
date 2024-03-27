@@ -5,6 +5,7 @@
   import messages from '../json/messages.json';
 
   // Initialize attributes
+  var emit = defineEmits(['setPage']);
   var manifest = ref();
   var version = ref();
   var message = ref(getRandomMessage()); // Optional: getRandomMessage()
@@ -79,15 +80,15 @@
       <h1>BOXEL3D</h1>
       <p>{{ message }}</p>
       <div class="carousel">
-        <div class="item">
+        <div class="item" @click="emit('setPage', 'skins')">
           <img src="/img/svg/button-skins.svg">
           <p class="text">Skins</p>
         </div>
-        <div class="item">
+        <div class="item" @click="emit('setPage', 'level-editor')">
           <img src="/img/svg/button-level-editor.svg">
           <p class="text">Level Editor</p>
         </div>
-        <div class="item">
+        <div class="item" @click="emit('setPage', 'level-picker')">
           <img src="/img/svg/button-play.svg">
           <p class="text">Play</p>
         </div>
@@ -99,7 +100,7 @@
         {{ version }}
       </a>
       <a class="button right fade-in" @click="openReviewLink">
-        <span class="material-symbols-rounded">sms</span>
+        <span class="material-symbols-rounded">favorite</span>
         Write a review
       </a>
     </div>
