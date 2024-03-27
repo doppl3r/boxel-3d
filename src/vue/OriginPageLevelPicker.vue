@@ -100,8 +100,10 @@
   function scrollToLevel() {
     var el = document.querySelector("[name='" + progressName + "']");
 
-    el.focus();
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    if (el) {
+      el.focus();
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
   }
 
   function exitLevelPicker() {
