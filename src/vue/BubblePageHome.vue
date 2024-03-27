@@ -1,10 +1,69 @@
 <script setup>
-  import { onMounted } from 'vue';
+  import { ref, onMounted } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
-  
+  import changelog from '../json/changelog.json';
+  import messages from '../json/messages.json';
+
+  // Initialize attributes
+  var manifest = ref();
+  var version = ref();
+  var message = ref(getRandomMessage()); // Optional: getRandomMessage()
+  var origin = ref(location.origin);
+  var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
+
+  async function updateVersion() {
+    var response = await fetch(origin.value + pathname.value + 'manifest.json');
+    var json = await response.json();
+    manifest.value = json;
+    version.value = 'v' + json.version;
+  }
+
+  function getRandomMessage() {
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+  function openChangelog() {
+    var text = '';
+
+    // Update text from changelog json file
+    for (var i = changelog.length - 1; i >= 0; i--) {
+      var log = changelog[i];
+      text += 'v' + log.version + '\n';
+
+      // Loop through version revisions
+      log.revisions.forEach(function(revision) { text += '- ' + revision + '\n'; });
+      text += '\n';
+    }
+
+    // Dispatch new popup from event
+    window.dispatchEvent(new CustomEvent('addPopup', {
+      detail: {
+        text: '<div style="text-align: left;">' + text + '</div>',
+        inputs: [{ type: 'button', value: 'Close' }]
+      }
+    }));
+  }
+
+  function openReviewLink() {
+    var url = '';
+
+    // Other userAgents: https://stackoverflow.com/a/26358856/2510368
+    if (navigator.userAgent.indexOf("Edg") != -1) { url = 'https://microsoftedge.microsoft.com/addons/detail/boxel-3d/gcklngphfijejfnnicbadhghhdifidek'; }
+    else if (navigator.userAgent.indexOf("Chrome") != -1) { url = 'https://chromewebstore.google.com/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews'; }
+    else if (navigator.userAgent.indexOf("Firefox") != -1) { url = 'https://addons.mozilla.org/en-US/firefox/addon/boxel-3d-game/'; }
+
+    // Open the link
+    openLink(url);
+  }
+
+  function openLink(url) {
+    if (chrome.tabs) chrome.tabs.create({ url: url });
+    else window.open(url, '_blank');
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
-    
+    updateVersion();
   });
 </script>
 
@@ -14,11 +73,11 @@
       <img src="/img/svg/background-purple.svg">
     </div>
     <div class="nav">
-      <BubbleButtonSettings class="button square right" />
+      <BubbleButtonSettings class="button right fade-in" />
     </div>
-    <div class="content">
+    <div class="content fade-in">
       <h1>BOXEL3D</h1>
-      <p>Now includes free cookies!</p>
+      <p>{{ message }}</p>
       <div class="carousel">
         <div class="item">
           <img src="/img/svg/button-skins.svg">
@@ -35,8 +94,12 @@
       </div>
     </div>
     <div class="footer">
-      <a class="button wide right">
-        <span class="material-symbols-rounded blue">sms</span>
+      <a class="button fade-in" :class="{ hidden: version == '' }" @click="openChangelog">
+        <span class="material-symbols-rounded">history</span>
+        {{ version }}
+      </a>
+      <a class="button right fade-in" @click="openReviewLink">
+        <span class="material-symbols-rounded">sms</span>
         Write a review
       </a>
     </div>

@@ -4,6 +4,10 @@
   width: 100%;
   height: 100%;
 
+  * {
+    transition: all 0.1s ease-out;
+  }
+
   .page {
     display: flex;
     flex-direction: column;
@@ -36,11 +40,30 @@
       pointer-events: none;
       top: 0;
       left: 0;
+
+      .button {
+        background-color: rgba(0, 0, 0, 0.25);
+        border-radius: 0.75em;
+        width: 2.5em;
+        height: 2.5em;
+        color: #ffffff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+        text-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
+    
+        &.right {
+          margin-left: auto;
+        }
+      }
     }
 
     .content {
       text-align: center;
       position: relative;
+      padding-bottom: 2em;
 
       .carousel {
         display: flex;
@@ -74,6 +97,36 @@
       width: 100%;
       bottom: 0;
       left: 0;
+
+      .button {
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.25);
+        border-radius: 99em;
+        color: #ffffff;
+        cursor: pointer;
+        display: flex;
+        height: 2em;
+        justify-content: center;
+        padding: 0.5em 1em 0.5em 0em;
+        pointer-events: all;
+        text-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
+
+        .material-symbols-rounded {
+          background-color: #4CA9FF;
+          box-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25); 
+          border-radius: 99em;
+          width: 1.5em;
+          height: 1.5em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 0.5em;
+        }
+    
+        &.left { margin-left: auto; }
+        &.center { margin-left: auto; margin-right: auto; }
+        &.right { margin-left: auto; }
+      }
     }
   }
 
@@ -91,51 +144,37 @@
     text-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
   }
 
-  .button {
-    background-color: rgba(0, 0, 0, 0.25);
-    color: #ffffff;
+  a {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: all;
-    text-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
-    
-    &.square {
-      border-radius: 0.75em;
-      width: 2.5em;
-      height: 2.5em;
-    }
+  }
 
-    &.wide {
-      border-radius: 99em;
-      height: 2em;
-      padding: 0.5em 1em 0.5em 0em;
-
-      .material-symbols-rounded {
-        box-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25); 
-        border-radius: 99em;
-        width: 1.5em;
-        height: 1.5em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 0.5em;
-  
-        &.blue {
-          background-color: #4CA9FF;
-        }
-      }
-    }
-
-    &.right {
-      margin-left: auto;
-    }
+  /* Animation classes */
+  .fade-in {
+    animation: fade-in 0.25s ease-in-out;
+    animation-fill-mode: forwards;
   }
 }
 
 @media (max-width: 640px) {
 
+}
+
+/* Animation keyframes */
+@keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+/* Font Family */
+@font-face {
+  font-family: 'Comfortaa-Bold';
+  src: url('/fonts/Comfortaa-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url('/fonts/Material-Symbols-Rounded.woff2') format('woff2');
 }
 
 .material-symbols-rounded {
@@ -153,19 +192,4 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
-}
-
-/* Font Family */
-@font-face {
-  font-family: 'Comfortaa-Bold';
-  src: url('/fonts/Comfortaa-Bold.woff2') format('woff2');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Material Symbols Rounded';
-  font-style: normal;
-  font-weight: 100 700;
-  src: url('/fonts/Material-Symbols-Rounded.woff2') format('woff2');
 }

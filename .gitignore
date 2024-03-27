@@ -4,3 +4,4 @@ build/
 dist/
 debug.log
 package-lock.json
+*.afdesign~lock~
