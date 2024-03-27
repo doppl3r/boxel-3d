@@ -123,6 +123,7 @@
     }
     
     if (e.code == 'Escape') {
+      e.preventDefault();
       exitLevelPicker();
     }
   }

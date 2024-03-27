@@ -145,6 +145,7 @@
         app.levelEditor.resetZAxis();
       }
       else if (e.code == 'Escape') {
+        e.preventDefault();
         if (app.play == true) pauseLevel();
         else exitLevel();
       }

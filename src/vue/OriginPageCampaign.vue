@@ -53,6 +53,7 @@
     // Make sure popup is closed
     if (isClosed.value == true) {
       if (e.code == 'Escape') {
+        e.preventDefault();
         pauseLevel();
       }
       else if (e.code == 'KeyE') {

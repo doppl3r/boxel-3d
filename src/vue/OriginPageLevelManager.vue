@@ -104,6 +104,7 @@
 
   function keydown(e) {
     if (e.code == 'Escape') {
+      e.preventDefault();
       exitLevelManager();
     }
   }
