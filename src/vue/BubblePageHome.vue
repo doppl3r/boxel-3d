@@ -79,18 +79,18 @@
     <div class="content fade-in">
       <h1>BOXEL3D</h1>
       <p>{{ message }}</p>
-      <div class="carousel">
+      <div class="carousel no-scroll">
         <div class="item" @click="emit('setPage', 'skins')">
           <img src="/img/svg/button-skins.svg">
-          <p class="text">Skins</p>
+          <p class="title">Skins</p>
         </div>
         <div class="item" @click="emit('setPage', 'level-editor')">
           <img src="/img/svg/button-level-editor.svg">
-          <p class="text">Level Editor</p>
+          <p class="title">Level Editor</p>
         </div>
         <div class="item" @click="emit('setPage', 'level-picker')">
           <img src="/img/svg/button-play.svg">
-          <p class="text">Play</p>
+          <p class="title">Play</p>
         </div>
       </div>
     </div>

@@ -1,10 +1,11 @@
 <script setup>
-  import { onMounted, onUnmounted, ref } from 'vue';
+  import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import skins from '../json/skins.json';
 
   var emit = defineEmits(['setPage']);
+  var defaultSkin = ref()
 
   // Add event listener(s)
   function addEventListeners() {
@@ -73,11 +74,15 @@
     var id = settings.value.skin.id;
     skins.forEach(function(skin) {
       if (skin.id == id) {
-        skin.selected = true;
+        defaultSkin.value = skin;
       }
     });
   }
 
+  onBeforeMount(function() {
+    selectSkinFromStorage();
+  });
+  
   // Run function after being mounted (visible)
   onMounted(function() {
     addEventListeners();
@@ -102,10 +107,10 @@
     <div class="content fade-in">
       <h1>Skins</h1>
       <p>Select your player skin</p>
-      <BubbleCarousel :items="skins" />
+      <BubbleCarousel :items="skins" :selected="defaultSkin" class="hide-titles" />
     </div>
     <div class="footer">
-      <a class="button center fade-in" @click="openReviewLink">
+      <a class="button center fade-in" @click="exitSkins">
         <span class="material-symbols-rounded">check_box</span>
         Select
       </a>

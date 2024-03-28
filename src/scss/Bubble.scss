@@ -70,6 +70,31 @@
         overflow-x: auto;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
+        padding: 0 calc(50vw - 3.125em); // 50% window width - 50% item width
+
+        &.no-scroll {
+          justify-content: center;
+          overflow: hidden;
+          padding: 0;
+
+          .item {
+            transform: scale(1);
+            padding: 0.5em;
+
+            &:hover {
+              animation: shake 0.25s ease-in-out;
+              animation-fill-mode: forwards;
+            }
+          }
+        }
+
+        &.hide-titles {
+          .item {
+            .title {
+              display: none;
+            }
+          }
+        }
 
         &::-webkit-scrollbar {
           display: none;
@@ -77,16 +102,23 @@
 
         .item {
           cursor: pointer;
-          padding: 0.5em;
+          padding: 0.5em 0;
           position: relative;
+          transform: scale(0.84);
+          transition: transform 0.15s ease-out;
+          
+          &.selected {
+            transform: scale(1);
+          }
           
           img {
-            width: 6.25em;
-            box-shadow: 0em 0.25em 0em rgba(0, 0, 0, 0.25);
             border-radius: 0.75em;
+            box-shadow: 0em 0.25em 0em rgba(0, 0, 0, 0.25);
+            pointer-events: none;
+            width: 6.25em;
           }
 
-          .text {
+          .title {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -160,14 +192,15 @@
     animation: fade-in 0.25s ease-in-out;
     animation-fill-mode: forwards;
   }
+
+  /* Animation keyframes */
+  @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+  @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(5deg); } 66% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
 }
 
 @media (max-width: 640px) {
 
 }
-
-/* Animation keyframes */
-@keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
 
 /* Font Family */
 @font-face {
