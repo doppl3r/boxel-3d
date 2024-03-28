@@ -1,6 +1,7 @@
 <script setup>
   import { onMounted, onUnmounted, ref } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
+  import BubbleCarousel from './BubbleCarousel.vue';
   import skins from '../json/skins.json';
 
   var emit = defineEmits(['setPage']);
@@ -8,17 +9,20 @@
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('keydown', keydown);
+    window.addEventListener('itemSelected', updatePlayerSkin)
   }
   
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('keydown', keydown);
+    window.removeEventListener('itemSelected', updatePlayerSkin)
   }
 
   // Set initial variables
   var settings = ref(app.storage.getSettings());
 
-  function selectSkin(skin, e) {
+  function updatePlayerSkin(e) {
+    var skin = e.detail;
     settings.value.skin = skin;
     if (skin.id == 680) {
       // Open custom skin options
@@ -37,9 +41,6 @@
       app.player.setSkin({ id: skin.id, url: skin.url });
       app.updateSettings(settings.value);
     }
-
-    // Scroll to element
-    scrollToSkin(e.target);
   }
 
   function changeImage(e) {
@@ -57,26 +58,6 @@
     }
   }
 
-  function isSelected(skin) {
-    return skin.id == settings.value.skin.id;
-  }
-
-  function scroll(e) {
-    var parent = getScrollParent(e.target);
-    parent.scrollLeft += e.deltaX + e.deltaY;
-  }
-
-  function getScrollParent(node) {
-    if (node == null) return null;
-    if (node.scrollWidth > node.clientWidth) return node;
-    else return getScrollParent(node.parentNode);
-  }
-
-  function scrollToSkin(el) {
-    if (el == null) el = document.querySelector("[class*='selected']");
-    el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-  }
-
   function exitSkins() {
     emit('setPage', 'home');
   }
@@ -88,9 +69,17 @@
     }
   }
 
+  function selectSkinFromStorage() {
+    var id = settings.value.skin.id;
+    skins.forEach(function(skin) {
+      if (skin.id == id) {
+        skin.selected = true;
+      }
+    });
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
-    scrollToSkin()
     addEventListeners();
   })
 
@@ -113,14 +102,7 @@
     <div class="content fade-in">
       <h1>Skins</h1>
       <p>Select your player skin</p>
-      <div class="carousel" @wheel="scroll($event)">
-        <template v-for="(skin, key) of skins">
-          <div class="item" :class="{ selected: isSelected(skin) }" :id="skin.id" @click="selectSkin(skin, $event)">
-            <img :src="isSelected(skin) ? settings.skin.url : skin.url">
-            <p class="text">{{ skin.title }}</p>
-          </div>
-        </template>
-      </div>
+      <BubbleCarousel :items="skins" />
     </div>
     <div class="footer">
       <a class="button center fade-in" @click="openReviewLink">
