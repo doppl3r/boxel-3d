@@ -1,6 +1,7 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
+  import BubbleCarousel from './BubbleCarousel.vue';
   import changelog from '../json/changelog.json';
   import messages from '../json/messages.json';
 
@@ -11,6 +12,38 @@
   var message = ref(getRandomMessage()); // Optional: getRandomMessage()
   var origin = ref(location.origin);
   var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
+  var menu = [
+    {
+      "title": "Skins",
+      "url": "/img/svg/button-skins.svg",
+      "callback": function() { emit('setPage', 'skins') }
+    },
+    {
+      "title": "Level Editor",
+      "url": "/img/svg/button-level-editor.svg",
+      "callback": function() { emit('setPage', 'level-editor') }
+    },
+    {
+      "title": "Play",
+      "url": "/img/svg/button-play.svg",
+      "callback": function() { emit('setPage', 'play') }
+    }
+  ];
+
+  // Add event listener(s)
+  function addEventListeners() {
+    window.addEventListener('itemSelected', selectMenuItem)
+  }
+  
+  // Remove event listeners
+  function removeEventListeners() {
+    window.removeEventListener('itemSelected', selectMenuItem)
+  }
+
+  function selectMenuItem(e) {
+    var item = e.detail;
+    if (item.callback) item.callback();
+  }
 
   async function updateVersion() {
     var response = await fetch(origin.value + pathname.value + 'manifest.json');
@@ -65,6 +98,11 @@
   // Run function after being mounted (visible)
   onMounted(function() {
     updateVersion();
+    addEventListeners();
+  });
+  
+  onUnmounted(function() {
+    removeEventListeners();
   });
 </script>
 
@@ -79,20 +117,7 @@
     <div class="content fade-in">
       <h1>BOXEL3D</h1>
       <p>{{ message }}</p>
-      <div class="carousel no-scroll">
-        <div class="item" @click="emit('setPage', 'skins')">
-          <img src="/img/svg/button-skins.svg">
-          <p class="title">Skins</p>
-        </div>
-        <div class="item" @click="emit('setPage', 'level-editor')">
-          <img src="/img/svg/button-level-editor.svg">
-          <p class="title">Level Editor</p>
-        </div>
-        <div class="item" @click="emit('setPage', 'level-picker')">
-          <img src="/img/svg/button-play.svg">
-          <p class="title">Play</p>
-        </div>
-      </div>
+      <BubbleCarousel :items="menu" scrolling="no" />
     </div>
     <div class="footer">
       <a class="button fade-in" :class="{ hidden: version == '' }" @click="openChangelog">

@@ -7,9 +7,9 @@
 
   function selectItem(item, e) {
     var el = getSelectedElement(e.target);
+    scrollToSelected(el);
     selectedItem.value = item;
     window.dispatchEvent(new CustomEvent('itemSelected', { detail: item }));
-    scrollToSelected(el);
   }
 
   function getSelectedElement(node) {
@@ -20,7 +20,7 @@
 
   function scrollFromEvent(e) {
     var parent = getScrollParent(e.target);
-    parent.scrollLeft += e.deltaX + e.deltaY; // All scroll events move horizontally
+    if (parent) parent.scrollLeft += e.deltaX + e.deltaY; // All scroll events move horizontally
   }
 
   function getScrollParent(node) {
@@ -36,6 +36,7 @@
   }
 
   function isSelected(item) {
+    if (item.id == null) return false;
     return selectedItem.value.id == item.id;
   }
   
