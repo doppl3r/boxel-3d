@@ -83,9 +83,9 @@
 
 <template>
   <Transition name="fade">
-    <div class="dialog" v-if="isOpen == true">
+    <div class="popup" v-if="isOpen == true">
       <div class="background" @click="runLastInputCallback"></div>
-      <div class="wrapper">
+      <div class="content">
         <p v-html="text"></p>
         <div class="inputs">
           <template v-for="(input, index) of inputs">
@@ -93,6 +93,9 @@
             <input :class="input.class" :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">
           </template>
         </div>
+        <a class="close" @click="runLastInputCallback">
+          <span class="material-symbols-rounded">close</span>
+        </a>
       </div>
     </div>
   </Transition>

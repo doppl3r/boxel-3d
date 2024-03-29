@@ -72,7 +72,7 @@
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('addPopup', {
       detail: {
-        text: '<div style="text-align: left;">' + text + '</div>',
+        text: '<div style="text-align: left; padding-right: 1em;">' + text + '</div>',
         inputs: [{ type: 'button', value: 'Close' }]
       }
     }));
