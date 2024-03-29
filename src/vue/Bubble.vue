@@ -4,6 +4,7 @@
   import BubblePageHome from './BubblePageHome.vue';
   import BubblePageSkins from './BubblePageSkins.vue';
   import BubblePopup from './BubblePopup.vue';
+  import BubbleSettings from './BubbleSettings.vue';
 
   // Conditionally render components
   var page = ref('home');
@@ -40,5 +41,6 @@
     <BubblePageHome v-if="page == 'home'" @set-page="setPage" />
     <BubblePageSkins v-if="page == 'skins'" @set-page="setPage" />
     <BubblePopup />
+    <BubbleSettings />
   </div>
 </template>
