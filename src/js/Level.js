@@ -218,7 +218,7 @@ class Level extends Group {
     app.timer.pause();
 
     // Dispatch new popup from event
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: text,
         inputs: [{ type: 'button', value: 'Continue', callback: function() {

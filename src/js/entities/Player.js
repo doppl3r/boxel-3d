@@ -208,7 +208,7 @@ class Player extends Cube {
     app.play = false;
 
     // Dispatch new popup from event
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: text,
         inputs: [

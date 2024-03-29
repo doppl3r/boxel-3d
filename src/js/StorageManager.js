@@ -163,7 +163,7 @@ class StorageManager {
 
   restoreFromFile() {
     // Open confirmation window
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: 'Restore all data from a file?<br><em>(scores, levels, etc.)</em>',
         inputs: [
@@ -188,7 +188,7 @@ class StorageManager {
                     app.storage.setAllLocalStorage(data);
 
                     // Open confirmation window
-                    window.dispatchEvent(new CustomEvent('addPopup', {
+                    window.dispatchEvent(new CustomEvent('openPopup', {
                       detail: {
                         text: 'Data restored!',
                         inputs: [{ value: 'Continue', type: 'button'}]
@@ -209,7 +209,7 @@ class StorageManager {
 
   backupToChrome(clearChromeStorage = false) {
     // Open confirmation window
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: 'Save all local data to the cloud?<br><em>(scores, levels, etc.)</em>',
         inputs: [
@@ -226,7 +226,7 @@ class StorageManager {
                   index++; // Show message on last item
                   if (index == localStorage.length) {
                     // Show confirmation
-                    window.dispatchEvent(new CustomEvent('addPopup', {
+                    window.dispatchEvent(new CustomEvent('openPopup', {
                       detail: {
                         text: 'Success! Your data was backed up to your account.',
                         inputs: [{ value: 'Continue', type: 'button' }]
@@ -245,7 +245,7 @@ class StorageManager {
 
   restoreFromChrome(clearLocalStorage = false) {
     // Open confirmation window
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: 'Restore all data from the cloud?<br><em>(scores, levels, etc.)</em>',
         inputs: [
@@ -262,7 +262,7 @@ class StorageManager {
                 }
 
                 // Show confirmation
-                window.dispatchEvent(new CustomEvent('addPopup', {
+                window.dispatchEvent(new CustomEvent('openPopup', {
                   detail: {
                     text: 'Success! Your data was restored from your account.',
                     inputs: [{ value: 'Continue', type: 'button' }]

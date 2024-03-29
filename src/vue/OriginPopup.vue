@@ -8,19 +8,19 @@
 
   // Add event listener(s)
   function addEventListeners() {
-    window.addEventListener('addPopup', addPopup);
+    window.addEventListener('openPopup', openPopup);
 	  window.addEventListener('closePopup', closePopup);
     window.addEventListener('keydown', keydown);
   }
   
   // Remove event listeners
   function removeEventListeners() {
-    window.removeEventListener('addPopup', addPopup);
+    window.removeEventListener('openPopup', openPopup);
 	  window.removeEventListener('closePopup', closePopup);
     window.removeEventListener('keydown', keydown);
   }
 
-  function addPopup(e) {
+  function openPopup(e) {
     isOpen.value = true;
 
     // Assign values from custom event detail

@@ -82,7 +82,7 @@
 
   function deleteLevel(item) {
     // Dispatch new popup from event
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: 'Are you sure you want to <em>delete</em> this level?',
         inputs: [

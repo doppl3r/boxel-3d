@@ -27,7 +27,7 @@
     settings.value.skin = skin;
     if (skin.id == 680) {
       // Open custom skin options
-      window.dispatchEvent(new CustomEvent('addPopup', {
+      window.dispatchEvent(new CustomEvent('openPopup', {
         detail: {
           text: 'Custom Skin',
           inputs: [

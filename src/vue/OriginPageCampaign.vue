@@ -29,7 +29,7 @@
 
   function pauseLevel() {
     app.pauseLevel();
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: 'Paused',
         inputs: [

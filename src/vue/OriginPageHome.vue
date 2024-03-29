@@ -67,7 +67,7 @@
     }
 
     // Dispatch new popup from event
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: '<img src="img/svg/cloud-check.svg">',
         inputs: inputs
@@ -89,7 +89,7 @@
     }
 
     // Dispatch new popup from event
-    window.dispatchEvent(new CustomEvent('addPopup', {
+    window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: '<div style="text-align: left;">' + text + '</div>',
         inputs: [{ type: 'button', value: 'Close' }]

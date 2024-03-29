@@ -147,7 +147,7 @@ class LevelEditor {
   exitLevel() {
     if (app.levelHistory.history.length > 2) {
       // Dispatch new popup from event
-      window.dispatchEvent(new CustomEvent('addPopup', {
+      window.dispatchEvent(new CustomEvent('openPopup', {
         detail: {
           text: 'Would you like to <em>save</em> your level?',
           inputs: [
