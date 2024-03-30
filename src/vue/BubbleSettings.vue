@@ -64,7 +64,10 @@
   }
 
   function updateSettings(e) {
-    console.log(e);
+    var el = e.target;
+    var key = el.id;
+    var value = el.value;
+    settings.value[key] = value;
   }
 
   onMounted(function() {
@@ -100,8 +103,61 @@
             <p>Gameplay settings</p>
             <div class="group">
               <div class="option">
-                <input type="checkbox" id="motion" :checked="settings.motion == 0" @change="updateSettings($event)">
+                <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
                 <label for="motion">Reduce Motion</label>
+              </div>
+              <div class="option">
+                <input type="checkbox" id="speedrun" :checked="settings.speedrun == true" @change="updateSettings($event)">
+                <label for="speedrun">Speedrun Mode</label>
+              </div>
+            </div>
+          </div>
+          <div class="panel" v-if="tab == 'graphics'">
+            <p>Graphics settings</p>
+            <div class="group">
+              <div class="option">
+                <label for="quality">Quality</label>
+                <input type="range" id="quality" min="1" max="10" step="1" :value="settings.quality" @change="updateSettings($event)">
+                <label for="quality">{{ (settings.quality * 10) }}%</label>
+              </div>
+              <div class="option">
+                <input type="checkbox" id="fullscreen" :checked="settings.fullscreen == true" @change="updateSettings($event)">
+                <label for="fullscreen">Fullscreen</label>
+              </div>
+              <div class="option">
+                <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
+                <label for="stats">Show FPS</label>
+              </div>
+              <div class="option">
+                <input type="checkbox" id="theme" :checked="settings.theme == 'bubble'" @change="updateSettings($event)">
+                <label for="theme">New UI</label>
+              </div>
+            </div>
+          </div>
+          <div class="panel" v-if="tab == 'audio'">
+            <p>Audio settings</p>
+            <div class="group">
+              <div class="option">
+                <label for="volume">Volume</label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" :value="settings.volume" @change="updateSettings($event)">
+                <label for="volume">{{ (settings.volume * 100) }}%</label>
+              </div>
+            </div>
+          </div>
+          <div class="panel" v-if="tab == 'data'">
+            <p>Data settings</p>
+            <div class="group">
+              <div class="option">
+                <label>Backup to...</label>
+                <input type="button" value="Google">
+                <input type="button" value="File">
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label>Import from...</label>
+                <input type="button" value="Google">
+                <input type="button" value="File">
               </div>
             </div>
           </div>
