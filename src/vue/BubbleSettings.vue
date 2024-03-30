@@ -89,7 +89,7 @@
             <span class="material-symbols-rounded">gamepad</span>
           </div>
           <div class="tab" :class="{ 'selected': tab == 'graphics' }" @click="tab = 'graphics'">
-            <span class="material-symbols-rounded">visibility</span>
+            <span class="material-symbols-rounded">landscape</span>
           </div>
           <div class="tab" :class="{ 'selected': tab == 'audio' }" @click="tab = 'audio'">
             <span class="material-symbols-rounded">volume_up</span>
@@ -121,16 +121,16 @@
                 <label for="quality">{{ (settings.quality * 10) }}%</label>
               </div>
               <div class="option">
-                <input type="checkbox" id="fullscreen" :checked="settings.fullscreen == true" @change="updateSettings($event)">
-                <label for="fullscreen">Fullscreen</label>
+                <input type="checkbox" id="theme" :checked="settings.theme == 'bubble'" @change="updateSettings($event)">
+                <label for="theme">New UI</label>
               </div>
               <div class="option">
                 <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
                 <label for="stats">Show FPS</label>
               </div>
               <div class="option">
-                <input type="checkbox" id="theme" :checked="settings.theme == 'bubble'" @change="updateSettings($event)">
-                <label for="theme">New UI</label>
+                <input type="checkbox" id="fullscreen" :checked="settings.fullscreen == true" @change="updateSettings($event)">
+                <label for="fullscreen">Fullscreen</label>
               </div>
             </div>
           </div>
