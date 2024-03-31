@@ -40,7 +40,7 @@
   <div class="ui-bubble">
     <BubblePageHome v-if="page == 'home'" @set-page="setPage" />
     <BubblePageSkins v-if="page == 'skins'" @set-page="setPage" />
-    <BubblePopup />
     <BubbleSettings />
+    <BubblePopup />
   </div>
 </template>

@@ -63,11 +63,60 @@
     }
   }
 
-  function updateSettings(e) {
+  function updateSettings(e, options, callback = function(){}) {
     var el = e.target;
     var key = el.id;
     var value = el.value;
+    var type = e.target.type;
+
+    // Resolve range values
+    if (type == 'range') value = parseFloat(value);
+    
+    // Resolve checkbox values
+    if (type == 'checkbox') value = el.checked;
+    if (options) value = options[value];
+
+    // Store settings
     settings.value[key] = value;
+    app.updateSettings(settings.value);
+    callback();
+  }
+
+  function openLink(url) {
+    if (chrome.tabs) chrome.tabs.create({ url: url });
+    else window.open(url, '_blank');
+  }
+
+  function openFullscreen() {
+    openLink(location.href + '?fullscreen=true');
+  }
+
+  function updateTheme() {
+    window.dispatchEvent(new CustomEvent('updateTheme'));
+  }
+
+  function isFullscreen() {
+    return location.href.includes('?fullscreen=true');
+  }
+
+  function hasChromeStorage() {
+    return chrome.storage != null;
+  }
+
+  function backupToFile() {
+    app.storage.backupToFile();
+  }
+
+  function backupToChrome() {
+    app.storage.backupToChrome();
+  }
+
+  function restoreFromFile() {
+    app.storage.restoreFromFile();
+  }
+
+  function restoreFromChrome() {
+    app.storage.restoreFromChrome();
   }
 
   onMounted(function() {
@@ -104,11 +153,7 @@
             <div class="group">
               <div class="option">
                 <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
-                <label for="motion">Reduce Motion</label>
-              </div>
-              <div class="option">
-                <input type="checkbox" id="speedrun" :checked="settings.speedrun == true" @change="updateSettings($event)">
-                <label for="speedrun">Speedrun Mode</label>
+                <label for="motion">Camera Motion</label>
               </div>
             </div>
           </div>
@@ -121,16 +166,16 @@
                 <label for="quality">{{ (settings.quality * 10) }}%</label>
               </div>
               <div class="option">
-                <input type="checkbox" id="theme" :checked="settings.theme == 'bubble'" @change="updateSettings($event)">
-                <label for="theme">New UI</label>
+                <input type="checkbox" id="theme" :checked="settings.theme == 'bubble'" @change="updateSettings($event, { true: 'bubble', false: 'origin' }, updateTheme)">
+                <label for="theme">New Theme</label>
+              </div>
+              <div class="option" v-if="isFullscreen() == false">
+                <input type="checkbox" id="fullscreen" @change="openFullscreen()">
+                <label for="fullscreen">Fullscreen</label>
               </div>
               <div class="option">
                 <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
-                <label for="stats">Show FPS</label>
-              </div>
-              <div class="option">
-                <input type="checkbox" id="fullscreen" :checked="settings.fullscreen == true" @change="updateSettings($event)">
-                <label for="fullscreen">Fullscreen</label>
+                <label for="stats">Show Stats</label>
               </div>
             </div>
           </div>
@@ -149,15 +194,15 @@
             <div class="group">
               <div class="option">
                 <label>Backup to...</label>
-                <input type="button" value="Google">
-                <input type="button" value="File">
+                <input type="button" value="File" @click="backupToFile">
+                <input v-if="hasChromeStorage()" type="button" value="Google" @click="backupToChrome">
               </div>
             </div>
             <div class="group">
               <div class="option">
-                <label>Import from...</label>
-                <input type="button" value="Google">
-                <input type="button" value="File">
+                <label>Restore from...</label>
+                <input type="button" value="File" @click="restoreFromFile">
+                <input v-if="hasChromeStorage()" type="button" value="Google" @click="restoreFromChrome">
               </div>
             </div>
           </div>

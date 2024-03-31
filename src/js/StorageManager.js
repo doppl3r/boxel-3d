@@ -97,7 +97,7 @@ class StorageManager {
     var defaultSettings = { 
       'volume': 0,
       'quality': 6,
-      'theme': 'origin',
+      'theme': 'bubble',
       'snap': 8,
       'skin': { id: 1, url: 'img/png/skins/pink.png' },
       'motion': true,
