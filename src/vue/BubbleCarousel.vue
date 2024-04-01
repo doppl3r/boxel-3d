@@ -32,12 +32,12 @@
 
   function scrollToSelected(el) {
     if (el == null) el = document.querySelector("[class*='selected']");
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }
 
   function isSelected(item) {
-    if (item.id == null) return false;
-    return selectedItem.value.id == item.id;
+    if (item.title == null || selectedItem.value == null) return false;
+    return selectedItem.value.title == item.title;
   }
   
   function setDefaultItem() {
@@ -61,7 +61,7 @@
 <template>
   <div class="carousel" @wheel.passive="scrollFromEvent($event)">
     <template v-for="(item, key) of items">
-      <div class="item" :class="{ 'selected': isSelected(item) }" :id="item.id" @click="selectItem(item, $event)">
+      <div class="item" :class="{ 'selected': isSelected(item) }" @click="selectItem(item, $event)">
         <img :src="item.url">
         <p class="title">{{ item.title }}</p>
       </div>

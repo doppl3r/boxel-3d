@@ -6,7 +6,7 @@
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
-  var progressName = getLevelName(progress - 1);
+  var progressTitle = getLevelTitle(progress - 1);
   var origin = ref(location.origin);
   var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
   var emit = defineEmits(['setPage']);
@@ -21,8 +21,8 @@
     window.removeEventListener('keydown', keydown);
   }
 
-  async function playLevel(name) {
-    var response = await fetch(origin.value + pathname.value + '/json/' + name + '.json');
+  async function playLevel(title) {
+    var response = await fetch(origin.value + pathname.value + '/json/' + title + '.json');
     var json = await response.json();
     var credit = '';
     emit('setPage', 'campaign');
@@ -33,7 +33,7 @@
     if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
-    settings.progress = getLevelIndex(name) + 1;
+    settings.progress = getLevelIndex(title) + 1;
     app.updateSettings(settings);
     app.playLevel();
     app.resetScene();
@@ -44,11 +44,11 @@
     }, 500);
   }
 
-  function getScore(name) {
-    return scores[name];
+  function getScore(title) {
+    return scores[title];
   }
 
-  function getLevelIndex(name) {
+  function getLevelIndex(title) {
     var count = 0;
     var index = -1;
     
@@ -57,7 +57,7 @@
       // Loop through each levels array
       pack.levels.forEach(function(level) {
         // Set level index and increment count
-        if (name == level.name) {
+        if (title == level.title) {
           index = count;
         }
         count++;
@@ -66,26 +66,26 @@
     return index;
   }
 
-  function getLevelName(index) {
-    var name;
+  function getLevelTitle(index) {
+    var title;
     var count = 0;
 
     // Loop through packs array
     levels.packs.forEach(function(pack) {
       // Loop through each levels array
       pack.levels.forEach(function(level) {
-        // Set name and increment count
+        // Set title and increment count
         if (index == count) {
-          name = level.name;
+          title = level.title;
         }
         count++;
       });
     });
-    return name;
+    return title;
   }
 
   function scrollToLevel() {
-    var el = document.querySelector("[name='" + progressName + "']");
+    var el = document.querySelector("[title='" + progressTitle + "']");
 
     if (el) {
       el.focus();
@@ -97,15 +97,15 @@
     emit('setPage', 'home');
   }
 
-  function updateProgressName(e) {
-    progressName = e.target.getAttribute('name');
+  function updateProgressTitle(e) {
+    progressTitle = e.target.getAttribute('title');
   }
 
   function keydown(e) {
     var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
     if (jumpKeys.indexOf(e.code) > -1) {
       e.preventDefault(); // Prevent scrolling
-      var el = document.querySelector("[name='" + progressName + "']");
+      var el = document.querySelector("[title='" + progressTitle + "']");
       if (el == document.activeElement) el.click();
     }
     
@@ -137,7 +137,7 @@
       <div class="levels">
         <div class="list">
           <template v-for="(pack, i) of levels.packs">
-            <h2>{{ pack.name }}</h2>
+            <h2>{{ pack.title }}</h2>
             <p v-if="pack.description">{{ pack.description }}</p>
             <div class="buttons" v-if="pack.links">
               <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target">
@@ -145,8 +145,8 @@
               </a>
             </div>
             <template v-for="(level, j) of pack.levels">
-              <div class="level" :class="{ completed: getScore(level.name) }" :name="level.name" @click="playLevel(level.name)" tabindex="0" @focus="updateProgressName($event)">
-                <span class="score" v-if="getScore(level.name)">{{ scores[level.name] }}</span>
+              <div class="level" :class="{ completed: getScore(level.title) }" :title="level.title" @click="playLevel(level.title)" tabindex="0" @focus="updateProgressTitle($event)">
+                <span class="score" v-if="getScore(level.title)">{{ scores[level.title] }}</span>
                 <span class="title">{{ level.description }}</span>
               </div>
             </template>

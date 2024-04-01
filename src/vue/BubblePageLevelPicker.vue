@@ -1,13 +1,16 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
+  import BubbleCarousel from './BubbleCarousel.vue';
   import levels from '../json/levels.json';
 
   // Initialize variables
+  var items = ref([]); // Carousel items
+  var selectedPack = ref();
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
-  var progressName = getLevelName(progress - 1);
+  var progressTitle = getLevelTitle(progress - 1);
   var origin = ref(location.origin);
   var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
   var emit = defineEmits(['setPage']);
@@ -22,8 +25,8 @@
     window.removeEventListener('keydown', keydown);
   }
 
-  async function playLevel(name) {
-    var response = await fetch(origin.value + pathname.value + '/json/' + name + '.json');
+  async function playLevel(title) {
+    var response = await fetch(origin.value + pathname.value + '/json/' + title + '.json');
     var json = await response.json();
     var credit = '';
     emit('setPage', 'campaign');
@@ -34,7 +37,7 @@
     if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
-    settings.progress = getLevelIndex(name) + 1;
+    settings.progress = getLevelIndex(title) + 1;
     app.updateSettings(settings);
     app.playLevel();
     app.resetScene();
@@ -45,11 +48,11 @@
     }, 500);
   }
 
-  function getScore(name) {
-    return scores[name];
+  function getScore(title) {
+    return scores[title];
   }
 
-  function getLevelIndex(name) {
+  function getLevelIndex(title) {
     var count = 0;
     var index = -1;
     
@@ -58,7 +61,7 @@
       // Loop through each levels array
       pack.levels.forEach(function(level) {
         // Set level index and increment count
-        if (name == level.name) {
+        if (title == level.title) {
           index = count;
         }
         count++;
@@ -67,46 +70,54 @@
     return index;
   }
 
-  function getLevelName(index) {
-    var name;
+  function getLevelTitle(index) {
+    var title;
     var count = 0;
 
     // Loop through packs array
     levels.packs.forEach(function(pack) {
       // Loop through each levels array
       pack.levels.forEach(function(level) {
-        // Set name and increment count
-        if (index == count) {
-          name = level.name;
-        }
+        // Set title and increment count
+        if (index == count) title = level.title;
         count++;
       });
     });
-    return name;
+    return title;
   }
 
-  function scrollToLevel() {
-    var el = document.querySelector("[name='" + progressName + "']");
+  function updateSelectedPack(index) {
+    var count = 0;
+    var id = 0;
 
-    if (el) {
-      el.focus();
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }
+    // Loop through packs array
+    levels.packs.forEach(function(pack) {
+      // Loop through each levels array
+      pack.id = 'pack-' + id;
+      pack.levels.forEach(function() {
+        // Set title and increment count
+        if (index == count) {
+          selectedPack.value = pack;
+        }
+        count++;
+      });
+      id++;
+    });
   }
 
   function exitLevelPicker() {
     emit('setPage', 'home');
   }
 
-  function updateProgressName(e) {
-    progressName = e.target.getAttribute('name');
+  function updateProgressTitle(e) {
+    progressTitle = e.target.getAttribute('title');
   }
 
   function keydown(e) {
     var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
     if (jumpKeys.indexOf(e.code) > -1) {
       e.preventDefault(); // Prevent scrolling
-      var el = document.querySelector("[name='" + progressName + "']");
+      var el = document.querySelector("[title='" + progressTitle + "']");
       if (el == document.activeElement) el.click();
     }
     
@@ -115,10 +126,21 @@
       exitLevelPicker();
     }
   }
+
+  function updateItems() {
+    items.value = []; // Empty array
+    levels.packs.forEach(function(pack) {
+      items.value.push(pack);
+    });
+  }
+
+  onBeforeMount(function() {
+    updateItems();
+    updateSelectedPack(progress - 1);
+  });
   
   // Run function after being mounted (visible)
   onMounted(function() {
-    scrollToLevel();
     addEventListeners();
   });
 
@@ -141,11 +163,12 @@
     <div class="content fade-in">
       <h1>Level Packs</h1>
       <p>Select a level pack</p>
+      <BubbleCarousel :items="items" :selected="selectedPack" />
     </div>
     <div class="footer">
       <a class="button center fade-in">
         <span class="material-symbols-rounded">slideshow</span>
-        Play
+        Select
       </a>
     </div>
   </div>
