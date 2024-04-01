@@ -90,6 +90,11 @@
     openLink(url);
   }
 
+  function clickLink(e) {
+    e.preventDefault(e);
+    if (e.target.href) openLink(e.target.href);
+  }
+
   function openLink(url) {
     if (chrome.tabs) chrome.tabs.create({ url: url });
     else window.open(url, '_blank');
@@ -116,7 +121,7 @@
     </div>
     <div class="content fade-in">
       <h1>BOXEL3D</h1>
-      <p>{{ message }}</p>
+      <p v-html="message" @click="clickLink($event)"></p>
       <BubbleCarousel :items="menu" scrolling="no" />
     </div>
     <div class="footer">

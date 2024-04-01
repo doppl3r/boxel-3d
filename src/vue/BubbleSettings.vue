@@ -138,7 +138,7 @@
             <span class="material-symbols-rounded">gamepad</span>
           </div>
           <div class="tab" :class="{ 'selected': tab == 'graphics' }" @click="tab = 'graphics'">
-            <span class="material-symbols-rounded">landscape</span>
+            <span class="material-symbols-rounded">page_info</span>
           </div>
           <div class="tab" :class="{ 'selected': tab == 'audio' }" @click="tab = 'audio'">
             <span class="material-symbols-rounded">volume_up</span>
@@ -153,7 +153,7 @@
             <div class="group">
               <div class="option">
                 <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
-                <label for="motion">Camera Motion</label>
+                <label for="motion">Camera Rotation</label>
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@
               </div>
               <div class="option">
                 <input type="checkbox" id="theme" :checked="settings.theme == 'bubble'" @change="updateSettings($event, { true: 'bubble', false: 'origin' }, updateTheme)">
-                <label for="theme">New Theme</label>
+                <label for="theme">Bubble UI</label>
               </div>
               <div class="option" v-if="isFullscreen() == false">
                 <input type="checkbox" id="fullscreen" @change="openFullscreen()">

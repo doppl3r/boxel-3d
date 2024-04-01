@@ -4,11 +4,11 @@
   function showSettings() {
     var settings = app.storage.getSettings(app);
     var inputs = [
-      { label: 'New Theme', name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme == 'bubble' ? 1 : 0, callback: function(e) { updateSettings('theme', e.target.value == "1" ? 'bubble' : 'origin'); window.dispatchEvent(new CustomEvent('updateTheme')); }},
       { label: 'Master Volume', name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume, callback: function(e) { updateSettings('volume', e.target.value); }},
       { label: 'Graphic Quality', name: 'quality', type: 'range', min: 2, max: 10, value: settings.quality, callback: function(e) { updateSettings('quality', parseInt(e.target.value)); }},
       { label: 'Camera Rotation', name: 'motion', type: 'range', min: 0, max: 1, value: settings.motion == true ? 1 : 0, callback: function(e) { updateSettings('motion', e.target.value == "1"); }},
-      { label: 'Show Stats', name: 'stats', type: 'range', min: 0, max: 1, value: settings.stats == true ? 1 : 0, callback: function(e) { updateSettings('stats', e.target.value == "1"); }}
+      { label: 'Show Stats', name: 'stats', type: 'range', min: 0, max: 1, value: settings.stats == true ? 1 : 0, callback: function(e) { updateSettings('stats', e.target.value == "1"); }},
+      { label: 'Bubble UI', name: 'theme', type: 'range', min: 0, max: 1, value: settings.theme == 'bubble' ? 1 : 0, callback: function(e) { updateSettings('theme', e.target.value == "1" ? 'bubble' : 'origin'); window.dispatchEvent(new CustomEvent('updateTheme')); }}
     ];
 
     // Add more options for the level maker

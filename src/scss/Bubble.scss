@@ -24,6 +24,8 @@
 
   a {
     cursor: pointer;
+    color: inherit;
+    text-decoration: none;
   }
 
   label {
@@ -41,6 +43,7 @@
     width: 100%;
 
     .background {
+      pointer-events: none;
       position: absolute;
       width: 100%;
       height: 100%;
@@ -78,6 +81,13 @@
         justify-content: center;
         pointer-events: all;
         text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+
+        &:hover {
+          .material-symbols-rounded {
+            animation: shake 0.25s ease-in-out;
+            animation-fill-mode: forwards;
+          }
+        }
     
         &.right {
           margin-left: auto;
@@ -178,6 +188,13 @@
         pointer-events: all;
         text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
 
+        &:hover {
+          .material-symbols-rounded {
+            animation: shake 0.25s ease-in-out;
+            animation-fill-mode: forwards;
+          }
+        }
+
         .material-symbols-rounded {
           background-color: #4CA9FF;
           box-shadow: 0em 0.125em 0em rgba(#000000, 0.25); 
@@ -240,7 +257,7 @@
           background-color: #FF674C;
           border-top-left-radius: 0.75em;
           border-bottom-left-radius: 0.75em;
-          box-shadow: 0 0.25em 0 rgba(#000000, 0.25);
+          box-shadow: 0 0.25em 0 rgba(#000000, 0.15);
           border-left: 0.25em solid transparent;
           border-right: 0.25em solid rgba(#000000, 0.15);
           cursor: pointer;
@@ -251,6 +268,13 @@
           color: #ffffff;
           width: 2.5em;
           height: 2.5em;
+
+          &:hover {
+            .material-symbols-rounded {
+              animation: shake 0.25s ease-in-out;
+              animation-fill-mode: forwards;
+            }
+          }
 
           &.selected {
             background-color: #FF8A4C;
@@ -265,7 +289,7 @@
         background-position: center;
         background-size: cover;
         border-radius: 0.75em;
-        box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+        box-shadow: 0em 0.25em 0em rgba(#000000, 0.15);
         flex-grow: 1;
         padding: 2.5em 2em;
         position: relative;
@@ -392,6 +416,13 @@
               }
             }
 
+            &:hover + label {
+              &:after {
+                animation: grow 0.25s ease-in-out;
+                animation-fill-mode: forwards;
+              }
+            }
+
             &:checked + label {
               &:before {
                 opacity: 1;
@@ -406,7 +437,8 @@
 
           &[type="range"] {
             background-color: transparent;
-            margin: 0.5em 0;
+            margin: 0.5em 0 1em;
+            height: 0.75em;
             width: 75%;
             outline: none;
             -webkit-appearance: none;
@@ -444,7 +476,7 @@
         .close {
           background-color: #FFC24C;
           border-radius: 0.5em;
-          box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+          box-shadow: 0em 0.25em 0em rgba(#000000, 0.15);
           color: #EB2B6D;
           display: flex;
           align-items: center;
@@ -454,7 +486,12 @@
           position: absolute;
           top: 0;
           right: 0;
-          transform: translate(50%, -50%);
+          margin: -1em -1em 0em 0em;
+
+          &:hover {
+            animation: shake 0.25s ease-in-out;
+            animation-fill-mode: forwards;
+          }
         }
       }
     }
@@ -468,7 +505,9 @@
 
   /* Animation keyframes */
   @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-  @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(5deg); } 66% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
+  @keyframes shrink { 0% { transform: scale(1); } 50% { transform: scale(0.90); } 100% { transform: scale(1); } }
+  @keyframes grow { 0% { transform: scale(1); } 50% { transform: scale(1.20); } 100% { transform: scale(1); } }
+  @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(10deg); } 66% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
 }
 
 @media (max-width: 640px) {

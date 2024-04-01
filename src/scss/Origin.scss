@@ -382,6 +382,7 @@
         img {
           max-width: 24px;
           filter: invert(0%);
+          pointer-events: none;
         }
       }
     }
