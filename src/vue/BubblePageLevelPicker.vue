@@ -4,7 +4,6 @@
   import levels from '../json/levels.json';
 
   // Initialize variables
-  var packGroup = ref('campaign');
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
@@ -23,12 +22,8 @@
     window.removeEventListener('keydown', keydown);
   }
 
-  function setPackGroup(name) {
-    packGroup.value = name;
-  }
-
   async function playLevel(name) {
-    var response = await fetch(origin.value + pathname.value + '/json/' + packGroup.value + '/' + name + '.json');
+    var response = await fetch(origin.value + pathname.value + '/json/' + name + '.json');
     var json = await response.json();
     var credit = '';
     emit('setPage', 'campaign');
@@ -58,21 +53,17 @@
     var count = 0;
     var index = -1;
     
-    // Loop through level groups (ex: campaign vs community)
-    for (var group in levels) {
-      // Loop through packs array
-      levels[group].packs.forEach(function(pack) {
-        // Loop through each levels array
-        pack.levels.forEach(function(level) {
-          // Set level index and increment count
-          if (name == level.name) {
-            packGroup.value = group;
-            index = count;
-          }
-          count++;
-        });
+    // Loop through packs array
+    levels.packs.forEach(function(pack) {
+      // Loop through each levels array
+      pack.levels.forEach(function(level) {
+        // Set level index and increment count
+        if (name == level.name) {
+          index = count;
+        }
+        count++;
       });
-    }
+    });
     return index;
   }
 
@@ -80,21 +71,17 @@
     var name;
     var count = 0;
 
-    // Loop through level groups (ex: campaign vs community)
-    for (var group in levels) {
-      // Loop through packs array
-      levels[group].packs.forEach(function(pack) {
-        // Loop through each levels array
-        pack.levels.forEach(function(level) {
-          // Set name and increment count
-          if (index == count) {
-            packGroup.value = group;
-            name = level.name;
-          }
-          count++;
-        });
+    // Loop through packs array
+    levels.packs.forEach(function(pack) {
+      // Loop through each levels array
+      pack.levels.forEach(function(level) {
+        // Set name and increment count
+        if (index == count) {
+          name = level.name;
+        }
+        count++;
       });
-    }
+    });
     return name;
   }
 
@@ -146,15 +133,17 @@
       <img src="/img/svg/background-purple.svg">
     </div>
     <div class="nav">
+      <a class="button fade-in" @click="exitLevelPicker" title="Exit to home (ESC)">
+        <span class="material-symbols-rounded">undo</span>
+      </a>
       <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="content fade-in">
       <h1>Level Packs</h1>
       <p>Select a level pack</p>
-      <BubbleCarousel :items="menu" scrolling="no" />
     </div>
     <div class="footer">
-      <a class="button right fade-in" @click="openReviewLink">
+      <a class="button center fade-in">
         <span class="material-symbols-rounded">slideshow</span>
         Play
       </a>

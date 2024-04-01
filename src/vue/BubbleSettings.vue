@@ -3,7 +3,7 @@
 
   // Initialize attributes
   var text = ref('');
-  var tab = ref('gameplay');
+  var tab = ref('graphics');
   var inputs = ref([]);
   var isOpen = ref(false);
   var settings = ref();
@@ -134,11 +134,11 @@
       <div class="background" @click="runLastInputCallback"></div>
       <div class="container">
         <div class="tabs">
-          <div class="tab" :class="{ 'selected': tab == 'gameplay' }" @click="tab = 'gameplay'">
-            <span class="material-symbols-rounded">gamepad</span>
-          </div>
           <div class="tab" :class="{ 'selected': tab == 'graphics' }" @click="tab = 'graphics'">
             <span class="material-symbols-rounded">page_info</span>
+          </div>
+          <div class="tab" :class="{ 'selected': tab == 'gameplay' }" @click="tab = 'gameplay'">
+            <span class="material-symbols-rounded">gamepad</span>
           </div>
           <div class="tab" :class="{ 'selected': tab == 'audio' }" @click="tab = 'audio'">
             <span class="material-symbols-rounded">volume_up</span>

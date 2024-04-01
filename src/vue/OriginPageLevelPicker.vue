@@ -3,7 +3,6 @@
   import levels from '../json/levels.json';
 
   // Initialize variables
-  var packGroup = ref('campaign');
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
@@ -22,12 +21,8 @@
     window.removeEventListener('keydown', keydown);
   }
 
-  function setPackGroup(name) {
-    packGroup.value = name;
-  }
-
   async function playLevel(name) {
-    var response = await fetch(origin.value + pathname.value + '/json/' + packGroup.value + '/' + name + '.json');
+    var response = await fetch(origin.value + pathname.value + '/json/' + name + '.json');
     var json = await response.json();
     var credit = '';
     emit('setPage', 'campaign');
@@ -57,21 +52,17 @@
     var count = 0;
     var index = -1;
     
-    // Loop through level groups (ex: campaign vs community)
-    for (var group in levels) {
-      // Loop through packs array
-      levels[group].packs.forEach(function(pack) {
-        // Loop through each levels array
-        pack.levels.forEach(function(level) {
-          // Set level index and increment count
-          if (name == level.name) {
-            packGroup.value = group;
-            index = count;
-          }
-          count++;
-        });
+    // Loop through packs array
+    levels.packs.forEach(function(pack) {
+      // Loop through each levels array
+      pack.levels.forEach(function(level) {
+        // Set level index and increment count
+        if (name == level.name) {
+          index = count;
+        }
+        count++;
       });
-    }
+    });
     return index;
   }
 
@@ -79,21 +70,17 @@
     var name;
     var count = 0;
 
-    // Loop through level groups (ex: campaign vs community)
-    for (var group in levels) {
-      // Loop through packs array
-      levels[group].packs.forEach(function(pack) {
-        // Loop through each levels array
-        pack.levels.forEach(function(level) {
-          // Set name and increment count
-          if (index == count) {
-            packGroup.value = group;
-            name = level.name;
-          }
-          count++;
-        });
+    // Loop through packs array
+    levels.packs.forEach(function(pack) {
+      // Loop through each levels array
+      pack.levels.forEach(function(level) {
+        // Set name and increment count
+        if (index == count) {
+          name = level.name;
+        }
+        count++;
       });
-    }
+    });
     return name;
   }
 
@@ -146,29 +133,25 @@
       <h1>Level<strong>Packs</strong></h1>
       <div class="buttons">
         <a class="button top-left" @click="exitLevelPicker" title="Exit to home (ESC)"><img src="/img/svg/home.svg"></a>
-        <a class="button" :class="{ purple: packGroup != 'campaign' }" @click="setPackGroup('campaign')" tabindex="0"><span>Campaign</span></a>
-        <a class="button" :class="{ purple: packGroup != 'community' }" @click="setPackGroup('community')" tabindex="0"><span>Community</span></a>
       </div>
       <div class="levels">
-        <template v-for="(group, key) of levels">
-          <div class="list" v-show="packGroup == key">
-            <template v-for="(pack, i) of group.packs">
-              <h2>{{ pack.name }}</h2>
-              <p v-if="pack.description">{{ pack.description }}</p>
-              <div class="buttons" v-if="pack.links">
-                <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target">
-                  <span>{{ link.text }}</span> <img v-if="link.icon" :src="origin + pathname + link.icon" />
-                </a>
+        <div class="list">
+          <template v-for="(pack, i) of levels.packs">
+            <h2>{{ pack.name }}</h2>
+            <p v-if="pack.description">{{ pack.description }}</p>
+            <div class="buttons" v-if="pack.links">
+              <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target">
+                <span>{{ link.text }}</span> <img v-if="link.icon" :src="origin + pathname + link.icon" />
+              </a>
+            </div>
+            <template v-for="(level, j) of pack.levels">
+              <div class="level" :class="{ completed: getScore(level.name) }" :name="level.name" @click="playLevel(level.name)" tabindex="0" @focus="updateProgressName($event)">
+                <span class="score" v-if="getScore(level.name)">{{ scores[level.name] }}</span>
+                <span class="title">{{ level.description }}</span>
               </div>
-              <template v-for="(level, j) of pack.levels">
-                <div class="level" :class="{ completed: getScore(level.name) }" :name="level.name" @click="playLevel(level.name)" tabindex="0" @focus="updateProgressName($event)">
-                  <span class="score" v-if="getScore(level.name)">{{ scores[level.name] }}</span>
-                  <span class="title">{{ level.description }}</span>
-                </div>
-              </template>
             </template>
-          </div>
-        </template>
+          </template>
+        </div>
       </div>
     </div>
   </div>
