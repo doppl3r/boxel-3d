@@ -5,6 +5,7 @@
 
   // Set initial values
   var theme = ref('bubble');
+  var options = ['origin', 'bubble'];
 
   // Add event listener(s)
   function addEventListeners() {
@@ -18,7 +19,13 @@
 
   function updateTheme(e) {
     var settings = JSON.parse(localStorage.getItem('settings'));
-    if (settings && settings.theme) theme.value = settings.theme;
+    // Check if local settings exists
+    if (settings && settings.theme) {
+      // Check if settings theme is an option
+      if (options.includes(settings.theme)) {
+        theme.value = settings.theme;
+      }
+    }
   }
 
   onMounted(function() {

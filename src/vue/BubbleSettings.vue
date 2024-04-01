@@ -166,16 +166,16 @@
                 <label for="quality">{{ (settings.quality * 10) }}%</label>
               </div>
               <div class="option">
-                <input type="checkbox" id="theme" :checked="settings.theme == 'bubble'" @change="updateSettings($event, { true: 'bubble', false: 'origin' }, updateTheme)">
-                <label for="theme">Bubble UI</label>
+                <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
+                <label for="stats">Show Stats</label>
               </div>
               <div class="option" v-if="isFullscreen() == false">
                 <input type="checkbox" id="fullscreen" @change="openFullscreen()">
                 <label for="fullscreen">Fullscreen</label>
               </div>
               <div class="option">
-                <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
-                <label for="stats">Show Stats</label>
+                <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="updateSettings($event, { true: 'origin', false: 'bubble' }, updateTheme)">
+                <label for="theme">Old UI</label>
               </div>
             </div>
           </div>
