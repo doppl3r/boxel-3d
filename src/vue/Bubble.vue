@@ -3,6 +3,8 @@
   import { ref, onMounted, onUnmounted } from 'vue';
   import BubblePageHome from './BubblePageHome.vue';
   import BubblePageSkins from './BubblePageSkins.vue';
+  import BubblePageLevelPicker from './BubblePageLevelPicker.vue';
+  import BubblePageCampaign from './BubblePageCampaign.vue';
   import BubblePopup from './BubblePopup.vue';
   import BubbleSettings from './BubbleSettings.vue';
 
@@ -40,6 +42,8 @@
   <div class="ui-bubble">
     <BubblePageHome v-if="page == 'home'" @set-page="setPage" />
     <BubblePageSkins v-if="page == 'skins'" @set-page="setPage" />
+    <BubblePageLevelPicker v-if="page == 'level-picker'" @set-page="setPage" />
+    <BubblePageCampaign v-if="page == 'campaign'" @set-page="setPage" />
     <BubbleSettings />
     <BubblePopup />
   </div>

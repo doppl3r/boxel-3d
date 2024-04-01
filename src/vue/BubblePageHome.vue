@@ -30,7 +30,7 @@
     {
       "title": "Play",
       "url": "/img/svg/button-play.svg",
-      "callback": function() { emit('setPage', 'play') }
+      "callback": function() { emit('setPage', 'campaign') }
     }
   ];
 
