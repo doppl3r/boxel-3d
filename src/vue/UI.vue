@@ -19,6 +19,7 @@
 
   function setThemeFromEvent(e) {
     if (e && e.detail) {
+      // Set theme from event details
       setTheme(e.detail);
     }
     else {

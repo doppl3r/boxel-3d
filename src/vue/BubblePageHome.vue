@@ -22,8 +22,9 @@
       "title": "Level Editor",
       "url": "/img/svg/button-level-editor.svg",
       "callback": function() {
+        // TODO: Replace events after developing Level Editor 2.0
         window.dispatchEvent(new CustomEvent('setTheme', { detail: 'origin' }));
-        window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-editor' }));
+        setTimeout(function() { window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-manager' })); }, 0);
       }
     },
     {

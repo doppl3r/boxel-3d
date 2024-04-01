@@ -99,7 +99,9 @@
   }
 
   function exitLevelManager() {
-    emit('setPage', 'home')
+    emit('setPage', 'home');
+    // TODO: Remove event after developing Level Editor 2.0
+    window.dispatchEvent(new CustomEvent('setTheme'));
   }
 
   function keydown(e) {
