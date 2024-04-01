@@ -192,7 +192,7 @@ class Level extends Group {
       progress++; // Increase level progress
       settings.progress = progress;
       a.updateSettings(settings, a);
-      window.dispatchEvent(new CustomEvent('setPage', { detail: { page: 'level-picker' }}));
+      window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-picker' }));
     }
     else if (a.state == 'level-editor') {
       a.updateGravity();

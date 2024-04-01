@@ -171,7 +171,7 @@ class LevelEditor {
     app.player.removeCheckpoint();
     app.player.setPosition({ x: 0, y: 0, z: 0 });
     app.levelEditor.controlsOrbit.enabled = false;
-    window.dispatchEvent(new CustomEvent('setPage', { detail: { page: 'level-manager' }}));
+    window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-manager' }));
   }
 
   undo() {

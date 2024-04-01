@@ -21,7 +21,7 @@
   }
 
   function setPageFromEvent(e) {
-    if (e.detail.page) setPage(e.detail.page);
+    if (e.detail) setPage(e.detail);
   }
 
   function setPage(name) {

@@ -235,7 +235,7 @@ class App {
     app.level.clearLevel(app);
     app.player.removeCheckpoint();
     app.player.setPosition({ x: 0, y: 0, z: 0 });
-    window.dispatchEvent(new CustomEvent('setPage', { detail: { page: 'level-picker' }}));
+    window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-picker' }));
     window.dispatchEvent(new CustomEvent('closePopup'));
   }
 

@@ -9,27 +9,37 @@
 
   // Add event listener(s)
   function addEventListeners() {
-    window.addEventListener('updateTheme', updateTheme);
+    window.addEventListener('setTheme', setThemeFromEvent);
   }
   
   // Remove event listeners
   function removeEventListeners() {
-    window.removeEventListener('updateTheme', updateTheme);
+    window.removeEventListener('setTheme', setThemeFromEvent);
   }
 
-  function updateTheme(e) {
-    var settings = JSON.parse(localStorage.getItem('settings'));
-    // Check if local settings exists
-    if (settings && settings.theme) {
-      // Check if settings theme is an option
-      if (options.includes(settings.theme)) {
-        theme.value = settings.theme;
+  function setThemeFromEvent(e) {
+    if (e && e.detail) {
+      setTheme(e.detail);
+    }
+    else {
+      // Set theme from local settings
+      var settings = JSON.parse(localStorage.getItem('settings'));
+      // Check if local settings exists
+      if (settings && settings.theme) {
+        // Check if settings theme is an option
+        if (options.includes(settings.theme)) {
+          setTheme(settings.theme);
+        }
       }
     }
   }
 
+  function setTheme(name) {
+    theme.value = name;
+  }
+
   onMounted(function() {
-    updateTheme(); // Run by default
+    setThemeFromEvent(); // Set theme from storage
     addEventListeners();
   });
 

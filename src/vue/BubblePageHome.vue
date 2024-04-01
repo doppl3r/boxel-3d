@@ -21,7 +21,10 @@
     {
       "title": "Level Editor",
       "url": "/img/svg/button-level-editor.svg",
-      "callback": function() { emit('setPage', 'level-editor') }
+      "callback": function() {
+        window.dispatchEvent(new CustomEvent('setTheme', { detail: 'origin' }));
+        window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-editor' }));
+      }
     },
     {
       "title": "Play",

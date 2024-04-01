@@ -91,8 +91,8 @@
     openLink(location.href + '?fullscreen=true');
   }
 
-  function updateTheme() {
-    window.dispatchEvent(new CustomEvent('updateTheme'));
+  function setTheme() {
+    window.dispatchEvent(new CustomEvent('setTheme'));
   }
 
   function isFullscreen() {
@@ -174,7 +174,7 @@
                 <label for="fullscreen">Fullscreen</label>
               </div>
               <div class="option">
-                <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="updateSettings($event, { true: 'origin', false: 'bubble' }, updateTheme)">
+                <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="updateSettings($event, { true: 'origin', false: 'bubble' }, setTheme)">
                 <label for="theme">Old UI</label>
               </div>
             </div>
