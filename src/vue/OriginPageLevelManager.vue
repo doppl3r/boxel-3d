@@ -105,7 +105,7 @@
   }
 
   function keydown(e) {
-    if (e.code == 'Escape') {
+    if (e.code == 'Escape' || e.code == 'KeyE') {
       e.preventDefault();
       exitLevelManager();
     }

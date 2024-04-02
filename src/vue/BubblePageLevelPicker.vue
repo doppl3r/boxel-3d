@@ -6,7 +6,8 @@
 
   // Initialize variables
   var items = ref([]); // Carousel items
-  var selectedPack = ref();
+  var key = ref(0);
+  var selectedItem = ref();
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
@@ -18,11 +19,13 @@
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('keydown', keydown);
+    window.addEventListener('itemSelected', updateSelectedItem);
   }
   
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('keydown', keydown);
+    window.removeEventListener('itemSelected', updateSelectedItem);
   }
 
   async function playLevel(title) {
@@ -86,22 +89,28 @@
     return title;
   }
 
-  function updateSelectedPack(index) {
+  function updateSelectedItem(e) {
+    if (selectedItem.value == e.detail) playSelectedItem();
+    selectedItem.value = e.detail;
+  }
+
+  function playSelectedItem() {
+    playLevel(selectedItem.value.title);
+  }
+
+  function setSelectedItem(index) {
     var count = 0;
-    var id = 0;
 
     // Loop through packs array
     levels.packs.forEach(function(pack) {
       // Loop through each levels array
-      pack.id = 'pack-' + id;
-      pack.levels.forEach(function() {
+      pack.levels.forEach(function(level) {
         // Set title and increment count
         if (index == count) {
-          selectedPack.value = pack;
+          selectedItem.value = level;
         }
         count++;
       });
-      id++;
     });
   }
 
@@ -113,30 +122,33 @@
     progressTitle = e.target.getAttribute('title');
   }
 
+  function setItems() {
+    items.value = []; // Empty array
+    levels.packs.forEach(function(pack) {
+      var url = pack.url;
+      pack.levels.forEach(function(item) {
+        item.url = url; // Assign pack image
+        items.value.push(item);
+      })
+    });
+  }
+
   function keydown(e) {
     var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
     if (jumpKeys.indexOf(e.code) > -1) {
       e.preventDefault(); // Prevent scrolling
-      var el = document.querySelector("[title='" + progressTitle + "']");
-      if (el == document.activeElement) el.click();
+      playSelectedItem();
     }
     
-    if (e.code == 'Escape') {
+    if (e.code == 'Escape' || e.code == 'KeyE') {
       e.preventDefault();
       exitLevelPicker();
     }
   }
 
-  function updateItems() {
-    items.value = []; // Empty array
-    levels.packs.forEach(function(pack) {
-      items.value.push(pack);
-    });
-  }
-
   onBeforeMount(function() {
-    updateItems();
-    updateSelectedPack(progress - 1);
+    setItems();
+    setSelectedItem(progress - 1);
   });
   
   // Run function after being mounted (visible)
@@ -163,10 +175,10 @@
     <div class="content fade-in">
       <h1>Level Packs</h1>
       <p>Select a level pack</p>
-      <BubbleCarousel :items="items" :selected="selectedPack" />
+      <BubbleCarousel :items="items" :selected="selectedItem" :key="key" />
     </div>
     <div class="footer">
-      <a class="button center fade-in">
+      <a class="button center fade-in" @click="playSelectedItem">
         <span class="material-symbols-rounded">slideshow</span>
         Select
       </a>

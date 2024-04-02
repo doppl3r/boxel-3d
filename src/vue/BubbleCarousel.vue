@@ -5,11 +5,31 @@
   var props = defineProps(['items', 'selected']);
   var selectedItem = ref();
 
+  // Add event listener(s)
+  function addEventListeners() {
+    window.addEventListener('keydown', keydown);
+  }
+  
+  // Remove event listeners
+  function removeEventListeners() {
+    window.removeEventListener('keydown', keydown);
+  }
+
   function selectItem(item, e) {
     var el = getSelectedElement(e.target);
     scrollToSelected(el);
     selectedItem.value = item;
     window.dispatchEvent(new CustomEvent('itemSelected', { detail: item }));
+  }
+
+  function selectNext() {
+    var el = document.querySelector("[class*='selected']");
+    if (el && el.nextElementSibling) el.nextElementSibling.click();
+  }
+
+  function selectPrev() {
+    var el = document.querySelector("[class*='selected']");
+    if (el && el.previousElementSibling) el.previousElementSibling.click();
   }
 
   function getSelectedElement(node) {
@@ -44,6 +64,15 @@
     if (props['selected']) selectedItem.value = props['selected'];
   }
 
+  function keydown(e) {
+    if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+      selectPrev();
+    }
+    else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+      selectNext();
+    }
+  }
+
   onBeforeMount(function() {
     setDefaultItem();
   });
@@ -51,10 +80,11 @@
   // Run function after being mounted (visible)
   onMounted(function() {
     scrollToSelected();
+    addEventListeners();
   });
 
   onUnmounted(function() {
-    
+    removeEventListeners();
   });
 </script>
 

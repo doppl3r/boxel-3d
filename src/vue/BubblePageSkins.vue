@@ -10,13 +10,13 @@
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('keydown', keydown);
-    window.addEventListener('itemSelected', updatePlayerSkin)
+    window.addEventListener('itemSelected', updatePlayerSkin);
   }
   
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('keydown', keydown);
-    window.removeEventListener('itemSelected', updatePlayerSkin)
+    window.removeEventListener('itemSelected', updatePlayerSkin);
   }
 
   // Set initial variables
@@ -31,7 +31,7 @@
         detail: {
           text: 'Custom Skin',
           inputs: [
-            { class: 'button', type: 'file', style: 'width: 100%', accept: 'image/png, image/jpeg', callback: changeImage },
+            { type: 'file', label: 'Upload', class: 'button', style: 'width: 100%', accept: 'image/png, image/jpeg', callback: changeImage },
             { type: 'button', value: 'Close' }
           ]
         }
@@ -64,7 +64,7 @@
   }
 
   function keydown(e) {
-    if (e.code == 'Escape') {
+    if (e.code == 'Escape' || e.code == 'KeyE') {
       e.preventDefault();
       exitSkins();
     }

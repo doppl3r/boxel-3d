@@ -144,7 +144,7 @@
       if (e.code == 'Digit0') {
         app.levelEditor.resetZAxis();
       }
-      else if (e.code == 'Escape') {
+      else if (e.code == 'Escape' || e.code == 'KeyE') {
         e.preventDefault();
         if (app.play == true) pauseLevel();
         else exitLevel();

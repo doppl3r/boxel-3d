@@ -153,6 +153,7 @@
             border-radius: 0.75em;
             box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
             pointer-events: none;
+            height: 6.25em;
             width: 6.25em;
           }
 
@@ -319,6 +320,29 @@
           bottom: 0;
           left: 50%;
           transform: translate(-50%, 50%);
+
+          label {
+            background-color: #EB2B6D;
+            border: none;
+            border-radius: 0.5em;
+            color: #ffffff;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1em;
+            padding: 0.5em 1em;
+            box-shadow: 0em 0.25em 0em rgba(#000000, 0.15);
+            text-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
+          }
+
+          input {
+            &[type="file"] {
+              display: none;
+            }
+            
+            &[type="button"] {
+              box-shadow: 0em 0.25em 0em rgba(#000000, 0.15);
+            }
+          }
         }
 
         .panel {
