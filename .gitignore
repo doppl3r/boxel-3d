@@ -5,3 +5,4 @@ dist/
 debug.log
 package-lock.json
 *.afdesign~lock~
+.DS_Store

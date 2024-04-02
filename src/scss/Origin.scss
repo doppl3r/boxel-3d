@@ -503,12 +503,6 @@
           }
         }
 
-        &.levels-community {
-          .level {
-            .index { display: none; }
-          }
-        }
-
         .level {
           border-radius: 4px;
           background-color: #620460;
@@ -569,15 +563,16 @@
             border-radius: 999px;
             background-color: #620460;
             color: #ffffff;
+            padding: 0 4px;
             position: absolute;
             top: 0;
-            left: 0;
-            margin: -8px 0px 0px -8px;
-            width: 16px;
+            left: 10%;
+            transform: translate(-50%, -50%) !important;
             height: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-wrap: nowrap;
           }
 
           .score {

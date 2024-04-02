@@ -146,6 +146,7 @@
             </div>
             <template v-for="(level, j) of pack.levels">
               <div class="level" :class="{ completed: getScore(level.title) }" :title="level.title" @click="playLevel(level.title)" tabindex="0" @focus="updateProgressTitle($event)">
+                <span class="index" v-if="level.label">{{ level.label }}</span>
                 <span class="score" v-if="getScore(level.title)">{{ scores[level.title] }}</span>
                 <span class="title">{{ level.description }}</span>
               </div>
