@@ -64,6 +64,12 @@
   }
 
   function keydown(e) {
+    var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
+    if (jumpKeys.indexOf(e.code) > -1) {
+      e.preventDefault(); // Prevent scrolling
+      exitSkins();
+    }
+
     if (e.code == 'Escape' || e.code == 'KeyE') {
       e.preventDefault();
       exitSkins();
