@@ -5,13 +5,13 @@
   import levels from '../json/levels.json';
 
   // Initialize variables
+  var description = ref('Select a level');
   var items = ref([]); // Carousel items
   var key = ref(0);
   var selectedItem = ref();
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
-  var progressTitle = getLevelTitle(progress - 1);
   var origin = ref(location.origin);
   var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
   var emit = defineEmits(['setPage']);
@@ -73,8 +73,14 @@
     return index;
   }
 
-  function getLevelTitle(index) {
-    var title;
+  function updateSelectedItem(e) {
+    if (selectedItem.value == e.detail) playSelectedItem();
+    selectedItem.value = e.detail;
+    updateDescription();
+  }
+
+  function updateDescription() {
+    var index = getLevelIndex(selectedItem.value.title);
     var count = 0;
 
     // Loop through packs array
@@ -82,23 +88,20 @@
       // Loop through each levels array
       pack.levels.forEach(function(level) {
         // Set title and increment count
-        if (index == count) title = level.title;
+        if (index == count) {
+          description.value = pack.title;
+        }
         count++;
       });
     });
-    return title;
-  }
-
-  function updateSelectedItem(e) {
-    if (selectedItem.value == e.detail) playSelectedItem();
-    selectedItem.value = e.detail;
   }
 
   function playSelectedItem() {
     playLevel(selectedItem.value.title);
   }
 
-  function setSelectedItem(index) {
+  function setSelectedItem() {
+    var index = progress - 1;
     var count = 0;
 
     // Loop through packs array
@@ -116,10 +119,6 @@
 
   function exitLevelPicker() {
     emit('setPage', 'home');
-  }
-
-  function updateProgressTitle(e) {
-    progressTitle = e.target.getAttribute('title');
   }
 
   function setItems() {
@@ -148,7 +147,7 @@
 
   onBeforeMount(function() {
     setItems();
-    setSelectedItem(progress - 1);
+    setSelectedItem();
   });
   
   // Run function after being mounted (visible)
@@ -173,14 +172,14 @@
       <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="content fade-in">
-      <h1>Level Packs</h1>
-      <p>Select a level pack</p>
+      <h1>Play</h1>
+      <p>{{ description }}</p>
       <BubbleCarousel :items="items" :selected="selectedItem" :key="key" />
     </div>
     <div class="footer">
       <a class="button center fade-in" @click="playSelectedItem">
         <span class="material-symbols-rounded">slideshow</span>
-        Select
+        Play
       </a>
     </div>
   </div>

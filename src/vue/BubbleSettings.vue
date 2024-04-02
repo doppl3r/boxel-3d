@@ -25,15 +25,17 @@
   function openSettings(e) {
     isOpen.value = true;
     settings.value = app.storage.getSettings();
-
+    window.dispatchEvent(new CustomEvent('beforeSettingsOpened'));
+    
     // Trigger opened event
     setTimeout(function() {
       window.dispatchEvent(new CustomEvent('settingsOpened'));
     }, 100);
   }
-
+  
   function closeSettings() {
     isOpen.value = false;
+    window.dispatchEvent(new CustomEvent('beforeSettingsClosed'));
 
     // Trigger opened event
     setTimeout(function() {

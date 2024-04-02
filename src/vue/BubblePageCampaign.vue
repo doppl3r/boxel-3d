@@ -10,6 +10,8 @@
   function addEventListeners() {
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
+    window.addEventListener('beforeSettingsOpened', settingsOpened);
+    window.addEventListener('beforeSettingsClosed', settingsClosed);
     window.addEventListener('keydown', keydown);
   }
   
@@ -17,6 +19,8 @@
   function removeEventListeners() {
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
+    window.removeEventListener('beforeSettingsOpened', settingsOpened);
+    window.removeEventListener('beforeSettingsClosed', settingsClosed);
     window.removeEventListener('keydown', keydown);
   }
 
@@ -40,6 +44,14 @@
   
   function popupClosed() {
     isClosed.value = true;
+  }
+
+  function settingsOpened() {
+    app.pauseLevel();
+  }
+  
+  function settingsClosed() {
+    app.resumeLevel();
   }
 
   function keydown(e) {

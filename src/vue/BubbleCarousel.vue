@@ -93,7 +93,7 @@
     <template v-for="(item, key) of items">
       <div class="item" :class="{ 'selected': isSelected(item) }" @click="selectItem(item, $event)">
         <img :src="item.url">
-        <p class="title">{{ item.title }}</p>
+        <p class="title">{{ item.description || item.title }}</p>
       </div>
     </template>
   </div>
