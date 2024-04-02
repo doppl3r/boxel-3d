@@ -6,23 +6,28 @@
       "levels": [
         {
           "title": "Campaign Level 1",
-          "description": "Slip & Slide"
+          "description": "Slip & Slide",
+          "label": "1-1"
         },
         {
           "title": "Campaign Level 2",
-          "description": "Olympic Ramp"
+          "description": "Olympic Ramp",
+          "label": "1-2"
         },
         {
           "title": "Campaign Level 3",
-          "description": "Easy Hop"
+          "description": "Easy Hop",
+          "label": "1-3"
         },
         {
           "title": "Campaign Level 4",
-          "description": "Spike Hurdles"
+          "description": "Spike Hurdles",
+          "label": "1-4"
         },
         {
           "title": "Campaign Level 5",
-          "description": "Air Jump"
+          "description": "Air Jump",
+          "label": "1-5"
         }
       ]
     },
@@ -32,23 +37,28 @@
       "levels": [
         {
           "title": "Campaign Level 6",
-          "description": "Secret Agent"
+          "description": "Secret Agent",
+          "label": "2-1"
         },
         {
           "title": "Campaign Level 7",
-          "description": "Long Boi"
+          "description": "Long Boi",
+          "label": "2-2"
         },
         {
           "title": "Campaign Level 8",
-          "description": "Bigger Boi"
+          "description": "Bigger Boi",
+          "label": "2-3"
         },
         {
           "title": "Campaign Level 9",
-          "description": "Spider Box"
+          "description": "Spider Box",
+          "label": "2-4"
         },
         {
           "title": "Campaign Level 10",
-          "description": "Rock Climber"
+          "description": "Rock Climber",
+          "label": "2-5"
         }
       ]
     },
@@ -58,23 +68,28 @@
       "levels": [
         {
           "title": "Campaign Level 11",
-          "description": "Tippy Tap"
+          "description": "Tippy Tap",
+          "label": "3-1"
         },
         {
           "title": "Campaign Level 12",
-          "description": "Agility Jumps"
+          "description": "Agility Jumps",
+          "label": "3-2"
         },
         {
           "title": "Campaign Level 13",
-          "description": "Zack's Coaster"
+          "description": "Zack's Coaster",
+          "label": "3-3"
         },
         {
           "title": "Campaign Level 14",
-          "description": "Simon Says"
+          "description": "Simon Says",
+          "label": "3-4"
         },
         {
           "title": "Campaign Level 15",
-          "description": "Wall of Finish"
+          "description": "Wall of Finish",
+          "label": "3-5"
         }
       ]
     },
@@ -84,23 +99,28 @@
       "levels": [
         {
           "title": "Campaign Level 16",
-          "description": "Kargoh's World"
+          "description": "Kargoh's World",
+          "label": "4-1"
         },
         {
           "title": "Campaign Level 17",
-          "description": "Kargoh's Bobsled"
+          "description": "Kargoh's Bobsled",
+          "label": "4-2"
         },
         {
           "title": "Campaign Level 18",
-          "description": "Kargoh's Plinko"
+          "description": "Kargoh's Plinko",
+          "label": "4-3"
         },
         {
           "title": "Campaign Level 19",
-          "description": "Kargoh's Obstacles"
+          "description": "Kargoh's Obstacles",
+          "label": "4-4"
         },
         {
           "title": "Campaign Level 20",
-          "description": "Kargoh's Ramp"
+          "description": "Kargoh's Ramp",
+          "label": "4-5"
         }
       ]
     },
@@ -110,23 +130,28 @@
       "levels": [
         {
           "title":"Campaign Level 21",
-          "description": "Gravity Loop"
+          "description": "Gravity Loop",
+          "label": "5-1"
         },
         {
           "title":"Campaign Level 22",
-          "description": "Gravity Sewer"
+          "description": "Gravity Sewer",
+          "label": "5-2"
         },
         {
           "title":"Campaign Level 23",
-          "description": "Gravity Twist"
+          "description": "Gravity Twist",
+          "label": "5-3"
         },
         {
           "title":"Campaign Level 24",
-          "description": "Gravity Ramps"
+          "description": "Gravity Ramps",
+          "label": "5-4"
         },
         {
           "title":"Campaign Level 25",
-          "description": "Gravity Spikes"
+          "description": "Gravity Spikes",
+          "label": "5-5"
         }
       ]
     },
@@ -136,23 +161,28 @@
       "levels": [
         {
           "title": "Campaign Level 26",
-          "description": "Stairway to Stairs"
+          "description": "Stairway to Stairs",
+          "label": "6-1"
         },
         {
           "title": "Campaign Level 27",
-          "description": "Extra Hops"
+          "description": "Extra Hops",
+          "label": "6-2"
         },
         {
           "title": "Campaign Level 28",
-          "description": "Butterfly Knot"
+          "description": "Butterfly Knot",
+          "label": "6-3"
         },
         {
           "title": "Campaign Level 29",
-          "description": "Jericho"
+          "description": "Jericho",
+          "label": "6-4"
         },
         {
           "title": "Campaign Level 30",
-          "description": "Rock Climber 2"
+          "description": "Rock Climber 2",
+          "label": "6-5"
         }
       ]
     },
@@ -162,23 +192,28 @@
       "levels": [
         {
           "title": "Campaign Level 31",
-          "description": "Escape Room"
+          "description": "Escape Room",
+          "label": "7-1"
         },
         {
           "title": "Campaign Level 32",
-          "description": "Spider Room"
+          "description": "Spider Room",
+          "label": "7-2"
         },
         {
           "title": "Campaign Level 33",
-          "description": "Kargoh's Spider"
+          "description": "Kargoh's Spider",
+          "label": "7-3"
         },
         {
           "title": "Campaign Level 34",
-          "description": "Spider Tower"
+          "description": "Spider Tower",
+          "label": "7-4"
         },
         {
           "title": "Campaign Level 35",
-          "description": "Spider Cave"
+          "description": "Spider Cave",
+          "label": "7-5"
         }
       ]
     },

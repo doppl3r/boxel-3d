@@ -123,9 +123,11 @@
 
   function setItems() {
     items.value = []; // Empty array
-    levels.packs.forEach(function(pack) {
+    levels.packs.forEach(function(pack, i) {
       var url = pack.url;
-      pack.levels.forEach(function(item) {
+      pack.levels.forEach(function(item, j) {
+        var score = getScore(item.title);
+        if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + getScore(item.title) + 's';
         item.url = url; // Assign pack image
         items.value.push(item);
       })
