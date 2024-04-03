@@ -50,9 +50,9 @@
     else return getScrollParent(node.parentNode);
   }
 
-  function scrollToSelected(el) {
+  function scrollToSelected(el, behavior = 'smooth') {
     if (el == null) el = document.querySelector("[class*='selected']");
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    if (el) el.scrollIntoView({ behavior: behavior, block: 'nearest', inline: 'center' });
   }
 
   function isSelected(item) {
@@ -79,7 +79,7 @@
 
   // Run function after being mounted (visible)
   onMounted(function() {
-    scrollToSelected();
+    scrollToSelected(null, 'instant');
     addEventListeners();
   });
 
