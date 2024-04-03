@@ -15,12 +15,12 @@
   var menu = [
     {
       "title": "Skins",
-      "url": "/img/svg/button-skins.svg",
+      "url": "img/svg/button-skins.svg",
       "callback": function() { emit('setPage', 'skins') }
     },
     {
       "title": "Level Editor",
-      "url": "/img/svg/button-level-editor.svg",
+      "url": "img/svg/button-level-editor.svg",
       "callback": function() {
         // TODO: Replace events after developing Level Editor 2.0
         window.dispatchEvent(new CustomEvent('setTheme', { detail: 'origin' }));
@@ -29,7 +29,7 @@
     },
     {
       "title": "Play",
-      "url": "/img/svg/button-play.svg",
+      "url": "img/svg/button-play.svg",
       "callback": function() { emit('setPage', 'level-picker') }
     }
   ];
