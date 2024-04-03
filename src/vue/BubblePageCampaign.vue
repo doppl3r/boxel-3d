@@ -5,6 +5,8 @@
 
   // Initialize variables
   var isClosed = ref(true); // Popup animation state
+  var scores = app.storage.getScores();
+  var record = ref();
 
   // Add event listener(s)
   function addEventListeners() {
@@ -77,9 +79,18 @@
     }
   }
 
+  function getCurrentScore() {
+    var name = app.level.name;
+    var score = scores[name];
+    if (score) {
+      record.value = app.timer.toHTML(score);
+    }
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     app.showCanvas();
+    getCurrentScore();
     addEventListeners();
   });
 
@@ -92,6 +103,16 @@
 <template>
   <div class="page">
     <div class="nav">
+      <div class="score fade-in" @click="pauseLevel()">
+        <div class="current">
+          <span class="material-symbols-rounded">pause_circle</span>
+          <div id="timer"></div>
+        </div>
+        <div class="record" v-if="record">
+          <span class="material-symbols-rounded">star</span>
+          <div v-html="record"></div>
+        </div>
+      </div>
       <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="footer">

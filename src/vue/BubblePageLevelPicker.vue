@@ -127,7 +127,7 @@
       var url = pack.url;
       pack.levels.forEach(function(item, j) {
         var score = getScore(item.title);
-        if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + getScore(item.title) + 's';
+        if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + getScore(item.title);
         item.url = url; // Assign pack image
         items.value.push(item);
       })
