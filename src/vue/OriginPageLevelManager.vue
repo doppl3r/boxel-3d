@@ -106,6 +106,7 @@
 
   function keydown(e) {
     if (e.code == 'Escape' || e.code == 'KeyE') {
+      if (e.target.value) return; // Prevent exit while typing
       e.preventDefault();
       exitLevelManager();
     }

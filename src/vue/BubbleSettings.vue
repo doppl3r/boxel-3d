@@ -169,7 +169,7 @@
               </div>
               <div class="option">
                 <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
-                <label for="stats">Show Stats</label>
+                <label for="stats">Show FPS</label>
               </div>
               <div class="option" v-if="isFullscreen() == false">
                 <input type="checkbox" id="fullscreen" @change="openFullscreen()">
