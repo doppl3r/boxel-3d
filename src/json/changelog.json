@@ -304,5 +304,12 @@
     "revisions": [
       "Fix escape shortcut"
     ]
+  },
+  {
+    "version": "2.0.0",
+    "revisions": [
+      "Added new UI",
+      "Added option to switch to old UI"
+    ]
   }
 ]
