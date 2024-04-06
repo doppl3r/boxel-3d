@@ -18,7 +18,6 @@ class Player extends Cube {
     this.util = new Utility();
     this.mass = 5;
     this.allowJump = false;
-    this.addLight('#dc265a', 25000, 500, false);
     this.rope = new Rope();
 
     // Add an invisible plane to player for rope raycaster mechanics

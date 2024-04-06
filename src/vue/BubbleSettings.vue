@@ -155,7 +155,7 @@
             <div class="group">
               <div class="option">
                 <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
-                <label for="motion">Camera Rotation</label>
+                <label for="motion">Camera Motion</label>
               </div>
             </div>
           </div>

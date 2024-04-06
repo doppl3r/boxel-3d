@@ -1,4 +1,4 @@
-import { Color, Fog, HemisphereLight, PerspectiveCamera, Scene } from 'three';
+import { Color, HemisphereLight, PerspectiveCamera, Scene } from 'three';
 import { Engine, Events } from 'matter-js';
 import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
@@ -44,15 +44,13 @@ class App {
     this.camera.position.zDefault = 180;
     this.camera.position.z = this.camera.position.zDefault;
     this.scene = new Scene();
-    this.scene.fog = new Fog('#dc265a', 400, 1250);
     this.scene.background = new Color('#1a1a1a');
     this.graphics = new Graphics(canvas);
     this.graphics.setCamera(this.camera);
     this.graphics.setScene(this.scene);
     this.graphics.setSelectedObjects([this.player]);
     this.loop = new Loop();
-    this.light = new HemisphereLight('#ffffff', '#000000', 1);
-    this.light.intensity = 1 * Math.PI; // PI was added after three.js r155
+    this.light = new HemisphereLight('#ffffff', '#000000', 1 * Math.PI); // PI was added after three.js r155
     this.then = new Date().getTime();
     this.now = this.then;
     this.delta = 0;
@@ -70,9 +68,8 @@ class App {
     // Add level to scene
     this.scene.add(this.level);
 
-    // Add background
-    this.background = new Background({ radius: 1000 });
-    this.background.setTarget(this.player);
+    // Add background to scene
+    this.background = new Background();
     this.scene.add(this.background);
 
     // Add event listeners and render app
@@ -98,6 +95,10 @@ class App {
   load(callback = function(){}) {
     // Start music
     this.assets.audio.play('theme', true);
+
+    // Initialize background with model
+    this.background.setTarget(this.player);
+    this.background.init({ model: app.assets.models.clone('background-city') });
 
     // Start game loop
     this.resizeWindow(null, this);
@@ -139,8 +140,7 @@ class App {
       this.timer.render(this);
 
       // Update background
-      this.background.update(delta, alpha);
-
+      this.background.update(app.motion == false);
     }
 
     // Update 3D renderer
@@ -207,6 +207,7 @@ class App {
   updateGravity(angle) { // between -1, and 1 directionally
     var vector = this.util.getVectorFromAngle(angle);
     var gravity = app.engine.world.gravity;
+    var scale = 1;
     gravity.x = vector.x;
     gravity.y = vector.y;
 
@@ -214,9 +215,14 @@ class App {
     if (angle != null && app.motion == true) {
       angle *= -1;
       if (angle < 0) app.camera.rotation.z = (app.camera.rotation.z - (Math.PI * 2)) % (Math.PI * 2);
+      scale = (Math.abs((angle + Math.PI) % (Math.PI)) / (Math.PI / 2)) + 1; // 0deg = 1, 90deg = 2
       app.animation.tween(app.camera.rotation, { z: angle });
+      app.background.animateScale(scale);
     }
-    else app.camera.rotation.z = 0;
+    else {
+      app.camera.rotation.z = 0;
+      app.background.animateScale(1, { duration: 1 });
+    }
   }
 
   updateQuality(quality, a = app) {
