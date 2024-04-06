@@ -2,6 +2,7 @@
   import { onMounted, onUnmounted, ref } from 'vue';
   import Origin from './Origin.vue'; // v1.0 theme
   import Bubble from './Bubble.vue'; // v2.0 theme
+  import Loading from './Loading.vue';
 
   // Set initial values
   var theme = ref('bubble');
@@ -57,4 +58,5 @@
 <template>
   <Origin v-if="theme == 'origin'" />
   <Bubble v-if="theme == 'bubble'" />
+  <Loading />
 </template>

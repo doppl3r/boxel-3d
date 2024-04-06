@@ -82,7 +82,7 @@
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition name="fade-origin-popup">
     <div class="dialog" v-if="isOpen == true">
       <div class="background" @click="runLastInputCallback"></div>
       <div class="wrapper">
@@ -98,6 +98,6 @@
   </Transition>
 </template>
 <style>
-  .fade-enter-active, .fade-leave-active { transition: opacity 0.1s ease; }
-  .fade-enter-from, .fade-leave-to { opacity: 0; }
+  .fade-origin-popup-enter-active, .fade-origin-popup-leave-active { transition: opacity 0.1s ease; }
+  .fade-origin-popup-enter-from, .fade-origin-popup-leave-to { opacity: 0; }
 </style>

@@ -7,7 +7,6 @@
   import BubblePageCampaign from './BubblePageCampaign.vue';
   import BubbleSettings from './BubbleSettings.vue';
   import BubblePopup from './BubblePopup.vue';
-  import BubbleLoading from './BubbleLoading.vue';
 
   // Conditionally render components
   var page = ref('home');
@@ -47,6 +46,5 @@
     <BubblePageCampaign v-if="page == 'campaign'" @set-page="setPage" />
     <BubbleSettings />
     <BubblePopup />
-    <BubbleLoading />
   </div>
 </template>

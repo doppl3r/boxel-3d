@@ -19,7 +19,7 @@
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition name="fade-loading">
     <div class="loading" v-show="isFinished() == false">
       <div class="bar">
         <div class="progress" :style="{ width: progress.percent + '%' }"></div>
@@ -29,8 +29,8 @@
   </Transition>
 </template>
 <style>
-  .fade-enter-active,
-  .fade-leave-active { transition: opacity 0.5s ease; }
-  .fade-enter-from,
-  .fade-leave-to { opacity: 0; }
+  .fade-loading-enter-active,
+  .fade-loading-leave-active { transition: opacity 0.5s ease; }
+  .fade-loading-enter-from,
+  .fade-loading-leave-to { opacity: 0; }
 </style>

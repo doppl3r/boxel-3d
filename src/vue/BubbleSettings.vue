@@ -131,7 +131,7 @@
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition name="fade-settings">
     <div class="popup settings" v-if="isOpen == true">
       <div class="background" @click="runLastInputCallback"></div>
       <div class="container">
@@ -217,6 +217,6 @@
   </Transition>
 </template>
 <style>
-  .fade-enter-active, .fade-leave-active { transition: opacity 0.1s ease; }
-  .fade-enter-from, .fade-leave-to { opacity: 0; }
+  .fade-settings-enter-active, .fade-settings-leave-active { transition: opacity 0.1s ease; }
+  .fade-settings-enter-from, .fade-settings-leave-to { opacity: 0; }
 </style>
