@@ -4,12 +4,14 @@
   import BubbleStats from './BubbleStats.vue';
 
   // Initialize variables
+  var credit = ref('');
   var isClosed = ref(true); // Popup animation state
   var scores = app.storage.getScores();
   var record = ref();
 
   // Add event listener(s)
   function addEventListeners() {
+    window.addEventListener('setCredit', setCredit);
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
     window.addEventListener('beforeSettingsOpened', settingsOpened);
@@ -19,11 +21,16 @@
   
   // Remove event listeners
   function removeEventListeners() {
+    window.removeEventListener('setCredit', setCredit);
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
     window.removeEventListener('beforeSettingsOpened', settingsOpened);
     window.removeEventListener('beforeSettingsClosed', settingsClosed);
     window.removeEventListener('keydown', keydown);
+  }
+
+  function setCredit(e) {
+    if (e.detail.text) credit.value = e.detail.text;
   }
 
   function pauseLevel() {
@@ -117,6 +124,7 @@
     </div>
     <div class="footer">
       <BubbleStats />
+      <div id="credit" class="credit button right fade-in disabled" v-html="credit" v-if="credit"></div>
     </div>
   </div>
 </template>

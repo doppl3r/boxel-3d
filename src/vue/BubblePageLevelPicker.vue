@@ -39,7 +39,6 @@
     app.play = true;
     app.timer.reset();
     if (json.author) credit = 'Level by ' + json.author;
-    if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
     if (theme) app.level.entityFactory.color = theme.color;
     app.background.setTheme(theme.model);
     app.level.clearLevel(app);
