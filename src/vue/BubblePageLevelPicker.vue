@@ -34,7 +34,6 @@
     var json = await response.json();
     var credit = '';
     var theme = themes[selectedItem.value.theme];
-    console.log(theme);
     emit('setPage', 'campaign');
     app.updateGravity();
     app.play = true;
@@ -42,7 +41,7 @@
     if (json.author) credit = 'Level by ' + json.author;
     if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
     if (theme) app.level.entityFactory.color = theme.color;
-    app.background.setTheme(selectedItem.value.theme);
+    app.background.setTheme(theme.model);
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
     settings.progress = getLevelIndex(title) + 1;

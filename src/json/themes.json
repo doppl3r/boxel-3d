@@ -1,34 +1,30 @@
 {
   "blue": {
     "model": "background-city",
-    "color": "#FFCB4C"
-  },
-  "classic": {
-    "model": "background-city",
-    "color": "#F7045D"
-  },
-  "grayscale": {
-    "model": "background-city",
     "color": "#ffffff"
   },
+  "classic": {
+    "model": "background-classic",
+    "color": "#620460"
+  },
   "green": {
-    "model": "background-city",
+    "model": "background-forest",
     "color": "#ffffff"
   },
   "orange": {
-    "model": "background-city",
+    "model": "background-desert",
     "color": "#EB2B6D"
   },
   "pink": {
-    "model": "background-city",
+    "model": "background-tokyo",
     "color": "#F62D67"
   },
   "purple": {
-    "model": "background-city",
+    "model": "background-kargoh",
     "color": "#ffffff"
   },
   "red": {
-    "model": "background-city",
+    "model": "background-hell",
     "color": "#8C004A"
   }
 }

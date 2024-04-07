@@ -34,7 +34,7 @@
     if (json.author) credit = 'Level by ' + json.author;
     if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
     app.level.entityFactory.color = '#620460';
-    app.background.setTheme('classic');
+    app.background.setTheme('background-classic');
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
     settings.progress = index + 1;
