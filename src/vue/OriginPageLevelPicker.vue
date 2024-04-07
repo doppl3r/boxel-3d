@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import levels from '../json/levels.json';
+  import themes from '../json/themes.json';
 
   // Initialize variables
   var scores = app.storage.getScores();
@@ -25,15 +26,18 @@
     var response = await fetch(origin.value + pathname.value + '/json/' + title + '.json');
     var json = await response.json();
     var credit = '';
+    var index = getLevelIndex(title);
     emit('setPage', 'campaign');
     app.updateGravity();
     app.play = true;
     app.timer.reset();
     if (json.author) credit = 'Level by ' + json.author;
     if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
+    app.level.entityFactory.color = '#620460';
+    app.background.setTheme('classic');
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
-    settings.progress = getLevelIndex(title) + 1;
+    settings.progress = index + 1;
     app.updateSettings(settings);
     app.playLevel();
     app.resetScene();
@@ -82,6 +86,24 @@
       });
     });
     return title;
+  }
+
+  function getLevelTheme(index) {
+    var theme;
+    var count = 0;
+
+    // Loop through packs array
+    levels.packs.forEach(function(pack) {
+      // Loop through each levels array
+      pack.levels.forEach(function(level) {
+        // Set theme and increment count
+        if (index == count) {
+          theme = pack.theme;
+        }
+        count++;
+      });
+    });
+    return theme;
   }
 
   function scrollToLevel() {

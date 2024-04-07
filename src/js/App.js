@@ -98,7 +98,7 @@ class App {
 
     // Initialize background with model
     this.background.setTarget(this.player);
-    this.background.init({ model: app.assets.models.clone('background-city') });
+    this.background.init();
 
     // Start game loop
     this.resizeWindow(null, this);

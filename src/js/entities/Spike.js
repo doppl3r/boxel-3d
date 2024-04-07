@@ -13,6 +13,7 @@ class Spike extends Cube {
         this.setScale({ x: 16, y: 16, z: 16 });
         this.shapes.removeAllShapes();
         this.addShapes(options);
+        this.setColors(options.color);
     }
 
     addShapes(options) {

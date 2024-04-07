@@ -44,7 +44,7 @@ class Shapes extends Group {
         options.opacity = (options.opacity == null) ? 1 : options.opacity;
 
         var geometry = new ConeGeometry((options.scaleX / 2) * 1.5, options.scaleY, options.segments);
-        var material = new MeshPhongMaterial({ color: options.color });
+        var material = new MeshPhongMaterial({ color: options.color, flatShading: true });
         var cone = new Mesh(geometry, material);
         cone.castShadow = true;
         cone.receiveShadow = true;

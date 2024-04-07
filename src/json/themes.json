@@ -1,0 +1,34 @@
+{
+  "blue": {
+    "model": "background-city",
+    "color": "#FFCB4C"
+  },
+  "classic": {
+    "model": "background-city",
+    "color": "#F7045D"
+  },
+  "grayscale": {
+    "model": "background-city",
+    "color": "#ffffff"
+  },
+  "green": {
+    "model": "background-city",
+    "color": "#ffffff"
+  },
+  "orange": {
+    "model": "background-city",
+    "color": "#EB2B6D"
+  },
+  "pink": {
+    "model": "background-city",
+    "color": "#F62D67"
+  },
+  "purple": {
+    "model": "background-city",
+    "color": "#ffffff"
+  },
+  "red": {
+    "model": "background-city",
+    "color": "#8C004A"
+  }
+}

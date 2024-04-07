@@ -3,6 +3,7 @@
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import levels from '../json/levels.json';
+  import themes from '../json/themes.json';
 
   // Initialize variables
   var description = ref('Select a level');
@@ -32,12 +33,16 @@
     var response = await fetch(origin.value + pathname.value + '/json/' + title + '.json');
     var json = await response.json();
     var credit = '';
+    var theme = themes[selectedItem.value.theme];
+    console.log(theme);
     emit('setPage', 'campaign');
     app.updateGravity();
     app.play = true;
     app.timer.reset();
     if (json.author) credit = 'Level by ' + json.author;
     if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
+    if (theme) app.level.entityFactory.color = theme.color;
+    app.background.setTheme(selectedItem.value.theme);
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
     settings.progress = getLevelIndex(title) + 1;
@@ -129,6 +134,7 @@
         var score = getScore(item.title);
         if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + getScore(item.title);
         item.url = url; // Assign pack image
+        item.theme = pack.theme;
         items.value.push(item);
       })
     });

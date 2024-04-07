@@ -15,11 +15,20 @@ import { Reset } from './Reset.js';
 
 class EntityFactory {
   constructor() {
-
+    this.color = '#620460';
   }
 
   createObject(type, options) {
     var object;
+
+    // Define default options
+    if (options == null) {
+      options = {
+        color: this.color
+      };
+    }
+
+    // Create new object from type
     switch(type) {
       case('player'): object = new Player(options); break;
       case('tip'): object = new Tip(options); break;
