@@ -17,7 +17,8 @@
 
   function selectItem(item, e) {
     var el = getSelectedElement(e.target);
-    scrollToSelected(el);
+    var behavior = e.isTrusted ? 'smooth' : 'instant'; // Keyboard "click" = "not trusted"
+    scrollToSelected(el, behavior);
     selectedItem.value = item;
     window.dispatchEvent(new CustomEvent('itemSelected', { detail: item }));
   }

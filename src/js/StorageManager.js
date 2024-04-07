@@ -96,7 +96,7 @@ class StorageManager {
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
       'volume': 0,
-      'quality': 6,
+      'quality': 10,
       'theme': 'bubble',
       'snap': 8,
       'skin': { id: 466, title: "Smile", url: "img/png/skins/smile.png" },

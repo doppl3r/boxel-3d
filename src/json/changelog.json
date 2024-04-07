@@ -311,5 +311,12 @@
       "Added new UI",
       "Added option to switch to old UI"
     ]
+  },
+  {
+    "version": "2.1.0",
+    "revisions": [
+      "Added new backgrounds",
+      "Fixed community level scores"
+    ]
   }
 ]
