@@ -40,7 +40,7 @@ class Background extends Group {
 
         // Set background properties
         this.scale.set(1280, 1280, 1280);
-        var count = 5;
+        var count = 4;
         var object = new Object3D();
 
         // Traverse model for meshes
@@ -52,7 +52,7 @@ class Background extends Group {
             // Update instance translations
             for (var i = 0; i < count; i++) {
               //object.scale.set(scale, scale, scale);
-              object.position.set(i - Math.floor(count / 2), 0, 0);
+              object.position.set(i - (count * 0.5) + 0.5, 0, 0);
               object.updateMatrix();
               instance.setMatrixAt(i, object.matrix);
             }
