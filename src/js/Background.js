@@ -9,7 +9,7 @@ class Background extends Group {
     this.setTheme('background-city');
   }
 
-  update(fixed = false) {
+  update(delta, alpha, fixed = false) {
     // Update background translations
     if (this.target){
       if (fixed == true) {
@@ -17,7 +17,7 @@ class Background extends Group {
       }
       else {
         this.position.y = this.target.position.y;
-        this.position.x = this.target.position.x - (this.target.position.x % (this.scale.x));
+        this.position.x = this.target.position.x - (this.target.position.x % this.scale.x);
       }
     }
   }

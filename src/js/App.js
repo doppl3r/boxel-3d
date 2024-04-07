@@ -140,7 +140,7 @@ class App {
       this.timer.render(this);
 
       // Update background
-      this.background.update(app.motion == false);
+      this.background.update(delta, alpha, app.motion == false);
     }
 
     // Update 3D renderer
