@@ -329,6 +329,15 @@ class Cube extends Mesh {
   isFrozen() {
     return this.body.collisionFilter.category == 0;
   }
+
+  addLight(color, intensity, distance, castShadow = false) {
+    if (this.light == null) {
+      this.light = new PointLight(color, intensity, distance);
+      this.light.position.set(0, 0, 0);
+      this.light.castShadow = castShadow;
+      this.add(this.light);
+    }
+  }
 }
 
 export { Cube };

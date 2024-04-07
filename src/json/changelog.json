@@ -319,4 +319,11 @@
       "Fixed community level scores"
     ]
   }
+  ,
+  {
+    "version": "2.1.1",
+    "revisions": [
+      "Update level backgrounds"
+    ]
+  }
 ]

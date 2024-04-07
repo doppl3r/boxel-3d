@@ -94,6 +94,12 @@
         // Set title and increment count
         if (index == count) {
           description.value = pack.title;
+
+          if (pack.links) {
+            pack.links.forEach(function(link) {
+              description.value += ' <a class="' + link.class + '" href="' + link.url + '" target="' + link.target + '"><img src="' + link.icon + '"> ' + link.text + '</a>'
+            })
+          }
         }
         count++;
       });
@@ -155,6 +161,7 @@
   onBeforeMount(function() {
     setItems();
     setSelectedItem();
+    updateDescription();
   });
   
   // Run function after being mounted (visible)
@@ -180,7 +187,7 @@
     </div>
     <div class="content fade-in">
       <h1>Play</h1>
-      <p>{{ description }}</p>
+      <p v-html="description"></p>
       <BubbleCarousel :items="items" :selected="selectedItem" :key="key" />
     </div>
     <div class="footer">
