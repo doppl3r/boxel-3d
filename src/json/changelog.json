@@ -323,7 +323,9 @@
   {
     "version": "2.1.1",
     "revisions": [
-      "Update level backgrounds"
+      "Added community level credit",
+      "Added community Discord link",
+      "Updated level backgrounds"
     ]
   }
 ]
