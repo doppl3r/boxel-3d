@@ -63,11 +63,14 @@
 
   function keydown(e) {
     if (isOpen.value == true) {
-      var jumpKeys = ['Space', 'Enter', 'Escape'];
-      if (jumpKeys.indexOf(e.code) > -1) {
-        // Close popup
-        e.preventDefault();
-        runLastInputCallback(e);
+      // Prevent actions while typing
+      if (e.target.type != 'text') {
+        var jumpKeys = ['Space', 'Enter', 'Escape'];
+        if (jumpKeys.indexOf(e.code) > -1) {
+          // Close popup
+          e.preventDefault();
+          runLastInputCallback(e);
+        }
       }
     }
   }
