@@ -318,14 +318,20 @@
       "Added 7 new environments for each level pack",
       "Fixed community level scores"
     ]
-  }
-  ,
+  },
   {
     "version": "2.1.1",
     "revisions": [
       "Added community level credit",
       "Added community Discord link",
       "Updated level backgrounds"
+    ]
+  },
+  {
+    "version": "2.1.2",
+    "revisions": [
+      "Added a new level (Ping Pong)",
+      "Fixed the Level Editor tip bug"
     ]
   }
 ]
