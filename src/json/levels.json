@@ -252,7 +252,7 @@
       "links": [
         {
           "class": "discord",
-          "icon": "/img/svg/discord.svg",
+          "icon": "img/svg/discord.svg",
           "target": "_blank",
           "text": "Join the Discord",
           "url": "https://discord.gg/j8fvd4UvbE"
