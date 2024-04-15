@@ -118,7 +118,7 @@
       // Loop through each levels array
       pack.levels.forEach(function(level) {
         // Set title and increment count
-        if (index == count) {
+        if (index == count || index == count + 1) { // count + 1 == last item
           selectedItem.value = level;
         }
         count++;
