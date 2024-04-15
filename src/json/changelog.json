@@ -333,5 +333,12 @@
       "Added a new level (Ping Pong)",
       "Fixed the Level Editor tip bug"
     ]
+  },
+  {
+    "version": "2.1.3",
+    "revisions": [
+      "Added a new community level (Kllixto)",
+      "Fixed a level picker bug"
+    ]
   }
 ]
