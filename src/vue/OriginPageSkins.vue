@@ -89,7 +89,7 @@
 
 <template>
   <div class="skins dashboard">
-    <div class="background"></div>
+    <div class="background-cubes"></div>
     <div class="wrapper fade-in">
       <h1>My<strong>Skins</strong></h1>
       <div class="skin-group">

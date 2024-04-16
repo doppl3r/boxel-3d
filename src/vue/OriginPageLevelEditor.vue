@@ -74,9 +74,14 @@
     app.background.visible = false;
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
-
+  
   function playLevel() {
     objectTypeVisible.value = false;
+    app.level.deselectLevel(app);
+    app.levelEditor.controlsOrbit.enabled = false;
+    app.levelEditor.controlsOrbit.reset();
+    app.levelEditor.controlsTransform.detach();
+    window.dispatchEvent(new CustomEvent('setSelectedObject'));
     app.playLevel();
   }
 
@@ -193,6 +198,9 @@
 </script>
 
 <template>
+  <Teleport to="body">
+    <div v-if="objectTypeVisible == false" class="background-cubes"></div>
+  </Teleport>
   <div class="level-editor">
     <div class="row top">
       <div class="col options-level">

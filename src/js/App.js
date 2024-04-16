@@ -44,7 +44,6 @@ class App {
     this.camera.position.zDefault = 180;
     this.camera.position.z = this.camera.position.zDefault;
     this.scene = new Scene();
-    this.scene.background = new Color('#1a1a1a');
     this.graphics = new Graphics(canvas);
     this.graphics.setCamera(this.camera);
     this.graphics.setScene(this.scene);
@@ -248,13 +247,6 @@ class App {
   playLevel() {
     app.play = true;
     app.timer.start();
-    app.level.deselectLevel(app);
-    app.levelEditor.controlsOrbit.enabled = false;
-    app.levelEditor.controlsOrbit.reset();
-    app.levelEditor.controlsTransform.detach();
-    app.background.visible = true;
-    if (app.player.jump == true) app.player.jump = false; // Prevent jump in the beginning
-    window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   pauseLevel() {

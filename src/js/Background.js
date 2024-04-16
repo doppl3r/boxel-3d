@@ -28,7 +28,7 @@ class Background extends Group {
 
   setTheme(name) {
     // Only set new theme
-    if (this.name != name) {
+    if (this.theme != name) {
       // Clone model from assets
       var model = app.assets.models.clone(name);
       if (model) {

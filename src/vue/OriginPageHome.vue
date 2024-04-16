@@ -111,7 +111,7 @@
 
 <template>
   <div class="home dashboard">
-    <div class="background"></div>
+    <div class="background-cubes"></div>
     <a class="version fade-in" @click="showChangelog">v{{ version }}</a>
     <div class="wrapper fade-in">
       <img src="/img/svg/logo-white.svg" class="logo">

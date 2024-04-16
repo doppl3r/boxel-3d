@@ -45,6 +45,7 @@
     app.level.importFromJSON(json, app);
     settings.progress = getLevelIndex(title) + 1;
     app.updateSettings(settings);
+    app.background.visible = true;
     app.playLevel();
     app.resetScene();
     

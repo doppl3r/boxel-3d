@@ -86,6 +86,9 @@
 
 <template>
   <div class="campaign dashboard">
+    <Teleport to="body">
+      <div class="background-cubes"></div>
+    </Teleport>
     <div id="timer"></div>
     <div id="credit" class="fade-in" v-html="credit" v-if="credit"></div>
     <div id="speedometer"><span id="speed"></span></div>

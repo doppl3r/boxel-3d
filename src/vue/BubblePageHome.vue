@@ -76,7 +76,7 @@
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: '<div style="text-align: left; padding-right: 1em;">' + text + '</div>',
+        text: '<div style="font-size: 0.75em; padding-right: 1em; text-align: left;">' + text + '</div>',
         inputs: [{ type: 'button', value: 'Close' }]
       }
     }));
@@ -130,7 +130,7 @@
     </div>
     <div class="footer">
       <a class="button fade-in" :class="{ hidden: version == '' }" @click="openChangelog">
-        <span class="material-symbols-rounded">history</span>
+        <span class="material-symbols-rounded">ink_pen</span>
         {{ version }}
       </a>
       <a class="button right fade-in" @click="openReviewLink">

@@ -39,6 +39,7 @@
     app.level.importFromJSON(json, app);
     settings.progress = index + 1;
     app.updateSettings(settings);
+    app.background.visible = false;
     app.playLevel();
     app.resetScene();
     
@@ -150,7 +151,7 @@
 
 <template>
   <div class="level-picker dashboard">
-    <div class="background"></div>
+    <div class="background-cubes"></div>
     <div class="wrapper fade-in">
       <h1>Level<strong>Packs</strong></h1>
       <div class="buttons">

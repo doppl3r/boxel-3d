@@ -340,5 +340,11 @@
       "Added a new community level (Kllixto)",
       "Fixed a level picker bug"
     ]
+  },
+  {
+    "version": "2.1.4",
+    "revisions": [
+      "Added the original background artwork"
+    ]
   }
 ]
