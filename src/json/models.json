@@ -19,5 +19,8 @@
   },
   "background-tokyo": {
     "url": "./glb/background-tokyo.glb"
+  },
+  "cube-control": {
+    "url": "./glb/cube-control.glb"
   }
 }

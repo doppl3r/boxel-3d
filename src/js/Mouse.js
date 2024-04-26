@@ -62,10 +62,17 @@ class Mouse {
         // Loop through objects selected
         for (var i = 0; i < intersects.length; i++) {
             var obj = intersects[i].object;
-            if (obj.parent.parent.isCube) {
-                object = obj.parent.parent;
-                break;
+
+            // Traverse meshes with visible material
+            if (obj.isMesh && obj.material.visible) {
+                // Find parent cube
+                obj.traverseAncestors(function(o) {
+                    if (object == null && o.isCube) object = o;
+                });
             }
+
+            // Break loop if object is defined
+            if (object) break;
         }
         return(object);
     }

@@ -19,11 +19,23 @@ class Player extends Cube {
     this.mass = 5;
     this.allowJump = false;
     this.addLight('#dc265a', 16000, 500, false);
+    this.controls = { left: 0, right: 0 };
     this.rope = new Rope();
 
     // Add an invisible plane to player for rope raycaster mechanics
     this.plane = new Mesh(new PlaneGeometry(1000, 1000), new MeshPhongMaterial({ visible: false, side: DoubleSide }));
     this.add(this.plane);
+  }
+
+  setControls(name, value) {
+    this.controls[name] = value;
+  }
+
+  updateControls() {
+    if (this.mode == 'control') {
+      // Credit: https://github.com/Charlieee1/
+
+    }
   }
 
   setScale(scale = {}, updateOrigin = true) {

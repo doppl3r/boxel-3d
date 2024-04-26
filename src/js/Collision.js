@@ -78,10 +78,19 @@ class Collision {
                 }
               }
               else if (objectA.body.class == 'finish') {
-                if (objectB.body.class ==  'player') { app.player.finish(); }
+                if (objectB.body.class ==  'player') {
+                  app.player.finish();
+                }
               }
               else if (objectA.body.class == 'reset') {
-                if (objectB.body.class ==  'player') { app.player.reset(); }
+                if (objectB.body.class ==  'player') {
+                  app.player.reset();
+                }
+              }
+              else if (objectA.body.class == 'control') {
+                if (objectB.body.class ==  'player') {
+                  app.player.setMode('control', false);
+                }
               }
             }
           }

@@ -12,6 +12,7 @@ import { Gravity } from './Gravity.js';
 import { Grapple } from './Grapple.js';
 import { Finish } from './Finish.js';
 import { Reset } from './Reset.js';
+import { Control } from './Control.js';
 
 class EntityFactory {
   constructor() {
@@ -43,6 +44,10 @@ class EntityFactory {
       case('grapple'): object = new Grapple(options); break;
       case('finish'): object = new Finish(options); break;
       case('reset'): object = new Reset(options); break;
+      case('control'):
+        options.model = app.assets.models.clone('cube-control');
+        object = new Control(options);
+      break;
       default: object = new Cube(options);
     }
     return object;

@@ -13,6 +13,7 @@
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
     window.addEventListener('keydown', keydown);
+    window.addEventListener('keyup', keyup);
   }
   
   // Remove event listeners
@@ -21,6 +22,7 @@
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
     window.removeEventListener('keydown', keydown);
+    window.removeEventListener('keyup', keyup);
   }
 
   function setCredit(e) {
@@ -62,12 +64,29 @@
       else if (e.code == 'KeyR') {
         app.level.retryLevel();
       }
+      else if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+        app.player.setControls('left', -1);
+      }
+      else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+        app.player.setControls('right', 1);
+      }
       else {
         var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
         if (jumpKeys.indexOf(e.code) > -1) {
           // Jump if one of the keys is pressed
           app.player.jump();
         }
+      }
+    }
+  }
+
+  function keyup(e) {
+    if (isClosed.value == true) {
+      if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+        app.player.setControls('left', 0);
+      }
+      else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+        app.player.setControls('right', 0);
       }
     }
   }

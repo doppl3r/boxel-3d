@@ -17,6 +17,7 @@
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
     window.addEventListener('keydown', keydown);
+    window.addEventListener('keyup', keyup);
   }
   
   function removeEventListeners() {
@@ -26,6 +27,7 @@
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
     window.removeEventListener('keydown', keydown);
+    window.removeEventListener('keyup', keyup);
   }
 
   function popupOpened() {
@@ -141,45 +143,71 @@
     if (isClosed.value == true) {
       // Jump if one of the keys is pressed
       var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
-      if (jumpKeys.indexOf(e.code) > -1) {
-        app.player.jump();
-      }
-
-      // Add undo/redo logic
-      if (e.code == 'Digit0') {
-        app.levelEditor.resetZAxis();
-      }
-      else if (e.code == 'Escape' || e.code == 'KeyE') {
-        e.preventDefault();
-        if (app.play == true) pauseLevel();
-        else exitLevel();
-      }
-      else if (e.code == 'KeyD') {
-        duplicateSelectedObject();
-      }
-      else if (e.code == 'KeyG') {
-        setTransformMode({ detail: 'translate' });
-      }
-      else if (e.code == 'KeyR') {
-        if (app.play == true) app.level.retryLevel();
-        else setTransformMode({ detail: 'rotate' });
-      }
-      else if (e.code == 'KeyS') {
-        if (e.ctrlKey == true) {
-          e.preventDefault();
-          app.levelEditor.saveLevel();
+      if (app.play == true) {
+        if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+          app.player.setControls('left', -1);
         }
-        else setTransformMode({ detail: 'scale' });
+        else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+          app.player.setControls('right', 1);
+        }
+        else {
+          var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
+          if (jumpKeys.indexOf(e.code) > -1) {
+            // Jump if one of the keys is pressed
+            app.player.jump();
+          }
+        }
       }
-      else if (e.code == 'KeyT') {
-        setTransformMode({ detail: 'translate' });
+      else {
+        // Add undo/redo logic
+        if (e.code == 'Digit0') {
+          app.levelEditor.resetZAxis();
+        }
+        else if (e.code == 'Escape' || e.code == 'KeyE') {
+          e.preventDefault();
+          if (app.play == true) pauseLevel();
+          else exitLevel();
+        }
+        else if (e.code == 'KeyD') {
+          duplicateSelectedObject();
+        }
+        else if (e.code == 'KeyG') {
+          setTransformMode({ detail: 'translate' });
+        }
+        else if (e.code == 'KeyR') {
+          if (app.play == true) app.level.retryLevel();
+          else setTransformMode({ detail: 'rotate' });
+        }
+        else if (e.code == 'KeyS') {
+          if (e.ctrlKey == true) {
+            e.preventDefault();
+            app.levelEditor.saveLevel();
+          }
+          else setTransformMode({ detail: 'scale' });
+        }
+        else if (e.code == 'KeyT') {
+          setTransformMode({ detail: 'translate' });
+        }
+        else if (e.code == 'KeyX') {
+          app.levelEditor.deleteSelectedObject();
+        }
+        else if (e.code == 'KeyZ') {
+          if (e.ctrlKey == true && e.shiftKey == false) app.levelEditor.undo();
+          if (e.ctrlKey == true && e.shiftKey == true) app.levelEditor.redo();
+        }
       }
-      else if (e.code == 'KeyX') {
-        app.levelEditor.deleteSelectedObject();
-      }
-      else if (e.code == 'KeyZ') {
-        if (e.ctrlKey == true && e.shiftKey == false) app.levelEditor.undo();
-        if (e.ctrlKey == true && e.shiftKey == true) app.levelEditor.redo();
+    }
+  }
+
+  function keyup(e) {
+    if (isClosed.value == true) {
+      if (app.play == true) {
+        if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+          app.player.setControls('left', 0);
+        }
+        else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+          app.player.setControls('right', 0);
+        }
       }
     }
   }
@@ -229,6 +257,7 @@
         <a class="item" :class="{ selected: objectType == 'grapple' }" @click="selectObjectType({ detail: { type: 'grapple' }})" title="Grapple cube"><img src="/img/svg/grapple.svg"></a>
         <a class="item" :class="{ selected: objectType == 'finish' }" @click="selectObjectType({ detail: { type: 'finish' }})" title="Finish cube"><img src="/img/svg/finish.svg"></a>
         <a class="item" :class="{ selected: objectType == 'reset' }" @click="selectObjectType({ detail: { type: 'reset' }})" title="Reset cube"><img src="/img/svg/reset.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'control' }" @click="selectObjectType({ detail: { type: 'control' }})" title="Control cube"><img src="/img/svg/control.svg"></a>
       </div>
       <div class="col object-options" v-if="selectedObject != null">
         <a class="item" :class="{ selected: controlsTransform.mode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img src="/img/svg/move.svg"></a>

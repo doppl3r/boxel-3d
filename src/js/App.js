@@ -150,6 +150,7 @@ class App {
     // Update engine to loop engine rate
     if (this.play == true) {
       // Update player object
+      this.player.updateControls();
       this.player.updateForce();
       this.player.renderSpeed(this);
       this.player.updateRope();
