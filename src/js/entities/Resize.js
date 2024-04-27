@@ -2,33 +2,33 @@ import { Bodies, Body } from 'matter-js';
 import { Cube } from './Cube.js';
 
 class Resize extends Cube {
-    constructor(options = {}) {
-        super(options);
-        this.body.class = 'resize';
-        
-        // Set sensor the same size as rectangle
-        this.hitbox.isSensor = true;
-        this.sensor = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
-        Body.setParts(this.body, [this.hitbox, this.sensor]);
+  constructor(options = {}) {
+    super(options);
+    this.body.class = 'resize';
+    
+    // Set sensor the same size as rectangle
+    this.hitbox.isSensor = true;
+    this.sensor = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
+    Body.setParts(this.body, [this.hitbox, this.sensor]);
 
-        // Update body properties
-        this.setScale({ x: 16, y: 16, z: 16 });
-        this.shapes.removeAllShapes();
-        this.addShapes(options);
-    }
+    // Update body properties
+    this.setScale({ x: 16, y: 16, z: 16 });
+    this.shapes.removeAllShapes();
+    this.addShapes(options);
+  }
 
-    addShapes(options) {
-        var u = (options.scaleZ * 0.2); // unit size
-        this.shapes.addCube({ scaleX: (u * 3), scaleY: (u * 3), scaleZ: (u * 3), color: '#0287ef' });
-        this.shapes.addCube({ x: -(u * 2), y: (u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-        this.shapes.addCube({ x: (u * 2), y: (u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-        this.shapes.addCube({ x: -(u * 2), y: -(u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-        this.shapes.addCube({ x: (u * 2), y: -(u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-        this.shapes.addCube({ x: -(u * 2), y: (u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-        this.shapes.addCube({ x: (u * 2), y: (u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-        this.shapes.addCube({ x: -(u * 2), y: -(u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-        this.shapes.addCube({ x: (u * 2), y: -(u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
-    }
+  addShapes(options) {
+    var u = (options.scaleZ * 0.2); // unit size
+    this.shapes.addCube({ scaleX: (u * 3), scaleY: (u * 3), scaleZ: (u * 3), color: '#0287ef' });
+    this.shapes.addCube({ x: -(u * 2), y: (u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+    this.shapes.addCube({ x: (u * 2), y: (u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+    this.shapes.addCube({ x: -(u * 2), y: -(u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+    this.shapes.addCube({ x: (u * 2), y: -(u * 2), z: (u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+    this.shapes.addCube({ x: -(u * 2), y: (u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+    this.shapes.addCube({ x: (u * 2), y: (u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+    this.shapes.addCube({ x: -(u * 2), y: -(u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+    this.shapes.addCube({ x: (u * 2), y: -(u * 2), z: -(u * 2), scaleX: (u * 1), scaleY: (u * 1), scaleZ: (u * 1), color: '#ffffff' });
+  }
 }
 
 export { Resize };
