@@ -239,10 +239,14 @@ class Player extends Cube {
   }
 
   finish() {
+    // Set time values
     var levelName = app.level.name;
     var time = app.timer.toString();
     var hasNewScore = app.storage.saveScore(levelName, time);
     var text = 'Finished!<br>Score: ' + time;
+
+    // Rerender timer
+    app.timer.render(time);
 
     // Show new record text
     if (hasNewScore == true) text += '<br><em>New record!</em>';

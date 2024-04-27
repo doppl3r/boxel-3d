@@ -136,7 +136,7 @@ class App {
 
       // Update from new position
       this.updateCamera(this);
-      this.timer.render(this);
+      this.timer.render();
 
       // Update background
       this.background.update(delta, alpha, app.motion == false);
