@@ -34,8 +34,37 @@ class Player extends Cube {
   updateControls() {
     if (this.mode == 'control') {
       // Credit: https://github.com/Charlieee1/
-
+      var dx = 0;
+      var vX = this.body.velocity.x;
+      var force = .5 * (this.controls.left + this.controls.right);
+      if (force > 0) dx = Math.max(vX, Math.min(vX + force, 4)) - vX;
+      else dx = Math.min(vX, Math.max(vX + force, -4)) - vX;
+      this.addVelocity(dx, 0);
     }
+  }
+
+  addVelocity(dx, dy) {
+    let v = this.body.velocity;
+    if (dy == 0) this.setVelocityX(v.x + dx);
+    else if (dx == 0) this.setVelocityY(v.y + dy);
+    else this.setVelocity(v.x + dx, v.y + dy);
+  }
+
+  setVelocity = function(vX, vY) {
+    this.body.velocity.x = vX;
+    this.body.velocity.y = vY;
+    this.body.positionPrev.x = this.body.position.x - vX;
+    this.body.positionPrev.y = this.body.position.y + vY;
+  }
+
+  setVelocityX(vX) {
+    this.body.velocity.x = vX;
+    this.body.positionPrev.x = this.body.position.x - vX;
+  }
+
+  setVelocityY(vY) {
+    this.body.velocity.y = vY;
+    this.body.positionPrev.y = this.body.position.y + vY;
   }
 
   setScale(scale = {}, updateOrigin = true) {
@@ -43,7 +72,7 @@ class Player extends Cube {
   }
 
   jump() {
-    if (this.mode == 'jump') {
+    if (this.mode == 'jump' || this.mode == 'control') {
       if (this.allowJump == true) {
         this.allowJump = false;
   

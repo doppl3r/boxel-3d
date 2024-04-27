@@ -7,7 +7,6 @@ class Control extends Cube {
     this.body.class = 'control';
     
     // Set sensor the same size as rectangle
-    this.hitbox.isSensor = true;
     this.sensor = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { isSensor: true, density: 0, class: 'sensor' });
     Body.setParts(this.body, [this.hitbox, this.sensor]);
 

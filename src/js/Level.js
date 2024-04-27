@@ -87,6 +87,7 @@ class Level extends Group {
     // Reset player properties
     a.player.setPosition({ x: 0, y: 0, z: 0 });
     a.player.setScale({ x: 16, y: 16, z: 16 });
+    a.player.setRotation(0);
     a.player.setFriction(0);
 
     // Prepare level with a single floor

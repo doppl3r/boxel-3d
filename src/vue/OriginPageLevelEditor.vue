@@ -144,11 +144,18 @@
       // Jump if one of the keys is pressed
       var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
       if (app.play == true) {
-        if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+        if (e.code == 'Escape' || e.code == 'KeyE') {
+          e.preventDefault();
+          pauseLevel();
+        }
+        else if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
           app.player.setControls('left', -1);
         }
         else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
           app.player.setControls('right', 1);
+        }
+        else if (e.code == 'KeyR') {
+          app.level.retryLevel();
         }
         else {
           var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
@@ -165,8 +172,7 @@
         }
         else if (e.code == 'Escape' || e.code == 'KeyE') {
           e.preventDefault();
-          if (app.play == true) pauseLevel();
-          else exitLevel();
+          exitLevel();
         }
         else if (e.code == 'KeyD') {
           duplicateSelectedObject();
@@ -175,8 +181,7 @@
           setTransformMode({ detail: 'translate' });
         }
         else if (e.code == 'KeyR') {
-          if (app.play == true) app.level.retryLevel();
-          else setTransformMode({ detail: 'rotate' });
+          setTransformMode({ detail: 'rotate' });
         }
         else if (e.code == 'KeyS') {
           if (e.ctrlKey == true) {
