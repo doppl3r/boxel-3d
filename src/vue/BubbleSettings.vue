@@ -200,12 +200,12 @@
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">security</span> For your security, mods must be manually added each time the game is launched.</label>
+                <label><span class="material-symbols-rounded">security</span> For your security, mods must be manually run each time the game is launched.</label>
               </div>
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">content_copy</span> Copy scripts from trusted websites and paste them here for later. Link to scripts: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
+                <label><span class="material-symbols-rounded">content_copy</span> Copy scripts from trusted websites and paste them in the clipboard for later.<br><br>Trusted mods: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
               </div>
             </div>
             <div class="group">

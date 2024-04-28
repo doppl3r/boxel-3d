@@ -19,29 +19,12 @@ class Player extends Cube {
     this.mass = 5;
     this.allowJump = false;
     this.addLight('#dc265a', 16000, 500, false);
-    this.controls = { left: 0, right: 0 };
+    this.controls = { left: 0, right: 0, acceleration: 1, speed: 4 };
     this.rope = new Rope();
 
     // Add an invisible plane to player for rope raycaster mechanics
     this.plane = new Mesh(new PlaneGeometry(1000, 1000), new MeshPhongMaterial({ visible: false, side: DoubleSide }));
     this.add(this.plane);
-  }
-
-  setControls(name, value) {
-    this.controls[name] = value;
-  }
-
-  updateControls() {
-    if (this.mode == 'control') {
-      // Credit: https://github.com/Charlieee1/
-      var direction = (this.controls.left + this.controls.right);
-      var speed = 0.001 * direction * app.loop.speed * this.body.mass;
-      var gravity = app.engine.world.gravity;
-      var force = new Vector2(speed * gravity.y, speed * -gravity.x);
-
-      // Apply new force
-      Body.applyForce(this.body, this.body.position, force);
-    }
   }
 
   setScale(scale = {}, updateOrigin = true) {
@@ -74,11 +57,40 @@ class Player extends Cube {
         velocity = Vector.rotate(velocity, -gravityAngle);
   
         // Disable angular velocity at slower speeds
-        if (this.body.speed < this.maxSpeed * 0.25) angularVelocity = 0;
+        if (this.body.speed < this.controls.speed * 0.25) angularVelocity = 0;
   
         // Use engine to modulate object
         Body.setVelocity(this.body, velocity);
         Body.setAngularVelocity(this.body, angularVelocity);
+        Body.applyForce(this.body, this.body.position, force);
+      }
+    }
+  }
+
+  setControls(name, value) {
+    this.controls[name] = value;
+  }
+
+  updateControls() {
+    if (this.mode == 'control') {
+      // Original credit: https://github.com/Charlieee1/
+      var direction = (this.controls.left + this.controls.right);
+      var speed = 0.001 * this.controls.acceleration * direction * app.loop.speed * this.body.mass;
+      var gravity = app.engine.world.gravity;
+      var force = new Vector2(speed * gravity.y, speed * -gravity.x);
+      var velocity_before = new Vector2(this.body.velocity.x, this.body.velocity.y);
+      var velocity_after = new Vector2(this.body.velocity.x + force.x, this.body.velocity.y + force.y);
+      var speed_before = velocity_before.length();
+      var speed_after = velocity_after.length();
+      
+      if (speed_after > speed_before) {
+        // Apply acceleration force
+        if (speed_after < this.controls.speed) {
+          Body.applyForce(this.body, this.body.position, force);
+        }
+      }
+      else {
+        // Apply deceleration force
         Body.applyForce(this.body, this.body.position, force);
       }
     }
@@ -126,7 +138,7 @@ class Player extends Cube {
 
   updateForce() {
     // Apply force to body until it reaches it's max speed (generic)
-    if (this.body.speed < this.maxSpeed) {
+    if (this.body.speed < this.controls.speed) {
       Body.applyForce(this.body, this.body.position, {
         x: this.force.x * app.loop.speed,
         y: this.force.y * app.loop.speed
