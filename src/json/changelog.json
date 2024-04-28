@@ -350,6 +350,7 @@
   {
     "version": "2.1.5",
     "revisions": [
+      "Added mods",
       "Added controls cube",
       "Fixed timer showing incorrect time"
     ]
