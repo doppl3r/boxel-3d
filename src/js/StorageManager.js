@@ -102,8 +102,7 @@ class StorageManager {
       'skin': { id: 466, title: "Smile", url: "img/png/skins/smile.png" },
       'motion': true,
       'stats': false,
-      'progress': 1,
-      'mods': 'app.loop.speed = 2;'
+      'progress': 1
     };
     var settings = defaultSettings; // Use default
 

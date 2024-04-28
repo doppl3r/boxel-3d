@@ -121,6 +121,17 @@
     app.storage.restoreFromChrome();
   }
 
+  function loadMods() {
+    var mods = localStorage.getItem('mods');
+    if (mods == null || mods == '') mods = 'app.loop.speed = 2;';
+    return mods;
+  }
+
+  function saveMods(e) {
+    var mods = e.target.value;
+    localStorage.setItem('mods', mods);
+  }
+
   onMounted(function() {
     addEventListeners();
   });
@@ -147,9 +158,6 @@
           </div>
           <div class="tab" :class="{ 'selected': tab == 'data' }" @click="tab = 'data'">
             <span class="material-symbols-rounded">save</span>
-          </div>
-          <div class="tab" :class="{ 'selected': tab == 'mods' }" @click="tab = 'mods'">
-            <span class="material-symbols-rounded">power</span>
           </div>
         </div>
         <div class="content compact">
@@ -183,6 +191,33 @@
                 <label for="motion">Camera Motion</label>
               </div>
             </div>
+            <p>Mods</p>
+            <div class="group">
+              <div class="option">
+                <label for="mods"><span class="material-symbols-rounded">assignment</span> Clipboard</label>
+                <textarea :value="loadMods()" id="mods" @change="saveMods" spellcheck="false"></textarea>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">security</span> For your security, mods must be manually added each time the game is launched.</label>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">content_copy</span> Copy scripts from trusted websites and paste them here for later. Link to scripts: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">arrow_selector_tool</span> Right-click this game and select <em>Inspect</em>.</label>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste all scripts, then press Enter to run all scripts.</label>
+              </div>
+            </div>
           </div>
           <div class="panel" v-if="tab == 'audio'">
             <p>Audio settings</p>
@@ -208,35 +243,6 @@
                 <label>Restore from...</label>
                 <input type="button" value="File" @click="restoreFromFile">
                 <input v-if="hasChromeStorage()" type="button" value="Google" @click="restoreFromChrome">
-              </div>
-            </div>
-          </div>
-          <div class="panel" v-if="tab == 'mods'">
-            <p>Mods</p>
-            <div class="group">
-              <div class="option">
-                <label>Saved scripts</label>
-                <textarea :value="settings.mods" id="mods" @change="updateSettings($event)" spellcheck="false"></textarea>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">content_copy</span> Copy scripts from trusted websites and paste them here for later. Link to scripts: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">arrow_selector_tool</span> Right-click this game and select <em>Inspect</em>.</label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste all scripts, then press Enter to run all scripts.</label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">autorenew</span> Repeat these steps each time you open Boxel 3D.</label>
               </div>
             </div>
           </div>
