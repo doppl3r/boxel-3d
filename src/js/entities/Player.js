@@ -1,4 +1,4 @@
-import { DoubleSide, Mesh, MeshPhongMaterial, PlaneGeometry, TextureLoader, SRGBColorSpace } from 'three';
+import { DoubleSide, Mesh, MeshPhongMaterial, PlaneGeometry, SRGBColorSpace, TextureLoader, Vector2 } from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Body, Query, Vector } from 'matter-js';
 import { Utility } from '../Utility.js';
@@ -34,15 +34,13 @@ class Player extends Cube {
   updateControls() {
     if (this.mode == 'control') {
       // Credit: https://github.com/Charlieee1/
-      var dx = 0;
-      var vX = this.body.velocity.x;
-      var force = 0.5 * (this.controls.left + this.controls.right);
-      if (force > 0) dx = Math.max(vX, Math.min(vX + force, 4)) - vX;
-      else dx = Math.min(vX, Math.max(vX + force, -4)) - vX;
+      var direction = (this.controls.left + this.controls.right);
+      var speed = 0.001 * direction * app.loop.speed * this.body.mass;
+      var gravity = app.engine.world.gravity;
+      var force = new Vector2(speed * gravity.y, speed * -gravity.x);
 
-      // TODO: Rotate force with gravity angle
-      this.body.velocity.x = this.body.velocity.x + dx;
-      this.body.positionPrev.x = this.body.position.x - this.body.velocity.x;
+      // Apply new force
+      Body.applyForce(this.body, this.body.position, force);
     }
   }
 
