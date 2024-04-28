@@ -472,10 +472,19 @@
           label {
             width: 100%;
             margin: 0.25em 0em;
+
+            .material-symbols-rounded {
+              vertical-align: middle;
+            }
           }
 
           input {
             margin-right: 0.5em;
+          }
+
+          a {
+            border-bottom: 0.125em solid #ffffff;
+            box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
           }
 
           .group {
@@ -635,6 +644,22 @@
               text-align: center;
             }
           }
+        }
+
+        textarea {
+          background-color: #EB2B6D;
+          border: none;
+          border-radius: 0.75em;
+          box-shadow: inset 0em 0.25em 0em rgba(#000000, 0.15);
+          color: #ffffff;
+          font-family: inherit;
+          font-size: 0.75em;
+          min-height: 5em;
+          outline: none;
+          padding: 0.5em;
+          resize: none;
+          text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+          width: 100%;
         }
   
         .close {

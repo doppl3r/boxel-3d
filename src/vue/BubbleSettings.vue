@@ -56,7 +56,7 @@
 
   function keydown(e) {
     if (isOpen.value == true) {
-      var jumpKeys = ['Space', 'Enter', 'Escape'];
+      var jumpKeys = ['Escape'];
       if (jumpKeys.indexOf(e.code) > -1) {
         // Close popup
         e.preventDefault();
@@ -148,17 +148,11 @@
           <div class="tab" :class="{ 'selected': tab == 'data' }" @click="tab = 'data'">
             <span class="material-symbols-rounded">save</span>
           </div>
+          <div class="tab" :class="{ 'selected': tab == 'mods' }" @click="tab = 'mods'">
+            <span class="material-symbols-rounded">power</span>
+          </div>
         </div>
         <div class="content compact">
-          <div class="panel" v-if="tab == 'gameplay'">
-            <p>Gameplay settings</p>
-            <div class="group">
-              <div class="option">
-                <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
-                <label for="motion">Camera Motion</label>
-              </div>
-            </div>
-          </div>
           <div class="panel" v-if="tab == 'graphics'">
             <p>Graphics settings</p>
             <div class="group">
@@ -178,6 +172,15 @@
               <div class="option">
                 <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="updateSettings($event, { true: 'origin', false: 'bubble' }, setTheme)">
                 <label for="theme">Old UI</label>
+              </div>
+            </div>
+          </div>
+          <div class="panel" v-if="tab == 'gameplay'">
+            <p>Gameplay settings</p>
+            <div class="group">
+              <div class="option">
+                <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
+                <label for="motion">Camera Motion</label>
               </div>
             </div>
           </div>
@@ -205,6 +208,30 @@
                 <label>Restore from...</label>
                 <input type="button" value="File" @click="restoreFromFile">
                 <input v-if="hasChromeStorage()" type="button" value="Google" @click="restoreFromChrome">
+              </div>
+            </div>
+          </div>
+          <div class="panel" v-if="tab == 'mods'">
+            <p>Mods</p>
+            <div class="group">
+              <div class="option">
+                <label>Saved scripts</label>
+                <textarea :value="settings.mods" id="mods" @change="updateSettings($event)" spellcheck="false"></textarea>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">counter_1</span> Copy scripts from trusted websites and paste them for later. <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">Github.com/Charlieee1</a></label>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">counter_2</span> Right-click this game and select <em>Inspect</em>.</label>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">counter_3</span> Select the <em>Console</em> tab, paste scripts, then press Enter.</label>
               </div>
             </div>
           </div>

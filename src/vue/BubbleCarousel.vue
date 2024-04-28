@@ -24,12 +24,12 @@
   }
 
   function selectNext() {
-    var el = document.querySelector("[class*='selected']");
+    var el = document.querySelector(".item[class*='selected']");
     if (el && el.nextElementSibling) el.nextElementSibling.click();
   }
 
   function selectPrev() {
-    var el = document.querySelector("[class*='selected']");
+    var el = document.querySelector(".item[class*='selected']");
     if (el && el.previousElementSibling) el.previousElementSibling.click();
   }
 
