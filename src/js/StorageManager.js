@@ -103,7 +103,7 @@ class StorageManager {
       'motion': true,
       'stats': false,
       'progress': 1,
-      'mods': '(function() {\n  app.loop.speed = 0.5;\n})();'
+      'mods': 'app.loop.speed = 2;'
     };
     var settings = defaultSettings; // Use default
 

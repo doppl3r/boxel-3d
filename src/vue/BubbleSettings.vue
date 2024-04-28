@@ -221,17 +221,22 @@
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">counter_1</span> Copy scripts from trusted websites and paste them for later. <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">Github.com/Charlieee1</a></label>
+                <label><span class="material-symbols-rounded">content_copy</span> Copy scripts from trusted websites and paste them here for later. Link to scripts: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
               </div>
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">counter_2</span> Right-click this game and select <em>Inspect</em>.</label>
+                <label><span class="material-symbols-rounded">arrow_selector_tool</span> Right-click this game and select <em>Inspect</em>.</label>
               </div>
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">counter_3</span> Select the <em>Console</em> tab, paste scripts, then press Enter.</label>
+                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste all scripts, then press Enter to run all scripts.</label>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <label><span class="material-symbols-rounded">autorenew</span> Repeat these steps each time you open Boxel 3D.</label>
               </div>
             </div>
           </div>
