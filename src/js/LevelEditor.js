@@ -121,20 +121,24 @@ class LevelEditor {
   }
 
   duplicateSelectedObject() {
-    app.selectedObject.select(false);
-    app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
-    app.selectedObject.position.y += 16;
-    app.selectedObject.select(true);
-    app.levelEditor.controlsTransform.attach(app.selectedObject);
-    app.levelEditor.setMode('translate');
-    app.levelHistory.save('Duplicated object', app);
+    if (app.selectedObject) {
+      app.selectedObject.select(false);
+      app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
+      app.selectedObject.position.y += 16;
+      app.selectedObject.select(true);
+      app.levelEditor.controlsTransform.attach(app.selectedObject);
+      app.levelEditor.setMode('translate');
+      app.levelHistory.save('Duplicated object', app);
+    }
   }
 
   deleteSelectedObject() {
-    app.level.removeObject(app.selectedObject, app);
-    app.levelEditor.controlsTransform.detach();
-    app.levelHistory.save('Deleted object', app);
-    window.dispatchEvent(new CustomEvent('setSelectedObject'));
+    if (app.selectedObject) {
+      app.level.removeObject(app.selectedObject, app);
+      app.levelEditor.controlsTransform.detach();
+      app.levelHistory.save('Deleted object', app);
+      window.dispatchEvent(new CustomEvent('setSelectedObject'));
+    }
   }
 
   saveLevel() {
@@ -194,9 +198,11 @@ class LevelEditor {
 
   saveSelectedObject() {
     var target = app.selectedObject;
-    target.position0 = target.position.clone();
-    target.scale0 = target.scale.clone();
-    target.rotation0 = target.rotation.clone();
+    if (target) {
+      target.position0 = target.position.clone();
+      target.scale0 = target.scale.clone();
+      target.rotation0 = target.rotation.clone();
+    }
   }
 
   resetZAxis() {

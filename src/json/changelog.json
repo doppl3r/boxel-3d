@@ -350,8 +350,9 @@
   {
     "version": "2.1.5",
     "revisions": [
-      "Added mods",
+      "Added custom mods",
       "Added controls cube",
+      "Added new alpha level",
       "Fixed timer showing incorrect time"
     ]
   }

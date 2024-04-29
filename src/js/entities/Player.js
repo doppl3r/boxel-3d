@@ -296,6 +296,7 @@ class Player extends Cube {
     this.setForceDirection();
     this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
     this.setMode(this.modeOrigin, false);
+    this.controls.left = this.controls.right = 0;
   }
 
   addTexture(url) {

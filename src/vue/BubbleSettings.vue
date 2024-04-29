@@ -205,7 +205,7 @@
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">content_copy</span> Copy scripts from trusted websites and paste them in the clipboard for later.<br><br>Trusted mods: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
+                <label><span class="material-symbols-rounded">content_copy</span> Copy mods from trusted websites and paste them in the clipboard for later.<br><br>Trusted mods: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
               </div>
             </div>
             <div class="group">
@@ -215,7 +215,7 @@
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste all scripts, then press Enter to run all scripts.</label>
+                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste all mods, then press Enter to run mods.</label>
               </div>
             </div>
           </div>

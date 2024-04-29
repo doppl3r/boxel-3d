@@ -65,10 +65,14 @@
         app.level.retryLevel();
       }
       else if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
-        app.player.setControls('left', -1);
+        if (app.play == true) {
+          app.player.setControls('left', -1);
+        }
       }
       else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
-        app.player.setControls('right', 1);
+        if (app.play == true) {
+          app.player.setControls('right', 1);
+        }
       }
       else {
         var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
