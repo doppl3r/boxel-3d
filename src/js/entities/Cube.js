@@ -232,6 +232,7 @@ class Cube extends Mesh {
     mode = (mode == null) ? 'default' : mode;
     this.mode = mode;
     if (updateOrigin == true) this.setModeOrigin(mode);
+    window.dispatchEvent(new CustomEvent('setMode', { detail: mode }));
   }
 
   setModeOrigin(mode) {

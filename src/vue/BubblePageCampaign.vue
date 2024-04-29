@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
+  import BubbleControls from './BubbleControls.vue';
   import BubbleStats from './BubbleStats.vue';
 
   // Initialize variables
@@ -148,6 +149,7 @@
     <div class="footer">
       <BubbleStats />
       <div id="credit" class="credit button right fade-in disabled" v-html="credit" v-if="credit"></div>
+      <BubbleControls />
     </div>
   </div>
 </template>
