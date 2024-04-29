@@ -1,6 +1,7 @@
 <script setup>
   import { onMounted, onUnmounted, ref } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
+  import OriginControls from './OriginControls.vue';
 
   var emit = defineEmits(['setPage']);
   var drawMode = ref('draw');
@@ -278,5 +279,6 @@
         <a class="item" @click="deleteSelectedObject" title="Delete (X)"><img src="/img/svg/trash.svg"></a>
       </div>
     </div>
+    <OriginControls />
   </div>
 </template>

@@ -18,10 +18,11 @@
     font-size: 1em;
     font-family: monospace;
     font-weight: bold;
-    padding: 0.125rem 0.25em;
+    padding: 0.125rem 0.25rem;
     position: fixed;
-    bottom: 16px;
-    right: 16px;
+    pointer-events: none;
+    top: 4.25rem;
+    left: 1rem;
     z-index: 1;
   }
 
@@ -963,6 +964,51 @@
     }
   }
 
+  .controls {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1;
+
+    .key {
+      background-color: rgba(0, 0, 0, 0.25);
+      border-radius: 0.5rem;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      text-align: center;
+      text-shadow: 0em 0.125em 0 rgba(#000000, 0.25);
+      width: 2.5rem;
+      height: 2.5rem;
+      opacity: 0;
+      pointer-events: all;
+      transition: none;
+
+      &.active {
+        background-color: #EB2B6D;
+      }
+
+      &.visible {
+        opacity: 1;
+      }
+    }
+
+    .row {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      position: relative;
+    }
+
+    .wasd {
+      flex-wrap: wrap;
+    }
+  }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); border-radius: 999px; }
@@ -990,6 +1036,10 @@
   .ui-origin {
     font-size: 12px;
     line-height: 12px;
+
+    .stats {
+      top: 3.25rem;
+    }
 
     input { width: 120px; }
 

@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
+  import OriginControls from './OriginControls.vue';
   import OriginStats from './OriginStats.vue';
 
   // Initialize variables
@@ -120,5 +121,6 @@
       <OriginButtonSettings class="button top-right" />
     </div>
     <OriginStats />
+    <OriginControls />
   </div>
 </template>
