@@ -355,5 +355,11 @@
       "Added new alpha level",
       "Fixed timer showing incorrect time"
     ]
+  },
+  {
+    "version": "2.1.6",
+    "revisions": [
+      "Added visual controls"
+    ]
   }
 ]
