@@ -188,7 +188,7 @@
             </div>
             <div class="group">
               <div class="option">
-                <label>Developer Settings</label>
+                <label>Developer Tools</label>
                 <input type="checkbox" id="debug" :checked="settings.debug == true" @change="updateSettings($event, null, showHelpers)">
                 <label for="debug">Debug Mode</label>
               </div>
