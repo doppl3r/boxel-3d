@@ -215,7 +215,7 @@
             </div>
             <div class="group">
               <div class="option">
-                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste mods from the clipboard, then press the enter Enter key to load mods.</label>
+                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste mods from the clipboard, then press the <em>enter</em> key to load mods.</label>
               </div>
             </div>
           </div>
