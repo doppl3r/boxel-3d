@@ -17,12 +17,13 @@ class Cube extends Mesh {
     options.radius = (options.radius == null) ? 0 : options.radius;
     options.angle = (options.angle == null) ? 0 : options.angle;
     options.color = (options.color == null) ? '#620460' : options.color;
+    options.debug = (options.debug == null) ? false : true;
 
     // Set default properties
     this.shapes = new Shapes();
     this.shapes.addCube(options);
     this.helper = new LineSegments(this.shapes.children[0].geometry, new MeshPhongMaterial({ color: '#00ff00', wireframe: true }));
-    this.helper.visible = false;
+    this.helper.visible = options.debug;
     this.setColors(options.color);
     this.add(this.shapes);
     this.hitbox = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });

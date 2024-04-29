@@ -150,9 +150,11 @@ class Level extends Group {
 
     // Loop through JSON level data
     for (var i = 0; i < levelData.children.length; i++) {
+      var settings = a.storage.getSettings(a);
       var objectData = levelData.children[i];
       var object = this.entityFactory.createObject(objectData.class);
       if (objectData.class == 'player') object = a.player;
+      object.helper.visible = settings.debug;
       this.setObjectProperties(object, objectData);
       this.addObject(object, a);
     }
@@ -228,6 +230,12 @@ class Level extends Group {
         }}]
       }
     }));
+  }
+
+  showHelpers(visible = true) {
+    this.traverse(function(obj) {
+      if (obj.helper) obj.helper.visible = visible;
+    });
   }
 }
 

@@ -101,6 +101,10 @@
     return location.href.includes('?fullscreen=true');
   }
 
+  function showHelpers() {
+    app.level.showHelpers(settings.value.debug);
+  }
+
   function hasChromeStorage() {
     return chrome.storage != null;
   }
@@ -189,6 +193,10 @@
               <div class="option">
                 <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
                 <label for="motion">Camera Motion</label>
+              </div>
+              <div class="option">
+                <input type="checkbox" id="debug" :checked="settings.debug == true" @change="updateSettings($event, null, showHelpers)">
+                <label for="debug">Debug Mode</label>
               </div>
             </div>
             <p>Mods</p>
