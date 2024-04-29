@@ -359,7 +359,8 @@
   {
     "version": "2.1.6",
     "revisions": [
-      "Added visual controls"
+      "Added visual controls",
+      "Added debug mode option"
     ]
   }
 ]

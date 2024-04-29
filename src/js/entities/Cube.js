@@ -1,4 +1,4 @@
-import { LineSegments, Mesh, MeshPhongMaterial, PointLight } from 'three';
+import { BoxGeometry, Group, LineSegments, Mesh, MeshPhongMaterial, PointLight } from 'three';
 import { Bodies, Body, Sleeping, Vector } from 'matter-js';
 import { Shapes } from './Shapes.js';
 
@@ -22,8 +22,6 @@ class Cube extends Mesh {
     // Set default properties
     this.shapes = new Shapes();
     this.shapes.addCube(options);
-    this.helper = new LineSegments(this.shapes.children[0].geometry, new MeshPhongMaterial({ color: '#00ff00', wireframe: true }));
-    this.helper.visible = options.debug;
     this.setColors(options.color);
     this.add(this.shapes);
     this.hitbox = Bodies.rectangle(0, 0, options.scaleX, options.scaleY, { class: 'hitbox' });
@@ -38,6 +36,13 @@ class Cube extends Mesh {
       name: this.uuid, // Useful for finding scene object
       class: 'cube'
     });
+
+    // Add helper
+    this.helper = new Group();
+    this.helper.visible = options.debug;
+    this.addHelper(this.hitbox);
+
+    // Update properties from options
     this.name = this.uuid;
     this.isCube = true; // Used for level editor
     this.setPosition({ x: options.x, y: options.y, z: options.z });
@@ -68,12 +73,28 @@ class Cube extends Mesh {
   }
 
   updateHelper() {
-    if (this.helper.visible == true) {
-      this.helper.position.x = this.body.positionPrev.x;
-      this.helper.position.y = -this.body.positionPrev.y;
+    if (this.helper && this.helper.visible == true) {
+      this.helper.position.x = this.body.position.x;
+      this.helper.position.y = -this.body.position.y;
       this.helper.rotation.z = -this.body.anglePrev;
       this.helper.scale.copy(this.scale).multiplyScalar(1);
     }
+  }
+
+  addHelper(part, options) {
+    // Set default options
+    if (options == null) options = {};
+    if (options.position == null) options.position = { x: 0, y: 0 };
+    if (options.color == null) options.color = '#00ff00';
+ 
+    // Update helper cube geometry
+    var width = part.bounds.max.x - part.bounds.min.x;
+    var height = part.bounds.max.y - part.bounds.min.y;
+    var depth = width;
+    var cube = new BoxGeometry(width, height, depth);
+    var wireframe = new LineSegments(cube, new MeshPhongMaterial({ color: options.color, wireframe: true }));
+    this.helper.add(wireframe);
+    cube.translate(options.position.x, options.position.y, 0);
   }
 
   setColors(color) {

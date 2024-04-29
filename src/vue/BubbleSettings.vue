@@ -186,6 +186,13 @@
                 <label for="theme">Old UI</label>
               </div>
             </div>
+            <div class="group">
+              <div class="option">
+                <label>Developer Settings</label>
+                <input type="checkbox" id="debug" :checked="settings.debug == true" @change="updateSettings($event, null, showHelpers)">
+                <label for="debug">Debug Mode</label>
+              </div>
+            </div>
           </div>
           <div class="panel" v-if="tab == 'gameplay'">
             <p>Gameplay settings</p>
@@ -193,10 +200,6 @@
               <div class="option">
                 <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
                 <label for="motion">Camera Motion</label>
-              </div>
-              <div class="option">
-                <input type="checkbox" id="debug" :checked="settings.debug == true" @change="updateSettings($event, null, showHelpers)">
-                <label for="debug">Debug Mode</label>
               </div>
             </div>
             <p>Mods</p>
