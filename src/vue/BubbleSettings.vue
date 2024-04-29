@@ -170,12 +170,10 @@
             <div class="group">
               <div class="option">
                 <label for="quality">Quality</label>
-                <input type="range" id="quality" min="1" max="10" step="1" :value="settings.quality" @change="updateSettings($event)">
-                <label for="quality">{{ (settings.quality * 10) }}%</label>
               </div>
               <div class="option">
-                <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
-                <label for="stats">Show FPS</label>
+                <input type="range" id="quality" min="1" max="10" step="1" :value="settings.quality" @change="updateSettings($event)">
+                <label for="quality">{{ (settings.quality * 10) }}%</label>
               </div>
               <div class="option" v-if="isFullscreen() == false">
                 <input type="checkbox" id="fullscreen" @change="openFullscreen()">
@@ -189,6 +187,12 @@
             <div class="group">
               <div class="option">
                 <label>Developer Tools</label>
+              </div>
+              <div class="option">
+                <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
+                <label for="stats">Show FPS</label>
+              </div>
+              <div class="option">
                 <input type="checkbox" id="debug" :checked="settings.debug == true" @change="updateSettings($event, null, showHelpers)">
                 <label for="debug">Debug Mode</label>
               </div>
@@ -235,6 +239,8 @@
             <div class="group">
               <div class="option">
                 <label for="volume">Volume</label>
+              </div>
+              <div class="option">
                 <input type="range" id="volume" min="0" max="1" step="0.1" :value="settings.volume" @change="updateSettings($event)">
                 <label for="volume">{{ (settings.volume * 100) }}%</label>
               </div>
@@ -245,6 +251,8 @@
             <div class="group">
               <div class="option">
                 <label>Backup to...</label>
+              </div>
+              <div class="option">
                 <input type="button" value="File" @click="backupToFile">
                 <input v-if="hasChromeStorage()" type="button" value="Google" @click="backupToChrome">
               </div>
@@ -252,6 +260,8 @@
             <div class="group">
               <div class="option">
                 <label>Restore from...</label>
+              </div>
+              <div class="option">
                 <input type="button" value="File" @click="restoreFromFile">
                 <input v-if="hasChromeStorage()" type="button" value="Google" @click="restoreFromChrome">
               </div>
