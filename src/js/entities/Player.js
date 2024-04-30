@@ -74,25 +74,17 @@ class Player extends Cube {
   updateControls() {
     if (this.mode == 'control') {
       // Original credit: https://github.com/Charlieee1/
-      var direction = (this.controls.left + this.controls.right);
-      var speed = 0.001 * this.controls.acceleration * direction * app.loop.speed * this.body.mass;
+      var velocity = this.body.velocity;
       var gravity = app.engine.world.gravity;
-      var force = new Vector2(speed * gravity.y, speed * -gravity.x);
-      var velocity_before = new Vector2(this.body.velocity.x, this.body.velocity.y);
-      var velocity_after = new Vector2(this.body.velocity.x + force.x, this.body.velocity.y + force.y);
-      var speed_before = velocity_before.length();
-      var speed_after = velocity_after.length();
-      
-      if (speed_after > speed_before) {
-        // Apply acceleration force
-        if (speed_after < this.controls.speed) {
-          Body.applyForce(this.body, this.body.position, force);
-        }
-      }
-      else {
-        // Apply deceleration force
-        Body.applyForce(this.body, this.body.position, force);
-      }
+      var direction = { x: gravity.y, y: -gravity.x };
+      var vX = Vector.dot(direction, velocity);
+      var dx = 0;
+      var force = .5 * (this.controls.left + this.controls.right);
+      if (force > 0) dx = Math.max(vX, Math.min(vX + force, 4)) - vX;
+      else dx = Math.min(vX, Math.max(vX + force, -4)) - vX;
+      var d = {x: dx * direction.x, y: dx * direction.y};
+      this.body.positionPrev.x = this.body.position.x - (this.body.velocity.x + d.x);
+      this.body.positionPrev.y = this.body.position.y - (this.body.velocity.y + d.y);
     }
   }
 
