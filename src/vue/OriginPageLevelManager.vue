@@ -63,6 +63,7 @@
     app.level.clearLevel(app);
     app.level.importFromJSON(levelData, app);
     app.level.key = item.key;
+    app.level.updateHelpers();
     app.updateSettings(settings, app);
     app.background.visible = false;
     app.levelHistory.save('Edited level', app);

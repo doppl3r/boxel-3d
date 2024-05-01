@@ -362,5 +362,11 @@
       "Added buttons for controls",
       "Added debug mode"
     ]
+  },
+  {
+    "version": "2.1.7",
+    "revisions": [
+      "Added shortcut \"C\" to restart from checkpoint"
+    ]
   }
 ]

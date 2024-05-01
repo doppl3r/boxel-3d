@@ -237,6 +237,12 @@ class Level extends Group {
       if (obj.helper) obj.helper.visible = visible;
     });
   }
+
+  updateHelpers() {
+    this.children.forEach(function(child) {
+      if (child.helper) child.updateHelper();
+    })
+  }
 }
 
 export { Level };

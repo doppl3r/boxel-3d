@@ -79,6 +79,9 @@
       else if (e.code == 'KeyR') {
         app.level.retryLevel();
       }
+      else if (e.code == 'KeyC') {
+        app.player.restart();
+      }
       else if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
         if (app.play == true) {
           app.player.setControls('left', -1);

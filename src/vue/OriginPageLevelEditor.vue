@@ -158,6 +158,9 @@
         else if (e.code == 'KeyR') {
           app.level.retryLevel();
         }
+        else if (e.code == 'KeyC') {
+          app.player.restart();
+        }
         else {
           var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
           if (jumpKeys.indexOf(e.code) > -1) {
