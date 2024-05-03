@@ -178,6 +178,9 @@ class Player extends Cube {
         }
       }
     }
+
+    // Dispatch finished event
+    window.dispatchEvent(new CustomEvent('playerKill', { detail: { player: this }}));
   }
 
   cancelRestart() {
@@ -212,11 +215,17 @@ class Player extends Cube {
       app.level.removeParticles(app);
       app.player.resetToOrigin();
       app.player.setPositionToCheckpoint();
+
+      // Dispatch finished event
+      window.dispatchEvent(new CustomEvent('playerRespawn', { detail: { player: this }}));
     }
   }
 
   restart() {
     app.level.retryLevel(app, true);
+
+    // Dispatch finished event
+    window.dispatchEvent(new CustomEvent('playerRestart', { detail: { player: this }}));
   }
 
   finish() {
@@ -232,6 +241,9 @@ class Player extends Cube {
     // Show new record text
     if (hasNewScore == true) text += '<br><em>New record!</em>';
     app.play = false;
+
+    // Dispatch finished event
+    window.dispatchEvent(new CustomEvent('levelFinish', { detail: { time: time }}));
 
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('openPopup', {
