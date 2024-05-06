@@ -209,15 +209,11 @@
   }
 
   function keyup(e) {
-    if (isClosed.value == true) {
-      if (app.play == true) {
-        if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
-          app.player.setControls('left', 0);
-        }
-        else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
-          app.player.setControls('right', 0);
-        }
-      }
+    if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+      app.player.setControls('left', 0);
+    }
+    else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+      app.player.setControls('right', 0);
     }
   }
 
