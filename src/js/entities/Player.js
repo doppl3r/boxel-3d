@@ -118,10 +118,12 @@ class Player extends Cube {
           // Check if object is visible or on zero z-plane
           var obj = app.level.getObjectByName(collision[0].name);
           if (obj.visible == true) {
-            app.level.add(this.rope);
-            this.rope.addJoints(this.body, collision[0], point); // bodyA, bodyB, point
-            this.updateRope();
-            break;
+            if (obj.position.z == 0) {
+              app.level.add(this.rope);
+              this.rope.addJoints(this.body, collision[0], point); // bodyA, bodyB, point
+              this.updateRope();
+              break;
+            }
           }
         }
       }
