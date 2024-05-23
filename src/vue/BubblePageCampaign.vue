@@ -149,7 +149,7 @@
     </div>
     <div class="footer">
       <BubbleStats />
-      <div id="credit" class="credit button right fade-in disabled" v-html="credit" v-if="credit"></div>
+      <div id="credit" class="credit button fade-in disabled" v-html="credit" v-if="credit"></div>
       <BubbleControls />
     </div>
   </div>
