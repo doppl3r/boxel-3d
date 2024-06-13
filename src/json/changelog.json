@@ -368,5 +368,18 @@
     "revisions": [
       "Added shortcut \"C\" to restart from checkpoint"
     ]
+  },
+  {
+    "version": "2.1.8",
+    "revisions": [
+      "Added 3 new community levels",
+      "Updated rope collisions"
+    ]
+  },
+  {
+    "version": "2.1.9",
+    "revisions": [
+      "Updated community level \"The Box Escape\""
+    ]
   }
 ]
