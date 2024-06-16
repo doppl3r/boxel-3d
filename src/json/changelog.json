@@ -381,5 +381,12 @@
     "revisions": [
       "Updated community level \"The Box Escape\""
     ]
+  },
+  {
+    "version": "2.1.9.1",
+    "revisions": [
+      "Fixed invisible rope",
+      "Fixed muted audio quietly playing"
+    ]
   }
 ]
