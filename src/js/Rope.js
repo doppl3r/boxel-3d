@@ -109,7 +109,7 @@ class Joint extends Group {
         
         // Add new fat line
         this.line2Geometry = new LineGeometry();
-        this.line2Material = new LineMaterial({ color: '#ffffff', dashed: false, linewidth: 1 / 128, dashScale: 1, dashSize: 8, gapSize: 2 });
+        this.line2Material = new LineMaterial({ color: '#ffffff', dashed: false, linewidth: 4, dashScale: 1, dashSize: 8, gapSize: 2 });
         this.line2 = new Line2(this.line2Geometry, this.line2Material);
         this.add(this.line2);
     }

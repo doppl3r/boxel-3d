@@ -75,7 +75,7 @@ class Audio {
     }
 
     setMasterVolume(volume) {
-        if (volume == 0) volume = 0.001; // A zero value causes Audio "isPlaying" to be false, and will not 
+        if (volume == 0) volume = 0.000001; // A zero value causes Audio "isPlaying" to be false, and will not play
         this.volume = volume;
         this.listener.setMasterVolume(volume);
     }
