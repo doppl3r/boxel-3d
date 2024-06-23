@@ -19,7 +19,7 @@ class Utility {
     getAngleFromVector(vector){
         var angle = Math.atan2(vector.y, vector.x);
         var degrees = 180*angle/Math.PI;  //degrees
-        return degreesToRadians((360 + Math.round(degrees)) % 360);
+        return this.degreesToRadians((360 + Math.round(degrees)) % 360);
     }
     
     radiansToDegrees(radians) {
