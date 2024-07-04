@@ -1,3 +1,4 @@
+import { MathUtils } from 'three';
 import { saveAs } from 'file-saver';
 
 class StorageManager {
@@ -103,6 +104,8 @@ class StorageManager {
       'motion': true,
       'stats': false,
       'debug': false,
+      'peer': this.generateUUID(),
+      'connection': '',
       'progress': 1
     };
     var settings = defaultSettings; // Use default
@@ -276,6 +279,10 @@ class StorageManager {
         ]
       }
     }));
+  }
+
+  generateUUID() {
+    return MathUtils.generateUUID();
   }
 }
 

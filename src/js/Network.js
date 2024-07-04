@@ -7,18 +7,6 @@ class Network extends EventDispatcher {
 
     // Create map of connections
     this.connections = new Map();
-
-    // TEST
-    this.open();
-    this.on('peer_open', function(e) {
-      console.log(e);
-    });
-    this.on('peer_connection', function(e) {
-      console.log(e);
-    });
-    this.on('connection_open', function(e) {
-      console.log(e);
-    });
   }
 
   update(delta, alpha) {
@@ -48,6 +36,10 @@ class Network extends EventDispatcher {
 
     // Clear connections before connecting to peer
     this.connections.clear();
+  }
+
+  disconnect() {
+    this.peer.disconnect();
   }
 
   addPeerListeners(peer) {
@@ -103,8 +95,18 @@ class Network extends EventDispatcher {
     });
   }
 
-  on(type, callback) {
-    this.addEventListener(type, callback);
+  on(type, listener) {
+    // Shorthand add listener
+    this.addEventListener(type, listener);
+  }
+
+  off(type, listener) {
+    // Shorthand remove listener
+    this.removeEventListener(type, listener);
+  }
+
+  isOnline() {
+    return this.peer != null && this.peer.open == true;
   }
 }
 
