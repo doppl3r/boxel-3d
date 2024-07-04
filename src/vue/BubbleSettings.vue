@@ -154,6 +154,9 @@
           <div class="tab" :class="{ 'selected': tab == 'graphics' }" @click="tab = 'graphics'">
             <span class="material-symbols-rounded">page_info</span>
           </div>
+          <div class="tab" :class="{ 'selected': tab == 'network' }" @click="tab = 'network'">
+            <span class="material-symbols-rounded">wifi</span>
+          </div>
           <div class="tab" :class="{ 'selected': tab == 'gameplay' }" @click="tab = 'gameplay'">
             <span class="material-symbols-rounded">gamepad</span>
           </div>
@@ -198,6 +201,33 @@
               </div>
             </div>
           </div>
+
+
+
+          <div class="panel" v-if="tab == 'network'">
+            <p>Network settings</p>
+            <div class="group">
+              <div class="option">
+                <input type="text" id="connect-id" placeholder="ex: 4630cba6-b969-46f3-8d32-e77324054612">
+              </div>
+              <div class="option">
+                <input type="checkbox" id="join-network">
+                <label for="join-network">Join Server</label>
+              </div>
+            </div>
+            <div class="group">
+              <div class="option">
+                <input type="text" id="peer-id" :value="settings.peer">
+              </div>
+              <div class="option">
+                <input type="checkbox" id="host-network">
+                <label for="host-network">Host Server</label>
+              </div>
+            </div>
+          </div>
+
+
+
           <div class="panel" v-if="tab == 'gameplay'">
             <p>Gameplay settings</p>
             <div class="group">

@@ -419,7 +419,7 @@
           overflow-y: auto;
           margin: 0;
           height: 100%;
-          max-height: 12em;
+          max-height: 14em;
           padding-bottom: 0.5em;
           text-align: center;
           white-space: pre-line;
@@ -461,7 +461,7 @@
           display: flex;
           flex-direction: column;
           row-gap: 0.5em;
-          height: 12em;
+          height: 14em;
           max-height: 100%;
           overflow-y: auto;
 
@@ -645,6 +645,27 @@
             & + label {
               width: 25%;
               text-align: center;
+            }
+          }
+
+          &[type="text"] {
+            background-color: #EB2B6D;
+            border: none;
+            border-radius: 0.75em;
+            box-shadow: inset 0em 0.25em 0em rgba(#000000, 0.15);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.625em;
+            line-height: 1.5em;
+            margin-bottom: 0.25em;
+            outline: none;
+            padding: 0.5em;
+            resize: none;
+            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+            width: 100%;
+
+            &::placeholder {
+              color: rgba(#ffffff, 0.5);
             }
           }
         }

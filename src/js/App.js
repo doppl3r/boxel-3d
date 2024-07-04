@@ -14,6 +14,7 @@ import { LevelHistory } from './LevelHistory.js';
 import { Player } from './entities/Player.js';
 import { Mouse } from './Mouse.js';
 import { LevelEditor } from './LevelEditor.js';
+import { Network } from './Network.js';
 
 class App {
   constructor() {
@@ -53,6 +54,9 @@ class App {
     this.then = new Date().getTime();
     this.now = this.then;
     this.delta = 0;
+
+    // Initialize network
+    this.network = new Network();
 
     // Initialize level editor
     this.level = new Level();
@@ -103,20 +107,39 @@ class App {
     this.resizeWindow(null, this);
 
     // Add physics loop
-    this.loop.add(60, function(data) {
+    this.loop.add(function(data) {
       this.updateEngine(data.delta, data.alpha);
-    }.bind(this));
+    }.bind(this), 60);
 
     // Add graphic loop
-    this.loop.add(-1, function(data) {
+    this.loop.add(function(data) {
       this.updateRender(data.delta, data.alpha);
-    }.bind(this));
+    }.bind(this), -1);
+
+    // Add network loop
+    this.loop.add(function(data) {
+      this.updateNetwork(data.delta, data.alpha);
+    }.bind(this), 10);
 
     // Start loop
     this.loop.start();
 
     // Run game callback
     callback();
+  }
+
+  updateEngine(delta) {
+    // Update engine to loop engine rate
+    if (this.play == true) {
+      // Update player object
+      this.player.updateControls();
+      this.player.updateForce();
+      this.player.renderSpeed(this);
+      this.player.updateRope();
+
+      // Update world engine
+      Engine.update(this.engine, delta * 1000);
+    }
   }
 
   updateRender(delta, alpha) {
@@ -137,27 +160,21 @@ class App {
       // Update from new position
       this.updateCamera(this);
       this.timer.render();
-
+      
       // Update background
       this.background.update(delta, alpha, app.motion == false);
     }
+
+    // Update network rendering
+    this.network.render(delta, alpha);
 
     // Update 3D renderer
     this.graphics.update(delta);
   }
 
-  updateEngine(delta) {
-    // Update engine to loop engine rate
-    if (this.play == true) {
-      // Update player object
-      this.player.updateControls();
-      this.player.updateForce();
-      this.player.renderSpeed(this);
-      this.player.updateRope();
-
-      // Update world engine
-      Engine.update(this.engine, delta * 1000);
-    }
+  updateNetwork(delta, alpha) {
+    // Update network
+    this.network.update(delta, alpha);
   }
 
   resizeWindow(e, a = app) {

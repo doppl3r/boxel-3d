@@ -388,5 +388,11 @@
       "Fixed invisible rope",
       "Fixed muted audio quietly playing"
     ]
+  },
+  {
+    "version": "2.2.0",
+    "revisions": [
+      "Added multiplayer"
+    ]
   }
 ]
