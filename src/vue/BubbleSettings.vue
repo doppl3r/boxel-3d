@@ -1,5 +1,11 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
+  import BubbleSettingsTabs from './BubbleSettingsTabs.vue';
+  import BubbleSettingsPanelGraphics from './BubbleSettingsPanelGraphics.vue';
+  import BubbleSettingsPanelMultiplayer from './BubbleSettingsPanelMultiplayer.vue';
+  import BubbleSettingsPanelGameplay from './BubbleSettingsPanelGameplay.vue';
+  import BubbleSettingsPanelAudio from './BubbleSettingsPanelAudio.vue';
+  import BubbleSettingsPanelData from './BubbleSettingsPanelData.vue';
 
   // Initialize attributes
   var tab = ref('graphics');
@@ -40,6 +46,10 @@
     setTimeout(function() {
       window.dispatchEvent(new CustomEvent('settingsClosed'));
     }, 100);
+  }
+
+  function changeTab(name) {
+    tab.value = name;
   }
 
   function runCallback(callback, e) {
@@ -83,106 +93,6 @@
     callback();
   }
 
-  function openLink(url) {
-    if (chrome.tabs) chrome.tabs.create({ url: url });
-    else window.open(url, '_blank');
-  }
-
-  function openFullscreen() {
-    openLink(location.href + '?fullscreen=true');
-  }
-
-  function setTheme() {
-    window.dispatchEvent(new CustomEvent('setTheme'));
-  }
-
-  function isFullscreen() {
-    return location.href.includes('?fullscreen=true');
-  }
-
-  function showHelpers() {
-    app.level.showHelpers(settings.value.debug);
-  }
-
-  function hasChromeStorage() {
-    return chrome.storage != null;
-  }
-
-  function backupToFile() {
-    app.storage.backupToFile();
-  }
-
-  function backupToChrome() {
-    app.storage.backupToChrome();
-  }
-
-  function restoreFromFile() {
-    app.storage.restoreFromFile();
-  }
-
-  function restoreFromChrome() {
-    app.storage.restoreFromChrome();
-  }
-
-  function loadMods() {
-    var mods = localStorage.getItem('mods');
-    if (mods == null || mods == '') mods = 'app.loop.speed = 2;';
-    return mods;
-  }
-
-  function saveMods(e) {
-    var mods = e.target.value;
-    localStorage.setItem('mods', mods);
-  }
-
-  function connect(e) {
-    // Remove listener
-    app.network.off('peer_open', connect);
-
-    // Disconnect if toggled off
-    if (e.target.checked == false) {
-      app.network.disconnect();
-      return;
-    }
-    
-    // Connect to network
-    if (isOnline()) {
-      console.log('connecting...');
-      app.network.connect(settings.value.connection);
-    }
-    else {
-      // Create peer then connect to host
-      console.log('creating peer...')
-      app.network.on('peer_open', connect);
-      app.network.open(settings.value.peer);
-    }
-  }
-
-  function isOnline() {
-    return app.network.isOnline();
-  }
-
-  function toggleHost() {
-    if (isOnline()) {
-      app.network.disconnect();
-    }
-    else {
-      app.network.open(settings.value.peer);
-    }
-  }
-
-  function copyInput(e) {
-    var input = e.target;
-    var text = input.value;
-
-    // Copy text to clipboard
-    
-    // Update success text for 1 second
-    input.value = 'Copied!'
-    navigator.clipboard.writeText(text);
-    setTimeout(function() { input.value = text; }, 1000);
-  }
-
   onMounted(function() {
     addEventListeners();
   });
@@ -197,149 +107,13 @@
     <div class="popup settings" v-if="isOpen == true">
       <div class="background" @click="runLastInputCallback"></div>
       <div class="container">
-        <div class="tabs">
-          <div class="tab" :class="{ 'selected': tab == 'graphics' }" @click="tab = 'graphics'">
-            <span class="material-symbols-rounded">page_info</span>
-          </div>
-          <div class="tab" :class="{ 'selected': tab == 'multiplayer' }" @click="tab = 'multiplayer'">
-            <span class="material-symbols-rounded">group</span>
-          </div>
-          <div class="tab" :class="{ 'selected': tab == 'gameplay' }" @click="tab = 'gameplay'">
-            <span class="material-symbols-rounded">gamepad</span>
-          </div>
-          <div class="tab" :class="{ 'selected': tab == 'audio' }" @click="tab = 'audio'">
-            <span class="material-symbols-rounded">volume_up</span>
-          </div>
-          <div class="tab" :class="{ 'selected': tab == 'data' }" @click="tab = 'data'">
-            <span class="material-symbols-rounded">save</span>
-          </div>
-        </div>
+        <BubbleSettingsTabs :tab="tab" @changeTab="changeTab" />
         <div class="content compact">
-          <div class="panel" v-if="tab == 'graphics'">
-            <p>Graphics settings</p>
-            <div class="group">
-              <div class="option">
-                <label for="quality">Quality</label>
-              </div>
-              <div class="option">
-                <input type="range" id="quality" min="1" max="10" step="1" :value="settings.quality" @change="updateSettings($event)">
-                <label for="quality">{{ (settings.quality * 10) }}%</label>
-              </div>
-              <div class="option" v-if="isFullscreen() == false">
-                <input type="checkbox" id="fullscreen" @change="openFullscreen()">
-                <label for="fullscreen">Fullscreen</label>
-              </div>
-              <div class="option">
-                <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="updateSettings($event, { true: 'origin', false: 'bubble' }, setTheme)">
-                <label for="theme">Old UI</label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label>Developer Tools</label>
-              </div>
-              <div class="option">
-                <input type="checkbox" id="stats" :checked="settings.stats == true" @change="updateSettings($event)">
-                <label for="stats">Show FPS</label>
-              </div>
-              <div class="option">
-                <input type="checkbox" id="debug" :checked="settings.debug == true" @change="updateSettings($event, null, showHelpers)">
-                <label for="debug">Debug Mode</label>
-              </div>
-            </div>
-          </div>
-          <div class="panel" v-if="tab == 'multiplayer'">
-            <p>Multiplayer Settings</p>
-            <div class="group">
-              <div class="option">
-                <label for="connection">Paste friend code</label>
-                <input type="text" id="connection" :value="settings.connection" @change="updateSettings($event)" placeholder="ex: 4630cba6-b969-46f3-8d32-e77324054612">
-              </div>
-              <div class="option">
-                <input type="checkbox" id="join-multiplayer" @change="connect($event)">
-                <label for="join-multiplayer">Join Server</label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label for="peer-id">Share friend code</label>
-                <input type="text" id="peer-id" :value="settings.peer" @click="copyInput($event)" readonly>
-              </div>
-              <div class="option">
-                <input type="checkbox" id="host-multiplayer" :checked="isOnline()" @change="toggleHost($event)">
-                <label for="host-multiplayer">Host Server</label>
-              </div>
-            </div>
-          </div>
-          <div class="panel" v-if="tab == 'gameplay'">
-            <p>Gameplay settings</p>
-            <div class="group">
-              <div class="option">
-                <input type="checkbox" id="motion" :checked="settings.motion == true" @change="updateSettings($event)">
-                <label for="motion">Camera Motion</label>
-              </div>
-            </div>
-            <p>Mods</p>
-            <div class="group">
-              <div class="option">
-                <label for="mods"><span class="material-symbols-rounded">assignment</span> Clipboard</label>
-                <textarea :value="loadMods()" id="mods" @change="saveMods" spellcheck="false"></textarea>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">security</span> For your security, mods must be manually loaded each time the game is launched.</label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">content_copy</span> Copy mods from trusted websites and paste them in the clipboard for later.<br><br>Trusted mods: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">arrow_selector_tool</span> Right-click this game and select <em>Inspect</em>.</label>
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste mods from the clipboard, then press the <em>enter</em> key to load mods.</label>
-              </div>
-            </div>
-          </div>
-          <div class="panel" v-if="tab == 'audio'">
-            <p>Audio settings</p>
-            <div class="group">
-              <div class="option">
-                <label for="volume">Volume</label>
-              </div>
-              <div class="option">
-                <input type="range" id="volume" min="0" max="1" step="0.1" :value="settings.volume" @change="updateSettings($event)">
-                <label for="volume">{{ (settings.volume * 100) }}%</label>
-              </div>
-            </div>
-          </div>
-          <div class="panel" v-if="tab == 'data'">
-            <p>Data settings</p>
-            <div class="group">
-              <div class="option">
-                <label>Backup to...</label>
-              </div>
-              <div class="option">
-                <input type="button" value="File" @click="backupToFile">
-                <input v-if="hasChromeStorage()" type="button" value="Google" @click="backupToChrome">
-              </div>
-            </div>
-            <div class="group">
-              <div class="option">
-                <label>Restore from...</label>
-              </div>
-              <div class="option">
-                <input type="button" value="File" @click="restoreFromFile">
-                <input v-if="hasChromeStorage()" type="button" value="Google" @click="restoreFromChrome">
-              </div>
-            </div>
-          </div>
+          <BubbleSettingsPanelGraphics :settings="settings" v-if="tab == 'graphics'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelMultiplayer :settings="settings" v-if="tab == 'multiplayer'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelGameplay :settings="settings" v-if="tab == 'gameplay'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelAudio :settings="settings" v-if="tab == 'audio'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelData :settings="settings" v-if="tab == 'data'" @updateSettings="updateSettings" />
           <a class="close" @click="runLastInputCallback">
             <span class="material-symbols-rounded">close</span>
           </a>
