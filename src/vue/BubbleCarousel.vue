@@ -66,11 +66,14 @@
   }
 
   function keydown(e) {
-    if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
-      selectPrev();
-    }
-    else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
-      selectNext();
+    // Ignore events from inputs
+    if (e.target.value == null) {
+      if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+        selectPrev();
+      }
+      else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+        selectNext();
+      }
     }
   }
 

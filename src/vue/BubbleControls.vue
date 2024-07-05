@@ -19,7 +19,10 @@
   }
 
   function keydown(e) {
-    keys.value[e.code] = true;
+    // Ignore events from inputs
+    if (e.target.value == null) {
+      keys.value[e.code] = true;
+    }
   }
 
   function keyup(e) {

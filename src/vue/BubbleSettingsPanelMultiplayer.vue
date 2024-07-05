@@ -56,6 +56,10 @@
         <input type="text" id="connection" :value="settings.connection" @change="$emit('updateSettings', $event)" placeholder="ex: 4630cba6-b969-46f3-8d32-e77324054612">
       </div>
       <div class="option">
+        <label for="name">Your name</label>
+        <input type="text" id="name" :value="settings.name" @change="updateName($event)">
+      </div>
+      <div class="option">
         <input type="checkbox" id="join-multiplayer" @change="connect($event)">
         <label for="join-multiplayer">Join Server</label>
       </div>

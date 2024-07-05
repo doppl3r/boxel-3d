@@ -106,6 +106,7 @@ class StorageManager {
       'debug': false,
       'peer': this.generateUUID(),
       'connection': '',
+      'name': 'Player',
       'progress': 1
     };
     var settings = defaultSettings; // Use default

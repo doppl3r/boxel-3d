@@ -69,34 +69,37 @@
   function keydown(e) {
     // Make sure popup is closed
     if (isClosed.value == true) {
-      if (e.code == 'Escape') {
-        e.preventDefault();
-        pauseLevel();
-      }
-      else if (e.code == 'KeyE') {
-        app.exitCampaign();
-      }
-      else if (e.code == 'KeyR') {
-        app.level.retryLevel();
-      }
-      else if (e.code == 'KeyC') {
-        app.player.restart();
-      }
-      else if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
-        if (app.play == true) {
-          app.player.setControls('left', -1);
+      // Ignore events from inputs
+      if (e.target.value == null) {
+        if (e.code == 'Escape') {
+          e.preventDefault();
+          pauseLevel();
         }
-      }
-      else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
-        if (app.play == true) {
-          app.player.setControls('right', 1);
+        else if (e.code == 'KeyE') {
+          app.exitCampaign();
         }
-      }
-      else {
-        var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
-        if (jumpKeys.indexOf(e.code) > -1) {
-          // Jump if one of the keys is pressed
-          app.player.jump();
+        else if (e.code == 'KeyR') {
+          app.level.retryLevel();
+        }
+        else if (e.code == 'KeyC') {
+          app.player.restart();
+        }
+        else if (e.code == 'KeyA' || e.code == 'ArrowLeft') {
+          if (app.play == true) {
+            app.player.setControls('left', -1);
+          }
+        }
+        else if (e.code == 'KeyD' || e.code == 'ArrowRight') {
+          if (app.play == true) {
+            app.player.setControls('right', 1);
+          }
+        }
+        else {
+          var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
+          if (jumpKeys.indexOf(e.code) > -1) {
+            // Jump if one of the keys is pressed
+            app.player.jump();
+          }
         }
       }
     }
