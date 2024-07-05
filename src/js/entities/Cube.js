@@ -360,6 +360,39 @@ class Cube extends Mesh {
       this.add(this.light);
     }
   }
+
+  toJSON() {
+    var json = {
+      class: this.body.class,
+      position: {
+        x: this.position.x,
+        y: this.position.y,
+        z: this.position.z,
+      },
+      rotation: {
+        x: this.rotation.x,
+        y: this.rotation.y,
+        z: this.rotation.z,
+      },
+      scale: {
+        x: this.scale.x,
+        y: this.scale.y,
+        z: this.scale.z,
+      },
+    };
+
+    // Only include non-static data
+    if (this.body.isStatic == false) {
+      json.isStatic = false;
+      json.friction = this.body.friction;
+    }
+
+    // Include text if object has text
+    if (this.text != null) json.text = this.text;
+
+    // Return json
+    return json;
+  }
 }
 
 export { Cube };

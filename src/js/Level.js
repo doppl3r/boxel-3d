@@ -76,7 +76,7 @@ class Level extends Group {
   }
 
   duplicateObject(object, a) {
-    var objectData = this.exportObjectToJSON(object);
+    var objectData = object.toJSON();
     var newObject = this.entityFactory.createObject(objectData.class);
     this.setObjectProperties(newObject, objectData);
     this.addObject(newObject, a);
@@ -118,27 +118,11 @@ class Level extends Group {
     for (var i = 0; i < a.level.children.length; i++) {
       var object = a.level.children[i];
       if (object.type == "Mesh") {
-        var objectData = this.exportObjectToJSON(object);
+        var objectData = object.toJSON();
         levelJSON.children.push(objectData);
       }
     }
     return levelJSON;
-  }
-
-  exportObjectToJSON(object) {
-    var objectJSON = {};
-    objectJSON.class = object.getClass();
-    objectJSON.position = { x: object.position.x, y: object.position.y, z: object.position.z };
-    objectJSON.rotation = { x: object.rotation.x, y: object.rotation.y, z: object.rotation.z };
-    objectJSON.scale = { x: object.scale.x, y: object.scale.y, z: object.scale.z };
-
-    // Conditionally add attributes
-    if (object.isStatic() == false) {
-      objectJSON.isStatic = object.isStatic();
-      objectJSON.friction = object.getFriction();
-    }
-    if (object.text != null) objectJSON.text = object.text; // Tip text
-    return objectJSON;
   }
 
   saveLevelData(a) {
