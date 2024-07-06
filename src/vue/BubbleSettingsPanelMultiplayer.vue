@@ -33,7 +33,7 @@
       app.network.disconnect();
     }
     else {
-      app.network.open(props['settings'].peer);
+      app.network.open(props['settings'].peer, true); // id, isHost
     }
   }
 
@@ -43,8 +43,13 @@
     
     // Update success text for 1 second
     input.value = 'Copied!'
+    input.disabled = true;
     navigator.clipboard.writeText(text);
-    setTimeout(function() { input.value = text; }, 1000);
+    setTimeout(function() {
+      // Revert input values
+      input.value = text;
+      input.disabled = false;
+    }, 1000);
   }
 </script>
 <template>

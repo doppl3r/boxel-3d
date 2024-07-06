@@ -18,7 +18,8 @@ import { Network } from './Network.js';
 
 class App {
   constructor() {
-    
+    // Initialize network
+    this.network = new Network();
   }
 
   init(canvas, callback = function(){}) {
@@ -54,9 +55,6 @@ class App {
     this.then = new Date().getTime();
     this.now = this.then;
     this.delta = 0;
-
-    // Initialize network
-    this.network = new Network();
 
     // Initialize level editor
     this.level = new Level();

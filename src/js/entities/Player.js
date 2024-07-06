@@ -226,7 +226,7 @@ class Player extends Cube {
   restart() {
     app.level.retryLevel(app, true);
 
-    // Dispatch finished event
+    // Dispatch restart event
     window.dispatchEvent(new CustomEvent('playerRestart', { detail: { player: this }}));
   }
 

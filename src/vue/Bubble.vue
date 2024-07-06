@@ -5,6 +5,7 @@
   import BubblePageSkins from './BubblePageSkins.vue';
   import BubblePageLevelPicker from './BubblePageLevelPicker.vue';
   import BubblePageCampaign from './BubblePageCampaign.vue';
+  import BubbleMultiplayer from './BubbleMultiplayer.vue';
   import BubbleSettings from './BubbleSettings.vue';
   import BubblePopup from './BubblePopup.vue';
 
@@ -44,6 +45,7 @@
     <BubblePageSkins v-if="page == 'skins'" @set-page="setPage" />
     <BubblePageLevelPicker v-if="page == 'level-picker'" @set-page="setPage" />
     <BubblePageCampaign v-if="page == 'campaign'" @set-page="setPage" />
+    <BubbleMultiplayer />
     <BubbleSettings />
     <BubblePopup />
   </div>
