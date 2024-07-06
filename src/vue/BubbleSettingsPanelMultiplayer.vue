@@ -14,7 +14,9 @@
     // Connect to network
     if (isOnline()) {
       console.log('connecting...');
-      app.network.connect(props['settings'].connection);
+      app.network.connect(props['settings'].connection, {
+        label: props['settings'].name
+      });
     }
     else {
       // Create peer then connect to host
@@ -30,7 +32,7 @@
 
   function toggleHost() {
     if (isOnline()) {
-      app.network.disconnect();
+      app.network.destroy();
     }
     else {
       app.network.open(props['settings'].peer, true); // id, isHost
@@ -57,12 +59,14 @@
     <p>Multiplayer Settings</p>
     <div class="group">
       <div class="option">
+        <label for="name">Your name</label>
+        <input type="text" id="name" :value="settings.name" @change="$emit('updateSettings', $event)">
+      </div>
+    </div>
+    <div class="group">
+      <div class="option">
         <label for="connection">Paste friend code</label>
         <input type="text" id="connection" :value="settings.connection" @change="$emit('updateSettings', $event)" placeholder="ex: 4630cba6-b969-46f3-8d32-e77324054612">
-      </div>
-      <div class="option">
-        <label for="name">Your name</label>
-        <input type="text" id="name" :value="settings.name" @change="updateName($event)">
       </div>
       <div class="option">
         <input type="checkbox" id="join-multiplayer" @change="connect($event)">

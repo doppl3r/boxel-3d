@@ -734,6 +734,42 @@
       margin-top: auto;
       margin-right: auto;
       pointer-events: all;
+
+      .tabs {
+        .tab {
+
+        }
+      }
+
+      .content {
+        .panel {
+          .messages { // <ul>
+            .message {
+
+            }
+          }
+
+          input {
+
+          }
+
+          button {
+
+          }
+
+          .players { // <ul>
+            .player {
+              .name {
+
+              }
+
+              .action {
+                
+              }
+            }
+          }
+        }
+      }
     }
   }
 

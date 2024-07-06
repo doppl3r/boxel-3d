@@ -33,9 +33,9 @@ class Network extends EventDispatcher {
     this.isHost = isHost;
   }
 
-  connect(id) {
+  connect(id, options) {
     // Create connection
-    var connection = this.peer.connect(id);
+    var connection = this.peer.connect(id, options);
     this.addConnectionListeners(connection);
 
     // Clear connections before connecting to peer
@@ -44,6 +44,10 @@ class Network extends EventDispatcher {
 
   disconnect() {
     this.peer.disconnect();
+  }
+
+  destroy() {
+    this.peer.destroy();
   }
 
   addPeerListeners(peer) {
@@ -61,7 +65,7 @@ class Network extends EventDispatcher {
     // Listen to peer close
     peer.on('close', function() {
       this.connections.clear(); // Clear connections map
-      this.dispatchEvent({ type: 'peer_close' });
+      this.dispatchEvent({ type: 'peer_close', target: this });
     }.bind(this))
 
     // Listen to peer disconnection
@@ -79,23 +83,23 @@ class Network extends EventDispatcher {
     // Dispatch connection open
     connection.on('open', function() {
       this.connections.set(connection.peer, connection); // Add to connections map using peer id
-      this.dispatchEvent({ type: 'connection_open' });
+      this.dispatchEvent({ type: 'connection_open', connection: connection });
     }.bind(this));
 
     // Dispatch connection close
     connection.on('close', function() {
       this.connections.delete(connection.peer); // Remove from connections map using peer id
-      this.dispatchEvent({ type: 'connection_close' });
+      this.dispatchEvent({ type: 'connection_close', connection: connection });
     }.bind(this));
 
     // Dispatch connection data
     connection.on('data', function(data) {
-      this.dispatchEvent({ type: 'connection_data', data: data });
+      this.dispatchEvent({ type: 'connection_data', connection: connection, data: data });
     }.bind(this));
 
     // Dispatch connection error
     connection.on('error', function(error) {
-      this.dispatchEvent({ type: 'connection_error', error: error });
+      this.dispatchEvent({ type: 'connection_error', connection: connection, error: error });
     });
   }
 
