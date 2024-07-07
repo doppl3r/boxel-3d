@@ -38,7 +38,8 @@
       addMessage({
         name: 'Server',
         text: 'Server is ready!',
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
+        color: '#4CA9FF'
       })
     }
   }
@@ -52,7 +53,8 @@
       addMessage({
         name: 'Server',
         text: 'Server is closed!',
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
+        color: '#4CA9FF'
       })
     }
   }
@@ -69,7 +71,8 @@
         type: 'message',
         name: 'Server',
         text: e.connection.label + ' has connected!',
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
+        color: '#4CA9FF'
       }
       sendMessage(data);
     }
@@ -83,7 +86,8 @@
       type: 'message',
       name: 'Server',
       text: e.connection.label + ' has disconnected.',
-      time: new Date().toLocaleTimeString()
+      time: new Date().toLocaleTimeString(),
+      color: '#4CA9FF'
     };
     
     // Let guess know the host disconnected
@@ -120,9 +124,10 @@
       if (message.value.value == '') return; // Prevent sending empty data
       data = {
         type: 'message',
-        name: settings.name,
+        name: settings.name + (isHost() ? ' [host]' : ''),
         text: message.value.value,
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
+        color: '#ffcc4d'
       };
       message.value.value = ''; // Clear message
     }
@@ -157,7 +162,9 @@
       var el = messageBox.value;
       var isScrolledToBottom = (el.scrollTop + 1) > (el.scrollHeight - el.clientHeight);
       await nextTick(); // Wait for element to recalculate height
-      if (isScrolledToBottom || force == true) el.scrollTop = el.scrollHeight + 1;
+      if (isScrolledToBottom || force == true) {
+        el.scrollTop = el.scrollHeight + 1;
+      }
     }
   }
 
@@ -197,42 +204,50 @@
   })
 </script>
 <template>
-  <div class="multiplayer" v-if="isOpen == true">
-    <div class="container">
-      <div class="tabs">
-        <div class="tab" :class="{ 'selected': tab == 'chat' }" @click="changeTab('chat')" title="Chat">
-          <span class="material-symbols-rounded">chat</span>
-          <span class="notifications" v-if="notifications > 0">{{ notifications }}</span>
-        </div>
-        <div class="tab" :class="{ 'selected': tab == 'lobby' }" @click="changeTab('lobby')" title="Lobby">
-          <span class="material-symbols-rounded">group</span>
-        </div>
-      </div>
-      <div class="content" :class="{ 'collapsed': isCollapsed == true }">
-        <div class="panel" v-if="tab == 'chat'">
-          <ul class="messages" ref="messageBox">
-            <li class="message" v-for="message in messages" :title="message.time">
-              <span class="name">{{ message.name }}: </span>
-              <span class="text">{{ message.text }}</span>
-            </li>
-          </ul>
-          <div class="message-input">
-            <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null)" @focus="isCollapsed = false; scrollToLastMessage(true);">
-            <button @click="sendMessage(null)">
-              <span class="material-symbols-rounded">send</span>
-            </button>
+  <Transition name="fade-multiplayer">
+    <div class="multiplayer" v-if="isOpen == true">
+      <div class="container">
+        <div class="tabs">
+          <div class="tab" :class="{ 'selected': tab == 'chat' }" @click="changeTab('chat')" title="Chat">
+            <span class="material-symbols-rounded">chat</span>
+            <span class="notifications" v-if="notifications > 0">{{ notifications }}</span>
+          </div>
+          <div class="tab" :class="{ 'selected': tab == 'lobby' }" @click="changeTab('lobby')" title="Lobby">
+            <span class="material-symbols-rounded">group</span>
           </div>
         </div>
-        <div class="panel" v-if="tab == 'lobby'">
-          <ul class="players">
-            <li class="player" v-for="player in players">
-              <span class="name">{{ player.name }}</span>
-              <span class="action material-symbols-rounded" @click="kickPlayer(player.id)" v-if="isHost()">cancel</span>
-              <span class="action material-symbols-rounded" @click="goToPlayer(player.id)">near_me</span>
-            </li>
-          </ul>
+        <div class="content" :class="{ 'collapsed': isCollapsed == true }">
+          <div class="panel" v-show="tab == 'chat'">
+            <ul class="messages" ref="messageBox">
+              <li class="message" v-for="message in messages" :title="message.time">
+                <span class="name" :style="{ color: message.color || '#ffffff' }">{{ message.name }}</span>
+                <span class="text">: {{ message.text }}</span>
+              </li>
+            </ul>
+            <div class="message-input">
+              <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null);" @focus="isCollapsed = false;" maxlength="128">
+              <button @click="sendMessage(null)">
+                <span class="material-symbols-rounded">send</span>
+              </button>
+            </div>
+          </div>
+          <div class="panel" v-show="tab == 'lobby'">
+            <ul class="players">
+              <li class="player" v-for="player in players">
+                <span class="name">{{ player.name }}</span>
+                <span class="action material-symbols-rounded" @click="kickPlayer(player.id)" v-if="isHost()">cancel</span>
+                <span class="action material-symbols-rounded" @click="goToPlayer(player.id)">near_me</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
+<style>
+  .fade-multiplayer-enter-active,
+  .fade-multiplayer-leave-active { transition: opacity 0.5s ease; }
+  .fade-multiplayer-enter-from,
+  .fade-multiplayer-leave-to { opacity: 0; }
+</style>
