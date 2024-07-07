@@ -34,7 +34,7 @@
     isOpen.value = true;
 
     // Tell host their server is ready
-    if (e.target.isHost == true) {
+    if (isHost() == true) {
       addMessage({
         name: 'Server',
         text: 'Server is ready!',
@@ -49,7 +49,7 @@
     isOpen.value = false;
 
     // Tell host their server is closed
-    if (e.target.isHost == true) {
+    if (isHost() == true) {
       addMessage({
         name: 'Server',
         text: 'Server is closed!',
@@ -169,7 +169,7 @@
   }
 
   function isHost() {
-    return app.network.isHost;
+    return app.multiplayer.isHost;
   }
 
   function kickPlayer(id) {

@@ -35,7 +35,8 @@
       app.network.destroy();
     }
     else {
-      app.network.open(props['settings'].peer, true); // id, isHost
+      app.network.open(props['settings'].peer);
+      app.multiplayer.setHost(true);
     }
   }
 

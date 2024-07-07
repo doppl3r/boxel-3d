@@ -7,18 +7,9 @@ class Network extends EventDispatcher {
 
     // Create map of connections
     this.connections = new Map();
-    this.isHost = false;
   }
 
-  update(delta, alpha) {
-
-  }
-
-  render(delta, alpha) {
-
-  }
-
-  open(id, isHost = false) {
+  open(id) {
     // Generate new id
     if (id == null) id = MathUtils.generateUUID();
 
@@ -28,9 +19,6 @@ class Network extends EventDispatcher {
     // Initialize peer with unique id
     this.peer = new Peer(id); // Generate random ID
     this.addPeerListeners(this.peer);
-
-    // Conditionally assign host state
-    this.isHost = isHost;
   }
 
   connect(id, options) {

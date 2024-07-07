@@ -14,83 +14,89 @@ import { LevelHistory } from './LevelHistory.js';
 import { Player } from './entities/Player.js';
 import { Mouse } from './Mouse.js';
 import { LevelEditor } from './LevelEditor.js';
+import { Multiplayer } from './Multiplayer.js';
 import { Network } from './Network.js';
 
 class App {
   constructor() {
-    // Initialize network
-    this.network = new Network();
-  }
-
-  init(canvas, callback = function(){}) {
     this.window = window;
     this.document = document;
     this.BOX_SIZE = 16;
-    this.engine = Engine.create();
-    this.util = new Utility();
     this.screenWidth = this.window.innerWidth;
     this.screenHeight = this.window.innerHeight;
+    this.engine = Engine.create();
+    this.util = new Utility();
     this.state = 'home';
     this.animation = new Animation();
-    this.timer = new Timer();
-    this.mouse = new Mouse();
     this.storage = new StorageManager();
     this.collision = new Collision();
     this.player = new Player({ x: 0, y: 0, z: 0 });
     this.play = false;
     this.fov = 75; // Default 75
+    this.scene = new Scene();
+    this.mouse = new Mouse();
+    
+    // Set time components
+    this.timer = new Timer();
+    this.loop = new Loop();
+    this.then = new Date().getTime();
+    this.now = this.then;
+    this.delta = 0;
+    
+    // Initialize level components
+    this.assets = new Assets();
+    this.level = new Level();
+    this.levelHistory = new LevelHistory();
+    this.scene.add(this.level);
+    
+    // Initialize camera
     this.camera = new PerspectiveCamera(this.fov, this.screenWidth / this.screenHeight, 1, 2000);
     this.camera.tilt = 0;
     this.camera.position.x = 0;
     this.camera.position.y = 0;
     this.camera.position.zDefault = 180;
     this.camera.position.z = this.camera.position.zDefault;
-    this.scene = new Scene();
-    this.graphics = new Graphics(canvas);
-    this.graphics.setCamera(this.camera);
-    this.graphics.setScene(this.scene);
-    this.graphics.setSelectedObjects([this.player]);
-    this.loop = new Loop();
-    this.light = new HemisphereLight('#ffffff', '#000000', 1 * Math.PI); // PI was added after three.js r155
-    this.then = new Date().getTime();
-    this.now = this.then;
-    this.delta = 0;
-
-    // Initialize level editor
-    this.level = new Level();
-    this.levelHistory = new LevelHistory();
-    this.levelEditor = new LevelEditor(this.camera, this.graphics.renderer.domElement);
-    this.scene.add(this.levelEditor.controlsTransform);
 
     // Add lighting to scene
+    this.light = new HemisphereLight('#ffffff', '#000000', 1 * Math.PI); // PI was added after three.js r155
     this.light.position.set(0.25, 0.5, 1);
     this.scene.add(this.light);
-
-    // Add level to scene
-    this.scene.add(this.level);
 
     // Add background to scene
     this.background = new Background();
     this.scene.add(this.background);
 
-    // Add event listeners and render app
-    var _this = this;
+    // Initialize network
+    this.multiplayer = new Multiplayer();
+    this.network = new Network();
+  }
+
+  init(canvas, callback = function(){}) {
+    this.graphics = new Graphics(canvas);
+    this.graphics.setCamera(this.camera);
+    this.graphics.setScene(this.scene);
+    this.graphics.setSelectedObjects([this.player]);
+    
+    // Initialize level editor
+    this.levelEditor = new LevelEditor(this.camera, canvas);
+    this.scene.add(this.levelEditor.controlsTransform);
+
+    // Add event listeners
     this.canvas = canvas;
     this.canvas.classList.add('hidden'); // Default hidden with CSS
     this.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
-    this.canvas.addEventListener('pointerdown', function(e){ _this.mouse.mouseDown(e, _this); }, false);
-    this.canvas.addEventListener('pointermove', function(e){ _this.mouse.mouseMove(e, _this); }, false);
-    this.canvas.addEventListener('pointerup', function(e){ _this.mouse.mouseUp(e, _this); }, false);
-    this.canvas.addEventListener('wheel', function(e){ _this.mouse.wheel(e, _this); }, false);
-    this.window.addEventListener('resize', function(e) { _this.resizeWindow(e, _this); });
-    Events.on(this.engine, 'collisionStart', function(e) { _this.collision.checkPlayerCollision(e, _this); });
+    this.canvas.addEventListener('pointerdown', function(e){ this.mouse.mouseDown(e, this); }.bind(this), false);
+    this.canvas.addEventListener('pointermove', function(e){ this.mouse.mouseMove(e, this); }.bind(this), false);
+    this.canvas.addEventListener('pointerup', function(e){ this.mouse.mouseUp(e, this); }.bind(this), false);
+    this.canvas.addEventListener('wheel', function(e){ this.mouse.wheel(e, this); }.bind(this), false);
+    this.window.addEventListener('resize', function(e) { this.resizeWindow(e, this); }.bind(this));
+    Events.on(this.engine, 'collisionStart', function(e) { this.collision.checkPlayerCollision(e, this); }.bind(this));
     
-    var _this = this;
-    this.assets = new Assets();
+    // Load assets, then load game
     this.assets.load(function() {
-      _this.load(callback);
-      _this.updateSettings(null, _this); // Update settings
-    });
+      this.load(callback);
+      this.updateSettings(null, this); // Update settings
+    }.bind(this));
   }
 
   load(callback = function(){}) {
@@ -164,7 +170,7 @@ class App {
     }
 
     // Update network rendering
-    this.network.render(delta, alpha);
+    this.multiplayer.render(delta, alpha);
 
     // Update 3D renderer
     this.graphics.update(delta);
@@ -172,7 +178,7 @@ class App {
 
   updateNetwork(delta, alpha) {
     // Update network
-    this.network.update(delta, alpha);
+    this.multiplayer.update(delta, alpha);
   }
 
   resizeWindow(e, a = app) {
