@@ -138,7 +138,7 @@
     });
   }
 
-  async function addMessage(data) {
+  function addMessage(data) {
     // Receive message from event and add to messages array
     messages.value.push(data);
 
@@ -148,11 +148,16 @@
     }
 
     // Scroll to message
+    scrollToLastMessage();
+  }
+
+  async function scrollToLastMessage(force = false) {
+    // Scroll to message
     if (messageBox.value) {
       var el = messageBox.value;
       var isScrolledToBottom = (el.scrollTop + 1) > (el.scrollHeight - el.clientHeight);
       await nextTick(); // Wait for element to recalculate height
-      if (isScrolledToBottom) el.scrollTop = el.scrollHeight;
+      if (isScrolledToBottom || force == true) el.scrollTop = el.scrollHeight + 1;
     }
   }
 
@@ -212,7 +217,7 @@
             </li>
           </ul>
           <div class="message-input">
-            <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null)">
+            <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null)" @focus="isCollapsed = false; scrollToLastMessage(true);">
             <button @click="sendMessage(null)">
               <span class="material-symbols-rounded">send</span>
             </button>

@@ -785,6 +785,12 @@
 
         &.collapsed {
           height: 2.5em;
+
+          .panel {
+            .messages {
+              padding: 0;
+            }
+          }
         }
 
         .panel {
@@ -807,7 +813,7 @@
             list-style: none;
             margin: auto 0 0 0;
             overflow-y: auto;
-            padding: 0;
+            padding: 0.25em 0;
             scroll-behavior: smooth;
 
             .message {
@@ -843,6 +849,7 @@
               border-radius: 0.5em;
               border: none;
               color: #ffffff;
+              cursor: pointer;
               display: flex;
               align-items: center;
               justify-content: center;
