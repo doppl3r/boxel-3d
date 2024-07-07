@@ -225,7 +225,7 @@
               </li>
             </ul>
             <div class="message-input">
-              <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null);" @focus="isCollapsed = false;" maxlength="128">
+              <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null);" @focus="isCollapsed = false; notifications = 0;" maxlength="128">
               <button @click="sendMessage(null)">
                 <span class="material-symbols-rounded">send</span>
               </button>
