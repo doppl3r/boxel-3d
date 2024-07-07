@@ -736,25 +736,125 @@
       pointer-events: all;
 
       .tabs {
-        .tab {
+        background-color: #000000;
+        border-radius: 0.5em;
+        display: inline-flex;
+        margin: 0em 0.75em;
+        position: relative;
+        z-index: 1;
+        transform: translateY(0.5em);
 
+        .tab {
+          border-radius: 0.5em;
+          color: #ffffff;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 1.5em;
+          height: 1.5em;
+          text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+
+          .material-symbols-rounded {
+            font-size: 1em;
+          }
+
+          &.selected {
+            background-color: #EB2B6D;
+            box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+          }
+
+          .notifications {
+            background-color: #4CA9FF;
+            border-radius: 99em;
+            font-size: 0.75em;
+            padding: 0.25em 0.5em;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+          }
         }
       }
 
       .content {
-        .panel {
-          .messages { // <ul>
-            .message {
+        width: 12.5em; // 200px;
+        height: 7.5em; // 120px;
+        transition: height 0.25s ease-in-out;
 
+        &.collapsed {
+          height: 2.5em;
+        }
+
+        .panel {
+          background-color: rgba(#000000, 0.25);
+          border-radius: 0.75em;
+          display: flex;
+          flex-direction: column;
+          padding: 0.5em;
+          position: relative;
+          height: 100%;
+          width: 100%;
+
+          /* Scrollbar */
+          ::-webkit-scrollbar { width: 0.25em; }
+          ::-webkit-scrollbar-track { background: rgba(#000000, 0.25); border-radius: 99em; }
+          ::-webkit-scrollbar-thumb { background: rgba(#ffffff, 1); border-radius: 99em; }
+          ::-webkit-scrollbar-thumb:hover { background: rgba(#ffffff, 1); border-radius: 99em; }
+
+          .messages { // <ul>
+            list-style: none;
+            margin: auto 0 0 0;
+            overflow-y: auto;
+            padding: 0;
+            scroll-behavior: smooth;
+
+            .message {
+              color: #fff;
+              font-size: 0.75em;
+              text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             }
           }
 
-          input {
+          .message-input {
+            display: flex;
+            gap: 0.5em;
 
-          }
+            input {
+              width: 100%;
+              background-color: rgba(#000000, 0.25);
+              border: none;
+              border-radius: 0.5em;
+              color: #fff;
+              font-size: 0.75em;
+              font-family: inherit;
+              text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+              outline: none;
+              padding: 0 0.5em;
 
-          button {
+              &::placeholder {
+                color: rgba(#ffffff, 0.5);
+              }
+            }
 
+            button {
+              background-color: #EB2B6D;
+              border-radius: 0.5em;
+              border: none;
+              color: #ffffff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 1.5em;
+              height: 1.5em;
+              box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+              text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+
+              .material-symbols-rounded {
+                font-size: 1em;
+              }
+            }
           }
 
           .players { // <ul>
@@ -764,7 +864,7 @@
               }
 
               .action {
-                
+
               }
             }
           }

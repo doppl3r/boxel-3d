@@ -1,10 +1,13 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { ref, nextTick, onMounted, onUnmounted } from 'vue';
 
   var tab = ref('chat');
   var isOpen = ref(false);
+  var isCollapsed = ref(false);
+  var notifications = ref(0);
   var message = ref('');
   var messages = ref([]);
+  var messageBox = ref();
   var players = ref()
 
   function addEventListeners() {
@@ -114,6 +117,7 @@
     // Send message to the host for distribution
     var settings = app.storage.getSettings();
     if (data == null) {
+      if (message.value.value == '') return; // Prevent sending empty data
       data = {
         type: 'message',
         name: settings.name,
@@ -134,9 +138,22 @@
     });
   }
 
-  function addMessage(data) {
+  async function addMessage(data) {
     // Receive message from event and add to messages array
     messages.value.push(data);
+
+    // Increment messages if not visible
+    if (tab.value != 'chat' || isCollapsed.value == true) {
+      notifications.value++;
+    }
+
+    // Scroll to message
+    if (messageBox.value) {
+      var el = messageBox.value;
+      var isScrolledToBottom = (el.scrollTop + 1) > (el.scrollHeight - el.clientHeight);
+      await nextTick(); // Wait for element to recalculate height
+      if (isScrolledToBottom) el.scrollTop = el.scrollHeight;
+    }
   }
 
   function isHost() {
@@ -149,6 +166,20 @@
 
   function goToPlayer(id) {
 
+  }
+
+  function changeTab(name) {
+    // Toggle multiplayer section
+    if (name == tab.value) isCollapsed.value = !isCollapsed.value;
+    else isCollapsed.value = false;
+
+    // Reset notifications
+    if (name == 'chat') {
+      notifications.value = 0;
+    }
+
+    // Set tab value to name
+    tab.value = name;
   }
 
   // Run function after being mounted (visible)
@@ -164,25 +195,28 @@
   <div class="multiplayer" v-if="isOpen == true">
     <div class="container">
       <div class="tabs">
-        <div class="tab" :class="{ 'selected': tab == 'chat' }" @click="tab = 'chat'" title="Chat">
+        <div class="tab" :class="{ 'selected': tab == 'chat' }" @click="changeTab('chat')" title="Chat">
           <span class="material-symbols-rounded">chat</span>
+          <span class="notifications" v-if="notifications > 0">{{ notifications }}</span>
         </div>
-        <div class="tab" :class="{ 'selected': tab == 'lobby' }" @click="tab = 'lobby'" title="Lobby">
+        <div class="tab" :class="{ 'selected': tab == 'lobby' }" @click="changeTab('lobby')" title="Lobby">
           <span class="material-symbols-rounded">group</span>
         </div>
       </div>
-      <div class="content">
+      <div class="content" :class="{ 'collapsed': isCollapsed == true }">
         <div class="panel" v-if="tab == 'chat'">
-          <ul class="messages">
+          <ul class="messages" ref="messageBox">
             <li class="message" v-for="message in messages" :title="message.time">
               <span class="name">{{ message.name }}: </span>
               <span class="text">{{ message.text }}</span>
             </li>
           </ul>
-          <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null)">
-          <button @click="sendMessage(null)">
-            <span class="material-symbols-rounded">send</span>
-          </button>
+          <div class="message-input">
+            <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null)">
+            <button @click="sendMessage(null)">
+              <span class="material-symbols-rounded">send</span>
+            </button>
+          </div>
         </div>
         <div class="panel" v-if="tab == 'lobby'">
           <ul class="players">
