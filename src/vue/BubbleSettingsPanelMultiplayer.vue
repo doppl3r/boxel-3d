@@ -15,7 +15,10 @@
     if (isOnline()) {
       console.log('connecting...');
       app.network.connect(props['settings'].connection, {
-        label: props['settings'].name
+        metadata: {
+          name: props['settings'].name,
+          uuid: app.player.uuid
+        }
       });
     }
     else {
@@ -33,10 +36,11 @@
   function toggleHost() {
     if (isOnline()) {
       app.network.destroy();
+      app.multiplayer.setHost(null);
     }
     else {
       app.network.open(props['settings'].peer);
-      app.multiplayer.setHost(true);
+      app.multiplayer.setHost(props['settings'].peer);
     }
   }
 

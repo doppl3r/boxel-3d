@@ -30,7 +30,7 @@
   }
 
   function onPeerOpen(e) {
-    console.log(e);
+    //console.log(e)
     isOpen.value = true;
 
     // Tell host their server is ready
@@ -45,7 +45,7 @@
   }
   
   function onPeerClose(e) {
-    console.log(e);
+    //console.log(e)
     isOpen.value = false;
 
     // Tell host their server is closed
@@ -60,17 +60,16 @@
   }
 
   function onPeerDisconnected(e) {
-    console.log(e);
+    //console.log(e)
   }
   
   function onConnectionOpen(e) {
-    console.log(e);
-
+    //console.log(e)
     if (isHost()) {
       var data = {
         type: 'message',
         name: 'Server',
-        text: e.connection.label + ' has connected!',
+        text: e.connection.metadata.name + ' has connected!',
         time: new Date().toLocaleTimeString(),
         color: '#4CA9FF'
       }
@@ -79,29 +78,29 @@
   }
   
   function onConnectionClose(e) {
-    console.log(e);
-    
+    //console.log(e)
     // Send message to all connections about a closed connection
     var data = {
       type: 'message',
       name: 'Server',
-      text: e.connection.label + ' has disconnected.',
+      text: e.connection.metadata.name + ' has disconnected.',
       time: new Date().toLocaleTimeString(),
       color: '#4CA9FF'
     };
     
-    // Let guess know the host disconnected
+    // Tell guests that a guest disconnected
     if (isHost()) {
       sendMessage(data);
     }
     else {
-      data.text = 'The host has disconnected.'
+      // Tell guests that the host disconnected
+      data.text = 'The host has disconnected.';
       addMessage(data);
     }
   }
   
   function onConnectionData(e) {
-    console.log(e);
+    //console.log(e)
     if (e.data.type == 'message') {
       // Add message to messages
       addMessage(e.data);
@@ -109,7 +108,7 @@
       // Send all guests the message
       if (isHost()) {
         // Send guest message to other guests
-        e.data.name = e.connection.label;
+        e.data.name = e.connection.metadata.name;
         app.network.connections.forEach(function(connection) {
           connection.send(e.data);
         })
@@ -135,6 +134,15 @@
     // Add message immediately for the host
     if (isHost()) {
       addMessage(data);
+    }
+    else {
+      // Let guest know the host does not exist
+      if (app.network.connections.size == 0) {
+        data.name = 'Error';
+        data.text = 'Host not found.';
+        data.color = '#ff0000';
+        addMessage(data);
+      }
     }
 
     // Send message to all connections (host has many, guest has 1)
@@ -169,7 +177,7 @@
   }
 
   function isHost() {
-    return app.multiplayer.isHost;
+    return app.multiplayer.isHost();
   }
 
   function kickPlayer(id) {

@@ -67,8 +67,9 @@ class App {
     this.scene.add(this.background);
 
     // Initialize network
-    this.multiplayer = new Multiplayer();
     this.network = new Network();
+    this.multiplayer = new Multiplayer(this.network);
+    this.scene.add(this.multiplayer.players);
   }
 
   init(canvas, callback = function(){}) {
