@@ -4,6 +4,7 @@ import { Body, Query, Vector } from 'matter-js';
 import { Utility } from '../Utility.js';
 import { Cube } from './Cube.js';
 import { Rope } from '../Rope.js';
+import { Text } from '../Text.js';
 
 class Player extends Cube {
   constructor(options = {}) {
@@ -21,6 +22,10 @@ class Player extends Cube {
     this.addLight('#dc265a', 16000, 500, false);
     this.controls = { left: 0, right: 0, acceleration: 1, speed: 4 };
     this.rope = new Rope();
+
+    // Add text above player
+    this.text = new Text({ text: '' });
+    this.add(this.text);
 
     // Add an invisible plane to player for rope raycaster mechanics
     this.plane = new Mesh(new PlaneGeometry(1000, 1000), new MeshPhongMaterial({ visible: false, side: DoubleSide }));

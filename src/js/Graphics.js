@@ -1,4 +1,5 @@
 import { PCFSoftShadowMap, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
@@ -17,6 +18,15 @@ class Graphics {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.shadowMap.enabled = false;
     this.renderer.shadowMap.type = PCFSoftShadowMap;
+
+    // Initialize CSS2DRenderer
+    this.rendererCSS = new CSS2DRenderer();
+    this.rendererCSS.domElement.className = 'rendererCSS';
+    this.rendererCSS.domElement.style.position = "absolute";
+    this.rendererCSS.domElement.style.pointerEvents = "none";
+    this.rendererCSS.domElement.style.top = "0px";
+    this.rendererCSS.domElement.style.left = "0px";
+    this.canvas.after(this.rendererCSS.domElement);
 
     // Assign post processing on top of renderer
     this.renderPass = new RenderPass(this.scene, this.camera);
@@ -54,6 +64,7 @@ class Graphics {
 
   render() {
     this.composer.render();
+    this.rendererCSS.render(this.scene, this.camera);
   }
 
   resize() {
@@ -66,6 +77,7 @@ class Graphics {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
+    this.rendererCSS.setSize(width, height);
     this.composer.setSize(width, height);
   }
 

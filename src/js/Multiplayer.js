@@ -164,6 +164,7 @@ class Multiplayer {
     // Create new player entity if it doesn't exist
     if (player == null) {
       player = new Player();
+      player.text.setText('Test');
 
       // Create properties for interpolation
       player.positionPrev = player.position.clone();

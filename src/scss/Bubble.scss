@@ -936,6 +936,20 @@
   @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(10deg); } 66% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
 }
 
+.rendererCSS {
+  .CSS2DObject {
+    color: #ffffff;
+    font-family: 'Comfortaa-Bold';
+    font-size: 1em;
+    line-height: 1em;
+    margin-top: -2rem;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+    z-index: 0 !important;
+  }
+}
+
 @media (max-width: 640px) {
 
 }
