@@ -157,6 +157,7 @@ class Multiplayer {
     if (player == null) {
       player = new Player();
       player.uuid = uuid; // Assign 3D uuid from connection player uuid
+      player.light.removeFromParent();
       this.players.add(player);
     }
 
