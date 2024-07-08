@@ -64,7 +64,7 @@
 </script>
 <template>
   <div class="panel">
-    <p>Multiplayer Settings</p>
+    <p>Multiplayer</p>
     <div class="group">
       <div class="option">
         <label for="name">Your name</label>

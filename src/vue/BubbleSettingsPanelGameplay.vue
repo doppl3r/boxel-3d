@@ -14,7 +14,7 @@
 </script>
 <template>
   <div class="panel">
-    <p>Gameplay settings</p>
+    <p>Gameplay</p>
     <div class="group">
       <div class="option">
         <input type="checkbox" id="motion" :checked="settings.motion == true" @change="$emit('updateSettings', $event)">

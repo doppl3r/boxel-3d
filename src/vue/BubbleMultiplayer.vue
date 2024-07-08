@@ -2,8 +2,8 @@
   import { ref, nextTick, onMounted, onUnmounted } from 'vue';
 
   var tab = ref('chat');
-  var isOpen = ref(false);
-  var isCollapsed = ref(false);
+  var online = ref(false);
+  var collapsed = ref(false);
   var notifications = ref(0);
   var message = ref('');
   var messages = ref([]);
@@ -15,6 +15,7 @@
     app.network.on('peer_open', onPeerOpen);
     app.network.on('peer_close', onPeerClose);
     app.network.on('peer_disconnected', onPeerDisconnected);
+    app.network.on('connection_start', onConnectionStart);
     app.network.on('connection_open', onConnectionOpen);
     app.network.on('connection_close', onConnectionClose);
     app.network.on('connection_data', onConnectionData);
@@ -24,6 +25,7 @@
     app.network.off('peer_open', onPeerOpen);
     app.network.off('peer_close', onPeerClose);
     app.network.off('peer_disconnected', onPeerDisconnected);
+    app.network.off('connection_start', onConnectionStart);
     app.network.off('connection_open', onConnectionOpen);
     app.network.off('connection_close', onConnectionClose);
     app.network.off('connection_data', onConnectionData);
@@ -31,36 +33,56 @@
 
   function onPeerOpen(e) {
     //console.log(e)
-    isOpen.value = true;
+    online.value = true;
 
     // Tell host their server is ready
-    if (isHost() == true) {
+    if (isHost()) {
       addMessage({
         name: 'Server',
         text: 'Server is ready!',
         time: new Date().toLocaleTimeString(),
         color: '#4CA9FF'
-      })
+      });
     }
   }
   
   function onPeerClose(e) {
     //console.log(e)
-    isOpen.value = false;
+    online.value = false;
 
     // Tell host their server is closed
-    if (isHost() == true) {
+    if (isHost()) {
       addMessage({
         name: 'Server',
         text: 'Server is closed!',
         time: new Date().toLocaleTimeString(),
-        color: '#4CA9FF'
-      })
+        color: '#ff0000'
+      });
     }
   }
 
   function onPeerDisconnected(e) {
     //console.log(e)
+    addMessage({
+      name: 'Client',
+      text: 'Server disconnected!',
+      time: new Date().toLocaleTimeString(),
+      color: '#ff0000'
+    });
+  }
+
+  function onConnectionStart(e) {
+    if (isHost()) {
+
+    }
+    else {
+      addMessage({
+        name: 'Client',
+        text: 'Searching for server...',
+        time: new Date().toLocaleTimeString(),
+        color: '#4CA9FF'
+      });
+    }
   }
   
   function onConnectionOpen(e) {
@@ -94,7 +116,9 @@
     }
     else {
       // Tell guests that the host disconnected
+      data.name = 'Client';
       data.text = 'The host has disconnected.';
+      data.color = '#ff0000';
       addMessage(data);
     }
   }
@@ -156,7 +180,7 @@
     messages.value.push(data);
 
     // Increment messages if not visible
-    if (tab.value != 'chat' || isCollapsed.value == true) {
+    if (tab.value != 'chat' || isCollapsed()) {
       notifications.value++;
     }
 
@@ -180,6 +204,14 @@
     return app.multiplayer.isHost();
   }
 
+  function isOnline() {
+    return online.value;
+  }
+
+  function isCollapsed() {
+    return collapsed.value;
+  }
+
   function kickPlayer(id) {
 
   }
@@ -190,8 +222,8 @@
 
   function changeTab(name) {
     // Toggle multiplayer section
-    if (name == tab.value) isCollapsed.value = !isCollapsed.value;
-    else isCollapsed.value = false;
+    if (name == tab.value) collapsed.value = !collapsed.value;
+    else collapsed.value = false;
 
     // Reset notifications
     if (name == 'chat') {
@@ -213,7 +245,7 @@
 </script>
 <template>
   <Transition name="fade-multiplayer">
-    <div class="multiplayer" v-if="isOpen == true">
+    <div class="multiplayer" v-if="isOnline()">
       <div class="container">
         <div class="tabs">
           <div class="tab" :class="{ 'selected': tab == 'chat' }" @click="changeTab('chat')" title="Chat">
@@ -224,7 +256,7 @@
             <span class="material-symbols-rounded">group</span>
           </div>
         </div>
-        <div class="content" :class="{ 'collapsed': isCollapsed == true }">
+        <div class="content" :class="{ 'collapsed': isCollapsed() }">
           <div class="panel" v-show="tab == 'chat'">
             <ul class="messages" ref="messageBox">
               <li class="message" v-for="message in messages" :title="message.time">
@@ -233,7 +265,7 @@
               </li>
             </ul>
             <div class="message-input">
-              <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null);" @focus="isCollapsed = false; notifications = 0;" maxlength="128">
+              <input type="text" ref="message" placeholder="Message" @keydown.enter="sendMessage(null);" @focus="collapsed = false; notifications = 0;" maxlength="128">
               <button @click="sendMessage(null)">
                 <span class="material-symbols-rounded">send</span>
               </button>

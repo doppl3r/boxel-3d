@@ -24,7 +24,12 @@ class Network extends EventDispatcher {
   connect(id, options) {
     // Create connection
     var connection = this.peer.connect(id, options);
+    
+    // Add connection events
     this.addConnectionListeners(connection);
+
+    // Dispatch the connection starting event
+    this.dispatchEvent({ type: 'connection_start', connection: connection });
 
     // Clear connections before connecting to peer
     this.connections.clear();
@@ -47,7 +52,7 @@ class Network extends EventDispatcher {
     // Add event listeners to host from client(s)
     peer.on('connection', function(connection) {
       this.addConnectionListeners(connection);
-      this.dispatchEvent({ type: 'peer_connection', connection: connection })
+      this.dispatchEvent({ type: 'peer_connection', connection: connection });
     }.bind(this));
 
     // Listen to peer close

@@ -23,7 +23,7 @@
 </script>
 <template>
   <div class="panel">
-    <p>Data settings</p>
+    <p>Data</p>
     <div class="group">
       <div class="option">
         <label>Backup to...</label>

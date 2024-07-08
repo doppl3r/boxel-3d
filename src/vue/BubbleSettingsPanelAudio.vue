@@ -3,7 +3,7 @@
 </script>
 <template>
   <div class="panel">
-    <p>Audio settings</p>
+    <p>Audio</p>
     <div class="group">
       <div class="option">
         <label for="volume">Volume</label>

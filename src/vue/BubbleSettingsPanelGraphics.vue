@@ -24,7 +24,7 @@
 </script>
 <template>
   <div class="panel">
-    <p>Graphics settings</p>
+    <p>Graphics</p>
     <div class="group">
       <div class="option">
         <label for="quality">Quality</label>
