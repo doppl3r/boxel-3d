@@ -1,5 +1,6 @@
 import { Group } from 'three';
 import { Player } from './entities/Player.js';
+import { Group as Tweens, Tween } from '@tweenjs/tween.js'
 
 /*
   The Multiplayer class manages the 3D object states
@@ -10,6 +11,8 @@ class Multiplayer {
   constructor(network) {
     this.network = network;
     this.players = new Group();
+    this.tweens = new Tweens();
+    this.tick = 10;
 
     // Add peer events
     this.network.on('peer_open', this.onPeerOpen.bind(this));
@@ -28,7 +31,7 @@ class Multiplayer {
   }
 
   render(delta, alpha) {
-
+    this.tweens.update();
   }
 
   onPeerOpen(e) {
@@ -54,7 +57,12 @@ class Multiplayer {
 
   onConnectionClose(e) {
     //console.log(e);
-    this.removePlayerFromConnection(e.connection);
+    if (this.isHost()) {
+      this.removePlayerFromConnection(e.connection);
+    }
+    else {
+      this.players.clear();
+    }
   }
 
   onConnectionData(e) {
@@ -156,6 +164,12 @@ class Multiplayer {
     // Create new player entity if it doesn't exist
     if (player == null) {
       player = new Player();
+
+      // Create properties for interpolation
+      player.positionPrev = player.position.clone();
+      player.positionNext = player.position.clone();
+      player.rotationPrev = player.rotation.clone();
+      player.rotationNext = player.rotation.clone();
       player.uuid = uuid; // Assign 3D uuid from connection player uuid
       player.light.removeFromParent();
       this.players.add(player);
@@ -166,10 +180,34 @@ class Multiplayer {
   }
 
   updatePlayer(player, data) {
-    // Update player properties
-    player.setPosition(data.position);
-    player.setRotation(data.rotation.z);
-    player.setScale(data.scale);
+    // Copy properties for interpolation
+    player.positionPrev.x = player.position.x;
+    player.positionPrev.y = player.position.y;
+    player.rotationPrev.z = player.rotation.z;
+
+    // Manually assign next properties
+    player.positionNext.x = data.position.x;
+    player.positionNext.y = data.position.y;
+    player.rotationNext.z = data.rotation.z;
+
+    // Start tween
+    this.tween({
+      object: { alpha: 0 },
+      to: { alpha: 1 },
+      duration: (1 / this.tick) * 1000,
+      onUpdate: function(obj) {
+        // Interpolate properties
+        player.position.x = (player.positionPrev.x + (player.positionNext.x - player.positionPrev.x) * obj.alpha);
+        player.position.y = (player.positionPrev.y + (player.positionNext.y - player.positionPrev.y) * obj.alpha);
+        player.rotation.z = (player.rotationPrev.z + (player.rotationNext.z - player.rotationPrev.z) * obj.alpha);
+      }
+    }).start();
+  }
+
+  tween(options) {
+    // Create and assign tween to tween group
+    var tween = new Tween(options.object, this.tweens).to(options.to, options.duration).dynamic(options.dynamic).easing(options.easing).interpolation(options.interpolation).onStart(options.onStart).onUpdate(options.onUpdate).onComplete(options.onComplete);
+    return tween;
   }
 
   removePlayer(uuid) {
@@ -177,6 +215,10 @@ class Multiplayer {
     var player = this.players.getObjectByProperty('uuid', uuid);
     if (player) player.removeFromParent();
     return player;
+  }
+
+  setTick(tick) {
+    this.tick = tick;
   }
 
   playerToJSON(player) {
