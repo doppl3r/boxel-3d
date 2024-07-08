@@ -1,6 +1,7 @@
 import { Group } from 'three';
 import { Player } from './entities/Player.js';
 import { Group as Tweens, Tween } from '@tweenjs/tween.js'
+import { Text } from './Text.js';
 
 /*
   The Multiplayer class manages the 3D object states
@@ -35,28 +36,28 @@ class Multiplayer {
   }
 
   onPeerOpen(e) {
-    //console.log(e);
+    if (this.isHost()) {
+      // Set host player name from settings
+      var settings = app.storage.getSettings();
+      app.player.setText(settings.name);
+    }
   }
 
   onPeerClose(e) {
-    //console.log(e);
     this.players.clear();
   }
   
   onPeerDisconnected(e) {
-    //console.log(e);
     this.players.clear();
   }
 
   onConnectionOpen(e) {
-    //console.log(e);
     if (this.isHost()) {
-      this.addPlayerFromConnection(e.connection)
+      this.addPlayerFromConnection(e.connection);
     }
   }
 
   onConnectionClose(e) {
-    //console.log(e);
     if (this.isHost()) {
       this.removePlayerFromConnection(e.connection);
     }
@@ -66,7 +67,6 @@ class Multiplayer {
   }
 
   onConnectionData(e) {
-    //console.log(e);
     if (e.data.type == 'players') {
       if (this.isHost()) {
         this.updatePlayerFromGuest(e.data);
@@ -79,7 +79,7 @@ class Multiplayer {
 
   updatePlayerFromGuest(data) {
     // Get player from data received (guests only send 1 array item)
-    var player = this.getPlayer(data.players[0].uuid);
+    var player = this.getPlayer(data.players[0]);
     this.updatePlayer(player, data.players[0]);
   }
 
@@ -89,8 +89,8 @@ class Multiplayer {
       // Only update other player data
       if (data.players[i].uuid != app.player.uuid) {
         // Add player if the player does not exist from host
-        var player = this.getPlayer(data.players[i].uuid);
-        if (player == null) player = this.addPlayer(data.players[i].uuid);
+        var player = this.getPlayer(data.players[i]);
+        if (player == null) player = this.addPlayer(data.players[i]);
 
         // Update player data now that it exists
         this.updatePlayer(player, data.players[i]);
@@ -144,34 +144,39 @@ class Multiplayer {
   }
 
   addPlayerFromConnection(connection) {
-    return this.addPlayer(connection.metadata.uuid);
+    return this.addPlayer(connection.metadata);
   }
 
   removePlayerFromConnection(connection) {
     return this.removePlayer(connection.metadata.uuid);
   }
 
-  getPlayer(uuid) {
+  getPlayer(metadata) {
     // Return player
-    var player = this.players.getObjectByProperty('uuid', uuid);
+    var player = this.players.getObjectByProperty('uuid', metadata.uuid);
     return player;
   }
 
-  addPlayer(uuid) {
+  addPlayer(metadata) {
     // Check if player exists first
-    var player = this.getPlayer(uuid);
+    var player = this.getPlayer(metadata);
     
     // Create new player entity if it doesn't exist
     if (player == null) {
       player = new Player();
-      player.text.setText('Test');
+      player.setText(metadata.name);
+
+      // Add text above player
+      player.add(new Text({ text: player.text }));
 
       // Create properties for interpolation
       player.positionPrev = player.position.clone();
       player.positionNext = player.position.clone();
       player.rotationPrev = player.rotation.clone();
       player.rotationNext = player.rotation.clone();
-      player.uuid = uuid; // Assign 3D uuid from connection player uuid
+
+      // Assign 3D uuid from connection metadata
+      player.uuid = metadata.uuid;
       player.light.removeFromParent();
       this.players.add(player);
     }
@@ -227,7 +232,8 @@ class Multiplayer {
       uuid: player.uuid,
       position: { x: player.position.x, y: player.position.y, z: 0 },
       rotation: { x: 0, y: 0, z: player.rotation.z },
-      scale: { x: player.scale.z, y: player.scale.y, z: player.scale.z }
+      scale: { x: player.scale.z, y: player.scale.y, z: player.scale.z },
+      name: player.text
     }
   }
 }

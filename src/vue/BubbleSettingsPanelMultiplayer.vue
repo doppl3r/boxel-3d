@@ -4,6 +4,7 @@
   function connect(e) {
     // Remove listener
     app.network.off('peer_open', connect);
+    app.multiplayer.setHost(null); // Remove host status
 
     // Disconnect if toggled off
     if (e.target.checked == false) {
@@ -13,7 +14,6 @@
     
     // Connect to network
     if (isOnline()) {
-      console.log('connecting...');
       app.network.connect(props['settings'].connection, {
         metadata: {
           name: props['settings'].name,
@@ -23,7 +23,6 @@
     }
     else {
       // Create peer then connect to host
-      console.log('creating peer...')
       app.network.on('peer_open', connect);
       app.network.open(props['settings'].peer);
     }
@@ -33,8 +32,12 @@
     return app.network.isOnline();
   }
 
+  function isHost() {
+    return app.multiplayer.isHost();
+  }
+
   function toggleHost() {
-    if (isOnline()) {
+    if (isHost()) {
       app.network.destroy();
       app.multiplayer.setHost(null);
     }
@@ -74,7 +77,7 @@
         <input type="text" id="connection" :value="settings.connection" @change="$emit('updateSettings', $event)" placeholder="ex: 4630cba6-b969-46f3-8d32-e77324054612">
       </div>
       <div class="option">
-        <input type="checkbox" id="join-multiplayer" @change="connect($event)">
+        <input type="checkbox" id="join-multiplayer" :checked="isOnline() && isHost() == false" @change="connect($event)">
         <label for="join-multiplayer">Join Server</label>
       </div>
     </div>
@@ -84,7 +87,7 @@
         <input type="text" id="peer-id" :value="settings.peer" @click="copyInput($event)" readonly>
       </div>
       <div class="option">
-        <input type="checkbox" id="host-multiplayer" :checked="isOnline()" @change="toggleHost($event)">
+        <input type="checkbox" id="host-multiplayer" :checked="isHost()" @change="toggleHost($event)">
         <label for="host-multiplayer">Host Server</label>
       </div>
     </div>
