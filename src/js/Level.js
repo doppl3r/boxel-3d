@@ -1,6 +1,8 @@
 import { Group } from 'three';
 import { World } from 'matter-js';
 import { EntityFactory } from './entities/EntityFactory.js';
+import levels from '../json/levels.json';
+import themes from '../json/themes.json';
 
 class Level extends Group {
   constructor() {
@@ -226,6 +228,18 @@ class Level extends Group {
     this.children.forEach(function(child) {
       if (child.helper) child.updateHelper();
     })
+  }
+
+  getThemeByLevelName(name) {
+    // Loop through levels json
+    var theme;
+    levels.packs.forEach(function(pack) {
+      pack.levels.forEach(function(level) {
+        // Assign theme using theme pack key
+        if (name == level.title) theme = themes[pack.theme];
+      })
+    });
+    return theme;
   }
 }
 

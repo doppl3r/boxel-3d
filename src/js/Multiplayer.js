@@ -181,6 +181,7 @@ class Multiplayer {
     // Create new player entity if it doesn't exist
     if (player == null) {
       player = new Player();
+      player.visible = false; // Hidden by default
       player.setText(metadata.name);
 
       // Add text above player
@@ -221,6 +222,9 @@ class Multiplayer {
       if (player.skin.url != data.skin) {
         player.addTexture({ url: data.skin});
       }
+
+      // Show/hide player if the level is the same as local level
+      player.visible = (app.level.name == player.level);
   
       // Start tween
       this.tween({

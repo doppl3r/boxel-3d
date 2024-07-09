@@ -3,7 +3,6 @@
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import levels from '../json/levels.json';
-  import themes from '../json/themes.json';
 
   // Initialize variables
   var description = ref('Select a level');
@@ -13,8 +12,6 @@
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
-  var origin = ref(location.origin);
-  var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
   var emit = defineEmits(['setPage']);
 
   // Add event listener(s)
@@ -30,29 +27,10 @@
   }
 
   async function playLevel(title) {
-    var response = await fetch(origin.value + pathname.value + '/json/' + title + '.json');
-    var json = await response.json();
-    var credit = '';
-    var theme = themes[selectedItem.value.theme];
+    await app.playLevelByTitle(title);
     emit('setPage', 'campaign');
-    app.updateGravity();
-    app.play = true;
-    app.timer.reset();
-    if (json.author) credit = 'Level by ' + json.author;
-    if (theme) app.level.entityFactory.color = theme.color;
-    app.background.setTheme(theme.model);
-    app.level.clearLevel(app);
-    app.level.importFromJSON(json, app);
     settings.progress = getLevelIndex(title) + 1;
     app.updateSettings(settings);
-    app.background.visible = true;
-    app.playLevel();
-    app.resetScene();
-    
-    // Send event to show credits
-    setTimeout(function() {
-      window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: credit }}));
-    }, 500);
   }
 
   function getScore(title) {

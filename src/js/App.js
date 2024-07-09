@@ -273,6 +273,30 @@ class App {
     app.timer.start();
   }
 
+  async playLevelByTitle(title, theme) {
+    var pathname = location.pathname.includes('.') ? '/' : location.pathname;
+    var response = await fetch(location.origin + pathname + '/json/' + title + '.json');
+    var json = await response.json();
+    if (theme == null) theme = app.level.getThemeByLevelName(title);
+    app.level.entityFactory.color = theme.color;
+    app.background.setTheme(theme.model);
+    app.updateGravity();
+    app.play = true;
+    app.timer.reset();
+    app.level.clearLevel(app);
+    app.level.importFromJSON(json, app);
+    app.background.visible = true;
+    app.playLevel();
+    app.resetScene();
+    
+    // Send event to show credits
+    setTimeout(function() {
+      if (json.author) {
+        window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: 'Level by ' + json.author }}));
+      }
+    }, 500);
+  }
+
   pauseLevel() {
     app.timer.pause();
     app.play = false;

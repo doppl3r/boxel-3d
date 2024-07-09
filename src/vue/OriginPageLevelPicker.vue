@@ -23,30 +23,10 @@
   }
 
   async function playLevel(title) {
-    var response = await fetch(origin.value + pathname.value + '/json/' + title + '.json');
-    var json = await response.json();
-    var credit = '';
-    var index = getLevelIndex(title);
+    await app.playLevelByTitle(title, { "model": "background-classic", "color": "#620460" });
     emit('setPage', 'campaign');
-    app.updateGravity();
-    app.play = true;
-    app.timer.reset();
-    if (json.author) credit = 'Level by ' + json.author;
-    if (json.star) credit = '<img src="img/svg/star.svg" title="Event winner"> ' + credit;
-    app.level.entityFactory.color = '#620460';
-    app.background.setTheme('background-classic');
-    app.level.clearLevel(app);
-    app.level.importFromJSON(json, app);
-    settings.progress = index + 1;
+    settings.progress = getLevelIndex(title) + 1;
     app.updateSettings(settings);
-    app.background.visible = false;
-    app.playLevel();
-    app.resetScene();
-    
-    // Send event to show credits
-    setTimeout(function() {
-      window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: credit }}));
-    }, 500);
   }
 
   function getScore(title) {

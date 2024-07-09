@@ -231,7 +231,7 @@
     var target = app.multiplayer.getPlayer({ uuid: player.uuid })
     if (target) app.player.setPosition(target.position, false);
 
-    // TODO: Change level to target player
+    // Change level to target player
     
   }
 
