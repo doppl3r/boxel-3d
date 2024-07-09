@@ -218,8 +218,8 @@ class Multiplayer {
   }
 
   updatePlayer(player, data) {
-    // Copy properties for interpolation
     if (player) {
+      // Copy properties for interpolation
       player.positionPrev.x = player.position.x;
       player.positionPrev.y = player.position.y;
       player.rotationPrev.z = player.rotation.z;
@@ -228,6 +228,11 @@ class Multiplayer {
       player.positionNext.x = data.position.x;
       player.positionNext.y = data.position.y;
       player.rotationNext.z = data.rotation.z;
+      
+      // Set scale (no prev/next needed)
+      player.scale.x = data.scale.x;
+      player.scale.y = data.scale.y;
+      player.scale.z = data.scale.z;
 
       // Update player level
       player.level = data.level;
@@ -287,7 +292,7 @@ class Multiplayer {
       uuid: player.uuid,
       position: { x: player.position.x, y: player.position.y, z: 0 },
       rotation: { x: 0, y: 0, z: player.rotation.z },
-      scale: { x: player.scale.z, y: player.scale.y, z: player.scale.z },
+      scale: { x: player.scale.x, y: player.scale.y, z: player.scale.z },
       name: player.text,
       skin: player.skin.url,
       level: player.level
