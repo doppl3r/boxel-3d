@@ -307,7 +307,7 @@
             <ul class="lobby">
               <li class="player" v-for="player in players">
                 <span class="name">{{ player.text }}</span>
-                <span class="action material-symbols-rounded" @click="kickPlayer(player)" v-if="isHost()" :title="'Kick ' + player.text">cancel</span>
+                <span class="action material-symbols-rounded" @dblclick="kickPlayer(player)" v-if="isHost()" :title="'Double-click to kick ' + player.text">close</span>
                 <span class="action material-symbols-rounded" @click="goToPlayer(player)" :title="'Teleport to ' + player.text">play_arrow</span>
               </li>
             </ul>
