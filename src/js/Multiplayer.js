@@ -121,6 +121,9 @@ class Multiplayer {
   }
 
   sendHostDataToGuests() {
+    // Update level/skin from local player
+    this.updateLocalPlayer();
+
     // Populate data with host player
     var data = {
       type: 'players',
@@ -141,6 +144,9 @@ class Multiplayer {
   }
 
   sendGuestDataToHost() {
+    // Update level/skin from local player
+    this.updateLocalPlayer();
+
     // Initialize data from guest player
     var data = {
       type: 'players',
@@ -198,27 +204,47 @@ class Multiplayer {
 
   updatePlayer(player, data) {
     // Copy properties for interpolation
-    player.positionPrev.x = player.position.x;
-    player.positionPrev.y = player.position.y;
-    player.rotationPrev.z = player.rotation.z;
+    if (player) {
+      player.positionPrev.x = player.position.x;
+      player.positionPrev.y = player.position.y;
+      player.rotationPrev.z = player.rotation.z;
+  
+      // Manually assign next properties
+      player.positionNext.x = data.position.x;
+      player.positionNext.y = data.position.y;
+      player.rotationNext.z = data.rotation.z;
 
-    // Manually assign next properties
-    player.positionNext.x = data.position.x;
-    player.positionNext.y = data.position.y;
-    player.rotationNext.z = data.rotation.z;
+      // Update player level
+      player.level = data.level;
 
-    // Start tween
-    this.tween({
-      object: { alpha: 0 },
-      to: { alpha: 1 },
-      duration: (1 / this.tick) * 1000,
-      onUpdate: function(obj) {
-        // Interpolate properties
-        player.position.x = (player.positionPrev.x + (player.positionNext.x - player.positionPrev.x) * obj.alpha);
-        player.position.y = (player.positionPrev.y + (player.positionNext.y - player.positionPrev.y) * obj.alpha);
-        player.rotation.z = (player.rotationPrev.z + (player.rotationNext.z - player.rotationPrev.z) * obj.alpha);
+      // Update player skin
+      if (player.skin.url != data.skin) {
+        player.addTexture({ url: data.skin});
       }
-    }).start();
+  
+      // Start tween
+      this.tween({
+        object: { alpha: 0 },
+        to: { alpha: 1 },
+        duration: (1 / this.tick) * 1000,
+        onUpdate: function(obj) {
+          // Interpolate properties
+          player.position.x = (player.positionPrev.x + (player.positionNext.x - player.positionPrev.x) * obj.alpha);
+          player.position.y = (player.positionPrev.y + (player.positionNext.y - player.positionPrev.y) * obj.alpha);
+          player.rotation.z = (player.rotationPrev.z + (player.rotationNext.z - player.rotationPrev.z) * obj.alpha);
+        }
+      }).start();
+    }
+  }
+
+  updateLocalPlayer() {
+    // Update guest data
+    app.player.level = app.level.name;
+
+    // Disable sharing custom skins
+    if (app.player.skin.url.startsWith('data:')) {
+      app.player.skin.url = 'img/png/skins/custom.png';
+    }
   }
 
   tween(options) {
@@ -244,7 +270,9 @@ class Multiplayer {
       position: { x: player.position.x, y: player.position.y, z: 0 },
       rotation: { x: 0, y: 0, z: player.rotation.z },
       scale: { x: player.scale.z, y: player.scale.y, z: player.scale.z },
-      name: player.text
+      name: player.text,
+      skin: player.skin.url,
+      level: player.level
     }
   }
 

@@ -21,6 +21,7 @@ class Player extends Cube {
     this.addLight('#dc265a', 16000, 500, false);
     this.controls = { left: 0, right: 0, acceleration: 1, speed: 4 };
     this.rope = new Rope();
+    this.skin = { url: '' };
 
     // Add an invisible plane to player for rope raycaster mechanics
     this.plane = new Mesh(new PlaneGeometry(1000, 1000), new MeshPhongMaterial({ visible: false, side: DoubleSide }));
@@ -153,7 +154,7 @@ class Player extends Cube {
     if (this.isFrozen() == false) {
       this.freeze(true);
       this.visible = false;
-      this.killTimeout = setTimeout(function() { app.player.restart(); }, 1000); // Respawn in 1 second
+      this.killTimeout = setTimeout(function() { this.restart(); }.bind(this), 1000); // Respawn in 1 second
       var rows = 4, cols = 4, layers = 4;
       var scale = { x: this.scale.x / cols, y: this.scale.y / rows, z: this.scale.z / layers }
       for (var row = -rows / 2; row < rows / 2; row++) {
@@ -213,10 +214,10 @@ class Player extends Cube {
 
   respawn(override = false) {
     // Override is used when a checkpoint set
-    if (app.player.isFrozen() == true || override == true) {
+    if (this.isFrozen() == true || override == true) {
       app.level.removeParticles(app);
-      app.player.resetToOrigin();
-      app.player.setPositionToCheckpoint();
+      this.resetToOrigin();
+      this.setPositionToCheckpoint();
 
       // Dispatch finished event
       window.dispatchEvent(new CustomEvent('playerRespawn', { detail: { player: this }}));
@@ -310,19 +311,19 @@ class Player extends Cube {
     loader.load(skin.url, 
       function(texture){
         texture.colorSpace = SRGBColorSpace;
-        app.player.remove(app.player.skin); // Reset skin
-        app.player.shapes.visible = false;
+        this.remove(this.skin); // Reset skin
+        this.shapes.visible = false;
         var geometry = new RoundedBoxGeometry(1, 1, 1, 1, 0.1); // width, height, depth, segments, radius
         var material = new MeshPhongMaterial({ map: texture, transparent: true, opacity: 1 });
-        app.player.shapes.setOpacities(0);
-        app.player.skin = new Mesh(geometry, material);
-        app.player.skin.url = skin.url;
-        app.player.add(app.player.skin);
-      },
+        this.shapes.setOpacities(0);
+        this.skin = new Mesh(geometry, material);
+        this.skin.url = skin.url;
+        this.add(this.skin);
+      }.bind(this),
       undefined,
       function(err) {
         console.error( 'An error happened: ' + err );
-      }
+      }.bind(this)
     );
   }
 }

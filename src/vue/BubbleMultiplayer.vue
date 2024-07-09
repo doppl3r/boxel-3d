@@ -232,6 +232,7 @@
     if (target) app.player.setPosition(target.position, false);
 
     // TODO: Change level to target player
+    
   }
 
   function changeTab(name) {
