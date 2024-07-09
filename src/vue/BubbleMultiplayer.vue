@@ -159,9 +159,10 @@
     var data = {
       type: 'message',
       name: 'Server',
-      text: settings.name + ' finished ' + level + ' in ' + time + 's',
+      text: settings.name + ' finished ' + level + ' in <em>' + time + 's</em>',
       time: getTime(),
-      color: '#4CA9FF'
+      color: '#4CA9FF',
+      raw: true
     };
     sendMessage(data);
   }
@@ -307,9 +308,11 @@
         <div class="content" :class="{ 'collapsed': isCollapsed() }">
           <div class="panel" v-show="tab == 'chat'">
             <ul class="messages" ref="messageBox">
-              <li class="message" v-for="message in messages" :title="message.time">
+              <li class="message" v-for="message in messages" :title="message.name">
                 <span class="name" :style="{ color: message.color || '#ffffff' }">{{ message.name }}</span>
-                <span class="text">: {{ message.text }}</span>
+                <span>: </span>
+                <span class="text" v-if="message.raw" v-html="message.text"></span>
+                <span class="text" v-else>{{ message.text }}</span>
               </li>
             </ul>
             <div class="message-input">
