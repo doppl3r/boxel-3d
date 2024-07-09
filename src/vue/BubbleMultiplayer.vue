@@ -158,10 +158,10 @@
     var settings = app.storage.getSettings();
     var data = {
       type: 'message',
-      name: 'Server',
-      text: settings.name + ' finished <em>' + level + '</em> in <strong>' + time + 's</strong>',
+      name: settings.name,
+      text: 'Finished <em>' + level + '</em> in <strong>' + time + 's</strong>',
       time: getTime(),
-      color: '#4CA9FF',
+      color: '#4cff64',
       raw: true
     };
     sendMessage(data);
