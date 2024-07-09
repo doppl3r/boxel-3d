@@ -8,7 +8,7 @@
 
     // Disconnect if toggled off
     if (e.target.checked == false) {
-      app.network.disconnect();
+      app.network.destroy();
       return;
     }
     

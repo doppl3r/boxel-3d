@@ -84,6 +84,17 @@ class Multiplayer {
   }
 
   updatePlayersFromHost(data) {
+    // Check if player length (minus app.player) is different than current player length 
+    if (data.players.length - 1 != this.players.children.length) {
+      // Remove player objects that do not exist in the host data array
+      var playersToRemove = this.players.children.filter(function(obj1) {
+        return !data.players.some(function(obj2) {
+          return obj1.uuid === obj2.uuid;
+        }); 
+      });
+      playersToRemove.forEach(function(player) { player.removeFromParent(); });
+    }
+
     // Loop through all players from data
     for (var i = data.players.length - 1; i >= 0; i--) {
       // Only update other player data

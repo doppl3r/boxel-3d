@@ -8,7 +8,7 @@
   var message = ref('');
   var messages = ref([]);
   var messageBox = ref();
-  var players = ref()
+  var players = ref([]);
 
   function addEventListeners() {
     // Add peer events
@@ -112,6 +112,7 @@
     
     // Tell guests that a guest disconnected
     if (isHost()) {
+      // Send message to all guests
       sendMessage(data);
     }
     else {
@@ -121,6 +122,9 @@
       data.color = '#ff0000';
       addMessage(data);
     }
+
+    // Assign lobby players array from multiplayer list
+    players.value = app.multiplayer.players.children.slice(0);
   }
   
   function onConnectionData(e) {
@@ -135,7 +139,13 @@
         e.data.name = e.connection.metadata.name;
         app.network.connections.forEach(function(connection) {
           connection.send(e.data);
-        })
+        });
+      }
+    }
+    else if (e.data.type == 'players') {
+      // Update players from multiplayer players list
+      if (players.value.length != app.multiplayer.players.children.length) {
+        players.value = app.multiplayer.players.children.slice(0);
       }
     }
   }
@@ -272,9 +282,9 @@
             </div>
           </div>
           <div class="panel" v-show="tab == 'lobby'">
-            <ul class="players">
+            <ul class="lobby">
               <li class="player" v-for="player in players">
-                <span class="name">{{ player.name }}</span>
+                <span class="name">{{ player.text }}</span>
                 <span class="action material-symbols-rounded" @click="kickPlayer(player.id)" v-if="isHost()">cancel</span>
                 <span class="action material-symbols-rounded" @click="goToPlayer(player.id)">near_me</span>
               </li>
