@@ -247,6 +247,24 @@ class Multiplayer {
       name: player.text
     }
   }
+
+  getConnectionByUUID(uuid) {
+    var connection;
+    app.network.connections.forEach(function(conn) {
+      if (uuid == conn.metadata.uuid) {
+        connection = conn;
+      }
+    });
+    return connection;
+  }
+
+  closeConnectionByUUID(uuid) {
+    // Only hosts can kick players
+    if (this.isHost()) {
+      var connection = this.getConnectionByUUID(uuid);
+      connection.close();
+    }
+  }
 }
 
 export { Multiplayer };

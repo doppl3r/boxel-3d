@@ -122,10 +122,10 @@ class App {
     }.bind(this), -1);
 
     // Add network loop
-    this.multiplayer.setTick(10);
+    this.multiplayer.setTick(8);
     this.loop.add(function(data) {
       this.updateNetwork(data.delta, data.alpha);
-    }.bind(this), 10);
+    }.bind(this), 8);
 
     // Start loop
     this.loop.start();

@@ -222,12 +222,16 @@
     return collapsed.value;
   }
 
-  function kickPlayer(id) {
-
+  function kickPlayer(player) {
+    app.multiplayer.closeConnectionByUUID(player.uuid);
   }
 
-  function goToPlayer(id) {
+  function goToPlayer(player) {
+    // Set player position
+    var target = app.multiplayer.getPlayer({ uuid: player.uuid })
+    if (target) app.player.setPosition(target.position, false);
 
+    // TODO: Change level to target player
   }
 
   function changeTab(name) {
@@ -285,8 +289,8 @@
             <ul class="lobby">
               <li class="player" v-for="player in players">
                 <span class="name">{{ player.text }}</span>
-                <span class="action material-symbols-rounded" @click="kickPlayer(player.id)" v-if="isHost()">cancel</span>
-                <span class="action material-symbols-rounded" @click="goToPlayer(player.id)">near_me</span>
+                <span class="action material-symbols-rounded" @click="kickPlayer(player)" v-if="isHost()" :title="'Kick ' + player.text">cancel</span>
+                <span class="action material-symbols-rounded" @click="goToPlayer(player)" :title="'Teleport to ' + player.text">near_me</span>
               </li>
             </ul>
           </div>
