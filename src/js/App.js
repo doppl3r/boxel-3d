@@ -277,7 +277,7 @@ class App {
     var pathname = location.pathname.includes('.') ? '/' : location.pathname;
     var response = await fetch(location.origin + pathname + '/json/' + title + '.json');
     var json = await response.json();
-    if (theme == null) theme = app.level.getThemeByLevelName(title);
+    if (theme == null) theme = app.level.getThemeByTitle(title);
     app.level.entityFactory.color = theme.color;
     app.background.setTheme(theme.model);
     app.updateGravity();

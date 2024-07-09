@@ -818,6 +818,7 @@
             list-style: none;
             margin: auto 0 0.25em 0;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 0;
             scroll-behavior: smooth;
 
@@ -826,6 +827,12 @@
               font-size: 0.75em;
               text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
               word-break: break-word;
+
+              img {
+                display: block;
+                max-height: 4em;
+                max-width: 100%;
+              }
             }
           }
 

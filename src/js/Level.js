@@ -230,16 +230,27 @@ class Level extends Group {
     })
   }
 
-  getThemeByLevelName(name) {
+  getThemeByTitle(title) {
     // Loop through levels json
     var theme;
     levels.packs.forEach(function(pack) {
       pack.levels.forEach(function(level) {
         // Assign theme using theme pack key
-        if (name == level.title) theme = themes[pack.theme];
+        if (title == level.title) theme = themes[pack.theme];
       })
     });
     return theme;
+  }
+
+  getDescriptionByTitle(title) {
+    var description;
+    levels.packs.forEach(function(pack) {
+      pack.levels.forEach(function(level) {
+        // Assign theme using theme pack key
+        if (title == level.title) description = level.description;
+      })
+    });
+    return description;
   }
 }
 

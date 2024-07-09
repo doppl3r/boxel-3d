@@ -19,6 +19,7 @@
     app.network.on('connection_open', onConnectionOpen);
     app.network.on('connection_close', onConnectionClose);
     app.network.on('connection_data', onConnectionData);
+    window.addEventListener('levelFinish', onLevelFinish);
   }
   
   function removeEventListeners() {
@@ -29,6 +30,7 @@
     app.network.off('connection_open', onConnectionOpen);
     app.network.off('connection_close', onConnectionClose);
     app.network.off('connection_data', onConnectionData);
+    window.removeEventListener('levelFinish', onLevelFinish);
   }
 
   function onPeerOpen(e) {
@@ -148,6 +150,20 @@
         players.value = app.multiplayer.players.children.slice(0);
       }
     }
+  }
+
+  function onLevelFinish(e) {
+    var time = e.detail.time;
+    var level = app.level.getDescriptionByTitle(e.detail.level);
+    var settings = app.storage.getSettings();
+    var data = {
+      type: 'message',
+      name: 'Server',
+      text: settings.name + ' finished ' + level + ' in ' + time + 's',
+      time: getTime(),
+      color: '#4CA9FF'
+    };
+    sendMessage(data);
   }
 
   function sendMessage(data) {

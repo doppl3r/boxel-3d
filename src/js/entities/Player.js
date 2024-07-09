@@ -246,7 +246,7 @@ class Player extends Cube {
     app.play = false;
 
     // Dispatch finished event
-    window.dispatchEvent(new CustomEvent('levelFinish', { detail: { time: time }}));
+    window.dispatchEvent(new CustomEvent('levelFinish', { detail: { time: time, level: levelName }}));
 
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('openPopup', {
