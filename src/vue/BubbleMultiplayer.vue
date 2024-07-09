@@ -229,8 +229,10 @@
   async function goToPlayer(player) {
     if (player.level != 'My Level') {
       // Change level to target player
-      await app.playLevelByTitle(player.level);
-      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+      if (player.level != app.level.name) {
+        await app.playLevelByTitle(player.level);
+        window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+      }
 
       // Set player position
       var target = app.multiplayer.getPlayer({ uuid: player.uuid })
