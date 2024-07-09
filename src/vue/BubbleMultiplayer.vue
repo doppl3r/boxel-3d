@@ -40,7 +40,7 @@
       addMessage({
         name: 'Server',
         text: 'Server is ready!',
-        time: new Date().toLocaleTimeString(),
+        time: getTime(),
         color: '#4CA9FF'
       });
     }
@@ -55,7 +55,7 @@
       addMessage({
         name: 'Server',
         text: 'Server is closed!',
-        time: new Date().toLocaleTimeString(),
+        time: getTime(),
         color: '#ff0000'
       });
     }
@@ -66,7 +66,7 @@
     addMessage({
       name: 'Client',
       text: 'Server disconnected!',
-      time: new Date().toLocaleTimeString(),
+      time: getTime(),
       color: '#ff0000'
     });
   }
@@ -79,7 +79,7 @@
       addMessage({
         name: 'Client',
         text: 'Searching for server...',
-        time: new Date().toLocaleTimeString(),
+        time: getTime(),
         color: '#4CA9FF'
       });
     }
@@ -92,7 +92,7 @@
         type: 'message',
         name: 'Server',
         text: e.connection.metadata.name + ' has connected!',
-        time: new Date().toLocaleTimeString(),
+        time: getTime(),
         color: '#4CA9FF'
       }
       sendMessage(data);
@@ -106,7 +106,7 @@
       type: 'message',
       name: 'Server',
       text: e.connection.metadata.name + ' has disconnected.',
-      time: new Date().toLocaleTimeString(),
+      time: getTime(),
       color: '#4CA9FF'
     };
     
@@ -159,7 +159,7 @@
         type: 'message',
         name: settings.name + (isHost() ? ' [host]' : ''),
         text: message.value.value,
-        time: new Date().toLocaleTimeString(),
+        time: getTime(),
         color: '#ffcc4d'
       };
       message.value.value = ''; // Clear message
@@ -242,7 +242,7 @@
       addMessage({
         name: 'Client',
         text: player.text + ' is picking a level...',
-        time: new Date().toLocaleTimeString(),
+        time: getTime(),
         color: '#4CA9FF'
       });
     }
@@ -260,6 +260,10 @@
 
     // Set tab value to name
     tab.value = name;
+  }
+
+  function getTime() {
+    return new Date().getTime();
   }
 
   // Run function after being mounted (visible)

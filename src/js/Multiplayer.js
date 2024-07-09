@@ -27,6 +27,7 @@ class Multiplayer {
   update(delta, alpha) {
     // Send all guests new data
     if (this.isHost()) {
+      this.checkConnections();
       this.sendHostDataToGuests();
     }
   }
@@ -69,12 +70,25 @@ class Multiplayer {
   onConnectionData(e) {
     if (e.data.type == 'players') {
       if (this.isHost()) {
+        // Update heartbeat time
+        e.connection.metadata.time = e.data.time;
+
+        // Update player data from guest
         this.updatePlayerFromGuest(e.data);
       }
       else {
         this.updatePlayersFromHost(e.data);
       }
     }
+  }
+
+  checkConnections() {
+    // Send all connections the host data
+    this.network.connections.forEach(function(connection) {
+      // Calculate time difference of response
+      var ms = this.getTime() - connection.metadata.time;
+      if (ms > 5000) connection.close(); // Kick after 5 seconds
+    }.bind(this));
   }
 
   updatePlayerFromGuest(data) {
@@ -128,7 +142,7 @@ class Multiplayer {
     var data = {
       type: 'players',
       players: [this.playerToJSON(app.player)],
-      time: new Date().toLocaleTimeString()
+      time: this.getTime()
     }
 
     // Add all players to data players list
@@ -151,7 +165,7 @@ class Multiplayer {
     var data = {
       type: 'players',
       players: [this.playerToJSON(app.player)],
-      time: new Date().toLocaleTimeString()
+      time: this.getTime()
     }
 
     // Send new guest data back to host connection (1)
@@ -296,6 +310,10 @@ class Multiplayer {
       var connection = this.getConnectionByUUID(uuid);
       connection.close();
     }
+  }
+
+  getTime() {
+    return new Date().getTime();
   }
 }
 
