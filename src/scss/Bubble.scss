@@ -828,6 +828,10 @@
               text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
               word-break: break-word;
 
+              * {
+                user-select: text;
+              }
+
               strong {
                 color: #4cff64;
               }

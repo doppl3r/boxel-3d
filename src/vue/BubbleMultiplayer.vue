@@ -9,6 +9,7 @@
   var messages = ref([]);
   var messageBox = ref();
   var players = ref([]);
+  var timeout;
 
   function addEventListeners() {
     // Add peer events
@@ -41,9 +42,9 @@
     if (isHost()) {
       addMessage({
         name: 'Server',
-        text: 'Server is ready!',
+        text: 'Server is ready! 😊',
         time: getTime(),
-        color: '#4CA9FF'
+        color: '#4ca9ff'
       });
     }
   }
@@ -56,9 +57,9 @@
     if (isHost()) {
       addMessage({
         name: 'Server',
-        text: 'Server is closed!',
+        text: 'Server closed! 😔',
         time: getTime(),
-        color: '#ff0000'
+        color: '#ff674c'
       });
     }
   }
@@ -66,10 +67,10 @@
   function onPeerDisconnected(e) {
     //console.log(e)
     addMessage({
-      name: 'Client',
-      text: 'Server disconnected!',
+      name: 'Server',
+      text: 'Server disconnected! 😔',
       time: getTime(),
-      color: '#ff0000'
+      color: '#ff674c'
     });
   }
 
@@ -79,23 +80,31 @@
     }
     else {
       addMessage({
-        name: 'Client',
-        text: 'Searching for server...',
+        name: 'Server',
+        text: 'Searching... 🔍',
         time: getTime(),
-        color: '#4CA9FF'
+        color: '#4ca9ff'
       });
+
+      // Wait for error
+      timeout = setTimeout(function() {
+        addMessage({ name: 'Error', text: 'Host not found. Your connection may be blocked on this network. 😔', time: getTime(), color: '#ff674c' });
+      }, 5000);
     }
   }
   
   function onConnectionOpen(e) {
-    //console.log(e)
+    // Cancel timeout message
+    clearTimeout(timeout);
+
+    // Update guests about new connection
     if (isHost()) {
       var data = {
         type: 'message',
         name: 'Server',
-        text: e.connection.metadata.name + ' has connected!',
+        text: e.connection.metadata.name + ' has connected! 👋',
         time: getTime(),
-        color: '#4CA9FF'
+        color: '#4ca9ff'
       }
       sendMessage(data);
     }
@@ -107,9 +116,9 @@
     var data = {
       type: 'message',
       name: 'Server',
-      text: e.connection.metadata.name + ' has disconnected.',
+      text: e.connection.metadata.name + ' has disconnected! 👋',
       time: getTime(),
-      color: '#4CA9FF'
+      color: '#4ca9ff'
     };
     
     // Tell guests that a guest disconnected
@@ -119,9 +128,9 @@
     }
     else {
       // Tell guests that the host disconnected
-      data.name = 'Client';
-      data.text = 'The host has disconnected.';
-      data.color = '#ff0000';
+      data.name = 'Server';
+      data.text = 'The host has disconnected! 😔';
+      data.color = '#4ca9ff';
       addMessage(data);
     }
 
@@ -159,7 +168,7 @@
     var data = {
       type: 'message',
       name: settings.name,
-      text: 'Finished <em>' + level + '</em> in <strong>' + time + 's</strong>',
+      text: 'Finished <em>' + level + '</em> in 🕒<strong>' + time + 's</strong>',
       time: getTime(),
       color: '#4cff64',
       raw: true
@@ -190,8 +199,8 @@
       // Let guest know the host does not exist
       if (app.network.connections.size == 0) {
         data.name = 'Error';
-        data.text = 'Host not found.';
-        data.color = '#ff0000';
+        data.text = 'Host not found! 😔';
+        data.color = '#ff674c';
         addMessage(data);
       }
     }
@@ -255,10 +264,10 @@
     }
     else {
       addMessage({
-        name: 'Client',
-        text: player.text + ' is picking a level...',
+        name: 'Server',
+        text: player.text + ' is currently picking a level... ⏳',
         time: getTime(),
-        color: '#4CA9FF'
+        color: '#4ca9ff'
       });
     }
   }
