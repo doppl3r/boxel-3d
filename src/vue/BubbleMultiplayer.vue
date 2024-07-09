@@ -159,7 +159,7 @@
     var data = {
       type: 'message',
       name: 'Server',
-      text: settings.name + ' finished ' + level + ' in <em>' + time + 's</em>',
+      text: settings.name + ' finished <em>' + level + '</em> in <strong>' + time + 's</strong>',
       time: getTime(),
       color: '#4CA9FF',
       raw: true
@@ -246,10 +246,8 @@
   async function goToPlayer(player) {
     if (player.level != 'My Level') {
       // Change level to target player
-      if (player.level != app.level.name) {
-        await app.playLevelByTitle(player.level);
-        window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
-      }
+      await app.playLevelByTitle(player.level);
+      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
 
       // Set player position
       var target = app.multiplayer.getPlayer({ uuid: player.uuid })
