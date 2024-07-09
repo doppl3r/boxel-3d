@@ -227,12 +227,23 @@
   }
 
   async function goToPlayer(player) {
-    // Change level to target player
-    await app.playLevelByTitle(player.level);
+    if (player.level != 'My Level') {
+      // Change level to target player
+      await app.playLevelByTitle(player.level);
+      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
 
-    // Set player position
-    var target = app.multiplayer.getPlayer({ uuid: player.uuid })
-    if (target) app.player.setPosition(target.position, false);
+      // Set player position
+      var target = app.multiplayer.getPlayer({ uuid: player.uuid })
+      if (target) app.player.setPosition(target.position, false);
+    }
+    else {
+      addMessage({
+        name: 'Client',
+        text: player.text + ' is picking a level...',
+        time: new Date().toLocaleTimeString(),
+        color: '#4CA9FF'
+      });
+    }
   }
 
   function changeTab(name) {
