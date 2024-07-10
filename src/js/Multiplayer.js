@@ -52,7 +52,7 @@ class Multiplayer {
   }
   
   onPeerDisconnected(e) {
-    this.players.clear();
+    // Peer disconnected manually or because the connection to the signalling server was lost.
   }
 
   onConnectionOpen(e) {

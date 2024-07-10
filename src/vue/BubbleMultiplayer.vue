@@ -35,7 +35,6 @@
   }
 
   function onPeerOpen(e) {
-    //console.log(e)
     online.value = true;
 
     // Tell host their server is ready
@@ -50,7 +49,6 @@
   }
   
   function onPeerClose(e) {
-    //console.log(e)
     online.value = false;
 
     // Tell host their server is closed
@@ -65,10 +63,9 @@
   }
 
   function onPeerDisconnected(e) {
-    //console.log(e)
     addMessage({
       name: 'Server',
-      text: 'You are no longer connected! 👍',
+      text: 'Weak connection... 🛜',
       time: getTime(),
       color: '#4ca9ff'
     });
@@ -111,7 +108,6 @@
   }
   
   function onConnectionClose(e) {
-    //console.log(e)
     // Send message to all connections about a closed connection
     var data = {
       type: 'message',
@@ -139,7 +135,6 @@
   }
   
   function onConnectionData(e) {
-    //console.log(e)
     if (e.data.type == 'message') {
       // Add message to messages
       addMessage(e.data);
