@@ -68,9 +68,9 @@
     //console.log(e)
     addMessage({
       name: 'Server',
-      text: 'Server disconnected! 😔',
+      text: 'You are no longer connected! 👍',
       time: getTime(),
-      color: '#ff674c'
+      color: '#4ca9ff'
     });
   }
 

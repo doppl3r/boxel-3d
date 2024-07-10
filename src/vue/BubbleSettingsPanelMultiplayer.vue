@@ -17,7 +17,8 @@
       app.network.connect(props['settings'].connection, {
         metadata: {
           name: props['settings'].name,
-          uuid: app.player.uuid
+          uuid: app.player.uuid,
+          time: app.multiplayer.getTime()
         }
       });
     }

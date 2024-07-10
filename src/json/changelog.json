@@ -394,5 +394,11 @@
     "revisions": [
       "Added multiplayer"
     ]
+  },
+  {
+    "version": "2.2.1",
+    "revisions": [
+      "Fixed network bugs"
+    ]
   }
 ]

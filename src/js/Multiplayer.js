@@ -13,6 +13,7 @@ class Multiplayer {
     this.network = network;
     this.players = new Group();
     this.tweens = new Tweens();
+    this.smooth = true;
     this.tick = 10;
 
     // Add peer events
@@ -27,9 +28,11 @@ class Multiplayer {
   update(delta, alpha) {
     // Send all guests new data
     if (this.isHost()) {
-      this.checkConnections();
       this.sendHostDataToGuests();
     }
+
+    // Check host/guests for stale connections
+    this.checkHeartbeat();
   }
 
   render(delta, alpha) {
@@ -68,11 +71,12 @@ class Multiplayer {
   }
 
   onConnectionData(e) {
+    // Update heartbeat time
+    e.connection.metadata.time = e.data.time;
+
+    // Check if data is for player updates
     if (e.data.type == 'players') {
       if (this.isHost()) {
-        // Update heartbeat time
-        e.connection.metadata.time = e.data.time;
-
         // Update player data from guest
         this.updatePlayerFromGuest(e.data);
       }
@@ -82,12 +86,12 @@ class Multiplayer {
     }
   }
 
-  checkConnections() {
-    // Send all connections the host data
+  checkHeartbeat() {
+    // Loop through all connections to ensure fresh connections
     this.network.connections.forEach(function(connection) {
       // Calculate time difference of response
       var ms = this.getTime() - connection.metadata.time;
-      if (ms > 5000) connection.close(); // Kick after 5 seconds
+      if (ms > 5000) connection.close(); // Close stale connections after 5 seconds
     }.bind(this));
   }
 
@@ -249,15 +253,21 @@ class Multiplayer {
       this.tween({
         object: { alpha: 0 },
         to: { alpha: 1 },
-        duration: (1 / this.tick) * 1000,
+        duration: 1000 / this.tick,
         onUpdate: function(obj) {
           // Interpolate properties
-          player.position.x = (player.positionPrev.x + (player.positionNext.x - player.positionPrev.x) * obj.alpha);
-          player.position.y = (player.positionPrev.y + (player.positionNext.y - player.positionPrev.y) * obj.alpha);
-          player.rotation.z = (player.rotationPrev.z + (player.rotationNext.z - player.rotationPrev.z) * obj.alpha);
-        }
+          player.position.x = (player.positionPrev.x + (player.positionNext.x - player.positionPrev.x) * (this.smooth == true ? obj.alpha : 1));
+          player.position.y = (player.positionPrev.y + (player.positionNext.y - player.positionPrev.y) * (this.smooth == true ? obj.alpha : 1));
+          player.rotation.z = (player.rotationPrev.z + (player.rotationNext.z - player.rotationPrev.z) * (this.smooth == true ? obj.alpha : 1));
+        }.bind(this)
       }).start();
     }
+  }
+
+  tween(options) {
+    // Create and assign tween to tween group
+    var tween = new Tween(options.object, this.tweens).to(options.to, options.duration).dynamic(options.dynamic).easing(options.easing).interpolation(options.interpolation).onStart(options.onStart).onUpdate(options.onUpdate).onComplete(options.onComplete);
+    return tween;
   }
 
   updateLocalPlayer() {
@@ -268,12 +278,6 @@ class Multiplayer {
     if (app.player.skin.url.startsWith('data:')) {
       app.player.skin.url = 'img/png/skins/custom.png';
     }
-  }
-
-  tween(options) {
-    // Create and assign tween to tween group
-    var tween = new Tween(options.object, this.tweens).to(options.to, options.duration).dynamic(options.dynamic).easing(options.easing).interpolation(options.interpolation).onStart(options.onStart).onUpdate(options.onUpdate).onComplete(options.onComplete);
-    return tween;
   }
 
   removePlayer(uuid) {
