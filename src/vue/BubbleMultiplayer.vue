@@ -173,7 +173,11 @@
       color: '#4cff64',
       raw: true
     };
-    sendMessage(data);
+
+    // Send time to everyone
+    if (app.network.isOnline()) {
+      sendMessage(data);
+    }
   }
 
   function sendMessage(data) {
