@@ -404,8 +404,10 @@
   {
     "version": "2.2.2",
     "revisions": [
-      "Fixed new record visual bug",
-      "Updated background material"
+      "Added level links to multiplayer chat",
+      "Added basic HTML tags to multiplayer chat (ex: <h1>, <strong>)",
+      "Updated background material",
+      "Fixed new record visual bug"
     ]
   }
 ]

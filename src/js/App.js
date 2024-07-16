@@ -274,27 +274,55 @@ class App {
   }
 
   async playLevelByTitle(title, theme) {
+    // Handle pathname for extensions or browsers
     var pathname = location.pathname.includes('.') ? '/' : location.pathname;
-    var response = await fetch(location.origin + pathname + '/json/' + title + '.json');
-    var json = await response.json();
-    if (theme == null) theme = app.level.getThemeByTitle(title);
-    app.level.entityFactory.color = theme.color;
-    app.background.setTheme(theme.model);
-    app.updateGravity();
-    app.play = true;
-    app.timer.reset();
-    app.level.clearLevel(app);
-    app.level.importFromJSON(json, app);
-    app.background.visible = true;
-    app.playLevel();
-    app.resetScene();
-    
-    // Send event to show credits
-    setTimeout(function() {
-      if (json.author) {
-        window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: 'Level by ' + json.author }}));
+    var levelExists = false;
+
+    // Fetch public folder for level
+    await fetch(location.origin + pathname + '/json/' + title + '.json').then((response) => {
+      if (response.ok) {
+        return response.json();
       }
-    }, 500);
+      throw new Error('Something went wrong');
+    })
+    .then((json) => {
+      // Do something with the response
+      var description = app.level.getDescriptionByTitle(title)
+      if (theme == null) theme = app.level.getThemeByTitle(title);
+      app.level.entityFactory.color = theme.color;
+      app.background.setTheme(theme.model);
+      app.updateGravity();
+      app.play = true;
+      app.timer.reset();
+      app.level.clearLevel(app);
+      app.level.importFromJSON(json, app);
+      app.background.visible = true;
+      app.playLevel();
+      app.resetScene();
+      levelExists = true;
+
+      // Dispatch level start event
+      window.dispatchEvent(new CustomEvent('levelStart', {
+        detail: {
+          title: title,
+          description: description
+        }
+      }));
+      
+      // Send event to show credits
+      setTimeout(function() {
+        if (json.author) {
+          window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: 'Level by ' + json.author }}));
+        }
+      }, 500);
+    })
+    .catch((error) => {
+      //console.log(error);
+      return false;
+    });
+
+    // Return level existence state
+    return levelExists;
   }
 
   pauseLevel() {

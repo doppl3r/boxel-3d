@@ -45,7 +45,7 @@
   }
 
   label {
-    color: #fff;
+    color: #ffffff;
     font-size: 0.75em;
     text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
   }
@@ -823,7 +823,7 @@
             scroll-behavior: smooth;
 
             .message {
-              color: #fff;
+              color: #ffffff;
               font-size: 0.75em;
               text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
               word-break: break-word;
@@ -832,12 +832,47 @@
                 user-select: text;
               }
 
-              strong {
+              a {
+                border-bottom: 0.125em solid #ffffff;
+              }
+
+              h1 {
+                font-size: 3em;
+                margin: 0;
+              }
+
+              h2 {
+                font-size: 2.5em;
+                margin: 0;
+              }
+
+              h3 {
+                font-size: 2em;
+                margin: 0;
+              }
+              
+              h4 {
+                font-size: 1.5em;
+                margin: 0;
+              }
+
+              h5 {
+                font-size: 1em;
+                margin: 0;
+              }
+
+              h6 {
+                font-size: 0.5em;
+                margin: 0;
+              }
+
+              em {
                 color: #4cff64;
               }
 
               img {
                 display: block;
+                height: auto;
                 max-height: 4em;
                 max-width: 100%;
               }
@@ -853,7 +888,7 @@
               background-color: rgba(#000000, 0.25);
               border: none;
               border-radius: 0.5em;
-              color: #fff;
+              color: #ffffff;
               font-size: 0.75em;
               font-family: inherit;
               text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
@@ -894,7 +929,7 @@
             scroll-behavior: smooth;
 
             .player {
-              color: #fff;
+              color: #ffffff;
               display: flex;
               align-items: center;
               font-size: 0.75em;
@@ -936,7 +971,7 @@
     .key {
       background-color: rgba(0, 0, 0, 0.25);
       border-radius: 0.5em;
-      color: #fff;
+      color: #ffffff;
       cursor: pointer;
       display: flex;
       align-items: center;

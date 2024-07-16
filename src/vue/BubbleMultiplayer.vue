@@ -1,5 +1,6 @@
 <script setup>
   import { ref, nextTick, onMounted, onUnmounted } from 'vue';
+  import sanitizeHtml from 'sanitize-html';
 
   var tab = ref('chat');
   var online = ref(false);
@@ -20,6 +21,7 @@
     app.network.on('connection_open', onConnectionOpen);
     app.network.on('connection_close', onConnectionClose);
     app.network.on('connection_data', onConnectionData);
+    window.addEventListener('levelStart', onLevelStart);
     window.addEventListener('levelFinish', onLevelFinish);
   }
   
@@ -31,6 +33,7 @@
     app.network.off('connection_open', onConnectionOpen);
     app.network.off('connection_close', onConnectionClose);
     app.network.off('connection_data', onConnectionData);
+    window.removeEventListener('levelStart', onLevelStart);
     window.removeEventListener('levelFinish', onLevelFinish);
   }
 
@@ -156,20 +159,40 @@
     }
   }
 
-  function onLevelFinish(e) {
-    var time = e.detail.time;
-    var level = app.level.getDescriptionByTitle(e.detail.level);
+  function onLevelStart(e) {
     var settings = app.storage.getSettings();
+    var title = e.detail.title;
+    var description = e.detail.description;
     var data = {
       type: 'message',
       name: settings.name,
-      text: 'Finished <em>' + level + '</em> in 🕒<strong>' + time + 's</strong>',
+      text: 'Is now playing <a href="' + title + '">' + description + '</a> ▶️',
       time: getTime(),
       color: '#4cff64',
       raw: true
     };
 
-    // Send time to everyone
+    // Send message to everyone
+    if (app.network.isOnline()) {
+      sendMessage(data);
+    }
+  }
+
+  function onLevelFinish(e) {
+    var time = e.detail.time;
+    var title = e.detail.level;
+    var description = app.level.getDescriptionByTitle(title);
+    var settings = app.storage.getSettings();
+    var data = {
+      type: 'message',
+      name: settings.name,
+      text: 'Finished <a href="' + title + '">' + description + '</a> in 🕒<strong>' + time + 's</strong>',
+      time: getTime(),
+      color: '#4cff64',
+      raw: true
+    };
+
+    // Send message to everyone
     if (app.network.isOnline()) {
       sendMessage(data);
     }
@@ -185,7 +208,8 @@
         name: settings.name + (isHost() ? ' [host]' : ''),
         text: message.value.value,
         time: getTime(),
-        color: '#ffcc4d'
+        color: '#ffcc4d',
+        raw: true
       };
       message.value.value = ''; // Clear message
     }
@@ -211,6 +235,13 @@
   }
 
   function addMessage(data) {
+    // Sanitize HTML to prevent injections
+    var cleanText = sanitizeHtml(data.text, {
+      allowedTags: ['a', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img'],
+      allowedAttributes: { 'a': ['href'], 'img': ['src', 'width', 'height'] }
+    });
+    data.text = cleanText;
+
     // Receive message from event and add to messages array
     messages.value.push(data);
 
@@ -253,13 +284,26 @@
 
   async function goToPlayer(player) {
     if (player.level != 'My Level') {
+      
       // Change level to target player
-      await app.playLevelByTitle(player.level);
-      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
-
-      // Set player position
-      var target = app.multiplayer.getPlayer({ uuid: player.uuid })
-      if (target) app.player.setPosition(target.position, false);
+      var load = await app.playLevelByTitle(player.level);
+      if (load) {
+        // Update game state
+        window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+  
+        // Set player position
+        var target = app.multiplayer.getPlayer({ uuid: player.uuid })
+        if (target) app.player.setPosition(target.position, false);
+      }
+      else {
+        // Notify user that the level is not official
+        addMessage({
+          name: 'Server',
+          text: player.text + ' is not playing an official level! 😔',
+          time: getTime(),
+          color: '#4ca9ff'
+        });
+      }
     }
     else {
       addMessage({
@@ -289,6 +333,29 @@
     return new Date().getTime();
   }
 
+  async function clickMessage(e) {
+    e.preventDefault(); // Prevent linking out
+    var target = e.target;
+    if (target.nodeName == 'A') {
+      // Check if link has attribute to play a specific level
+      var title = target.getAttribute('href');
+      var load = await app.playLevelByTitle(title); // Change level
+      if (load) {
+        // Update game state if level is returned
+        window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+      }
+      else {
+        // Notify user that level does not exist
+        addMessage({
+          name: 'Server',
+          text: 'Level does not exist! 😔',
+          time: getTime(),
+          color: '#4ca9ff'
+        });
+      }
+    }
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     addEventListeners();
@@ -313,7 +380,7 @@
         </div>
         <div class="content" :class="{ 'collapsed': isCollapsed() }">
           <div class="panel" v-show="tab == 'chat'">
-            <ul class="messages" ref="messageBox">
+            <ul class="messages" ref="messageBox" @click="clickMessage">
               <li class="message" v-for="message in messages" :title="message.name">
                 <span class="name" :style="{ color: message.color || '#ffffff' }">{{ message.name }}</span>
                 <span>: </span>
