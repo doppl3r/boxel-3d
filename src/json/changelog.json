@@ -400,5 +400,12 @@
     "revisions": [
       "Improved network performance"
     ]
+  },
+  {
+    "version": "2.2.2",
+    "revisions": [
+      "Fixed new record visual bug",
+      "Updated background material"
+    ]
   }
 ]
