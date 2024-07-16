@@ -405,7 +405,7 @@
     "version": "2.2.2",
     "revisions": [
       "Added level links to multiplayer chat",
-      "Added basic HTML tags to multiplayer chat (ex: <h1>, <strong>)",
+      "Added basic HTML tags to multiplayer chat (ex: h1, strong etc.)",
       "Updated background material",
       "Fixed new record visual bug"
     ]
