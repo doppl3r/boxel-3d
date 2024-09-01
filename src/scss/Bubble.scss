@@ -76,15 +76,16 @@
     }
 
     .nav {
-      display: flex;
       align-items: flex-start;
-      width: 100%;
+      display: flex;
+      gap: 0.5em;
+      left: 0;
       padding: 1.5em;
       position: absolute;
       pointer-events: none;
-      z-index: 1;
       top: 0;
-      left: 0;
+      width: 100%;
+      z-index: 1;
 
       .button {
         background-color: rgba(#000000, 0.25);

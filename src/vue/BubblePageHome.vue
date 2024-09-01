@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
+  import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import changelog from '../json/changelog.json';
   import messages from '../json/messages.json';
@@ -121,6 +122,7 @@
       <img src="/img/svg/background-purple.svg">
     </div>
     <div class="nav">
+      <BubbleButtonFullscreen class="button left fade-in" />
       <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="content fade-in">

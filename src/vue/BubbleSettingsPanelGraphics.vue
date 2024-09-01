@@ -1,19 +1,6 @@
 <script setup>
   var props = defineProps(['settings']);
 
-  function isFullscreen() {
-    return location.href.includes('?fullscreen=true');
-  }
-
-  function openLink(url) {
-    if (chrome.tabs) chrome.tabs.create({ url: url });
-    else window.open(url, '_blank');
-  }
-
-  function openFullscreen() {
-    openLink(location.href + '?fullscreen=true');
-  }
-
   function setTheme() {
     window.dispatchEvent(new CustomEvent('setTheme'));
   }
@@ -32,10 +19,6 @@
       <div class="option">
         <input type="range" id="quality" min="1" max="10" step="1" :value="settings.quality" @change="$emit('updateSettings', $event)">
         <label for="quality">{{ (settings.quality * 10) }}%</label>
-      </div>
-      <div class="option" v-if="isFullscreen() == false">
-        <input type="checkbox" id="fullscreen" @change="openFullscreen()">
-        <label for="fullscreen">Fullscreen</label>
       </div>
       <div class="option">
         <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="$emit('updateSettings', $event, { true: 'origin', false: 'bubble' }, setTheme)">
