@@ -8,11 +8,9 @@
   var manifest = ref();
   var version = ref();
   var message = ref('Tiny Tycoon is now available on Google Chrome!'); // Optional: getRandomMessage()
-  var origin = ref(location.origin);
-  var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
 
   async function updateVersion() {
-    var response = await fetch(origin.value + pathname.value + 'manifest.json');
+    var response = await fetch('./manifest.json');
     var json = await response.json();
     manifest.value = json;
     version.value = json.version;

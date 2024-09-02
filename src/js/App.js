@@ -274,12 +274,11 @@ class App {
   }
 
   async playLevelByTitle(title, theme) {
-    // Handle pathname for extensions or browsers
-    var pathname = location.pathname.includes('.') ? '/' : location.pathname;
+    // Initialize level state
     var levelExists = false;
 
     // Fetch public folder for level
-    await fetch(location.origin + pathname + '/json/' + title + '.json').then((response) => {
+    await fetch('./json/' + title + '.json').then((response) => {
       if (response.ok) {
         return response.json();
       }

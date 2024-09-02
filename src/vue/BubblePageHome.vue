@@ -11,8 +11,6 @@
   var manifest = ref();
   var version = ref();
   var message = ref(getRandomMessage()); // Optional: getRandomMessage()
-  var origin = ref(location.origin);
-  var pathname = ref(location.pathname.includes('.') ? '/' : location.pathname);
   var menu = [
     {
       "title": "Skins",
@@ -51,7 +49,7 @@
   }
 
   async function updateVersion() {
-    var response = await fetch(origin.value + pathname.value + 'manifest.json');
+    var response = await fetch('./manifest.json');
     var json = await response.json();
     manifest.value = json;
     version.value = 'v' + json.version;
