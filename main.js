@@ -14,7 +14,7 @@ function createWindow() {
     width: 640,
     height: 360,
     fullscreen: false,
-    icon: './dist/img/png/icon128.png',
+    icon: './build/img/png/icon128.png',
     show: true,
     useContentSize: true,
     webPreferences: {
@@ -35,7 +35,7 @@ function createWindow() {
   mainWindow.webContents.executeJavaScript('localStorage.setItem("setting-timestamp", ' + (new Date().getTime()) + ');');
 
   // Load the index.html of the app
-  mainWindow.loadFile('./dist/index.html');
+  mainWindow.loadFile('./build/index.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

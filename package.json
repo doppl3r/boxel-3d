@@ -9,8 +9,35 @@
     "build": "vite build",
     "dev": "vite",
     "dist": "vite build && electron-builder",
-    "preview": "vite preview",
     "start": "vite build && electron ."
+  },
+  "build": {
+    "appId": "com.electron.boxel.3d",
+    "artifactName": "${productName}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "icon": "img/png/icon512.png",
+    "files": [
+      "main.js",
+      "preload.js",
+      "build"
+    ],
+    "mac": {
+      "category": "public.app-category.arcade-games",
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64"
+        ]
+      }
+    },
+    "win": {
+      "target": "portable"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
   "dependencies": {
     "@tweenjs/tween.js": "^23.1.2",
@@ -25,6 +52,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
     "electron": "^32.0.1",
+    "electron-builder": "^24.13.3",
     "vite": "^5.3.3"
   }
 }
