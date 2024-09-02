@@ -1,41 +1,26 @@
-import * as TWEEN from '@tweenjs/tween.js'
+import { Easing, Group as Tweens, Tween } from '@tweenjs/tween.js'
 
 // This class utilizes tween.js within /libraries
 class Animation {
-    constructor() {
-        
-    }
+  constructor() {
+    this.tweens = new Tweens();
+  }
 
-    update(delta) {
+  update(delta, alpha) {
+    this.tweens.update();
+  }
 
-    }
+  tween(options) {
+    // Set default behavior
+    options = Object.assign({
+      duration: 1000,
+      easing: Easing.Quadratic.InOut
+    }, options);
 
-    init(options) {
-        options.duration = (options.duration) ? options.duration : 250;
-        options.fps = (options.fps) ? options.fps : 60;
-        options.easing = (options.easing) ? options.easing : TWEEN.Easing.Quadratic.InOut;
-        options.update = (options.update) ? options.update : function() {};
-        options.callback = (options.callback) ? options.callback : function() {};
-    }
-
-    tween(before, after, options = {}) {
-        // Initialize tween interval with asynchronous fps
-        this.init(options);
-        var interval = setInterval(
-            function() { 
-                if (TWEEN.update()) {
-                    TWEEN.update();
-                } 
-                else {
-                    TWEEN.remove(tween);
-                    clearInterval(interval);
-                    options.callback();
-                }
-            }, 1 / options.fps);
-
-        // Initialize tween
-        var tween = new TWEEN.Tween(before).to(after, options.duration).easing(options.easing).onUpdate(options.update).start();
-    }
+    // Create and assign tween to tween group
+    var tween = new Tween(options.object, this.tweens).to(options.to, options.duration).dynamic(options.dynamic).easing(options.easing).interpolation(options.interpolation).onStart(options.onStart).onUpdate(options.onUpdate).onComplete(options.onComplete);
+    return tween;
+  }
 }
 
 export { Animation };

@@ -1,4 +1,4 @@
-import { Color, HemisphereLight, PerspectiveCamera, Scene } from 'three';
+import { HemisphereLight, PerspectiveCamera, Scene } from 'three';
 import { Engine, Events } from 'matter-js';
 import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
@@ -169,6 +169,9 @@ class App {
       
       // Update background
       this.background.update(delta, alpha, app.motion == false);
+
+      // Update animations
+      app.animation.update(delta, alpha)
     }
 
     // Update network rendering
@@ -239,12 +242,12 @@ class App {
       angle *= -1;
       if (angle < 0) app.camera.rotation.z = (app.camera.rotation.z - (Math.PI * 2)) % (Math.PI * 2);
       scale = (Math.abs((angle + Math.PI) % (Math.PI)) / (Math.PI / 2)) + 1; // 0deg = 1, 90deg = 2
-      app.animation.tween(app.camera.rotation, { z: angle });
+      app.animation.tween({ object: app.camera.rotation, to: { z: angle }, duration: 250 }).start();
       app.background.animateScale(scale);
     }
     else {
       app.camera.rotation.z = 0;
-      app.background.animateScale(1, { duration: 1 });
+      app.background.animateScale(1);
     }
   }
 

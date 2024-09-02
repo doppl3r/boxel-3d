@@ -65,8 +65,8 @@ class Background extends Group {
     }
   }
 
-  animateScale(scale, options) {
-    app.animation.tween(this.scale, { x: 1280 * scale, y: 1280 * scale }, options);
+  animateScale(scale) {
+    app.animation.tween({ object: this.scale, to: { x: 1280 * scale, y: 1280 * scale }, duration: 250 }).start();
   }
 }
 
