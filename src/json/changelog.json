@@ -409,5 +409,11 @@
       "Updated background material",
       "Fixed new record visual bug"
     ]
+  },
+  {
+    "version": "2.2.3",
+    "revisions": [
+      "Added fullscreen button to home screen"
+    ]
   }
 ]

@@ -10,7 +10,7 @@ export default defineConfig({
     outDir: './build',
     rollupOptions: {
       input: {
-        v1: path.resolve(__dirname, 'index.html'),
+        main: path.resolve(__dirname, 'index.html'),
         v2: path.resolve(__dirname, 'v2/index.html')
       },
     }
