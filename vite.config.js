@@ -1,11 +1,19 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    hmr: false, // Disable hot reload on save
+  base: './',
+  build: {
+    emptyOutDir: true,
+    outDir: './build',
+    rollupOptions: {
+      input: {
+        v1: path.resolve(__dirname, 'index.html'),
+        v2: path.resolve(__dirname, 'v2/index.html')
+      },
+    }
   },
   plugins: [vue()],
   resolve: {
@@ -16,10 +24,7 @@ export default defineConfig({
       'fs': path.resolve('jsconfig.json')
     }
   },
-  base: './',
-    build: {
-      outDir: './build',
-      emptyOutDir: true
-    }
+  server: {
+    hmr: false, // Disable hot reload on save
   }
-)
+})
