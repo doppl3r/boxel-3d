@@ -2,126 +2,126 @@
     {
         "id": 1,
         "title": "Pink",
-        "url": "img/png/skins/pink.png"
+        "url": "png/pink.png"
     },
     {
         "id": 2,
         "title": "Blue",
-        "url": "img/png/skins/blue.png"
+        "url": "png/blue.png"
     },
     {
         "id": 377,
         "title": "Kargoh Krate",
-        "url": "img/png/skins/krate.png"
+        "url": "png/krate.png"
     },
     {
         "id": 680,
         "title": "Custom Skin",
-        "url": "img/png/skins/custom.png"
+        "url": "png/custom.png"
     },
     {
         "id": 563,
         "title": "Monkey",
-        "url": "img/png/skins/monkey.png"
+        "url": "png/monkey.png"
     },
     {
         "id": 668,
         "title": "Puppy",
-        "url": "img/png/skins/puppy.png"
+        "url": "png/puppy.png"
     },
     {
         "id": 565,
         "title": "Kitty",
-        "url": "img/png/skins/kitty.png"
+        "url": "png/kitty.png"
     },
     {
         "id": 466,
         "title": "Smile",
-        "url": "img/png/skins/smile.png"
+        "url": "png/smile.png"
     },
     {
         "id": 476,
         "title": "Love",
-        "url": "img/png/skins/love.png"
+        "url": "png/love.png"
     },
     {
         "id": 486,
         "title": "Grin",
-        "url": "img/png/skins/grin.png"
+        "url": "png/grin.png"
     },
     {
         "id": 488,
         "title": "Sad Boi",
-        "url": "img/png/skins/sad.png"
+        "url": "png/sad.png"
     },
     {
         "id": 666,
         "title": "Sick",
-        "url": "img/png/skins/sick.png"
+        "url": "png/sick.png"
     },
     {
         "id": 667,
         "title": "Angry",
-        "url": "img/png/skins/mad.png"
+        "url": "png/mad.png"
     },
     {
         "id": 661,
         "title": "Skull",
-        "url": "img/png/skins/skull.png"
+        "url": "png/skull.png"
     },
     {
         "id": 562,
         "title": "Doppler",
-        "url": "img/png/skins/doppler.png"
+        "url": "png/doppler.png"
     },
     {
         "id": 557,
         "title": "Kargoh",
-        "url": "img/png/skins/kargoh.png"
+        "url": "png/kargoh.png"
     },
     {
         "id": 458,
         "title": "USA",
-        "url": "img/png/skins/usa.png"
+        "url": "png/usa.png"
     },
     {
         "id": 462,
         "title": "Australia",
-        "url": "img/png/skins/au.png"
+        "url": "png/au.png"
     },
     {
         "id": 460,
         "title": "UK",
-        "url": "img/png/skins/uk.png"
+        "url": "png/uk.png"
     },
     {
         "id": 490,
         "title": "Canada",
-        "url": "img/png/skins/canada.png"
+        "url": "png/canada.png"
     },
     {
         "id": 465,
         "title": "Japan",
-        "url": "img/png/skins/jp.png"
+        "url": "png/jp.png"
     },
     {
         "id": 152,
         "title": "Golden Skin",
-        "url": "img/png/skins/gold.png"
+        "url": "png/gold.png"
     },
     {
         "id": 407,
         "title": "Lucky Die",
-        "url": "img/png/skins/lucky.png"
+        "url": "png/lucky.png"
     },
     {
         "id": 484,
         "title": "Prism",
-        "url": "img/png/skins/prism.png"
+        "url": "png/prism.png"
     },
     {
         "id": 500,
         "title": "Boxel Golf",
-        "url": "img/png/skins/boxel-golf.png"
+        "url": "png/boxel-golf.png"
     }
 ]

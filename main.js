@@ -14,7 +14,7 @@ function createWindow() {
     width: 640,
     height: 360,
     fullscreen: false,
-    icon: './build/img/png/icon128.png',
+    icon: './build/png/icon128.png',
     show: true,
     useContentSize: true,
     webPreferences: {

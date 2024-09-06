@@ -293,9 +293,7 @@ class Player extends Cube {
     }
   }
 
-  setSkin(skin, a = app) {
-    if (skin.id == null || skin.url == null) skin = { id: 1, url: 'img/png/skins/pink.png' };
-    
+  setSkin(skin = {}, a = app) {
     // Add texture
     this.addTexture(skin);
   }
@@ -309,24 +307,31 @@ class Player extends Cube {
   }
 
   addTexture(skin) {
-    var loader = new TextureLoader();
-    loader.load(skin.url, 
-      function(texture){
-        texture.colorSpace = SRGBColorSpace;
-        this.remove(this.skin); // Reset skin
-        this.shapes.visible = false;
-        var geometry = new RoundedBoxGeometry(1, 1, 1, 1, 0.1); // width, height, depth, segments, radius
-        var material = new MeshPhongMaterial({ map: texture, transparent: true, opacity: 1 });
-        this.shapes.setOpacities(0);
-        this.skin = new Mesh(geometry, material);
-        this.skin.url = skin.url;
-        this.add(this.skin);
-      }.bind(this),
-      undefined,
-      function(err) {
-        console.error( 'An error happened: ' + err );
-      }.bind(this)
-    );
+    // Check if skin URL exists
+    if (skin.url) {
+      // Fix public path (v2.2.3+)
+      skin.url = skin.url.replace('img/png/skins/', 'png/');
+
+      // Load texture using url
+      var loader = new TextureLoader();
+      loader.load(skin.url, 
+        function(texture){
+          texture.colorSpace = SRGBColorSpace;
+          this.remove(this.skin); // Reset skin
+          this.shapes.visible = false;
+          var geometry = new RoundedBoxGeometry(1, 1, 1, 1, 0.1); // width, height, depth, segments, radius
+          var material = new MeshPhongMaterial({ map: texture, transparent: true, opacity: 1 });
+          this.shapes.setOpacities(0);
+          this.skin = new Mesh(geometry, material);
+          this.skin.url = skin.url;
+          this.add(this.skin);
+        }.bind(this),
+        undefined,
+        function(err) {
+          console.error( 'An error happened: ', err );
+        }.bind(this)
+      );
+    }
   }
 }
 

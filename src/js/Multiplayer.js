@@ -276,7 +276,7 @@ class Multiplayer {
 
     // Disable sharing custom skins
     if (app.player.skin.url.startsWith('data:')) {
-      app.player.skin.url = 'img/png/skins/custom.png';
+      app.player.skin.url = 'png/custom.png';
     }
   }
 

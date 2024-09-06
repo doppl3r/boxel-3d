@@ -8,10 +8,13 @@
     "default_title": "Boxel 3D"
   },
   "icons": { 
-    "16": "img/png/icon16.png", 
-    "32": "img/png/icon32.png",
-    "48": "img/png/icon48.png", 
-    "128": "img/png/icon128.png"
+    "16": "png/icon16.png", 
+    "32": "png/icon32.png",
+    "48": "png/icon48.png", 
+    "128": "png/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   },
   "permissions": [
     "storage"

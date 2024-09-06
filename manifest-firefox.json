@@ -7,8 +7,8 @@
     "default_popup": "index.html",
     "default_title": "Boxel 3D",
     "default_icon": {
-      "16": "img/png/icon16.png",
-      "48": "img/png/icon48.png"
+      "16": "png/icon16.png",
+      "48": "png/icon48.png"
     }
   },
   "browser_specific_settings": {

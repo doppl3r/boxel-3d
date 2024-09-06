@@ -33,7 +33,7 @@
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: '<img src="img/svg/gear.svg">',
+        text: '<img src="svg/gear.svg">',
         inputs: inputs
       }
     }));
@@ -47,5 +47,5 @@
 </script>
 
 <template>
-  <a @click="showSettings" title="Settings"><img src="/img/svg/gear.svg"></a>
+  <a @click="showSettings" title="Settings"><img src="/svg/gear.svg"></a>
 </template>

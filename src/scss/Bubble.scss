@@ -407,7 +407,7 @@
 
       .content {
         background-color: #FF8A4C;
-        background-image: url('/img/svg/background-popup.svg');
+        background-image: url('/svg/background-popup.svg');
         background-position: center;
         background-size: cover;
         border-radius: 0.75em;
@@ -620,7 +620,7 @@
               border: none;
               border-radius: 0.5em;
               background-color: #FFCB4C;
-              background-image: url('/img/svg/range-thumb.svg');
+              background-image: url('/svg/range-thumb.svg');
               background-size: 0.75em 0.75em;
               background-repeat: no-repeat;
               background-position: center;
@@ -636,7 +636,7 @@
               border: none;
               border-radius: 0.5em;
               background-color: #FFCB4C;
-              background-image: url('/img/svg/range-thumb.svg');
+              background-image: url('/svg/range-thumb.svg');
               background-size: 0.75em 0.75em;
               background-repeat: no-repeat;
               background-position: center;
@@ -1042,7 +1042,7 @@
 /* Font Family */
 @font-face {
   font-family: 'Comfortaa-Bold';
-  src: url('/fonts/Comfortaa-Bold.woff2') format('woff2');
+  src: url('/woff2/Comfortaa-Bold.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
 }
@@ -1051,7 +1051,7 @@
   font-family: 'Material Symbols Rounded';
   font-style: normal;
   font-weight: 100 700;
-  src: url('/fonts/Material-Symbols-Rounded.woff2') format('woff2');
+  src: url('/woff2/Material-Symbols-Rounded.woff2') format('woff2');
 }
 
 .material-symbols-rounded {
