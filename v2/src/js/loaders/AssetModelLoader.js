@@ -22,7 +22,13 @@ class AssetModelLoader extends GLTFLoader {
         model.duplicate = this.duplicate.bind(this, model);
         this.manager.cache[key] = model;
         this.addMixer(model);
-      }.bind(this));
+      }.bind(this),
+      function(xhr) {
+        
+      },
+      function(error) {
+        console.error(error);
+      });
     }
   }
 

@@ -1,8 +1,7 @@
-import { Character } from '../entities/Character';
 import { Cube } from '../entities/Cube';
+import { Finish } from '../entities/Finish';
 import { Player } from '../entities/Player';
-import { Sphere } from '../entities/Sphere';
-import { TriMesh } from '../entities/TriMesh';
+import { Spike } from '../entities/Spike';
 
 /*
   This class creates new entity instances that are compatible
@@ -20,25 +19,21 @@ class EntityFactory {
     if (fn == null) return;
     return fn(options);
   }
-
-  static createCharacter(options) {
-    return new Character(options);
-  }
   
   static createCube(options) {
     return new Cube(options);
+  }
+
+  static createFinish(options) {
+    return new Finish(options);
   }
 
   static createPlayer(options) {
     return new Player(options);
   }
 
-  static createSphere(options) {
-    return new Sphere(options);
-  }
-  
-  static createTriMesh(options) {
-    return new TriMesh(options);
+  static createSpike(options) {
+    return new Spike(options);
   }
 }
 

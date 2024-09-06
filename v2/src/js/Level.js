@@ -40,8 +40,9 @@ class Level extends Group {
 
       // Create a new entity from child properties
       var entity = EntityFactory.create({
-        class: 'Cube',
+        class: child.class.charAt(0).toUpperCase() + child.class.slice(1),
         friction: child.friction || 0,
+        model: game.assets.duplicate('cube-' + child.class),
         position: position,
         quaternion: quaternion,
         scale: scale,

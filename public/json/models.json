@@ -1,5 +1,17 @@
 {
   "cube-control": {
     "url": "../glb/cube-control.glb"
+  },
+  "cube-cube": {
+    "url": "../glb/cube-cube.glb"
+  },
+  "cube-finish": {
+    "url": "../glb/cube-finish.glb"
+  },
+  "cube-player": {
+    "url": "../glb/cube-player.glb"
+  },
+  "cube-spike": {
+    "url": "../glb/cube-spike.glb"
   }
 }
