@@ -1,7 +1,11 @@
+import { Bounce } from '../entities/Bounce';
+import { Checkpoint } from '../entities/Checkpoint';
 import { Cube } from '../entities/Cube';
 import { Finish } from '../entities/Finish';
 import { Player } from '../entities/Player';
+import { Resize } from '../entities/Resize';
 import { Spike } from '../entities/Spike';
+import { Tip } from '../entities/Tip';
 
 /*
   This class creates new entity instances that are compatible
@@ -20,6 +24,14 @@ class EntityFactory {
     return fn(options);
   }
   
+  static createBounce(options) {
+    return new Bounce(options);
+  }
+
+  static createCheckpoint(options) {
+    return new Checkpoint(options);
+  }
+
   static createCube(options) {
     return new Cube(options);
   }
@@ -32,8 +44,16 @@ class EntityFactory {
     return new Player(options);
   }
 
+  static createResize(options) {
+    return new Resize(options);
+  }
+
   static createSpike(options) {
     return new Spike(options);
+  }
+
+  static createTip(options) {
+    return new Tip(options);
   }
 }
 
