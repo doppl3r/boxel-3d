@@ -1,8 +1,12 @@
 import { Bounce } from '../entities/Bounce';
 import { Checkpoint } from '../entities/Checkpoint';
+import { Control } from '../entities/Control';
 import { Cube } from '../entities/Cube';
 import { Finish } from '../entities/Finish';
+import { Grapple } from '../entities/Grapple';
+import { Gravity } from '../entities/Gravity';
 import { Player } from '../entities/Player';
+import { Reset } from '../entities/Reset';
 import { Resize } from '../entities/Resize';
 import { Spike } from '../entities/Spike';
 import { Tip } from '../entities/Tip';
@@ -32,16 +36,36 @@ class EntityFactory {
     return new Checkpoint(options);
   }
 
+  static createControl(options) {
+    return new Control(options);
+  }
+
   static createCube(options) {
     return new Cube(options);
+  }
+
+  static createDirection(options) {
+    return new Direction(options);
   }
 
   static createFinish(options) {
     return new Finish(options);
   }
 
+  static createGrapple(options) {
+    return new Grapple(options);
+  }
+
+  static createGravity(options) {
+    return new Gravity(options);
+  }
+
   static createPlayer(options) {
     return new Player(options);
+  }
+
+  static createReset(options) {
+    return new Reset(options);
   }
 
   static createResize(options) {
