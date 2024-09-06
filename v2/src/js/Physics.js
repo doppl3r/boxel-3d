@@ -23,7 +23,6 @@ class Physics extends EventDispatcher {
 
     // Add game debugger
     this.debugger = new Debugger(this.world);
-    //this.debugger.disable();
   }
 
   update(delta, alpha) {
@@ -62,16 +61,6 @@ class Physics extends EventDispatcher {
     });
   }
 
-  setScene(scene) {
-    // Assign scene for entity 3D objects
-    this.scene = scene;
-
-    // Add debugger to scene
-    if (this.debugger.parent != scene) {
-      this.scene.add(this.debugger);
-    }
-  }
-
   setFrequency(frequency = 60) {
     this.world.timestep = 1 / frequency;
   }
@@ -95,11 +84,6 @@ class Physics extends EventDispatcher {
 
     // Add entity to entities map using the body handle as the key (ex: "5e-324")
     this.entities.set(entity.body.handle, entity);
-
-    // Add entity 3D object to scene reference
-    if (this.scene) {
-      this.scene.add(entity.object);
-    }
   }
 
   remove(entity) {

@@ -19,7 +19,7 @@ class LightFactory {
       color: '#ffffff',
       decay: 2,
       distance: 0,
-      groundColor: '#ffffff',
+      groundColor: '#000000',
       intensity: Math.PI,
       shadow: false,
       skyColor: '#ffffff'

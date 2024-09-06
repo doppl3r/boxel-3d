@@ -2,6 +2,7 @@ import { Loop } from './Loop';
 import { Graphics } from './Graphics.js';
 import { AssetLoader } from './loaders/AssetLoader.js';
 import { Physics } from './Physics.js';
+import { Level } from './Level.js';
 
 class Game {
   constructor() {
@@ -15,6 +16,9 @@ class Game {
 
     // Initialize components
     this.physics = new Physics();
+
+    // Initialize level
+    this.level = new Level();
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets = new AssetLoader(this.onLoad.bind(this), this.onProgress.bind(this));
@@ -33,11 +37,23 @@ class Game {
     this.graphics.render();
   }
 
-  onLoad() {
+  async onLoad() {
     // Initialize entity manager
     this.physics.init();
     this.physics.setFrequency(30);
-    this.physics.setScene(this.graphics.scene);
+
+    // Adjust graphics components
+    this.graphics.scene.add(this.physics.debugger);
+    this.graphics.scene.add(this.level);
+    this.graphics.camera.position.y = -2;
+    this.graphics.camera.position.z = 20;
+
+    // Load level from JSON
+    this.level.load('../json/Campaign Level 4.json', function(entities) {
+      entities.forEach(function(entity) {
+        this.physics.add(entity);
+      }.bind(this));
+    }.bind(this));
 
     // Add game loops
     this.loop.add(this.update.bind(this), 30); // Physics

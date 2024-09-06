@@ -18,6 +18,7 @@ class Entity {
       density: 1,
       activeEvents: 'NONE', // 0: NONE, 1: COLLISION_EVENTS, 2: CONTACT_FORCE_EVENTS
       collisionGroups: 0xFFFFFFFF,
+      friction: 0.5,
       isEnabled: true,
       isSensor: false,
       linearDamping: 0,
@@ -47,6 +48,7 @@ class Entity {
     this.colliderDesc.setCollisionGroups(options.collisionGroups);
     this.colliderDesc.setSolverGroups(options.solverGroups);
     this.colliderDesc.setSensor(options.isSensor);
+    this.colliderDesc.setFriction(options.friction);
     this.colliderDesc.setRestitution(options.restitution);
     this.colliderDesc.setDensity(options.density);
     this.colliderDesc.setMass(options.mass);
