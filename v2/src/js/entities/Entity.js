@@ -13,11 +13,13 @@ class Entity {
     // Set options with default values
     options = Object.assign({
       activeCollisionTypes: 'DEFAULT', // 1: DYNAMIC_DYNAMIC, 2: DYNAMIC_FIXED, 12: DYNAMIC_KINEMATIC, 15: DEFAULT, 32: FIXED_FIXED, 8704: KINEMATIC_FIXED, 52224: KINEMATIC_KINEMATIC, 60943: ALL
+      activeEvents: 'NONE', // 0: NONE, 1: COLLISION_EVENTS, 2: CONTACT_FORCE_EVENTS
       angularDamping: 0,
       ccd: false,
-      density: 1,
-      activeEvents: 'NONE', // 0: NONE, 1: COLLISION_EVENTS, 2: CONTACT_FORCE_EVENTS
       collisionGroups: 0xFFFFFFFF,
+      density: 1,
+      enabledRotations: { x: true, y: true, z: true },
+      enabledTranslations: { x: true, y: true, z: true },
       friction: 0.5,
       isEnabled: true,
       isSensor: false,
@@ -41,6 +43,8 @@ class Entity {
     this.rigidBodyDesc.setCcdEnabled(options.ccd);
     this.rigidBodyDesc.setAngularDamping(options.angularDamping);
     this.rigidBodyDesc.setLinearDamping(options.linearDamping);
+    this.rigidBodyDesc.enabledRotations(options.enabledRotations.x, options.enabledRotations.y, options.enabledRotations.z);
+    this.rigidBodyDesc.enabledTranslations(options.enabledTranslations.x, options.enabledTranslations.y, options.enabledTranslations.z);
     
     // Initialize collider description
     this.colliderDesc = new ColliderDesc(options.shape);

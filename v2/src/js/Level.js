@@ -45,7 +45,7 @@ class Level extends Group {
         position: position,
         quaternion: quaternion,
         scale: scale,
-        type: child.isStatic == false ? 'Dynamic' : 'Fixed' 
+        type: child.isStatic == false ? 'Dynamic' : 'Fixed'
       });
 
       // Add 3D object to level

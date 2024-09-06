@@ -45,7 +45,6 @@ class Game {
     // Adjust graphics components
     this.graphics.scene.add(this.physics.debugger);
     this.graphics.scene.add(this.level);
-    this.graphics.camera.position.y = -2;
     this.graphics.camera.position.z = 20;
 
     // Load level from JSON
