@@ -1,4 +1,10 @@
 {
+  "cube-bounce": {
+    "url": "../glb/cube-bounce.glb"
+  },
+  "cube-checkpoint": {
+    "url": "../glb/cube-checkpoint.glb"
+  },
   "cube-control": {
     "url": "../glb/cube-control.glb"
   },
@@ -11,7 +17,13 @@
   "cube-player": {
     "url": "../glb/cube-player.glb"
   },
+  "cube-resize": {
+    "url": "../glb/cube-resize.glb"
+  },
   "cube-spike": {
     "url": "../glb/cube-spike.glb"
+  },
+  "cube-tip": {
+    "url": "../glb/cube-tip.glb"
   }
 }
