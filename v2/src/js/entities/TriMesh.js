@@ -1,5 +1,5 @@
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { TriMesh as TriMeshShape } from '@dimforge/rapier3d';
+import { TriMesh as TriMeshShape, TriMeshFlags } from '@dimforge/rapier3d';
 import { Entity } from './Entity.js';
 
 /*
@@ -44,7 +44,7 @@ class TriMesh extends Entity {
     }
 
     // Create physical shape
-    options.shape = new TriMeshShape(options.vertices, options.indices);
+    options.shape = new TriMeshShape(options.vertices, options.indices, TriMeshFlags['FIX_INTERNAL_EDGES']);
 
     // Inherit Entity class
     super(options);
