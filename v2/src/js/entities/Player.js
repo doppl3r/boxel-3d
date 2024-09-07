@@ -1,6 +1,7 @@
 import { Vector3 } from 'three';
 import { CameraFactory } from '../factories/CameraFactory.js';
 import { Cube } from './Cube.js';
+import { LightFactory } from '../factories/LightFactory.js';
 
 /*
   A Player is a subclass that extends the Cube class
@@ -13,12 +14,16 @@ class Player extends Cube {
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
       ccd: true,
-      jumpForce: 200,
+      jumpForce: 350,
       moveForce: 5
     }, options);
 
     // Inherit Character class
     super(options);
+
+    // Add light to player
+    this.light = LightFactory.create('point', { color: '#dc265a', intensity: Math.PI * 10 });
+    this.object.add(this.light);
 
     // Set default properties
     this.keys = {};

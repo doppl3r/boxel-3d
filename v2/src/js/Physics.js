@@ -15,7 +15,7 @@ class Physics extends EventDispatcher {
 
   init() {
     // Initialize Rapier world
-    this.world = new World({ x: 0.0, y: -9.81, z: 0.0 });
+    this.world = new World({ x: 0.0, y: -9.81 * 4, z: 0.0 });
     this.events = new EventQueue(true);
 
     // Initialize entity manager

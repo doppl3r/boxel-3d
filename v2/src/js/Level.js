@@ -27,7 +27,7 @@ class Level extends Group {
     var rotation = new Euler();
     var scale = new Vector3();
     var quaternion = new Quaternion();
-    var light = LightFactory.create('hemisphere');
+    var light = LightFactory.create('hemisphere', { position: { x: 0.25, y: 0.5, z: 1 }});
 
     // Reset level
     this.clear();
@@ -52,6 +52,10 @@ class Level extends Group {
         scale: scale,
         type: child.isStatic == false ? 'Dynamic' : 'Fixed'
       });
+
+      if (child.class == 'player') {
+        this.player = entity;
+      }
 
       // Add 3D object to level
       this.add(entity.object);

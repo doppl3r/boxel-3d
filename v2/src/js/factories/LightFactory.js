@@ -21,6 +21,7 @@ class LightFactory {
       distance: 0,
       groundColor: '#000000',
       intensity: Math.PI,
+      position: { x: 0, y: 0, z: 0 },
       shadow: false,
       skyColor: '#ffffff'
     }, options)
@@ -41,6 +42,9 @@ class LightFactory {
       light = new PointLight(options.color, options.intensity, options.distance, options.decay);
       helper = new PointLightHelper(light);
     }
+
+    // Update position
+    light.position.copy(options.position);
 
     // Add shadow option
     if (options.shadow) {

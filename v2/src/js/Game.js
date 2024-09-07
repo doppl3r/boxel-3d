@@ -45,11 +45,13 @@ class Game {
     // Adjust graphics components
     this.graphics.scene.add(this.physics.debugger);
     this.graphics.scene.add(this.level);
-    this.graphics.camera.position.z = 20;
 
     // Load level from JSON
     this.level.load('../json/Campaign Level 4.json', function(entities) {
       entities.forEach(function(entity) {
+        if (entity == this.level.player) {
+          this.graphics.setCamera(entity.camera);
+        }
         this.physics.add(entity);
       }.bind(this));
     }.bind(this));
