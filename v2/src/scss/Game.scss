@@ -74,3 +74,18 @@ html {
     }
   }
 }
+
+/* Font Family */
+@font-face {
+  font-family: 'Comfortaa-Bold';
+  src: url('/woff2/Comfortaa-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url('/woff2/Material-Symbols-Rounded.woff2') format('woff2');
+}

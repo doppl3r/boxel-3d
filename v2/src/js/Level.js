@@ -5,6 +5,9 @@ import { EntityFactory } from './factories/EntityFactory.js';
 class Level extends Group {
   constructor() {
     super();
+
+    // Define variables
+    this.player;
   }
 
   async load(path, callback = function(){}) {
@@ -40,6 +43,7 @@ class Level extends Group {
 
       // Create a new entity from child properties
       var entity = EntityFactory.create({
+        ccd: true,
         class: child.class.charAt(0).toUpperCase() + child.class.slice(1),
         friction: child.friction || 0,
         model: game.assets.duplicate('cube-' + child.class),

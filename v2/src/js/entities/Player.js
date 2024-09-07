@@ -12,8 +12,9 @@ class Player extends Cube {
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      moveForce: 5,
-      jumpForce: 5
+      ccd: true,
+      jumpForce: 200,
+      moveForce: 5
     }, options);
 
     // Inherit Character class
@@ -21,7 +22,8 @@ class Player extends Cube {
 
     // Set default properties
     this.keys = {};
-    this.jumping = true;
+    this.pointer = {}
+    this.jumping = false;
     this.jumpForce = options.jumpForce;
     this.moveForce = options.moveForce;
     this.force = new Vector3();
@@ -29,6 +31,11 @@ class Player extends Cube {
     // Set character camera properties
     this.camera = CameraFactory.create('perspective');
     this.cameraOffset = new Vector3(0, 0, 20);
+
+    // Add event listeners
+    this.addEventListener('added', function(e) { this.addEventListeners(); }.bind(this));
+    this.addEventListener('removed', function(e) { this.removeEventListeners(); }.bind(this));
+    this.addEventListener('collision', this.checkCollision.bind(this))
   }
 
   update(delta) {
@@ -48,21 +55,26 @@ class Player extends Cube {
     this.camera.lookAt(this.object.position);
   }
 
+  checkCollision(e) {
+    var entity = e.pair[1] == this ? e.pair[0] : e.pair[1];
+    if (e.started == true) {
+      console.log(entity);
+      this.jumping = false;
+    }
+  }
+
   updateVelocityFromInput(delta) {
     // Reset force to zero
     this.force.set(0, 0, 0);
 
     // Add force relative to zero radians/degrees (visually 90° counterclockwise)
-    if (this.keys['KeyW'] == true) this.force.x = -delta * this.moveForce;
-    if (this.keys['KeyA'] == true) this.force.z = delta * this.moveForce;
-    if (this.keys['KeyS'] == true) this.force.x = delta * this.moveForce;
-    if (this.keys['KeyD'] == true) this.force.z = -delta * this.moveForce;
-    if (this.keys['Space'] == true && this.isJumping() == false) {
+    if ((this.keys['Space'] == true || this.pointer[1] == true) && this.isJumping() == false) {
       this.jumping = true;
       this.force.y += delta * this.jumpForce * 1.5;
     }
 
-    // TODO: Add new force to current velocity
+    // Add new force to current velocity
+    this.body.applyImpulse(this.force, true);
   }
 
   isJumping() {
@@ -73,12 +85,16 @@ class Player extends Cube {
     // Add event listeners
     domElement.addEventListener('keydown', function(e) { this.keyDown(e); }.bind(this), false);
     domElement.addEventListener('keyup', function(e) { this.keyUp(e); }.bind(this), false);
+    domElement.addEventListener('pointerdown', function(e) { this.pointerDown(e); }.bind(this), false);
+    domElement.addEventListener('pointerup', function(e) { this.pointerUp(e); }.bind(this), false);
   }
-
+  
   removeEventListeners(domElement = window.document) {
     // Add event listeners
     domElement.removeEventListener('keydown', function(e) { this.keyDown(e); }.bind(this), false);
     domElement.removeEventListener('keyup', function(e) { this.keyUp(e); }.bind(this), false);
+    domElement.removeEventListener('pointerdown', function(e) { this.pointerDown(e); }.bind(this), false);
+    domElement.removeEventListener('pointerup', function(e) { this.pointerUp(e); }.bind(this), false);
   }
 
   keyDown(e) {
@@ -90,6 +106,14 @@ class Player extends Cube {
   keyUp(e) {
     // Set key values to false
     this.keys[e.code] = false;
+  }
+
+  pointerDown(e) {
+    this.pointer[e.which] = true;
+  }
+  
+  pointerUp(e) {
+    this.pointer[e.which] = false;
   }
 }
 

@@ -1,4 +1,4 @@
-import { MathUtils, Object3D, Quaternion, Vector3 } from 'three';
+import { EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
 import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
 
 /*
@@ -8,8 +8,11 @@ import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, RigidBodyDesc, RigidB
   interpolate the 3D object at a higher interval (smoother results)
 */
 
-class Entity {
+class Entity extends EventDispatcher {
   constructor(options) {
+    // Inherit Three.js EventDispatcher system
+    super();
+
     // Set options with default values
     options = Object.assign({
       activeCollisionTypes: 'DEFAULT', // 1: DYNAMIC_DYNAMIC, 2: DYNAMIC_FIXED, 12: DYNAMIC_KINEMATIC, 15: DEFAULT, 32: FIXED_FIXED, 8704: KINEMATIC_FIXED, 52224: KINEMATIC_KINEMATIC, 60943: ALL

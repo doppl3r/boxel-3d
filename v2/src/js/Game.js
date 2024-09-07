@@ -58,6 +58,11 @@ class Game {
     this.loop.add(this.update.bind(this), 30); // Physics
     this.loop.add(this.render.bind(this), -1); // Render
     this.loop.start();
+
+    // Add event listener for collision events that occur in Physics.js
+    this.physics.addEventListener('collision', function(e) {
+      e.pair.forEach(function(entity) { entity.dispatchEvent(e); });
+    });
   }
 
   onProgress(url, itemsLoaded, itemsTotal) {

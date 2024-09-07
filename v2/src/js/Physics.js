@@ -15,7 +15,7 @@ class Physics extends EventDispatcher {
 
   init() {
     // Initialize Rapier world
-    this.world = new World({ x: 0.0, y: -9.81 * 2, z: 0.0 });
+    this.world = new World({ x: 0.0, y: -9.81, z: 0.0 });
     this.events = new EventQueue(true);
 
     // Initialize entity manager
@@ -81,6 +81,7 @@ class Physics extends EventDispatcher {
     entity.createBody(this.world);
     entity.createCollider(this.world);
     entity.takeSnapshot(); // Take snapshot from rigid body for 3D object
+    entity.dispatchEvent({ type: 'added' })
 
     // Add entity to entities map using the body handle as the key (ex: "5e-324")
     this.entities.set(entity.body.handle, entity);
@@ -91,6 +92,7 @@ class Physics extends EventDispatcher {
     this.entities.delete(entity.body.handle);
     this.world.removeRigidBody(entity.body);
     entity.object.removeFromParent();
+    entity.dispatchEvent({ type: 'removed' });
   }
 
   get(handle) {

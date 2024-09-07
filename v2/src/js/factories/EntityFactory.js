@@ -2,6 +2,7 @@ import { Bounce } from '../entities/Bounce';
 import { Checkpoint } from '../entities/Checkpoint';
 import { Control } from '../entities/Control';
 import { Cube } from '../entities/Cube';
+import { Direction } from '../entities/Direction';
 import { Finish } from '../entities/Finish';
 import { Grapple } from '../entities/Grapple';
 import { Gravity } from '../entities/Gravity';
