@@ -14,7 +14,7 @@ class Player extends Cube {
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
       ccd: true,
-      jumpForce: 900,
+      jumpForce: 400,
       moveForce: 5,
       softCcdPrediction: 0,
     }, options);

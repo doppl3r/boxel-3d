@@ -40,23 +40,25 @@ class Game {
   async onLoad() {
     // Initialize entity manager
     this.physics.init();
+    this.physics.setFrequency(30);
 
     // Adjust graphics components
     this.graphics.scene.add(this.physics.debugger);
     this.graphics.scene.add(this.level);
 
     // Load level from JSON
-    this.level.load('../json/Campaign Level 11.json', function(entities) {
+    this.level.load('../json/Mountain Climb.json', function(entities) {
       entities.forEach(function(entity) {
+        this.physics.add(entity);
         if (entity == this.level.player) {
           this.graphics.setCamera(entity.camera);
+          entity.setPosition({ x: 150, y: 175, z: 0 });
         }
-        this.physics.add(entity);
       }.bind(this));
     }.bind(this));
 
     // Add game loops
-    this.loop.add(this.update.bind(this), 60); // Physics
+    this.loop.add(this.update.bind(this), 30); // Physics
     this.loop.add(this.render.bind(this), -1); // Render
     this.loop.start();
   }
