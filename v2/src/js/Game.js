@@ -40,14 +40,13 @@ class Game {
   async onLoad() {
     // Initialize entity manager
     this.physics.init();
-    this.physics.setFrequency(30);
 
     // Adjust graphics components
     this.graphics.scene.add(this.physics.debugger);
     this.graphics.scene.add(this.level);
 
     // Load level from JSON
-    this.level.load('../json/Campaign Level 4.json', function(entities) {
+    this.level.load('../json/Campaign Level 11.json', function(entities) {
       entities.forEach(function(entity) {
         if (entity == this.level.player) {
           this.graphics.setCamera(entity.camera);
@@ -57,14 +56,9 @@ class Game {
     }.bind(this));
 
     // Add game loops
-    this.loop.add(this.update.bind(this), 30); // Physics
+    this.loop.add(this.update.bind(this), 60); // Physics
     this.loop.add(this.render.bind(this), -1); // Render
     this.loop.start();
-
-    // Add event listener for collision events that occur in Physics.js
-    this.physics.addEventListener('collision', function(e) {
-      e.pair.forEach(function(entity) { entity.dispatchEvent(e); });
-    });
   }
 
   onProgress(url, itemsLoaded, itemsTotal) {

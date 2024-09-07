@@ -20,6 +20,7 @@ class Entity extends EventDispatcher {
       angularDamping: 0,
       ccd: false,
       collisionGroups: 0xFFFFFFFF,
+      contactForceEventThreshold: 0,
       density: 1,
       enabledRotations: { x: true, y: true, z: true },
       enabledTranslations: { x: true, y: true, z: true },
@@ -35,31 +36,34 @@ class Entity extends EventDispatcher {
       scale: { x: 1, y: 1, z: 1 },
       shape: null,
       solverGroups: 0xFFFFFFFF,
+      softCcdPrediction: 0,
       type: 'Dynamic', // 0: Dynamic, 1: Fixed, 2: KinematicPositionBased, 3: KinematicVelocityBased
     }, options);
 
     // Initialize rigid body description
     this.rigidBodyDesc = new RigidBodyDesc(RigidBodyType[options.type]);
-    this.rigidBodyDesc.setTranslation(options.position.x, options.position.y, options.position.z);
-    this.rigidBodyDesc.setRotation(options.quaternion);
-    this.rigidBodyDesc.setEnabled(options.isEnabled);
-    this.rigidBodyDesc.setCcdEnabled(options.ccd);
-    this.rigidBodyDesc.setAngularDamping(options.angularDamping);
-    this.rigidBodyDesc.setLinearDamping(options.linearDamping);
     this.rigidBodyDesc.enabledRotations(options.enabledRotations.x, options.enabledRotations.y, options.enabledRotations.z);
     this.rigidBodyDesc.enabledTranslations(options.enabledTranslations.x, options.enabledTranslations.y, options.enabledTranslations.z);
+    this.rigidBodyDesc.setAngularDamping(options.angularDamping);
+    this.rigidBodyDesc.setCcdEnabled(options.ccd);
+    this.rigidBodyDesc.setEnabled(options.isEnabled);
+    this.rigidBodyDesc.setLinearDamping(options.linearDamping);
+    this.rigidBodyDesc.setRotation(options.quaternion);
+    this.rigidBodyDesc.setSoftCcdPrediction(options.softCcdPrediction);
+    this.rigidBodyDesc.setTranslation(options.position.x, options.position.y, options.position.z);
     
     // Initialize collider description
     this.colliderDesc = new ColliderDesc(options.shape);
     this.colliderDesc.setActiveCollisionTypes(ActiveCollisionTypes[options.activeCollisionTypes]);
-    this.colliderDesc.setCollisionGroups(options.collisionGroups);
-    this.colliderDesc.setSolverGroups(options.solverGroups);
-    this.colliderDesc.setSensor(options.isSensor);
-    this.colliderDesc.setFriction(options.friction);
-    this.colliderDesc.setRestitution(options.restitution);
-    this.colliderDesc.setDensity(options.density);
-    this.colliderDesc.setMass(options.mass);
     this.colliderDesc.setActiveEvents(ActiveEvents[options.activeEvents]);
+    this.colliderDesc.setCollisionGroups(options.collisionGroups);
+    this.colliderDesc.setContactForceEventThreshold(options.contactForceEventThreshold);
+    this.colliderDesc.setDensity(options.density);
+    this.colliderDesc.setFriction(options.friction);
+    this.colliderDesc.setMass(options.mass);
+    this.colliderDesc.setRestitution(options.restitution);
+    this.colliderDesc.setSensor(options.isSensor);
+    this.colliderDesc.setSolverGroups(options.solverGroups);
 
     // These components are created when this entity is added to scene/world
     this.body;

@@ -50,6 +50,7 @@ class Level extends Group {
         position: position,
         quaternion: quaternion,
         scale: scale,
+        softCcdPrediction: 0.5,
         type: child.isStatic == false ? 'Dynamic' : 'Fixed'
       });
 

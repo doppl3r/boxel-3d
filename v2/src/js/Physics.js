@@ -1,5 +1,4 @@
 import { EventQueue, World } from '@dimforge/rapier3d';
-import { EventDispatcher } from 'three';
 import { Debugger } from './Debugger.js';
 import { EntityFactory } from './factories/EntityFactory.js';
 
@@ -7,10 +6,9 @@ import { EntityFactory } from './factories/EntityFactory.js';
   Manage physics related components
 */
 
-class Physics extends EventDispatcher {
+class Physics {
   constructor() {
-    // Inherit Three.js EventDispatcher system
-    super();
+    
   }
 
   init() {
@@ -44,13 +42,11 @@ class Physics extends EventDispatcher {
     this.world.step(this.events);
 
     // Check collision events
-    this.events.drainCollisionEvents(function(handleOne, handleTwo, started) {
-      // Dispatch event to subscribers
-      this.dispatchEvent({
-        type: 'collision',
-        pair: [this.get(handleOne), this.get(handleTwo)],
-        started: started
-      });
+    this.events.drainCollisionEvents(function(h1, h2, started) {
+      // Dispatch event to entities
+      var e = { type: 'collision', pair: [this.get(h1), this.get(h2)], started: started };
+      e.pair[0].dispatchEvent(e);
+      e.pair[1].dispatchEvent(e);
     }.bind(this));
   }
 

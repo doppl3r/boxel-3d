@@ -14,8 +14,9 @@ class Player extends Cube {
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
       ccd: true,
-      jumpForce: 350,
-      moveForce: 5
+      jumpForce: 900,
+      moveForce: 5,
+      softCcdPrediction: 0,
     }, options);
 
     // Inherit Character class
@@ -63,7 +64,6 @@ class Player extends Cube {
   checkCollision(e) {
     var entity = e.pair[1] == this ? e.pair[0] : e.pair[1];
     if (e.started == true) {
-      console.log(entity);
       this.jumping = false;
     }
   }
@@ -73,7 +73,8 @@ class Player extends Cube {
     this.force.set(0, 0, 0);
 
     // Add force relative to zero radians/degrees (visually 90° counterclockwise)
-    if ((this.keys['Space'] == true || this.pointer[1] == true) && this.isJumping() == false) {
+    if (this.isJumping() == false && this.jump == true) {
+      this.jump = false;
       this.jumping = true;
       this.force.y += delta * this.jumpForce * 1.5;
     }
@@ -106,6 +107,10 @@ class Player extends Cube {
     // Assign key inputs to true (once)
     if (e.repeat) return;
     this.keys[e.code] = true;
+  
+    if (this.keys['Space'] == true) {
+      this.jump = true;
+    }
   }
 
   keyUp(e) {
@@ -115,6 +120,10 @@ class Player extends Cube {
 
   pointerDown(e) {
     this.pointer[e.which] = true;
+
+    if (this.pointer[1] == true) {
+      this.jump = true;
+    }
   }
   
   pointerUp(e) {
