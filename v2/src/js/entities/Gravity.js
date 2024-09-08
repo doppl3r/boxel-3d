@@ -19,12 +19,6 @@ class Gravity extends Cube {
     this.addEventListener('collision', this.checkCollision.bind(this))
   }
 
-  checkCollision(e) {
-    if (e.started == true) {
-      console.log('Gravity selected!');
-    }
-  }
-
   update(delta) {
     // Call Entity update function
     super.update(delta);
@@ -33,6 +27,12 @@ class Gravity extends Cube {
   render(delta, alpha) {
     // Call Entity render function
     super.render(delta, alpha);
+  }
+
+  checkCollision(e) {
+    if (e.started == true) {
+      console.log('Gravity selected!');
+    }
   }
 }
 

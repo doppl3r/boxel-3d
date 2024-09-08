@@ -21,6 +21,12 @@ class Bounce extends Cube {
     // Call Entity render function
     super.render(delta, alpha);
   }
+
+  createCollider(world) {
+    super.createCollider(world);
+
+    // Add extra collider
+  }
 }
 
 export { Bounce };
