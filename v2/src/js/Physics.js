@@ -13,7 +13,7 @@ class Physics {
 
   init() {
     // Initialize Rapier world
-    this.world = new World({ x: 0.0, y: -9.81 * 6, z: 0.0 });
+    this.world = new World({ x: 0.0, y: -9.81 * 8, z: 0.0 });
     this.events = new EventQueue(true);
 
     // Initialize entity manager

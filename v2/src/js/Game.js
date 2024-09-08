@@ -47,7 +47,7 @@ class Game {
     this.graphics.scene.add(this.level);
 
     // Load level from JSON
-    this.level.load('../json/Campaign Level 4.json', function(entities) {
+    this.level.load('../json/Campaign Level 9.json', function(entities) {
       entities.forEach(function(entity) {
         this.physics.add(entity);
         if (entity == this.level.player) {

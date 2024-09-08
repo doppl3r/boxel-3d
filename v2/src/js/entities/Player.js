@@ -13,7 +13,7 @@ class Player extends Cube {
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      jumpForce: 1100,
+      jumpForce: 30,
       moveForce: 5
     }, options);
 
@@ -27,7 +27,7 @@ class Player extends Cube {
     // Set default properties
     this.keys = {};
     this.pointer = {}
-    this.jumping = false;
+    this.jumpCount = 0;
     this.jumpForce = options.jumpForce;
     this.moveForce = options.moveForce;
     this.force = new Vector3();
@@ -44,9 +44,6 @@ class Player extends Cube {
   }
 
   update(delta) {
-    // Update the player velocity from input keys
-    this.updateVelocityFromInput(delta);
-
     // Call Entity update function
     super.update(delta);
   }
@@ -63,25 +60,20 @@ class Player extends Cube {
   checkCollision(e) {
     var entity = e.pair[1] == this ? e.pair[0] : e.pair[1];
     if (e.started == true) {
-      this.jumping = false;
+      this.jumpCount = 1;
     }
   }
 
-  updateVelocityFromInput(delta) {
-    // Reset force to zero
-    this.force.set(0, 0, 0);
+  jump() {
+    if (this.jumpCount > 0) {
+      this.jumpCount--;
 
-    // Add force relative to zero radians/degrees (visually 90° counterclockwise)
-    if ((this.keys['Space'] == true || this.pointer[1] == true) && this.jumping == false) {
-      this.jumping = true;
+      // Reset player falling velocity
       this.velocity.copy(this.body.linvel());
       this.velocity.y = 0;
       this.body.setLinvel(this.velocity);
-      this.force.y += delta * this.jumpForce * 1.5;
+      this.body.applyImpulse({ x: 0, y: this.jumpForce, z: 0 }, true);
     }
-
-    // Add new force to current velocity
-    this.body.applyImpulse(this.force, true);
   }
 
   addEventListeners(domElement = window.document) {
@@ -104,6 +96,9 @@ class Player extends Cube {
     // Assign key inputs to true (once)
     if (e.repeat) return;
     this.keys[e.code] = true;
+
+    // Add keybindings
+    if (this.keys['Space'] == true) this.jump();
   }
 
   keyUp(e) {
@@ -113,6 +108,9 @@ class Player extends Cube {
 
   pointerDown(e) {
     this.pointer[e.which] = true;
+
+    // Add touch bindings
+    if (this.pointer[1] == true) this.jump();
   }
   
   pointerUp(e) {
