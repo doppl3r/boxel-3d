@@ -58,7 +58,6 @@ class Player extends Cube {
   }
 
   checkCollision(e) {
-    var entity = e.pair[1] == this ? e.pair[0] : e.pair[1];
     if (e.started == true) {
       this.jumpCount = 1;
     }

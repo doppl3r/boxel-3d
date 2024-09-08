@@ -44,9 +44,10 @@ class Physics {
     // Check collision events
     this.events.drainCollisionEvents(function(h1, h2, started) {
       // Dispatch event to entities
-      var e = { type: 'collision', pair: [this.get(h1), this.get(h2)], started: started };
-      e.pair[0].dispatchEvent(e);
-      e.pair[1].dispatchEvent(e);
+      var p1 = this.get(h1);
+      var p2 = this.get(h2);
+      p1.dispatchEvent({ type: 'collision', entity: p2, started: started })
+      p2.dispatchEvent({ type: 'collision', entity: p1, started: started })
     }.bind(this));
   }
 
