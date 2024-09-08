@@ -13,10 +13,8 @@ class Player extends Cube {
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      ccd: true,
-      jumpForce: 400,
-      moveForce: 5,
-      softCcdPrediction: 0,
+      jumpForce: 1100,
+      moveForce: 5
     }, options);
 
     // Inherit Character class
@@ -33,6 +31,7 @@ class Player extends Cube {
     this.jumpForce = options.jumpForce;
     this.moveForce = options.moveForce;
     this.force = new Vector3();
+    this.velocity = new Vector3();
 
     // Set character camera properties
     this.camera = CameraFactory.create('perspective');
@@ -73,18 +72,16 @@ class Player extends Cube {
     this.force.set(0, 0, 0);
 
     // Add force relative to zero radians/degrees (visually 90° counterclockwise)
-    if (this.isJumping() == false && this.jump == true) {
-      this.jump = false;
+    if ((this.keys['Space'] == true || this.pointer[1] == true) && this.jumping == false) {
       this.jumping = true;
+      this.velocity.copy(this.body.linvel());
+      this.velocity.y = 0;
+      this.body.setLinvel(this.velocity);
       this.force.y += delta * this.jumpForce * 1.5;
     }
 
     // Add new force to current velocity
     this.body.applyImpulse(this.force, true);
-  }
-
-  isJumping() {
-    return this.jumping;
   }
 
   addEventListeners(domElement = window.document) {
@@ -107,10 +104,6 @@ class Player extends Cube {
     // Assign key inputs to true (once)
     if (e.repeat) return;
     this.keys[e.code] = true;
-  
-    if (this.keys['Space'] == true) {
-      this.jump = true;
-    }
   }
 
   keyUp(e) {
@@ -120,10 +113,6 @@ class Player extends Cube {
 
   pointerDown(e) {
     this.pointer[e.which] = true;
-
-    if (this.pointer[1] == true) {
-      this.jump = true;
-    }
   }
   
   pointerUp(e) {
