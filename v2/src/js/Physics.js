@@ -42,12 +42,14 @@ class Physics {
     this.world.step(this.events);
 
     // Check collision events
-    this.events.drainCollisionEvents(function(h1, h2, started) {
+    this.events.drainCollisionEvents(function(handle1, handle2, started) {
       // Dispatch event to entities
-      var p1 = this.get(h1);
-      var p2 = this.get(h2);
-      p1.dispatchEvent({ type: 'collision', entity: p2, started: started })
-      p2.dispatchEvent({ type: 'collision', entity: p1, started: started })
+      var entity1 = this.get(handle1);
+      var entity2 = this.get(handle2);
+      var event1 = { type: 'collision', entity: entity2, started: started };
+      var event2 = { type: 'collision', entity: entity1, started: started };
+      entity1.dispatchEvent(event1);
+      entity2.dispatchEvent(event2);
     }.bind(this));
   }
 

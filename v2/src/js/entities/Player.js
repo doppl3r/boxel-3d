@@ -13,6 +13,8 @@ class Player extends Cube {
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
+      collisionEventStart: function(e) { e.target.checkCollision(e); },
+      collisionEventEnd: function(e) {},
       jumpForce: 30,
       moveForce: 5
     }, options);
@@ -40,7 +42,6 @@ class Player extends Cube {
     // Add event listeners
     this.addEventListener('added', function(e) { this.addEventListeners(); }.bind(this));
     this.addEventListener('removed', function(e) { this.removeEventListeners(); }.bind(this));
-    this.addEventListener('collision', function(e) { this.checkCollision(e); }.bind(this));
   }
 
   update(delta) {
