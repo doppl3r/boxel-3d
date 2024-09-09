@@ -38,11 +38,7 @@ class Entity extends EventDispatcher {
 
     // Add event listeners
     this.addEventListener('collision', this.onCollision);
-    this.addEventListener('removed', function(e) {
-      // Remove all event listeners when removed by Physics.js
-      e.target.removeEventListener('collision', e.target.onCollision);
-      e.target.removeEventListener('removed', e.target.onCollision);
-    });
+    this.addEventListener('removed', this.onRemoved);
   }
 
   update(delta) {
@@ -194,6 +190,12 @@ class Entity extends EventDispatcher {
     // Determine which event to call by the "started" boolean
     if (e.started == true) collider.collisionEventStart(e);
     else collider.collisionEventEnd(e);
+  }
+
+  onRemoved(e) {
+    // Remove all event listeners when removed by Physics.js
+    e.target.removeEventListener('collision', e.target.onCollision);
+    e.target.removeEventListener('removed', e.target.onRemoved);
   }
 
   toJSON() {

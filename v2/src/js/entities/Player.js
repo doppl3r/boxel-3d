@@ -40,8 +40,8 @@ class Player extends Cube {
     this.cameraOffset = new Vector3(0, 0, 20);
 
     // Add event listeners
-    this.addEventListener('added', function(e) { this.addEventListeners(); }.bind(this));
-    this.addEventListener('removed', function(e) { this.removeEventListeners(); }.bind(this));
+    this.addEventListener('added', this.onAdded);
+    this.addEventListener('removed', this.onRemoved);
   }
 
   update(delta) {
@@ -76,20 +76,25 @@ class Player extends Cube {
     }
   }
 
-  addEventListeners(domElement = window.document) {
-    // Add event listeners
-    domElement.addEventListener('keydown', function(e) { this.keyDown(e); }.bind(this), false);
-    domElement.addEventListener('keyup', function(e) { this.keyUp(e); }.bind(this), false);
-    domElement.addEventListener('pointerdown', function(e) { this.pointerDown(e); }.bind(this), false);
-    domElement.addEventListener('pointerup', function(e) { this.pointerUp(e); }.bind(this), false);
+  onAdded(event) {
+    // Add window event listeners
+    window.document.addEventListener('keydown', function(e) { this.keyDown(e); }.bind(this), false);
+    window.document.addEventListener('keyup', function(e) { this.keyUp(e); }.bind(this), false);
+    window.document.addEventListener('pointerdown', function(e) { this.pointerDown(e); }.bind(this), false);
+    window.document.addEventListener('pointerup', function(e) { this.pointerUp(e); }.bind(this), false);
   }
   
-  removeEventListeners(domElement = window.document) {
-    // Add event listeners
-    domElement.removeEventListener('keydown', function(e) { this.keyDown(e); }.bind(this), false);
-    domElement.removeEventListener('keyup', function(e) { this.keyUp(e); }.bind(this), false);
-    domElement.removeEventListener('pointerdown', function(e) { this.pointerDown(e); }.bind(this), false);
-    domElement.removeEventListener('pointerup', function(e) { this.pointerUp(e); }.bind(this), false);
+  onRemoved(event) {
+    // Remove entity event listeners
+    event.target.removeEventListener('added', event.target.onAdded);
+    event.target.removeEventListener('removed', event.target.onRemoved);
+    super.onRemoved(event);
+
+    // Remove window event listeners
+    window.document.removeEventListener('keydown', function(e) { this.keyDown(e); }.bind(this), false);
+    window.document.removeEventListener('keyup', function(e) { this.keyUp(e); }.bind(this), false);
+    window.document.removeEventListener('pointerdown', function(e) { this.pointerDown(e); }.bind(this), false);
+    window.document.removeEventListener('pointerup', function(e) { this.pointerUp(e); }.bind(this), false);
   }
 
   keyDown(e) {
