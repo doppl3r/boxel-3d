@@ -16,14 +16,13 @@ class Entity extends EventDispatcher {
     // These components are created when this entity is added to scene/world
     this.body;
     this.collider;
-    this.model;
     this.object = new Object3D();
     this.snapshot = {
       position_1: new Vector3(0, 0, 0),
       position_2: new Vector3(0, 0, 0),
       quaternion_1: new Quaternion(0, 0, 0, 1),
       quaternion_2: new Quaternion(0, 0, 0, 1)
-    }
+    };
 
     // Define initial rigidBodyDesc and colliderDesc
     this.setRigidBodyDesc(options);
@@ -32,9 +31,6 @@ class Entity extends EventDispatcher {
     // Update object properties
     this.takeSnapshot();
     this.lerp(1);
-
-    // Add optional model
-    this.addModel(options.model);
   }
 
   update(delta) {
@@ -43,11 +39,6 @@ class Entity extends EventDispatcher {
   }
 
   render(delta, alpha) {
-    // Update model (optional)
-    if (this.model && this.model.mixer) {
-      this.model.mixer.update(delta);
-    }
-
     // Interpolate 3D object position
     this.lerp(alpha);
   }
@@ -135,13 +126,6 @@ class Entity extends EventDispatcher {
     if (this.body) this.body.setRotation(quaternion);
   }
 
-  addModel(model) {
-    if (model) {
-      this.model = model;
-      this.object.add(model);
-    }
-  }
-
   takeSnapshot() {
     // A snapshot requires a physical rigid body
     if (this.body) {
@@ -200,22 +184,6 @@ class Entity extends EventDispatcher {
       }
     }
 
-    // Add model info
-    if (this.model) {
-      json.model = {
-        name: this.model.name
-      }
-
-      // Add optional actions
-      if (this.model.actions && this.model.actions.active) {
-        json.model.action = {
-          duration: this.model.actions.active.duration,
-          name: this.model.actions.active.getClip().name,
-          time: this.model.actions.active.time,
-        }
-      }
-    }
-
     return json;
   }
 
@@ -230,14 +198,6 @@ class Entity extends EventDispatcher {
     if (json.quaternion) {
       if (this.body) this.setRotation(json.quaternion);
       this.snapshot.quaternion_2.copy(json.quaternion);
-    }
-
-    if (json.model) {
-      if (json.model.action) {
-        // Update animation
-        this.model.play(json.model.action.name, json.model.action.duration);
-        this.model.actions[json.model.action.name].time = json.model.action.time;
-      }
     }
   }
 }

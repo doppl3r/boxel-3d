@@ -32,8 +32,28 @@ class Cube extends Entity {
     // Inherit Entity class
     super(options);
 
+    // Define global properties
+    this.model;
+    if (options.model) {
+      this.model = options.model;
+      this.object.add(this.model);
+    }
+
     // Update 3D object scale
     this.object.scale.copy(options.scale)
+  }
+
+  update(delta) {
+    super.update(delta);
+  }
+
+  render(delta, alpha) {
+    super.render(delta, alpha);
+
+    // Update model (optional)
+    if (this.model && this.model.mixer) {
+      this.model.mixer.update(delta);
+    }
   }
 }
 
