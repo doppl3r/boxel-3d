@@ -86,6 +86,8 @@ class Entity extends EventDispatcher {
       activeCollisionTypes: 'DEFAULT', // 1: DYNAMIC_DYNAMIC, 2: DYNAMIC_FIXED, 12: DYNAMIC_KINEMATIC, 15: DEFAULT, 32: FIXED_FIXED, 8704: KINEMATIC_FIXED, 52224: KINEMATIC_KINEMATIC, 60943: ALL
       activeEvents: 'NONE', // 0: NONE, 1: COLLISION_EVENTS, 2: CONTACT_FORCE_EVENTS
       collisionGroups: 0xFFFFFFFF,
+      collisionEventStart: function(e) {},
+      collisionEventEnd: function(e) {},
       contactForceEventThreshold: 0,
       density: 1,
       friction: 0.5,
@@ -107,6 +109,12 @@ class Entity extends EventDispatcher {
     this.colliderDesc.setMass(options.mass);
     this.colliderDesc.setRestitution(options.restitution);
     this.colliderDesc.setSolverGroups(options.solverGroups);
+
+    // Set collision events
+    this.addEventListener('collision', function(e) {
+      if (e.started == true) options.collisionEventStart(e);
+      else options.collisionEventEnd(e);
+    })
   }
 
   createBody(world) {

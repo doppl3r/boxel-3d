@@ -68,11 +68,6 @@ class Level extends Group {
     // Return array of entities
     return entities;
   }
-
-  update(delta) {
-    // Update debugger buffer
-    this.debugger.update();
-  }
 }
 
 export { Level };

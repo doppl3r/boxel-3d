@@ -7,6 +7,10 @@ import { Cube } from './Cube.js';
 class Grapple extends Cube {
   constructor(options = {}) {
     // Set options with default values
+    options = Object.assign({
+      collisionEventStart: function(e) { console.log('Grapple selected!'); },
+      collisionEventEnd: function(e) {}
+    }, options);
 
     // Inherit Character class
     super(options);

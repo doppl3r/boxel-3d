@@ -8,15 +8,13 @@ class Reset extends Cube {
   constructor(options = {}) {
     // Set options with default values
     options = Object.assign({
-      isSensor: true,
-      type: 'Fixed'
+      collisionEventStart: function(e) { console.log('Reset selected!'); },
+      collisionEventEnd: function(e) {},
+      isSensor: true
     }, options);
 
     // Inherit Character class
     super(options);
-
-    // Add event listeners
-    this.addEventListener('collision', this.checkCollision.bind(this))
   }
 
   update(delta) {
@@ -27,12 +25,6 @@ class Reset extends Cube {
   render(delta, alpha) {
     // Call Entity render function
     super.render(delta, alpha);
-  }
-
-  checkCollision(e) {
-    if (e.started == true) {
-      console.log('Reset selected!');
-    }
   }
 }
 
