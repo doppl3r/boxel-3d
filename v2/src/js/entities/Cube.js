@@ -32,12 +32,9 @@ class Cube extends Entity {
     // Inherit Entity class
     super(options);
 
-    // Define global properties
-    this.model;
-    if (options.model) {
-      this.model = options.model;
-      this.object.add(this.model);
-    }
+    // Add optional model to 3D object
+    this.model = options.model;
+    this.object.add(this.model);
 
     // Update 3D object scale
     this.object.scale.copy(options.scale)

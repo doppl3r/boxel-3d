@@ -1,4 +1,5 @@
 import { Cube } from './Cube.js';
+import { Cuboid } from '@dimforge/rapier3d';
 
 /*
   A Bounce is a subclass that extends the Cube class
@@ -8,12 +9,19 @@ class Bounce extends Cube {
   constructor(options = {}) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { console.log(e); },
-      collisionEventEnd: function(e) {},
+      
     }, options);
 
     // Inherit Character class
     super(options);
+
+    // Add a sensor collider to the rigidBody
+    this.addColliderDesc({
+      collisionEventStart: function(e) { e.target.bounce(e); },
+      isSensor: true,
+      shape: new Cuboid(options.scale.x * 0.4, options.scale.y * 0.125, options.scale.z * 0.25),
+      translation: { x: 0, y: 0.5 * options.scale.y, z: 0 }
+    });
   }
 
   update(delta) {
@@ -26,10 +34,8 @@ class Bounce extends Cube {
     super.render(delta, alpha);
   }
 
-  createCollider(world) {
-    super.createCollider(world);
-
-    // Add extra collider
+  bounce(e) {
+    console.log('Bounce Sensor Touched!');
   }
 }
 

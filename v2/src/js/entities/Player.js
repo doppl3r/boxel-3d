@@ -69,10 +69,10 @@ class Player extends Cube {
       this.jumpCount--;
 
       // Reset player falling velocity
-      this.velocity.copy(this.body.linvel());
+      this.velocity.copy(this.rigidBody.linvel());
       this.velocity.y = 0;
-      this.body.setLinvel(this.velocity);
-      this.body.applyImpulse({ x: 0, y: this.jumpForce, z: 0 }, true);
+      this.rigidBody.setLinvel(this.velocity);
+      this.rigidBody.applyImpulse({ x: 0, y: this.jumpForce, z: 0 }, true);
     }
   }
 

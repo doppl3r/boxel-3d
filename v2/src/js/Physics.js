@@ -32,7 +32,7 @@ class Physics {
 
     // Loop through all entities
     this.entities.forEach(function(child) {
-      if (child.body) child.update(delta);
+      if (child.rigidBody) child.update(delta);
     });
 
     // Update debugger buffer
@@ -44,10 +44,10 @@ class Physics {
     // Check collision events
     this.events.drainCollisionEvents(function(handle1, handle2, started) {
       // Dispatch event to entities
-      var entity1 = this.get(handle1);
-      var entity2 = this.get(handle2);
-      var event1 = { type: 'collision', entity: entity2, started: started };
-      var event2 = { type: 'collision', entity: entity1, started: started };
+      var entity1 = this.getEntityFromColliderHandle(handle1);
+      var entity2 = this.getEntityFromColliderHandle(handle2);
+      var event1 = { type: 'collision', pair: entity2, handle: handle1, started: started };
+      var event2 = { type: 'collision', pair: entity1, handle: handle2, started: started };
       entity1.dispatchEvent(event1);
       entity2.dispatchEvent(event2);
     }.bind(this));
@@ -78,18 +78,18 @@ class Physics {
 
     // Create body and collider for entity
     entity.createBody(this.world);
-    entity.createCollider(this.world);
+    entity.createColliders(this.world);
     entity.takeSnapshot(); // Take snapshot from rigid body for 3D object
     entity.dispatchEvent({ type: 'added' })
 
-    // Add entity to entities map using the body handle as the key (ex: "5e-324")
-    this.entities.set(entity.body.handle, entity);
+    // Add entity to entities map using the rigidBody handle as the key (ex: "5e-324")
+    this.entities.set(entity.rigidBody.handle, entity);
   }
 
   remove(entity) {
     // Delete and remove entity reference using the body handle as the key
-    this.entities.delete(entity.body.handle);
-    this.world.removeRigidBody(entity.body);
+    this.entities.delete(entity.rigidBody.handle);
+    this.world.removeRigidBody(entity.rigidBody);
     entity.object.removeFromParent();
     entity.dispatchEvent({ type: 'removed' });
   }
@@ -97,6 +97,12 @@ class Physics {
   get(handle) {
     // Get entity from entities map using the body handle as the key
     return this.entities.get(handle);
+  }
+
+  getEntityFromColliderHandle(handle) {
+    var collider = this.world.getCollider(handle);
+    var rigidBody = collider._parent;
+    return this.get(rigidBody.handle);
   }
 
   drain() {
