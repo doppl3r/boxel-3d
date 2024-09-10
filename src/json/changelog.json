@@ -416,4 +416,11 @@
       "Added fullscreen button to home screen"
     ]
   }
+  ,
+  {
+    "version": "2.2.4",
+    "revisions": [
+      "Added global Matter.js variables for modding."
+    ]
+  }
 ]

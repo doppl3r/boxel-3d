@@ -1,5 +1,5 @@
 import { HemisphereLight, PerspectiveCamera, Scene } from 'three';
-import { Engine, Events } from 'matter-js';
+import { Composite, Bodies, Body, Engine, Events } from 'matter-js';
 import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
 import { Timer } from './Timer.js';
@@ -35,6 +35,9 @@ class App {
     this.fov = 75; // Default 75
     this.scene = new Scene();
     this.mouse = new Mouse();
+
+    // Set global variables for mods
+    this.window.Matter = { Composite: Composite, Bodies: Bodies, Body: Body };
     
     // Set time components
     this.timer = new Timer();
