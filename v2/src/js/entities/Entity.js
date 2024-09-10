@@ -32,11 +32,13 @@ class Entity extends EventDispatcher {
     this.setRigidBodyDesc(options);
     this.addColliderDesc(options);
 
-    // Update object properties
+    // Update 3D object position/rotation
     this.takeSnapshot();
     this.lerp(1);
 
     // Add event listeners
+    this.onCollision = this.onCollision.bind(this);
+    this.onRemoved = this.onRemoved.bind(this);
     this.addEventListener('collision', this.onCollision);
     this.addEventListener('removed', this.onRemoved);
   }
@@ -186,7 +188,7 @@ class Entity extends EventDispatcher {
 
   onCollision(e) {
     // Get the collider from the event handle
-    var collider = e.target.colliders.get(e.handle);
+    var collider = this.colliders.get(e.handle);
 
     // Determine which event to call by the "started" boolean
     if (e.started == true) collider.collisionEventStart(e);
@@ -195,8 +197,8 @@ class Entity extends EventDispatcher {
 
   onRemoved(e) {
     // Remove all event listeners when removed by Physics.js
-    e.target.removeEventListener('collision', e.target.onCollision);
-    e.target.removeEventListener('removed', e.target.onRemoved);
+    this.removeEventListener('collision', this.onCollision);
+    this.removeEventListener('removed', this.onRemoved);
   }
 
   toJSON() {

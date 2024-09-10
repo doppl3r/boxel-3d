@@ -40,7 +40,7 @@ class Game {
   async onLoad() {
     // Initialize entity manager
     this.physics.init();
-    this.physics.setFrequency(60);
+    this.physics.setFrequency(30);
 
     // Adjust graphics components
     this.graphics.scene.add(this.physics.debugger);
@@ -57,7 +57,7 @@ class Game {
     }.bind(this));
 
     // Add game loops
-    this.loop.add(this.update.bind(this), 60); // Physics
+    this.loop.add(this.update.bind(this), 30); // Physics
     this.loop.add(this.render.bind(this), -1); // Render
     this.loop.start();
   }
