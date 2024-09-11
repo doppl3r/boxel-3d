@@ -19,6 +19,7 @@ class Spike extends Cube {
     this.addColliderDesc({
       collisionEventStart: function(e) { e.target.kill(e); },
       isSensor: true,
+      mass: 0,
       shape: new Cuboid(options.scale.x * 0.4, options.scale.y * 0.125, options.scale.z * 0.25),
       translation: { x: 0, y: 0.5 * options.scale.y, z: 0 }
     });

@@ -93,15 +93,6 @@ class AssetModelLoader extends GLTFLoader {
       }
     }
   }
-
-  updateShadows(model, castShadow = false, receiveShadow = false) {
-    model.traverse(function (child) {
-      if (child.isMesh) {
-        child.castShadow = castShadow;
-        child.receiveShadow = receiveShadow;
-      }
-    });
-  }
 }
 
 export { AssetModelLoader };
