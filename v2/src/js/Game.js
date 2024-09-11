@@ -46,20 +46,27 @@ class Game {
     this.graphics.scene.add(this.physics.debugger);
     this.graphics.scene.add(this.level);
 
-    // Load level from JSON
-    this.level.load('../json/Campaign Level 1.json', function(entities) {
-      entities.forEach(function(entity) {
-        this.physics.add(entity);
-        if (entity == this.level.player) {
-          this.graphics.setCamera(entity.camera);
-        }
-      }.bind(this));
-    }.bind(this));
+    // Start generic level
+    this.loadLevel();
 
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics
     this.loop.add(this.render.bind(this), -1); // Render
     this.loop.start();
+  }
+
+  loadLevel(name = 'Campaign Level 1', callback = function(){}) {
+    // Load level from JSON
+    this.physics.clear();
+    this.level.load('../json/' + name + '.json', function(entities) {
+      entities.forEach(function(entity) {
+        this.physics.add(entity);
+        if (entity == this.level.player) {
+          this.graphics.setCamera(entity.camera);
+        }
+        callback();
+      }.bind(this));
+    }.bind(this));
   }
 
   onProgress(url, itemsLoaded, itemsTotal) {
