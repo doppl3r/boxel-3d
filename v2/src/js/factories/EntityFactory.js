@@ -9,6 +9,7 @@ import { Gravity } from '../entities/Gravity';
 import { Player } from '../entities/Player';
 import { Reset } from '../entities/Reset';
 import { Resize } from '../entities/Resize';
+import { Sphere } from '../entities/Sphere';
 import { Spike } from '../entities/Spike';
 import { Tip } from '../entities/Tip';
 
@@ -71,6 +72,10 @@ class EntityFactory {
 
   static createResize(options) {
     return new Resize(options);
+  }
+
+  static createSphere(options) {
+    return new Sphere(options);
   }
 
   static createSpike(options) {

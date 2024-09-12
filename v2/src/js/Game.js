@@ -47,9 +47,7 @@ class Game {
     this.graphics.scene.add(this.level);
 
     // Start generic level
-    this.loadLevel('Mountain Climb', function(e) {
-      game.level.player.setPosition({ x: 137.5, y: 160, z: 0 });
-    });
+    this.loadLevel('Campaign Level 2');
 
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics
