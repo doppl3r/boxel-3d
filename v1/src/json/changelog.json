@@ -422,5 +422,11 @@
       "Added global Matter.js variables for modding",
       "Fixed level export bug"
     ]
+  },
+  {
+    "version": "2.2.5",
+    "revisions": [
+      "Fix \"The Arcadium\" community level"
+    ]
   }
 ]

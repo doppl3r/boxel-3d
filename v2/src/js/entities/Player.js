@@ -76,7 +76,7 @@ class Player extends Cube {
       this.velocity.copy(this.rigidBody.linvel());
       this.velocity.y = 0;
       this.rigidBody.setLinvel(this.velocity);
-      this.rigidBody.applyImpulse({ x: 0, y: this.jumpForce, z: 0 }, true);
+      this.rigidBody.applyImpulse({ x: 0, y: this.jumpForce * this.rigidBody.mass(), z: 0 }, true);
     }
   }
 
