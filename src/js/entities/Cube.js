@@ -387,8 +387,8 @@ class Cube extends Mesh {
       json.friction = this.body.friction;
     }
 
-    // Include text if object has text
-    if (this.text != null) json.text = this.text;
+    // Include text if object is a tip
+    if (this.body.class == 'tip' && this.text != null) json.text = this.text;
 
     // Return json
     return json;

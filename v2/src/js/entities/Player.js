@@ -19,7 +19,7 @@ class Player extends Cube {
       moveForce: 5
     }, options);
 
-    // Inherit Character class
+    // Inherit Cube class
     super(options);
 
     // Add light to player
@@ -35,7 +35,7 @@ class Player extends Cube {
     this.force = new Vector3();
     this.velocity = new Vector3();
 
-    // Set character camera properties
+    // Create camera with offset property
     this.camera = CameraFactory.create('perspective');
     this.cameraOffset = new Vector3(0, 0, 20);
 
