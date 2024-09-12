@@ -100,7 +100,7 @@ class StorageManager {
       'quality': 10,
       'theme': 'bubble',
       'snap': 8,
-      'skin': { id: 466, title: "Smile", url: "png/smile.png" },
+      'skin': { id: 466, title: "Smile", url: "../png/smile.png" },
       'motion': true,
       'stats': false,
       'debug': false,
