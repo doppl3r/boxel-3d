@@ -419,8 +419,8 @@
   {
     "version": "2.2.4",
     "revisions": [
-      "Added global Matter.js variables for modding.",
-      "Fixed level export bug."
+      "Added global Matter.js variables for modding",
+      "Fixed level export bug"
     ]
   }
 ]
