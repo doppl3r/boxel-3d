@@ -14,12 +14,12 @@
   var menu = [
     {
       "title": "Skins",
-      "url": "svg/button-skins.svg",
+      "url": "../svg/button-skins.svg",
       "callback": function() { emit('setPage', 'skins') }
     },
     {
       "title": "Level Editor",
-      "url": "svg/button-level-editor.svg",
+      "url": "../svg/button-level-editor.svg",
       "callback": function() {
         // TODO: Replace events after developing Level Editor 2.0
         window.dispatchEvent(new CustomEvent('setTheme', { detail: 'origin' }));
@@ -28,7 +28,7 @@
     },
     {
       "title": "Play",
-      "url": "svg/button-play.svg",
+      "url": "../svg/button-play.svg",
       "callback": function() { emit('setPage', 'level-picker') }
     }
   ];
@@ -49,7 +49,7 @@
   }
 
   async function updateVersion() {
-    var response = await fetch('./manifest.json');
+    var response = await fetch('../manifest.json');
     var json = await response.json();
     manifest.value = json;
     version.value = 'v' + json.version;
@@ -117,7 +117,7 @@
 <template>
   <div class="page">
     <div class="background">
-      <img src="/svg/background-purple.svg">
+      <img :src="'../svg/background-purple.svg'">
     </div>
     <div class="nav">
       <BubbleButtonFullscreen class="button left fade-in" />

@@ -237,45 +237,45 @@
   <div class="level-editor">
     <div class="row top">
       <div class="col options-level">
-        <a class="item" :class="{ selected: drawMode == 'draw' }" @click="setDrawMode('draw')" action="draw" title="Draw cubes"><img src="/svg/pencil.svg"></a>
-        <a class="item" :class="{ selected: drawMode == 'erase' }" @click="setDrawMode('erase')" action="erase" title="Erase cubes"><img src="/svg/eraser.svg"></a>
-        <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img src="/svg/home.svg"></a>
-        <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img src="/svg/save.svg"></a>
-        <a class="item" @click="undo" title="Undo edit (Ctrl + Z)"><img src="/svg/undo.svg"></a>
-        <a class="item" @click="redo" title="Redo edit (Ctrl + Shift + Z)"><img src="/svg/redo.svg"></a>
-        <a class="item" @click="rewind" title="Restart level"><img src="/svg/rewind.svg"></a>
-        <a class="item" @click="pauseLevel" title="Pause level"><img src="/svg/pause.svg"></a>
-        <a class="item" @click="playLevel" title="Play level"><img src="/svg/play.svg"></a>
+        <a class="item" :class="{ selected: drawMode == 'draw' }" @click="setDrawMode('draw')" action="draw" title="Draw cubes"><img :src="'../svg/pencil.svg'"></a>
+        <a class="item" :class="{ selected: drawMode == 'erase' }" @click="setDrawMode('erase')" action="erase" title="Erase cubes"><img :src="'../svg/eraser.svg'"></a>
+        <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img :src="'../svg/home.svg'"></a>
+        <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img :src="'../svg/save.svg'"></a>
+        <a class="item" @click="undo" title="Undo edit (Ctrl + Z)"><img :src="'../svg/undo.svg'"></a>
+        <a class="item" @click="redo" title="Redo edit (Ctrl + Shift + Z)"><img :src="'../svg/redo.svg'"></a>
+        <a class="item" @click="rewind" title="Restart level"><img :src="'../svg/rewind.svg'"></a>
+        <a class="item" @click="pauseLevel" title="Pause level"><img :src="'../svg/pause.svg'"></a>
+        <a class="item" @click="playLevel" title="Play level"><img :src="'../svg/play.svg'"></a>
         <OriginButtonSettings class="item last" />
       </div>
     </div>
     <div class="row left" v-if="drawMode == 'draw' && objectTypeVisible == true">
       <div class="col object-type">
-        <a class="item" :class="{ selected: objectType == 'cube' }" @click="selectObjectType({ detail: { type: 'cube' }})" title="Basic cube"><img src="/svg/cube.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'tip' }" @click="selectObjectType({ detail: { type: 'tip' }})" title="Tip cube"><img src="/svg/tip.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'bounce' }" @click="selectObjectType({ detail: { type: 'bounce' }})" title="Bounce cube"><img src="/svg/bounce.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'checkpoint' }" @click="selectObjectType({ detail: { type: 'checkpoint' }})" title="Checkpoint cube"><img src="/svg/checkpoint.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'spike' }" @click="selectObjectType({ detail: { type: 'spike' }})" title="Spike cube"><img src="/svg/spike.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'resize' }" @click="selectObjectType({ detail: { type: 'resize' }})" title="Resize cube"><img src="/svg/grow.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'direction' }" @click="selectObjectType({ detail: { type: 'direction' }})" title="Direction cube"><img src="/svg/direction.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'gravity' }" @click="selectObjectType({ detail: { type: 'gravity' }})" title="Gravity cube"><img src="/svg/gravity.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'grapple' }" @click="selectObjectType({ detail: { type: 'grapple' }})" title="Grapple cube"><img src="/svg/grapple.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'finish' }" @click="selectObjectType({ detail: { type: 'finish' }})" title="Finish cube"><img src="/svg/finish.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'reset' }" @click="selectObjectType({ detail: { type: 'reset' }})" title="Reset cube"><img src="/svg/reset.svg"></a>
-        <a class="item" :class="{ selected: objectType == 'control' }" @click="selectObjectType({ detail: { type: 'control' }})" title="Control cube"><img src="/svg/control.svg"></a>
+        <a class="item" :class="{ selected: objectType == 'cube' }" @click="selectObjectType({ detail: { type: 'cube' }})" title="Basic cube"><img :src="'../svg/cube.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'tip' }" @click="selectObjectType({ detail: { type: 'tip' }})" title="Tip cube"><img :src="'../svg/tip.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'bounce' }" @click="selectObjectType({ detail: { type: 'bounce' }})" title="Bounce cube"><img :src="'../svg/bounce.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'checkpoint' }" @click="selectObjectType({ detail: { type: 'checkpoint' }})" title="Checkpoint cube"><img :src="'../svg/checkpoint.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'spike' }" @click="selectObjectType({ detail: { type: 'spike' }})" title="Spike cube"><img :src="'../svg/spike.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'resize' }" @click="selectObjectType({ detail: { type: 'resize' }})" title="Resize cube"><img :src="'../svg/grow.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'direction' }" @click="selectObjectType({ detail: { type: 'direction' }})" title="Direction cube"><img :src="'../svg/direction.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'gravity' }" @click="selectObjectType({ detail: { type: 'gravity' }})" title="Gravity cube"><img :src="'../svg/gravity.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'grapple' }" @click="selectObjectType({ detail: { type: 'grapple' }})" title="Grapple cube"><img :src="'../svg/grapple.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'finish' }" @click="selectObjectType({ detail: { type: 'finish' }})" title="Finish cube"><img :src="'../svg/finish.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'reset' }" @click="selectObjectType({ detail: { type: 'reset' }})" title="Reset cube"><img :src="'../svg/reset.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'control' }" @click="selectObjectType({ detail: { type: 'control' }})" title="Control cube"><img :src="'../svg/control.svg'"></a>
       </div>
       <div class="col object-options" v-if="selectedObject != null">
-        <a class="item" :class="{ selected: controlsTransform.mode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img src="/svg/move.svg"></a>
-        <a class="item" :class="{ selected: controlsTransform.mode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img src="/svg/scale-out-x.svg"></a>
-        <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="setTransformMode({ detail: 'rotate' })" title="Rotate (R)"><img src="/svg/rotate-clockwise.svg"></a>
-        <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img src="/svg/pin.svg"></a>
+        <a class="item" :class="{ selected: controlsTransform.mode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img :src="'../svg/move.svg'"></a>
+        <a class="item" :class="{ selected: controlsTransform.mode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img :src="'../svg/scale-out-x.svg'"></a>
+        <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="setTransformMode({ detail: 'rotate' })" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
+        <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img :src="'../svg/pin.svg'"></a>
         <div class="item" :class="{ disabled: selectedObject.isStatic() }">
-          <a action="friction" title="Friction"><img src="/svg/friction.svg"></a>
+          <a action="friction" title="Friction"><img :src="'../svg/friction.svg'"></a>
           <div class="slider"><input name="friction" type="range" min="0" max="1" step="0.25" :value="selectedObject.body.friction" @change="updateFriction($event)"></div>
         </div>
-        <a class="item" :class="{ disabled: selectedObject.text == null }" @click="changeText" title="Text"><img src="/svg/type.svg"></a>
-        <a class="item" @click="duplicateSelectedObject" title="Duplicate (D)"><img src="/svg/duplicate.svg"></a>
-        <a class="item" @click="deleteSelectedObject" title="Delete (X)"><img src="/svg/trash.svg"></a>
+        <a class="item" :class="{ disabled: selectedObject.text == null }" @click="changeText" title="Text"><img :src="'../svg/type.svg'"></a>
+        <a class="item" @click="duplicateSelectedObject" title="Duplicate (D)"><img :src="'../svg/duplicate.svg'"></a>
+        <a class="item" @click="deleteSelectedObject" title="Delete (X)"><img :src="'../svg/trash.svg'"></a>
       </div>
     </div>
     <OriginControls />

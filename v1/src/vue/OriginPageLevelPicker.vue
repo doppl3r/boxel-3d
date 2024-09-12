@@ -133,7 +133,7 @@
     <div class="wrapper fade-in">
       <h1>Level<strong>Packs</strong></h1>
       <div class="buttons">
-        <a class="button top-left" @click="exitLevelPicker" title="Exit to home (ESC)"><img src="/svg/home.svg"></a>
+        <a class="button top-left" @click="exitLevelPicker" title="Exit to home (ESC)"><img :src="'../svg/home.svg'"></a>
       </div>
       <div class="levels">
         <div class="list">

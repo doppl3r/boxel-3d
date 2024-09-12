@@ -1,20 +1,12 @@
 <script setup>
-  import '../scss/App.scss';
-  import { ref, onMounted } from 'vue';
-  import { App } from '../js/App.js';
-  import UI from './UI.vue';
+  import { onMounted } from 'vue';
 
-  // Initialize app and expose to window scope
-  var canvas = ref();
-  var app = window.app = new App();
-
-  // Initialize app after canvas has been mounted
+  // Redirect app after loading
   onMounted(function() {
-    app.init(canvas.value);
+    location.replace('v1/index.html')
   });
 </script>
 
 <template>
-  <canvas ref="canvas"></canvas>
-  <UI />
+  
 </template>

@@ -1,0 +1,26 @@
+{
+  "background-city": {
+    "url": "../glb/background-city.glb"
+  },
+  "background-classic": {
+    "url": "../glb/background-classic.glb"
+  },
+  "background-desert": {
+    "url": "../glb/background-desert.glb"
+  },
+  "background-forest": {
+    "url": "../glb/background-forest.glb"
+  },
+  "background-hell": {
+    "url": "../glb/background-hell.glb"
+  },
+  "background-kargoh": {
+    "url": "../glb/background-kargoh.glb"
+  },
+  "background-tokyo": {
+    "url": "../glb/background-tokyo.glb"
+  },
+  "cube-control": {
+    "url": "../glb/cube-control.glb"
+  }
+}

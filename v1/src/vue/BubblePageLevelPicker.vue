@@ -158,7 +158,7 @@
 <template>
   <div class="page">
     <div class="background">
-      <img src="/svg/background-purple.svg">
+      <img :src="'../svg/background-purple.svg'">
     </div>
     <div class="nav">
       <a class="button fade-in" @click="exitLevelPicker" title="Exit to home (ESC)">

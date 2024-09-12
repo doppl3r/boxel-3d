@@ -10,7 +10,7 @@
   var message = ref('Tiny Tycoon is now available on Google Chrome!'); // Optional: getRandomMessage()
 
   async function updateVersion() {
-    var response = await fetch('./manifest.json');
+    var response = await fetch('../manifest.json');
     var json = await response.json();
     manifest.value = json;
     version.value = json.version;
@@ -112,19 +112,19 @@
     <div class="background-cubes"></div>
     <a class="version fade-in" @click="showChangelog">v{{ version }}</a>
     <div class="wrapper fade-in">
-      <img src="/svg/logo-white.svg" class="logo">
+      <img :src="'../svg/logo-white.svg'" class="logo">
       <div class="message-bar" @click="openMessageLink">
-        <div class="message"><img class="google-icon" src="/svg/google-icon.svg" /> <span class="message-text" v-html="message"></span></div>
+        <div class="message"><img class="google-icon" :src="'../svg/google-icon.svg'" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
-        <a class="button top-right three" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img src="/svg/grow.svg"></a>
-        <a class="button top-right two" @click="showAccountOptions" title="Account"><img src="/svg/cloud-check.svg"></a>
+        <a class="button top-right three" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img :src="'../svg/grow.svg'"></a>
+        <a class="button top-right two" @click="showAccountOptions" title="Account"><img :src="'../svg/cloud-check.svg'"></a>
         <OriginButtonSettings class="button top-right" />
-        <a class="button" @click="$emit('setPage', 'level-manager')" tabindex="0"><span>Level Maker</span> <img src="/svg/pencil.svg"></a>
-        <a class="button" @click="$emit('setPage', 'skins')" tabindex="0"><span>Skins</span> <img src="/svg/smile.svg"></a>
-        <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img src="/svg/play.svg"></a>
+        <a class="button" @click="$emit('setPage', 'level-manager')" tabindex="0"><span>Level Maker</span> <img :src="'../svg/pencil.svg'"></a>
+        <a class="button" @click="$emit('setPage', 'skins')" tabindex="0"><span>Skins</span> <img :src="'../svg/smile.svg'"></a>
+        <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img :src="'../svg/play.svg'"></a>
       </div>
     </div>
-    <a class="review fade-in" @click="openReviewLink"><img src="/svg/heart.svg">Write a review</a>
+    <a class="review fade-in" @click="openReviewLink"><img :src="'../svg/heart.svg'">Write a review</a>
   </div>
 </template>

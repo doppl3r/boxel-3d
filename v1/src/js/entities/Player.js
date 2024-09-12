@@ -310,7 +310,7 @@ class Player extends Cube {
     // Check if skin URL exists
     if (skin.url) {
       // Fix public path (v2.2.3+)
-      skin.url = skin.url.replace('img/png/skins/', 'png/');
+      skin.url = skin.url.replace('img/png/skins/', '../png/');
 
       // Load texture using url
       var loader = new TextureLoader();
