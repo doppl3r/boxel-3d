@@ -25,12 +25,12 @@ class Game {
     this.assets.load('../json/');
   }
 
-  update(data) {
+  update(data = { delta: 1 / 60 }) {
     // Update world physics
-    this.physics.update(data.delta, data.alpha);
+    this.physics.update(data.delta);
   }
 
-  render(data) {
+  render(data = { delta: 1 / 60, alpha: 0 }) {
     this.physics.render(data.delta, data.alpha);
 
     // Render graphics
@@ -47,7 +47,7 @@ class Game {
     this.graphics.scene.add(this.level);
 
     // Start generic level
-    this.loadLevel('Campaign Level 8');
+    this.loadLevel('Campaign Level 1');
 
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics
