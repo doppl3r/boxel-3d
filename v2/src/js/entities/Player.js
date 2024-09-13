@@ -14,9 +14,7 @@ class Player extends Cube {
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
       collisionEventStart: function(e) { e.target.checkCollision(e); },
-      collisionEventEnd: function(e) {},
-      jumpForce: 30,
-      moveForce: 5
+      collisionEventEnd: function(e) {}
     }, options);
 
     // Inherit Cube class
@@ -30,10 +28,6 @@ class Player extends Cube {
     this.keys = {};
     this.pointer = {}
     this.jumpCount = 0;
-    this.jumpForce = options.jumpForce;
-    this.moveForce = options.moveForce;
-    this.force = new Vector3();
-    this.velocity = new Vector3();
 
     // Create camera with offset property
     this.camera = CameraFactory.create('perspective');
@@ -72,11 +66,12 @@ class Player extends Cube {
     if (this.jumpCount > 0) {
       this.jumpCount--;
 
-      // Reset player falling velocity
-      this.velocity.copy(this.rigidBody.linvel());
-      this.velocity.y = 0;
-      this.rigidBody.setLinvel(this.velocity);
-      this.rigidBody.applyImpulse({ x: 0, y: this.jumpForce * this.rigidBody.mass(), z: 0 }, true);
+      const speed = 30;
+      const mass = this.rigidBody.mass();
+      const gravity = game.physics.world.gravity;
+
+      // Add impulse value using gravity as the normal
+      this.applyImpulseFromNormal({ x: 0, y: -speed * mass, z: 0 }, game.physics.world.gravity);
     }
   }
 
