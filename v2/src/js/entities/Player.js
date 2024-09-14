@@ -64,14 +64,12 @@ class Player extends Cube {
 
   jump() {
     if (this.jumpCount > 0) {
-      this.jumpCount--;
-
       const speed = 30;
       const mass = this.rigidBody.mass();
-      const gravity = game.physics.world.gravity;
-
+      
       // Add impulse value using gravity as the normal
-      this.applyImpulseFromNormal({ x: 0, y: -speed * mass, z: 0 }, game.physics.world.gravity);
+      this.applyImpulseFromNormal({ x: 0, y: speed * mass, z: 0 }, game.physics.world.gravity);
+      this.jumpCount--;
     }
   }
 

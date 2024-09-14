@@ -29,16 +29,15 @@ class Gravity extends Cube {
   }
 
   setGravity(e) {
-    var quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
-    var rotation = new Euler().setFromQuaternion(quaternion);
     var gravity = new Vector3().copy(game.physics.world.gravity);
+    var length = gravity.length();
+    var quaternion = new Quaternion().copy(this.rigidBody.rotation());
+    var euler = new Euler().setFromQuaternion(quaternion);
+    var angle = -((Math.PI / 2) - euler.z);
 
-    // TODO: Fix gravity not rotating correctly
-    gravity.applyAxisAngle({ x: 0, y: 0, z: 1 }, rotation.z);
-    
-    // Update world gravity
-    game.physics.world.gravity.x = gravity.x;
-    game.physics.world.gravity.y = gravity.y;
+    // Update gravity using entity angle
+    game.physics.world.gravity.x = length * Math.cos(angle);
+    game.physics.world.gravity.y = length * Math.sin(angle);
   }
 }
 
