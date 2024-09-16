@@ -7,7 +7,6 @@
   // Initialize variables
   var credit = ref('');
   var isClosed = ref(true); // Popup animation state
-  var scores = app.storage.getScores();
   var record = ref();
 
   // Add event listener(s)
@@ -52,6 +51,7 @@
 
   function popupOpened() {
     isClosed.value = false;
+    getCurrentScore(); // Refresh record score
   }
   
   function popupClosed() {
@@ -116,7 +116,7 @@
 
   function getCurrentScore() {
     var name = app.level.name;
-    var score = scores[name];
+    var score = app.storage.getScores()[name];
     if (score) {
       record.value = app.timer.toHTML(score);
     }
