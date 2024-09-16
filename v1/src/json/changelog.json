@@ -426,7 +426,8 @@
   {
     "version": "2.2.5",
     "revisions": [
-      "Fix \"The Arcadium\" community level"
+      "Fix \"The Arcadium\" community level",
+      "Fix high score UI bug"
     ]
   }
 ]

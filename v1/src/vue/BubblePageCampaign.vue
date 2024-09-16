@@ -51,11 +51,11 @@
 
   function popupOpened() {
     isClosed.value = false;
-    getCurrentScore(); // Refresh record score
   }
   
   function popupClosed() {
     isClosed.value = true;
+    getCurrentScore(); // Refresh record score
   }
 
   function settingsOpened() {
