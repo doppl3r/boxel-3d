@@ -66,9 +66,13 @@ class Player extends Cube {
     if (this.jumpCount > 0) {
       const magnitude = 30;
       const mass = this.rigidBody.mass();
+      const force = new Vector3(0, magnitude * mass, 0);
+      const gravity = game.physics.world.gravity;
+      const angle = Math.atan2(gravity.y, gravity.x) + (Math.PI / 2);
       
-      // Add impulse value using gravity as the normal
-      this.applyImpulseFromNormal({ x: 0, y: magnitude * mass, z: 0 }, game.physics.world.gravity);
+      // Update velocity and apply jump
+      this.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
+      this.applyImpulseAtAngle(force, angle); // Jump
       this.jumpCount--;
     }
   }
