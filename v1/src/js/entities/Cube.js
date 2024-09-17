@@ -76,6 +76,7 @@ class Cube extends Mesh {
     if (this.helper && this.helper.visible == true) {
       this.helper.position.x = this.body.position.x;
       this.helper.position.y = -this.body.position.y;
+      this.helper.position.z = this.position.z;
       this.helper.rotation.z = -this.body.anglePrev;
       this.helper.scale.copy(this.scale).multiplyScalar(1);
     }
