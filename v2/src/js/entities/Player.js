@@ -71,7 +71,7 @@ class Player extends Cube {
       const angle = Math.atan2(gravity.y, gravity.x) + (Math.PI / 2);
       
       // Update velocity and apply jump
-      this.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
+      this.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, -angle); // Cancel y-velocity
       this.applyImpulseAtAngle(force, angle); // Jump
       this.jumpCount--;
     }
