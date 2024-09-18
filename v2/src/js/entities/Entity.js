@@ -219,11 +219,23 @@ class Entity extends EventDispatcher {
 
   applyVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
     // Rotate and apply velocity at an angle
-    const velocity = new Vector3().copy(this.rigidBody.linvel());
-    velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
-    velocity.multiply(force);
+    var velocity = new Vector3().copy(this.rigidBody.linvel());
     velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
+    velocity.multiply(force);
+    velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
     this.rigidBody.setLinvel(velocity, true);
+  }
+
+  applyTorqueImpulseAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
+    var velocity = new Vector3().copy(this.rigidBody.linvel());
+    var direction = 1;
+
+    // Rotate velocity before computing direction
+    velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
+    direction *= -Math.sign(Math.round(velocity.x)); // -1, 0, or 1
+    force = new Vector3().copy(force);
+    force.multiplyScalar(direction);
+    this.rigidBody.applyTorqueImpulse(force, true);
   }
 
   applyImpulseAtAngle(force = { x: 0, y: 0, z: 0 }, angle) {
