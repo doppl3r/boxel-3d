@@ -8,7 +8,7 @@ class Finish extends Cube {
   constructor(options = {}) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { game.loop.stop(); game.render(); console.log('Finish selected!'); },
+      collisionEventStart: function(e) { console.log('Finish selected!'); },
       collisionEventEnd: function(e) {}
     }, options);
 

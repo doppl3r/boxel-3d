@@ -149,8 +149,20 @@ class Entity extends EventDispatcher {
     }
   }
 
+  getPosition() {
+    if (this.rigidBody == null) return this.object.position;
+    else if (this.rigidBody.isKinematic()) return this.rigidBody.nextTranslation()
+    else return this.rigidBody.translation();
+  }
+
   setPosition(position) {
     if (this.rigidBody) this.rigidBody.setTranslation(position);
+  }
+
+  getRotation() {
+    if (this.rigidBody == null) return this.object.quaternion;
+    else if (this.rigidBody.isKinematic()) return this.rigidBody.nextRotation()
+    else return this.rigidBody.rotation();
   }
 
   setRotation(quaternion) {
@@ -211,7 +223,7 @@ class Entity extends EventDispatcher {
     velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
     velocity.multiply(force);
     velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
-    this.rigidBody.setLinvel(velocity);
+    this.rigidBody.setLinvel(velocity, true);
   }
 
   applyImpulseAtAngle(force = { x: 0, y: 0, z: 0 }, angle) {
