@@ -226,7 +226,7 @@ class Entity extends EventDispatcher {
     this.rigidBody.setLinvel(velocity, true);
   }
 
-  applyTorqueImpulseAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
+  setAngularVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
     var velocity = new Vector3().copy(this.rigidBody.linvel());
     var direction = 1;
 
@@ -235,7 +235,7 @@ class Entity extends EventDispatcher {
     direction *= -Math.sign(Math.round(velocity.x)); // -1, 0, or 1
     force = new Vector3().copy(force);
     force.multiplyScalar(direction);
-    this.rigidBody.applyTorqueImpulse(force, true);
+    this.rigidBody.setAngvel(force, true);
   }
 
   applyImpulseAtAngle(force = { x: 0, y: 0, z: 0 }, angle) {
