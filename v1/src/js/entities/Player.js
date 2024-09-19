@@ -84,8 +84,8 @@ class Player extends Cube {
       if (force > 0) dx = Math.max(vX, Math.min(vX + force, 4)) - vX;
       else dx = Math.min(vX, Math.max(vX + force, -4)) - vX;
       var d = {x: dx * direction.x, y: dx * direction.y};
-      this.body.positionPrev.x = this.body.position.x - (this.body.velocity.x + d.x);
-      this.body.positionPrev.y = this.body.position.y - (this.body.velocity.y + d.y);
+      this.body.positionPrev.x = this.body.position.x - (velocity.x + d.x);
+      this.body.positionPrev.y = this.body.position.y - (velocity.y + d.y);
     }
   }
 

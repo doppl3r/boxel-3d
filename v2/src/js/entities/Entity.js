@@ -47,7 +47,7 @@ class Entity extends EventDispatcher {
 
   update(delta) {
     // Take a snapshot every time the entity is updated
-    if (this.rigidBody) this.takeSnapshot();
+    this.takeSnapshot();
 
     // Dispatch update event to listeners
     this.dispatchEvent({ type: 'updated' });

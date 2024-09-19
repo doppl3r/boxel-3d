@@ -15,12 +15,6 @@ class Direction extends Cube {
 
     // Inherit Character class
     super(options);
-
-    this.force = new Vector3();
-    this.magnitude = 4;
-    this.quaternion = new Quaternion();
-    this.euler = new Euler();
-    this.angle = 0;
   }
 
   update(delta) {
@@ -35,17 +29,20 @@ class Direction extends Cube {
 
   setDirection(e) {
     var force = new Vector3(1, 0, 0); // Default "right"
-    var magnitude = 40;
+    var magnitude = 10;
     var quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
     var euler = new Euler().setFromQuaternion(quaternion);
-    var angle = -(euler.z);
+    var angle = euler.z;
     
     // Update force using target entity angle
     force.x = magnitude * Math.cos(angle);
     force.y = magnitude * Math.sin(angle);
 
-    // TODO: Add constant force with max speed limit
-    //e.pair.rigidBody.addForce(force, true);
+    // Add event listener to target
+    e.pair.rigidBody.resetForces(true);
+    e.pair.rigidBody.addForce(force, true);
+
+    // TODO: Clamp velocity
   }
 }
 
