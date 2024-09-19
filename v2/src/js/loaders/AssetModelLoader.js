@@ -27,7 +27,7 @@ class AssetModelLoader extends GLTFLoader {
         
       },
       function(error) {
-        console.error(error);
+        console.error('Error: Model name "' + key + '" not found. Does it exist in \'public/json/models.json\'?');
       });
     }
   }

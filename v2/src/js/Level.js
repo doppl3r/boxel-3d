@@ -17,7 +17,7 @@ class Level extends Group {
       throw new Error('Something went wrong');
     })
     .then(function(json) { callback(this.loadJSON(json)); }.bind(this))
-    .catch(function(error) { console.error(error); return false; });
+    .catch(function(error) { console.error('Error: Level \'' + path + '\' not found.'); return false; });
   }
 
   loadJSON(json) {

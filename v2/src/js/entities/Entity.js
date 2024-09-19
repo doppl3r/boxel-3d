@@ -48,6 +48,9 @@ class Entity extends EventDispatcher {
   update(delta) {
     // Take a snapshot every time the entity is updated
     if (this.rigidBody) this.takeSnapshot();
+
+    // Dispatch update event to listeners
+    this.dispatchEvent({ type: 'updated' });
   }
 
   render(delta, alpha) {
@@ -245,6 +248,11 @@ class Entity extends EventDispatcher {
     this.rigidBody.applyImpulse(force, true);
   }
 
+  getSpeed() {
+    if (this.rigidBody == null) return 0;
+    return _vector.copy(this.rigidBody.linvel()).length();
+  }
+
   toJSON() {
     var json = {
       class: this.constructor.name,
@@ -285,5 +293,8 @@ class Entity extends EventDispatcher {
     }
   }
 }
+
+// Assign local helper components
+const _vector = new Vector3();
 
 export { Entity };

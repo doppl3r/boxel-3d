@@ -12,15 +12,14 @@ class Level extends Group {
   }
 
   addObject(object, a) {
-    World.add(a.engine.world, object.body); // Add hitbox to world
-
     // Update body state (-1 == active physics)
-    if (object.position.z == 0) object.body.collisionFilter.mask = -1;
-    else object.body.collisionFilter.mask = 0; // Disable physics
-
+    if (object.position.z == 0) {
+      World.add(a.engine.world, object.body); // Add hitbox to world
+      this.parent.add(object.helper);
+    }
+    
     // Add to group
     this.add(object);
-    this.parent.add(object.helper);
   }
 
   removeObject(object, a, override = false) {

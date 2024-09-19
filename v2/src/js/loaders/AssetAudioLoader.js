@@ -27,7 +27,13 @@ class AssetAudioLoader extends AudioLoader {
         
         // Cache audio asset to the manager
         this.manager.cache[key] = audio;
-      }.bind(this));
+      }.bind(this),
+      function(xhr) {
+        
+      },
+      function(err) {
+        console.error('Error: Audio name "' + key + '" not found. Does it exist in \'public/json/audio.json\'?');
+      });
     }
   }
 
