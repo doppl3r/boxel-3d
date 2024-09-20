@@ -47,7 +47,7 @@ class Game {
     this.graphics.scene.add(this.level);
 
     // Start generic level
-    this.loadLevel('Campaign Level 21');
+    this.loadLevel('Direction Test');
 
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics

@@ -1,4 +1,4 @@
-import { EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
+import { Euler, EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
 import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
 
 /*
@@ -36,6 +36,10 @@ class Entity extends EventDispatcher {
     this.takeSnapshot();
     this.lerp(1);
 
+    // Define local force values
+    this.force = new Vector3();
+    this.forceLimit = Infinity;
+
     // Bind "this" context to class function (required for event removal)
     this.onCollision = this.onCollision.bind(this);
     this.onRemoved = this.onRemoved.bind(this);
@@ -48,6 +52,9 @@ class Entity extends EventDispatcher {
   update(delta) {
     // Take a snapshot every time the entity is updated
     this.takeSnapshot();
+
+    // Check local force
+    this.updateForce();
 
     // Dispatch update event to listeners
     this.dispatchEvent({ type: 'updated' });
@@ -246,6 +253,30 @@ class Entity extends EventDispatcher {
     force = new Vector3().copy(force);
     force.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
     this.rigidBody.applyImpulse(force, true);
+  }
+
+  setForce(force = { x: 0, y: 0, z: 0 }, limit = Infinity) {
+    this.force.copy(force);
+    this.forceLimit = limit;
+  }
+
+  updateForce() {
+    // Check if force exists
+    if (this.force.length() > 0) {
+      _vector.copy(this.rigidBody.linvel());
+      const angle = Math.atan2(this.force.y, this.force.x);
+
+      // Rotate vector by the force angle
+
+      // TODO: This works horizontal, but not vertically
+      _vector.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
+      _vector.x = _vector.x + Math.abs(this.force.x);
+      _vector.x = Math.max(-this.forceLimit, Math.min(this.forceLimit, _vector.x));
+      _vector.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
+
+      // Update velocity with new force
+      this.rigidBody.setLinvel(_vector);
+    }
   }
 
   getSpeed() {

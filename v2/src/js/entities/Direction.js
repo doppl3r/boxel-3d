@@ -29,20 +29,18 @@ class Direction extends Cube {
 
   setDirection(e) {
     var force = new Vector3(1, 0, 0); // Default "right"
-    var magnitude = 10;
+    var speed = 0.25;
+    var limit = 14;
     var quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
     var euler = new Euler().setFromQuaternion(quaternion);
     var angle = euler.z;
     
     // Update force using target entity angle
-    force.x = magnitude * Math.cos(angle);
-    force.y = magnitude * Math.sin(angle);
-
-    // Add event listener to target
-    e.pair.rigidBody.resetForces(true);
-    e.pair.rigidBody.addForce(force, true);
+    force.x = speed * Math.cos(angle);
+    force.y = speed * Math.sin(angle);
 
     // TODO: Clamp velocity
+    e.pair.setForce(force, limit);
   }
 }
 
