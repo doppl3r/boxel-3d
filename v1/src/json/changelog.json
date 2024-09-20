@@ -430,5 +430,11 @@
       "Fixed \"The Arcadium\" community level",
       "Fixed high score UI bug"
     ]
+  },
+  {
+    "version": "2.2.6",
+    "revisions": [
+      "Added more snap options to level editor"
+    ]
   }
 ]

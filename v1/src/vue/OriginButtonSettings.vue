@@ -14,7 +14,12 @@
     // Add more options for the level maker
     if (app.state == 'level-manager' || app.state == 'level-editor') {
       inputs.push(
-        { label: 'Editor Snap', name: 'snap', type: 'range', min: 1, max: 8, step: 7, value: settings.snap, callback: function(e) { updateSettings('snap', e.target.value); }},
+        { label: 'Editor Snap', name: 'snap', type: 'range', min: 0, max: 16, step: 4, value: settings.snap, callback: function(e) {
+          var snap = Number(e.target.value);
+          if (snap == 0) snap = 1;
+          e.target.title = snap;
+          updateSettings('snap', snap);
+        }},
       );
     }
     else if (app.state == 'campaign') {
