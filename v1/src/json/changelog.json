@@ -426,8 +426,9 @@
   {
     "version": "2.2.5",
     "revisions": [
-      "Fix \"The Arcadium\" community level",
-      "Fix high score UI bug"
+      "Added 5 new community levels",
+      "Fixed \"The Arcadium\" community level",
+      "Fixed high score UI bug"
     ]
   }
 ]
