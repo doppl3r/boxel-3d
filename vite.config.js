@@ -19,6 +19,13 @@ export default defineConfig({
       treeshake: false
     }
   },
+  css: {
+    preprocessorOptions : {
+      scss: {
+        api: "modern",
+      }        
+    } 
+  },
   plugins: [
     topLevelAwait(),
     vue(),

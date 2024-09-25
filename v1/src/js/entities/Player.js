@@ -76,16 +76,25 @@ class Player extends Cube {
     if (this.mode == 'control') {
       // Original credit: https://github.com/Charlieee1/
       var velocity = this.body.velocity;
-      var gravity = app.engine.world.gravity;
-      var direction = { x: gravity.y, y: -gravity.x };
-      var vX = Vector.dot(direction, velocity);
-      var dx = 0;
-      var force = .5 * (this.controls.left + this.controls.right);
-      if (force > 0) dx = Math.max(vX, Math.min(vX + force, 4)) - vX;
-      else dx = Math.min(vX, Math.max(vX + force, -4)) - vX;
-      var d = {x: dx * direction.x, y: dx * direction.y};
-      this.body.positionPrev.x = this.body.position.x - (velocity.x + d.x);
-      this.body.positionPrev.y = this.body.position.y - (velocity.y + d.y);
+      var gravity = app.engine.world.gravity; // { x: 0, y: 1 }
+      var perpendicularForce = { x: gravity.y, y: -gravity.x }; // { x: 1, y: 0 }
+      var maxSpeed = 4;
+      var acceleration = 0.5;
+      var dot = Vector.dot(velocity, perpendicularForce);
+      var speed = acceleration * (this.controls.left + this.controls.right);
+      var inputDirection = 0; // -0.5 to +0.5
+
+      if (speed > 0) {
+        inputDirection = Math.max(dot, Math.min(dot + speed, maxSpeed)) - dot;
+      }
+      else {
+        inputDirection = Math.min(dot, Math.max(dot + speed, -maxSpeed)) - dot;
+      }
+
+      // Update velocity using new force
+      velocity.x += inputDirection * perpendicularForce.x;
+      velocity.y += inputDirection * perpendicularForce.y;
+      Body.setVelocity(this.body, velocity);
     }
   }
 
@@ -334,5 +343,7 @@ class Player extends Cube {
     }
   }
 }
+
+const _vector = new Vector2();
 
 export { Player };
