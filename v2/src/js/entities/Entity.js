@@ -38,8 +38,8 @@ class Entity extends EventDispatcher {
 
     // Define local force values
     this.force = new Vector3();
-    this.forceSpeed = 1;
-    this.forceMax = Infinity;
+    this.forceAcceleration = 1;
+    this.forceMaxSpeed = Infinity;
 
     // Bind "this" context to class function (required for event removal)
     this.onCollision = this.onCollision.bind(this);
@@ -256,10 +256,10 @@ class Entity extends EventDispatcher {
     this.rigidBody.applyImpulse(force, true);
   }
 
-  setForce(force = { x: 0, y: 0, z: 0 }, speed = 1, max = Infinity) {
+  setForce(force = { x: 0, y: 0, z: 0 }, acceleration = 1, max = Infinity) {
     this.force.copy(force);
-    this.forceSpeed = speed;
-    this.forceMax = max;
+    this.forceAcceleration = acceleration;
+    this.forceMaxSpeed = max;
   }
 
   updateForce() {
@@ -269,8 +269,8 @@ class Entity extends EventDispatcher {
       _dot = _vector.dot(this.force);
 
       // Set next acceleration
-      let acceleration = Math.max(_dot, Math.min(_dot + this.forceSpeed, this.forceMax)) - _dot; // -0.5 to +0.5
-
+      let acceleration = Math.max(_dot, Math.min(_dot + this.forceAcceleration, this.forceMaxSpeed)) - _dot; // -0.5 to +0.5
+      
       // Update velocity using new force
       _vector.x += acceleration * this.force.x;
       _vector.y += acceleration * this.force.y;

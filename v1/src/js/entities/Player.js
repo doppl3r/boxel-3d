@@ -19,7 +19,7 @@ class Player extends Cube {
     this.mass = 5;
     this.allowJump = false;
     this.addLight('#dc265a', 16000, 500, false);
-    this.controls = { left: 0, right: 0, acceleration: 1, speed: 4 };
+    this.controls = { left: 0, right: 0, acceleration: 0.5, speed: 4 };
     this.rope = new Rope();
     this.skin = { url: '' };
 
@@ -76,24 +76,24 @@ class Player extends Cube {
     if (this.mode == 'control') {
       // Original credit: https://github.com/Charlieee1/
       var velocity = this.body.velocity;
-      var gravity = app.engine.world.gravity; // { x: 0, y: 1 }
-      var perpendicularForce = { x: gravity.y, y: -gravity.x }; // { x: 1, y: 0 }
+      var gravity = app.engine.world.gravity; // Ex: { x: 0, y: 1 }
+      var force = { x: gravity.y, y: -gravity.x }; // Ex: { x: 1, y: 0 }
       var maxSpeed = 4;
-      var acceleration = 0.5;
-      var dot = Vector.dot(velocity, perpendicularForce);
-      var speed = acceleration * (this.controls.left + this.controls.right);
-      var inputDirection = 0; // -0.5 to +0.5
+      var dot = Vector.dot(velocity, force);
+      var acceleration = this.controls.acceleration * (this.controls.left + this.controls.right);
+      var accelerationNew = 0; // -0.5 to +0.5
 
-      if (speed > 0) {
-        inputDirection = Math.max(dot, Math.min(dot + speed, maxSpeed)) - dot;
+      // Calculate new acceleration
+      if (acceleration > 0) {
+        accelerationNew = Math.max(dot, Math.min(dot + acceleration, maxSpeed)) - dot;
       }
       else {
-        inputDirection = Math.min(dot, Math.max(dot + speed, -maxSpeed)) - dot;
+        accelerationNew = Math.min(dot, Math.max(dot + acceleration, -maxSpeed)) - dot;
       }
 
       // Update velocity using new force
-      velocity.x += inputDirection * perpendicularForce.x;
-      velocity.y += inputDirection * perpendicularForce.y;
+      velocity.x += accelerationNew * force.x;
+      velocity.y += accelerationNew * force.y;
       Body.setVelocity(this.body, velocity);
     }
   }
