@@ -38,7 +38,8 @@ class Entity extends EventDispatcher {
 
     // Define local force values
     this.force = new Vector3();
-    this.forceLimit = Infinity;
+    this.forceSpeed = 1;
+    this.forceMax = Infinity;
 
     // Bind "this" context to class function (required for event removal)
     this.onCollision = this.onCollision.bind(this);
@@ -255,24 +256,24 @@ class Entity extends EventDispatcher {
     this.rigidBody.applyImpulse(force, true);
   }
 
-  setForce(force = { x: 0, y: 0, z: 0 }, limit = Infinity) {
+  setForce(force = { x: 0, y: 0, z: 0 }, speed = 1, max = Infinity) {
     this.force.copy(force);
-    this.forceLimit = limit;
+    this.forceSpeed = speed;
+    this.forceMax = max;
   }
 
   updateForce() {
     // Check if force exists
     if (this.force.length() > 0) {
       _vector.copy(this.rigidBody.linvel());
-      const angle = Math.atan2(this.force.y, this.force.x);
+      _dot = _vector.dot(this.force);
 
-      // Rotate vector by the force angle
+      // Set next acceleration
+      let acceleration = Math.max(_dot, Math.min(_dot + this.forceSpeed, this.forceMax)) - _dot; // -0.5 to +0.5
 
-      // TODO: This works horizontal, but not vertically
-      _vector.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
-      _vector.x = _vector.x + Math.abs(this.force.x);
-      _vector.x = Math.max(-this.forceLimit, Math.min(this.forceLimit, _vector.x));
-      _vector.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
+      // Update velocity using new force
+      _vector.x += acceleration * this.force.x;
+      _vector.y += acceleration * this.force.y;
 
       // Update velocity with new force
       this.rigidBody.setLinvel(_vector);
@@ -326,6 +327,7 @@ class Entity extends EventDispatcher {
 }
 
 // Assign local helper components
-const _vector = new Vector3();
+let _vector = new Vector3();
+let _dot = 0.0;
 
 export { Entity };
