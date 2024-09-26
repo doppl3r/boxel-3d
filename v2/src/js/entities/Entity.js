@@ -266,14 +266,15 @@ class Entity extends EventDispatcher {
     // Check if force exists
     if (this.forceDirection.length() > 0) {
       _vector.copy(this.rigidBody.linvel());
-      const intensity = _vector.dot(this.forceDirection);
-      const speedNext = intensity + this.forceAcceleration; // Ex: 0.5 to 4.5
-      const speedClamped = Math.max(intensity, Math.min(speedNext, this.forceSpeedMax));
-      const acceleration = speedClamped - intensity; // Ex: 0.5 or 0 at max speed
+      const speed = _vector.dot(this.forceDirection);
+      const speedNext = speed + this.forceAcceleration; // Ex: 0.5 to 4.5
+      const speedClamped = Math.max(speed, Math.min(speedNext, this.forceSpeedMax));
+      const acceleration = speedClamped - speed; // Ex: 0.5 (or 0 at max speed)
       
       // Update velocity using new force
       _vector.x += this.forceDirection.x * acceleration;
       _vector.y += this.forceDirection.y * acceleration;
+      _vector.z += this.forceDirection.z * acceleration;
       this.rigidBody.setLinvel(_vector);
     }
   }

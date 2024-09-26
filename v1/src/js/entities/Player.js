@@ -79,11 +79,11 @@ class Player extends Cube {
       var direction = (this.controls.left + this.controls.right); // -1, 0, 1
       var force = { x: gravity.y * direction, y: -gravity.x * direction };
       var velocity = this.body.velocity;
-      var intensity = Vector.dot(velocity, force);
+      var speed = Vector.dot(velocity, force);
       var speedMax = 4;
-      var speedNext = intensity + this.controls.acceleration;
-      var speedClamped = Math.max(intensity, Math.min(speedNext, speedMax));
-      var acceleration = speedClamped - intensity; // Acceleration value (ex: 0.5) or 0 at max speed
+      var speedNext = speed + this.controls.acceleration; // Ex: 0.5 to 4.5
+      var speedClamped = Math.max(speed, Math.min(speedNext, speedMax));
+      var acceleration = speedClamped - speed; // Ex: 0.5 (or 0 at max speed)
 
       // Update velocity using new force
       velocity.x += force.x * acceleration;
