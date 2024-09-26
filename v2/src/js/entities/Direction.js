@@ -28,17 +28,17 @@ class Direction extends Cube {
   }
 
   setDirection(e) {
-    var force = new Vector3(1, 0, 0); // Default "right"
+    var direction = new Vector3(1, 0, 0); // Default "right"
     var quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
     var euler = new Euler().setFromQuaternion(quaternion);
     var angle = euler.z;
     
-    // Update force using target entity angle
-    force.x = Math.cos(angle);
-    force.y = Math.sin(angle);
+    // Update direction using target entity angle
+    direction.x = Math.cos(angle);
+    direction.y = Math.sin(angle);
 
-    // Set directional force
-    e.pair.setForce(force, 0.5, 14);
+    // Set force direction
+    e.pair.setForce(direction, 0.5, 14);
   }
 }
 

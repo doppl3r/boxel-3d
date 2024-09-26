@@ -257,7 +257,7 @@ class Entity extends EventDispatcher {
   }
 
   setForce(direction = { x: 0, y: 0, z: 0 }, acceleration = 1, max = Infinity) {
-    this.forceDirection.copy(direction);
+    this.forceDirection.copy(direction).normalize(); // Ex: -1.0 to 1.0
     this.forceAcceleration = acceleration;
     this.forceSpeedMax = max;
   }
@@ -268,7 +268,7 @@ class Entity extends EventDispatcher {
       _vector.copy(this.rigidBody.linvel());
       const intensity = _vector.dot(this.forceDirection);
       const speedNext = intensity + this.forceAcceleration; // Ex: 0.5 to 4.5
-      const speedClamped = Math.max(intensity, Math.min(speedNext, this.forceSpeedMax)); // Ex: -0.5 to +0.5
+      const speedClamped = Math.max(intensity, Math.min(speedNext, this.forceSpeedMax));
       const acceleration = speedClamped - intensity; // Ex: 0.5 or 0 at max speed
       
       // Update velocity using new force
