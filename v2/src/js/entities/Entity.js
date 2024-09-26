@@ -37,9 +37,9 @@ class Entity extends EventDispatcher {
     this.lerp(1);
 
     // Define local force values
-    this.force = new Vector3();
+    this.forceDirection = new Vector3();
     this.forceAcceleration = 1;
-    this.forceMaxSpeed = Infinity;
+    this.forceSpeedMax = Infinity;
 
     // Bind "this" context to class function (required for event removal)
     this.onCollision = this.onCollision.bind(this);
@@ -256,26 +256,24 @@ class Entity extends EventDispatcher {
     this.rigidBody.applyImpulse(force, true);
   }
 
-  setForce(force = { x: 0, y: 0, z: 0 }, acceleration = 1, max = Infinity) {
-    this.force.copy(force);
+  setForce(direction = { x: 0, y: 0, z: 0 }, acceleration = 1, max = Infinity) {
+    this.forceDirection.copy(direction);
     this.forceAcceleration = acceleration;
-    this.forceMaxSpeed = max;
+    this.forceSpeedMax = max;
   }
 
   updateForce() {
     // Check if force exists
-    if (this.force.length() > 0) {
+    if (this.forceDirection.length() > 0) {
       _vector.copy(this.rigidBody.linvel());
-      _dot = _vector.dot(this.force);
-
-      // Set next acceleration
-      let acceleration = Math.max(_dot, Math.min(_dot + this.forceAcceleration, this.forceMaxSpeed)) - _dot; // -0.5 to +0.5
+      const intensity = _vector.dot(this.forceDirection);
+      const speedNext = intensity + this.forceAcceleration; // Ex: 0.5 to 4.5
+      const speedClamped = Math.max(intensity, Math.min(speedNext, this.forceSpeedMax)); // Ex: -0.5 to +0.5
+      const acceleration = speedClamped - intensity; // Ex: 0.5 or 0 at max speed
       
       // Update velocity using new force
-      _vector.x += acceleration * this.force.x;
-      _vector.y += acceleration * this.force.y;
-
-      // Update velocity with new force
+      _vector.x += this.forceDirection.x * acceleration;
+      _vector.y += this.forceDirection.y * acceleration;
       this.rigidBody.setLinvel(_vector);
     }
   }
@@ -328,6 +326,5 @@ class Entity extends EventDispatcher {
 
 // Assign local helper components
 let _vector = new Vector3();
-let _dot = 0.0;
 
 export { Entity };

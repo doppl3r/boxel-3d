@@ -37,7 +37,7 @@ class Direction extends Cube {
     force.x = Math.cos(angle);
     force.y = Math.sin(angle);
 
-    // TODO: Clamp velocity
+    // Set directional force
     e.pair.setForce(force, 0.5, 14);
   }
 }
