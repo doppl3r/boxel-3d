@@ -75,25 +75,19 @@ class Player extends Cube {
   updateControls() {
     if (this.mode == 'control') {
       // Original credit: https://github.com/Charlieee1/
+      var gravity = app.engine.world.gravity;
+      var direction = (this.controls.left + this.controls.right); // -1, 0, 1
+      var force = { x: gravity.y * direction, y: -gravity.x * direction };
       var velocity = this.body.velocity;
-      var gravity = app.engine.world.gravity; // Ex: { x: 0, y: 1 }
-      var force = { x: gravity.y, y: -gravity.x }; // Ex: { x: 1, y: 0 }
-      var maxSpeed = 4;
-      var dot = Vector.dot(velocity, force);
-      var acceleration = this.controls.acceleration * (this.controls.left + this.controls.right);
-      var accelerationNew = 0; // -0.5 to +0.5
-
-      // Calculate new acceleration
-      if (acceleration > 0) {
-        accelerationNew = Math.max(dot, Math.min(dot + acceleration, maxSpeed)) - dot;
-      }
-      else {
-        accelerationNew = Math.min(dot, Math.max(dot + acceleration, -maxSpeed)) - dot;
-      }
+      var intensity = Vector.dot(velocity, force); // Dot product
+      var speedMax = 4;
+      var speedNext = intensity + this.controls.acceleration;
+      var speedClamped = Math.max(intensity, Math.min(speedNext, speedMax));
+      var acceleration = speedClamped - intensity; // Acceleration value (ex: 0.5) or 0 at max speed
 
       // Update velocity using new force
-      velocity.x += accelerationNew * force.x;
-      velocity.y += accelerationNew * force.y;
+      velocity.x += acceleration * force.x;
+      velocity.y += acceleration * force.y;
       Body.setVelocity(this.body, velocity);
     }
   }
