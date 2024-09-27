@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshStandardMaterial } from 'three';
+import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
 import { Cuboid } from '@dimforge/rapier3d';
 import { Entity } from './Entity.js';
 
@@ -51,6 +51,15 @@ class Cube extends Entity {
     if (this.model && this.model.mixer) {
       this.model.mixer.update(delta);
     }
+  }
+  
+  setScale(scale) {
+    var collider = this.colliders.entries().next().value[1];
+    var halfExtents = new Vector3().copy(scale).divideScalar(2);
+
+    // Update collider and 3D object scale
+    collider.setHalfExtents(halfExtents);
+    this.object.scale.copy(scale);
   }
 }
 

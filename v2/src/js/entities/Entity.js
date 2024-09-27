@@ -1,4 +1,4 @@
-import { Euler, EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
+import { EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
 import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
 
 /*
@@ -178,6 +178,15 @@ class Entity extends EventDispatcher {
 
   setRotation(quaternion) {
     if (this.rigidBody) this.rigidBody.setRotation(quaternion);
+  }
+
+  getScale() {
+    return this.object.scale;
+  }
+
+  setScale(scale) {
+    // Colliders cannot be resized directly 
+    this.object.scale.copy(scale);
   }
 
   takeSnapshot() {
