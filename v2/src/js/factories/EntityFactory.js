@@ -12,6 +12,7 @@ import { Resize } from '../entities/Resize';
 import { Sphere } from '../entities/Sphere';
 import { Spike } from '../entities/Spike';
 import { Tip } from '../entities/Tip';
+import { TriMesh } from '../entities/TriMesh';
 
 /*
   This class creates new entity instances that are compatible
@@ -84,6 +85,10 @@ class EntityFactory {
 
   static createTip(options) {
     return new Tip(options);
+  }
+
+  static createTriMesh(options) {
+    return new TriMesh(options);
   }
 }
 
