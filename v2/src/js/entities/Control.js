@@ -8,7 +8,7 @@ class Control extends Cube {
   constructor(options = {}) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { console.log('Control selected!'); },
+      collisionEventStart: function(e) { e.target.setMode(e); },
       collisionEventEnd: function(e) {},
       isSensor: true
     }, options);
@@ -25,6 +25,11 @@ class Control extends Cube {
   render(delta, alpha) {
     // Call Entity render function
     super.render(delta, alpha);
+  }
+
+  setMode(e) {
+    // Safely dispatch event to listener (ex: Player)
+    e.pair.dispatchEvent({ type: 'setmode', mode: 'control' })
   }
 }
 

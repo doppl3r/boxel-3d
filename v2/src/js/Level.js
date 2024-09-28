@@ -65,17 +65,6 @@ class Level extends Group {
       entities.push(entity);
     }.bind(this));
 
-    var beach = EntityFactory.create({
-      class: 'TriMesh',
-      friction: 0,
-      model: game.assets.duplicate('background-tropic'),
-      position: { x: 12, y: -3, z: -1 },
-      type: 'Fixed'
-    });
-
-    this.add(beach.object);
-    entities.push(beach);
-
     // Return array of entities
     return entities;
   }

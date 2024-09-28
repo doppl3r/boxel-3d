@@ -28,6 +28,7 @@ class Player extends Cube {
     this.keys = {};
     this.pointer = {}
     this.jumpCount = 0;
+    this.mode = 'jump';
 
     // Create camera with offset property
     this.camera = CameraFactory.create('perspective');
@@ -63,18 +64,20 @@ class Player extends Cube {
   }
 
   jump() {
-    if (this.jumpCount > 0) {
-      const magnitude = 30;
-      const mass = this.rigidBody.mass();
-      const force = new Vector3(0, magnitude * mass, 0);
-      const gravity = game.physics.world.gravity;
-      const angle = Math.atan2(gravity.y, gravity.x) + (Math.PI / 2);
-      
-      // Update velocity and apply jump
-      this.setAngularVelocityAtAngle({ x: 0, y: 0, z: 8 }, angle); // Set angular velocity
-      this.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
-      this.applyImpulseAtAngle(force, angle); // Jump
-      this.jumpCount--;
+    if (this.mode == 'jump' || this.mode == 'control') {
+      if (this.jumpCount > 0) {
+        const magnitude = 30;
+        const mass = this.rigidBody.mass();
+        const force = new Vector3(0, magnitude * mass, 0);
+        const gravity = game.physics.world.gravity;
+        const angle = Math.atan2(gravity.y, gravity.x) + (Math.PI / 2);
+        
+        // Update velocity and apply jump
+        this.setAngularVelocityAtAngle({ x: 0, y: 0, z: 8 }, angle); // Set angular velocity
+        this.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
+        this.applyImpulseAtAngle(force, angle); // Jump
+        this.jumpCount--;
+      }
     }
   }
 
@@ -84,8 +87,12 @@ class Player extends Cube {
     e.target.keyUp = e.target.keyUp.bind(e.target);
     e.target.pointerDown = e.target.pointerDown.bind(e.target);
     e.target.pointerUp = e.target.pointerUp.bind(e.target);
+    e.target.setModeFromEvent - e.target.setModeFromEvent.bind(e.target);
 
-    // Add event listeners to document
+    // Add player event listeners
+    e.target.addEventListener('setmode', e.target.setModeFromEvent);
+
+    // Add document event listeners
     document.addEventListener('keydown', e.target.keyDown);
     document.addEventListener('keyup', e.target.keyUp);
     document.addEventListener('pointerdown', e.target.pointerDown);
@@ -96,12 +103,21 @@ class Player extends Cube {
     // Remove entity event listeners
     e.target.removeEventListener('added', e.target.onPlayerAdded);
     e.target.removeEventListener('removed', e.target.onPlayerRemoved);
+    e.target.removeEventListener('setmode', e.target.setModeFromEvent);
 
-    // Remove event listeners
+    // Remove document event listeners
     document.removeEventListener('keydown', e.target.keyDown);
     document.removeEventListener('keyup', e.target.keyUp);
     document.removeEventListener('pointerdown', e.target.pointerDown);
     document.removeEventListener('pointerup', e.target.pointerUp);
+  }
+
+  setModeFromEvent(e) {
+    this.setMode(e.mode);
+  }
+
+  setMode(mode) {
+    this.mode = mode;
   }
 
   keyDown(e) {
