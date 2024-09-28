@@ -1,7 +1,7 @@
 import { Vector3 } from 'three';
 import { CameraFactory } from '../factories/CameraFactory.js';
-import { Cube } from './Cube.js';
 import { LightFactory } from '../factories/LightFactory.js';
+import { Cube } from './Cube.js';
 
 /*
   A Player is a subclass that extends the Cube class
@@ -57,7 +57,6 @@ class Player extends Cube {
 
     // Update camera position
     this.camera.position.copy(this.object.position).add(this.cameraOffset);
-    this.camera.lookAt(this.object.position);
   }
 
   checkCollision(e) {
@@ -109,10 +108,12 @@ class Player extends Cube {
     e.target.keyUp = e.target.keyUp.bind(e.target);
     e.target.pointerDown = e.target.pointerDown.bind(e.target);
     e.target.pointerUp = e.target.pointerUp.bind(e.target);
-    e.target.setModeFromEvent - e.target.setModeFromEvent.bind(e.target);
+    e.target.onSetMode = e.target.onSetMode.bind(e.target);
+    e.target.onSetGravity = e.target.onSetGravity.bind(e.target);
 
     // Add player event listeners
-    e.target.addEventListener('setmode', e.target.setModeFromEvent);
+    e.target.addEventListener('setmode', e.target.onSetMode);
+    e.target.addEventListener('setgravity', e.target.onSetGravity);
 
     // Add document event listeners
     document.addEventListener('keydown', e.target.keyDown);
@@ -125,7 +126,8 @@ class Player extends Cube {
     // Remove entity event listeners
     e.target.removeEventListener('added', e.target.onPlayerAdded);
     e.target.removeEventListener('removed', e.target.onPlayerRemoved);
-    e.target.removeEventListener('setmode', e.target.setModeFromEvent);
+    e.target.removeEventListener('setmode', e.target.onSetMode);
+    e.target.removeEventListener('setgravity', e.target.onSetGravity);
 
     // Remove document event listeners
     document.removeEventListener('keydown', e.target.keyDown);
@@ -134,12 +136,23 @@ class Player extends Cube {
     document.removeEventListener('pointerup', e.target.pointerUp);
   }
 
-  setModeFromEvent(e) {
+  onSetMode(e) {
     this.setMode(e.mode);
   }
 
   setMode(mode) {
     this.mode = mode;
+  }
+
+  onSetGravity(e) {
+    this.tween({
+      object: { z: this.camera.rotation.z },
+      to: { z: e.angle + Math.PI / 2 },
+      dynamic: true,
+      duration: 250,
+      easing: 'Quadratic.InOut',
+      onUpdate: function(obj) { this.camera.rotation.z = obj.z }.bind(this)
+    }).start();
   }
 
   keyDown(e) {

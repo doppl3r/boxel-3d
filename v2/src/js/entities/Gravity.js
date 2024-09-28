@@ -38,6 +38,9 @@ class Gravity extends Cube {
     // Update gravity using entity angle
     game.physics.world.gravity.x = magnitude * Math.cos(angle);
     game.physics.world.gravity.y = magnitude * Math.sin(angle);
+
+    // Dispatch event to pair
+    e.pair.dispatchEvent({ type: 'setgravity', gravity: gravity, angle: angle });
   }
 }
 

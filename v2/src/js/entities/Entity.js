@@ -1,5 +1,6 @@
 import { EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
 import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
+import { Easing, Group, Tween } from '@tweenjs/tween.js'
 
 /*
   An entity is an abstract class that contains a single 3D object and a
@@ -21,6 +22,7 @@ class Entity extends EventDispatcher {
     this.colliders = new Map();
     this.collidersDesc = [];
     this.object = new Object3D();
+    this.tweens = new Group();
     this.snapshot = {
       position_1: new Vector3(),
       position_2: new Vector3(),
@@ -67,6 +69,9 @@ class Entity extends EventDispatcher {
 
     // Interpolate 3D object position
     this.lerp(alpha);
+
+    // Update optional tweens
+    this.tweens.update();
   }
 
   setRigidBodyDesc(options) {
@@ -187,6 +192,17 @@ class Entity extends EventDispatcher {
   setScale(scale) {
     // Colliders cannot be resized directly 
     this.object.scale.copy(scale);
+  }
+
+  tween(options) {
+    // Resolve easing from string (ex: "Quadratic.InOut") - https://stackoverflow.com/a/43849204/2510368
+    if (typeof options.easing == 'string') {
+      options.easing = options.easing.split('.').reduce((p,c)=>p&&p[c]||null, Easing);
+    }
+
+    // Create and assign tween to tween group
+    var tween = new Tween(options.object, this.tweens).to(options.to, options.duration).dynamic(options.dynamic).easing(options.easing).interpolation(options.interpolation).onStart(options.onStart).onUpdate(options.onUpdate).onComplete(options.onComplete);
+    return tween;
   }
 
   takeSnapshot() {
