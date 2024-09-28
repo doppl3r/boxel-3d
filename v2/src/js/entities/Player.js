@@ -46,6 +46,9 @@ class Player extends Cube {
   update(delta) {
     // Call Entity update function
     super.update(delta);
+
+    // Update player controls
+    this.updateControls();
   }
 
   render(delta, alpha) {
@@ -78,6 +81,25 @@ class Player extends Cube {
         this.applyImpulseAtAngle(force, angle); // Jump
         this.jumpCount--;
       }
+    }
+  }
+
+  updateControls() {
+    if (this.mode == 'control') {
+      let direction = 0;
+      let gravity = game.physics.world.gravity;
+      let angle = Math.atan2(gravity.y, gravity.x) + (Math.PI / 2);
+
+      // Conditionally assign direction from keyboard input
+      if (this.keys['KeyA'] == true) direction = -1;
+      else if (this.keys['KeyD'] == true) direction = 1;
+      else if (this.keys['ArrowLeft'] == true) direction = -1;
+      else if (this.keys['ArrowRight'] == true) direction = 1;
+
+      // Rotate direction vector according to gravity angle
+      _vector.copy({ x: direction, y: 0, z: 0 });
+      _vector.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
+      this.setForce(_vector, 2, 14);
     }
   }
 
@@ -126,7 +148,7 @@ class Player extends Cube {
     this.keys[e.code] = true;
 
     // Add keybindings
-    if (this.keys['Space'] == true) this.jump();
+    if (this.keys['Space'] == true || this.keys['ArrowUp'] == true) this.jump();
   }
 
   keyUp(e) {
@@ -145,5 +167,8 @@ class Player extends Cube {
     this.pointer[e.which] = false;
   }
 }
+
+// Assign local helper components
+let _vector = new Vector3();
 
 export { Player };
