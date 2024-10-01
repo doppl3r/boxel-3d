@@ -434,7 +434,8 @@
   {
     "version": "2.2.6",
     "revisions": [
-      "Added more snap options to level editor"
+      "Added more snap options to level editor",
+      "Updated resize cube to resize any cube"
     ]
   }
 ]

@@ -59,7 +59,7 @@ class Collision {
                 }
               }
               else if (objectA.body.class == 'resize') {
-                if (objectB.body.class ==  'player') {
+                if (objectB.isStatic() == false) {
                   objectB.setScale(objectA.scale, false);
                 }
               }

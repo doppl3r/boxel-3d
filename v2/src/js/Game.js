@@ -43,11 +43,11 @@ class Game {
     this.physics.setFrequency(60);
 
     // Adjust graphics components
-    //this.graphics.scene.add(this.physics.debugger);
+    this.graphics.scene.add(this.physics.debugger);
     this.graphics.scene.add(this.level);
 
     // Start generic level
-    this.loadLevel('Controls Test');
+    this.loadLevel('Campaign Level 5');
 
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics
