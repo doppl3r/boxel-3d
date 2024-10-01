@@ -10,7 +10,6 @@ class LevelEditor {
     this.controlsTransform = new TransformControls(camera, domElement);
     this.controlsTransform.showZ = true;
     this.controlsTransform.space = 'world';
-    this.controlsTransform.traverse(function(obj) { obj.isTransformable = true });
     this.controlsOrbit = new OrbitControls(camera, domElement);
     this.controlsOrbit.enabled = false; // Default disabled for campaign
     this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 };
