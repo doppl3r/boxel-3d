@@ -4,36 +4,80 @@
   "children": [
     {
       "type": "cube",
-      "name": "Platform",
+      "name": "Platform 1",
       "position": { "x": 0, "y": 0, "z": 0 },
       "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 24, "y": 1, "z": 1 }
     },
     {
+      "type": "cube",
+      "name": "Platform 2",
+      "position": { "x": 0, "y": 12, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 0 },
+      "scale": { "x": 24, "y": 1, "z": 1 }
+    },
+    {
+      "type": "cube",
+      "name": "Platform 3",
+      "position": { "x": -11.5, "y": 6, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 0 },
+      "scale": { "x": 1, "y": 11, "z": 1 }
+    },
+    {
+      "type": "cube",
+      "name": "Platform 4",
+      "position": { "x": 11.5, "y": 6, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 0 },
+      "scale": { "x": 1, "y": 11, "z": 1 }
+    },
+    {
       "type": "player",
+      "name": "Player",
       "position": { "x": 0, "y": 1, "z": 0 },
       "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 1, "y": 1, "z": 1 },
       "status": 0
     },
     {
-      "type": "group",
-      "position": { "x": 0, "y": 0, "z": 0 },
+      "type": "cube",
+      "name": "Cube 1",
+      "position": { "x": 2, "y": 2, "z": 0 },
       "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 1, "y": 1, "z": 1 },
+      "status": 0,
       "children": [
         {
-          "type": "cube",
-          "position": { "x": 4, "y": 4, "z": 0 },
+          "type": "bounce",
+          "name": "Bounce 1",
+          "position": { "x": -4, "y": 4, "z": 0 },
           "rotation": { "x": 0, "y": 0, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 },
           "status": 0
         },
         {
-          "type": "cube",
+          "type": "control",
+          "name": "Control 1",
+          "position": { "x": 1, "y": 6, "z": 0 },
+          "rotation": { "x": 0, "y": 0, "z": 0 },
+          "scale": { "x": 1, "y": 1, "z": 1 },
+          "status": 0,
+          "children": [
+            {
+              "type": "gravity",
+              "name": "Gravity 1",
+              "position": { "x": 6, "y": 9, "z": 0 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 1, "y": 1, "z": 1 },
+              "status": 0
+            }
+          ]
+        },
+        {
+          "type": "bounce",
+          "name": "Bounce 2",
           "position": { "x": 6, "y": 6, "z": 0 },
           "rotation": { "x": 0, "y": 0, "z": 0 },
-          "scale": { "x": 2, "y": 2, "z": 2 },
+          "scale": { "x": 1, "y": 1, "z": 1 },
           "status": 0
         }
       ]

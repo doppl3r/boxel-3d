@@ -1,5 +1,5 @@
-import { EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
-import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
+import { Euler, EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
+import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, JointData, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
 import { Easing, Group, Tween } from '@tweenjs/tween.js'
 
 /*
@@ -16,19 +16,23 @@ class Entity extends EventDispatcher {
     // Inherit Three.js EventDispatcher system
     super();
 
-    // These components are created when this entity is added to scene/world
+    // Set base components
     this.rigidBody;
     this.rigidBodyDesc;
     this.colliders = new Map();
     this.collidersDesc = [];
     this.object = new Object3D();
-    this.tweens = new Group();
     this.snapshot = {
       position_1: new Vector3(),
       position_2: new Vector3(),
       quaternion_1: new Quaternion(),
       quaternion_2: new Quaternion()
     };
+    this.tweens = new Group();
+    this.forceDirection = new Vector3();
+    this.forceAcceleration = 1;
+    this.forceSpeedMax = Infinity;
+    this.parent;
 
     // Define initial rigidBodyDesc and colliderDesc
     this.setRigidBodyDesc(options);
@@ -37,17 +41,10 @@ class Entity extends EventDispatcher {
     // Update 3D object position/rotation
     this.takeSnapshot();
     this.lerp(1);
-
-    // Define local force values
-    this.forceDirection = new Vector3();
-    this.forceAcceleration = 1;
-    this.forceSpeedMax = Infinity;
-
-    // Bind "this" context to class function (required for event removal)
+    
+    // Add entity event listeners
     this.onCollision = this.onCollision.bind(this);
     this.onRemoved = this.onRemoved.bind(this);
-
-    // Add entity event listeners
     this.addEventListener('collision', this.onCollision);
     this.addEventListener('removed', this.onRemoved);
   }
@@ -165,6 +162,17 @@ class Entity extends EventDispatcher {
     }
   }
 
+  createJoint(world) {
+    if (this.parent) {
+      var anchor1 = new Vector3();
+      var anchor2 = new Vector3().copy(this.parent.rigidBodyDesc.translation).sub(this.rigidBodyDesc.translation);
+      var frame1 = new Quaternion();
+      var frame2 = new Quaternion().copy(this.rigidBodyDesc.rotation);
+      var params = JointData.fixed(anchor1, frame1, anchor2, frame2);
+      this.joint = world.createImpulseJoint(params, this.parent.rigidBody, this.rigidBody, true);
+    }
+  }
+
   getPosition() {
     if (this.rigidBody == null) return this.object.position;
     else if (this.rigidBody.isKinematic()) return this.rigidBody.nextTranslation()
@@ -195,7 +203,7 @@ class Entity extends EventDispatcher {
   }
 
   tween(options) {
-    // Resolve easing from string (ex: "Quadratic.InOut") - https://stackoverflow.com/a/43849204/2510368
+    // Assign easing from string (ex: "Quadratic.InOut") - https://stackoverflow.com/a/43849204/2510368
     if (typeof options.easing == 'string') {
       options.easing = options.easing.split('.').reduce((p,c)=>p&&p[c]||null, Easing);
     }

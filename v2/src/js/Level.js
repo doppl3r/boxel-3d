@@ -36,25 +36,25 @@ class Level extends Group {
     return entities;
   }
 
-  createEntities(object, entities = []) {
+  createEntities(object, entities = [], parent) {
     // Loop through object children
     object.children.forEach(function(child) {
       // Add entity to array
-      var entity;
-      if (child.children) {
-        // Recursively load child entities
-        this.createEntities(child, entities);
-      }
-      else {
-        entity = this.createEntity(child);
+      var entity = this.createEntity(child);
 
-        if (entity.constructor.name == 'Player') this.player = entity;
-    
-        // Add 3D object to level
-        this.add(entity.object);
+      entity.parent = parent;
+
+      if (entity.constructor.name == 'Player') this.player = entity;
   
-        // Populate entities array
-        entities.push(entity);
+      // Add 3D object to level
+      this.add(entity.object);
+
+      // Populate entities array
+      entities.push(entity);
+      
+      // Recursively load child entities
+      if (child.children) {
+        this.createEntities(child, entities, entity);
       }
     }.bind(this));
 
