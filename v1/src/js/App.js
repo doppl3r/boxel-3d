@@ -201,7 +201,7 @@ class App {
     app.camera.position.z = app.camera.position.zDefault;
     a.level.removeParticles(a);
     a.level.resetLevel();
-    a.updateRender(null, a);
+    a.updateRender(null, 0);
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 

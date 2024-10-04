@@ -16,17 +16,13 @@ class Level extends Group {
       if (response.ok) { return response.json(); }
       throw new Error('Something went wrong');
     })
-    .then(function(json) { callback(this.loadJSON(json)); }.bind(this))
-    .catch(function(error) { console.error('Error: Level \'' + path + '\' not found.'); return false; });
+    .then(function(json) { callback(this.loadScene(json)); }.bind(this))
+    .catch(function(error) { console.error(error); });
   }
 
-  loadJSON(json) {
+  loadScene(scene) {
     // Initialize properties
     var entities = [];
-    var position = new Vector3();
-    var rotation = new Euler();
-    var scale = new Vector3();
-    var quaternion = new Quaternion();
     var light = LightFactory.create('ambient', { position: { x: 0.25, y: 0.5, z: 1 }});
 
     // Reset level
@@ -34,39 +30,66 @@ class Level extends Group {
     this.add(light);
 
     // Loop through children
-    json.children.forEach(function(child) {
-      // Update properties
-      position.set(child.position.x, child.position.y, child.position.z).divideScalar(16);
-      rotation.set(child.rotation.x, child.rotation.y, child.rotation.z);
-      scale.set(child.scale.x, child.scale.y, child.scale.z).divideScalar(16);
-      quaternion.setFromEuler(rotation);
+    entities = this.createEntities(scene);
 
-      // Create a new entity from child properties
-      var entity = EntityFactory.create({
-        ccd: true,
-        class: child.class.charAt(0).toUpperCase() + child.class.slice(1),
-        friction: child.friction || 0,
-        model: game.assets.duplicate('cube-' + child.class),
-        position: position,
-        quaternion: quaternion,
-        scale: scale,
-        softCcdPrediction: 0.5,
-        type: child.isStatic == false ? 'Dynamic' : 'Fixed'
-      });
+    // Return array of entities
+    return entities;
+  }
 
-      if (child.class == 'player') {
-        this.player = entity;
-      }
-
-      // Add 3D object to level
-      this.add(entity.object);
-
+  createEntities(object, entities = []) {
+    // Loop through object children
+    object.children.forEach(function(child) {
       // Add entity to array
-      entities.push(entity);
+      var entity;
+      if (child.children) {
+        // Recursively load child entities
+        this.createEntities(child, entities);
+      }
+      else {
+        entity = this.createEntity(child);
+
+        if (entity.constructor.name == 'Player') this.player = entity;
+    
+        // Add 3D object to level
+        this.add(entity.object);
+  
+        // Populate entities array
+        entities.push(entity);
+      }
     }.bind(this));
 
     // Return array of entities
     return entities;
+  }
+
+  createEntity(object) {
+    var position = new Vector3();
+    var rotation = new Euler();
+    var scale = new Vector3();
+    var quaternion = new Quaternion();
+    var status = (object.status != null) ? object.status : 1;
+
+    // Update properties
+    position.set(object.position.x, object.position.y, object.position.z);
+    rotation.set(object.rotation.x, object.rotation.y, object.rotation.z);
+    scale.set(object.scale.x, object.scale.y, object.scale.z);
+    quaternion.setFromEuler(rotation);
+
+    // Create a new entity from object properties
+    var entity = EntityFactory.create({
+      ccd: true,
+      class: object.type.charAt(0).toUpperCase() + object.type.slice(1),
+      friction: object.friction || 0,
+      model: game.assets.duplicate('cube-' + object.type),
+      position: position,
+      quaternion: quaternion,
+      scale: scale,
+      softCcdPrediction: 0.5,
+      status: status,
+      type: object.type
+    });
+
+    return entity;
   }
 }
 
