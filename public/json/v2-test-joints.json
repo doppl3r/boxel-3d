@@ -39,44 +39,18 @@
       "status": 0
     },
     {
-      "type": "cube",
-      "name": "Cube 1",
-      "position": { "x": 2, "y": 2, "z": 0 },
+      "type": "direction",
+      "name": "Direction 1",
+      "position": { "x": -2, "y": 2, "z": 0 },
       "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 1, "y": 1, "z": 1 },
       "status": 0,
       "children": [
         {
-          "type": "bounce",
-          "name": "Bounce 1",
-          "position": { "x": -4, "y": 4, "z": 0 },
-          "rotation": { "x": 0, "y": 0, "z": 0 },
-          "scale": { "x": 1, "y": 1, "z": 1 },
-          "status": 0
-        },
-        {
-          "type": "control",
-          "name": "Control 1",
-          "position": { "x": 1, "y": 6, "z": 0 },
-          "rotation": { "x": 0, "y": 0, "z": 0 },
-          "scale": { "x": 1, "y": 1, "z": 1 },
-          "status": 0,
-          "children": [
-            {
-              "type": "gravity",
-              "name": "Gravity 1",
-              "position": { "x": 6, "y": 9, "z": 0 },
-              "rotation": { "x": 0, "y": 0, "z": 0 },
-              "scale": { "x": 1, "y": 1, "z": 1 },
-              "status": 0
-            }
-          ]
-        },
-        {
-          "type": "bounce",
-          "name": "Bounce 2",
-          "position": { "x": 6, "y": 6, "z": 0 },
-          "rotation": { "x": 0, "y": 0, "z": 0 },
+          "type": "direction",
+          "name": "Direction 2",
+          "position": { "x": 4, "y": 4, "z": 0 },
+          "rotation": { "x": 0, "y": 0, "z": 1.57 },
           "scale": { "x": 1, "y": 1, "z": 1 },
           "status": 0
         }
