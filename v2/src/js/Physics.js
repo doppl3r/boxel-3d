@@ -73,7 +73,7 @@ class Physics {
     // Create body and collider for entity
     entity.createBody(this.world);
     entity.createColliders(this.world);
-    entity.createJoint(this.world);
+    entity.createJointFromParent(this.world);
     entity.takeSnapshot(); // Take snapshot from rigid body for 3D object
     entity.dispatchEvent({ type: 'added' });
 

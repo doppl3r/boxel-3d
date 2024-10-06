@@ -34,32 +34,77 @@
       "status": 0
     },
     {
-      "type": "cube",
-      "position": { "x": -6, "y": 4, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0.2 },
+      "type": "direction",
+      "position": { "x": -8, "y": 4, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 1, "y": 1, "z": 1 },
-      "status": 0,
+      "status": 1,
       "children": [
         {
-          "type": "cube",
-          "position": { "x": -2, "y": 4, "z": 0 },
-          "rotation": { "x": 0, "y": 0, "z": 0.4 },
+          "type": "direction",
+          "position": { "x": -6, "y": 8, "z": 0 },
+          "rotation": { "x": 0, "y": 0, "z": 0 },
           "scale": { "x": 1, "y": 1, "z": 1 },
           "status": 0,
           "children": [
             {
-              "type": "cube",
-              "position": { "x": 2, "y": 4, "z": 0 },
-              "rotation": { "x": 0, "y": 0, "z": 0.6 },
+              "type": "direction",
+              "position": { "x": -4, "y": 4, "z": 0 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
               "scale": { "x": 1, "y": 1, "z": 1 },
               "status": 0,
               "children": [
                 {
-                  "type": "cube",
-                  "position": { "x": 6, "y": 4, "z": 0 },
-                  "rotation": { "x": 0, "y": 0, "z": 0.8 },
+                  "type": "direction",
+                  "position": { "x": -2, "y": 8, "z": 0 },
+                  "rotation": { "x": 0, "y": 0, "z": 0 },
                   "scale": { "x": 1, "y": 1, "z": 1 },
-                  "status": 0
+                  "status": 0,
+                  "children": [
+                    {
+                      "type": "direction",
+                      "position": { "x": 0, "y": 4, "z": 0 },
+                      "rotation": { "x": 0, "y": 0, "z": 0 },
+                      "scale": { "x": 1, "y": 1, "z": 1 },
+                      "status": 0,
+                      "children": [
+                        {
+                          "type": "direction",
+                          "position": { "x": 2, "y": 8, "z": 0 },
+                          "rotation": { "x": 0, "y": 0, "z": 0 },
+                          "scale": { "x": 1, "y": 1, "z": 1 },
+                          "status": 0,
+                          "children": [
+                            {
+                              "type": "direction",
+                              "position": { "x": 4, "y": 4, "z": 0 },
+                              "rotation": { "x": 0, "y": 0, "z": 0 },
+                              "scale": { "x": 1, "y": 1, "z": 1 },
+                              "status": 0,
+                              "children": [
+                                {
+                                  "type": "direction",
+                                  "position": { "x": 6, "y": 8, "z": 0 },
+                                  "rotation": { "x": 0, "y": 0, "z": 0 },
+                                  "scale": { "x": 1, "y": 1, "z": 1 },
+                                  "status": 0,
+                                  "children": [
+                                    {
+                                      "type": "direction",
+                                      "position": { "x": 8, "y": 4, "z": 0 },
+                                      "rotation": { "x": 0, "y": 0, "z": 0 },
+                                      "scale": { "x": 1, "y": 1, "z": 1 },
+                                      "status": 0
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
