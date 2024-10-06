@@ -166,8 +166,14 @@ class Entity extends EventDispatcher {
     if (this.parent) {
       var anchor1 = new Vector3();
       var anchor2 = new Vector3().copy(this.rigidBodyDesc.translation).sub(this.parent.rigidBodyDesc.translation);
-      var frame1 = new Quaternion();
-      var frame2 = new Quaternion().copy(this.rigidBodyDesc.rotation);
+      var frame1 = new Quaternion().copy(this.rigidBodyDesc.rotation);
+      var frame2 = new Quaternion().copy(this.parent.rigidBodyDesc.rotation);
+
+      // Rotate position by the frame conjugate
+      anchor1.applyQuaternion(frame1.conjugate());
+      anchor2.applyQuaternion(frame2.conjugate());
+
+      // Create fixed joint from parameters
       var params = JointData.fixed(anchor1, frame1, anchor2, frame2);
       this.joint = world.createImpulseJoint(params, this.rigidBody, this.parent.rigidBody, true);
     }

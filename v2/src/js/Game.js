@@ -47,7 +47,9 @@ class Game {
     this.graphics.scene.add(this.level);
 
     // Start generic level
-    this.loadLevel('v2-test-joints');
+    this.loadLevel('v2-test-joints', function() {
+      this.physics.debugger.update();
+    }.bind(this));
 
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics
