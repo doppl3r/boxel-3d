@@ -10,7 +10,7 @@ class LightFactory {
     
   }
 
-  static create(type, options = {}) {
+  static create(type = 'point', options = {}) {
     var light;
     var helper;
     

@@ -6,6 +6,7 @@ import { Direction } from '../entities/Direction';
 import { Finish } from '../entities/Finish';
 import { Grapple } from '../entities/Grapple';
 import { Gravity } from '../entities/Gravity';
+import { Light } from '../entities/Light';
 import { Player } from '../entities/Player';
 import { Reset } from '../entities/Reset';
 import { Resize } from '../entities/Resize';
@@ -61,6 +62,10 @@ class EntityFactory {
 
   static createGravity(options) {
     return new Gravity(options);
+  }
+
+  static createLight(options) {
+    return new Light(options);
   }
 
   static createPlayer(options) {

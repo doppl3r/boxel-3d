@@ -2,7 +2,8 @@ import { Loop } from './Loop';
 import { Graphics } from './Graphics.js';
 import { AssetLoader } from './loaders/AssetLoader.js';
 import { Physics } from './Physics.js';
-import { Level } from './Level.js';
+import { LevelFactory } from './factories/LevelFactory.js';
+import { LevelEditor } from './LevelEditor.js';
 
 class Game {
   constructor() {
@@ -17,8 +18,9 @@ class Game {
     // Initialize components
     this.physics = new Physics();
 
-    // Initialize level
-    this.level = new Level();
+    // Initialize level components
+    this.levelFactory = new LevelFactory();
+    this.levelEditor = new LevelEditor();
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets = new AssetLoader(this.onLoad.bind(this), this.onProgress.bind(this));
@@ -44,7 +46,6 @@ class Game {
 
     // Adjust graphics components
     this.graphics.scene.add(this.physics.debugger);
-    this.graphics.scene.add(this.level);
 
     // Start generic level
     this.loadLevel('v2-test-joints', function() {
@@ -60,10 +61,12 @@ class Game {
   loadLevel(name = 'Campaign Level 1', callback = function(){}) {
     // Load level from JSON
     this.physics.clear();
-    this.level.load('../json/' + name + '.json', function(entities) {
+    this.levelFactory.loadFile('../json/' + name + '.json', function(entities) {
       entities.forEach(function(entity) {
         this.physics.add(entity);
+        this.graphics.scene.add(entity.object);
         if (entity.type == 'player') {
+          this.player = entity;
           this.graphics.setCamera(entity.camera);
         }
       }.bind(this));
