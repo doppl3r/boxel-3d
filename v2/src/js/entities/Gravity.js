@@ -16,6 +16,9 @@ class Gravity extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'gravity';
   }
 
   update(delta) {

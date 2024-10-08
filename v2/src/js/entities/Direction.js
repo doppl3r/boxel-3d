@@ -15,6 +15,9 @@ class Direction extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'direction';
   }
 
   update(delta) {

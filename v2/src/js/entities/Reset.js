@@ -15,6 +15,9 @@ class Reset extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'reset';
   }
 
   update(delta) {

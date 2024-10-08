@@ -16,6 +16,9 @@ class Bounce extends Cube {
     // Inherit Character class
     super(options);
 
+    // Set default properties
+    this.type = 'bounce';
+
     // Add a sensor collider to the rigidBody
     this.addColliderDesc({
       activeCollisionTypes: 'ALL',

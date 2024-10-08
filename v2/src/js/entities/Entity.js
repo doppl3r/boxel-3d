@@ -32,6 +32,7 @@ class Entity extends EventDispatcher {
     this.forceDirection = new Vector3();
     this.forceAcceleration = 1;
     this.forceSpeedMax = Infinity;
+    this.isEntity = true;
     this.parent;
 
     // Define initial rigidBodyDesc and colliderDesc

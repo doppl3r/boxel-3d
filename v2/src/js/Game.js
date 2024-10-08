@@ -37,7 +37,7 @@ class Game {
     this.graphics.render();
   }
 
-  async onLoad() {
+  onLoad() {
     // Initialize entity manager
     this.physics.init();
     this.physics.setFrequency(60);
@@ -49,12 +49,12 @@ class Game {
     // Start generic level
     this.loadLevel('v2-test-joints', function() {
       this.physics.debugger.update();
-    }.bind(this));
 
-    // Add game loops
-    this.loop.add(this.update.bind(this), 60); // Physics
-    this.loop.add(this.render.bind(this), -1); // Render
-    this.loop.start();
+      // Add game loops
+      this.loop.add(this.update.bind(this), 60); // Physics
+      this.loop.add(this.render.bind(this), -1); // Render
+      this.loop.start();
+    }.bind(this));
   }
 
   loadLevel(name = 'Campaign Level 1', callback = function(){}) {
@@ -63,11 +63,11 @@ class Game {
     this.level.load('../json/' + name + '.json', function(entities) {
       entities.forEach(function(entity) {
         this.physics.add(entity);
-        if (entity == this.level.player) {
+        if (entity.type == 'player') {
           this.graphics.setCamera(entity.camera);
         }
-        callback();
       }.bind(this));
+      callback();
     }.bind(this));
   }
 

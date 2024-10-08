@@ -14,6 +14,9 @@ class Finish extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'finish';
   }
 
   update(delta) {

@@ -32,6 +32,10 @@ class Cube extends Entity {
     // Inherit Entity class
     super(options);
 
+    // Set default properties
+    this.isCube = true;
+    this.type = 'cube';
+
     // Add optional model to 3D object
     this.model = options.model;
     this.object.add(this.model);

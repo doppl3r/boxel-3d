@@ -16,6 +16,9 @@ class Resize extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'resize';
   }
 
   update(delta) {

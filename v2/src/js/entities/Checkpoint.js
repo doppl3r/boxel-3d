@@ -15,6 +15,9 @@ class Checkpoint extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'checkpoint';
   }
 
   update(delta) {

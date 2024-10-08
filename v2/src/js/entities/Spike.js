@@ -15,6 +15,9 @@ class Spike extends Cube {
     // Inherit Character class
     super(options);
 
+    // Set default properties
+    this.type = 'spike';
+
     // Add a sensor collider to the rigidBody
     this.addColliderDesc({
       collisionEventStart: function(e) { e.target.kill(e); },

@@ -15,6 +15,9 @@ class Control extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'control';
   }
 
   update(delta) {

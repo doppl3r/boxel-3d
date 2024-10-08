@@ -14,6 +14,9 @@ class Grapple extends Cube {
 
     // Inherit Character class
     super(options);
+
+    // Set default properties
+    this.type = 'grapple';
   }
 
   update(delta) {

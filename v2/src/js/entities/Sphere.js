@@ -34,6 +34,10 @@ class Sphere extends Entity {
     // Inherit Entity class
     super(options);
 
+    // Set default properties
+    this.isSphere = true;
+    this.type = 'sphere';
+
     // Add optional model to 3D object
     this.model = options.model;
     this.object.add(this.model);

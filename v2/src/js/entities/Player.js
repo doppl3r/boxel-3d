@@ -20,15 +20,16 @@ class Player extends Cube {
     // Inherit Cube class
     super(options);
 
-    // Add light to player
-    this.light = LightFactory.create('point', { color: '#dc265a', intensity: Math.PI * 10 });
-    this.object.add(this.light);
-
     // Set default properties
+    this.type = 'player';
     this.keys = {};
     this.pointer = {}
     this.jumpCount = 0;
     this.mode = 'jump';
+
+    // Add light to player
+    this.light = LightFactory.create('point', { color: '#dc265a', intensity: Math.PI * 10 });
+    this.object.add(this.light);
 
     // Create camera with offset property
     this.camera = CameraFactory.create('perspective');
