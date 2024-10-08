@@ -73,7 +73,7 @@ class LevelFactory {
     quaternion.setFromEuler(rotation);
 
     // Create a new entity from json properties
-    var entity = EntityFactory.create({
+    var options = Object.assign({
       ccd: true,
       class: json.type.charAt(0).toUpperCase() + json.type.slice(1),
       friction: json.friction || 0,
@@ -84,7 +84,8 @@ class LevelFactory {
       softCcdPrediction: 0.5,
       status: status,
       type: json.type
-    });
+    }, json);
+    var entity = EntityFactory.create(options);
 
     return entity;
   }

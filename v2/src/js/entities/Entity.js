@@ -132,8 +132,8 @@ class Entity extends EventDispatcher {
     colliderDesc.setTranslation(options.translation.x, options.translation.y, options.translation.z);
     
     // Conditionally set values to allow default effects
-    if (options.mass) colliderDesc.setMass(options.mass);
-
+    if (options.mass != null) colliderDesc.setMass(options.mass);
+    
     // Store callback events to colliderDesc
     colliderDesc.collisionEventStart = options.collisionEventStart;
     colliderDesc.collisionEventEnd = options.collisionEventEnd;

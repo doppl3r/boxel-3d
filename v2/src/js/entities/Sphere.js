@@ -41,6 +41,21 @@ class Sphere extends Entity {
     // Add optional model to 3D object
     this.model = options.model;
     this.object.add(this.model);
+
+    // Update 3D object scale
+    this.object.scale.set(options.radius * 2, options.radius * 2, options.radius * 2);
+  }
+
+  setRadius(radius) {
+    var collider = this.colliders.entries().next().value[1];
+
+    // Update collider and 3D object scale
+    collider.setRadius(radius);
+    this.object.scale.set(radius * 2, radius * 2, radius * 2);
+  }
+
+  setScale(scale) {
+    this.setRadius(scale.x / 2);
   }
 }
 

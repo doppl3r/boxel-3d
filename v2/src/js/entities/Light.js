@@ -11,11 +11,12 @@ class Light extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) {},
       collisionEventEnd: function(e) {},
+      intensity: Math.PI,
       isSensor: true,
       status: 1
     }, options);
 
-    // Initialize default cube model mesh
+    // Assign new light to 3D model
     if (options.model == null) {
       options.model = LightFactory.create('point');
     }
@@ -25,6 +26,9 @@ class Light extends Cube {
 
     // Set default properties
     this.type = 'light';
+
+    // Update light properties
+    this.updateIntensity();
   }
 
   update(delta) {
@@ -35,6 +39,12 @@ class Light extends Cube {
   render(delta, alpha) {
     // Call Entity render function
     super.render(delta, alpha);
+  }
+
+  updateIntensity() {
+    // Find the max scale value
+    var max = Math.max(...Object.values(this.object.scale));
+    this.model.intensity = Math.PI * max;
   }
 }
 
