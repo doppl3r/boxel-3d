@@ -23,8 +23,12 @@ class Game {
     this.levelEditor = new LevelEditor();
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
-    this.assets = new AssetLoader(this.onLoad.bind(this), this.onProgress.bind(this));
-    this.assets.load('../json/');
+    this.assets = new AssetLoader(this.onLoad.bind(this));
+    this.assets.load({
+      models: '../json/models.json',
+      textures: '../json/textures.json',
+      audio: '../json/audio.json',
+    });
   }
 
   update(data = { delta: 1 / 60 }) {
@@ -70,12 +74,6 @@ class Game {
       }.bind(this));
       callback();
     }.bind(this));
-  }
-
-  onProgress(url, itemsLoaded, itemsTotal) {
-    // Emit loader progress to global window object
-    var percent = Math.ceil((itemsLoaded / itemsTotal) * 100);
-    dispatchEvent(new CustomEvent('updateLoading', { detail: { url: url, itemsLoaded: itemsLoaded, itemsTotal: itemsTotal, percent: percent }}));
   }
 }
 

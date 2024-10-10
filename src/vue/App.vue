@@ -2,13 +2,36 @@
   import '../scss/Global.scss';
   import { onMounted, ref } from 'vue';
   import Card from './Card.vue';
+  import Loading from './Loading.vue';
+  import { Loop } from '../js/Loop.js';
+  import { Graphics } from '../js/Graphics.js';
+  import { AssetLoader } from '../js/loaders/AssetLoader.js';
 
   // Initialize components
   var canvas = ref();
+  var loop;
+  var graphics;
+  var assets;
+
+  function onLoad() {
+    loop.add(render, -1); // Add render loop
+  }
+
+  function render() {
+    this.graphics.render();
+  }
 
   // Redirect app after loading
   onMounted(function() {
     //location.replace('v1/index.html')
+    loop = new Loop();
+    graphics = new Graphics(canvas.value);
+    assets = new AssetLoader(onLoad)
+    assets.load({
+      models: '../json/menu-models.json',
+      textures: '../json/menu-textures.json',
+      audio: '../json/menu-audio.json',
+    })
   });
 </script>
 
@@ -18,6 +41,7 @@
     <Card :src="'../svg/button-play.svg'" :text="'Classic'"></Card>
     <Card :src="'../svg/button-play-pro.svg'" :text="'Pro'"></Card>
   </div>
+  <Loading />
 </template>
 
 <style lang="scss" scoped>
