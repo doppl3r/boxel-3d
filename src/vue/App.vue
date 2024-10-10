@@ -5,6 +5,7 @@
   import Loading from './Loading.vue';
   import { Loop } from '../js/Loop.js';
   import { Graphics } from '../js/Graphics.js';
+  import { LightFactory } from '../js/factories/LightFactory.js';
   import { AssetLoader } from '../js/loaders/AssetLoader.js';
 
   // Initialize components
@@ -12,13 +13,31 @@
   var loop;
   var graphics;
   var assets;
+  var background;
+  var light;
 
   function onLoad() {
-    loop.add(render, -1); // Add render loop
+    // Initialize 3D objects
+    background = assets.get('background-tropic');
+    light = LightFactory.create('ambient');
+
+    // Update camera and scene
+    graphics.camera.position.set(0, 12, 16);
+    graphics.camera.lookAt(0, -2, 0);
+    graphics.scene.add(background, light);
+
+    // Start render loop
+    loop.add(render, -1);
+    loop.start();
   }
 
-  function render() {
-    this.graphics.render();
+  function render(data) {
+    background.rotation.y = (Math.cos(data.index * 0.0025)) * 0.25;
+    graphics.render();
+  }
+
+  function openLink(url) {
+    window.location.href = url;
   }
 
   // Redirect app after loading
@@ -28,9 +47,9 @@
     graphics = new Graphics(canvas.value);
     assets = new AssetLoader(onLoad)
     assets.load({
-      models: '../json/menu-models.json',
-      textures: '../json/menu-textures.json',
-      audio: '../json/menu-audio.json',
+      models: './json/menu-models.json',
+      textures: './json/menu-textures.json',
+      audio: './json/menu-audio.json',
     })
   });
 </script>
@@ -38,8 +57,8 @@
 <template>
   <canvas ref="canvas"></canvas>
   <div class="cards">
-    <Card :src="'../svg/button-play.svg'" :text="'Classic'"></Card>
-    <Card :src="'../svg/button-play-pro.svg'" :text="'Pro'"></Card>
+    <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
+    <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openLink('./v2/index.html')"></Card>
   </div>
   <Loading />
 </template>

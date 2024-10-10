@@ -14,6 +14,7 @@ class Game {
     // Initialize core game engine
     this.loop = new Loop();
     this.graphics = new Graphics(canvas);
+    this.graphics.addStats();
 
     // Initialize components
     this.physics = new Physics();

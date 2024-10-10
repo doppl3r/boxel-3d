@@ -20,10 +20,14 @@
     border-radius: calc($border-width * 4);
     padding: $border-width;
     position: relative;
-    transition: transform 0.15s ease-out;
+    transition: transform 0.1s ease-out;
 
     &:hover {
       transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.9);
     }
 
     img {
@@ -32,6 +36,7 @@
       height: 6.25em; // 100px
       margin-bottom: $border-width;
       object-fit: cover;
+      pointer-events: none;
       width: 6.25em;
     }
 
