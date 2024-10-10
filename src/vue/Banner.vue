@@ -17,6 +17,8 @@
   $border-width: 0.25em;
 
   .banner {
+    animation: translateBackground 5s linear;
+    animation-iteration-count: infinite;
     background-color: #FFCB4C;
     background-image: url('/svg/background-stars.svg');
     background-size: 8em;
@@ -40,4 +42,6 @@
       padding: 0.125em 1em;
     }
   }
+
+  @keyframes translateBackground { 0% { background-position: 0em 0em; } 100% { background-position: 8em -8em; } }
 </style>
