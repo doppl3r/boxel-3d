@@ -1,12 +1,13 @@
 <script setup>
   import '../scss/Global.scss';
   import { onMounted, ref } from 'vue';
+  import Banner from './Banner.vue';
   import Card from './Card.vue';
   import Loading from './Loading.vue';
-  import { Loop } from '../js/Loop.js';
-  import { Graphics } from '../js/Graphics.js';
-  import { LightFactory } from '../js/factories/LightFactory.js';
-  import { AssetLoader } from '../js/loaders/AssetLoader.js';
+  import { Loop } from '../../v2/src/js/Loop.js';
+  import { Graphics } from '../../v2/src/js/Graphics.js';
+  import { LightFactory } from '../../v2/src/js/factories/LightFactory.js';
+  import { AssetLoader } from '../../v2/src/js/loaders/AssetLoader.js';
 
   // Initialize components
   var canvas = ref();
@@ -37,7 +38,7 @@
   }
 
   function openLink(url) {
-    window.location.href = url;
+    window.open(url, '_self');
   }
 
   // Redirect app after loading
@@ -56,11 +57,14 @@
 
 <template>
   <canvas ref="canvas"></canvas>
-  <div class="cards">
-    <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
-    <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openLink('./v2/index.html')"></Card>
+  <div class="ui">
+    <Banner>Select Boxel 3D Edition</Banner>
+    <div class="cards">
+      <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
+      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openLink('./v2/index.html')"></Card>
+    </div>
+    <Loading />
   </div>
-  <Loading />
 </template>
 
 <style lang="scss" scoped>
@@ -74,13 +78,22 @@
     z-index: 0;
   }
 
-  .cards {
+  .ui {
     align-items: center;
     display: flex;
+    flex-direction: column;
     gap: 1em;
     height: 100%;
     justify-content: center;
     position: relative;
     width: 100%;
+  }
+
+  .cards {
+    align-items: center;
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    position: relative;
   }
 </style>

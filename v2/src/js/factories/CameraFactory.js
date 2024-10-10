@@ -34,6 +34,7 @@ class CameraFactory {
     // Set camera options
     camera.fov = options.fov;
     camera.zoom = options.zoom;
+    camera.updateProjectionMatrix();
 
     // Add helper after camera has been added
     if (options.helper == true) {

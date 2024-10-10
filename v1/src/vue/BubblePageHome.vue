@@ -98,9 +98,13 @@
     if (e.target.href) openLink(e.target.href);
   }
 
-  function openLink(url) {
+  function openLink(url, target = '_blank') {
     if (chrome.tabs) chrome.tabs.create({ url: url });
-    else window.open(url, '_blank');
+    else window.open(url, target);
+  }
+
+  function goBack() {
+    window.open('../index.html', '_self');
   }
 
   // Run function after being mounted (visible)
@@ -120,8 +124,11 @@
       <img :src="'../svg/background-purple.svg'">
     </div>
     <div class="nav">
-      <BubbleButtonFullscreen class="button left fade-in" />
-      <BubbleButtonSettings class="button right fade-in" />
+      <a class="button left fade-in" @click="goBack">
+        <span class="material-symbols-rounded">undo</span>
+      </a>
+      <BubbleButtonFullscreen class="button right fade-in" />
+      <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">
       <h1>BOXEL3D</h1>
