@@ -1,6 +1,6 @@
 <script setup>
   import '../scss/Global.scss';
-  import { ref, onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { Game } from '../js/Game.js';
   import Loading from './Loading.vue';
 
