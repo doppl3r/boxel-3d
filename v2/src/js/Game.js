@@ -19,11 +19,7 @@ class Game {
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets = new AssetLoader(this.onLoad.bind(this));
-    this.assets.load({
-      models: '../json/models.json',
-      textures: '../json/textures.json',
-      audio: '../json/audio.json',
-    });
+    this.assets.load({ models: '../json/models.json', textures: '../json/textures.json', audio: '../json/audio.json' });
   }
 
   update(data = { delta: 1 / 60 }) {
@@ -36,17 +32,15 @@ class Game {
     this.stage.render(data.delta, data.alpha);
   }
 
-  onLoad() {
+  async onLoad() {
     // Start generic level
-    this.stage.load('v2-test-joints', function() {
-      // Add game loops
-      this.loop.add(this.update.bind(this), 60); // Physics
-      this.loop.add(this.render.bind(this), -1); // Render
-      this.loop.start();
-    }.bind(this));
-  }
+    await this.stage.load('../json/v2-test-joints.json');
 
-  
+    // Add game loops
+    this.loop.add(this.update.bind(this), 60); // Physics
+    this.loop.add(this.render.bind(this), -1); // Render
+    this.loop.start();
+  }
 }
 
 export { Game };

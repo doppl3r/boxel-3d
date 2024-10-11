@@ -7,13 +7,13 @@ class LevelFactory {
     // Define variables
   }
 
-  static loadFile(path, callback = function(){}) {
+  static async loadFile(path) {
     // Fetch public folder for level
-    fetch(path).then(function (response) {
+    return fetch(path).then(function (response) {
       if (response.ok) { return response.json(); }
       throw new Error('Something went wrong');
     })
-    .then(function(json) { callback(this.loadFromJSON(json)); }.bind(this))
+    .then(function(json) { return this.loadFromJSON(json); }.bind(this))
     .catch(function(error) { console.error(error); });
   }
 

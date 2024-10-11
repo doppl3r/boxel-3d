@@ -108,20 +108,20 @@ class Stage {
     }.bind(this));
   }
 
-  load(name, callback = function(){}) {
+  async load(path) {
     this.clear();
     
     // Load level from JSON
-    LevelFactory.loadFile('../json/' + name + '.json', function(entities) {
-      entities.forEach(function(entity) {
-        this.add(entity);
-        this.graphics.scene.add(entity.object);
-        if (entity.type == 'player') {
-          this.player = entity;
-          this.graphics.setCamera(entity.camera);
-        }
-      }.bind(this));
-      callback();
+    var entities = await LevelFactory.loadFile(path);
+
+    // Loop through entities
+    entities.forEach(function(entity) {
+      this.add(entity);
+      this.graphics.scene.add(entity.object);
+      if (entity.type == 'player') {
+        this.player = entity;
+        this.graphics.setCamera(entity.camera);
+      }
     }.bind(this));
   }
 
