@@ -3,7 +3,7 @@
   import { onMounted, ref } from 'vue';
   import Banner from './Banner.vue';
   import Card from './Card.vue';
-  import Loading from './Loading.vue';
+  import Loading from '../../v2/src/vue/Loading.vue';
   import { Loop } from '../../v2/src/js/Loop.js';
   import { Graphics } from '../../v2/src/js/Graphics.js';
   import { LightFactory } from '../../v2/src/js/factories/LightFactory.js';

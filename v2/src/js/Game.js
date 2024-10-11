@@ -15,7 +15,6 @@ class Game {
 
     // Initialize components
     this.stage = new Stage(canvas);
-    this.stage.setFrequency(60);
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets = new AssetLoader(this.onLoad.bind(this));
@@ -33,8 +32,8 @@ class Game {
   }
 
   async onLoad() {
-    // Start generic level
-    await this.stage.load('../json/v2-test-joints.json');
+    // Load generic level
+    await this.stage.loadLevel('../json/v2-test-joints.json');
 
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics

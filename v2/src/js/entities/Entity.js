@@ -1,4 +1,4 @@
-import { Euler, EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
+import { EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
 import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, JointData, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
 import { Easing, Group, Tween } from '@tweenjs/tween.js'
 
