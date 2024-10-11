@@ -18,7 +18,7 @@ class Game {
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets = new AssetLoader(this.onLoad.bind(this));
-    this.assets.load({ models: '../json/models.json', textures: '../json/textures.json', audio: '../json/audio.json' });
+    this.assets.load({ models: '../json/assets-models.json', textures: '../json/assets-textures.json', audio: '../json/assets-audio.json' });
   }
 
   update(data = { delta: 1 / 60 }) {
