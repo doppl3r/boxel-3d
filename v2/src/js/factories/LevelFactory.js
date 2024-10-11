@@ -5,12 +5,11 @@ import { EntityFactory } from './EntityFactory.js';
 class LevelFactory {
   constructor() {
     // Define variables
-    this.player;
   }
 
-  async loadFile(path, callback = function(){}) {
+  static loadFile(path, callback = function(){}) {
     // Fetch public folder for level
-    await fetch(path).then(function (response) {
+    fetch(path).then(function (response) {
       if (response.ok) { return response.json(); }
       throw new Error('Something went wrong');
     })
@@ -18,7 +17,7 @@ class LevelFactory {
     .catch(function(error) { console.error(error); });
   }
 
-  loadFromJSON(json) {
+  static loadFromJSON(json) {
     // Initialize properties
     var entities = [];
 
@@ -37,7 +36,7 @@ class LevelFactory {
     return entities;
   }
 
-  createEntities(json, entities = [], parent) {
+  static createEntities(json, entities = [], parent) {
     // Loop through children
     json.children.forEach(function(child) {
       // Add entity to array
@@ -59,7 +58,7 @@ class LevelFactory {
     return entities;
   }
 
-  createEntity(json) {
+  static createEntity(json) {
     var position = new Vector3();
     var rotation = new Euler();
     var scale = new Vector3();

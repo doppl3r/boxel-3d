@@ -72,7 +72,7 @@ class Player extends Cube {
         const magnitude = 30;
         const mass = this.rigidBody.mass();
         const force = new Vector3(0, magnitude * mass, 0);
-        const gravity = game.physics.world.gravity;
+        const gravity = game.stage.world.gravity;
         const angle = Math.atan2(gravity.y, gravity.x) + (Math.PI / 2);
         
         // Update velocity and apply jump
@@ -87,7 +87,7 @@ class Player extends Cube {
   updateControls() {
     if (this.mode == 'control') {
       let direction = 0;
-      let gravity = game.physics.world.gravity;
+      let gravity = game.stage.world.gravity;
       let angle = Math.atan2(gravity.y, gravity.x) + (Math.PI / 2);
 
       // Conditionally assign direction from keyboard input

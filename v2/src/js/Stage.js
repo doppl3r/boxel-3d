@@ -1,27 +1,26 @@
 import { EventQueue, World } from '@dimforge/rapier3d';
+import { Graphics } from './Graphics.js';
 import { Debugger } from './Debugger.js';
 import { EntityFactory } from './factories/EntityFactory.js';
+import { LevelFactory } from './factories/LevelFactory.js';
 
 /*
   Manage physics related components
 */
 
-class Physics {
-  constructor() {
-    
-  }
-
-  init() {
+class Stage {
+  constructor(canvas) {
     // Initialize Rapier world
     this.world = new World({ x: 0.0, y: -9.81 * 8, z: 0.0 });
     this.world.numSolverIterations = 4; // Default = 4
     this.events = new EventQueue(true);
-
-    // Initialize entity manager
+    this.debugger = new Debugger(this.world);
     this.entities = new Map();
 
-    // Add game debugger
-    this.debugger = new Debugger(this.world);
+    // Add 3D pipeline to stage
+    this.graphics = new Graphics(canvas);
+    this.graphics.scene.add(this.debugger);
+    this.graphics.addStats();
   }
 
   update(delta) {
@@ -52,6 +51,9 @@ class Physics {
     this.entities.forEach(function(entity) {
       entity.render(delta, alpha);
     });
+
+    // Render graphics
+    this.graphics.render();
   }
 
   setFrequency(frequency = 60) {
@@ -106,6 +108,23 @@ class Physics {
     }.bind(this));
   }
 
+  load(name, callback = function(){}) {
+    this.clear();
+    
+    // Load level from JSON
+    LevelFactory.loadFile('../json/' + name + '.json', function(entities) {
+      entities.forEach(function(entity) {
+        this.add(entity);
+        this.graphics.scene.add(entity.object);
+        if (entity.type == 'player') {
+          this.player = entity;
+          this.graphics.setCamera(entity.camera);
+        }
+      }.bind(this));
+      callback();
+    }.bind(this));
+  }
+
   toJSON() {
     var json = [];
     this.entities.forEach(function(entity){
@@ -115,4 +134,4 @@ class Physics {
   }
 }
 
-export { Physics };
+export { Stage };

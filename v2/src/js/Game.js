@@ -1,27 +1,21 @@
 import { Loop } from './Loop';
-import { Graphics } from './Graphics.js';
 import { AssetLoader } from './loaders/AssetLoader.js';
-import { Physics } from './Physics.js';
-import { LevelFactory } from './factories/LevelFactory.js';
-import { LevelEditor } from './LevelEditor.js';
+import { Stage } from './Stage.js';
 
 class Game {
   constructor() {
-
+    this.loop;
+    this.stage;
+    this.assets;
   }
 
   init(canvas) {
     // Initialize core game engine
     this.loop = new Loop();
-    this.graphics = new Graphics(canvas);
-    this.graphics.addStats();
 
     // Initialize components
-    this.physics = new Physics();
-
-    // Initialize level components
-    this.levelFactory = new LevelFactory();
-    this.levelEditor = new LevelEditor();
+    this.stage = new Stage(canvas);
+    this.stage.setFrequency(60);
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets = new AssetLoader(this.onLoad.bind(this));
@@ -33,27 +27,18 @@ class Game {
   }
 
   update(data = { delta: 1 / 60 }) {
-    // Update world physics
-    this.physics.update(data.delta);
+    // Update entity physics
+    this.stage.update(data.delta);
   }
 
   render(data = { delta: 1 / 60, alpha: 0 }) {
-    this.physics.render(data.delta, data.alpha);
-
-    // Render graphics
-    this.graphics.render();
+    // Update entity 3D objects
+    this.stage.render(data.delta, data.alpha);
   }
 
   onLoad() {
-    // Initialize entity manager
-    this.physics.init();
-    this.physics.setFrequency(60);
-
-    // Adjust graphics components
-    this.graphics.scene.add(this.physics.debugger);
-
     // Start generic level
-    this.loadLevel('v2-test-joints', function() {
+    this.stage.load('v2-test-joints', function() {
       // Add game loops
       this.loop.add(this.update.bind(this), 60); // Physics
       this.loop.add(this.render.bind(this), -1); // Render
@@ -61,21 +46,7 @@ class Game {
     }.bind(this));
   }
 
-  loadLevel(name = 'Campaign Level 1', callback = function(){}) {
-    // Load level from JSON
-    this.physics.clear();
-    this.levelFactory.loadFile('../json/' + name + '.json', function(entities) {
-      entities.forEach(function(entity) {
-        this.physics.add(entity);
-        this.graphics.scene.add(entity.object);
-        if (entity.type == 'player') {
-          this.player = entity;
-          this.graphics.setCamera(entity.camera);
-        }
-      }.bind(this));
-      callback();
-    }.bind(this));
-  }
+  
 }
 
 export { Game };

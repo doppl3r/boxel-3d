@@ -121,6 +121,10 @@ class Graphics {
   addStats() {
     document.body.appendChild(this.stats.dom);
   }
+
+  removeStats() {
+    document.body.removeChild(this.stats.dom);
+  }
 }
 
 export { Graphics };
