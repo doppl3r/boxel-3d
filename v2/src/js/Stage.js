@@ -23,8 +23,8 @@ class Stage {
   }
 
   render(delta, alpha) {
-    // Update all 3D object rendering properties
-    this.physics.render(delta, alpha);
+    // Update all entities animation properties
+    this.physics.animate(delta, alpha);
 
     // Render graphics
     this.graphics.render();

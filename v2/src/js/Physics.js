@@ -39,10 +39,10 @@ class Physics {
     }.bind(this));
   }
 
-  render(delta, alpha) {
+  animate(delta, alpha) {
     // Update all 3D object rendering properties
     this.entities.forEach(function(entity) {
-      entity.render(delta, alpha);
+      entity.animate(delta, alpha);
     });
   }
 
@@ -63,7 +63,7 @@ class Physics {
     }
 
     // Create body and collider for entity
-    entity.createBody(this.world);
+    entity.createRigidBody(this.world);
     entity.createColliders(this.world);
     entity.createJointFromParent(this.world);
     entity.dispatchEvent({ type: 'added' });

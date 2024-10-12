@@ -48,8 +48,8 @@ class Cube extends Entity {
     super.update(delta);
   }
 
-  render(delta, alpha) {
-    super.render(delta, alpha);
+  animate(delta, alpha) {
+    super.animate(delta, alpha);
 
     // Update model (optional)
     if (this.model && this.model.mixer) {

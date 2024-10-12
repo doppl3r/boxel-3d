@@ -26,9 +26,9 @@ class Gravity extends Cube {
     super.update(delta);
   }
 
-  render(delta, alpha) {
-    // Call Entity render function
-    super.render(delta, alpha);
+  animate(delta, alpha) {
+    // Call Entity animate function
+    super.animate(delta, alpha);
   }
 
   setGravity(e) {

@@ -59,15 +59,15 @@ class Entity extends EventDispatcher {
     this.dispatchEvent({ type: 'updated' });
   }
 
-  render(delta, alpha) {
+  animate(delta, alpha) {
     // Skip (s)lerp if body type is null or "Fixed"
     if (this.rigidBody && this.rigidBody.isFixed()) return false;
 
-    // Interpolate 3D object position
-    this.lerp(alpha);
-
     // Update optional tweens
     this.tweens.update();
+
+    // Interpolate 3D object position
+    this.lerp(alpha);
   }
 
   setRigidBodyDesc(options) {
@@ -140,7 +140,7 @@ class Entity extends EventDispatcher {
     this.collidersDesc.push(colliderDesc);
   }
 
-  createBody(world) {
+  createRigidBody(world) {
     this.rigidBody = world.createRigidBody(this.rigidBodyDesc);
   }
 
