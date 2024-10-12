@@ -27,9 +27,18 @@ class EntityFactory {
 
   static create(options) {
     // Call function by class name
-    var fn = this['create' + options.class].bind(this);
-    if (fn == null) return;
-    return fn(options);
+    if (options.type != null) {
+      var type = options.type.charAt(0).toUpperCase() + options.type.slice(1);
+      var fn = this['create' + type];
+      if (fn == null) {
+        console.error(`Error: Entity type "${ type }" not found.`);
+        return;
+      }
+      return fn(options);
+    }
+    else {
+      console.error(`Error: Entity type is undefined.`)
+    }
   }
   
   static createBounce(options) {

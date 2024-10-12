@@ -1,4 +1,4 @@
-import { Euler, Quaternion, Vector3 } from 'three';
+import { Quaternion, Vector3 } from 'three';
 import { LightFactory } from './LightFactory.js';
 import { EntityFactory } from './EntityFactory.js';
 
@@ -25,10 +25,10 @@ class LevelFactory {
     entities = this.createEntities(json);
 
     // Add ambient light
-    var light = EntityFactory.create({
-      class: 'Light',
+    var light = EntityFactory.createLight({
       model: LightFactory.create('ambient'),
-      position: { x: 0, y: 4, z: 0 }
+      position: { x: 0, y: 4, z: 0 },
+      sleeping: true
     });
     entities.push(light);
 
@@ -41,16 +41,15 @@ class LevelFactory {
     json.children.forEach(function(child) {
       // Add entity to array
       var entity = this.createEntity(child);
-
-      // Assign parent
-      entity.parent = parent;
-
-      // Populate entities array
-      entities.push(entity);
-      
-      // Recursively load child entities
-      if (child.children) {
-        this.createEntities(child, entities, entity);
+      if (entity != null) {
+        // Assign parent before adding entity
+        entity.parent = parent;
+        entities.push(entity);
+        
+        // Recursively load child entities
+        if (child.children) {
+          this.createEntities(child, entities, entity);
+        }
       }
     }.bind(this));
 
@@ -60,26 +59,24 @@ class LevelFactory {
 
   static createEntity(json) {
     var position = new Vector3();
-    var rotation = new Euler();
-    var scale = new Vector3();
-    var quaternion = new Quaternion();
-    var status = (json.status != null) ? json.status : 1;
+    var rotation = new Quaternion();
+    var scale = new Vector3(1, 1, 1);
+    var status = (json.status != null) ? json.status : 1; // 0 = Dynamic, 1 = Fixed
 
     // Update properties
-    position.set(json.position.x, json.position.y, json.position.z);
-    rotation.set(json.rotation.x, json.rotation.y, json.rotation.z);
-    scale.set(json.scale.x, json.scale.y, json.scale.z);
-    quaternion.setFromEuler(rotation);
+    if (json.position) position.set(json.position.x, json.position.y, json.position.z);
+    if (json.rotation) rotation.set(json.rotation.x, json.rotation.y, json.rotation.z, json.rotation.w);
+    if (json.scale) scale.set(json.scale.x, json.scale.y, json.scale.z);
 
     // Create a new entity from json properties
     var options = Object.assign({
       ccd: true,
-      class: json.type.charAt(0).toUpperCase() + json.type.slice(1),
       friction: json.friction || 0,
       model: game.assets.duplicate('cube-' + json.type),
       position: position,
-      quaternion: quaternion,
+      rotation: rotation,
       scale: scale,
+      sleeping: status != 0,
       softCcdPrediction: 0.5,
       status: status,
       type: json.type

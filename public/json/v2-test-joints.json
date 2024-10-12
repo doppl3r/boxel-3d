@@ -5,87 +5,72 @@
     {
       "type": "cube",
       "position": { "x": 0, "y": 0, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 24, "y": 1, "z": 1 }
     },
     {
       "type": "cube",
       "position": { "x": 0, "y": 12, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 24, "y": 1, "z": 1 }
     },
     {
       "type": "cube",
       "position": { "x": -11.5, "y": 6, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 1, "y": 11, "z": 1 }
     },
     {
       "type": "cube",
       "position": { "x": 11.5, "y": 6, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 1, "y": 11, "z": 1 }
+    },
+    {
+      "type": "gravity",
+      "position": { "x": 9, "y": 7, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 1, "w": 0 },
+      "scale": { "x": 2, "y": 2, "z": 2 }
     },
     {
       "type": "direction",
       "position": { "x": -8, "y": 4, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
-      "scale": { "x": 1, "y": 1, "z": 1 },
       "status": 1,
       "children": [
         {
           "type": "direction",
           "position": { "x": -6, "y": 8, "z": 0 },
-          "rotation": { "x": 0, "y": 0, "z": 0 },
-          "scale": { "x": 1, "y": 1, "z": 1 },
           "status": 0,
           "children": [
             {
               "type": "direction",
               "position": { "x": -4, "y": 4, "z": 0 },
-              "rotation": { "x": 0, "y": 0, "z": 0 },
-              "scale": { "x": 1, "y": 1, "z": 1 },
               "status": 0,
               "children": [
                 {
                   "type": "direction",
                   "position": { "x": -2, "y": 8, "z": 0 },
-                  "rotation": { "x": 0, "y": 0, "z": 0 },
-                  "scale": { "x": 1, "y": 1, "z": 1 },
                   "status": 0,
                   "children": [
                     {
                       "type": "direction",
                       "position": { "x": 0, "y": 4, "z": 0 },
-                      "rotation": { "x": 0, "y": 0, "z": 0 },
-                      "scale": { "x": 1, "y": 1, "z": 1 },
                       "status": 0,
                       "children": [
                         {
                           "type": "direction",
                           "position": { "x": 2, "y": 8, "z": 0 },
-                          "rotation": { "x": 0, "y": 0, "z": 0 },
-                          "scale": { "x": 1, "y": 1, "z": 1 },
                           "status": 0,
                           "children": [
                             {
                               "type": "direction",
                               "position": { "x": 4, "y": 4, "z": 0 },
-                              "rotation": { "x": 0, "y": 0, "z": 0 },
-                              "scale": { "x": 1, "y": 1, "z": 1 },
                               "status": 0,
                               "children": [
                                 {
                                   "type": "direction",
                                   "position": { "x": 6, "y": 8, "z": 0 },
-                                  "rotation": { "x": 0, "y": 0, "z": 0 },
-                                  "scale": { "x": 1, "y": 1, "z": 1 },
                                   "status": 0,
                                   "children": [
                                     {
                                       "type": "player",
                                       "position": { "x": 8, "y": 4, "z": 0 },
-                                      "rotation": { "x": 0, "y": 0, "z": 0 },
                                       "scale": { "x": 2, "y": 2, "z": 2 },
                                       "status": 0
                                     }
