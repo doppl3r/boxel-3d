@@ -66,7 +66,6 @@ class Physics {
     entity.createBody(this.world);
     entity.createColliders(this.world);
     entity.createJointFromParent(this.world);
-    entity.takeSnapshot(); // Take snapshot from rigid body for 3D object
     entity.dispatchEvent({ type: 'added' });
 
     // Add entity to entities map using the rigidBody handle as the key (ex: "5e-324")
