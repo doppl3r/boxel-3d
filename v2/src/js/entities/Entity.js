@@ -335,8 +335,14 @@ class Entity extends EventDispatcher {
     return _vector.copy(this.rigidBody.linvel()).length();
   }
 
-  toJSON() {
+  toJSON(stringify = false) {
+    // Initialize entity values
     var json = {
+      type: this.type
+    };
+
+    // Include rigidBody properties
+    json = Object.assign({
       angularDamping: this.rigidBodyDesc.angularDamping,
       ccd: this.rigidBodyDesc.ccdEnabled,
       enabledRotations: {
@@ -364,10 +370,38 @@ class Entity extends EventDispatcher {
       },
       sleeping: this.rigidBodyDesc.sleeping,
       softCcdPrediction: this.rigidBodyDesc.softCcdPrediction,
-      status: this.rigidBodyDesc.status,
-      type: this.type
-    };
+      status: this.rigidBodyDesc.status
+    });
 
+    // Include first collider properties
+    json = Object.assign({
+      activeCollisionTypes: this.collidersDesc[0].activeCollisionTypes,
+      activeEvents: this.collidersDesc[0].activeEvents,
+      collisionGroups: this.collidersDesc[0].collisionGroups,
+      contactForceEventThreshold: this.collidersDesc[0].contactForceEventThreshold,
+      density: this.collidersDesc[0].density,
+      friction: this.collidersDesc[0].friction,
+      isSensor: this.collidersDesc[0].isSensor,
+      mass: this.collidersDesc[0].mass,
+      restitution: this.collidersDesc[0].restitution,
+      shape: this.collidersDesc[0].shape,
+      solverGroups: this.collidersDesc[0].solverGroups,
+      translation: this.collidersDesc[0].translation
+    }, json);
+
+    // Format json to string
+    if (stringify == true) {
+      // TODO: Include custom functions for future execution
+      json = Object.assign({
+        collisionEventStart: this.collidersDesc[0].collisionEventStart.name,
+        collisionEventEnd: this.collidersDesc[0].collisionEventEnd.name,
+      }, json);
+
+      // Assign json as string
+      json = JSON.stringify(json);
+    }
+
+    // Return final json
     return json;
   }
 }
