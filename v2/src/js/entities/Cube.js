@@ -58,12 +58,26 @@ class Cube extends Entity {
   }
   
   setScale(scale) {
-    var collider = this.colliders.entries().next().value[1];
-    var halfExtents = new Vector3().copy(scale).divideScalar(2);
+    // Update all collider halfExtents and positions
+    for (var i = 0; i < this.rigidBody.numColliders(); i++) {
+      var collider = this.rigidBody.collider(i);
+      var colliderDesc = this.collidersDesc[i];
+      var halfExtents = new Vector3().copy(colliderDesc.shape.halfExtents);
+      var scaleOrigin = halfExtents.clone().multiplyScalar(2);
+      var scaleNew = new Vector3().copy(scale);
+      var factor = scaleNew.clone();
+      var translation = new Vector3().copy(colliderDesc.translation).multiply(scaleNew);
 
-    // Update collider and 3D object scale
-    collider.setHalfExtents(halfExtents);
-    this.object.scale.copy(scale);
+      // Divide new scale by the first collider original scale
+      if (i == 0) factor.copy(scaleNew.clone().divide(scaleOrigin));
+  
+      // Update collider and 3D object scale
+      collider.setHalfExtents(halfExtents.multiply(factor));
+      collider.setTranslationWrtParent(translation);
+    }
+
+    // Update 3D object scale
+    super.setScale(scaleNew);
   }
 }
 

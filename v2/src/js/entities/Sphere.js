@@ -47,7 +47,7 @@ class Sphere extends Entity {
   }
 
   setRadius(radius) {
-    var collider = this.colliders.entries().next().value[1];
+    var collider = this.rigidBody.collider(0); // First collider
 
     // Update collider and 3D object scale
     collider.setRadius(radius);

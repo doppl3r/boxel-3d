@@ -19,7 +19,6 @@ class Entity extends EventDispatcher {
     // Set base components
     this.rigidBody;
     this.rigidBodyDesc;
-    this.colliders = new Map();
     this.collidersDesc = [];
     this.object = new Object3D();
     this.snapshot = {
@@ -154,9 +153,6 @@ class Entity extends EventDispatcher {
         // Parent the collider to the rigid body
         var collider = world.createCollider(colliderDesc, this.rigidBody);
 
-        // Add collider to colliders map using the collider handle as the key (ex: "5e-324")
-        this.colliders.set(collider.handle, collider);
-
         // Assign optional callback events to collider
         collider.collisionEventStart = colliderDesc.collisionEventStart;
         collider.collisionEventEnd = colliderDesc.collisionEventEnd;
@@ -206,7 +202,6 @@ class Entity extends EventDispatcher {
   }
 
   setScale(scale) {
-    // Colliders cannot be resized directly 
     this.object.scale.copy(scale);
   }
 
@@ -254,9 +249,17 @@ class Entity extends EventDispatcher {
     this.object.quaternion.slerpQuaternions(this.snapshot.rotation_1, this.snapshot.rotation_2, alpha);
   }
 
+  getCollider(handle) {
+    // Loop through rigid body colliders
+    for (var i = 0; i < this.rigidBody.numColliders(); i++) {
+      const collider = this.rigidBody.collider(i);
+      if (handle == collider.handle) return collider;
+    }
+  }
+
   onCollision(e) {
     // Get the collider from the event handle
-    var collider = e.target.colliders.get(e.handle);
+    var collider = e.target.getCollider(e.handle);
 
     // Determine which event to call by the "started" boolean
     if (e.started == true) collider.collisionEventStart(e);
