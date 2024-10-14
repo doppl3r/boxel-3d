@@ -3,6 +3,7 @@
   import { onMounted, ref } from 'vue';
   import Banner from './Banner.vue';
   import Card from './Card.vue';
+  import Popup from '../../v2/src/vue/Popup.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
   import { Loop } from '../../v2/src/js/Loop.js';
   import { Graphics } from '../../v2/src/js/Graphics.js';
@@ -41,6 +42,25 @@
     window.open(url, '_self');
   }
 
+  function openPopup() {
+    // Dispatch new popup from event
+    window.dispatchEvent(new CustomEvent('openPopup', {
+      detail: {
+        title: 'Coming Soon!',
+        text: 'Boxel 3D "Pro" is currently in development and will Be available in early 2025!',
+        inputs: [
+          {
+            type: 'button',
+            value: 'Continue',
+            callback: function() {
+              window.dispatchEvent(new CustomEvent('closePopup'));
+            }
+          }
+        ]
+      }
+    }));
+  }
+
   // Redirect app after loading
   onMounted(function() {
     //location.replace('v1/index.html')
@@ -58,11 +78,12 @@
 <template>
   <canvas ref="canvas"></canvas>
   <div class="ui">
-    <Banner>Select Boxel 3D Edition</Banner>
+    <Banner>Select Edition</Banner>
     <div class="cards">
       <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
-      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openLink('./v2/index.html')"></Card>
+      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openPopup()"></Card>
     </div>
+    <Popup />
     <Loading />
   </div>
 </template>
