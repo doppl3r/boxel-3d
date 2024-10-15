@@ -127,7 +127,7 @@
       <a class="button left fade-in" @click="goBack">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <BubbleButtonFullscreen class="button right fade-in" />
+      <BubbleButtonFullscreen class="button fade-in" />
       <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">
