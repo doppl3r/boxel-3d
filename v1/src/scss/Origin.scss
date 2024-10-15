@@ -333,6 +333,10 @@
           &.three {
             right: 144px;
           }
+
+          &.four {
+            right: 208px;
+          }
         }
 
         &:hover {
@@ -1065,6 +1069,7 @@
 
             &.two { right: 64px; }
             &.three { right: 112px; }
+            &.four { right: 160px; }
           }
 
           &.top-left { width: 32px; }

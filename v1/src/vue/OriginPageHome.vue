@@ -25,6 +25,10 @@
     else window.open(url, '_blank');
   }
 
+  function goBack() {
+    window.open('../index.html', '_self');
+  }
+
   function openMessageLink() {
     openLink('https://chrome.google.com/webstore/detail/tiny-tycoon/bamdkjfjhhnjcgcjmmjdnncpglihepoi');
   }
@@ -117,7 +121,8 @@
         <div class="message"><img class="google-icon" :src="'../svg/google-icon.svg'" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
-        <a class="button top-right three" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img :src="'../svg/grow.svg'"></a>
+        <a class="button top-right four" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img :src="'../svg/grow.svg'"></a>
+        <a class="button top-right three"  @click="goBack" title="Go back"><img :src="'../svg/back.svg'"></a>
         <a class="button top-right two" @click="showAccountOptions" title="Account"><img :src="'../svg/cloud-check.svg'"></a>
         <OriginButtonSettings class="button top-right" />
         <a class="button" @click="$emit('setPage', 'level-manager')" tabindex="0"><span>Level Maker</span> <img :src="'../svg/pencil.svg'"></a>
