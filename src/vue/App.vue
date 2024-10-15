@@ -71,7 +71,7 @@
       models: './json/menu-models.json',
       textures: './json/menu-textures.json',
       audio: './json/menu-audio.json',
-    })
+    });
   });
 </script>
 

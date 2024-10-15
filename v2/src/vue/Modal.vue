@@ -115,33 +115,35 @@
   $color-yellow: #FFCB4C;
 
   // Modal fade transition
-  .fade-modal-enter-active{
-    animation: twist 0.2s;
+  .fade-modal-enter-active {
+    animation: fade 0.2s;
+
+    .container {
+      animation: twist 0.2s;
+    }
   }
+  
   .fade-modal-leave-active {
-    animation: twist 0.2s reverse;
+    animation: fade 0.2s reverse;
+
+    .container {
+      animation: twist 0.2s reverse;
+    }
   }
 
   // Animations
   @keyframes translateBackground { 0% { background-position: 0em 0em; } 100% { background-position: -8em -8em; } }
   @keyframes grow { 0% { transform: scale(1); } 50% { transform: scale(1.20); } 100% { transform: scale(1); } }
   @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(10deg); } 66% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
-  @keyframes twist {
-    0% {
-      opacity: 0;
-      transform: rotate(15deg) scale(0.75);
-    }
-    100% {
-      opacity: 1;
-      transform: rotate(0deg) scale(1);
-    }
-  }
+  @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+  @keyframes twist { 0% { opacity: 0; transform: rotate(15deg) scale(0.75); } 100% { opacity: 1; transform: rotate(0deg) scale(1); } }
 
   .modal {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5em;
+    overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
