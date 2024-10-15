@@ -3,7 +3,7 @@
   import { onMounted, ref } from 'vue';
   import Banner from './Banner.vue';
   import Card from './Card.vue';
-  import Popup from '../../v2/src/vue/Popup.vue';
+  import Modal from '../../v2/src/vue/Modal.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
   import { Loop } from '../../v2/src/js/Loop.js';
   import { Graphics } from '../../v2/src/js/Graphics.js';
@@ -42,9 +42,9 @@
     window.open(url, '_self');
   }
 
-  function openPopup() {
-    // Dispatch new popup from event
-    window.dispatchEvent(new CustomEvent('openPopup', {
+  function openModal() {
+    // Dispatch new modal from event
+    window.dispatchEvent(new CustomEvent('openModal', {
       detail: {
         title: 'Coming Soon!',
         text: 'Boxel 3D "Pro" is currently in development and will Be available in early 2025!',
@@ -53,7 +53,7 @@
             type: 'button',
             value: 'Continue',
             callback: function() {
-              window.dispatchEvent(new CustomEvent('closePopup'));
+              window.dispatchEvent(new CustomEvent('closeModal'));
             }
           }
         ]
@@ -81,9 +81,9 @@
     <Banner>Select Edition</Banner>
     <div class="cards">
       <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
-      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openPopup()"></Card>
+      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openModal()" v-on:click.ctrl="openLink('./v2/index.html')"></Card>
     </div>
-    <Popup />
+    <Modal />
     <Loading />
   </div>
 </template>

@@ -9,19 +9,19 @@
 
   // Add event listener(s)
   function addEventListeners() {
-    window.addEventListener('openPopup', openPopup);
-	  window.addEventListener('closePopup', closePopup);
+    window.addEventListener('openModal', openModal);
+	  window.addEventListener('closeModal', closeModal);
     window.addEventListener('keydown', keydown);
   }
   
   // Remove event listeners
   function removeEventListeners() {
-    window.removeEventListener('openPopup', openPopup);
-	  window.removeEventListener('closePopup', closePopup);
+    window.removeEventListener('openModal', openModal);
+	  window.removeEventListener('closeModal', closeModal);
     window.removeEventListener('keydown', keydown);
   }
 
-  function openPopup(e) {
+  function openModal(e) {
     isOpen.value = true;
 
     // Assign values from custom event detail
@@ -40,21 +40,21 @@
 
     // Trigger opened event
     setTimeout(function() {
-      window.dispatchEvent(new CustomEvent('popupOpened'));
+      window.dispatchEvent(new CustomEvent('modalOpened'));
     }, 100);
   }
 
-  function closePopup() {
+  function closeModal() {
     isOpen.value = false;
 
     // Trigger opened event
     setTimeout(function() {
-      window.dispatchEvent(new CustomEvent('popupClosed'));
+      window.dispatchEvent(new CustomEvent('modalClosed'));
     }, 100);
   }
 
   function runCallback(callback, e) {
-    if (callback == null) callback = closePopup;
+    if (callback == null) callback = closeModal;
     callback(e);
   }
 
@@ -67,7 +67,7 @@
     if (isOpen.value == true) {
       var jumpKeys = ['Space', 'Enter', 'Escape'];
       if (jumpKeys.indexOf(e.code) > -1) {
-        // Close popup
+        // Close modal
         e.preventDefault();
         runLastInputCallback(e);
       }
@@ -84,8 +84,8 @@
 </script>
 
 <template>
-  <Transition name="fade-popup">
-    <div class="popup" v-if="isOpen == true">
+  <Transition name="fade-modal">
+    <div class="modal" v-if="isOpen == true">
       <div class="background" @click="runLastInputCallback"></div>
       <div class="container">
         <div class="content">
@@ -93,7 +93,7 @@
           <p class="text">{{ text }}</p>
           <div class="inputs">
             <template v-for="(input, index) of inputs">
-              <input :class="input.class" :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">
+              <input :class="input.class" :id="'modal-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">
             </template>
           </div>
           <a class="close" @click="runLastInputCallback">
@@ -114,16 +114,30 @@
   $color-red: #F52D59;
   $color-yellow: #FFCB4C;
 
-  // Popup fade transition
-  .fade-popup-enter-active, .fade-popup-leave-active { transition: opacity 0.1s ease; }
-  .fade-popup-enter-from, .fade-popup-leave-to { opacity: 0; }
+  // Modal fade transition
+  .fade-modal-enter-active{
+    animation: twist 0.2s;
+  }
+  .fade-modal-leave-active {
+    animation: twist 0.2s reverse;
+  }
 
   // Animations
   @keyframes translateBackground { 0% { background-position: 0em 0em; } 100% { background-position: -8em -8em; } }
   @keyframes grow { 0% { transform: scale(1); } 50% { transform: scale(1.20); } 100% { transform: scale(1); } }
   @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(10deg); } 66% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
+  @keyframes twist {
+    0% {
+      opacity: 0;
+      transform: rotate(15deg) scale(0.75);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+  }
 
-  .popup {
+  .modal {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,7 +156,7 @@
     ::-webkit-scrollbar-thumb:hover { background: rgba(#ffffff, 1); border-radius: 99em; }
 
     .background {
-      background: radial-gradient(circle, rgba($color-purple, 0) 50%, rgba($color-purple, 1) 100%);
+      //background: radial-gradient(circle, rgba($color-purple, 0) 50%, rgba($color-purple, 1) 100%);
       position: absolute;
       top: 0;
       left: 0;
@@ -234,8 +248,8 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 2.5em;
-          width: 2.5em;
+          height: 2em;
+          width: 2em;
           position: absolute;
           top: 0;
           right: 0;
