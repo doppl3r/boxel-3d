@@ -24,8 +24,7 @@
     light = LightFactory.create('ambient');
 
     // Update camera and scene
-    graphics.camera.position.set(0, 12, 16);
-    graphics.camera.lookAt(0, -2, 0);
+    background.traverse(function(child) { if (child.isCamera) graphics.setCamera(child); });
     graphics.scene.add(background, light);
 
     // Start render loop
@@ -34,7 +33,7 @@
   }
 
   function render(data) {
-    background.rotation.y = (Math.cos(data.index * 0.0025)) * 0.25;
+    background.mixer.update(data.delta)
     graphics.render();
   }
 
