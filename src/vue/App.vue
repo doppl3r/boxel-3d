@@ -3,12 +3,12 @@
   import { onMounted, ref } from 'vue';
   import Banner from './Banner.vue';
   import Card from './Card.vue';
-  import Modal from '../../v2/src/vue/Modal.vue';
-  import Loading from '../../v2/src/vue/Loading.vue';
-  import { Loop } from '../../v2/src/js/Loop.js';
-  import { Graphics } from '../../v2/src/js/Graphics.js';
-  import { LightFactory } from '../../v2/src/js/factories/LightFactory.js';
-  import { AssetLoader } from '../../v2/src/js/loaders/AssetLoader.js';
+  import Modal from '@/v2/src/vue/Modal.vue';
+  import Loading from '@/v2/src/vue/Loading.vue';
+  import { Loop } from '@/v2/src/js/Loop.js';
+  import { Graphics } from '@/v2/src/js/Graphics.js';
+  import { LightFactory } from '@/v2/src/js/factories/LightFactory.js';
+  import { AssetLoader } from '@/v2/src/js/loaders/AssetLoader.js';
 
   // Initialize components
   var canvas = ref();
@@ -25,6 +25,7 @@
 
     // Update camera and scene
     background.traverse(function(child) { if (child.isCamera) graphics.setCamera(child); });
+    graphics.resize();
     graphics.scene.add(background, light);
 
     // Start render loop

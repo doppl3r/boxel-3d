@@ -32,12 +32,13 @@ export default defineConfig({
     wasm()
   ],
   resolve: {
-    alias: { // Resolve html sanitizer paths
-      'source-map-js': path.resolve('jsconfig.json'),
-      'path': path.resolve('jsconfig.json'),
-      'url': path.resolve('jsconfig.json'),
-      'fs': path.resolve('jsconfig.json')
-    }
+    alias: [ // Resolve html sanitizer paths
+      { find: '@', replacement: path.resolve('./') },
+      { find: 'source-map-js', replacement: path.resolve('jsconfig.json') },
+      { find: 'path', replacement: path.resolve('jsconfig.json') },
+      { find: 'url', replacement: path.resolve('jsconfig.json') },
+      { find: 'fs', replacement: path.resolve('jsconfig.json') }
+    ]
   },
   server: {
     hmr: false, // Disable hot reload on save,
