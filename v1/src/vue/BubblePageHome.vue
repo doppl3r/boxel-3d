@@ -104,7 +104,7 @@
   }
 
   function goBack() {
-    window.open('../index.html', '_self');
+    history.back();
   }
 
   // Run function after being mounted (visible)

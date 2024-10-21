@@ -26,7 +26,7 @@
   }
 
   function goBack() {
-    window.open('../index.html', '_self');
+    history.back();
   }
 
   function openMessageLink() {

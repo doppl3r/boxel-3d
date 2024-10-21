@@ -47,7 +47,8 @@
     "sanitize-html": "^2.13.1",
     "sass": "^1.80.3",
     "three": "^0.169.0",
-    "vue": "^3.5.12"
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@dimforge/rapier3d": "^0.14.0",

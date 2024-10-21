@@ -16,6 +16,7 @@
 
 <template>
   <canvas ref="canvas"></canvas>
+  <RouterView />
   <Loading />
 </template>
 

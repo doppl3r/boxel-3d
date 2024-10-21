@@ -63,7 +63,6 @@
 
   // Redirect app after loading
   onMounted(function() {
-    //location.replace('v1/index.html')
     loop = new Loop();
     graphics = new Graphics(canvas.value);
     assets = new AssetLoader(onLoad)
@@ -81,7 +80,7 @@
     <Banner>Select Edition</Banner>
     <div class="cards">
       <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
-      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openModal()" v-on:click.ctrl="openLink('./v2/index.html')"></Card>
+      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openModal()" v-on:click.shift="openLink('./v2/index.html')"></Card>
     </div>
     <Modal />
     <Loading />
