@@ -1,12 +1,15 @@
 <script setup>
   import '../scss/Global.scss';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
+  import { useRoute } from 'vue-router'
   import { Game } from '../js/Game.js';
   import Loading from './Loading.vue';
 
   // Initialize app and expose to window scope
-  var canvas = ref();
-  var game = window.game = new Game();
+  const canvas = ref();
+  const game = window.game = new Game();
+  const gameRef = window.gameRef = ref(game);
+  const route = useRoute();
 
   // Initialize app after canvas has been mounted
   onMounted(function() {
@@ -15,19 +18,44 @@
 </script>
 
 <template>
+  <!-- Canvas behind every page -->
   <canvas ref="canvas"></canvas>
-  <RouterView />
+
+  <!-- Render page component using Routes.js -->
+  <div class="page" :class="route.name">
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component" :game="gameRef" />
+      </transition>
+    </router-view>
+  </div>
+
+  <!-- Loading screen is global -->
   <Loading />
 </template>
 
 <style lang="scss" scoped>
   canvas {
-    image-rendering: pixelated;
-    width: 100%;
     height: 100%;
+    image-rendering: pixelated;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
+    width: 100%;
     z-index: 0;
+  }
+
+  .page {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+    .fade-enter-active,
+    .fade-leave-active { transition: opacity 0.5s ease; }
+    .fade-enter-from,
+    .fade-leave-to { opacity: 0; }
   }
 </style>

@@ -7,14 +7,16 @@ import { LevelFactory } from './factories/LevelFactory.js';
 */
 
 class Stage {
-  constructor(canvas) {
+  constructor() {
     // Initialize Rapier world
     this.physics = new Physics();
+    this.graphics;
+  }
 
+  init(canvas) {
     // Add 3D pipeline to stage
     this.graphics = new Graphics(canvas);
     this.graphics.scene.add(this.physics.debugger);
-    this.graphics.addStats();
   }
 
   update(delta) {

@@ -1,23 +1,21 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from '../vue/App.vue'
-import PageHome from '../vue/PageHome.vue'
-import PagePlay from '../vue/PagePlay.vue'
+import Routes from './Routes.js'
 
-const routes = [
-  {
-    path: '/',
-    component: PageHome
-  },
-  {
-    path: '/play',
-    component: PagePlay
-  }
-];
+/*
+  Router history modes
+  - createWebHashHistory: #/home
+  - createWebHistory: /home
+  - createMemoryHistory: /home
+
+  createWebHashHistory works great with Electron because it expects
+  an index.html file, allowing /index.html#/home to work.
+*/
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes: Routes
 });
 
 // Initialize app with routes

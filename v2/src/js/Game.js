@@ -4,20 +4,16 @@ import { Stage } from './Stage.js';
 
 class Game {
   constructor() {
-    this.loop;
-    this.stage;
-    this.assets;
+    this.loop = new Loop();
+    this.stage = new Stage();
+    this.assets = new AssetLoader(this.onLoad.bind(this));
   }
 
   init(canvas) {
-    // Initialize core game engine
-    this.loop = new Loop();
-
     // Initialize components
-    this.stage = new Stage(canvas);
+    this.stage.init(canvas);
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
-    this.assets = new AssetLoader(this.onLoad.bind(this));
     this.assets.load({
       models: '../json/assets-models.json',
       textures: '../json/assets-textures.json',
