@@ -9,9 +9,10 @@ class Game {
     this.assets = new AssetLoader(this.onLoad.bind(this));
   }
 
-  init(canvas) {
+  init(canvas, callback = () => {}) {
     // Initialize components
     this.stage.init(canvas);
+    this.callback = callback;
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets.load({
@@ -31,14 +32,14 @@ class Game {
     this.stage.render(data.delta, data.alpha);
   }
 
-  async onLoad() {
-    // Load generic level
-    await this.stage.loadLevel('../json/v2-test-joints.json');
-
+  onLoad() {
     // Add game loops
     this.loop.add(this.update.bind(this), 60); // Physics
     this.loop.add(this.render.bind(this), -1); // Render
     this.loop.start();
+
+    // Run callback
+    this.callback();
   }
 }
 

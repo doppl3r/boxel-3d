@@ -1,19 +1,21 @@
 <script setup>
   import '../scss/Global.scss';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router'
   import { Game } from '../js/Game.js';
   import Loading from './Loading.vue';
 
   // Initialize app and expose to window scope
   const canvas = ref();
-  const game = window.game = new Game();
-  const gameRef = window.gameRef = ref(game);
+  const gameRef = ref(new Game());
+  const game = window.game = gameRef.value;
   const route = useRoute();
 
   // Initialize app after canvas has been mounted
   onMounted(function() {
-    game.init(canvas.value);
+    game.init(canvas.value, function() {
+      game.stage.loadLevel('../json/v2-test-joints.json');
+    });
   });
 </script>
 
@@ -25,7 +27,7 @@
   <div class="page" :class="route.name">
     <router-view v-slot="{ Component }">
       <transition name="fade">
-        <component :is="Component" :game="gameRef" />
+        <component :is="Component" :game="game" />
       </transition>
     </router-view>
   </div>

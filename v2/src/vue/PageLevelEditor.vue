@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted } from 'vue';
   import LevelEditorScene from './LevelEditorScene.vue';
 
   // Initialize app and expose to window scope
@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <LevelEditorScene :game="props.game" />
+  <LevelEditorScene :entities="props.game.stage.physics.entities" />
 </template>
 
 <style lang="scss" scoped>
