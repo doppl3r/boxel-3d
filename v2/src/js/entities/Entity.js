@@ -398,14 +398,18 @@ class Entity extends EventDispatcher {
       translation: this.collidersDesc[0].translation
     }, json);
 
+    // Include collider start event name if defined
+    if (typeof this.collidersDesc[0].collisionEventStart == 'string') {
+      json.collisionEventStart = this.collidersDesc[0].collisionEventStart;
+    }
+
+    // Include collider end event name if defined
+    if (typeof this.collidersDesc[0].collisionEventEnd == 'string') {
+      json.collisionEventEnd = this.collidersDesc[0].collisionEventEnd;
+    }
+
     // Format json to string
     if (stringify == true) {
-      // TODO: Include custom functions for future execution
-      json = Object.assign({
-        collisionEventStart: this.collidersDesc[0].collisionEventStart.name,
-        collisionEventEnd: this.collidersDesc[0].collisionEventEnd.name,
-      }, json);
-
       // Assign json as string
       json = JSON.stringify(json);
     }

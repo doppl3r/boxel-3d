@@ -13,7 +13,6 @@ class Cube extends Entity {
     options = Object.assign({
       enabledRotations: { x: false, y: false, z: true },
       enabledTranslations: { x: true, y: true, z: false },
-      model: 'cube-cube',
       scale: { x: 1, y: 1, z: 1 }
     }, options);
 
@@ -29,7 +28,13 @@ class Cube extends Entity {
     this.model = options.model;
 
     // Update 3D object scale
-    this.object.scale.copy(options.scale)
+    this.object.scale.copy(options.scale);
+
+    // Add entity event listeners
+    this.onCubeAdded = this.onCubeAdded.bind(this);
+    this.onCubeRemoved = this.onCubeRemoved.bind(this);
+    this.addEventListener('added', this.onCubeAdded);
+    this.addEventListener('removed', this.onCubeRemoved);
   }
 
   update(delta) {
@@ -69,16 +74,30 @@ class Cube extends Entity {
     super.setScale(scaleNew);
   }
 
-  createModel(options) {
-    options = Object.assign({
-      color: '#ffffff'
-    }, options);
+  onCubeAdded(e) {
+    // Add 3D model to 3D object
+    if (this.model == null) this.createModel();
+    this.object.add(this.model);
+  }
+  
+  onCubeRemoved(e) {
+    e.target.removeEventListener('added', e.target.onCubeAdded);
+    e.target.removeEventListener('removed', e.target.onCubeRemoved);
+  }
 
+  createModel() {
     var geometry = new BoxGeometry(1, 1, 1);
-    var material = new MeshStandardMaterial({ color: options.color });
+    var material = new MeshStandardMaterial({ color: '#ffffff' });
     this.model = new Mesh(geometry, material);
     this.model.receiveShadow = true;
     this.model.castShadow = true;
+  }
+
+  toJSON(stringify = false) {
+    // Extend entity toJSON with model name
+    const json = super.toJSON(stringify);
+    json.model = this.model.name;
+    return json;
   }
 }
 

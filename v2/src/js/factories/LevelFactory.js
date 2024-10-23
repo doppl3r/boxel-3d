@@ -1,5 +1,4 @@
 import { Quaternion, Vector3 } from 'three';
-import { LightFactory } from './LightFactory.js';
 import { EntityFactory } from './EntityFactory.js';
 
 class LevelFactory {
@@ -70,9 +69,9 @@ class LevelFactory {
     var entity = EntityFactory.create(options);
 
     // Create model from json model name
-    if (entity.model) {
-      if (typeof entity.model == 'string') entity.model = game.assets.duplicate(entity.model);
-      entity.object.add(entity.model);
+    if (typeof entity.model == 'string') {
+      // Replace model with asset model
+      entity.model = game.assets.duplicate(entity.model);
     }
     return entity;
   }

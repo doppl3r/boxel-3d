@@ -28,6 +28,12 @@ class Sphere extends Entity {
 
     // Update 3D object scale
     this.object.scale.set(options.radius * 2, options.radius * 2, options.radius * 2);
+
+    // Add entity event listeners
+    this.onSphereAdded = this.onSphereAdded.bind(this);
+    this.onSphereRemoved = this.onSphereRemoved.bind(this);
+    this.addEventListener('added', this.onSphereAdded);
+    this.addEventListener('removed', this.onSphereRemoved);
   }
 
   setRadius(radius) {
@@ -42,16 +48,20 @@ class Sphere extends Entity {
     this.setRadius(scale.x / 2);
   }
 
-  createModel(options) {
-    options = Object.assign({
-      color: '#ffffff',
-      heightSegments: 32,
-      radius: 0.5,
-      widthSegments: 32,
-    }, options);
+  onSphereAdded(e) {
+    // Add 3D model to 3D object
+    if (this.model == null) this.createModel();
+    this.object.add(this.model);
+  }
+  
+  onSphereRemoved(e) {
+    e.target.removeEventListener('added', e.target.onSphereAdded);
+    e.target.removeEventListener('removed', e.target.onSphereRemoved);
+  }
 
-    var geometry = new SphereGeometry(options.radius, options.widthSegments, options.heightSegments);
-    var material = new MeshStandardMaterial({ color: options.color });
+  createModel() {
+    var geometry = new SphereGeometry(0.5, 16, 16);
+    var material = new MeshStandardMaterial({ color: '#ffffff' });
     this.model = new Mesh(geometry, material);
     this.model.receiveShadow = true;
     this.model.castShadow = true;
