@@ -3,16 +3,15 @@ import { AssetLoader } from './loaders/AssetLoader.js';
 import { Stage } from './Stage.js';
 
 class Game {
-  constructor() {
+  constructor(onLoad) {
     this.loop = new Loop();
     this.stage = new Stage();
-    this.assets = new AssetLoader(this.onLoad.bind(this));
+    this.assets = new AssetLoader(onGameLoad.bind(this, onLoad));
   }
 
-  init(canvas, callback = () => {}) {
+  init(canvas) {
     // Initialize components
     this.stage.init(canvas);
-    this.callback = callback;
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets.load({
@@ -31,16 +30,16 @@ class Game {
     // Update entity 3D objects
     this.stage.render(data.delta, data.alpha);
   }
+}
 
-  onLoad() {
-    // Add game loops
-    this.loop.add(this.update.bind(this), 60); // Physics
-    this.loop.add(this.render.bind(this), -1); // Render
-    this.loop.start();
+function onGameLoad(onLoad) {
+  // Add and start game loops
+  this.loop.add(this.update.bind(this), 60); // Physics
+  this.loop.add(this.render.bind(this), -1); // Render
+  this.loop.start();
 
-    // Run callback
-    this.callback();
-  }
+  // Run loading callback
+  onLoad();
 }
 
 export { Game };

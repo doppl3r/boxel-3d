@@ -7,15 +7,17 @@
 
   // Initialize app and expose to window scope
   const canvas = ref();
-  const gameRef = ref(new Game());
+  const gameRef = ref(new Game(onLoad));
   const game = window.game = gameRef.value;
   const route = useRoute();
 
+  function onLoad() {
+    game.stage.loadLevel('../json/v2-test-joints.json');
+  }
+
   // Initialize app after canvas has been mounted
   onMounted(function() {
-    game.init(canvas.value, function() {
-      game.stage.loadLevel('../json/v2-test-joints.json');
-    });
+    game.init(canvas.value);
   });
 </script>
 
