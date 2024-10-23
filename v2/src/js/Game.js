@@ -6,7 +6,7 @@ class Game {
   constructor(onLoad) {
     this.loop = new Loop();
     this.stage = new Stage();
-    this.assets = new AssetLoader(onGameLoad.bind(this, onLoad));
+    this.assets = new AssetLoader(this.onLoad.bind(this, onLoad));
   }
 
   init(canvas) {
@@ -30,16 +30,16 @@ class Game {
     // Update entity 3D objects
     this.stage.render(data.delta, data.alpha);
   }
-}
 
-function onGameLoad(onLoad) {
-  // Add and start game loops
-  this.loop.add(this.update.bind(this), 60); // Physics
-  this.loop.add(this.render.bind(this), -1); // Render
-  this.loop.start();
-
-  // Run loading callback
-  onLoad();
+  onLoad(onLoad) {
+    // Add and start game loops
+    this.loop.add(this.update.bind(this), 60); // Physics
+    this.loop.add(this.render.bind(this), -1); // Render
+    this.loop.start();
+  
+    // Run optional callback
+    if (typeof onLoad == 'function') onLoad();
+  }
 }
 
 export { Game };

@@ -11,25 +11,13 @@ class Sphere extends Entity {
   constructor(options = {}) {
     // Set options with default values
     options = Object.assign({
-      color: '#ffffff',
       enabledRotations: { x: false, y: false, z: true },
       enabledTranslations: { x: true, y: true, z: false },
-      heightSegments: 32,
-      radius: 0.5,
-      widthSegments: 32,
+      radius: 0.5
     }, options);
 
     // Create physical shape
     options.shape = new Ball(options.radius);
-
-    // Initialize default sphere model mesh
-    if (options.model == null) {
-      var geometry = new SphereGeometry(options.radius, options.widthSegments, options.heightSegments);
-      var material = new MeshStandardMaterial({ color: options.color });
-      options.model = new Mesh(geometry, material);
-      options.model.receiveShadow = true;
-      options.model.castShadow = true;
-    }
 
     // Inherit Entity class
     super(options);
@@ -37,10 +25,6 @@ class Sphere extends Entity {
     // Set default properties
     this.isSphere = true;
     this.type = 'sphere';
-
-    // Add optional model to 3D object
-    this.model = options.model;
-    this.object.add(this.model);
 
     // Update 3D object scale
     this.object.scale.set(options.radius * 2, options.radius * 2, options.radius * 2);
@@ -56,6 +40,21 @@ class Sphere extends Entity {
 
   setScale(scale) {
     this.setRadius(scale.x / 2);
+  }
+
+  createModel(options) {
+    options = Object.assign({
+      color: '#ffffff',
+      heightSegments: 32,
+      radius: 0.5,
+      widthSegments: 32,
+    }, options);
+
+    var geometry = new SphereGeometry(options.radius, options.widthSegments, options.heightSegments);
+    var material = new MeshStandardMaterial({ color: options.color });
+    this.model = new Mesh(geometry, material);
+    this.model.receiveShadow = true;
+    this.model.castShadow = true;
   }
 }
 

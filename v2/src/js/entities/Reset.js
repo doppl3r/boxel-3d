@@ -10,7 +10,8 @@ class Reset extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Reset selected!'); },
       collisionEventEnd: function(e) {},
-      isSensor: true
+      isSensor: true,
+      model: 'cube-reset'
     }, options);
 
     // Inherit Character class

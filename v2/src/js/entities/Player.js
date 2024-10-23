@@ -14,7 +14,8 @@ class Player extends Cube {
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
       collisionEventStart: function(e) { e.target.checkCollision(e); },
-      collisionEventEnd: function(e) {}
+      collisionEventEnd: function(e) {},
+      model: 'cube-player'
     }, options);
 
     // Inherit Cube class

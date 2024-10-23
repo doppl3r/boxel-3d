@@ -9,7 +9,8 @@ class Finish extends Cube {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Finish selected!'); },
-      collisionEventEnd: function(e) {}
+      collisionEventEnd: function(e) {},
+      model: 'cube-finish'
     }, options);
 
     // Inherit Character class

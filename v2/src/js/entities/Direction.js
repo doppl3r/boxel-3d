@@ -10,7 +10,8 @@ class Direction extends Cube {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setDirection(e); },
-      collisionEventEnd: function(e) {}
+      collisionEventEnd: function(e) {},
+      model: 'cube-direction'
     }, options);
 
     // Inherit Character class

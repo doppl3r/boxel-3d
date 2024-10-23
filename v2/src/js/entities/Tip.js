@@ -10,7 +10,8 @@ class Tip extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Tip selected!'); },
       collisionEventEnd: function(e) {},
-      isSensor: true
+      isSensor: true,
+      model: 'cube-tip'
     }, options);
 
     // Inherit Character class

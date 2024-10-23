@@ -24,14 +24,6 @@ class LevelFactory {
     // Loop through children
     entities = this.createEntities(json);
 
-    // Add ambient light
-    var light = EntityFactory.createLight({
-      model: LightFactory.create('ambient'),
-      position: { x: 0, y: 4, z: 0 },
-      sleeping: true
-    });
-    entities.push(light);
-
     // Return array of entities
     return entities;
   }
@@ -61,28 +53,27 @@ class LevelFactory {
     var position = new Vector3();
     var rotation = new Quaternion();
     var scale = new Vector3(1, 1, 1);
-    var status = (json.status != null) ? json.status : 1; // 0 = Dynamic, 1 = Fixed
 
     // Update properties
     if (json.position) position.set(json.position.x, json.position.y, json.position.z);
     if (json.rotation) rotation.set(json.rotation.x, json.rotation.y, json.rotation.z, json.rotation.w);
     if (json.scale) scale.set(json.scale.x, json.scale.y, json.scale.z);
 
-    // Create a new entity from json properties
+    // Assign defaults from json values
     var options = Object.assign({
       ccd: true,
       friction: json.friction || 0,
-      model: game.assets.duplicate('cube-' + json.type),
-      position: position,
-      rotation: rotation,
-      scale: scale,
-      sleeping: status != 0,
-      softCcdPrediction: 0.5,
-      status: status,
-      type: json.type
+      softCcdPrediction: 0.5
     }, json);
+
+    // Create new entity from options
     var entity = EntityFactory.create(options);
 
+    // Create model from json model name
+    if (entity.model) {
+      if (typeof entity.model == 'string') entity.model = game.assets.duplicate(entity.model);
+      entity.object.add(entity.model);
+    }
     return entity;
   }
 }

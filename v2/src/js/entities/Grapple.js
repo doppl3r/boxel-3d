@@ -9,7 +9,8 @@ class Grapple extends Cube {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Grapple selected!'); },
-      collisionEventEnd: function(e) {}
+      collisionEventEnd: function(e) {},
+      model: 'cube-grapple'
     }, options);
 
     // Inherit Character class

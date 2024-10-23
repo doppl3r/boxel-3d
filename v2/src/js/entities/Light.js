@@ -11,24 +11,18 @@ class Light extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) {},
       collisionEventEnd: function(e) {},
-      intensity: Math.PI,
       isSensor: true,
       status: 1
     }, options);
 
-    // Assign new light to 3D model
-    if (options.model == null) {
-      options.model = LightFactory.create('point');
-    }
-
     // Inherit Character class
     super(options);
 
+    // Assign new light to 3D model
+    this.model = LightFactory.create(options.lightType, options);
+
     // Set default properties
     this.type = 'light';
-
-    // Update light properties
-    this.updateIntensity();
   }
 
   update(delta) {

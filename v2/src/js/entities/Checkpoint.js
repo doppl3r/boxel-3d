@@ -10,7 +10,8 @@ class Checkpoint extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Checkpoint selected!'); },
       collisionEventEnd: function(e) {},
-      isSensor: true
+      isSensor: true,
+      model: 'cube-checkpoint'
     }, options);
 
     // Inherit Character class

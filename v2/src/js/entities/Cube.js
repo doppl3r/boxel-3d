@@ -11,34 +11,22 @@ class Cube extends Entity {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      color: '#ffffff',
       enabledRotations: { x: false, y: false, z: true },
       enabledTranslations: { x: true, y: true, z: false },
+      model: 'cube-cube',
       scale: { x: 1, y: 1, z: 1 }
     }, options);
 
     // Create physical shape
     options.shape = new Cuboid(options.scale.x / 2, options.scale.y / 2, options.scale.z / 2);
 
-    // Initialize default cube model mesh
-    if (options.model == null) {
-      var geometry = new BoxGeometry(1, 1, 1);
-      var material = new MeshStandardMaterial({ color: options.color });
-      options.model = new Mesh(geometry, material);
-      options.model.receiveShadow = true;
-      options.model.castShadow = true;
-    }
-
     // Inherit Entity class
     super(options);
-
+    
     // Set default properties
     this.isCube = true;
     this.type = 'cube';
-
-    // Add optional model to 3D object
     this.model = options.model;
-    this.object.add(this.model);
 
     // Update 3D object scale
     this.object.scale.copy(options.scale)
@@ -79,6 +67,18 @@ class Cube extends Entity {
 
     // Update 3D object scale
     super.setScale(scaleNew);
+  }
+
+  createModel(options) {
+    options = Object.assign({
+      color: '#ffffff'
+    }, options);
+
+    var geometry = new BoxGeometry(1, 1, 1);
+    var material = new MeshStandardMaterial({ color: options.color });
+    this.model = new Mesh(geometry, material);
+    this.model.receiveShadow = true;
+    this.model.castShadow = true;
   }
 }
 

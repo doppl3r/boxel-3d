@@ -10,7 +10,8 @@ class Control extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setMode(e); },
       collisionEventEnd: function(e) {},
-      isSensor: true
+      isSensor: true,
+      model: 'cube-control'
     }, options);
 
     // Inherit Character class

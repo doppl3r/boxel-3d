@@ -11,7 +11,8 @@ class Resize extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setPairScale(e); },
       collisionEventEnd: function(e) {},
-      isSensor: true
+      isSensor: true,
+      model: 'cube-resize'
     }, options);
 
     // Inherit Character class

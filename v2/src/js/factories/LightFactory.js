@@ -24,7 +24,7 @@ class LightFactory {
       position: { x: 0, y: 0, z: 0 },
       shadow: false,
       skyColor: '#ffffff'
-    }, options)
+    }, options);
     
     // Conditionally create camera
     if (type == 'ambient') {

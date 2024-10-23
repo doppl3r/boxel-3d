@@ -11,7 +11,8 @@ class Gravity extends Cube {
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setGravity(e);  },
       collisionEventEnd: function(e) {},
-      isSensor: true
+      isSensor: true,
+      model: 'cube-gravity'
     }, options);
 
     // Inherit Character class

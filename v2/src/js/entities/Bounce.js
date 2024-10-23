@@ -10,7 +10,8 @@ class Bounce extends Cube {
   constructor(options = {}) {
     // Set options with default values
     options = Object.assign({
-      
+      scale: { x: 1, y: 1, z: 1 },
+      model: 'cube-bounce'
     }, options);
 
     // Inherit Character class
