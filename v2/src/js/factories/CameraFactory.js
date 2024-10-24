@@ -10,7 +10,7 @@ class CameraFactory {
 
   }
 
-  static create(type = 'perspective', options) {
+  static create(type = 'PerspectiveCamera', options) {
     var camera;
     var helper;
     var width = window.innerWidth;
@@ -24,10 +24,10 @@ class CameraFactory {
     }, options);
 
     // Conditionally create camera
-    if (type == 'perspective') {
+    if (type == 'PerspectiveCamera') {
       camera = new PerspectiveCamera(options.fov, ratio, 0.05, 100);
     }
-    else if (type == 'orthographic') {
+    else if (type == 'OrthographicCamera') {
       camera = new OrthographicCamera(-ratio, ratio, 1, -1, 0.05, 100);
     }
 

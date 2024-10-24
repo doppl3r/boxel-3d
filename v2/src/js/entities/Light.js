@@ -37,12 +37,6 @@ class Light extends Cube {
     super.animate(delta, alpha);
   }
 
-  updateIntensity() {
-    // Find the max scale value
-    var max = Math.max(...Object.values(this.object.scale));
-    this.model.intensity = Math.PI * max;
-  }
-
   toJSON() {
     // Extend entity toJSON with model name
     const json = super.toJSON();

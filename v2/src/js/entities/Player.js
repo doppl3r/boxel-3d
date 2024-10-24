@@ -33,7 +33,7 @@ class Player extends Cube {
     this.object.add(this.light);
 
     // Create camera with offset property
-    this.camera = CameraFactory.create('perspective');
+    this.camera = CameraFactory.create('PerspectiveCamera');
     this.cameraOffset = new Vector3(0, 0, 20);
 
     // Bind "this" context to class function (required for event removal)

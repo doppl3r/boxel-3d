@@ -45,6 +45,14 @@ class Cube extends Entity {
       this.model.mixer.update(delta);
     }
   }
+
+  createModel() {
+    var geometry = new BoxGeometry(1, 1, 1);
+    var material = new MeshStandardMaterial({ color: '#ffffff' });
+    this.model = new Mesh(geometry, material);
+    this.model.receiveShadow = true;
+    this.model.castShadow = true;
+  }
   
   setScale(scale) {
     var scaleNew = new Vector3().copy(scale);
