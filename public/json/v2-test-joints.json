@@ -9,13 +9,6 @@
       "lightType": "AmbientLight"
     },
     {
-      "type": "trimesh",
-      "model": { "name": "background-tropic" },
-      "position": { "x": 0, "y": 0, "z": 0 },
-      "scale": { "x": 24, "y": 1, "z": 1 },
-      "status": 1
-    },
-    {
       "type": "cube",
       "model": { "name": "cube-cube" },
       "position": { "x": 0, "y": 0, "z": 0 },

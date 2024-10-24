@@ -66,7 +66,12 @@ class LevelFactory {
     }, json);
 
     // Assign optional 3D model using stored model name
-    if (json.model) options.model = game.assets.duplicate(json.model.name);
+    if (json.model) {
+      // Check if model exists
+      if (game.assets.get(json.model.name)) {
+        options.model = game.assets.duplicate(json.model.name);
+      }
+    }
 
     // Create new entity from options
     var entity = EntityFactory.create(options);
