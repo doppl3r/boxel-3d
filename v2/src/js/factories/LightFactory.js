@@ -10,7 +10,7 @@ class LightFactory {
     
   }
 
-  static create(type = 'point', options = {}) {
+  static create(type = 'PointLight', options) {
     var light;
     var helper;
     
@@ -27,18 +27,18 @@ class LightFactory {
     }, options);
     
     // Conditionally create camera
-    if (type == 'ambient') {
+    if (type == 'AmbientLight') {
       light = new AmbientLight(options.color, options.intensity);
     }
-    else if (type == 'directional') {
+    else if (type == 'DirectionalLight') {
       light = new DirectionalLight(options.color, options.intensity);
       helper = new DirectionalLightHelper(light);
     }
-    else if (type == 'hemisphere') {
+    else if (type == 'HemisphereLight') {
       light = new HemisphereLight(options.skyColor, options.groundColor, options.intensity);
       helper = new HemisphereLightHelper(light);
     }
-    else if (type == 'point') {
+    else if (type == 'PointLight') {
       light = new PointLight(options.color, options.intensity, options.distance, options.decay);
       helper = new PointLightHelper(light);
     }

@@ -5,12 +5,12 @@ import { Cube } from './Cube.js';
 */
 
 class Finish extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Finish selected!'); },
       collisionEventEnd: function(e) {},
-      model: 'cube-finish'
+      model: { name: 'cube-checkpoint' }
     }, options);
 
     // Inherit Character class

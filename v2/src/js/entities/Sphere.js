@@ -8,7 +8,7 @@ import { Entity } from './Entity.js';
 */
 
 class Sphere extends Entity {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       enabledRotations: { x: false, y: false, z: true },

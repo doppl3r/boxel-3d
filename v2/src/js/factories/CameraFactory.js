@@ -10,7 +10,7 @@ class CameraFactory {
 
   }
 
-  static create(type = 'perspective', options = {}) {
+  static create(type = 'perspective', options) {
     var camera;
     var helper;
     var width = window.innerWidth;

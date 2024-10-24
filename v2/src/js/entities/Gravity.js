@@ -6,13 +6,13 @@ import { Cube } from './Cube.js';
 */
 
 class Gravity extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setGravity(e);  },
       collisionEventEnd: function(e) {},
       isSensor: true,
-      model: 'cube-gravity'
+      model: { name: 'cube-gravity' }
     }, options);
 
     // Inherit Character class

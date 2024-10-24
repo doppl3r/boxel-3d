@@ -6,12 +6,12 @@ import { Cube } from './Cube.js';
 */
 
 class Direction extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setDirection(e); },
       collisionEventEnd: function(e) {},
-      model: 'cube-direction'
+      model: { name: 'cube-direction' }
     }, options);
 
     // Inherit Character class

@@ -6,13 +6,13 @@ import { Cube } from './Cube.js';
 */
 
 class Resize extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setPairScale(e); },
       collisionEventEnd: function(e) {},
       isSensor: true,
-      model: 'cube-resize'
+      model: { name: 'cube-resize' }
     }, options);
 
     // Inherit Character class

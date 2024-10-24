@@ -5,12 +5,12 @@ import { Cube } from './Cube.js';
 */
 
 class Grapple extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Grapple selected!'); },
       collisionEventEnd: function(e) {},
-      model: 'cube-grapple'
+      model: { name: 'cube-grapple' }
     }, options);
 
     // Inherit Character class

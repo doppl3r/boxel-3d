@@ -65,14 +65,11 @@ class LevelFactory {
       softCcdPrediction: 0.5
     }, json);
 
+    // Assign optional 3D model using stored model name
+    if (json.model) options.model = game.assets.duplicate(json.model.name);
+
     // Create new entity from options
     var entity = EntityFactory.create(options);
-
-    // Create model from json model name
-    if (typeof entity.model == 'string') {
-      // Replace model with asset model
-      entity.model = game.assets.duplicate(entity.model);
-    }
     return entity;
   }
 }

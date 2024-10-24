@@ -8,14 +8,14 @@ import { Cube } from './Cube.js';
 */
 
 class Player extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
       collisionEventStart: function(e) { e.target.checkCollision(e); },
       collisionEventEnd: function(e) {},
-      model: 'cube-player'
+      model: { name: 'cube-player' }
     }, options);
 
     // Inherit Cube class
@@ -29,7 +29,7 @@ class Player extends Cube {
     this.mode = 'jump';
 
     // Add light to player
-    this.light = LightFactory.create('point', { color: '#dc265a', intensity: Math.PI * 10 });
+    this.light = LightFactory.create('PointLight', { color: '#dc265a', intensity: Math.PI * 10 });
     this.object.add(this.light);
 
     // Create camera with offset property

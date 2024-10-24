@@ -93,10 +93,10 @@ class Cube extends Entity {
     this.model.castShadow = true;
   }
 
-  toJSON(stringify = false) {
+  toJSON() {
     // Extend entity toJSON with model name
-    const json = super.toJSON(stringify);
-    json.model = this.model.name;
+    const json = super.toJSON();
+    if (this.model.name) json.model = { name: this.model.name };
     return json;
   }
 }

@@ -6,11 +6,11 @@ import { Cuboid } from '@dimforge/rapier3d';
 */
 
 class Spike extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       scale: { x: 1, y: 1, z: 1 },
-      model: 'cube-spike'
+      model: { name: 'cube-spike' }
     }, options);
 
     // Inherit Character class

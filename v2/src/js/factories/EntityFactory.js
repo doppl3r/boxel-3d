@@ -101,7 +101,11 @@ class EntityFactory {
     return new Tip(options);
   }
 
-  static createTriMesh(options) {
+  static createTrimesh(options) {
+    if (options.model == null) {
+      console.warn('Warning: Missing model for TriMesh entity.')
+      return;
+    }
     return new TriMesh(options);
   }
 }

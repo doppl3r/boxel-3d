@@ -5,13 +5,13 @@ import { Cube } from './Cube.js';
 */
 
 class Tip extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Tip selected!'); },
       collisionEventEnd: function(e) {},
       isSensor: true,
-      model: 'cube-tip'
+      model: { name: 'cube-tip' }
     }, options);
 
     // Inherit Character class

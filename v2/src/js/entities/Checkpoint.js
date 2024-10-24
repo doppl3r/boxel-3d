@@ -5,13 +5,13 @@ import { Cube } from './Cube.js';
 */
 
 class Checkpoint extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Checkpoint selected!'); },
       collisionEventEnd: function(e) {},
       isSensor: true,
-      model: 'cube-checkpoint'
+      model: { name: 'cube-checkpoint' }
     }, options);
 
     // Inherit Character class

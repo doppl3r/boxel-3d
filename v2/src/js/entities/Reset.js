@@ -5,13 +5,13 @@ import { Cube } from './Cube.js';
 */
 
 class Reset extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { console.log('Reset selected!'); },
       collisionEventEnd: function(e) {},
       isSensor: true,
-      model: 'cube-reset'
+      model: { name: 'cube-reset' }
     }, options);
 
     // Inherit Character class

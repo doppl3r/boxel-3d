@@ -5,13 +5,13 @@ import { Cube } from './Cube.js';
 */
 
 class Control extends Cube {
-  constructor(options = {}) {
+  constructor(options) {
     // Set options with default values
     options = Object.assign({
       collisionEventStart: function(e) { e.target.setMode(e); },
       collisionEventEnd: function(e) {},
       isSensor: true,
-      model: 'cube-control'
+      model: { name: 'cube-control' }
     }, options);
 
     // Inherit Character class
