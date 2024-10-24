@@ -412,6 +412,15 @@ class Entity extends EventDispatcher {
       json.collisionEventEnd = this.collidersDesc[0].collisionEventEnd;
     }
 
+    // TODO: Assign a more robust collision event
+    /* 
+      ex: {
+        name: "myFunction",
+        value: {}
+        target: "cube 1"
+      }
+    */
+
     // Return final json
     return json;
   }

@@ -21,7 +21,7 @@
   function onLoad() {
     // Initialize 3D objects
     background = assets.get('background-tropic');
-    light = LightFactory.create('ambient');
+    light = LightFactory.create('AmbientLight');
 
     // Update camera and scene
     background.traverse(function(child) { if (child.isCamera) graphics.setCamera(child); });
@@ -65,7 +65,7 @@
   onMounted(function() {
     loop = new Loop();
     graphics = new Graphics(canvas.value);
-    assets = new AssetLoader(onLoad)
+    assets = new AssetLoader(onLoad);
     assets.load({
       models: './json/menu-models.json',
       textures: './json/menu-textures.json',
