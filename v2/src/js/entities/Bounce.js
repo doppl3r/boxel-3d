@@ -1,4 +1,3 @@
-import { Euler, Quaternion } from 'three';
 import { Cube } from './Cube.js';
 import { Cuboid } from '@dimforge/rapier3d';
 
@@ -10,6 +9,7 @@ class Bounce extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
+      events: [{ name: "bounce" }],
       scale: { x: 1, y: 1, z: 1 },
       model: { name: 'cube-bounce' }
     }, options);
@@ -40,21 +40,6 @@ class Bounce extends Cube {
   animate(delta, alpha) {
     // Call Entity animate function
     super.animate(delta, alpha);
-  }
-
-  bounce(e) {
-    const magnitude = 30;
-    const quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
-    const euler = new Euler().setFromQuaternion(quaternion);
-    const angle = euler.z;
-    
-    // Update Bounce entity
-    e.target.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
-    e.target.applyImpulseAtAngle({ x: 0, y: -magnitude * e.target.object.scale.y, z: 0 }, angle); // Bounce
-    
-    // Update collision pair
-    e.pair.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
-    e.pair.applyImpulseAtAngle({ x: 0, y: magnitude * e.pair.rigidBody.mass(), z: 0 }, angle); // Bounce
   }
 }
 

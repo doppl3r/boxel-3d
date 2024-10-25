@@ -31,6 +31,7 @@ class Entity extends EventDispatcher {
     this.forceDirection = new Vector3();
     this.forceAcceleration = 1;
     this.forceSpeedMax = Infinity;
+    this.events = {};
     this.isEntity = true;
     this.parent;
     this.type;
@@ -106,10 +107,9 @@ class Entity extends EventDispatcher {
       activeCollisionTypes: 'DEFAULT', // 1: DYNAMIC_DYNAMIC, 2: DYNAMIC_FIXED, 12: DYNAMIC_KINEMATIC, 15: DEFAULT, 32: FIXED_FIXED, 8704: KINEMATIC_FIXED, 52224: KINEMATIC_KINEMATIC, 60943: ALL
       activeEvents: 'NONE', // 0: NONE, 1: COLLISION_EVENTS, 2: CONTACT_FORCE_EVENTS
       collisionGroups: 0xFFFFFFFF,
-      collisionEventStart: function(e) {},
-      collisionEventEnd: function(e) {},
       contactForceEventThreshold: 0,
       density: 1,
+      events: [],
       friction: 0.5,
       isSensor: false,
       mass: null,
@@ -135,8 +135,7 @@ class Entity extends EventDispatcher {
     if (options.mass != null) colliderDesc.setMass(options.mass);
     
     // Store callback events to colliderDesc
-    colliderDesc.collisionEventStart = options.collisionEventStart;
-    colliderDesc.collisionEventEnd = options.collisionEventEnd;
+    colliderDesc.events = options.events;
 
     // Add colliderDesc to array
     this.collidersDesc.push(colliderDesc);
@@ -154,8 +153,7 @@ class Entity extends EventDispatcher {
         var collider = world.createCollider(colliderDesc, this.rigidBody);
 
         // Assign optional callback events to collider
-        collider.collisionEventStart = colliderDesc.collisionEventStart;
-        collider.collisionEventEnd = colliderDesc.collisionEventEnd;
+        collider.events = colliderDesc.events;
       }.bind(this));
     }
   }
@@ -260,19 +258,22 @@ class Entity extends EventDispatcher {
   onCollision(e) {
     // Get the collider from the event handle
     var collider = e.target.getCollider(e.handle);
-    var collisionState = (e.started ? 'Start' : 'End');
-    var collisionEvent = collider['collisionEvent' + collisionState];
-    var collisionName = collisionEvent.name;
 
-    // Assign callback function by string
-    if (typeof collisionEvent == 'string') {
-      collisionName = collisionEvent;
-      collisionEvent = this[collisionEvent];
-    }
+    // Get a new list of events based on e.started state
+    var events = collider.events.filter(
+      function(event) {
+        // Return events with matching started state
+        return (event.started == undefined && e.started == true) || event.started == e.started;
+      }.bind(this)
+    );
 
-    // Execute collider event
-    try { collisionEvent(e); }
-    catch { console.warn(`Warning: function ${ collisionName } does not exist`); }
+    // Call each event with optional data
+    events.forEach(
+      function(event) {
+        try { this.events[event.name].call(this, Object.assign(e, { data: event.data })); }
+        catch { console.warn(`Warning: event ${ event.name } does not exist`); }
+      }.bind(this)
+    );
   }
 
   onAdded(e) {
@@ -344,6 +345,10 @@ class Entity extends EventDispatcher {
     return _vector.copy(this.rigidBody.linvel()).length();
   }
 
+  setEventLibrary(eventLibrary) {
+    this.events = eventLibrary;
+  }
+
   toJSON() {
     // Initialize entity values
     var json = {
@@ -394,6 +399,7 @@ class Entity extends EventDispatcher {
       collisionGroups: this.collidersDesc[0].collisionGroups,
       contactForceEventThreshold: this.collidersDesc[0].contactForceEventThreshold,
       density: this.collidersDesc[0].density,
+      events: this.collidersDesc[0].events,
       friction: this.collidersDesc[0].friction,
       isSensor: this.collidersDesc[0].isSensor,
       mass: this.collidersDesc[0].mass,
@@ -401,25 +407,6 @@ class Entity extends EventDispatcher {
       solverGroups: this.collidersDesc[0].solverGroups,
       translation: this.collidersDesc[0].translation
     }, json);
-
-    // Include collider start event name if defined
-    if (typeof this.collidersDesc[0].collisionEventStart == 'string') {
-      json.collisionEventStart = this.collidersDesc[0].collisionEventStart;
-    }
-
-    // Include collider end event name if defined
-    if (typeof this.collidersDesc[0].collisionEventEnd == 'string') {
-      json.collisionEventEnd = this.collidersDesc[0].collisionEventEnd;
-    }
-
-    // TODO: Assign a more robust collision event
-    /* 
-      ex: {
-        name: "myFunction",
-        value: {}
-        target: "cube 1"
-      }
-    */
 
     // Return final json
     return json;

@@ -13,8 +13,7 @@ class Player extends Cube {
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      collisionEventStart: function(e) { e.target.checkCollision(e); },
-      collisionEventEnd: function(e) {},
+      events: [{ name: "checkCollision" }],
       model: { name: 'cube-player' }
     }, options);
 
@@ -63,7 +62,7 @@ class Player extends Cube {
 
   checkCollision(e) {
     if (e.started == true) {
-      this.jumpCount = 1;
+      e.target.jumpCount = 1;
     }
   }
 
@@ -105,6 +104,9 @@ class Player extends Cube {
   }
 
   onPlayerAdded(e) {
+    // Assign collision check event
+    e.target.events.checkCollision = e.target.checkCollision;
+
     // Bind target "this" context to class function (required for event removal)
     e.target.keyDown = e.target.keyDown.bind(e.target);
     e.target.keyUp = e.target.keyUp.bind(e.target);
