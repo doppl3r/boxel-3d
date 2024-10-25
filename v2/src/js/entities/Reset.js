@@ -8,8 +8,7 @@ class Reset extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { console.log('Reset selected!'); },
-      collisionEventEnd: function(e) {},
+      events: [{ name: 'reset' }],
       isSensor: true,
       model: { name: 'cube-reset' }
     }, options);
@@ -29,6 +28,10 @@ class Reset extends Cube {
   animate(delta, alpha) {
     // Call Entity animate function
     super.animate(delta, alpha);
+  }
+
+  reset(e) {
+
   }
 }
 

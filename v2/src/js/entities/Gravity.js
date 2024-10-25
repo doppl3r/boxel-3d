@@ -9,8 +9,7 @@ class Gravity extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { e.target.setGravity(e);  },
-      collisionEventEnd: function(e) {},
+      events: [{ name: 'setGravity' }],
       isSensor: true,
       model: { name: 'cube-gravity' }
     }, options);

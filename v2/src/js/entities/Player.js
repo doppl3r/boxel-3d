@@ -104,9 +104,6 @@ class Player extends Cube {
   }
 
   onPlayerAdded(e) {
-    // Assign collision check event
-    e.target.events.checkCollision = e.target.checkCollision;
-
     // Bind target "this" context to class function (required for event removal)
     e.target.keyDown = e.target.keyDown.bind(e.target);
     e.target.keyUp = e.target.keyUp.bind(e.target);

@@ -9,7 +9,6 @@ class Bounce extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      events: [{ name: "bounce" }],
       scale: { x: 1, y: 1, z: 1 },
       model: { name: 'cube-bounce' }
     }, options);
@@ -24,7 +23,7 @@ class Bounce extends Cube {
     this.addColliderDesc({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      collisionEventStart: function(e) { e.target.bounce(e); },
+      events: [{ name: 'bounce' }],
       isSensor: true,
       mass: 0,
       shape: new Cuboid(options.scale.x * 0.4, options.scale.y * 0.125, options.scale.z * 0.4),

@@ -8,8 +8,7 @@ class Finish extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { console.log('Finish selected!'); },
-      collisionEventEnd: function(e) {},
+      events: [{ name: finish }],
       model: { name: 'cube-checkpoint' }
     }, options);
 
@@ -28,6 +27,10 @@ class Finish extends Cube {
   animate(delta, alpha) {
     // Call Entity animate function
     super.animate(delta, alpha);
+  }
+
+  finish(e) {
+    console.log(e);
   }
 }
 

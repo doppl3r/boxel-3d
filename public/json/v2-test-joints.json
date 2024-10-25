@@ -37,73 +37,61 @@
       "status": 1
     },
     {
-      "type": "resize",
-      "model": { "name": "cube-resize" },
+      "type": "control",
+      "model": { "name": "cube-control" },
       "position": { "x": 8, "y": 7, "z": 0 },
       "rotation": { "x": 0, "y": 0, "z": 1, "w": 0 },
       "scale": { "x": 2, "y": 2, "z": 2 },
       "status": 1
     },
     {
-      "type": "direction",
-      "model": { "name": "cube-direction" },
+      "type": "player",
+      "model": { "name": "cube-player" },
+      "position": { "x": 8, "y": 4, "z": 0 },
+      "scale": { "x": 1, "y": 1, "z": 1 },
+      "status": 0
+    },
+    {
+      "type": "cube",
+      "events": [
+        {
+          "name": "teleport",
+          "position": { "x": 8, "y": 4, "z": 0 }
+        }
+      ],
+      "model": { "name": "cube-tip" },
       "position": { "x": -8, "y": 4, "z": 0 },
       "status": 1,
       "children": [
         {
-          "type": "direction",
-          "model": { "name": "cube-direction" },
+          "type": "cube",
+          "model": { "name": "cube-cube" },
           "position": { "x": -6, "y": 8, "z": 0 },
           "status": 0,
           "children": [
             {
-              "type": "direction",
-              "model": { "name": "cube-direction" },
+              "type": "cube",
+              "model": { "name": "cube-cube" },
               "position": { "x": -4, "y": 4, "z": 0 },
               "status": 0,
               "children": [
                 {
-                  "type": "direction",
-                  "model": { "name": "cube-direction" },
+                  "type": "cube",
+                  "model": { "name": "cube-cube" },
                   "position": { "x": -2, "y": 8, "z": 0 },
                   "status": 0,
                   "children": [
                     {
-                      "type": "direction",
-                      "model": { "name": "cube-direction" },
+                      "type": "cube",
+                      "model": { "name": "cube-cube" },
                       "position": { "x": 0, "y": 4, "z": 0 },
                       "status": 0,
                       "children": [
                         {
-                          "type": "direction",
-                          "model": { "name": "cube-direction" },
+                          "type": "cube",
+                          "model": { "name": "cube-cube" },
                           "position": { "x": 2, "y": 8, "z": 0 },
-                          "status": 0,
-                          "children": [
-                            {
-                              "type": "direction",
-                              "model": { "name": "cube-direction" },
-                              "position": { "x": 4, "y": 4, "z": 0 },
-                              "status": 0,
-                              "children": [
-                                {
-                                  "type": "bounce",
-                                  "model": { "name": "cube-bounce" },
-                                  "position": { "x": 6, "y": 8, "z": 0 },
-                                  "status": 0,
-                                  "children": [
-                                    {
-                                      "type": "player",
-                                      "model": { "name": "cube-player" },
-                                      "position": { "x": 8, "y": 4, "z": 0 },
-                                      "scale": { "x": 2, "y": 2, "z": 2 },
-                                      "status": 0
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
+                          "status": 0
                         }
                       ]
                     }

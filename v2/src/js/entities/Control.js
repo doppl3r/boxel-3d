@@ -8,8 +8,7 @@ class Control extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { e.target.setMode(e); },
-      collisionEventEnd: function(e) {},
+      events: [{ name: 'setMode' }],
       isSensor: true,
       model: { name: 'cube-control' }
     }, options);

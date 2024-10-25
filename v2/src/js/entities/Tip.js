@@ -8,8 +8,7 @@ class Tip extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { console.log('Tip selected!'); },
-      collisionEventEnd: function(e) {},
+      events: [{ name: 'showTip', text: 'Say something nice!' }],
       isSensor: true,
       model: { name: 'cube-tip' }
     }, options);
@@ -29,6 +28,10 @@ class Tip extends Cube {
   animate(delta, alpha) {
     // Call Entity animate function
     super.animate(delta, alpha);
+  }
+
+  showTip(e) {
+
   }
 }
 

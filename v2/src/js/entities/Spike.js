@@ -21,7 +21,7 @@ class Spike extends Cube {
 
     // Add a sensor collider to the rigidBody
     this.addColliderDesc({
-      collisionEventStart: function(e) { e.target.kill(e); },
+      event: [{ name: 'kill' }],
       isSensor: true,
       mass: 0,
       shape: new Cuboid(options.scale.x * 0.4, options.scale.y * 0.125, options.scale.z * 0.25),

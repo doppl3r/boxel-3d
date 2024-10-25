@@ -4,13 +4,9 @@ import { Euler, Quaternion } from 'three';
   An event library contains custom functions that can be assign to all entities.
 */
 
-class Events {
-  constructor() {
-    
-  }
-
+export default {
   bounce(e) {
-    const magnitude = 30;
+    const magnitude = e.magnitude || 30;
     const quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
     const euler = new Euler().setFromQuaternion(quaternion);
     const angle = euler.z;
@@ -22,7 +18,9 @@ class Events {
     // Update collision pair
     e.pair.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
     e.pair.applyImpulseAtAngle({ x: 0, y: magnitude * e.pair.rigidBody.mass(), z: 0 }, angle); // Bounce
+  },
+  teleport(e) {
+    // Update collision pair
+    e.pair.setPosition(e.position);
   }
-}
-
-export { Events };
+};

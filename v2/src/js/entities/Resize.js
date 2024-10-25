@@ -9,7 +9,7 @@ class Resize extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: 'setPairScale', // TODO: Change to object format
+      events: [{ name: 'setPairScale', egg: 'test' }],
       isSensor: true,
       model: { name: 'cube-resize' }
     }, options);
@@ -32,6 +32,7 @@ class Resize extends Cube {
   }
 
   setPairScale(e) {
+    console.log(e);
     var collider = e.target.rigidBody.collider(0); // First collider
     var scale = new Vector3().copy(collider.halfExtents()).multiplyScalar(2);
     e.pair.setScale(scale)

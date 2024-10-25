@@ -8,8 +8,7 @@ class Checkpoint extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      collisionEventStart: function(e) { console.log('Checkpoint selected!'); },
-      collisionEventEnd: function(e) {},
+      events: [{ name: 'setCheckpoint' }],
       isSensor: true,
       model: { name: 'cube-checkpoint' }
     }, options);
@@ -19,6 +18,10 @@ class Checkpoint extends Cube {
 
     // Set default properties
     this.type = 'checkpoint';
+  }
+
+  setCheckpoint(e) {
+
   }
 
   update(delta) {
