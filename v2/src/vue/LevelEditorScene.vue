@@ -14,9 +14,11 @@
 
 <template>
   <div class="scene">
-    <div class="title">Scene</div>
-    <div class="actions">
+    <div class="header">
+      <div class="title">Scene</div>
+      <div class="actions">
 
+      </div>
     </div>
     <div class="entities">
       <div class="entity" v-for="[key, value] in props.entities" :key="key">
@@ -29,10 +31,38 @@
 
 <style lang="scss" scoped>
   .scene {
-    background-color: #ffffff;
-    padding: 1em;
+    border-radius: 0.5em;
+    background-color: #FFCB4C;
+    border: 0.25em solid #000000;
+    box-shadow: 0 0.25em 0 #000000;
+    padding: 0.5em;
     position: absolute;
-    right: 1em;
-    top: 1em;
+    right: 1.5em;
+    top: 1.5em;
+    width: 10em;
+
+    ::-webkit-scrollbar { width: 0.25em; }
+    ::-webkit-scrollbar-track { background: rgba(#FFA217, 1); border-radius: 99em; }
+    ::-webkit-scrollbar-thumb { background: rgba(#000000, 1); border-radius: 99em; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(#F52D59, 1); border-radius: 99em; }
+
+    .entities {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125em;
+      overflow-y: auto;
+      padding-right: 0.5em;
+      height: 12em;
+
+      .entity {
+        align-items: center;
+        background-color: #FFA217;
+        border-radius: 0.25em;
+        display: flex;
+        font-size: 1em;
+        line-height: 1.5em;
+        padding: 0 0.25em;
+      }
+    }
   }
 </style>

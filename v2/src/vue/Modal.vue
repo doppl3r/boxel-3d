@@ -193,6 +193,7 @@
           border-radius: 99em;
           color: #ffffff;
           font-size: 1.5em;
+          line-height: 1.5em;
           margin: 0 auto 1em;
           padding: $border-width 1em;
         }
@@ -200,10 +201,11 @@
         .text {
           color: #ffffff;
           font-size: 1.25em;
-          overflow-y: auto;
-          margin: 0;
           height: 100%;
+          line-height: 1.25em;
+          margin: 0;
           max-height: 8em;
+          overflow-y: auto;
           padding-bottom: 0.5em;
           text-align: center;
           text-shadow: 0 0.125em 0 #000000;

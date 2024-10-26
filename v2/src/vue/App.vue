@@ -40,6 +40,7 @@
 
 <style lang="scss" scoped>
   canvas {
+    background-color: #333333;
     height: 100%;
     image-rendering: pixelated;
     left: 0;
@@ -52,10 +53,15 @@
   .page {
     height: 100%;
     left: 0;
+    pointer-events: none;
     position: absolute;
     top: 0;
     width: 100%;
     z-index: 1;
+
+    > * {
+      pointer-events: all;
+    }
 
     .fade-enter-active,
     .fade-leave-active { transition: opacity 0.5s ease; }

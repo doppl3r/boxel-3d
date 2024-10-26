@@ -171,9 +171,11 @@ class Player extends Cube {
   }
 
   pointerDown(e) {
-    this.pointer[e.which] = true;
-
+    // Cancel input for non-canvas elements
+    if (e.target.nodeName != 'CANVAS') return;
+    
     // Add touch bindings
+    this.pointer[e.which] = true;
     if (this.pointer[1] == true) this.jump();
   }
   
