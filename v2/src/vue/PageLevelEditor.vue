@@ -1,6 +1,7 @@
 <script setup>
   import { onMounted } from 'vue';
-  import LevelEditorScene from './LevelEditorScene.vue';
+  import LevelEditorPanelActions from './LevelEditorPanelActions.vue';
+  import LevelEditorPanelScene from './LevelEditorPanelScene.vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({
@@ -14,9 +15,20 @@
 </script>
 
 <template>
-  <LevelEditorScene :entities="props.game.stage.physics.entities" />
+  <div class="panels">
+    <LevelEditorPanelActions />
+    <LevelEditorPanelScene :entities="game.stage.physics.entities" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
+  .panels {
+    height: 100%;
+    pointer-events: none;
+    width: 100%;
 
+    > * {
+      pointer-events: all;
+    }
+  }
 </style>
