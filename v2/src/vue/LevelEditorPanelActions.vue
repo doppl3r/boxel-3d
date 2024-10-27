@@ -1,10 +1,13 @@
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted } from 'vue';
 
-  const mode = ref('select');
+  const emit = defineEmits(['setMode'])
+  const props = defineProps({
+    mode: Object
+  });
 
-  function setMode(newMode) {
-    mode.value = newMode;
+  function selectAction(mode) {
+    emit('setMode', { type: mode });
   }
   
   // Initialize app after canvas has been mounted
@@ -15,13 +18,13 @@
 
 <template>
   <div class="panel actions">
-    <div class="action button" :class="{ selected: mode == 'add' }" @click="setMode('add')" title="Add">
+    <div class="action button" :class="{ selected: mode.type == 'add' }" @click="selectAction('add')" title="Add">
       <span class="material-symbols-rounded">dashboard_customize</span>
     </div>
-    <div class="action button" :class="{ selected: mode == 'select' }" @click="setMode('select')" title="Select">
+    <div class="action button" :class="{ selected: mode.type == 'select' }" @click="selectAction('select')" title="Select">
       <span class="material-symbols-rounded">arrow_selector_tool</span>
     </div>
-    <div class="action button" :class="{ selected: mode == 'move' }" @click="setMode('move')" title="Move camera">
+    <div class="action button" :class="{ selected: mode.type == 'move' }" @click="selectAction('move')" title="Move camera">
       <span class="material-symbols-rounded">back_hand</span>
     </div>
   </div>
@@ -43,6 +46,7 @@
       border-radius: 0.5em;
       box-shadow: 0 0.25em 0 #000000;
       color: #ffffff;
+      cursor: pointer;
       display: flex;
       justify-content: center;
       width: 2em;

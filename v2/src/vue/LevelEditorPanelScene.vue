@@ -68,8 +68,8 @@
 
         .action {
           align-items: center;
-          background-color: #FFA217;
           border-radius: 0.25em;
+          cursor: pointer;
           display: flex;
           height: 1em;
           justify-content: center;
@@ -99,6 +99,7 @@
         align-items: center;
         background-color: #FFA217;
         border-radius: 0.25em;
+        cursor: pointer;
         display: flex;
         font-size: 1em;
         line-height: 1.5em;
