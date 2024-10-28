@@ -3,6 +3,7 @@
   import LevelEditorPanelActions from './LevelEditorPanelActions.vue';
   import LevelEditorPanelAssets from './LevelEditorPanelAssets.vue';
   import LevelEditorPanelScene from './LevelEditorPanelScene.vue';
+  import ContextMenu from './ContextMenu.vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({ game: Object });
@@ -19,10 +20,13 @@
 </script>
 
 <template>
-  <div class="panels">
-    <LevelEditorPanelActions :mode="mode" @setMode="setMode" />
-    <LevelEditorPanelAssets :mode="mode" />
-    <LevelEditorPanelScene :entities="game.stage.physics.entities" />
+  <div>
+    <div class="panels">
+      <LevelEditorPanelActions :mode="mode" @setMode="setMode" />
+      <LevelEditorPanelAssets :mode="mode" />
+      <LevelEditorPanelScene :entities="game.stage.physics.entities" />
+    </div>
+    <ContextMenu :game="game" />
   </div>
 </template>
 

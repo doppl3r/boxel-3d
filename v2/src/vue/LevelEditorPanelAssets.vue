@@ -28,13 +28,12 @@
   
   // Initialize component values on mounted
   onMounted(function() {
-    console.log('hey');
     entities.value = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
   });
 </script>
 
 <template>
-  <div class="panel models" v-show="visible == true">
+  <div class="panel assets" v-show="visible == true">
     <div class="header">
       <div class="title">Add</div>
     </div>
@@ -53,7 +52,7 @@
   ::-webkit-scrollbar-thumb { background: rgba(#000000, 1); border-radius: 99em; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(#F52D59, 1); border-radius: 99em; }
 
-  .models {
+  .assets {
     border-radius: 0.5em;
     background-color: #FFCB4C;
     border: 0.25em solid #000000;
