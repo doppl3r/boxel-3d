@@ -15,7 +15,7 @@
 
   // Initialize app after canvas has been mounted
   onMounted(function() {
-    
+    game.loadLevel('../json/v2-test-joints.json');
   });
 </script>
 
@@ -24,7 +24,7 @@
     <div class="panels">
       <LevelEditorPanelActions :mode="mode" @setMode="setMode" />
       <LevelEditorPanelAssets :mode="mode" />
-      <LevelEditorPanelScene :entities="game.stage.physics.entities" />
+      <LevelEditorPanelScene :entities="game.physics.entities" />
     </div>
     <ContextMenu :game="game" />
   </div>

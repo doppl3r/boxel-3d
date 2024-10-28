@@ -10,9 +10,10 @@
   const gameRef = ref(new Game(onLoad));
   const game = window.game = gameRef.value;
   const route = useRoute();
+  const loaded = ref(false);
 
   function onLoad() {
-    game.stage.loadLevel('../json/v2-test-joints.json');
+    loaded.value = true;
   }
 
   // Initialize app after canvas has been mounted
@@ -26,7 +27,7 @@
   <canvas ref="canvas"></canvas>
 
   <!-- Render page component using Routes.js -->
-  <div class="page" :class="route.name">
+  <div class="page" :class="route.name" v-if="loaded">
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <component :is="Component" :game="game" />

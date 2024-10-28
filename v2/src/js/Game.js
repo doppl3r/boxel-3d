@@ -1,17 +1,21 @@
 import { Loop } from './Loop';
 import { AssetLoader } from './loaders/AssetLoader.js';
-import { Stage } from './Stage.js';
+import { Graphics } from './Graphics.js';
+import { Physics } from './Physics.js';
+import { LevelFactory } from './factories/LevelFactory.js';
 
 class Game {
   constructor(onLoad) {
     this.loop = new Loop();
-    this.stage = new Stage();
+    this.physics = new Physics();
+    this.graphics;
     this.assets = new AssetLoader(this.onLoad.bind(this, onLoad));
   }
 
   init(canvas) {
     // Initialize components
-    this.stage.init(canvas);
+    this.graphics = new Graphics(canvas);
+    this.graphics.scene.add(this.physics.debugger);
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets.load({
@@ -23,12 +27,15 @@ class Game {
 
   update(data = { delta: 1 / 60 }) {
     // Update entity physics
-    this.stage.update(data.delta);
+    this.physics.update(data.delta);
   }
 
   render(data = { delta: 1 / 60, alpha: 0 }) {
-    // Update entity 3D objects
-    this.stage.render(data.delta, data.alpha);
+    // Update all entities animation properties
+    this.physics.animate(data.delta, data.alpha);
+
+    // Render graphics
+    this.graphics.render()
   }
 
   onLoad(onLoad) {
@@ -39,6 +46,23 @@ class Game {
   
     // Run optional callback
     if (typeof onLoad == 'function') onLoad();
+  }
+
+  async loadLevel(path) {
+    this.physics.clear();
+    
+    // Load level from JSON
+    var entities = await LevelFactory.loadFile(path);
+
+    // Loop through entities
+    entities.forEach(function(entity) {
+      this.physics.add(entity);
+      this.graphics.scene.add(entity.object);
+      if (entity.type == 'player') {
+        this.player = entity;
+        this.graphics.setCamera(entity.camera);
+      }
+    }.bind(this));
   }
 }
 
