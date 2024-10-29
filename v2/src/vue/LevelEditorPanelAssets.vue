@@ -1,8 +1,5 @@
 <script setup>
   import { onMounted, ref, watch } from 'vue';
-  import { Graphics } from '@/v2/src/js/Graphics.js';
-  import { CameraFactory } from '@/v2/src/js/factories/CameraFactory.js';
-  import { LightFactory } from '@/v2/src/js/factories/LightFactory.js';
 
   // Declare component variables
   const props = defineProps({
@@ -12,34 +9,21 @@
   const visible = ref(false);
   const entities = ref([]);
 
-  function close() {
-    visible.value = false;
-  }
-
-  function generateThumbnails() {
-    let graphics = new Graphics();
-    let camera = CameraFactory.create('OrthographicCamera');
-    let light = LightFactory.create('AmbientLight');
-
-    // Set default properties
-    camera.position.z = 10;
-    graphics.setCamera(camera);
-    graphics.setSize(48, 48);
-    graphics.scene.add(light);
-
+  function loadAssets() {
     // Loop through each asset
     for (var key in props.assets.cache) {
-      var asset = game.assets.get(key);
+      var asset = props.assets.get(key);
       if (asset.userData.isEntity) {
-        graphics.scene.add(asset);
-        graphics.renderer.render(graphics.scene, graphics.camera);
         entities.value.push({
           key: key,
-          src: graphics.canvas.toDataURL('image/png')
+          src: asset.thumbnail
         });
-        asset.removeFromParent();
       }
     }
+  }
+
+  function close() {
+    visible.value = false;
   }
 
   watch(() => props.mode, (after, before) => {
@@ -61,7 +45,7 @@
   
   // Initialize component values on mounted
   onMounted(function() {
-    generateThumbnails();
+    loadAssets();
   });
 </script>
 

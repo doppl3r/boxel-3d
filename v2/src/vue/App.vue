@@ -7,7 +7,8 @@
 
   // Initialize app and expose to window scope
   const canvas = ref();
-  const game = window.game = new Game(onLoad);
+  const gameRef = ref(new Game(onLoad));
+  const game = window.game = gameRef.value;
   const route = useRoute();
   const loaded = ref(false);
 
