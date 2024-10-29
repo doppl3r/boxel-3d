@@ -8,7 +8,7 @@ import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
 import Stats from './Stats.js';
 
 class Graphics {
-  constructor(canvas) {
+  constructor(canvas = document.createElement('canvas')) {
     // Initialize camera and scene
     this.camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
     this.scene = new Scene();
@@ -57,7 +57,7 @@ class Graphics {
 
     // Add window resize logic
     window.addEventListener('resize', function(e) { this.resize(e); }.bind(this));
-    this.resize(); // Run resize immediately
+    this.resize({ target: window }); // Run resize immediately
   }
 
   render() {
@@ -67,16 +67,20 @@ class Graphics {
   }
 
   resize(e) {
-    var width = window.innerWidth;
-    var height = window.innerHeight;
+    var width = e.target.innerWidth;
+    var height = e.target.innerHeight;
+    this.setSize(width, height)
+  }
+
+  setSize(width, height) {
     var ratio = width / height;
     
     // Update orthographic frustum
     if (this.camera.isOrthographicCamera) {
-      this.camera.left = -ratio;
-      this.camera.right = ratio;
-      this.camera.top = 1;
-      this.camera.bottom = -1;
+      this.camera.left = -ratio * 0.5;
+      this.camera.right = ratio * 0.5;
+      this.camera.top = 0.5;
+      this.camera.bottom = -0.5;
     }
 
     // Update camera ratio

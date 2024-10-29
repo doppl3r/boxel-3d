@@ -43,6 +43,12 @@ class LightFactory {
       helper = new PointLightHelper(light);
     }
 
+    // Return error message
+    if (light == null) {
+      console.error(`Error: Light type "${ type }" does not exists.`);
+      return;
+    }
+
     // Update position
     light.position.copy(options.position);
 

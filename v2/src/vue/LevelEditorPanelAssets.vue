@@ -1,12 +1,45 @@
 <script setup>
   import { onMounted, ref, watch } from 'vue';
+  import { Graphics } from '@/v2/src/js/Graphics.js';
+  import { CameraFactory } from '@/v2/src/js/factories/CameraFactory.js';
+  import { LightFactory } from '@/v2/src/js/factories/LightFactory.js';
 
-  const props = defineProps({ mode: Object });
+  // Declare component variables
+  const props = defineProps({
+    assets: Object,
+    mode: Object
+  });
   const visible = ref(false);
   const entities = ref([]);
 
   function close() {
     visible.value = false;
+  }
+
+  function generateThumbnails() {
+    let graphics = new Graphics();
+    let camera = CameraFactory.create('OrthographicCamera');
+    let light = LightFactory.create('AmbientLight');
+
+    // Set default properties
+    camera.position.z = 10;
+    graphics.setCamera(camera);
+    graphics.setSize(48, 48);
+    graphics.scene.add(light);
+
+    // Loop through each asset
+    for (var key in props.assets.cache) {
+      var asset = game.assets.get(key);
+      if (asset.userData.isEntity) {
+        graphics.scene.add(asset);
+        graphics.renderer.render(graphics.scene, graphics.camera);
+        entities.value.push({
+          key: key,
+          src: graphics.canvas.toDataURL('image/png')
+        });
+        asset.removeFromParent();
+      }
+    }
   }
 
   watch(() => props.mode, (after, before) => {
@@ -28,7 +61,7 @@
   
   // Initialize component values on mounted
   onMounted(function() {
-    entities.value = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+    generateThumbnails();
   });
 </script>
 
@@ -38,8 +71,8 @@
       <div class="title">Add</div>
     </div>
     <div class="entities">
-      <div class="entity" v-for="entity in entities">
-
+      <div class="entity" v-for="entity in entities" :title="entity.key">
+        <img :src="entity.src" />
       </div>
     </div>
     <div class="close" @click="close">x</div>
@@ -89,6 +122,7 @@
         display: flex;
         font-size: 1em;
         height: 2em;
+        padding: 0.25em;
         width: 2em;
 
         &:hover {
@@ -98,6 +132,11 @@
         &.selected {
           background-color: #000000;
           color: #ffffff;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
         }
       }
     }

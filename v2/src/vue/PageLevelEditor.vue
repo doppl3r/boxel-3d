@@ -23,7 +23,7 @@
   <div>
     <div class="panels">
       <LevelEditorPanelActions :mode="mode" @setMode="setMode" />
-      <LevelEditorPanelAssets :mode="mode" />
+      <LevelEditorPanelAssets :mode="mode" :assets="game.assets" />
       <LevelEditorPanelScene :entities="game.physics.entities" />
     </div>
     <ContextMenu :game="game" />

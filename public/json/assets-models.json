@@ -3,42 +3,81 @@
     "url": "../glb/background-tropic.glb"
   },
   "cube-bounce": {
-    "url": "../glb/cube-bounce.glb"
+    "url": "../glb/cube-bounce.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-checkpoint": {
-    "url": "../glb/cube-checkpoint.glb"
+    "url": "../glb/cube-checkpoint.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-control": {
-    "url": "../glb/cube-control.glb"
+    "url": "../glb/cube-control.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-cube": {
-    "url": "../glb/cube-cube.glb"
+    "url": "../glb/cube-cube.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-direction": {
-    "url": "../glb/cube-direction.glb"
+    "url": "../glb/cube-direction.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-finish": {
-    "url": "../glb/cube-finish.glb"
+    "url": "../glb/cube-finish.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-grapple": {
-    "url": "../glb/cube-grapple.glb"
+    "url": "../glb/cube-grapple.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-gravity": {
-    "url": "../glb/cube-gravity.glb"
+    "url": "../glb/cube-gravity.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-player": {
-    "url": "../glb/cube-player.glb"
+    "url": "../glb/cube-player.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-reset": {
-    "url": "../glb/cube-reset.glb"
+    "url": "../glb/cube-reset.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-resize": {
-    "url": "../glb/cube-resize.glb"
+    "url": "../glb/cube-resize.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-spike": {
-    "url": "../glb/cube-spike.glb"
+    "url": "../glb/cube-spike.glb",
+    "userData": {
+      "isEntity": true
+    }
   },
   "cube-tip": {
-    "url": "../glb/cube-tip.glb"
+    "url": "../glb/cube-tip.glb",
+    "userData": {
+      "isEntity": true
+    }
   }
 }
