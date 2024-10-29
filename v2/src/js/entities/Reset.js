@@ -5,12 +5,14 @@ import { Cube } from './Cube.js';
 */
 
 class Reset extends Cube {
+  // Define static properties
+  static model = 'cube-reset';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
       events: [{ name: 'reset' }],
-      isSensor: true,
-      model: { name: 'cube-reset' }
+      isSensor: true
     }, options);
 
     // Inherit Character class

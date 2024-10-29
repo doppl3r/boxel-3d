@@ -6,12 +6,14 @@ import { Cube } from './Cube.js';
 */
 
 class Resize extends Cube {
+  // Define static properties
+  static model = 'cube-resize';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
       events: [{ name: 'setPairScale', egg: 'test' }],
-      isSensor: true,
-      model: { name: 'cube-resize' }
+      isSensor: true
     }, options);
 
     // Inherit Character class

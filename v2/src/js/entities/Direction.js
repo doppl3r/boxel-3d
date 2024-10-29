@@ -6,11 +6,13 @@ import { Cube } from './Cube.js';
 */
 
 class Direction extends Cube {
+  // Define static properties
+  static model = 'cube-direction';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      events: [{ name: 'setDirection' }],
-      model: { name: 'cube-direction' }
+      events: [{ name: 'setDirection' }]
     }, options);
 
     // Inherit Character class

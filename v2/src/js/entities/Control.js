@@ -5,12 +5,14 @@ import { Cube } from './Cube.js';
 */
 
 class Control extends Cube {
+  // Define static properties
+  static model = 'cube-control';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
       events: [{ name: 'setMode' }],
-      isSensor: true,
-      model: { name: 'cube-control' }
+      isSensor: true
     }, options);
 
     // Inherit Character class

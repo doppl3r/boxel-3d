@@ -5,12 +5,14 @@ import { Cube } from './Cube.js';
 */
 
 class Checkpoint extends Cube {
+  // Define static properties
+  static model = 'cube-checkpoint';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
       events: [{ name: 'setCheckpoint' }],
-      isSensor: true,
-      model: { name: 'cube-checkpoint' }
+      isSensor: true
     }, options);
 
     // Inherit Character class

@@ -5,12 +5,14 @@ import { Cube } from './Cube.js';
 */
 
 class Tip extends Cube {
+  // Define static properties
+  static model = 'cube-tip';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
       events: [{ name: 'showTip', text: 'Say something nice!' }],
-      isSensor: true,
-      model: { name: 'cube-tip' }
+      isSensor: true
     }, options);
 
     // Inherit Character class

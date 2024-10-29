@@ -8,13 +8,15 @@ import { Cube } from './Cube.js';
 */
 
 class Player extends Cube {
+  // Define static properties
+  static model = 'cube-player';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      events: [{ name: "checkCollision" }],
-      model: { name: 'cube-player' }
+      events: [{ name: "checkCollision" }]
     }, options);
 
     // Inherit Cube class

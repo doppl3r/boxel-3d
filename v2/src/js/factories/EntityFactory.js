@@ -21,17 +21,30 @@ import { TriMesh } from '../entities/TriMesh';
 */
 
 class EntityFactory {
-  constructor() {
-    
-  }
+  static Tip = Tip;
+  static Checkpoint = Checkpoint;
+  static Control = Control;
+  static Cube = Cube;
+  static Direction = Direction;
+  static Finish = Finish;
+  static Grapple = Grapple;
+  static Gravity = Gravity;
+  static Light = Light;
+  static Player = Player;
+  static Reset = Reset;
+  static Sphere = Sphere;
+  static Resize = Resize;
+  static Spike = Spike;
+  static Tip = Tip;
+  static TriMesh = TriMesh;
 
   static create(options) {
     // Call function by class name
     if (options.type != null) {
-      var type = options.type.charAt(0).toUpperCase() + options.type.slice(1);
-      var fn = this['create' + type];
+      var className = this.getClassName(options.type);
+      var fn = this['create' + className];
       if (fn == null) {
-        console.error(`Error: Entity type "${ type }" not found.`);
+        console.error(`Error: Entity type "${ className }" not found.`);
         return;
       }
       return fn(options);
@@ -107,6 +120,16 @@ class EntityFactory {
       return;
     }
     return new TriMesh(options);
+  }
+
+  static getClassName(type) {
+    return type.charAt(0).toUpperCase() + type.slice(1);
+  }
+
+  static getProperty(type, property) {
+    const className = this.getClassName(type);
+    if (className) return this[className][property];
+    return;
   }
 }
 

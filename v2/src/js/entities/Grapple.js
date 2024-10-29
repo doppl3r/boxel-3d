@@ -5,11 +5,13 @@ import { Cube } from './Cube.js';
 */
 
 class Grapple extends Cube {
+  // Define static properties
+  static model = 'cube-grapple';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      events: [{ name: 'setMode' }],
-      model: { name: 'cube-grapple' }
+      events: [{ name: 'setMode' }]
     }, options);
 
     // Inherit Character class

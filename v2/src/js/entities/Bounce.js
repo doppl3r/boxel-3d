@@ -6,11 +6,13 @@ import { Cuboid } from '@dimforge/rapier3d';
 */
 
 class Bounce extends Cube {
+  // Define static properties
+  static model = 'cube-bounce';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      scale: { x: 1, y: 1, z: 1 },
-      model: { name: 'cube-bounce' }
+      scale: { x: 1, y: 1, z: 1 }
     }, options);
 
     // Inherit Character class

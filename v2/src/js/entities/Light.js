@@ -6,6 +6,8 @@ import { Cube } from './Cube.js';
 */
 
 class Light extends Cube {
+  static model = '';
+
   constructor(options) {
     // Set options with default values
     options = Object.assign({

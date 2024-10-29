@@ -69,7 +69,7 @@
 <template>
   <transition name="fade">
     <ul class="menu" ref="menu" v-show="isVisible" :style="position" @mouseover="isActive = true" @mouseleave="isActive = false">
-      <li class="item" v-for="item in items" @click="select(item)" title="{{ item.text }}">
+      <li class="item" v-for="item in items" @click="select(item)">
         <span class="material-symbols-rounded" v-if="item.icon">{{ item.icon }}</span>
         {{ item.text }}
       </li>
