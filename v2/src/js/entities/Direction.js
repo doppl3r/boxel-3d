@@ -7,7 +7,9 @@ import { Cube } from './Cube.js';
 
 class Direction extends Cube {
   // Define static properties
-  static model = 'cube-direction';
+  static model = {
+    name: 'cube-direction'
+  };
 
   constructor(options) {
     // Set options with default values

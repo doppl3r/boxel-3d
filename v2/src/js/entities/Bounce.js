@@ -7,7 +7,9 @@ import { Cuboid } from '@dimforge/rapier3d';
 
 class Bounce extends Cube {
   // Define static properties
-  static model = 'cube-bounce';
+  static model = {
+    name: 'cube-bounce'
+  };
 
   constructor(options) {
     // Set options with default values

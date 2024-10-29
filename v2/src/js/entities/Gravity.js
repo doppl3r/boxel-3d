@@ -7,7 +7,9 @@ import { Cube } from './Cube.js';
 
 class Gravity extends Cube {
   // Define static properties
-  static model = 'cube-gravity';
+  static model = {
+    name: 'cube-gravity'
+  };
 
   constructor(options) {
     // Set options with default values

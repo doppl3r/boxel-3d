@@ -6,7 +6,9 @@ import { Cube } from './Cube.js';
 
 class Finish extends Cube {
   // Define static properties
-  static model = 'cube-finish';
+  static model = {
+    name: 'cube-finish'
+  };
   
   constructor(options) {
     // Set options with default values

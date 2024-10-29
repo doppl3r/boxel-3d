@@ -7,7 +7,9 @@ import { Cube } from './Cube.js';
 
 class Resize extends Cube {
   // Define static properties
-  static model = 'cube-resize';
+  static model = {
+    name: 'cube-resize'
+  };
 
   constructor(options) {
     // Set options with default values

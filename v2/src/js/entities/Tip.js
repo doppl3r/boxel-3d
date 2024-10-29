@@ -6,7 +6,9 @@ import { Cube } from './Cube.js';
 
 class Tip extends Cube {
   // Define static properties
-  static model = 'cube-tip';
+  static model = {
+    name: 'cube-tip'
+  };
 
   constructor(options) {
     // Set options with default values

@@ -6,7 +6,10 @@ import { Cube } from './Cube.js';
 */
 
 class Light extends Cube {
-  static model = '';
+  // Define static properties
+  static model = {
+    name: ''
+  };
 
   constructor(options) {
     // Set options with default values

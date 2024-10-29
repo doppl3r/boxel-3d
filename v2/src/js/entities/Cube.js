@@ -9,7 +9,9 @@ import { Entity } from './Entity.js';
 
 class Cube extends Entity {
   // Define static properties
-  static model = 'cube-cube';
+  static model = {
+    name: 'cube-cube'
+  };
 
   constructor(options) {
     // Set options with default values
@@ -49,9 +51,11 @@ class Cube extends Entity {
     }
   }
 
-  createModel() {
+  createModel(options) {
+    Object.assign({ color: '#ffffff' }, options);
+
     var geometry = new BoxGeometry(1, 1, 1);
-    var material = new MeshStandardMaterial({ color: '#ffffff' });
+    var material = new MeshStandardMaterial({ color: options.color });
     this.model = new Mesh(geometry, material);
     this.model.receiveShadow = true;
     this.model.castShadow = true;

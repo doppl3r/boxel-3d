@@ -6,7 +6,9 @@ import { Cube } from './Cube.js';
 
 class Grapple extends Cube {
   // Define static properties
-  static model = 'cube-grapple';
+  static model = {
+    name: 'cube-grapple'
+  };
 
   constructor(options) {
     // Set options with default values

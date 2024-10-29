@@ -6,7 +6,9 @@ import { Cube } from './Cube.js';
 
 class Reset extends Cube {
   // Define static properties
-  static model = 'cube-reset';
+  static model = {
+    name: 'cube-reset'
+  };
 
   constructor(options) {
     // Set options with default values

@@ -7,7 +7,9 @@ import { Cuboid } from '@dimforge/rapier3d';
 
 class Spike extends Cube {
   // Define static properties
-  static model = 'cube-spike';
+  static model = {
+    name: 'cube-spike'
+  };
 
   constructor(options) {
     // Set options with default values

@@ -6,7 +6,9 @@ import { Cube } from './Cube.js';
 
 class Checkpoint extends Cube {
   // Define static properties
-  static model = 'cube-checkpoint';
+  static model = {
+    name: 'cube-checkpoint'
+  };
 
   constructor(options) {
     // Set options with default values

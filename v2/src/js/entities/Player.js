@@ -9,7 +9,9 @@ import { Cube } from './Cube.js';
 
 class Player extends Cube {
   // Define static properties
-  static model = 'cube-player';
+  static model = {
+    name: 'cube-player'
+  };
 
   constructor(options) {
     // Set options with default values

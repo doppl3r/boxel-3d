@@ -128,7 +128,13 @@ class EntityFactory {
 
   static getProperty(type, property) {
     const className = this.getClassName(type);
-    if (className) return this[className][property];
+    if (className) {
+      const staticClass = this[className];
+      if (staticClass) return staticClass[property];
+      else {
+        console.error(`Error: Static class "${ className }" does not exist.`)
+      }
+    }
     return;
   }
 }
