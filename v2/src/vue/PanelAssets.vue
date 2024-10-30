@@ -1,20 +1,25 @@
 <script setup>
-  import { onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
 
   // Declare component variables
   const props = defineProps({
-    assets: Object,
+    game: Object,
     mode: Object
   });
-  const visible = ref(false);
-  const entities = ref([]);
+  const expanded = ref(false);
+  const assets = ref([]);
+  const isVisible = computed((previous) => {
+    if (props.mode.type == 'add') expanded.value = !previous;
+    else expanded.value = false;
+    return expanded.value;
+  });
 
   function loadAssets() {
     // Loop through each asset
-    for (var key in props.assets.cache) {
-      var asset = props.assets.get(key);
-      if (asset.userData.isEntity) {
-        entities.value.push({
+    for (var key in props.game.assets.cache) {
+      var asset = props.game.assets.get(key);
+      if (asset.userData.isAsset) {
+        assets.value.push({
           key: key,
           src: asset.thumbnail
         });
@@ -23,25 +28,8 @@
   }
 
   function close() {
-    visible.value = false;
+    expanded.value = false;
   }
-
-  watch(() => props.mode, (after, before) => {
-    if (after.type == 'add') {
-      // Show if previous mode was not "add"
-      if (before.type != after.type) {
-        visible.value = true;
-      }
-      else {
-        // Toggle visibility if previous mode is the same
-        visible.value = !visible.value
-      }
-    }
-    else {
-      // Hide if mode is not "add"
-      visible.value = false;
-    }
-  })
   
   // Initialize component values on mounted
   onMounted(function() {
@@ -50,13 +38,13 @@
 </script>
 
 <template>
-  <div class="panel assets" v-show="visible == true">
+  <div class="panel" v-show="isVisible">
     <div class="header">
       <div class="title">Add</div>
     </div>
-    <div class="entities">
-      <div class="entity" v-for="entity in entities" :title="entity.key">
-        <img :src="entity.src" />
+    <div class="assets">
+      <div class="asset" v-for="asset in assets" :title="asset.key">
+        <img :src="asset.src" />
       </div>
     </div>
     <div class="close" @click="close">x</div>
@@ -69,7 +57,7 @@
   ::-webkit-scrollbar-thumb { background: rgba(#000000, 1); border-radius: 99em; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(#F52D59, 1); border-radius: 99em; }
 
-  .assets {
+  .panel {
     border-radius: 0.5em;
     background-color: #FFCB4C;
     border: 0.25em solid #000000;
@@ -89,7 +77,7 @@
       }
     }
 
-    .entities {
+    .assets {
       display: flex;
       flex-wrap: wrap;
       gap: 0.125em;
@@ -98,7 +86,7 @@
       overflow-y: auto;
       padding-right: 0.5em;
 
-      .entity {
+      .asset {
         align-items: center;
         background-color: #FFA217;
         border-radius: 0.5em;

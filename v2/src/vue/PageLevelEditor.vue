@@ -1,8 +1,8 @@
 <script setup>
   import { onMounted, ref } from 'vue';
-  import LevelEditorPanelActions from './LevelEditorPanelActions.vue';
-  import LevelEditorPanelAssets from './LevelEditorPanelAssets.vue';
-  import LevelEditorPanelScene from './LevelEditorPanelScene.vue';
+  import PanelActions from './PanelActions.vue';
+  import PanelAssets from './PanelAssets.vue';
+  import PanelScene from './PanelScene.vue';
   import ContextMenu from './ContextMenu.vue';
 
   // Initialize app and expose to window scope
@@ -22,9 +22,9 @@
 <template>
   <div>
     <div class="panels">
-      <LevelEditorPanelActions :mode="mode" @setMode="setMode" />
-      <LevelEditorPanelAssets :mode="mode" :assets="game.assets" />
-      <LevelEditorPanelScene :entities="game.physics.entities" />
+      <PanelActions :game="game" :mode="mode" @setMode="setMode" />
+      <PanelAssets :game="game" :mode="mode" />
+      <PanelScene :game="game" />
     </div>
     <ContextMenu :game="game" />
   </div>

@@ -5,79 +5,79 @@
   "cube-bounce": {
     "url": "../glb/cube-bounce.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-checkpoint": {
     "url": "../glb/cube-checkpoint.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-control": {
     "url": "../glb/cube-control.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-cube": {
     "url": "../glb/cube-cube.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-direction": {
     "url": "../glb/cube-direction.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-finish": {
     "url": "../glb/cube-finish.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-grapple": {
     "url": "../glb/cube-grapple.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-gravity": {
     "url": "../glb/cube-gravity.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-player": {
     "url": "../glb/cube-player.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-reset": {
     "url": "../glb/cube-reset.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-resize": {
     "url": "../glb/cube-resize.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-spike": {
     "url": "../glb/cube-spike.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   },
   "cube-tip": {
     "url": "../glb/cube-tip.glb",
     "userData": {
-      "isEntity": true
+      "isAsset": true
     }
   }
 }
