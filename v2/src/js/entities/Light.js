@@ -44,6 +44,7 @@ class Light extends Cube {
     // Extend entity toJSON with model name
     const json = super.toJSON();
     json.lightType = this.model.type;
+    json.intensity = this.model.intensity;
     return json;
   }
 }
