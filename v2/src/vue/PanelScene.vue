@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, onMounted, reactive, ref } from 'vue';
+  import { computed, ref } from 'vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({
@@ -9,11 +9,6 @@
   const entitiesArr = computed(() => {
     const arr = Array.from(props.game.physics.entities, value => value[1]);
     return arr;
-  });
-  
-  // Initialize app after canvas has been mounted
-  onMounted(function() {
-    
   });
 </script>
 
@@ -59,8 +54,9 @@
     .header {
       align-items: center;
       display: flex;
-
+      
       .title {
+        cursor: pointer;
         flex-grow: 1;
       }
 
