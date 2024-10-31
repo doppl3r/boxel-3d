@@ -55,9 +55,10 @@ class Graphics {
     this.composer.addPass(this.smaaPass); // Anti-aliasing
     this.composer.addPass(this.outputPass); // Gamma/sRGB correction
 
-    // Add window resize logic
-    window.addEventListener('resize', function(e) { this.resize(e); }.bind(this));
-    this.resize({ target: window }); // Run resize immediately
+    // Add event listeners and dispatch resize immediately
+    this.resize = this.resize.bind(this);
+    window.addEventListener('resize', this.resize);
+    window.dispatchEvent(new Event('resize'));
   }
 
   render() {

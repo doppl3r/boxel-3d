@@ -35,7 +35,7 @@ class Game {
     this.physics.animate(data.delta, data.alpha);
 
     // Render graphics
-    this.graphics.render()
+    this.graphics.render();
   }
 
   onLoad(onLoad) {

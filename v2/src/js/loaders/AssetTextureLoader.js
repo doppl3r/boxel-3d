@@ -24,7 +24,7 @@ class AssetTextureLoader extends TextureLoader {
         }.bind(this),
         undefined,
         function(err) {
-          console.error(`Error: Texture "${ value.url }" not found.`);
+          console.error(err);
         });
       }
     }

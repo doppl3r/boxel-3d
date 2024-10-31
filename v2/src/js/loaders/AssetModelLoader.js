@@ -29,7 +29,7 @@ class AssetModelLoader extends GLTFLoader {
           
         },
         function(error) {
-          console.error(`Error: Model "${ value.url }" not found.`);
+          console.error(error);
         });
       }
     }

@@ -25,7 +25,7 @@
 
     // Update camera and scene
     background.traverse(function(child) { if (child.isCamera) graphics.setCamera(child); });
-    graphics.resize();
+    graphics.setSize(window.innerWidth, window.innerHeight);
     graphics.scene.add(background, light);
 
     // Start render loop
