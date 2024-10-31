@@ -21,7 +21,7 @@ import { TriMesh } from '../entities/TriMesh';
 */
 
 class EntityFactory {
-  static Tip = Tip;
+  static Bounce = Bounce;
   static Checkpoint = Checkpoint;
   static Control = Control;
   static Cube = Cube;

@@ -1,5 +1,5 @@
 {
-  "name": "v2-test-joints",
+  "name": "boxel-3d-sandbox",
   "version": "2",
   "children": [
     {
@@ -51,7 +51,7 @@
       "events": [
         {
           "name": "teleport",
-          "position": { "x": 8, "y": 4, "z": 0 }
+          "position": { "x": -8, "y": 4, "z": -12 }
         }
       ],
       "position": { "x": -8, "y": 4, "z": 0 },
@@ -91,6 +91,99 @@
           ]
         }
       ]
+    },
+
+    {
+      "type": "cube",
+      "position": { "x": 0, "y": 0, "z": -12 },
+      "scale": { "x": 24, "y": 1, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "position": { "x": 0, "y": 12, "z": -12 },
+      "scale": { "x": 24, "y": 1, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "position": { "x": -11.5, "y": 6, "z": -12 },
+      "scale": { "x": 1, "y": 11, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "position": { "x": 11.5, "y": 6, "z": -12 },
+      "scale": { "x": 1, "y": 11, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "bounce",
+      "position": { "x": 4, "y": 1, "z": -12 },
+      "scale": { "x": 4, "y": 1, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "model": { "name": "cube-tip" },
+      "events": [
+        {
+          "name": "teleport",
+          "position": { "x": 8, "y": 4, "z": -24 }
+        }
+      ],
+      "position": { "x": 9.5, "y": 10, "z": -12 },
+      "status": 1
+    },
+
+
+
+    {
+      "type": "cube",
+      "position": { "x": 0, "y": 0, "z": -24 },
+      "scale": { "x": 24, "y": 1, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "position": { "x": 0, "y": 12, "z": -24 },
+      "scale": { "x": 24, "y": 1, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "position": { "x": -11.5, "y": 6, "z": -24 },
+      "scale": { "x": 1, "y": 11, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "position": { "x": 11.5, "y": 6, "z": -24 },
+      "scale": { "x": 1, "y": 11, "z": 1 },
+      "status": 1
+    },
+    {
+      "type": "gravity",
+      "model": { "name": "cube-tip" },
+      "events": [
+        {
+          "name": "teleport",
+          "position": { "x": 8, "y": 4, "z": 0 }
+        },
+        {
+          "name": "setGravity",
+          "position": { "x": 8, "y": 4, "z": 0 }
+        }
+      ],
+      "position": { "x": -10.5, "y": 11, "z": -24 },
+      "status": 1
+    },
+    {
+      "type": "gravity",
+      "position": { "x": -10.5, "y": 1, "z": -24 },
+      "rotation": { "x": 0, "y": 0, "z": 0.7068032050181363, "w": -0.7074101591179357 },
+      "scale": { "x": 1, "y": 1, "z": 1 },
+      "status": 1
     }
   ]
 }

@@ -15,7 +15,10 @@
 
   // Initialize app after canvas has been mounted
   onMounted(function() {
-    game.loadLevel('../json/v2-test-joints.json');
+    game.loadLevel('../json/boxel-3d-sandbox.json');
+    game.graphics.fog.color.set('#222222');
+    game.graphics.fog.near = 10;
+    game.graphics.fog.far = 50;
   });
 </script>
 
