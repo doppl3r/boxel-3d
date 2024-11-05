@@ -1,14 +1,42 @@
 <script setup>
-  import { computed, ref } from 'vue';
+  import { ref, watch } from 'vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({
     game: Object
   });
   const expanded = ref(true);
-  const entitiesArr = computed(() => {
-    const arr = Array.from(props.game.physics.entities, value => value[1]);
-    return arr;
+  const entitiesArr = ref([]);
+
+  function onDragStart(e, entity) {
+    //console.log(e);
+    var index = entitiesArr.value.indexOf(entity)
+    e.dataTransfer.setData('text/plain', index);
+  }
+
+  function onDragEnd(e, entity) {
+    //console.log(e);
+  }
+
+  function onDragOver(e, entity) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }
+  
+  function onDrop(e, endEntity) {
+    e.preventDefault();
+    const startIndex = e.dataTransfer.getData('text/plain');
+    const startEntity = entitiesArr.value[startIndex]
+    const endIndex = entitiesArr.value.indexOf(endEntity);
+    
+    if (startIndex != endIndex) {
+      entitiesArr.value.splice(startIndex, 1);
+      entitiesArr.value.splice(endIndex, 0, startEntity);
+    }
+  }
+  
+  watch(props.game.physics.entities, function(after, before) {
+    entitiesArr.value = Array.from(after, value => value[1]);
   });
 </script>
 
@@ -26,7 +54,13 @@
       </div>
     </div>
     <div class="entities" v-show="expanded == true">
-      <div class="entity" v-for="(entity, index) in entitiesArr" :key="index">
+      <div class="entity" v-for="(entity, index) in entitiesArr" :id="entity.type"
+        :key="index" draggable="true"
+        @dragstart="onDragStart($event, entity)"
+        @dragend="onDragEnd($event, entity)"
+        @dragover="onDragOver($event, entity)"
+        @drop="onDrop($event, entity)"
+      >
         <div class="icon" :class="entity.type"></div>
         {{ entity.type }}
       </div>
