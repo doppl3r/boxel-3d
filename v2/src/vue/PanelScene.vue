@@ -1,43 +1,28 @@
 <script setup>
-  import { ref, watch } from 'vue';
+  import { onMounted, ref } from 'vue';
+  import PanelSceneItem from './PanelSceneItem.vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({
     game: Object
   });
   const expanded = ref(true);
-  const entitiesArr = ref([]);
+  const entities = ref([]);
 
-  function onDragStart(e, entity) {
-    //console.log(e);
-    var index = entitiesArr.value.indexOf(entity)
-    e.dataTransfer.setData('text/plain', index);
+  async function loadFile(path) {
+    // Fetch public folder for level
+    return fetch(path).then(function (response) {
+      if (response.ok) { return response.json(); }
+      throw new Error('Something went wrong');
+    })
+    .then(function(json) { return json; }.bind(this))
+    .catch(function(error) { console.error(error); });
   }
 
-  function onDragEnd(e, entity) {
-    //console.log(e);
-  }
-
-  function onDragOver(e, entity) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-  }
-  
-  function onDrop(e, endEntity) {
-    e.preventDefault();
-    const startIndex = e.dataTransfer.getData('text/plain');
-    const startEntity = entitiesArr.value[startIndex]
-    const endIndex = entitiesArr.value.indexOf(endEntity);
-    
-    if (startIndex != endIndex) {
-      entitiesArr.value.splice(startIndex, 1);
-      entitiesArr.value.splice(endIndex, 0, startEntity);
-    }
-  }
-  
-  watch(props.game.physics.entities, function(after, before) {
-    entitiesArr.value = Array.from(after, value => value[1]);
-  });
+  onMounted(async () => {
+    const level = await loadFile('../json/boxel-3d-sandbox.json');
+    entities.value = level;
+  })
 </script>
 
 <template>
@@ -53,17 +38,8 @@
         </div>
       </div>
     </div>
-    <div class="entities" v-show="expanded == true">
-      <div class="entity" v-for="(entity, index) in entitiesArr" :id="entity.type"
-        :key="index" draggable="true"
-        @dragstart="onDragStart($event, entity)"
-        @dragend="onDragEnd($event, entity)"
-        @dragover="onDragOver($event, entity)"
-        @drop="onDrop($event, entity)"
-      >
-        <div class="icon" :class="entity.type"></div>
-        {{ entity.type }}
-      </div>
+    <div class="content" v-show="expanded == true">
+      <PanelSceneItem :data="entities" v-show="expanded == true" />
     </div>
   </div>
 </template>
@@ -119,34 +95,11 @@
       }
     }
 
-    .entities {
-      display: flex;
-      flex-direction: column;
-      gap: 0.125em;
+    .content {
       margin-top: 0.25em;
       overflow-y: auto;
       padding-right: 0.5em;
       height: 8em;
-
-      .entity {
-        align-items: center;
-        background-color: #FFA217;
-        border-radius: 0.25em;
-        cursor: pointer;
-        display: flex;
-        font-size: 1em;
-        line-height: 1.5em;
-        padding: 0 0.25em;
-
-        &:hover {
-          background-color: #F52D59;
-        }
-
-        &.selected {
-          background-color: #000000;
-          color: #ffffff;
-        }
-      }
     }
   }
 </style>
