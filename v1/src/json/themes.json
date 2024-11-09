@@ -26,5 +26,9 @@
   "red": {
     "model": "background-hell",
     "color": "#8C004A"
+  },
+  "tropic": {
+    "model": "background-tropic",
+    "color": "#fcf9f7"
   }
 }

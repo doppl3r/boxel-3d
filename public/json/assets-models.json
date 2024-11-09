@@ -1,6 +1,6 @@
 {
-  "background-tropic": {
-    "url": "../glb/background-tropic.glb"
+  "background-island": {
+    "url": "../glb/background-island.glb"
   },
   "cube-bounce": {
     "url": "../glb/cube-bounce.glb",

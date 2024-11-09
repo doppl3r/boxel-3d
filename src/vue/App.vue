@@ -20,7 +20,7 @@
 
   function onLoad() {
     // Initialize 3D objects
-    background = assets.get('background-tropic');
+    background = assets.get('background-island');
     light = LightFactory.create('AmbientLight');
 
     // Update camera and scene

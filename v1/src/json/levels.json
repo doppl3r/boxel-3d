@@ -225,9 +225,9 @@
       ]
     },
     {
-      "title": "Alpha Testing",
-      "url": "../svg/button-level-editor.svg",
-      "theme": "blue",
+      "title": "Tropic",
+      "url": "../svg/button-pack-tropic.svg",
+      "theme": "tropic",
       "description": "Test out levels before they are officially released",
       "levels": [
         {
