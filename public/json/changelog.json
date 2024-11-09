@@ -438,5 +438,19 @@
       "Added more snap options to level editor",
       "Updated resize cube to resize any cube"
     ]
+  },
+  {
+    "version": "2.2.7",
+    "revisions": [
+      "Added new home page",
+      "Updated community levels"
+    ]
+  },
+  {
+    "version": "2.2.8",
+    "revisions": [
+      "Added new tropic theme",
+      "Renamed \"Alpha\" levels to \"Tropic\""
+    ]
   }
 ]

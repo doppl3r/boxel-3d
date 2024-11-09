@@ -3,7 +3,6 @@
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
-  import changelog from '../json/changelog.json';
   import messages from '../json/messages.json';
 
   // Initialize attributes
@@ -59,7 +58,13 @@
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
-  function openChangelog() {
+  async function openChangelog() {
+    const changelog = await fetch('../json/changelog.json').then(function (response) {
+      if (response.ok) { return response.json(); }
+      throw new Error('Something went wrong');
+    })
+    .then(function(json) { return json; }.bind(this))
+    .catch(function(error) { console.error(error); });
     var text = '';
 
     // Update text from changelog json file

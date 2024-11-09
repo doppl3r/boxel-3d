@@ -1,7 +1,6 @@
 <script setup>
   import { ref, onMounted } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
-  import changelog from '../json/changelog.json';
   import messages from '../json/messages.json';
 
   // Initialize attributes
@@ -77,7 +76,13 @@
     }));
   }
 
-  function showChangelog() {
+  async function showChangelog() {
+    const changelog = await fetch('../json/changelog.json').then(function (response) {
+      if (response.ok) { return response.json(); }
+      throw new Error('Something went wrong');
+    })
+    .then(function(json) { return json; }.bind(this))
+    .catch(function(error) { console.error(error); });
     var text = '';
 
     // Update text from changelog json file
