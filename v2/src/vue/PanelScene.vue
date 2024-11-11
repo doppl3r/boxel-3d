@@ -20,6 +20,10 @@
     .catch(function(error) { console.error(error); });
   }
 
+  function isExpanded() {
+    return expanded.value == true
+  }
+
   function onDragOver(e) {
     const speed = 1;
     /* if (e.clientY < 100) {
@@ -28,6 +32,26 @@
         content.value.scrollBy(0, -speed);
       }, 500);
     } */
+  }
+
+  function itemContextMenu(e, item) {
+    document.dispatchEvent(new CustomEvent('contextmenu', {
+      detail: [
+        {
+          text: 'Delete',
+          icon: 'delete',
+          callback: () => console.log('deleted')
+        }
+      ]
+    }));
+  }
+
+  function itemDragStart(e, item) {
+    console.log(item);
+  }
+  
+  function itemDragDrop(e, item) {
+    console.log(item);
   }
 
   onMounted(async () => {
@@ -50,7 +74,13 @@
       </div>
     </div>
     <div ref="content" class="content" v-show="expanded == true" @dragover.stop.prevent="onDragOver">
-      <PanelSceneItem :data="scene" v-show="expanded == true" />
+      <PanelSceneItem
+        :data="scene"
+        v-show="isExpanded"
+        @item-context-menu="itemContextMenu"
+        @item-drag-start="itemDragStart"
+        @item-drag-drop="itemDragDrop"
+      />
     </div>
   </div>
 </template>

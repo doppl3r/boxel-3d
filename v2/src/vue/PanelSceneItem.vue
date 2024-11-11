@@ -1,65 +1,26 @@
 <script setup>
-  // Initialize app and expose to window scope
+  // Define item emits and props
+  const emit = defineEmits(['itemContextMenu', 'itemDragDrop', 'itemDragStart'])
   const props = defineProps({
     data: Object
   });
-
-  function onDragStart(e, entity) {
-    //console.log(entity);
-    /* if (props.data.children) {
-      var index = props.data.children.indexOf(entity);
-      e.dataTransfer.setData('text/plain', index);
-    } */
-  }
-
-  function onDragEnd(e, entity) {
-    
-  }
-
-  function onDragOver(e, entity) {
-    
-  }
-  
-  function onDrop(e, entity) {
-    console.log(props.data, entity)
-
-    /* if (props.data.children) {
-      const startIndex = e.dataTransfer.getData('text/plain');
-      const startEntity = props.data.children[startIndex];
-      const endIndex = props.data.children.indexOf(endEntity);
-      
-      if (startIndex != endIndex) {
-        props.data.children.splice(startIndex, 1);
-        props.data.children.splice(endIndex, 0, startEntity);
-      }
-    } */
-  }
-
-  function showContextMenu(e, data) {
-    document.dispatchEvent(new CustomEvent('contextmenu', {
-      detail: [
-        {
-          text: 'Delete',
-          icon: 'delete',
-          callback: () => console.log('deleted')
-        }
-      ]
-    }));
-  }
 </script>
 
 <template>
   <div class="item">
     <div class="tab" v-if="props.data.type" draggable="true"
-      @contextmenu="showContextMenu(e, props.data)"
-      @dragstart="onDragStart($event, props.data)"
-      @dragend.prevent="onDragEnd($event, props.data)"
-      @dragover.prevent="onDragOver($event, props.data)"
-      @drop.prevent="onDrop($event, props.data)">
+      @contextmenu="emit('itemContextMenu', $event, props.data)"
+      @dragstart="emit('itemDragStart', $event, props.data)"
+      @drop="emit('itemDragDrop', $event, props.data)">
       {{ props.data.type }}
     </div>
 
-    <PanelSceneItem v-for="entity in props.data.children" :data="entity" />
+    <PanelSceneItem v-for="item in props.data.children"
+      :data="item"
+      @item-context-menu="emit('itemContextMenu', $event, item)"
+      @item-drag-start="emit('itemDragStart', $event, item)"
+      @item-drag-drop="emit('itemDragDrop', $event, item)"
+    />
   </div>
 </template>
 
