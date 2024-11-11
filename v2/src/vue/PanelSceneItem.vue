@@ -1,25 +1,23 @@
 <script setup>
   // Define item emits and props
-  const emit = defineEmits(['itemContextMenu', 'itemDragDrop', 'itemDragStart'])
-  const props = defineProps({
-    data: Object
-  });
+  const props = defineProps({ item: Object });
+  const emit = defineEmits(['itemContextMenu', 'itemDragDrop', 'itemDragStart']);
 </script>
 
 <template>
   <div class="item">
-    <div class="tab" v-if="props.data.type" draggable="true"
-      @contextmenu="emit('itemContextMenu', $event, props.data)"
-      @dragstart="emit('itemDragStart', $event, props.data)"
-      @drop="emit('itemDragDrop', $event, props.data)">
-      {{ props.data.type }}
+    <div class="tab" draggable="true" v-if="props.item.type"
+      @contextmenu="emit('itemContextMenu', props.item)"
+      @dragstart="emit('itemDragStart', props.item)"
+      @drop="emit('itemDragDrop', props.item)">
+      {{ props.item.type }}
     </div>
 
-    <PanelSceneItem v-for="item in props.data.children"
-      :data="item"
-      @item-context-menu="emit('itemContextMenu', $event, item)"
-      @item-drag-start="emit('itemDragStart', $event, item)"
-      @item-drag-drop="emit('itemDragDrop', $event, item)"
+    <PanelSceneItem v-for="item in props.item.children"
+      :item="item"
+      @item-context-menu="emit('itemContextMenu', item)"
+      @item-drag-start="emit('itemDragStart', item)"
+      @item-drag-drop="emit('itemDragDrop', item);"
     />
   </div>
 </template>

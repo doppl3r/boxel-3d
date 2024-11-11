@@ -3,12 +3,10 @@
   import PanelSceneItem from './PanelSceneItem.vue';
 
   // Initialize app and expose to window scope
-  const props = defineProps({
-    game: Object
-  });
+  const props = defineProps({ game: Object });
   const expanded = ref(true);
-  const scene = ref([]);
   const content = ref();
+  const scene = ref([]);
 
   async function loadFile(path) {
     // Fetch public folder for level
@@ -46,12 +44,12 @@
     }));
   }
 
-  function itemDragStart(e, item) {
-    console.log(item);
+  function itemDragStart(item) {
+    //console.log(item);
   }
   
-  function itemDragDrop(e, item) {
-    console.log(item);
+  function itemDragDrop(item) {
+    //console.log(item);
   }
 
   onMounted(async () => {
@@ -75,7 +73,7 @@
     </div>
     <div ref="content" class="content" v-show="expanded == true" @dragover.stop.prevent="onDragOver">
       <PanelSceneItem
-        :data="scene"
+        :item="scene"
         v-show="isExpanded"
         @item-context-menu="itemContextMenu"
         @item-drag-start="itemDragStart"
