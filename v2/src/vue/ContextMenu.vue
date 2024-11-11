@@ -2,33 +2,32 @@
   import { nextTick, onMounted, onUnmounted, ref } from 'vue';
 
   const menu = ref();
-  const items = ref([{ text: 'Cancel', icon: 'cancel' }]);
+  const actions = ref([{ text: 'Cancel', icon: 'cancel' }]);
   const props = defineProps({ game: Object });
-  const position = ref({ left: '0px', top: '0px' });
+  const style = ref({ animationDuration: '0.15s', left: '0px', top: '0px' })
   const isVisible = ref(false);
-  const isActive = ref(false);
 
-  function onClick(e) {
+  function showContextMenu(e) {
     e.preventDefault();
-    // Update menu visibility
-    if (e.button == 2) {
-      isVisible.value = true;
-      updatePosition(e);
-    }
-    else {
-      // Close menu if not active
-      if (isActive.value == false) {
-        isVisible.value = false;
-      }
-    }
+    isVisible.value = true;
+    updatePosition(e);
+    
+    // Ex: document.dispatchEvent(new CustomEvent('contextmenu', { detail: [] }));
+    if (e.detail) actions.value = e.detail;
   }
 
-  function select(item) {
-    if (item.callback) item.callback();
+  function closeContextMenu(e) {
+    e.preventDefault();
     isVisible.value = false;
   }
 
+  function select(e, action) {
+    if (action.callback) action.callback(e);
+    closeContextMenu(e);
+  }
+
   async function updatePosition(e) {
+    // Wait for DOM element to render
     await nextTick();
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
@@ -42,36 +41,31 @@
     if (top + height > screenHeight) top = screenHeight - height;
 
     // Assign CSS style rules
-    position.value.left = left + 'px';
-    position.value.top = top + 'px';
-  }
-
-  function onContextMenu(e) {
-    e.preventDefault();
-    
-    // Ex: document.dispatchEvent(new CustomEvent('contextmenu', { detail: [] }));
-    if (e.detail) items.value = e.detail;
+    style.value.left = left + 'px';
+    style.value.top = top + 'px';
   }
   
   // Initialize app after canvas has been mounted
   onMounted(function() {
     // Add event listener
-    document.addEventListener('contextmenu', onContextMenu);
-    document.addEventListener('pointerup', onClick);
+    document.addEventListener('contextmenu', showContextMenu);
+    document.addEventListener('pointerup', closeContextMenu);
   });
 
   onUnmounted(function() {
-    document.removeEventListener('contextmenu', onContextMenu);
-    document.removeEventListener('pointerup', onClick);
+    document.removeEventListener('contextmenu', showContextMenu);
+    document.removeEventListener('pointerup', closeContextMenu);
   });
 </script>
 
 <template>
   <transition name="fade">
-    <ul class="menu" ref="menu" v-show="isVisible" :style="position" @mouseover="isActive = true" @mouseleave="isActive = false">
-      <li class="item" v-for="item in items" @click="select(item)">
-        <span class="material-symbols-rounded" v-if="item.icon">{{ item.icon }}</span>
-        {{ item.text }}
+    <ul ref="menu" v-show="isVisible" :style="style">
+      <li v-for="action in actions">
+        <button @click.prevent="select($event, action)">
+          <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
+          {{ action.text }}
+        </button>
       </li>
     </ul>
   </transition>
@@ -79,10 +73,11 @@
 
 <style lang="scss" scoped>
   .fade-enter-active {
-    animation: fade-in 0.15s;
+    animation-name: fade-in;
   }
   .fade-leave-active {
-    animation: fade-in 0.15s reverse;
+    animation-name: fade-in;
+    animation-direction: reverse;
   }
 
   @keyframes fade-in {
@@ -90,7 +85,7 @@
     100% { opacity: 1; transform: translateY(0em); }
   }
 
-  .menu {
+  ul {
     border-radius: 0.5em;
     background-color: #FFCB4C;
     border: 0.25em solid #000000;
@@ -102,23 +97,31 @@
     top: 1em;
     transform: translateY(0em);
     width: 10em;
-    
-    .item {
-      align-items: center;
-      border-radius: 0.25em;
-      cursor: pointer;
-      display: flex;
-      font-size: 1em;
-      gap: 0.25em;
-      line-height: 1.5em;
-      padding: 0 0.25em;
 
-      &:hover {
-        background-color: #FFA217;
-      }
+    li {
+      list-style: none;
 
-      .material-symbols-rounded {
+      button {
+        align-items: center;
+        background-color: transparent;
+        border-radius: 0.25em;
+        border-width: 0;
+        cursor: pointer;
+        display: flex;
+        font-family: inherit;
         font-size: 1em;
+        gap: 0.25em;
+        line-height: 1.5em;
+        padding: 0 0.25em;
+        width: 100%;
+  
+        &:hover {
+          background-color: #FFA217;
+        }
+  
+        .material-symbols-rounded {
+          font-size: 1em;
+        }
       }
     }
   }

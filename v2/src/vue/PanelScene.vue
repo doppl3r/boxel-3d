@@ -7,7 +7,8 @@
     game: Object
   });
   const expanded = ref(true);
-  const entities = ref([]);
+  const scene = ref([]);
+  const content = ref();
 
   async function loadFile(path) {
     // Fetch public folder for level
@@ -19,9 +20,19 @@
     .catch(function(error) { console.error(error); });
   }
 
+  function onDragOver(e) {
+    const speed = 1;
+    /* if (e.clientY < 100) {
+      setTimeout(function() {
+        console.log(e, content.value);
+        content.value.scrollBy(0, -speed);
+      }, 500);
+    } */
+  }
+
   onMounted(async () => {
     const level = await loadFile('../json/boxel-3d-sandbox.json');
-    entities.value = level;
+    scene.value = level;
   })
 </script>
 
@@ -38,8 +49,8 @@
         </div>
       </div>
     </div>
-    <div class="content" v-show="expanded == true">
-      <PanelSceneItem :data="entities" v-show="expanded == true" />
+    <div ref="content" class="content" v-show="expanded == true" @dragover.stop.prevent="onDragOver">
+      <PanelSceneItem :data="scene" v-show="expanded == true" />
     </div>
   </div>
 </template>
@@ -96,10 +107,10 @@
     }
 
     .content {
+      height: 8em;
       margin-top: 0.25em;
       overflow-y: auto;
       padding-right: 0.5em;
-      height: 8em;
     }
   }
 </style>

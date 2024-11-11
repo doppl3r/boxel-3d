@@ -5,24 +5,25 @@
   });
 
   function onDragStart(e, entity) {
-    if (props.data.children) {
+    //console.log(entity);
+    /* if (props.data.children) {
       var index = props.data.children.indexOf(entity);
       e.dataTransfer.setData('text/plain', index);
-    }
+    } */
   }
 
   function onDragEnd(e, entity) {
-    //console.log(e);
+    
   }
 
   function onDragOver(e, entity) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
+    
   }
   
-  function onDrop(e, endEntity) {
-    e.preventDefault();
-    if (props.data.children) {
+  function onDrop(e, entity) {
+    console.log(props.data, entity)
+
+    /* if (props.data.children) {
       const startIndex = e.dataTransfer.getData('text/plain');
       const startEntity = props.data.children[startIndex];
       const endIndex = props.data.children.indexOf(endEntity);
@@ -31,17 +32,30 @@
         props.data.children.splice(startIndex, 1);
         props.data.children.splice(endIndex, 0, startEntity);
       }
-    }
+    } */
+  }
+
+  function showContextMenu(e, data) {
+    document.dispatchEvent(new CustomEvent('contextmenu', {
+      detail: [
+        {
+          text: 'Delete',
+          icon: 'delete',
+          callback: () => console.log('deleted')
+        }
+      ]
+    }));
   }
 </script>
 
 <template>
   <div class="item">
     <div class="tab" v-if="props.data.type" draggable="true"
+      @contextmenu="showContextMenu(e, props.data)"
       @dragstart="onDragStart($event, props.data)"
-      @dragend="onDragEnd($event, props.data)"
-      @dragover="onDragOver($event, props.data)"
-      @drop="onDrop($event, props.data)">
+      @dragend.prevent="onDragEnd($event, props.data)"
+      @dragover.prevent="onDragOver($event, props.data)"
+      @drop.prevent="onDrop($event, props.data)">
       {{ props.data.type }}
     </div>
 
