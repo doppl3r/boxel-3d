@@ -46,6 +46,7 @@
       "status": 0
     },
     {
+      "id": "pizza",
       "type": "cube",
       "model": { "name": "cube-tip" },
       "events": [
@@ -55,42 +56,32 @@
         }
       ],
       "position": { "x": -8, "y": 4, "z": 0 },
-      "status": 1,
-      "children": [
-        {
-          "type": "cube",
-          "position": { "x": -6, "y": 8, "z": 0 },
-          "status": 0,
-          "children": [
-            {
-              "type": "cube",
-              "position": { "x": -4, "y": 4, "z": 0 },
-              "status": 0,
-              "children": [
-                {
-                  "type": "cube",
-                  "position": { "x": -2, "y": 8, "z": 0 },
-                  "status": 0,
-                  "children": [
-                    {
-                      "type": "bounce",
-                      "position": { "x": 0, "y": 4, "z": 0 },
-                      "status": 0,
-                      "children": [
-                        {
-                          "type": "cube",
-                          "position": { "x": 2, "y": 8, "z": 0 },
-                          "status": 0
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "status": 1
+    },
+    {
+      "type": "cube",
+      "position": { "x": -6, "y": 8, "z": 0 },
+      "status": 0
+    },
+    {
+      "type": "cube",
+      "position": { "x": -4, "y": 4, "z": 0 },
+      "status": 0
+    },
+    {
+      "type": "cube",
+      "position": { "x": -2, "y": 8, "z": 0 },
+      "status": 0
+    },
+    {
+      "type": "cube",
+      "position": { "x": 0, "y": 4, "z": 0 },
+      "status": 0
+    },
+    {
+      "type": "cube",
+      "position": { "x": 2, "y": 8, "z": 0 },
+      "status": 0
     },
 
     {

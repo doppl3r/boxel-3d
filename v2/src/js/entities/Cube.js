@@ -88,7 +88,16 @@ class Cube extends Entity {
   toJSON() {
     // Extend entity toJSON with model name
     const json = super.toJSON();
+
+    // Assign cube properties to entity JSON
+    Object.assign(json, {
+      type: this.type
+    });
+
+    // Conditionally store model name
     if (this.model.name) json.model = { name: this.model.name };
+
+    // Return json object
     return json;
   }
 }
