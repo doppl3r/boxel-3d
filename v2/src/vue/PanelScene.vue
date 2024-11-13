@@ -2,13 +2,11 @@
   import { onMounted, ref } from 'vue';
 
   // Initialize app and expose to window scope
-  const props = defineProps({ game: Object, entities: Array });
-  const emit = defineEmits(['addEntity', 'moveEntity']);
+  const props = defineProps({ entities: Array });
+  const emit = defineEmits(['addEntity', 'deleteEntity', 'moveEntity', 'renameEntity']);
   const expanded = ref(true);
   const content = ref();
-
   let entity1 = {};
-  let scrolling = false;
 
   function isExpanded() {
     return expanded.value == true;
@@ -20,7 +18,7 @@
         {
           text: 'Delete',
           icon: 'delete',
-          callback: () => console.log('deleted')
+          callback: () => emit('deleteEntity', e, entity)
         }
       ]
     }));
@@ -30,6 +28,10 @@
     entity1 = entity;
   }
 
+  function onDragOver(e, entity) {
+    
+  }
+
   function onDragEnd(e, entity) {
     content.value.style.overflowY = 'auto';
   }
@@ -37,24 +39,6 @@
   function onDragDrop(e, entity2) {
     emit('moveEntity', e, entity1, entity2);
     entity1 = null;
-  }
-
-  function onContentDragOver(e) {
-    const contentOffset = content.value.getBoundingClientRect();
-    const scrollUp = e.clientY - contentOffset.top < e.target.offsetHeight;
-    const scrollDown = e.clientY - contentOffset.top > content.value.offsetHeight - e.target.offsetHeight;
-    const direction = (scrollUp ? -1 : 0) + (scrollDown ? 1 : 0);
-
-    if (scrollDown || scrollUp) {
-      content.value.style.overflowY = 'hidden';
-      if (scrolling == false) {
-        scrolling = true;
-        setTimeout(() => {
-          content.value.scrollBy(0, e.target.offsetHeight * direction * 4);
-          scrolling = false;
-        }, 250);
-      }
-    }
   }
 </script>
 
@@ -71,18 +55,22 @@
         </div>
       </div>
     </div>
-    <div ref="content" class="content" v-show="isExpanded()" @dragover.prevent="onContentDragOver" @mousemove.prevent="">
+    <div ref="content" class="content" v-show="isExpanded()">
       <ul>
         <TransitionGroup name="list">
           <li v-for="entity in props.entities" :key="entity.id"
             draggable="true"
             @contextmenu="onContextMenu($event, entity)"
             @dragstart="onDragStart($event, entity)"
+            @dragover.prevent="onDragOver($event, entity)"
             @dragend="onDragEnd($event, entity)"
             @drop="onDragDrop($event, entity)">
-            <label>
-              {{ entity.type }}
-            </label>
+            <input type="text"
+              :value="entity.name || entity.type"
+              @change="emit('renameEntity', $event, entity)"
+              @keyup.enter="$event.target.blur()"
+              @pointerdown="$event.target.blur()"
+            />
           </li>
         </TransitionGroup>
         <li v-if="props.entities.length == 0" @click="emit('addEntity', $event);">
@@ -99,6 +87,21 @@
 </style>
 
 <style lang="scss" scoped>
+  .list-move,
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.5s ease-in-out;
+  }
+
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+  }
+
+  .list-leave-active {
+    font-size: 0;
+  }
+
   ::-webkit-scrollbar { width: 0.25em; }
   ::-webkit-scrollbar-track { background: rgba(#FFA217, 1); border-radius: 99em; }
   ::-webkit-scrollbar-thumb { background: rgba(#000000, 1); border-radius: 99em; }
@@ -168,24 +171,28 @@
         list-style-type: none;
         margin: 0;
         padding: 0;
-        position: relative;
 
         li {
           align-items: flex-start;
-          background-color: #FFA217;
-          border-radius: 0.25em;
           cursor: pointer;
           display: flex;
-          font-size: 1em;
-          line-height: 1.5em;
-          padding: 0 0.25em;
-          position: relative;
-          transition: all 0.5s ease;
           width: 100%;
           
           &.selected {
             background-color: #F52D59;
             color: #ffffff;
+          }
+          
+          input {
+            background-color: #FFA217;
+            border-width: 0;
+            border-radius: 0.25em;
+            font-family: inherit;
+            font-size: 1em;
+            line-height: 1.5em;
+            outline: none;
+            padding: 0 0.25em;
+            width: 100%;
           }
         }
       }

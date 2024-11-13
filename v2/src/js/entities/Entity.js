@@ -20,6 +20,7 @@ class Entity extends EventDispatcher {
     Object.defineProperty(this, 'id', { value: _id++ });
 
     // Set base components
+    this.name = '';
     this.uuid = options.uuid || MathUtils.generateUUID();
     this.isEntity = true;
     this.parent;
@@ -354,6 +355,7 @@ class Entity extends EventDispatcher {
   toJSON() {
     // Initialize entity values
     let json = {
+      name: this.name,
       parent: {
         uuid: null
       },

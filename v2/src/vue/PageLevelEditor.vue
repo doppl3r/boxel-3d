@@ -18,6 +18,12 @@
     console.log(e);
   }
 
+  function deleteEntity(e, entity) {
+    props.game.physics.remove(entity);
+    const index = entities.value.indexOf(entity);
+    entities.value.splice(index, 1);
+  }
+
   function moveEntity(e, entity1, entity2) {
     const index1 = entities.value.indexOf(entity1);
     const index2 = entities.value.indexOf(entity2);
@@ -25,6 +31,10 @@
 
     entities.value.splice(index1, 1); // Remove entity1 from current index;
     entities.value.splice(index2 + order, 0, entity1); // Insert entity1 below entity2 index
+  }
+
+  function renameEntity(e, entity) {
+    entity.name = e.target.value;
   }
 
   // Initialize app after canvas has been mounted
@@ -38,7 +48,13 @@
     <div class="panels">
       <PanelActions :game="game" :mode="mode" @setMode="setMode" />
       <PanelAssets :game="game" :mode="mode" />
-      <PanelScene :game="game" :entities="entities" @add-entity="addEntity" @move-entity="moveEntity" />
+      <PanelScene
+        :entities="entities"
+        @add-entity="addEntity"
+        @delete-entity="deleteEntity"
+        @move-entity="moveEntity"
+        @rename-entity="renameEntity"
+      />
     </div>
     <ContextMenu :game="game" />
   </div>
