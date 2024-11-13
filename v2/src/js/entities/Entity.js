@@ -121,7 +121,7 @@ class Entity extends EventDispatcher {
       translation: { x: 0, y: 0, z: 0 }
     }, options);
 
-    var colliderDesc = new ColliderDesc(options.shape);
+    const colliderDesc = new ColliderDesc(options.shape);
     colliderDesc.setActiveCollisionTypes(ActiveCollisionTypes[options.activeCollisionTypes]);
     colliderDesc.setActiveEvents(ActiveEvents[options.activeEvents]);
     colliderDesc.setCollisionGroups(options.collisionGroups);
@@ -152,7 +152,7 @@ class Entity extends EventDispatcher {
       // Loop through all collider descriptions
       this.collidersDesc.forEach(function(colliderDesc) {
         // Parent the collider to the rigid body
-        var collider = world.createCollider(colliderDesc, this.rigidBody);
+        const collider = world.createCollider(colliderDesc, this.rigidBody);
 
         // Assign optional callback events to collider
         collider.events = colliderDesc.events;
@@ -162,17 +162,17 @@ class Entity extends EventDispatcher {
 
   createJointFromParent(world) {
     if (this.parent) {
-      var anchor1 = new Vector3();
-      var anchor2 = new Vector3().copy(this.parent.rigidBodyDesc.translation).sub(this.rigidBodyDesc.translation);
-      var frame1 = new Quaternion().copy(this.parent.rigidBodyDesc.rotation);
-      var frame2 = new Quaternion().copy(this.rigidBodyDesc.rotation);
+      const anchor1 = new Vector3();
+      const anchor2 = new Vector3().copy(this.parent.rigidBodyDesc.translation).sub(this.rigidBodyDesc.translation);
+      const frame1 = new Quaternion().copy(this.parent.rigidBodyDesc.rotation);
+      const frame2 = new Quaternion().copy(this.rigidBodyDesc.rotation);
 
       // Rotate position by the frame conjugate
       anchor1.applyQuaternion(frame1.conjugate());
       anchor2.applyQuaternion(frame2.conjugate());
 
       // Create fixed joint from parameters
-      var params = JointData.fixed(anchor1, frame1, anchor2, frame2);
+      const params = JointData.fixed(anchor1, frame1, anchor2, frame2);
       this.joint = world.createImpulseJoint(params, this.parent.rigidBody, this.rigidBody, true);
     }
   }
@@ -216,7 +216,7 @@ class Entity extends EventDispatcher {
     }
 
     // Create and assign tween to tween group
-    var tween = new Tween(options.object, this.tweens).to(options.to, options.duration).dynamic(options.dynamic).easing(options.easing).interpolation(options.interpolation).onStart(options.onStart).onUpdate(options.onUpdate).onComplete(options.onComplete);
+    const tween = new Tween(options.object, this.tweens).to(options.to, options.duration).dynamic(options.dynamic).easing(options.easing).interpolation(options.interpolation).onStart(options.onStart).onUpdate(options.onUpdate).onComplete(options.onComplete);
     return tween;
   }
 
@@ -255,7 +255,7 @@ class Entity extends EventDispatcher {
 
   getCollider(handle) {
     // Loop through rigid body colliders
-    for (var i = 0; i < this.rigidBody.numColliders(); i++) {
+    for (let i = 0; i < this.rigidBody.numColliders(); i++) {
       const collider = this.rigidBody.collider(i);
       if (handle == collider.handle) return collider;
     }
@@ -263,10 +263,10 @@ class Entity extends EventDispatcher {
 
   onCollision(e) {
     // Get the collider from the event handle
-    var collider = e.target.getCollider(e.handle);
+    const collider = e.target.getCollider(e.handle);
 
     // Get a new list of events based on e.started state
-    var events = collider.events.filter(
+    const events = collider.events.filter(
       function(event) {
         // Return events with matching started state
         return (event.started == undefined && e.started == true) || event.started == e.started;
@@ -297,7 +297,7 @@ class Entity extends EventDispatcher {
 
   applyVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
     // Rotate and apply velocity at an angle
-    var velocity = new Vector3().copy(this.rigidBody.linvel());
+    const velocity = new Vector3().copy(this.rigidBody.linvel());
     velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
     velocity.multiply(force);
     velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
@@ -305,8 +305,8 @@ class Entity extends EventDispatcher {
   }
 
   setAngularVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
-    var velocity = new Vector3().copy(this.rigidBody.linvel());
-    var direction = 1;
+    const velocity = new Vector3().copy(this.rigidBody.linvel());
+    let direction = 1;
 
     // Rotate velocity before computing direction
     velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
@@ -353,9 +353,17 @@ class Entity extends EventDispatcher {
 
   toJSON() {
     // Initialize entity values
-    var json = {
+    let json = {
+      parent: {
+        uuid: null
+      },
       uuid: this.uuid
     };
+
+    // Include parent UUID
+    if (this.parent) {
+      json.parent.uuid = this.parent.uuid;
+    }
 
     // Include rigidBody properties
     json = Object.assign({

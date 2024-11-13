@@ -14,27 +14,23 @@
     mode.value = newMode;
   }
 
-  async function loadFile(path) {
-    // Fetch public folder for level
-    return fetch(path).then(function (response) {
-      if (response.ok) { return response.json(); }
-      throw new Error('Something went wrong');
-    })
-    .then(function(json) { return json; }.bind(this))
-    .catch(function(error) { console.error(error); });
-  }
-
   function addEntity(e) {
     console.log(e);
   }
 
-  function moveEntity(entity1, entity2) {
-    console.log(entity1, entity2);
+  function moveEntity(e, entity1, entity2) {
+    const index1 = entities.value.indexOf(entity1);
+    const index2 = entities.value.indexOf(entity2);
+    const order = (index1 > index2 ? 1 : 0);
+
+    entities.value.splice(index1, 1); // Remove entity1 from current index;
+    entities.value.splice(index2 + order, 0, entity1); // Insert entity1 below entity2 index
   }
 
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     entities.value = await game.loadLevel('../json/boxel-3d-sandbox.json');
+    window.entities = entities;
   });
 </script>
 

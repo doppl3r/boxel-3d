@@ -6,13 +6,15 @@
   const emit = defineEmits(['addEntity', 'moveEntity']);
   const expanded = ref(true);
   const content = ref();
-  let entityStart;
+
+  let entity1 = {};
+  let scrolling = false;
 
   function isExpanded() {
     return expanded.value == true;
   }
 
-  function onContextMenu(entity) {
+  function onContextMenu(e, entity) {
     document.dispatchEvent(new CustomEvent('contextmenu', {
       detail: [
         {
@@ -24,26 +26,36 @@
     }));
   }
 
-  function onDragStart(entity) {
-    entityStart = entity;
+  function onDragStart(e, entity) {
+    entity1 = entity;
   }
 
-  function onDragDrop(entity) {
-    emit('moveEntity', entityStart, entity);
-    entityStart = null;
+  function onDragEnd(e, entity) {
+    content.value.style.overflowY = 'auto';
   }
-
-  function onDragOver(e) {
-    const speed = 1;
-    /* if (e.clientY < 100) {
-      setTimeout(function() {
-        console.log(e, content.value);
-        content.value.scrollBy(0, -speed);
-      }, 500);
-    } */
-  }
-
   
+  function onDragDrop(e, entity2) {
+    emit('moveEntity', e, entity1, entity2);
+    entity1 = null;
+  }
+
+  function onContentDragOver(e) {
+    const contentOffset = content.value.getBoundingClientRect();
+    const scrollUp = e.clientY - contentOffset.top < e.target.offsetHeight;
+    const scrollDown = e.clientY - contentOffset.top > content.value.offsetHeight - e.target.offsetHeight;
+    const direction = (scrollUp ? -1 : 0) + (scrollDown ? 1 : 0);
+
+    if (scrollDown || scrollUp) {
+      content.value.style.overflowY = 'hidden';
+      if (scrolling == false) {
+        scrolling = true;
+        setTimeout(() => {
+          content.value.scrollBy(0, e.target.offsetHeight * direction);
+          scrolling = false;
+        }, 50);
+      }
+    }
+  }
 </script>
 
 <template>
@@ -59,14 +71,17 @@
         </div>
       </div>
     </div>
-    <div ref="content" class="content" v-show="isExpanded()" @dragover.stop.prevent="onDragOver">
+    <div ref="content" class="content" v-show="isExpanded()" @dragover.stop.prevent="onContentDragOver">
       <ul>
-        <li v-for="entity in props.entities"
+        <li v-for="(entity, index) in props.entities" :key="index"
           draggable="true"
-          @contextmenu="onContextMenu(entity)"
-          @dragstart="onDragStart(entity)"
-          @drop="onDragDrop(entity)">
-          {{ entity.type }}
+          @contextmenu="onContextMenu($event, entity)"
+          @dragstart="onDragStart($event, entity)"
+          @dragend="onDragEnd($event, entity)"
+          @drop="onDragDrop($event, entity)">
+          <label>
+            {{ entity.type }}
+          </label>
         </li>
         <li v-if="props.entities.length == 0" @click="emit('addEntity', $event);">
           <span class="material-symbols-rounded">add</span>
@@ -135,35 +150,42 @@
       flex-grow: 1;
       margin-top: 0.25em;
       min-height: 8em;
+      overflow-x: hidden;
       overflow-y: auto;
       padding-right: 0.5em;
+      scroll-behavior: smooth;
 
       ul {
         display: flex;
         flex-direction: column;
-        gap: 0.125em;
-        list-style: none;
+        list-style-type: none;
         margin: 0;
         padding: 0;
+        position: relative;
 
         li {
-          align-items: flex-start;
-          background-color: #FFA217;
-          border-radius: 0.25em;
-          cursor: pointer;
-          display: flex;
-          font-size: 1em;
-          line-height: 1.5em;
-          padding: 0 0.25em;
+          padding-bottom: 0.125em;
           width: 100%;
-          
-          &:hover {
-            background-color: #F52D59;
-          }
 
-          &.selected {
-            background-color: #000000;
-            color: #ffffff;
+          &:last-of-type {
+            padding-bottom: 0;
+          }
+          
+          label {
+            align-items: flex-start;
+            background-color: #FFA217;
+            border-radius: 0.25em;
+            cursor: pointer;
+            display: flex;
+            font-size: 1em;
+            line-height: 1.5em;
+            padding: 0 0.25em;
+            width: 100%;
+
+            &.selected {
+              background-color: #F52D59;
+              color: #ffffff;
+            }
           }
         }
       }
