@@ -1,4 +1,4 @@
-import { EventDispatcher, Object3D, Quaternion, Vector3 } from 'three';
+import { EventDispatcher, MathUtils, Object3D, Quaternion, Vector3 } from 'three';
 import { ActiveCollisionTypes, ActiveEvents, ColliderDesc, JointData, RigidBodyDesc, RigidBodyType } from '@dimforge/rapier3d';
 import { Easing, Group, Tween } from '@tweenjs/tween.js'
 
@@ -20,6 +20,7 @@ class Entity extends EventDispatcher {
     Object.defineProperty(this, 'id', { value: _id++ });
 
     // Set base components
+    this.uuid = options.uuid || MathUtils.generateUUID();
     this.isEntity = true;
     this.parent;
     this.rigidBody;
@@ -353,7 +354,7 @@ class Entity extends EventDispatcher {
   toJSON() {
     // Initialize entity values
     var json = {
-      id: this.id
+      uuid: this.uuid
     };
 
     // Include rigidBody properties

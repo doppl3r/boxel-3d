@@ -63,6 +63,9 @@ class Game {
         this.graphics.setCamera(entity.camera);
       }
     }.bind(this));
+
+    // Return final array of entities
+    return entities;
   }
 }
 
