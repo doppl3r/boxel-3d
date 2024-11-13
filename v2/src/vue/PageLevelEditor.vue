@@ -30,7 +30,6 @@
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     entities.value = await game.loadLevel('../json/boxel-3d-sandbox.json');
-    window.entities = entities;
   });
 </script>
 

@@ -50,9 +50,9 @@
       if (scrolling == false) {
         scrolling = true;
         setTimeout(() => {
-          content.value.scrollBy(0, e.target.offsetHeight * direction);
+          content.value.scrollBy(0, e.target.offsetHeight * direction * 4);
           scrolling = false;
-        }, 50);
+        }, 250);
       }
     }
   }
@@ -71,18 +71,20 @@
         </div>
       </div>
     </div>
-    <div ref="content" class="content" v-show="isExpanded()" @dragover.stop.prevent="onContentDragOver">
+    <div ref="content" class="content" v-show="isExpanded()" @dragover.prevent="onContentDragOver" @mousemove.prevent="">
       <ul>
-        <li v-for="(entity, index) in props.entities" :key="index"
-          draggable="true"
-          @contextmenu="onContextMenu($event, entity)"
-          @dragstart="onDragStart($event, entity)"
-          @dragend="onDragEnd($event, entity)"
-          @drop="onDragDrop($event, entity)">
-          <label>
-            {{ entity.type }}
-          </label>
-        </li>
+        <TransitionGroup name="list">
+          <li v-for="entity in props.entities" :key="entity.id"
+            draggable="true"
+            @contextmenu="onContextMenu($event, entity)"
+            @dragstart="onDragStart($event, entity)"
+            @dragend="onDragEnd($event, entity)"
+            @drop="onDragDrop($event, entity)">
+            <label>
+              {{ entity.type }}
+            </label>
+          </li>
+        </TransitionGroup>
         <li v-if="props.entities.length == 0" @click="emit('addEntity', $event);">
           <span class="material-symbols-rounded">add</span>
           Add entity
@@ -91,6 +93,10 @@
     </div>
   </div>
 </template>
+
+<style>
+  
+</style>
 
 <style lang="scss" scoped>
   ::-webkit-scrollbar { width: 0.25em; }
@@ -154,38 +160,32 @@
       overflow-y: auto;
       padding-right: 0.5em;
       scroll-behavior: smooth;
-
+      
       ul {
         display: flex;
         flex-direction: column;
+        gap: 0.125em;
         list-style-type: none;
         margin: 0;
         padding: 0;
         position: relative;
 
         li {
-          padding-bottom: 0.125em;
+          align-items: flex-start;
+          background-color: #FFA217;
+          border-radius: 0.25em;
+          cursor: pointer;
+          display: flex;
+          font-size: 1em;
+          line-height: 1.5em;
+          padding: 0 0.25em;
+          position: relative;
+          transition: all 0.5s ease;
           width: 100%;
-
-          &:last-of-type {
-            padding-bottom: 0;
-          }
           
-          label {
-            align-items: flex-start;
-            background-color: #FFA217;
-            border-radius: 0.25em;
-            cursor: pointer;
-            display: flex;
-            font-size: 1em;
-            line-height: 1.5em;
-            padding: 0 0.25em;
-            width: 100%;
-
-            &.selected {
-              background-color: #F52D59;
-              color: #ffffff;
-            }
+          &.selected {
+            background-color: #F52D59;
+            color: #ffffff;
           }
         }
       }
