@@ -31,9 +31,7 @@ class Sphere extends Entity {
 
     // Add entity event listeners
     this.onSphereAdded = this.onSphereAdded.bind(this);
-    this.onSphereRemoved = this.onSphereRemoved.bind(this);
     this.addEventListener('added', this.onSphereAdded);
-    this.addEventListener('removed', this.onSphereRemoved);
   }
 
   setRadius(radius) {
@@ -49,14 +47,17 @@ class Sphere extends Entity {
   }
 
   onSphereAdded(e) {
+    this.onSphereRemoved = this.onSphereRemoved.bind(this);
+    this.addEventListener('removed', this.onSphereRemoved);
+
     // Add 3D model to 3D object
     if (this.model == null) this.createModel();
     this.object.add(this.model);
   }
   
   onSphereRemoved(e) {
-    e.target.removeEventListener('added', e.target.onSphereAdded);
-    e.target.removeEventListener('removed', e.target.onSphereRemoved);
+    this.removeEventListener('added', this.onSphereAdded);
+    this.removeEventListener('removed', this.onSphereRemoved);
   }
 
   createModel() {

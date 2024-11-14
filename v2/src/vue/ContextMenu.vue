@@ -17,7 +17,6 @@
   }
 
   function closeContextMenu(e) {
-    e.preventDefault();
     isVisible.value = false;
   }
 

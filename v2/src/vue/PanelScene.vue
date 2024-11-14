@@ -24,6 +24,17 @@
     }));
   }
 
+  function focusInput(e) {
+    e.target.parentNode.removeAttribute('draggable');
+    e.target.removeAttribute('readonly');
+  }
+
+  function unfocusInput(e) {
+    e.target.parentNode.setAttribute('draggable', true);
+    e.target.setAttribute('readonly', true);
+    e.target.blur();
+  }
+
   function onDragStart(e, entity) {
     entity1 = entity;
   }
@@ -65,11 +76,11 @@
             @dragover.prevent="onDragOver($event, entity)"
             @dragend="onDragEnd($event, entity)"
             @drop="onDragDrop($event, entity)">
-            <input type="text"
-              :value="entity.name || entity.type"
+            <input type="text" readonly :value="entity.name || entity.type"
               @change="emit('renameEntity', $event, entity)"
-              @keyup.enter="$event.target.blur()"
-              @pointerdown="$event.target.blur()"
+              @keyup.enter="unfocusInput"
+              @focusout="unfocusInput"
+              @dblclick="focusInput"
             />
           </li>
         </TransitionGroup>
@@ -90,7 +101,7 @@
   .list-move,
   .list-enter-active,
   .list-leave-active {
-    transition: all 0.5s ease-in-out;
+    transition: all 0.15s ease-in-out;
   }
 
   .list-enter-from,
@@ -193,6 +204,10 @@
             outline: none;
             padding: 0 0.25em;
             width: 100%;
+
+            &[readonly] {
+              cursor: pointer;
+            }
           }
         }
       }

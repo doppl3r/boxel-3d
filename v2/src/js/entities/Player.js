@@ -18,7 +18,7 @@ class Player extends Cube {
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      events: [{ name: "checkCollision" }]
+      events: [{ name: 'checkCollision' }]
     }, options);
 
     // Inherit Cube class
@@ -41,11 +41,7 @@ class Player extends Cube {
 
     // Bind "this" context to class function (required for event removal)
     this.onPlayerAdded = this.onPlayerAdded.bind(this);
-    this.onPlayerRemoved = this.onPlayerRemoved.bind(this);
-    
-    // Add event listeners
     this.addEventListener('added', this.onPlayerAdded);
-    this.addEventListener('removed', this.onPlayerRemoved);
   }
 
   update(delta) {
@@ -109,36 +105,37 @@ class Player extends Cube {
 
   onPlayerAdded(e) {
     // Bind target "this" context to class function (required for event removal)
-    e.target.keyDown = e.target.keyDown.bind(e.target);
-    e.target.keyUp = e.target.keyUp.bind(e.target);
-    e.target.pointerDown = e.target.pointerDown.bind(e.target);
-    e.target.pointerUp = e.target.pointerUp.bind(e.target);
-    e.target.onSetMode = e.target.onSetMode.bind(e.target);
-    e.target.onSetGravity = e.target.onSetGravity.bind(e.target);
-
+    this.onPlayerRemoved = this.onPlayerRemoved.bind(this);
+    this.keyDown = this.keyDown.bind(this);
+    this.keyUp = this.keyUp.bind(this);
+    this.pointerDown = this.pointerDown.bind(this);
+    this.pointerUp = this.pointerUp.bind(this);
+    this.onSetMode = this.onSetMode.bind(this);
+    this.onSetGravity = this.onSetGravity.bind(this);
+    
     // Add player event listeners
-    e.target.addEventListener('setmode', e.target.onSetMode);
-    e.target.addEventListener('setgravity', e.target.onSetGravity);
+    this.addEventListener('removed', this.onPlayerRemoved);
+    this.addEventListener('setmode', this.onSetMode);
+    this.addEventListener('setgravity', this.onSetGravity);
 
     // Add document event listeners
-    document.addEventListener('keydown', e.target.keyDown);
-    document.addEventListener('keyup', e.target.keyUp);
-    document.addEventListener('pointerdown', e.target.pointerDown);
-    document.addEventListener('pointerup', e.target.pointerUp);
+    document.addEventListener('keydown', this.keyDown);
+    document.addEventListener('keyup', this.keyUp);
+    document.addEventListener('pointerdown', this.pointerDown);
+    document.addEventListener('pointerup', this.pointerUp);
   }
   
   onPlayerRemoved(e) {
     // Remove entity event listeners
-    e.target.removeEventListener('added', e.target.onPlayerAdded);
-    e.target.removeEventListener('removed', e.target.onPlayerRemoved);
-    e.target.removeEventListener('setmode', e.target.onSetMode);
-    e.target.removeEventListener('setgravity', e.target.onSetGravity);
+    this.removeEventListener('removed', this.onPlayerRemoved);
+    this.removeEventListener('setmode', this.onSetMode);
+    this.removeEventListener('setgravity', this.onSetGravity);
 
     // Remove document event listeners
-    document.removeEventListener('keydown', e.target.keyDown);
-    document.removeEventListener('keyup', e.target.keyUp);
-    document.removeEventListener('pointerdown', e.target.pointerDown);
-    document.removeEventListener('pointerup', e.target.pointerUp);
+    document.removeEventListener('keydown', this.keyDown);
+    document.removeEventListener('keyup', this.keyUp);
+    document.removeEventListener('pointerdown', this.pointerDown);
+    document.removeEventListener('pointerup', this.pointerUp);
   }
 
   onSetMode(e) {

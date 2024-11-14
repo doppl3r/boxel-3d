@@ -43,13 +43,9 @@ class Entity extends EventDispatcher {
     this.setRigidBodyDesc(options);
     this.addColliderDesc(options);
     
-    // Add entity event listeners
-    this.onCollision = this.onCollision.bind(this);
+    // Add entity event listeners with "this" context
     this.onAdded = this.onAdded.bind(this);
-    this.onRemoved = this.onRemoved.bind(this);
-    this.addEventListener('collision', this.onCollision);
     this.addEventListener('added', this.onAdded);
-    this.addEventListener('removed', this.onRemoved);
   }
 
   update(delta) {
@@ -264,7 +260,7 @@ class Entity extends EventDispatcher {
 
   onCollision(e) {
     // Get the collider from the event handle
-    const collider = e.target.getCollider(e.handle);
+    const collider = this.getCollider(e.handle);
 
     // Get a new list of events based on e.started state
     const events = collider.events.filter(
@@ -285,15 +281,20 @@ class Entity extends EventDispatcher {
 
   onAdded(e) {
     // Update 3D object properties
-    e.target.updateSnapshot();
-    e.target.lerp(1);
+    this.updateSnapshot();
+    this.lerp(1);
+
+    // Add entity event listeners with "this" context
+    this.onCollision = this.onCollision.bind(this);
+    this.onRemoved = this.onRemoved.bind(this);
+    this.addEventListener('collision', this.onCollision);
+    this.addEventListener('removed', this.onRemoved);
   }
 
   onRemoved(e) {
     // Remove all event listeners when removed by Physics.js
-    e.target.removeEventListener('collision', e.target.onCollision);
-    e.target.removeEventListener('added', e.target.onAdded);
-    e.target.removeEventListener('removed', e.target.onRemoved);
+    this.removeEventListener('collision', this.onCollision);
+    this.removeEventListener('removed', this.onRemoved);
   }
 
   applyVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {

@@ -56,8 +56,15 @@ class Game {
 
     // Loop through entities
     entities.forEach(function(entity) {
+      // Add 3D object after entity is added
+      entity.addEventListener('added', function(e) {
+        this.graphics.scene.add(entity.object);
+      }.bind(this));
+
+      // Add entity to physics entities map
       this.physics.add(entity);
-      this.graphics.scene.add(entity.object);
+
+      // Assign rendering camera from player
       if (entity.type == 'player') {
         this.player = entity;
         this.graphics.setCamera(entity.camera);

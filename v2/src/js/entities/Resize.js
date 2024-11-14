@@ -36,7 +36,6 @@ class Resize extends Cube {
   }
 
   setPairScale(e) {
-    console.log(e);
     var collider = e.target.rigidBody.collider(0); // First collider
     var scale = new Vector3().copy(collider.halfExtents()).multiplyScalar(2);
     e.pair.setScale(scale)

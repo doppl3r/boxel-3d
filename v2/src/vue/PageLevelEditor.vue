@@ -1,5 +1,6 @@
 <script setup>
   import { onMounted, ref } from 'vue';
+  import { History } from '../js/History';
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
   import PanelScene from './PanelScene.vue';
@@ -9,6 +10,7 @@
   const props = defineProps({ game: Object });
   const mode = ref({ type: 'select' });
   const entities = ref([]);
+  const history = window.his = new History();
 
   function setMode(newMode) {
     mode.value = newMode;
@@ -18,10 +20,23 @@
     console.log(e);
   }
 
-  function deleteEntity(e, entity) {
-    props.game.physics.remove(entity);
-    const index = entities.value.indexOf(entity);
-    entities.value.splice(index, 1);
+  function deleteEntity(e, ent) {
+    const entity = props.game.physics.get(ent.rigidBody.handle);
+    const index = entities.value.indexOf(ent);
+
+    const command = {
+      run: function() {
+        props.game.physics.remove(entity);
+        entities.value.splice(index, 1);
+      },
+      undo: function() {
+        props.game.physics.add(entity);
+        entities.value.splice(index, 0, entity);
+      }
+    }
+    
+    command.run();
+    history.add(command);
   }
 
   function moveEntity(e, entity1, entity2) {
