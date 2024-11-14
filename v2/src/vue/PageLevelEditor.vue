@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, onUnmounted, ref } from 'vue';
   import { History } from '../js/History';
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
@@ -52,9 +52,20 @@
     entity.name = e.target.value;
   }
 
+  function onKeyUp(e) {
+    if (e.key == 'z' && e.ctrlKey == true) {
+      history.undo().undo();
+    }
+  }
+
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     entities.value = await game.loadLevel('../json/boxel-3d-sandbox.json');
+    document.addEventListener('keyup', onKeyUp);
+  });
+
+  onUnmounted(function() {
+    document.removeEventListener('keyup', onKeyUp);
   });
 </script>
 
