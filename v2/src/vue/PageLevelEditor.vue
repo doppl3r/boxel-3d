@@ -1,6 +1,6 @@
 <script setup>
   import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
-  import { Command, History } from '../js/CommandHistory';
+  import { History } from '../js/CommandHistory';
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
   import PanelScene from './PanelScene.vue';
@@ -25,7 +25,7 @@
   function deleteEntity(e, ent) {
     const entity = props.game.physics.get(ent.rigidBody.handle);
     const index = entities.value.indexOf(ent);
-    history.execute(new Command(
+    history.add(
       function() {
         props.game.physics.remove(entity);
         entities.value.splice(index, 1);
@@ -34,7 +34,7 @@
         props.game.physics.add(entity);
         entities.value.splice(index, 0, entity);
       }
-    ));
+    ).execute();
   }
 
   function moveEntity(e, entity1, entity2) {
@@ -42,8 +42,16 @@
     const index2 = entities.value.indexOf(entity2);
     const order = (index1 > index2 ? 1 : 0);
 
-    entities.value.splice(index1, 1); // Remove entity1 from current index;
-    entities.value.splice(index2 + order, 0, entity1); // Insert entity1 below entity2 index
+    history.add(
+      function() {
+        entities.value.splice(index1, 1); // Remove entity
+        entities.value.splice(index2 + order, 0, entity1); // Insert entity
+      },
+      function() {
+        entities.value.splice(index2 + order, 1); // Remove entity
+        entities.value.splice(index1, 0, entity1); // Insert entity
+      }
+    ).execute();
   }
 
   function renameEntity(e, entity) {

@@ -1,5 +1,5 @@
 /*
-  A command contains a "do" and "undo" function
+  A command contains an "execute" and an "undo" function
 */
 
 class Command {
@@ -10,9 +10,8 @@ class Command {
 }
 
 /*
-  History contains an array of commands that
-  get executed when added. All commands can
-  be done/undo at the current index
+  History contains an array of commands that can
+  be iterated by the current index
 */
 
 class History {
@@ -21,11 +20,12 @@ class History {
     this.current = -1;
   }
 
-  execute(command) {
+  add(execute, undo) {
+    const command = new Command(execute, undo);
     this.commands.splice(this.current + 1); // Clear redo history
     this.commands.push(command);
-    command.execute();
     this.current++;
+    return command;
   }
 
   undo() {
