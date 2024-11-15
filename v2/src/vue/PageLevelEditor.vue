@@ -1,6 +1,6 @@
 <script setup>
   import { onMounted, onUnmounted, ref } from 'vue';
-  import { History } from '../js/History';
+  import { Command, History } from '../js/CommandHistory';
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
   import PanelScene from './PanelScene.vue';
@@ -24,19 +24,17 @@
     const entity = props.game.physics.get(ent.rigidBody.handle);
     const index = entities.value.indexOf(ent);
 
-    const command = {
-      run: function() {
+    const command = new Command(
+      () => {
         props.game.physics.remove(entity);
         entities.value.splice(index, 1);
       },
-      undo: function() {
+      () => {
         props.game.physics.add(entity);
         entities.value.splice(index, 0, entity);
       }
-    }
-    
-    command.run();
-    history.add(command);
+    );
+    history.execute(command);
   }
 
   function moveEntity(e, entity1, entity2) {
