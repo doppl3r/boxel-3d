@@ -167,6 +167,10 @@
             background-color: #F52D59;
           }
 
+          &[disabled] {
+            pointer-events: none;
+          }
+
           .material-symbols-rounded {
             font-size: 1em;
           }
