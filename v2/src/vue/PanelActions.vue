@@ -20,15 +20,15 @@
 <template>
   <div class="panel">
     <div class="actions">
-      <div class="action button" :class="{ selected: mode.type == 'select' }" @click="selectAction('select')" title="Select">
+      <button class="action" :class="{ selected: mode.type == 'select' }" @click="selectAction('select')" title="Select">
         <span class="material-symbols-rounded">arrow_selector_tool</span>
-      </div>
-      <div class="action button" :class="{ selected: mode.type == 'add' }" @click="selectAction('add')" title="Add">
+      </button>
+      <button class="action" :class="{ selected: mode.type == 'add' }" @click="selectAction('add')" title="Add">
         <span class="material-symbols-rounded">dashboard_customize</span>
-      </div>
-      <div class="action button" :class="{ selected: mode.type == 'move' }" @click="selectAction('move')" title="Move camera">
+      </button>
+      <button class="action" :class="{ selected: mode.type == 'move' }" @click="selectAction('move')" title="Move camera">
         <span class="material-symbols-rounded">back_hand</span>
-      </div>
+      </button>
     </div>
   </div>
 </template>

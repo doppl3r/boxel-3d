@@ -155,8 +155,8 @@
         .action {
           align-items: center;
           background-color: transparent;
-          border-width: 0;
           border-radius: 0.25em;
+          border-width: 0;
           cursor: pointer;
           display: flex;
           height: 1em;

@@ -43,11 +43,11 @@
       <div class="title">Add</div>
     </div>
     <div class="assets">
-      <div class="asset" v-for="asset in assets" :title="asset.key">
+      <button class="asset" v-for="asset in assets" :title="asset.key">
         <img :src="asset.src" />
-      </div>
+      </button>
     </div>
-    <div class="close" @click="close">x</div>
+    <button class="close" @click="close">x</button>
   </div>
 </template>
 
@@ -90,6 +90,7 @@
         align-items: center;
         background-color: #FFA217;
         border-radius: 0.5em;
+        border-width: 0;
         cursor: pointer;
         display: flex;
         font-size: 1em;
@@ -121,6 +122,7 @@
       box-shadow: 0 0.25em 0 #000000;
       color: #000000;
       display: flex;
+      font-family: inherit;
       height: 1.5em;
       justify-content: center;
       position: absolute;
