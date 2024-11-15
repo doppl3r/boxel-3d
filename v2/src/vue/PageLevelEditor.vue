@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, onUnmounted, ref } from 'vue';
+  import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
   import { Command, History } from '../js/CommandHistory';
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
@@ -10,7 +10,9 @@
   const props = defineProps({ game: Object });
   const mode = ref({ type: 'select' });
   const entities = ref([]);
-  const history = window.his = new History();
+  const history = reactive(new History());
+  const canUndo = computed(() => history.canUndo());
+  const canRedo = computed(() => history.canRedo());
 
   function setMode(newMode) {
     mode.value = newMode;
@@ -23,18 +25,16 @@
   function deleteEntity(e, ent) {
     const entity = props.game.physics.get(ent.rigidBody.handle);
     const index = entities.value.indexOf(ent);
-
-    const command = new Command(
-      () => {
+    history.execute(new Command(
+      function() {
         props.game.physics.remove(entity);
         entities.value.splice(index, 1);
       },
-      () => {
+      function() {
         props.game.physics.add(entity);
         entities.value.splice(index, 0, entity);
       }
-    );
-    history.execute(command);
+    ));
   }
 
   function moveEntity(e, entity1, entity2) {
@@ -50,20 +50,31 @@
     entity.name = e.target.value;
   }
 
-  function onKeyUp(e) {
-    if (e.key == 'z' && e.ctrlKey == true) {
-      history.undo().undo();
+  function onKeyDown(e) {
+    if (e.code == 'KeyZ') {
+      if (e.ctrlKey == true) {
+        if (e.shiftKey == true) redo();
+        else undo();
+      }
     }
+  }
+
+  function undo() {
+    history.undo();
+  }
+
+  function redo() {
+    history.redo();
   }
 
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     entities.value = await game.loadLevel('../json/boxel-3d-sandbox.json');
-    document.addEventListener('keyup', onKeyUp);
+    document.addEventListener('keydown', onKeyDown);
   });
 
   onUnmounted(function() {
-    document.removeEventListener('keyup', onKeyUp);
+    document.removeEventListener('keydown', onKeyDown);
   });
 </script>
 
@@ -74,10 +85,14 @@
       <PanelAssets :game="game" :mode="mode" />
       <PanelScene
         :entities="entities"
+        :canUndo="canUndo"
+        :canRedo="canRedo"
         @add-entity="addEntity"
         @delete-entity="deleteEntity"
         @move-entity="moveEntity"
         @rename-entity="renameEntity"
+        @redo="redo"
+        @undo="undo"
       />
     </div>
     <ContextMenu :game="game" />

@@ -2,8 +2,8 @@
   import { onMounted, ref } from 'vue';
 
   // Initialize app and expose to window scope
-  const props = defineProps({ entities: Array });
-  const emit = defineEmits(['addEntity', 'deleteEntity', 'moveEntity', 'renameEntity']);
+  const props = defineProps({ canUndo: Boolean, canRedo: Boolean, entities: Array });
+  const emit = defineEmits(['addEntity', 'deleteEntity', 'moveEntity', 'renameEntity', 'redo', 'undo']);
   const expanded = ref(true);
   const content = ref();
   let entity1 = {};
@@ -58,12 +58,18 @@
     <div class="header">
       <div class="title" @click="expanded = !expanded">Scene</div>
       <div class="actions">
-        <div class="action button" title="Play level">
+        <button class="action button" @click="emit('undo')" title="Undo" :disabled="props.canUndo == false">
+          <span class="material-symbols-rounded">undo</span>
+        </button>
+        <button class="action button" @click="emit('redo')" title="Redo" :disabled="props.canRedo == false">
+          <span class="material-symbols-rounded">redo</span>
+        </button>
+        <button class="action button" title="Play level">
           <span class="material-symbols-rounded">play_arrow</span>
-        </div>
-        <div class="action button" title="Settings">
+        </button>
+        <button class="action button" title="Settings">
           <span class="material-symbols-rounded">settings</span>
-        </div>
+        </button>
       </div>
     </div>
     <div ref="content" class="content" v-show="isExpanded()">
@@ -148,6 +154,8 @@
 
         .action {
           align-items: center;
+          background-color: transparent;
+          border-width: 0;
           border-radius: 0.25em;
           cursor: pointer;
           display: flex;

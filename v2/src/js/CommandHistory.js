@@ -1,10 +1,19 @@
+/*
+  A command contains a "do" and "undo" function
+*/
+
 class Command {
-  constructor(execute, undo, value) {
+  constructor(execute, undo) {
     this.execute = execute;
     this.undo = undo;
-    this.value = value;
   }
 }
+
+/*
+  History contains an array of commands that
+  get executed when added. All commands can
+  be done/undo at the current index
+*/
 
 class History {
   constructor() {
@@ -20,38 +29,26 @@ class History {
   }
 
   undo() {
-    if (this.current >= 0) {
+    if (this.canUndo()) {
       this.commands[this.current].undo();
       this.current--;
     }
   }
 
   redo() {
-    if (this.current < this.commands.length - 1) {
+    if (this.canRedo()) {
       this.current++;
       this.commands[this.current].execute();
     }
   }
+
+  canUndo() {
+    return this.current >= 0;
+  }
+
+  canRedo() {
+    return this.current < this.commands.length - 1;
+  }
 }
 
 export { Command, History };
-
-// Example usage:
-/* const history = new CommandHistory();
-
-const addCommand = new Command(
-  (value) => { console.log(`Adding ${value}`); },
-  (value) => { console.log(`Undoing add ${value}`); },
-  10
-);
-
-const multiplyCommand = new Command(
-  (value) => { console.log(`Multiplying by ${value}`); },
-  (value) => { console.log(`Undoing multiply by ${value}`); },
-  2
-);
-
-history.execute(addCommand);
-history.execute(multiplyCommand);
-history.undo();
-history.redo(); */
