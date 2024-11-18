@@ -10,6 +10,7 @@
   const props = defineProps({ game: Object });
   const mode = ref({ type: 'select' });
   const entities = ref([]);
+  const entitiesSelected = reactive([]);
   const history = reactive(new History());
   const canUndo = computed(() => history.canUndo());
   const canRedo = computed(() => history.canRedo());
@@ -22,9 +23,9 @@
     console.log(e);
   }
 
-  function deleteEntity(e, ent) {
-    const entity = props.game.physics.get(ent.rigidBody.handle);
-    const index = entities.value.indexOf(ent);
+  function deleteEntity(e, entity1) {
+    const entity = props.game.physics.get(entity1.rigidBody.handle);
+    const index = entities.value.indexOf(entity1);
     history.add(
       function() {
         props.game.physics.remove(entity);
@@ -35,6 +36,7 @@
         entities.value.splice(index, 0, entity);
       }
     ).execute();
+    return entity1;
   }
 
   function moveEntity(e, entity1, entity2) {
@@ -52,10 +54,49 @@
         entities.value.splice(index1, 0, entity1); // Insert entity
       }
     ).execute();
+    return entity1;
   }
 
   function renameEntity(e, entity) {
-    entity.name = e.target.value;
+    const before = entity.name || entity.type;
+    const after = e.target.value;
+    history.add(
+      function() {
+        entity.name = after;
+      },
+      function() {
+        entity.name = before;
+      }
+    ).execute();
+    return entity;
+  }
+
+  function selectEntity(e, entity1, entity2) {
+    if (e.ctrlKey) {
+      // Deselect selected entity
+      if (entity1.isSelected) {
+        deselectEntity(e, entity1);
+        return entity1;
+      }
+    }
+    else {
+      // Deselect all entities
+      for (let i = entitiesSelected.length - 1; i >= 0; i--) {
+        deselectEntity(e, entitiesSelected[i]);
+      }
+    }
+
+    // Add entity to selected array and set selected boolean
+    entity1.isSelected = true;
+    entitiesSelected.push(entity1);
+    return entity1;
+  }
+
+  function deselectEntity(e, entity) {
+    const index = entitiesSelected.indexOf(entity);
+    entity.isSelected = false;
+    entitiesSelected.splice(index, 1);
+    return entity;
   }
 
   function onKeyDown(e) {
@@ -99,6 +140,7 @@
         @delete-entity="deleteEntity"
         @move-entity="moveEntity"
         @rename-entity="renameEntity"
+        @select-entity="selectEntity"
         @redo="redo"
         @undo="undo"
       />

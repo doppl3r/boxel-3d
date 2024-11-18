@@ -3,13 +3,17 @@
 
   // Initialize app and expose to window scope
   const props = defineProps({ canUndo: Boolean, canRedo: Boolean, entities: Array });
-  const emit = defineEmits(['addEntity', 'deleteEntity', 'moveEntity', 'renameEntity', 'redo', 'undo']);
+  const emit = defineEmits(['addEntity', 'deleteEntity', 'moveEntity', 'renameEntity', 'selectEntity', 'redo', 'undo']);
   const expanded = ref(true);
   const content = ref();
   let entity1 = {};
 
   function isExpanded() {
     return expanded.value == true;
+  }
+
+  function onClick(e, entity) {
+    emit('selectEntity', e, entity);
   }
 
   function onContextMenu(e, entity) {
@@ -64,19 +68,22 @@
         <button class="action button" @click="emit('redo')" title="Redo" :disabled="props.canRedo == false">
           <span class="material-symbols-rounded">redo</span>
         </button>
+        <button class="action button" title="Restart level">
+          <span class="material-symbols-rounded">fast_rewind</span>
+        </button>
         <button class="action button" title="Play level">
           <span class="material-symbols-rounded">play_arrow</span>
-        </button>
-        <button class="action button" title="Settings">
-          <span class="material-symbols-rounded">settings</span>
         </button>
       </div>
     </div>
     <div ref="content" class="content" v-show="isExpanded()">
       <ul>
         <TransitionGroup name="list">
-          <li v-for="entity in props.entities" :key="entity.id"
+          <li v-for="entity in props.entities"
+            :key="entity.id"
+            :class="{ 'selected': entity.isSelected }"
             draggable="true"
+            @click="onClick($event, entity)"
             @contextmenu="onContextMenu($event, entity)"
             @dragstart="onDragStart($event, entity)"
             @dragover.prevent="onDragOver($event, entity)"
@@ -197,6 +204,8 @@
 
         li {
           align-items: flex-start;
+          background-color: #FFA217;
+          border-radius: 0.25em;
           cursor: pointer;
           display: flex;
           width: 100%;
@@ -207,9 +216,8 @@
           }
           
           input {
-            background-color: #FFA217;
+            background-color: transparent;
             border-width: 0;
-            border-radius: 0.25em;
             font-family: inherit;
             font-size: 1em;
             line-height: 1.5em;
