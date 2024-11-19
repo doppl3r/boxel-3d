@@ -67,15 +67,23 @@
     ).execute();
   }
 
-  function selectEntity(e, entity, index) {
+  function selectEntity(e, entity) {
     // Store last entity before deselecting entities
-    let entityLast = entitiesSelected[entitiesSelected.length - 1];
-    let indexStart = entities.value.indexOf(entityLast);
-    let indexEnd = entities.value.indexOf(entity);
-    let indexes = [indexStart, indexEnd].sort((a, b) => a - b);
+    let indexStart = entities.value.indexOf(entity);
+    let indexEnd = indexStart;
 
+    // Update start index if shift key is true
+    if (e.shiftKey == true) {
+      indexStart = entities.value.indexOf(entitiesSelected[0]);
+      if (indexStart == -1) indexStart = 0;
+      if (indexStart > indexEnd) {
+        indexStart = indexEnd;
+        indexEnd = entities.value.indexOf(entitiesSelected[entitiesSelected.length - 1]);
+      }
+    }
+
+    // Deselect selected entity
     if (e.ctrlKey == true) {
-      // Deselect entity if already selected
       if (entity.isSelected) {
         deselectEntity(e, entity);
         return; // Cancel selection
@@ -88,19 +96,11 @@
       }
     }
 
-    if (e.shiftKey == true) {
-      if (entityLast) {
-        for (let i = indexes[0]; i <= indexes[1]; i++) {
-          // Add entity to selected array and set selected boolean
-          entities.value[i].isSelected = true;
-          entitiesSelected.push(entities.value[i]);
-        }
-      }
+    // Add entities to selected array and set selected boolean
+    for (let i = indexStart; i <= indexEnd; i++) {
+      entities.value[i].isSelected = true;
+      entitiesSelected.push(entities.value[i]);
     }
-
-    // Add entity to selected array and set selected boolean
-    entity.isSelected = true;
-    entitiesSelected.push(entity);
   }
 
   function deselectEntity(e, entity) {
