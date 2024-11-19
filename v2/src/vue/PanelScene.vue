@@ -176,6 +176,7 @@
 
           &[disabled] {
             pointer-events: none;
+            user-select: none;
           }
 
           .material-symbols-rounded {

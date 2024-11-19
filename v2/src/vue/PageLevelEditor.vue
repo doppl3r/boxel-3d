@@ -23,9 +23,8 @@
     console.log(e);
   }
 
-  function deleteEntity(e, entity1) {
-    const entity = props.game.physics.get(entity1.rigidBody.handle);
-    const index = entities.value.indexOf(entity1);
+  function deleteEntity(e, entity) {
+    const index = entities.value.indexOf(entity);
     history.add(
       function() {
         props.game.physics.remove(entity);
@@ -36,7 +35,6 @@
         entities.value.splice(index, 0, entity);
       }
     ).execute();
-    return entity1;
   }
 
   function moveEntity(e, entity1, entity2) {
@@ -54,7 +52,6 @@
         entities.value.splice(index1, 0, entity1); // Insert entity
       }
     ).execute();
-    return entity1;
   }
 
   function renameEntity(e, entity) {
@@ -68,38 +65,52 @@
         entity.name = before;
       }
     ).execute();
-    return entity;
   }
 
-  function selectEntity(e, entity1, entity2) {
-    if (e.ctrlKey) {
-      // Deselect selected entity
-      if (entity1.isSelected) {
-        deselectEntity(e, entity1);
-        return entity1;
+  function selectEntity(e, entity, index) {
+    // Store last entity before deselecting entities
+    let entityLast = entitiesSelected[entitiesSelected.length - 1];
+    let indexStart = entities.value.indexOf(entityLast);
+    let indexEnd = entities.value.indexOf(entity);
+    let indexes = [indexStart, indexEnd].sort((a, b) => a - b);
+
+    if (e.ctrlKey == true) {
+      // Deselect entity if already selected
+      if (entity.isSelected) {
+        deselectEntity(e, entity);
+        return; // Cancel selection
       }
     }
     else {
-      // Deselect all entities
+      // Deselect all entities before selecting new entity
       for (let i = entitiesSelected.length - 1; i >= 0; i--) {
         deselectEntity(e, entitiesSelected[i]);
       }
     }
 
+    if (e.shiftKey == true) {
+      if (entityLast) {
+        for (let i = indexes[0]; i <= indexes[1]; i++) {
+          // Add entity to selected array and set selected boolean
+          entities.value[i].isSelected = true;
+          entitiesSelected.push(entities.value[i]);
+        }
+      }
+    }
+
     // Add entity to selected array and set selected boolean
-    entity1.isSelected = true;
-    entitiesSelected.push(entity1);
-    return entity1;
+    entity.isSelected = true;
+    entitiesSelected.push(entity);
   }
 
   function deselectEntity(e, entity) {
     const index = entitiesSelected.indexOf(entity);
     entity.isSelected = false;
     entitiesSelected.splice(index, 1);
-    return entity;
   }
 
   function onKeyDown(e) {
+    if (e.repeat) return;
     if (e.code == 'KeyZ') {
       if (e.ctrlKey == true) {
         if (e.shiftKey == true) redo();
