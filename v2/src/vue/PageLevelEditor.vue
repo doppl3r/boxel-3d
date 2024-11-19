@@ -10,8 +10,8 @@
   const props = defineProps({ game: Object });
   const mode = ref({ type: 'select' });
   const entities = ref([]);
+  const entityPrev = ref({});
   const entitiesSelected = reactive([]);
-  const entitySelected = ref({});
   const history = reactive(new History());
   const canUndo = computed(() => history.canUndo());
   const canRedo = computed(() => history.canRedo());
@@ -69,22 +69,20 @@
   }
 
   function selectEntity(e, entity) {
-    // Store last entity before deselecting entities
-    let indexStart = entities.value.indexOf(entity);
-    let indexEnd = indexStart;
+    // Initialize indexes
+    let indexEntityPrev = entities.value.indexOf(entityPrev.value);
+    let indexEntityNext = entities.value.indexOf(entity);
+    let indexLoopStart = indexEntityNext;
+    let indexLoopEnd = indexEntityNext;
 
     // Update start index if shift key is true
     if (e.shiftKey == true) {
-      indexStart = entities.value.indexOf(entitySelected.value);
-      if (indexStart == -1) indexStart = 0;
-      if (indexStart > indexEnd) {
-        indexEnd = indexStart;
-        indexStart = entities.value.indexOf(entity);
-      }
+      indexLoopEnd = Math.max(indexEntityNext, indexEntityPrev); // Set <= previous entity index
+      indexLoopStart = Math.max(0, Math.min(Math.min(indexEntityNext, indexEntityPrev), indexLoopEnd)); // Clamp min >= 0
     }
     else {
-      // Store selected entity for shift click
-      entitySelected.value = entity;
+      // Store previously selected entity for shift click
+      entityPrev.value = entity;
     }
 
     // Deselect selected entity
@@ -102,7 +100,7 @@
     }
 
     // Add entities to selected array and set selected boolean
-    for (let i = indexStart; i <= indexEnd; i++) {
+    for (let i = indexLoopStart; i <= indexLoopEnd; i++) {
       entities.value[i].isSelected = true;
       entitiesSelected.push(entities.value[i]);
     }
