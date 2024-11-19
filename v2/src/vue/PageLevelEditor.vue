@@ -11,6 +11,7 @@
   const mode = ref({ type: 'select' });
   const entities = ref([]);
   const entitiesSelected = reactive([]);
+  const entitySelected = ref({});
   const history = reactive(new History());
   const canUndo = computed(() => history.canUndo());
   const canRedo = computed(() => history.canRedo());
@@ -74,12 +75,16 @@
 
     // Update start index if shift key is true
     if (e.shiftKey == true) {
-      indexStart = entities.value.indexOf(entitiesSelected[0]);
+      indexStart = entities.value.indexOf(entitySelected.value);
       if (indexStart == -1) indexStart = 0;
       if (indexStart > indexEnd) {
-        indexStart = indexEnd;
-        indexEnd = entities.value.indexOf(entitiesSelected[entitiesSelected.length - 1]);
+        indexEnd = indexStart;
+        indexStart = entities.value.indexOf(entity);
       }
+    }
+    else {
+      // Store selected entity for shift click
+      entitySelected.value = entity;
     }
 
     // Deselect selected entity
