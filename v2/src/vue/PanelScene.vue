@@ -3,7 +3,17 @@
 
   // Initialize app and expose to window scope
   const props = defineProps({ canUndo: Boolean, canRedo: Boolean, entities: Array });
-  const emit = defineEmits(['addEntity', 'deleteEntity', 'moveEntity', 'renameEntity', 'selectEntity', 'redo', 'undo']);
+  const emit = defineEmits([
+    'addEntity',
+    'deleteEntity',
+    'linkEntity',
+    'moveEntity',
+    'renameEntity',
+    'selectEntity',
+    'unlinkEntity',
+    'redo',
+    'undo'
+  ]);
   const expanded = ref(true);
   const content = ref();
   let entity1 = {};
@@ -17,15 +27,31 @@
   }
 
   function onContextMenu(e, entity) {
-    document.dispatchEvent(new CustomEvent('contextmenu', {
-      detail: [
-        {
-          text: 'Delete',
-          icon: 'delete',
-          callback: () => emit('deleteEntity', e, entity)
-        }
-      ]
-    }));
+    let options = [
+      {
+        text: 'Delete',
+        icon: 'delete',
+        callback: () => emit('deleteEntity', e, entity)
+      }
+    ];
+
+    if (entity.parent) {
+      options.push({
+        text: 'Unlink',
+        icon: 'link_off',
+        callback: () => emit('unlinkEntity', e, entity)
+      });
+    }
+    else {
+      options.push({
+        text: 'Link',
+        icon: 'link',
+        callback: () => emit('linkEntity', e, entity)
+      });
+    }
+
+    // Dispatch event to the global context menu
+    document.dispatchEvent(new CustomEvent('contextmenu', { detail: options }));
   }
 
   function focusInput(e) {
@@ -88,7 +114,16 @@
             @dragstart="onDragStart($event, entity)"
             @dragover.prevent="onDragOver($event, entity)"
             @dragend="onDragEnd($event, entity)"
-            @drop="onDragDrop($event, entity)">
+            @drop="onDragDrop($event, entity)"
+          >
+            <span
+              v-if="entity.parent"
+              class="icon material-symbols-rounded"
+              title="Double click to select parent"
+              @dblclick="onClick($event, entity.parent)"
+            >
+              link
+            </span>
             <input type="text" readonly :value="entity.name || entity.type"
               @change="emit('renameEntity', $event, entity)"
               @keyup.enter="unfocusInput"
@@ -204,26 +239,34 @@
         padding: 0;
 
         li {
-          align-items: flex-start;
+          align-items: center;
           background-color: #FFA217;
           border-radius: 0.25em;
           cursor: pointer;
           display: flex;
+          padding: 0 0.25em;
           width: 100%;
           
           &.selected {
-            background-color: #F52D59;
-            color: #ffffff;
+            background-color: rgba(#F52D59, 1);
+            outline: 0.125em solid rgba(#F52D59, 0);
+            outline-offset: -0.125em;
+          }
+
+          .icon {
+            padding-right: 0.125em;
           }
           
           input {
             background-color: transparent;
             border-width: 0;
+            color: inherit;
             font-family: inherit;
             font-size: 1em;
             line-height: 1.5em;
             outline: none;
-            padding: 0 0.25em;
+            padding: 0;
+            text-shadow: inherit;
             width: 100%;
 
             &[readonly] {

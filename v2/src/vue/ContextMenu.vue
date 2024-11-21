@@ -93,12 +93,13 @@
     position: fixed;
     left: 3.25em;
     margin: 0;
+    min-width: 10em;
     top: 1em;
     transform: translateY(0em);
-    width: 10em;
 
     li {
       list-style: none;
+      white-space: nowrap;
 
       button {
         align-items: center;
@@ -116,10 +117,6 @@
   
         &:hover {
           background-color: #FFA217;
-        }
-  
-        .material-symbols-rounded {
-          font-size: 1em;
         }
       }
     }

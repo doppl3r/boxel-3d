@@ -38,10 +38,18 @@
     ).execute();
   }
 
+  function deselectEntity(e, entity) {
+    const index = entitiesSelected.indexOf(entity);
+    entity.isSelected = false;
+    entitiesSelected.splice(index, 1);
+  }
+
   function moveEntity(e, entity1, entity2) {
     const index1 = entities.value.indexOf(entity1);
     const index2 = entities.value.indexOf(entity2);
     const order = (index1 > index2 ? 1 : 0);
+
+    console.log(index1, index2);
 
     history.add(
       function() {
@@ -106,10 +114,12 @@
     }
   }
 
-  function deselectEntity(e, entity) {
-    const index = entitiesSelected.indexOf(entity);
-    entity.isSelected = false;
-    entitiesSelected.splice(index, 1);
+  function linkEntity(e, entity) {
+    console.log(entity);
+  }
+
+  function unlinkEntity(e, entity) {
+    console.log(entity);
   }
 
   function onKeyDown(e) {
@@ -152,9 +162,11 @@
         :canRedo="canRedo"
         @add-entity="addEntity"
         @delete-entity="deleteEntity"
+        @link-entity="linkEntity"
         @move-entity="moveEntity"
         @rename-entity="renameEntity"
         @select-entity="selectEntity"
+        @unlink-entity="unlinkEntity"
         @redo="redo"
         @undo="undo"
       />
