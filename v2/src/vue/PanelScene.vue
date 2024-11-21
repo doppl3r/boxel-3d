@@ -27,28 +27,16 @@
   }
 
   function onContextMenu(e, entity) {
-    let options = [
-      {
-        text: 'Delete',
-        icon: 'delete',
-        callback: () => emit('deleteEntity', e, entity)
-      }
-    ];
+    let options = [];
+    let optionLink = { text: 'Link', icon: 'link', callback: () => emit('linkEntity', e, entity) }
+    let optionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => emit('unlinkEntity', e, entity) }
+    let optionDelete = { text: 'Delete', icon: 'delete', callback: () => emit('deleteEntity', e, entity) }
 
-    if (entity.parent) {
-      options.push({
-        text: 'Unlink',
-        icon: 'link_off',
-        callback: () => emit('unlinkEntity', e, entity)
-      });
-    }
-    else {
-      options.push({
-        text: 'Link',
-        icon: 'link',
-        callback: () => emit('linkEntity', e, entity)
-      });
-    }
+    if (entity.parent) options.push(optionUnlink);
+    else options.push(optionLink);
+
+    // Add delete option
+    options.push(optionDelete);
 
     // Dispatch event to the global context menu
     document.dispatchEvent(new CustomEvent('contextmenu', { detail: options }));

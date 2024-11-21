@@ -89,11 +89,14 @@
     background-color: #FFCB4C;
     border: 0.25em solid #000000;
     box-shadow: 0 0.25em 0 #000000;
-    padding: 0.5em;
-    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125em;
     left: 3.25em;
     margin: 0;
     min-width: 10em;
+    padding: 0.5em;
+    position: fixed;
     top: 1em;
     transform: translateY(0em);
 

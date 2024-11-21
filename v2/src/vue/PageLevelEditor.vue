@@ -25,15 +25,32 @@
   }
 
   function deleteEntity(e, entity) {
-    const index = entities.value.indexOf(entity);
+    // Store an array of selected entities with their current index
+    const selected = entitiesSelected.map(entity => {
+      return {
+        index: entities.value.indexOf(entity),
+        entity: entity
+      }
+    });
+
+    // Sort array of selected entities by indexes
+    selected.sort((a, b) => a.index - b.index);
+
+    // Add delete or revert commands
     history.add(
       function() {
-        props.game.physics.remove(entity);
-        entities.value.splice(index, 1);
+        for (let i = selected.length - 1; i >= 0; i--) {
+          const item = selected[i];
+          props.game.physics.remove(item.entity);
+          entities.value.splice(item.index, 1);
+        }
       },
       function() {
-        props.game.physics.add(entity);
-        entities.value.splice(index, 0, entity);
+        for (let i = 0; i < selected.length; i++) {
+          const item = selected[i];
+          props.game.physics.add(item.entity);
+          entities.value.splice(item.index, 0, item.entity);
+        }
       }
     ).execute();
   }
@@ -48,8 +65,6 @@
     const index1 = entities.value.indexOf(entity1);
     const index2 = entities.value.indexOf(entity2);
     const order = (index1 > index2 ? 1 : 0);
-
-    console.log(index1, index2);
 
     history.add(
       function() {
