@@ -16,7 +16,6 @@
   ]);
   const expanded = ref(true);
   const content = ref();
-  let entity1 = {};
 
   function isExpanded() {
     return expanded.value == true;
@@ -54,7 +53,7 @@
   }
 
   function onDragStart(e, entity) {
-    entity1 = entity;
+    
   }
 
   function onDragOver(e, entity) {
@@ -65,9 +64,8 @@
     content.value.style.overflowY = 'auto';
   }
   
-  function onDragDrop(e, entity2) {
-    emit('moveEntity', e, entity1, entity2);
-    entity1 = null;
+  function onDragDrop(e, entity) {
+    emit('moveEntity', e, entity);
   }
 </script>
 

@@ -26,10 +26,10 @@
 
   function deleteEntity(e, entity) {
     // Store an array of selected entities with their current index
-    const selected = entitiesSelected.map(entity => {
+    const selected = entitiesSelected.map(item => {
       return {
-        index: entities.value.indexOf(entity),
-        entity: entity
+        index: entities.value.indexOf(item),
+        entity: item
       }
     });
 
@@ -61,19 +61,56 @@
     entitiesSelected.splice(index, 1);
   }
 
-  function moveEntity(e, entity1, entity2) {
-    const index1 = entities.value.indexOf(entity1);
-    const index2 = entities.value.indexOf(entity2);
-    const order = (index1 > index2 ? 1 : 0);
+  function moveEntity(e, entity) {
+    const index = entities.value.indexOf(entity);
 
+    // Store an array of selected entities with their current index
+    const selected = entitiesSelected.map(item => {
+      return {
+        index: entities.value.indexOf(item),
+        entity: item
+      }
+    });
+
+    // Sort array of selected entities by indexes
+    selected.sort((a, b) => a.index - b.index);
+
+    // Add move or remove commands
     history.add(
       function() {
-        entities.value.splice(index1, 1); // Remove entity
-        entities.value.splice(index2 + order, 0, entity1); // Insert entity
+        // Loop from the back-to-front (bottom-to-top)
+        if (index > selected[selected.length - 1].index) {
+          for (let i = selected.length - 1; i >= 0; i--) {
+            const item = selected[i];
+            const offset = (selected.length - 1);
+            entities.value.splice(item.index, 1); // Remove entity
+            entities.value.splice((index + i) - offset, 0, item.entity); // Insert entity
+          }
+        }
+        else if (index < selected[0].index) {
+          // Loop from front-to-back (top-to-bottom)
+          for (let i = 0; i < selected.length; i++) {
+            const item = selected[i];
+            entities.value.splice(item.index, 1); // Remove entity
+            entities.value.splice((index + i), 0, item.entity); // Insert entity
+          }
+        }
       },
       function() {
-        entities.value.splice(index2 + order, 1); // Remove entity
-        entities.value.splice(index1, 0, entity1); // Insert entity
+        // TODO: replace entities selected to fix bug
+        let indexFirst = entities.value.indexOf(entitiesSelected[0]);
+        let indexLast = entities.value.indexOf(entitiesSelected[entitiesSelected.length - 1]);
+        let indexMin = Math.min(indexFirst, indexLast);
+
+        // Empty selected entities from array
+        for (let i = 0; i < selected.length; i++) {
+          entities.value.splice(indexMin, 1); // Remove entity
+        }
+
+        // Insert entity entities back to their original array
+        for (let i = 0; i < selected.length; i++) {
+          entities.value.splice(selected[i].index, 0, selected[i].entity); // Insert entity
+        }
       }
     ).execute();
   }
