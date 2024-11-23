@@ -3,15 +3,17 @@
 
   const props = defineProps({
     event: {
-      type: Object,
       default: {
         clientX: 0,
         clientY: 0,
-      }
+      },
+      required: true,
+      type: Object
     },
     actions: {
-      type: Array,
-      default: []
+      default: [],
+      required: true,
+      type: Array
     }
   });
   const style = ref({ animationDuration: '0.15s', left: '0px', top: '0px' });
