@@ -58,6 +58,12 @@
     entitiesSelected.splice(index, 1);
   }
 
+  function deselectAllEntities(e) {
+    for (let i = entitiesSelected.length - 1; i >= 0; i--) {
+      deselectEntity(e, entitiesSelected[i]);
+    }
+  }
+
   function moveEntity(e, entity) {
     // Store an array of selected entities with their current index
     const selected = entitiesSelected.map(item => {
@@ -135,9 +141,7 @@
     }
     else {
       // Deselect all entities before selecting new entity
-      for (let i = entitiesSelected.length - 1; i >= 0; i--) {
-        deselectEntity(e, entitiesSelected[i]);
-      }
+      deselectAllEntities(e);
     }
 
     // Add entities to selected array and set selected boolean
@@ -145,6 +149,13 @@
       entities.value[i].isSelected = true;
       entitiesSelected.push(entities.value[i]);
     }
+  }
+
+  function selectAllEntities(e) {
+    let entityStart = entities.value[0];
+    let entityEnd = entities.value[entities.value.length - 1];
+    entityPrev.value = entityStart;
+    selectEntity({ shiftKey: true }, entityEnd);
   }
 
   function linkEntity(e, entity) {
@@ -157,14 +168,18 @@
 
   function onKeyDown(e) {
     if (e.repeat) return;
-    if (e.code == 'KeyZ') {
-      if (e.ctrlKey == true) {
-        if (e.shiftKey == true) redo();
-        else undo();
-      }
+    if (e.code == 'KeyA' && e.ctrlKey) {
+      e.preventDefault();
+      selectAllEntities(e);
     }
-    else if (e.code == 'KeyX') {
-      if (e.ctrlKey == true) deleteEntity();
+    else if (e.code == 'KeyD' && e.ctrlKey) {
+      e.preventDefault();
+      deselectAllEntities(e);
+    }
+    else if (e.code == 'KeyX' && e.ctrlKey) deleteEntity(e);
+    else if (e.code == 'KeyZ' && e.ctrlKey) {
+      if (e.shiftKey == true) redo();
+      else undo();
     }
   }
 

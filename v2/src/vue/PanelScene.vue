@@ -110,7 +110,11 @@
             >
               link
             </span>
-            <input type="text" readonly :value="entity.name || entity.type"
+            <input
+              type="text"
+              readonly
+              :id="entity.id"
+              :value="entity.name || entity.type"
               @change="emit('renameEntity', $event, entity)"
               @keyup.enter="unfocusInput"
               @focusout="unfocusInput"

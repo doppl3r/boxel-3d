@@ -24,7 +24,7 @@
       <div class="bar">
         <div class="progress" :style="{ width: progress.percent + '%' }"></div>
       </div>
-      <label>Loading: {{ progress.percent }}%</label>
+      <div class="label">Loading: {{ progress.percent }}%</div>
     </div>
   </Transition>
 </template>
@@ -65,7 +65,7 @@
       }
     }
 
-    label {
+    .label {
       color: #ffffff;
       font-size: 1em;
     }
