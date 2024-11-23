@@ -65,6 +65,9 @@
   }
 
   function moveEntity(e, entity) {
+    // Prevent moving items to self
+    if (entity.isSelected) return;
+
     // Store an array of selected entities with their current index
     const selected = entitiesSelected.map(item => {
       return {
