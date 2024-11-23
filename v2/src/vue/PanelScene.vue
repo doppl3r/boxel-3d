@@ -1,5 +1,6 @@
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
+  import ContextMenu from './ContextMenu.vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({ canUndo: Boolean, canRedo: Boolean, entities: Array });
@@ -16,6 +17,8 @@
   ]);
   const expanded = ref(true);
   const content = ref();
+  const contextMenuEvent = ref({});
+  const contextMenuActions = ref([]);
 
   function isExpanded() {
     return expanded.value == true;
@@ -26,19 +29,20 @@
   }
 
   function onContextMenu(e, entity) {
-    let options = [];
-    let optionLink = { text: 'Link', icon: 'link', callback: () => emit('linkEntity', e, entity) }
-    let optionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => emit('unlinkEntity', e, entity) }
-    let optionDelete = { text: 'Delete', icon: 'delete', callback: () => emit('deleteEntity', e, entity) }
+    let actions = [];
+    let actionLink = { text: 'Link', icon: 'link', callback: () => emit('linkEntity', e, entity) }
+    let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => emit('unlinkEntity', e, entity) }
+    let actionDelete = { text: 'Delete', icon: 'delete', callback: () => emit('deleteEntity', e, entity) }
 
-    if (entity.parent) options.push(optionUnlink);
-    else options.push(optionLink);
+    if (entity.parent) actions.push(actionUnlink);
+    else actions.push(actionLink);
 
-    // Add delete option
-    options.push(optionDelete);
+    // Add delete action
+    actions.push(actionDelete);
 
     // Dispatch event to the global context menu
-    document.dispatchEvent(new CustomEvent('contextmenu', { detail: options }));
+    contextMenuEvent.value = e;
+    contextMenuActions.value = actions;
   }
 
   function focusInput(e) {
@@ -96,7 +100,7 @@
             :class="{ 'selected': entity.isSelected }"
             draggable="true"
             @click="onClick($event, entity)"
-            @contextmenu="onContextMenu($event, entity)"
+            @contextmenu.prevent="onContextMenu($event, entity)"
             @dragstart="onDragStart($event, entity)"
             @dragover.prevent="onDragOver($event, entity)"
             @dragend="onDragEnd($event, entity)"
@@ -128,6 +132,7 @@
         </li>
       </ul>
     </div>
+    <ContextMenu :event="contextMenuEvent" :actions="contextMenuActions" />
   </div>
 </template>
 

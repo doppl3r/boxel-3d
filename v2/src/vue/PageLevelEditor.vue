@@ -4,7 +4,6 @@
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
   import PanelScene from './PanelScene.vue';
-  import ContextMenu from './ContextMenu.vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({ game: Object });
@@ -225,7 +224,6 @@
         @undo="undo"
       />
     </div>
-    <ContextMenu :game="game" />
   </div>
 </template>
 
