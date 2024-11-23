@@ -1,5 +1,5 @@
 <script setup>
-  import { nextTick, ref, watch } from 'vue';
+  import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
   const props = defineProps({
     event: {
@@ -22,6 +22,15 @@
 
   function select(e, action) {
     if (action.callback) action.callback(e);
+    close();
+  }
+
+  function open(e) {
+    isVisible.value = true;
+    updatePosition(e);
+  }
+
+  function close(e) {
     isVisible.value = false;
   }
 
@@ -46,25 +55,31 @@
 
   // Listen to prop event changes
   watch(() => props.event, () => {
-    isVisible.value = true;
-    updatePosition(props.event);
+    open(props.event);
+  });
+
+  // Initialize app after canvas has been mounted
+  onMounted(function() {
+    // Add event listener
+    document.addEventListener('pointerup', close);
+  });
+
+  onUnmounted(function() {
+    document.removeEventListener('pointerup', close);
   });
 </script>
 
 <template>
-  <div class="contextmenu" v-show="isVisible">
-    <div class="background" @click="isVisible = false" @contextmenu.prevent="isVisible = false"></div>
-    <Transition name="fade">
-      <ul ref="menu" :style="style" v-if="isVisible">
-        <li v-for="action in props.actions">
-          <button @click.prevent="select($event, action)">
-            <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
-            {{ action.text }}
-          </button>
-        </li>
-      </ul>
-    </Transition>
-  </div>
+  <Transition name="fade">
+    <ul ref="menu" :style="style" v-if="isVisible">
+      <li v-for="action in props.actions">
+        <button @click.prevent="select($event, action)">
+          <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
+          {{ action.text }}
+        </button>
+      </li>
+    </ul>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>
@@ -81,60 +96,43 @@
     0% { opacity: 0; transform: translateY(1em); }
     100% { opacity: 1; transform: translateY(0em); }
   }
-
-  .contextmenu {
-    height: 100%;
-    left: 0;
+  
+  ul {
+    border-radius: 0.5em;
+    background-color: #FFCB4C;
+    border: 0.25em solid #000000;
+    box-shadow: 0 0.25em 0 #000000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125em;
+    left: 3.25em;
+    margin: 0;
+    min-width: 10em;
+    padding: 0.5em;
     position: fixed;
-    top: 0;
+    top: 1em;
     transform: translateY(0em);
-    width: 100%;
 
-    .background {
-      height: inherit;
-      left: inherit;
-      position: relative;
-      top: inherit;
-      width: inherit;
-    }
+    li {
+      list-style: none;
+      white-space: nowrap;
+
+      button {
+        align-items: center;
+        background-color: transparent;
+        border-radius: 0.25em;
+        border-width: 0;
+        cursor: pointer;
+        display: flex;
+        font-family: inherit;
+        font-size: 1em;
+        gap: 0.25em;
+        line-height: 1.5em;
+        padding: 0 0.25em;
+        width: 100%;
   
-    ul {
-      border-radius: 0.5em;
-      background-color: #FFCB4C;
-      border: 0.25em solid #000000;
-      box-shadow: 0 0.25em 0 #000000;
-      display: flex;
-      flex-direction: column;
-      gap: 0.125em;
-      left: 3.25em;
-      margin: 0;
-      min-width: 10em;
-      padding: 0.5em;
-      position: fixed;
-      top: 1em;
-      transform: translateY(0em);
-  
-      li {
-        list-style: none;
-        white-space: nowrap;
-  
-        button {
-          align-items: center;
-          background-color: transparent;
-          border-radius: 0.25em;
-          border-width: 0;
-          cursor: pointer;
-          display: flex;
-          font-family: inherit;
-          font-size: 1em;
-          gap: 0.25em;
-          line-height: 1.5em;
-          padding: 0 0.25em;
-          width: 100%;
-    
-          &:hover {
-            background-color: #FFA217;
-          }
+        &:hover {
+          background-color: #FFA217;
         }
       }
     }
