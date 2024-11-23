@@ -22,5 +22,8 @@ export default {
   teleport(e) {
     // Update collision pair
     e.pair.setPosition(e.position);
+  },
+  toggleVisibility(e) {
+    e.target.object.visible = !e.target.object.visible;
   }
 };

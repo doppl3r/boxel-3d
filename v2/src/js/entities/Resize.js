@@ -14,7 +14,7 @@ class Resize extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      events: [{ name: 'setPairScale', egg: 'test' }],
+      events: [{ name: 'setPairScale' }],
       isSensor: true
     }, options);
 

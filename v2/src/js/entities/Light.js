@@ -14,6 +14,7 @@ class Light extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
+      collisionGroups: 0x00000000,
       isSensor: true,
       status: 1
     }, options);
