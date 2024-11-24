@@ -141,21 +141,6 @@
 </style>
 
 <style lang="scss" scoped>
-  .list-move,
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 0.15s ease-in-out;
-  }
-
-  .list-enter-from,
-  .list-leave-to {
-    opacity: 0;
-  }
-
-  .list-leave-active {
-    font-size: 0;
-  }
-
   ::-webkit-scrollbar { width: 0.25em; }
   ::-webkit-scrollbar-track { background: rgba(#FFA217, 1); border-radius: 99em; }
   ::-webkit-scrollbar-thumb { background: rgba(#000000, 1); border-radius: 99em; }
@@ -240,12 +225,13 @@
           cursor: pointer;
           display: flex;
           padding: 0 0.25em;
+          transition-duration: 0.1s;
+          transition-property: transform;
+          transition-timing-function: ease-in-out;
           width: 100%;
           
           &.selected {
             background-color: rgba(#F52D59, 1);
-            outline: 0.125em solid rgba(#F52D59, 0);
-            outline-offset: -0.125em;
           }
 
           .icon {

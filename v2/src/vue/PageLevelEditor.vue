@@ -33,33 +33,24 @@
     }).sort((a, b) => a.index - b.index);
 
     // Add delete or revert commands
-    history.add(
-      function() {
-        for (let i = selected.length - 1; i >= 0; i--) {
-          const item = selected[i];
-          props.game.physics.remove(item.entity);
-          entities.value.splice(item.index, 1);
+    if (selected.length > 0) {
+      history.add(
+        function() {
+          for (let i = selected.length - 1; i >= 0; i--) {
+            const item = selected[i];
+            props.game.physics.remove(item.entity);
+            entities.value.splice(item.index, 1);
+            deselectEntity(e, item.entity, i);
+          }
+        },
+        function() {
+          for (let i = 0; i < selected.length; i++) {
+            const item = selected[i];
+            props.game.physics.add(item.entity);
+            entities.value.splice(item.index, 0, item.entity);
+          }
         }
-      },
-      function() {
-        for (let i = 0; i < selected.length; i++) {
-          const item = selected[i];
-          props.game.physics.add(item.entity);
-          entities.value.splice(item.index, 0, item.entity);
-        }
-      }
-    ).execute();
-  }
-
-  function deselectEntity(e, entity) {
-    const index = entitiesSelected.indexOf(entity);
-    entity.isSelected = false;
-    entitiesSelected.splice(index, 1);
-  }
-
-  function deselectAllEntities(e) {
-    for (let i = entitiesSelected.length - 1; i >= 0; i--) {
-      deselectEntity(e, entitiesSelected[i]);
+      ).execute();
     }
   }
 
@@ -158,6 +149,18 @@
     let entityEnd = entities.value[entities.value.length - 1];
     entityPrev.value = entityStart;
     selectEntity({ shiftKey: true }, entityEnd);
+  }
+
+  function deselectEntity(e, entity, index) {
+    if (index == null) index = entitiesSelected.indexOf(entity);
+    entity.isSelected = false;
+    entitiesSelected.splice(index, 1);
+  }
+
+  function deselectAllEntities(e) {
+    for (let i = entitiesSelected.length - 1; i >= 0; i--) {
+      deselectEntity(e, entitiesSelected[i], i);
+    }
   }
 
   function linkEntity(e, entity) {
