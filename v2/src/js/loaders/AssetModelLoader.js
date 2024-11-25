@@ -29,22 +29,22 @@ class AssetModelLoader extends GLTFLoader {
           
         },
         function(error) {
-          console.error(error);
+          console.error(`Error: Model "${ value.url }" not found.`);
         });
       }
     }
-    catch {
-      console.error(`Error: File "${ url }" not found.`);
+    catch (error) {
+      console.error(error);
     }
   }
 
   duplicate(model) {
     // Initialize model as null
-    var model = cloneWithSkeleton(model);
-    this.addMixer(model);
+    const clone = cloneWithSkeleton(model);
+    this.addMixer(clone);
 
     // Return new model
-    return model;
+    return clone;
   }
 
   addMixer(model) {

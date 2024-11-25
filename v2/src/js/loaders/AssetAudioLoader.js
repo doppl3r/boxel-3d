@@ -33,12 +33,12 @@ class AssetAudioLoader extends AudioLoader {
           
         },
         function(err) {
-          console.error(err);
+          console.error(`Error: Audio "${ value.url }" not found.`);
         });
       }
     }
-    catch {
-      console.error(`Error: File "${ url }" not found.`);
+    catch (error) {
+      console.error(error);
     }
   }
 

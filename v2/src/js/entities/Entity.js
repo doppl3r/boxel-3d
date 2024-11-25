@@ -252,7 +252,7 @@ class Entity extends EventDispatcher {
           if (typeof event == 'object') fn = this[event.name];
           fn(Object.assign(e, event));
         }
-        catch { console.warn(`Warning: Function "${ event.name }" does not exist`); }
+        catch (error) { console.error(error); }
       }.bind(this)
     );
   }
