@@ -51,7 +51,7 @@
 
     {
       "type": "cube",
-      "uuid": "9183b20a-30b0-4cc7-be5e-8cf297fa3079",
+      "id": "9183b20a-30b0-4cc7-be5e-8cf297fa3079",
       "model": { "name": "cube-tip" },
       "events": [
         {
@@ -64,38 +64,48 @@
     },
     {
       "type": "cube",
-      "uuid": "a0721edb-820c-42e3-ac7e-4d4edaaa67c0",
-      "parent": "9183b20a-30b0-4cc7-be5e-8cf297fa3079",
+      "id": "a0721edb-820c-42e3-ac7e-4d4edaaa67c0",
       "position": { "x": -6, "y": 8, "z": 0 },
-      "status": 0
+      "status": 0,
+      "userData": {
+        "parentId": "9183b20a-30b0-4cc7-be5e-8cf297fa3079"
+      }
     },
     {
       "type": "cube",
-      "uuid": "57b034a2-1db0-466d-ad70-9fd96e225f83",
-      "parent": "a0721edb-820c-42e3-ac7e-4d4edaaa67c0",
+      "id": "57b034a2-1db0-466d-ad70-9fd96e225f83",
       "position": { "x": -4, "y": 4, "z": 0 },
-      "status": 0
+      "status": 0,
+      "userData": {
+        "parentId": "a0721edb-820c-42e3-ac7e-4d4edaaa67c0"
+      }
     },
     {
       "type": "cube",
-      "uuid": "649142c2-9d67-4bbc-93f2-a137a1a4b3da",
-      "parent": "57b034a2-1db0-466d-ad70-9fd96e225f83",
+      "id": "649142c2-9d67-4bbc-93f2-a137a1a4b3da",
       "position": { "x": -2, "y": 8, "z": 0 },
-      "status": 0
+      "status": 0,
+      "userData": {
+        "parentId": "57b034a2-1db0-466d-ad70-9fd96e225f83"
+      }
     },
     {
       "type": "bounce",
-      "uuid": "97383ba1-3b9f-4ce6-9b3f-19e97c3e0e31",
-      "parent": "649142c2-9d67-4bbc-93f2-a137a1a4b3da",
+      "id": "97383ba1-3b9f-4ce6-9b3f-19e97c3e0e31",
       "position": { "x": 0, "y": 4, "z": 0 },
-      "status": 0
+      "status": 0,
+      "userData": {
+        "parentId": "649142c2-9d67-4bbc-93f2-a137a1a4b3da"
+      }
     },
     {
       "type": "cube",
-      "uuid": "f941d824-c311-4ff7-bf73-ec4c5103d213",
-      "parent": "97383ba1-3b9f-4ce6-9b3f-19e97c3e0e31",
+      "id": "f941d824-c311-4ff7-bf73-ec4c5103d213",
       "position": { "x": 2, "y": 8, "z": 0 },
-      "status": 0
+      "status": 0,
+      "userData": {
+        "parentId": "97383ba1-3b9f-4ce6-9b3f-19e97c3e0e31"
+      }
     },
 
 

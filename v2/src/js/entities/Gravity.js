@@ -38,7 +38,7 @@ class Gravity extends Cube {
   setGravity(e) {
     var gravity = new Vector3().copy(game.physics.world.gravity);
     var magnitude = gravity.length();
-    var quaternion = new Quaternion().copy(this.rigidBody.rotation());
+    var quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
     var euler = new Euler().setFromQuaternion(quaternion);
     var angle = -((Math.PI / 2) - euler.z);
 
