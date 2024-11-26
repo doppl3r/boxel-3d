@@ -29,20 +29,27 @@
   }
 
   function onContextMenu(e, entity) {
-    let actions = [];
-    let actionLink = { text: 'Link', icon: 'link', callback: () => emit('linkEntity', e, entity) }
-    let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => emit('unlinkEntity', e, entity) }
-    let actionDelete = { text: 'Delete', icon: 'delete', callback: () => emit('deleteEntity', e, entity) }
+    if (entity.isSelected) {
+      let actions = [];
+      let actionLink = { text: 'Link', icon: 'link', callback: () => emit('linkEntity', e, entity) }
+      let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => emit('unlinkEntity', e, entity) }
+      let actionDelete = { text: 'Delete', icon: 'delete', callback: () => emit('deleteEntity', e, entity) }
 
-    if (entity.parent) actions.push(actionUnlink);
-    else actions.push(actionLink);
+      if (entity.rigidBodyDesc.userData.parentId) actions.push(actionUnlink);
+      else actions.push(actionLink);
 
-    // Add delete action
-    actions.push(actionDelete);
+      // Add delete action
+      actions.push(actionDelete);
 
-    // Dispatch event to the global context menu
-    contextMenuEvent.value = e;
-    contextMenuActions.value = actions;
+      // Dispatch event to the global context menu
+      contextMenuEvent.value = e;
+      contextMenuActions.value = actions;
+    }
+    else {
+      // Select item and re-open context menu
+      onClick(e, entity);
+      onContextMenu(e, entity);
+    }
   }
 
   function focusInput(e) {
@@ -107,10 +114,9 @@
             @drop="onDragDrop($event, entity)"
           >
             <span
-              v-if="entity.parent"
+              v-if="entity.rigidBodyDesc.userData.parentId"
               class="icon material-symbols-rounded"
               title="Double click to select parent"
-              @dblclick="onClick($event, entity.parent)"
             >
               link
             </span>

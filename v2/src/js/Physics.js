@@ -14,7 +14,7 @@ class Physics {
     this.eventQueue = new EventQueue(true);
     this.debugger = new Debugger(this.world);
     this.entities = new Map();
-    this.entityPairs = new Map();
+    this.jointQueue = [];
   }
 
   update(delta) {
@@ -123,34 +123,24 @@ class Physics {
 
   checkJointPairs(entity) {
     // Get current family by parent ID
-    const family = this.entityPairs.get(entity.parentId);
-
-    if (family) {
-      // TODO: Create joint
-    }
-    else {
-      // TODO: Create new family
-    }
-
-    // TODO: Check all orphans
+    const parentId = entity.rigidBody.userData.parentId;
+    let parent = this.get(parentId);
+    if (parent) this.createJoint(parent, entity);
   }
 
-  createJointFromParent(entity) {
-    let joint;
-    if (entity.parent) {
-      const anchor1 = new Vector3();
-      const anchor2 = new Vector3().copy(entity.parent.rigidBodyDesc.translation).sub(entity.rigidBodyDesc.translation);
-      const frame1 = new Quaternion().copy(entity.parent.rigidBodyDesc.rotation);
-      const frame2 = new Quaternion().copy(entity.rigidBodyDesc.rotation);
+  createJoint(parent, child) {
+    const anchor1 = new Vector3();
+    const anchor2 = new Vector3().copy(parent.rigidBodyDesc.translation).sub(child.rigidBodyDesc.translation);
+    const frame1 = new Quaternion().copy(parent.rigidBodyDesc.rotation);
+    const frame2 = new Quaternion().copy(child.rigidBodyDesc.rotation);
 
-      // Rotate position by the frame conjugate
-      anchor1.applyQuaternion(frame1.conjugate());
-      anchor2.applyQuaternion(frame2.conjugate());
+    // Rotate position by the frame conjugate
+    anchor1.applyQuaternion(frame1.conjugate());
+    anchor2.applyQuaternion(frame2.conjugate());
 
-      // Create fixed joint from parameters
-      const params = JointData.fixed(anchor1, frame1, anchor2, frame2);
-      joint = this.world.createImpulseJoint(params, entity.parent.rigidBody, entity.rigidBody, true);
-    }
+    // Create fixed joint from parameters
+    const params = JointData.fixed(anchor1, frame1, anchor2, frame2);
+    const joint = this.world.createImpulseJoint(params, parent.rigidBody, child.rigidBody, true);
     return joint;
   }
 
