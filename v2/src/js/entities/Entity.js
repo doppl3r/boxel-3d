@@ -68,8 +68,8 @@ class Entity extends EventDispatcher {
   }
 
   setRigidBodyDesc(options) {
-    // Set options with default values
-    options = Object.assign({
+    // Set default rigid body options
+    this.defaultRigidBodyOptions = {
       angularDamping: 0,
       ccd: false,
       enabledRotations: { x: true, y: true, z: true },
@@ -81,9 +81,12 @@ class Entity extends EventDispatcher {
       sleeping: false,
       softCcdPrediction: 0,
       status: 0 // 0: Dynamic, 1: Fixed, 2: KinematicPositionBased, 3: KinematicVelocityBased
-    }, options);
+    };
 
-    // Initialize rigid body description
+    // Set options with default values
+    options = Object.assign({ ...this.defaultRigidBodyOptions }, options);
+
+    // Create rigid body description
     this.rigidBodyDesc = new RigidBodyDesc(isNaN(options.status) ? RigidBodyType[options.status] : options.status);
     this.rigidBodyDesc.enabledRotations(options.enabledRotations.x, options.enabledRotations.y, options.enabledRotations.z);
     this.rigidBodyDesc.enabledTranslations(options.enabledTranslations.x, options.enabledTranslations.y, options.enabledTranslations.z);
@@ -103,8 +106,8 @@ class Entity extends EventDispatcher {
   }
 
   addColliderDesc(options) {
-    // Set options with default values
-    options = Object.assign({
+    // Set default collider options
+    this.defaultColliderOptions = {
       activeCollisionTypes: 'DEFAULT', // 1: DYNAMIC_DYNAMIC, 2: DYNAMIC_FIXED, 12: DYNAMIC_KINEMATIC, 15: DEFAULT, 32: FIXED_FIXED, 8704: KINEMATIC_FIXED, 52224: KINEMATIC_KINEMATIC, 60943: ALL
       activeEvents: 'NONE', // 0: NONE, 1: COLLISION_EVENTS, 2: CONTACT_FORCE_EVENTS
       collisionGroups: 0xFFFFFFFF,
@@ -118,11 +121,15 @@ class Entity extends EventDispatcher {
       shape: null,
       solverGroups: 0xFFFFFFFF,
       translation: { x: 0, y: 0, z: 0 }
-    }, options);
+    };
 
+    // Set options with default values
+    options = Object.assign({ ...this.defaultColliderOptions }, options);
+
+    // Create collider description
     const colliderDesc = new ColliderDesc(options.shape);
-    colliderDesc.setActiveCollisionTypes(ActiveCollisionTypes[options.activeCollisionTypes]);
-    colliderDesc.setActiveEvents(ActiveEvents[options.activeEvents]);
+    colliderDesc.setActiveCollisionTypes(isNaN(options.activeCollisionTypes) ? ActiveCollisionTypes[options.activeCollisionTypes] : options.activeCollisionTypes);
+    colliderDesc.setActiveEvents(isNaN(options.activeEvents) ? ActiveEvents[options.activeEvents] : options.activeEvents);
     colliderDesc.setCollisionGroups(options.collisionGroups);
     colliderDesc.setContactForceEventThreshold(options.contactForceEventThreshold);
     colliderDesc.setMass(options.mass); // Must set before density
@@ -370,8 +377,8 @@ class Entity extends EventDispatcher {
 
     // Include first collider properties
     json = Object.assign({
-      activeCollisionTypes: ActiveCollisionTypes[this.collidersDesc[0].activeCollisionTypes],
-      activeEvents: ActiveEvents[this.collidersDesc[0].activeEvents],
+      activeCollisionTypes: this.collidersDesc[0].activeCollisionTypes,
+      activeEvents: this.collidersDesc[0].activeEvents,
       collisionGroups: this.collidersDesc[0].collisionGroups,
       contactForceEventThreshold: this.collidersDesc[0].contactForceEventThreshold,
       density: this.collidersDesc[0].density,

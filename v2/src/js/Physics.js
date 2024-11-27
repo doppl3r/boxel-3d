@@ -76,7 +76,7 @@ class Physics {
 
   remove(entity) {
     // Remove entity physics components before deletion
-    this.removeJoints(entity);
+    this.removeJoint(entity);
     this.removeColliders(entity);
     this.removeRigidBody(entity);
     entity.object.removeFromParent();
@@ -177,7 +177,7 @@ class Physics {
     return joint;
   }
 
-  removeJoints(entity) {
+  removeJoint(entity) {
     // Loop through all world joints for matching ID
     this.world.impulseJoints.forEach(function(joint) {
       let parent = this.get(joint.body1().userData.id);
