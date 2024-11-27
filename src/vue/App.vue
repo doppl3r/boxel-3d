@@ -5,8 +5,8 @@
   import Card from './Card.vue';
   import Modal from '@/v2/src/vue/Modal.vue';
   import Loading from '@/v2/src/vue/Loading.vue';
-  import { Loop } from '@/v2/src/js/Loop.js';
-  import { Graphics } from '@/v2/src/js/Graphics.js';
+  import { Loop } from '@/v2/src/js/core/Loop.js';
+  import { Graphics } from '@/v2/src/js/core/Graphics.js';
   import { LightFactory } from '@/v2/src/js/factories/LightFactory.js';
   import { AssetLoader } from '@/v2/src/js/loaders/AssetLoader.js';
 

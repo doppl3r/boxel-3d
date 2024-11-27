@@ -1,6 +1,6 @@
-import PageHome from '../vue/PageHome.vue'
-import PagePlay from '../vue/PagePlay.vue'
-import PageLevelEditor from '../vue/PageLevelEditor.vue'
+import PageHome from '../../vue/PageHome.vue'
+import PagePlay from '../../vue/PagePlay.vue'
+import PageLevelEditor from '../../vue/PageLevelEditor.vue'
 
 /*
   Vue Router is used to change page components using URL paths. This solution 

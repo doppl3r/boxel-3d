@@ -1,6 +1,6 @@
 <script setup>
   import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
-  import { History } from '../js/CommandHistory';
+  import { History } from '../js/core/CommandHistory';
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
   import PanelScene from './PanelScene.vue';

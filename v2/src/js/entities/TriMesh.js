@@ -1,6 +1,6 @@
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { TriMesh as TriMeshShape, TriMeshFlags } from '@dimforge/rapier3d';
-import { Entity } from './Entity.js';
+import { Entity } from '../core/Entity.js';
 
 /*
   A TriMesh creates a rigid body from a set of vertices and
@@ -55,6 +55,22 @@ class TriMesh extends Entity {
     // Add model to 3D object
     this.model = options.model;
     this.object.add(this.model);
+  }
+
+  toJSON() {
+    // Extend entity toJSON with model name
+    const json = super.toJSON();
+
+    // Assign cube properties to entity JSON
+    Object.assign(json, {
+      type: this.type
+    });
+
+    // Conditionally store model name
+    if (this.model.name) json.model = { name: this.model.name };
+
+    // Return json object
+    return json;
   }
 }
 

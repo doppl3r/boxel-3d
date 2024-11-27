@@ -1,7 +1,7 @@
-import { Loop } from './Loop';
+import { Loop } from './core/Loop';
 import { AssetLoader } from './loaders/AssetLoader.js';
-import { Graphics } from './Graphics.js';
-import { Physics } from './Physics.js';
+import { Graphics } from './core/Graphics.js';
+import { Physics } from './core/Physics.js';
 import { LevelFactory } from './factories/LevelFactory.js';
 
 class Game {

@@ -1,6 +1,6 @@
 import { SphereGeometry, Mesh, MeshStandardMaterial } from 'three';
 import { Ball } from '@dimforge/rapier3d';
-import { Entity } from './Entity.js';
+import { Entity } from '../core/Entity.js';
 
 /*
   A sphere is a ball shape that provides a 3D object (Three.js) and
@@ -66,6 +66,22 @@ class Sphere extends Entity {
     this.model = new Mesh(geometry, material);
     this.model.receiveShadow = true;
     this.model.castShadow = true;
+  }
+
+  toJSON() {
+    // Extend entity toJSON with model name
+    const json = super.toJSON();
+
+    // Assign cube properties to entity JSON
+    Object.assign(json, {
+      type: this.type
+    });
+
+    // Conditionally store model name
+    if (this.model.name) json.model = { name: this.model.name };
+
+    // Return json object
+    return json;
   }
 }
 

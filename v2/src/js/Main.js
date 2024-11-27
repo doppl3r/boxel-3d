@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from '../vue/App.vue'
-import Routes from './Routes.js'
+import Routes from './routes/Routes.js'
 
 /*
   Router history modes
