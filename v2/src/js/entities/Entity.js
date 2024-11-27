@@ -19,6 +19,7 @@ class Entity extends EventDispatcher {
     // Set base components
     this.name = '';
     this.id = options.id || MathUtils.generateUUID();
+    this.parentId = options.parentId;
     this.isEntity = true;
     this.rigidBody;
     this.rigidBodyDesc;
@@ -79,8 +80,7 @@ class Entity extends EventDispatcher {
       rotation: { x: 0, y: 0, z: 0, w: 1 },
       sleeping: false,
       softCcdPrediction: 0,
-      status: 0, // 0: Dynamic, 1: Fixed, 2: KinematicPositionBased, 3: KinematicVelocityBased
-      userData: {}
+      status: 0 // 0: Dynamic, 1: Fixed, 2: KinematicPositionBased, 3: KinematicVelocityBased
     }, options);
 
     // Initialize rigid body description
@@ -95,7 +95,7 @@ class Entity extends EventDispatcher {
     this.rigidBodyDesc.setSleeping(options.sleeping);
     this.rigidBodyDesc.setSoftCcdPrediction(options.softCcdPrediction);
     this.rigidBodyDesc.setTranslation(options.position.x, options.position.y, options.position.z);
-    this.rigidBodyDesc.setUserData(Object.assign(options.userData, { id: this.id })); // Store entity ID for Physics.js
+    this.rigidBodyDesc.setUserData({ id: this.id, parentId: options.parentId }); // Store entity ID for Physics.js
   }
 
   setRigidBody(rigidBody) {
@@ -329,6 +329,7 @@ class Entity extends EventDispatcher {
     // Initialize entity values
     let json = {
       id: this.id,
+      parentId: this.parentId,
       name: this.name
     };
 
@@ -366,8 +367,7 @@ class Entity extends EventDispatcher {
       },
       sleeping: this.rigidBodyDesc.sleeping,
       softCcdPrediction: this.rigidBodyDesc.softCcdPrediction,
-      status: this.rigidBodyDesc.status,
-      userData: this.rigidBodyDesc.userData
+      status: this.rigidBodyDesc.status
     }, json);
 
     // Include first collider properties
