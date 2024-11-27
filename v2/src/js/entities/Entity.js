@@ -113,7 +113,7 @@ class Entity extends EventDispatcher {
       events: [],
       friction: 0.5,
       isSensor: false,
-      mass: null,
+      mass: 0,
       restitution: 0,
       shape: null,
       solverGroups: 0xFFFFFFFF,
@@ -125,16 +125,14 @@ class Entity extends EventDispatcher {
     colliderDesc.setActiveEvents(ActiveEvents[options.activeEvents]);
     colliderDesc.setCollisionGroups(options.collisionGroups);
     colliderDesc.setContactForceEventThreshold(options.contactForceEventThreshold);
+    colliderDesc.setMass(options.mass); // Must set before density
     colliderDesc.setDensity(options.density);
     colliderDesc.setFriction(options.friction);
-    colliderDesc.setSensor(options.isSensor);
     colliderDesc.setRestitution(options.restitution);
+    colliderDesc.setSensor(options.isSensor);
     colliderDesc.setSolverGroups(options.solverGroups);
     colliderDesc.setTranslation(options.translation.x, options.translation.y, options.translation.z);
-    
-    // Conditionally set values to allow default effects
-    if (options.mass != null) colliderDesc.setMass(options.mass);
-    
+
     // Store callback events to colliderDesc
     colliderDesc.events = options.events;
 
@@ -372,8 +370,8 @@ class Entity extends EventDispatcher {
 
     // Include first collider properties
     json = Object.assign({
-      activeCollisionTypes: this.collidersDesc[0].activeCollisionTypes,
-      activeEvents: this.collidersDesc[0].activeEvents,
+      activeCollisionTypes: ActiveCollisionTypes[this.collidersDesc[0].activeCollisionTypes],
+      activeEvents: ActiveEvents[this.collidersDesc[0].activeEvents],
       collisionGroups: this.collidersDesc[0].collisionGroups,
       contactForceEventThreshold: this.collidersDesc[0].contactForceEventThreshold,
       density: this.collidersDesc[0].density,
