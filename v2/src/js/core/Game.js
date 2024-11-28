@@ -1,4 +1,4 @@
-import { Ticker } from './Ticker';
+import { Ticker } from './Ticker.js';
 import { AssetLoader } from '../loaders/AssetLoader.js';
 import { Graphics } from './Graphics.js';
 import { Physics } from './Physics.js';
@@ -35,11 +35,6 @@ class Game {
 
     // Render graphics
     this.graphics.render();
-  }
-
-  setFrequency(frequency = 60) {
-    this.physics.setFrequency(frequency);
-    this.ticker.get(0).rate = 1 / frequency;
   }
 
   onLoad(onLoad) {
