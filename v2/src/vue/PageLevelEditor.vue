@@ -1,5 +1,6 @@
 <script setup>
   import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
+  import { LevelFactory } from '../js/factories/LevelFactory.js';
   import { History } from '../js/core/CommandHistory';
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
@@ -196,9 +197,36 @@
     history.redo();
   }
 
+  async function loadLevel(path) {
+    game.physics.clear();
+    
+    // Load level from JSON
+    var entities = await LevelFactory.loadFile(path);
+
+    // Loop through entities
+    entities.forEach(function(entity) {
+      // Add 3D object after entity is added
+      entity.addEventListener('added', function(e) {
+        game.graphics.scene.add(entity.object);
+      });
+
+      // Add entity to physics entities map
+      game.physics.add(entity);
+
+      // Assign rendering camera from player
+      if (entity.type == 'player') {
+        game.player = entity;
+        game.graphics.setCamera(entity.camera);
+      }
+    });
+
+    // Return final array of entities
+    return entities;
+  }
+
   // Initialize app after canvas has been mounted
   onMounted(async function() {
-    entities.value = await game.loadLevel('../json/boxel-3d-sandbox.json');
+    entities.value = await loadLevel('../json/boxel-3d-sandbox.json');
     document.addEventListener('keydown', onKeyDown);
   });
 

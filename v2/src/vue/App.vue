@@ -2,15 +2,16 @@
   import '../scss/Global.scss';
   import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router'
-  import { Game } from '../js/Game.js';
+  import { Game } from '../js/core/Game.js';
   import Loading from './Loading.vue';
 
   // Initialize app and expose to window scope
+  const loaded = ref(false);
   const canvas = ref();
   const game = window.game = new Game(onLoad);
   const route = useRoute();
-  const loaded = ref(false);
 
+  // Update loaded state before mounting pages
   function onLoad() {
     loaded.value = true;
   }

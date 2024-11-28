@@ -1,8 +1,7 @@
-import { Loop } from './core/Loop';
-import { AssetLoader } from './loaders/AssetLoader.js';
-import { Graphics } from './core/Graphics.js';
-import { Physics } from './core/Physics.js';
-import { LevelFactory } from './factories/LevelFactory.js';
+import { Loop } from './Loop';
+import { AssetLoader } from '../loaders/AssetLoader.js';
+import { Graphics } from './Graphics.js';
+import { Physics } from './Physics.js';
 
 class Game {
   constructor(onLoad) {
@@ -46,33 +45,6 @@ class Game {
   
     // Run optional callback
     if (typeof onLoad == 'function') onLoad();
-  }
-
-  async loadLevel(path) {
-    this.physics.clear();
-    
-    // Load level from JSON
-    var entities = await LevelFactory.loadFile(path);
-
-    // Loop through entities
-    entities.forEach(function(entity) {
-      // Add 3D object after entity is added
-      entity.addEventListener('added', function(e) {
-        this.graphics.scene.add(entity.object);
-      }.bind(this));
-
-      // Add entity to physics entities map
-      this.physics.add(entity);
-
-      // Assign rendering camera from player
-      if (entity.type == 'player') {
-        this.player = entity;
-        this.graphics.setCamera(entity.camera);
-      }
-    }.bind(this));
-
-    // Return final array of entities
-    return entities;
   }
 }
 
