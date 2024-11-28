@@ -5,14 +5,14 @@
   import Card from './Card.vue';
   import Modal from '@/v2/src/vue/Modal.vue';
   import Loading from '@/v2/src/vue/Loading.vue';
-  import { Loop } from '@/v2/src/js/core/Loop.js';
+  import { Ticker } from '@/v2/src/js/core/Ticker.js';
   import { Graphics } from '@/v2/src/js/core/Graphics.js';
   import { LightFactory } from '@/v2/src/js/factories/LightFactory.js';
   import { AssetLoader } from '@/v2/src/js/loaders/AssetLoader.js';
 
   // Initialize components
   var canvas = ref();
-  var loop;
+  var ticker;
   var graphics;
   var assets;
   var background;
@@ -29,8 +29,8 @@
     graphics.scene.add(background, light);
 
     // Start render loop
-    loop.add(render, -1);
-    loop.start();
+    ticker.add(render, -1);
+    ticker.start();
   }
 
   function render(data) {
@@ -63,7 +63,7 @@
 
   // Redirect app after loading
   onMounted(function() {
-    loop = new Loop();
+    ticker = new Ticker();
     graphics = new Graphics(canvas.value);
     assets = new AssetLoader(onLoad);
     assets.load({

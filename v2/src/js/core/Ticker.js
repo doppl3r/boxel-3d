@@ -9,9 +9,9 @@
   Clock credit: mrdoob
 */
 
-class Loop {
+class Ticker {
   constructor() {
-    this.actions = [];
+    this.loops = [];
     this.startTime = 0;
     this.oldTime = 0;
     this.elapsedTime = 0;
@@ -20,36 +20,36 @@ class Loop {
     this.index = 0;
   }
 
-  add(callback = () => {}, frequency = -1) {
-    // Add callback function to array of functions
-    this.actions.push({
-      rate: 1 / frequency,
-      sum: 1 / frequency,
-      alpha: 0,
-      callback: callback // Execute function after each interval
-    });
+  add(callback, delay = 1000 / 60) {
+    // Create a loop with a callback and delay (milliseconds)
+    const loop = new Loop(callback, delay);
+    this.loops.push(loop);
   }
 
-  update(animationFrameCallback) {
+  get(index) {
+    return this.loops[index];
+  }
+
+  tick(animationFrameCallback) {
     if (this.running == true) {
       // Request visual update function before next repaint
       this.index = requestAnimationFrame(animationFrameCallback);
 
       // Check if functions exist
-      if (this.actions.length > 0) {
+      if (this.loops.length > 0) {
         var delta = this.getDelta();
-        var alpha = this.actions[0].sum / this.actions[0].rate; // Set alpha relative to base interval
+        var alpha = this.loops[0].sum / this.loops[0].rate; // Set alpha relative to base interval
 
         // Loop through array of functions (descending order)
-        for (var index = this.actions.length - 1; index >= 0; index--) {
-          this.actions[index].sum += delta;
+        for (var index = this.loops.length - 1; index >= 0; index--) {
+          this.loops[index].sum += delta;
 
-          // Trigger this.actions[index] callback
-          if (this.actions[index].sum >= this.actions[index].rate || this.actions[index].rate == -1) {
-            this.actions[index].sum %= this.actions[index].rate;
-            this.actions[index].callback({
-              delta: (this.actions[index].rate == -1) ? delta : this.actions[index].rate,
-              alpha: (index == 0) ? 0 : alpha, // Return zero for base action or alpha for sibling actions
+          // Trigger this.loops[index] callback
+          if (this.loops[index].sum >= this.loops[index].rate || this.loops[index].rate == -1) {
+            this.loops[index].sum %= this.loops[index].rate;
+            this.loops[index].callback({
+              delta: (this.loops[index].rate == -1) ? delta : this.loops[index].rate,
+              alpha: (index == 0) ? 0 : alpha, // Return zero for base loop or alpha for sibling loops
               index: this.index
             });
           }
@@ -66,8 +66,8 @@ class Loop {
 
     // Create recursive callback function
     var animationFrameCallback = function() {
-      // Run update function with callback
-      this.update(animationFrameCallback);
+      // Run tick function with callback
+      this.tick(animationFrameCallback);
     }.bind(this);
 
     // Start recursive callback loop
@@ -102,4 +102,25 @@ class Loop {
   }
 }
 
-export { Loop };
+/*
+  A loop triggers a callback after a specific time delay (milliseconds).
+  The rate is measured by delay over 1 second.
+  
+  Ex:
+    delay (60fps): 1000 / 60
+    rate (0.16ms): delay / 1000
+*/
+
+class Loop {
+  constructor(callback = () => {}, delay) {
+    this.rate = delay / 1000;
+    this.sum = 0;
+    this.alpha = 0;
+    this.callback = callback;
+
+    // Render immediately if delay is negative
+    if (delay < 0) this.rate = -1;
+  }
+}
+
+export { Ticker };
