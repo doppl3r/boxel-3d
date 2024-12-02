@@ -15,6 +15,7 @@ class Game {
     // Initialize components
     this.graphics = new Graphics(canvas);
     this.graphics.scene.add(this.physics.debugger);
+    this.physics.debugger.disable();
 
     // Load public assets with callbacks (onLoad, onProgress, onError)
     this.assets.load({

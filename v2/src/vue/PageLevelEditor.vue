@@ -227,6 +227,7 @@
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     entities.value = await loadLevel('../json/boxel-3d-sandbox.json');
+    game.physics.debugger.enable();
     document.addEventListener('keydown', onKeyDown);
   });
 

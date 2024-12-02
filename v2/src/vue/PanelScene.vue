@@ -64,7 +64,9 @@
   }
 
   function onDragStart(e, entity) {
-    
+    if (entity.isSelected != true) {
+      onClick(e, entity);
+    }
   }
 
   function onDragOver(e, entity) {
@@ -230,14 +232,20 @@
           border-radius: 0.25em;
           cursor: pointer;
           display: flex;
+          opacity: 1;
           padding: 0 0.25em;
           transition-duration: 0.1s;
-          transition-property: transform;
+          transition-property: font-size, opacity, transform;
           transition-timing-function: ease-in-out;
           width: 100%;
           
           &.selected {
             background-color: rgba(#F52D59, 1);
+          }
+          
+          &.list-leave-active {
+            opacity: 0;
+            font-size: 0;
           }
 
           .icon {
