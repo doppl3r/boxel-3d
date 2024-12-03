@@ -1,6 +1,5 @@
 <script setup>
   import { ref } from 'vue';
-  import ContextMenu from './ContextMenu.vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({ canUndo: Boolean, canRedo: Boolean, entities: Array });
@@ -9,6 +8,7 @@
     'deleteEntity',
     'linkEntity',
     'moveEntity',
+    'openContextMenu',
     'renameEntity',
     'selectEntity',
     'unlinkEntity',
@@ -17,8 +17,6 @@
   ]);
   const expanded = ref(true);
   const content = ref();
-  const contextMenuEvent = ref({});
-  const contextMenuActions = ref([]);
 
   function isExpanded() {
     return expanded.value == true;
@@ -29,27 +27,7 @@
   }
 
   function onContextMenu(e, entity) {
-    if (entity.isSelected) {
-      let actions = [];
-      let actionLink = { text: 'Link', icon: 'link', callback: () => emit('linkEntity', e, entity) }
-      let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => emit('unlinkEntity', e, entity) }
-      let actionDelete = { text: 'Delete', icon: 'delete', callback: () => emit('deleteEntity', e, entity) }
-
-      if (entity.rigidBodyDesc.userData.parentId) actions.push(actionUnlink);
-      else actions.push(actionLink);
-
-      // Add delete action
-      actions.push(actionDelete);
-
-      // Dispatch event to the global context menu
-      contextMenuEvent.value = e;
-      contextMenuActions.value = actions;
-    }
-    else {
-      // Select item and re-open context menu
-      onClick(e, entity);
-      onContextMenu(e, entity);
-    }
+    emit('openContextMenu', e, entity);
   }
 
   function focusInput(e) {
@@ -140,7 +118,6 @@
         </li>
       </ul>
     </div>
-    <ContextMenu :event="contextMenuEvent" :actions="contextMenuActions" />
   </div>
 </template>
 

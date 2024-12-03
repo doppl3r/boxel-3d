@@ -5,6 +5,7 @@
   import PanelActions from './PanelActions.vue';
   import PanelAssets from './PanelAssets.vue';
   import PanelScene from './PanelScene.vue';
+  import ContextMenu from './ContextMenu.vue';
 
   // Initialize app and expose to window scope
   const props = defineProps({ game: Object });
@@ -15,6 +16,8 @@
   const history = reactive(new History());
   const canUndo = computed(() => history.canUndo());
   const canRedo = computed(() => history.canRedo());
+  const contextMenuEvent = ref({});
+  const contextMenuActions = ref([]);
 
   function setMode(newMode) {
     mode.value = newMode;
@@ -224,6 +227,30 @@
     return entities;
   }
 
+  function openContextMenu(e, entity) {
+    if (entity.isSelected) {
+      let actions = [];
+      let actionLink = { text: 'Link', icon: 'link', callback: () => linkEntity(e, entity) }
+      let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => unlinkEntity(e, entity) }
+      let actionDelete = { text: 'Delete', icon: 'delete', callback: () => deleteEntity(e, entity) }
+
+      if (entity.rigidBodyDesc.userData.parentId) actions.push(actionUnlink);
+      else actions.push(actionLink);
+
+      // Add delete action
+      actions.push(actionDelete);
+
+      // Dispatch event to the global context menu
+      contextMenuEvent.value = e;
+      contextMenuActions.value = actions;
+    }
+    else {
+      // Select item and re-open context menu
+      selectEntity(e, entity);
+      openContextMenu(e, entity);
+    }
+  }
+
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     entities.value = await loadLevel('../json/boxel-3d-sandbox.json');
@@ -252,10 +279,12 @@
         @rename-entity="renameEntity"
         @select-entity="selectEntity"
         @unlink-entity="unlinkEntity"
+        @open-context-menu="openContextMenu"
         @redo="redo"
         @undo="undo"
       />
     </div>
+    <ContextMenu :event="contextMenuEvent" :actions="contextMenuActions" />
   </div>
 </template>
 
