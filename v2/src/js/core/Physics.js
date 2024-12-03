@@ -178,17 +178,25 @@ class Physics {
   }
 
   removeJoint(entity) {
-    // Loop through all world joints for matching ID
-    this.world.impulseJoints.forEach(function(joint) {
-      let parent = this.get(joint.body1().userData.id);
-      let child = this.get(joint.body2().userData.id);
+    // Populate array of joint handles from entity
+    const jointHandles = [];
+    this.world.impulseJoints.forEachJointHandleAttachedToRigidBody(entity.rigidBody.handle, function(handle) {
+      jointHandles.push(handle);
+    }.bind(this));
+
+    // Loop through joint handles
+    for (let i = jointHandles.length - 1; i >= 0; i--) {
+      const handle = jointHandles[i];
+      const joint = this.world.impulseJoints.get(handle);
+      const parent = this.get(joint.body1().userData.id);
+      const child = this.get(joint.body2().userData.id);
       
       // Add child joint back to joint queue
       if (entity.id == parent.id) {
         this.jointQueue.push(child);
-        this.world.removeImpulseJoint(joint, true);
+        this.world.impulseJoints.remove(handle, true);
       }
-    }.bind(this));
+    }
   }
 
   createController(entity) {

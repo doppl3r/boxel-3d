@@ -172,7 +172,33 @@
   }
 
   function unlinkEntity(e, entity) {
-    console.log(entity);
+    // Store an array of selected entities with their current index
+    const selected = entitiesSelected.map(item => {
+      return {
+        parentId: item.getParentId(),
+        entity: item
+      }
+    });
+
+    // Unassign or assign parent
+    if (selected.length > 0) {
+      history.add(
+        function() {
+          for (let i = selected.length - 1; i >= 0; i--) {
+            const item = selected[i];
+            /* props.game.physics.removeJoint(item.entity);
+            item.entity.setParentId(null); */
+          }
+        },
+        function() {
+          for (let i = 0; i < selected.length; i++) {
+            const item = selected[i];
+            /* item.entity.setParentId(item.parentId);
+            props.game.physics.checkJointPairs(item.entity); */
+          }
+        }
+      ).execute();
+    }
   }
 
   function onKeyDown(e) {

@@ -19,7 +19,6 @@ class Entity extends EventDispatcher {
     // Set base components
     this.name = '';
     this.id = options.id || MathUtils.generateUUID();
-    this.parentId = options.parentId;
     this.isEntity = true;
     this.rigidBody;
     this.rigidBodyDesc;
@@ -69,7 +68,7 @@ class Entity extends EventDispatcher {
 
   setRigidBodyDesc(options) {
     // Set default rigid body options
-    this.defaultRigidBodyOptions = {
+    const defaultOptions = {
       angularDamping: 0,
       ccd: false,
       enabledRotations: { x: true, y: true, z: true },
@@ -84,7 +83,7 @@ class Entity extends EventDispatcher {
     };
 
     // Set options with default values
-    options = Object.assign({ ...this.defaultRigidBodyOptions }, options);
+    options = Object.assign({ ...defaultOptions }, options);
 
     // Create rigid body description
     this.rigidBodyDesc = new RigidBodyDesc(isNaN(options.status) ? RigidBodyType[options.status] : options.status);
@@ -107,7 +106,7 @@ class Entity extends EventDispatcher {
 
   addColliderDesc(options) {
     // Set default collider options
-    this.defaultColliderOptions = {
+    const defaultOptions = {
       activeCollisionTypes: 'DEFAULT', // 1: DYNAMIC_DYNAMIC, 2: DYNAMIC_FIXED, 12: DYNAMIC_KINEMATIC, 15: DEFAULT, 32: FIXED_FIXED, 8704: KINEMATIC_FIXED, 52224: KINEMATIC_KINEMATIC, 60943: ALL
       activeEvents: 'NONE', // 0: NONE, 1: COLLISION_EVENTS, 2: CONTACT_FORCE_EVENTS
       collisionGroups: 0xFFFFFFFF,
@@ -124,7 +123,7 @@ class Entity extends EventDispatcher {
     };
 
     // Set options with default values
-    options = Object.assign({ ...this.defaultColliderOptions }, options);
+    options = Object.assign({ ...defaultOptions }, options);
 
     // Create collider description
     const colliderDesc = new ColliderDesc(options.shape);
@@ -149,6 +148,15 @@ class Entity extends EventDispatcher {
 
   setController(controller) {
     this.controller = controller;
+  }
+
+  getParentId() {
+    return this.rigidBodyDesc.userData.parentId;
+  }
+
+  setParentId(parentId) {
+    this.rigidBodyDesc.userData.parentId = parentId;
+    if (this.rigidBody) this.rigidBody.userData.parentId = parentId;
   }
 
   getPosition() {
@@ -334,7 +342,6 @@ class Entity extends EventDispatcher {
     // Initialize entity values
     let json = {
       id: this.id,
-      parentId: this.parentId,
       name: this.name
     };
 
@@ -354,6 +361,7 @@ class Entity extends EventDispatcher {
       },
       isEnabled: this.rigidBodyDesc.enabled,
       linearDamping: this.rigidBodyDesc.linearDamping,
+      parentId: this.rigidBodyDesc.userData.parentId,
       position: {
         x: this.rigidBodyDesc.translation.x,
         y: this.rigidBodyDesc.translation.y,
