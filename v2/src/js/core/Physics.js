@@ -173,6 +173,14 @@ class Physics {
     // Loop through queue
     for (let i = this.jointQueue.length - 1; i >= 0; i--) {
       let child = this.jointQueue[i];
+
+      // Restore parentId if previously removed
+      if (child.rigidBody.userData.parentIdPrev) {
+        child.rigidBody.userData.parentId = child.rigidBody.userData.parentIdPrev;
+        child.rigidBody.userData.parentIdPrev = null;
+      }
+
+      // Create joint if parent entity exists in the world
       parent = this.get(child.rigidBodyDesc.userData.parentId);
       if (parent) {
         this.createJoint(parent, child);
@@ -198,6 +206,10 @@ class Physics {
       // Enqueue orphan entity before removing joint
       if (entity.id == parent.id) {
         this.jointQueue.push(child);
+
+        // Store parentId if child is re-jointed to parent
+        child.rigidBody.userData.parentIdPrev = child.rigidBody.userData.parentId;
+        child.rigidBody.userData.parentId = null;
       }
 
       // Remove joints

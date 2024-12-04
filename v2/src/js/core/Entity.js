@@ -156,7 +156,6 @@ class Entity extends EventDispatcher {
 
   setParentId(parentId) {
     this.rigidBodyDesc.userData.parentId = parentId;
-    if (this.rigidBody) this.rigidBody.userData.parentId = parentId;
   }
 
   getPosition() {
