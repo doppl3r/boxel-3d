@@ -179,14 +179,7 @@ class Physics {
 
   removeJoint(entity) {
     // Populate array of joint handles from entity
-    const jointHandles = [];
     this.world.impulseJoints.forEachJointHandleAttachedToRigidBody(entity.rigidBody.handle, function(handle) {
-      jointHandles.push(handle);
-    }.bind(this));
-
-    // Loop through joint handles
-    for (let i = jointHandles.length - 1; i >= 0; i--) {
-      const handle = jointHandles[i];
       const joint = this.world.impulseJoints.get(handle);
       const parent = this.get(joint.body1().userData.id);
       const child = this.get(joint.body2().userData.id);
@@ -196,7 +189,7 @@ class Physics {
         this.jointQueue.push(child);
         this.world.impulseJoints.remove(handle, true);
       }
-    }
+    }.bind(this));
   }
 
   createController(entity) {
