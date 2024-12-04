@@ -66,7 +66,7 @@ class Physics {
       // Create entity physics components
       this.createRigidBody(entity);
       this.createColliders(entity);
-      this.checkJointPairs(entity);
+      this.createParentJoint(entity);
 
       // Dispatch 'added' event to observers
       entity.dispatchEvent({ type: 'added' });
@@ -76,7 +76,7 @@ class Physics {
 
   remove(entity) {
     // Remove entity physics components before deletion
-    this.removeJoint(entity);
+    this.removeJoints(entity);
     this.removeColliders(entity);
     this.removeRigidBody(entity);
     entity.object.removeFromParent();
@@ -134,7 +134,27 @@ class Physics {
     }
   }
 
-  checkJointPairs(entity) {
+  createJoint(parent, child) {
+    const anchor1 = new Vector3();
+    const anchor2 = new Vector3().copy(parent.rigidBodyDesc.translation).sub(child.rigidBodyDesc.translation);
+    const frame1 = new Quaternion().copy(parent.rigidBodyDesc.rotation);
+    const frame2 = new Quaternion().copy(child.rigidBodyDesc.rotation);
+
+    // Rotate position by the frame conjugate
+    anchor1.applyQuaternion(frame1.conjugate());
+    anchor2.applyQuaternion(frame2.conjugate());
+
+    // Create fixed joint from parameters
+    const params = JointData.fixed(anchor1, frame1, anchor2, frame2);
+    const joint = this.world.createImpulseJoint(params, parent.rigidBody, child.rigidBody, true);
+    return joint;
+  }
+
+  removeJoint(joint) {
+    this.world.removeImpulseJoint(joint, true);
+  }
+
+  createParentJoint(entity) {
     // Get entity parent ID
     let parentId = entity.rigidBodyDesc.userData.parentId;
     let parent = this.get(parentId);
@@ -161,35 +181,52 @@ class Physics {
     }
   }
 
-  createJoint(parent, child) {
-    const anchor1 = new Vector3();
-    const anchor2 = new Vector3().copy(parent.rigidBodyDesc.translation).sub(child.rigidBodyDesc.translation);
-    const frame1 = new Quaternion().copy(parent.rigidBodyDesc.rotation);
-    const frame2 = new Quaternion().copy(child.rigidBodyDesc.rotation);
-
-    // Rotate position by the frame conjugate
-    anchor1.applyQuaternion(frame1.conjugate());
-    anchor2.applyQuaternion(frame2.conjugate());
-
-    // Create fixed joint from parameters
-    const params = JointData.fixed(anchor1, frame1, anchor2, frame2);
-    const joint = this.world.createImpulseJoint(params, parent.rigidBody, child.rigidBody, true);
-    return joint;
-  }
-
-  removeJoint(entity) {
+  removeJoints(entity) {
     // Populate array of joint handles from entity
+    const jointHandles = [];
     this.world.impulseJoints.forEachJointHandleAttachedToRigidBody(entity.rigidBody.handle, function(handle) {
+      jointHandles.push(handle);
+    });
+
+    // Reverse-loop through joint handles
+    for (let i = jointHandles.length - 1; i >= 0; i--) {
+      const handle = jointHandles[i];
       const joint = this.world.impulseJoints.get(handle);
       const parent = this.get(joint.body1().userData.id);
       const child = this.get(joint.body2().userData.id);
       
-      // Add child joint back to joint queue
+      // Enqueue orphan entity before removing joint
       if (entity.id == parent.id) {
         this.jointQueue.push(child);
-        this.world.impulseJoints.remove(handle, true);
       }
-    }.bind(this));
+
+      // Remove joints
+      this.removeJoint(joint);
+    };
+  }
+
+  removeParentJoint(entity) {
+    const jointHandles = [];
+    const parent = this.get(entity.getParentId());
+    
+    if (parent) {
+      // Populate array of joint handles from parent entity
+      this.world.impulseJoints.forEachJointHandleAttachedToRigidBody(parent.rigidBody.handle, function(handle) {
+        jointHandles.push(handle);
+      });
+  
+      // Reverse-loop through joint handles
+      for (let i = jointHandles.length - 1; i >= 0; i--) {
+        const handle = jointHandles[i];
+        const joint = this.world.impulseJoints.get(handle); 
+        const child = this.get(joint.body2().userData.id);
+        
+        // Check if entity ID is the same as the child ID
+        if (entity.id == child.id) {
+          this.removeJoint(joint);
+        }
+      }
+    }
   }
 
   createController(entity) {

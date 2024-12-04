@@ -186,15 +186,15 @@
         function() {
           for (let i = selected.length - 1; i >= 0; i--) {
             const item = selected[i];
-            /* props.game.physics.removeJoint(item.entity);
-            item.entity.setParentId(null); */
+            props.game.physics.removeParentJoint(item.entity);
+            item.entity.setParentId(null);
           }
         },
         function() {
           for (let i = 0; i < selected.length; i++) {
             const item = selected[i];
-            /* item.entity.setParentId(item.parentId);
-            props.game.physics.checkJointPairs(item.entity); */
+            item.entity.setParentId(item.parentId);
+            props.game.physics.createParentJoint(item.entity);
           }
         }
       ).execute();

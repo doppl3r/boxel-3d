@@ -169,6 +169,10 @@ class Entity extends EventDispatcher {
     if (this.rigidBody) this.rigidBody.setTranslation(position);
   }
 
+  resetPosition() {
+    if (this.rigidBody) this.rigidBody.setTranslation(this.rigidBodyDesc.translation);
+  }
+
   getRotation() {
     if (this.rigidBody == null) return this.rigidBodyDesc.rotation;
     else if (this.rigidBody.isKinematic()) return this.rigidBody.nextRotation()
@@ -177,6 +181,10 @@ class Entity extends EventDispatcher {
 
   setRotation(rotation) {
     if (this.rigidBody) this.rigidBody.setRotation(rotation);
+  }
+
+  resetRotation() {
+    if (this.rigidBody) this.rigidBody.setRotation(this.rigidBodyDesc.rotation);
   }
 
   getScale() {
