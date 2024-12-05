@@ -17,7 +17,7 @@ class Entity extends EventDispatcher {
     super();
 
     // Set base components
-    this.name = '';
+    this.name = options.name || '';
     this.id = options.id || MathUtils.generateUUID();
     this.isEntity = true;
     this.rigidBody;
@@ -155,7 +155,15 @@ class Entity extends EventDispatcher {
   }
 
   setParentId(parentId) {
+    this.rigidBodyDesc.userData.parentIdPrev = this.rigidBodyDesc.userData.parentId;
     this.rigidBodyDesc.userData.parentId = parentId;
+  }
+
+  restoreParentId() {
+    if (this.rigidBodyDesc.userData.parentIdPrev) {
+      this.rigidBodyDesc.userData.parentId = this.rigidBodyDesc.userData.parentIdPrev;
+      this.rigidBodyDesc.userData.parentIdPrev = null;
+    }
   }
 
   getPosition() {

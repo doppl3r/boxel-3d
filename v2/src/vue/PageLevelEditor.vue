@@ -193,7 +193,7 @@
         function() {
           for (let i = 0; i < selected.length; i++) {
             const item = selected[i];
-            item.entity.setParentId(item.parentId);
+            item.entity.restoreParentId();
             props.game.physics.createParentJoint(item.entity);
           }
         }

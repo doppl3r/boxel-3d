@@ -3,12 +3,6 @@
   "version": "2",
   "children": [
     {
-      "type": "light",
-      "position": { "x": 0, "y": 4, "z": 0 },
-      "status": 1,
-      "lightType": "AmbientLight"
-    },
-    {
       "type": "cube",
       "position": { "x": 0, "y": 0, "z": 0 },
       "scale": { "x": 24, "y": 1, "z": 1 },
@@ -32,25 +26,12 @@
       "scale": { "x": 1, "y": 11, "z": 1 },
       "status": 1
     },
-    {
-      "type": "control",
-      "position": { "x": 8, "y": 7, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 1, "w": 0 },
-      "scale": { "x": 2, "y": 2, "z": 2 },
-      "status": 1
-    },
-    {
-      "type": "player",
-      "position": { "x": 8, "y": 1, "z": 0 },
-      "scale": { "x": 1, "y": 1, "z": 1 },
-      "status": 0
-    },
-
 
 
 
     {
       "type": "cube",
+      "name": "0",
       "id": "9183b20a-30b0-4cc7-be5e-8cf297fa3079",
       "model": { "name": "cube-tip" },
       "events": [
@@ -64,6 +45,7 @@
     },
     {
       "type": "cube",
+      "name": "1",
       "id": "a0721edb-820c-42e3-ac7e-4d4edaaa67c0",
       "parentId": "9183b20a-30b0-4cc7-be5e-8cf297fa3079",
       "position": { "x": -6, "y": 8, "z": 0 },
@@ -71,6 +53,7 @@
     },
     {
       "type": "cube",
+      "name": "2",
       "id": "57b034a2-1db0-466d-ad70-9fd96e225f83",
       "parentId": "a0721edb-820c-42e3-ac7e-4d4edaaa67c0",
       "position": { "x": -4, "y": 4, "z": 0 },
@@ -78,6 +61,7 @@
     },
     {
       "type": "cube",
+      "name": "3",
       "id": "649142c2-9d67-4bbc-93f2-a137a1a4b3da",
       "parentId": "57b034a2-1db0-466d-ad70-9fd96e225f83",
       "position": { "x": -2, "y": 8, "z": 0 },
@@ -85,6 +69,7 @@
     },
     {
       "type": "bounce",
+      "name": "4",
       "id": "97383ba1-3b9f-4ce6-9b3f-19e97c3e0e31",
       "parentId": "57b034a2-1db0-466d-ad70-9fd96e225f83",
       "position": { "x": 0, "y": 4, "z": 0 },
@@ -92,6 +77,7 @@
     },
     {
       "type": "cube",
+      "name": "5",
       "id": "f941d824-c311-4ff7-bf73-ec4c5103d213",
       "parentId": "97383ba1-3b9f-4ce6-9b3f-19e97c3e0e31",
       "position": { "x": 2, "y": 8, "z": 0 },
@@ -100,6 +86,19 @@
 
 
 
+    {
+      "type": "control",
+      "position": { "x": 8, "y": 7, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 1, "w": 0 },
+      "scale": { "x": 2, "y": 2, "z": 2 },
+      "status": 1
+    },
+    {
+      "type": "player",
+      "position": { "x": 8, "y": 1, "z": 0 },
+      "scale": { "x": 1, "y": 1, "z": 1 },
+      "status": 0
+    },
     {
       "type": "cube",
       "position": { "x": 0, "y": 0, "z": -12 },
@@ -191,6 +190,12 @@
       "rotation": { "x": 0, "y": 0, "z": 0.7068032050181363, "w": -0.7074101591179357 },
       "scale": { "x": 1, "y": 1, "z": 1 },
       "status": 1
+    },
+    {
+      "type": "light",
+      "position": { "x": 0, "y": 4, "z": 0 },
+      "status": 1,
+      "lightType": "AmbientLight"
     }
   ]
 }

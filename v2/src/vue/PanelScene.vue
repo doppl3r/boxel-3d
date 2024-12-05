@@ -84,7 +84,7 @@
         <TransitionGroup name="list">
           <li v-for="entity in props.entities"
             :key="entity.id"
-            :class="{ 'selected': entity.isSelected }"
+            :class="{ selected: entity.isSelected }"
             draggable="true"
             @click="onClick($event, entity)"
             @contextmenu.prevent="onContextMenu($event, entity)"
@@ -94,7 +94,7 @@
             @drop="onDragDrop($event, entity)"
           >
             <span
-              v-if="entity.rigidBodyDesc.userData.parentId"
+              :class="{ hidden: entity.rigidBodyDesc.userData.parentId == null }"
               class="icon material-symbols-rounded"
               title="Double click to select parent"
             >
@@ -223,10 +223,19 @@
           &.list-leave-active {
             opacity: 0;
             font-size: 0;
+
+            .icon {
+              font-size: 0;
+            }
           }
 
           .icon {
             padding-right: 0.125em;
+            transition: inherit;
+
+            &.hidden {
+              font-size: 0;
+            }
           }
           
           input {

@@ -156,7 +156,7 @@ class Physics {
 
   createParentJoint(entity) {
     // Get entity parent ID
-    let parentId = entity.rigidBodyDesc.userData.parentId;
+    let parentId = entity.getParentId();
     let parent = this.get(parentId);
     
     // Check if entity has parent ID
@@ -173,18 +173,19 @@ class Physics {
     // Loop through queue
     for (let i = this.jointQueue.length - 1; i >= 0; i--) {
       let child = this.jointQueue[i];
-
-      // Restore parentId if previously removed
-      if (child.rigidBody.userData.parentIdPrev) {
-        child.rigidBody.userData.parentId = child.rigidBody.userData.parentIdPrev;
-        child.rigidBody.userData.parentIdPrev = null;
-      }
+      
+      // Restore parent ID if previously removed
+      child.restoreParentId();
 
       // Create joint if parent entity exists in the world
-      parent = this.get(child.rigidBodyDesc.userData.parentId);
+      parent = this.get(child.getParentId());
       if (parent) {
         this.createJoint(parent, child);
         this.jointQueue.splice(i, 1);
+      }
+      else {
+        // Reset child parent Id to null if parent entity does not exist yet
+        child.setParentId(null);
       }
     }
   }
@@ -205,11 +206,10 @@ class Physics {
       
       // Enqueue orphan entity before removing joint
       if (entity.id == parent.id) {
-        this.jointQueue.push(child);
-
-        // Store parentId if child is re-jointed to parent
-        child.rigidBody.userData.parentIdPrev = child.rigidBody.userData.parentId;
-        child.rigidBody.userData.parentId = null;
+        if (child.rigidBodyDesc.userData.parentId != null) {
+          this.jointQueue.push(child);
+          child.setParentId(null);
+        }
       }
 
       // Remove joints
