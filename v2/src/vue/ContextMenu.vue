@@ -73,7 +73,7 @@
   <Transition name="fade">
     <ul ref="menu" :style="style" v-if="isVisible">
       <li v-for="action in props.actions">
-        <button @click.prevent="select($event, action)">
+        <button @click.prevent="select($event, action)" :disabled="action.disabled">
           <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
           {{ action.text }}
         </button>
@@ -130,6 +130,10 @@
         line-height: 1.5em;
         padding: 0 0.25em;
         width: 100%;
+
+        &[disabled] {
+          pointer-events: none;
+        }
   
         &:hover {
           background-color: #FFA217;

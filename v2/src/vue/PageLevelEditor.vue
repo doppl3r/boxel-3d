@@ -260,11 +260,14 @@
       let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => unlinkEntity(e, entity) }
       let actionDelete = { text: 'Delete', icon: 'delete', callback: () => deleteEntity(e, entity) }
 
-      if (entity.rigidBodyDesc.userData.parentId) actions.push(actionUnlink);
-      else actions.push(actionLink);
+      // Conditionally disable link actions
+      if (entitiesSelected.length == 1) {
+        actionLink.disabled = true;
+        if (entity.getParentId() == null) actionUnlink.disabled = true;
+      }
 
       // Add delete action
-      actions.push(actionDelete);
+      actions.push(actionLink, actionUnlink, actionDelete);
 
       // Dispatch event to the global context menu
       contextMenuEvent.value = e;
