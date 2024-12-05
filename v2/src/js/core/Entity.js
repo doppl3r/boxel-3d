@@ -155,11 +155,8 @@ class Entity extends EventDispatcher {
   }
 
   setParentId(parentId) {
-    // Set parent ID if previous ID was not set
-    if (this.rigidBodyDesc.userData.parentIdPrev == null) {
-      this.rigidBodyDesc.userData.parentIdPrev = this.rigidBodyDesc.userData.parentId;
-      this.rigidBodyDesc.userData.parentId = parentId;
-    }
+    this.rigidBodyDesc.userData.parentIdPrev = this.rigidBodyDesc.userData.parentId;
+    this.rigidBodyDesc.userData.parentId = parentId;
   }
 
   restoreParentId() {

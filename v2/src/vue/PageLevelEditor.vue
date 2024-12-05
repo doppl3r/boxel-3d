@@ -176,8 +176,9 @@
         entity: item
       }
     }).sort((a, b) => a.index - b.index);
-
+    
     // Assign or unassign to top selected item
+    const topParentId = selected[0].entity.id;
     if (selected.length > 0) {
       history.add(
         function() {
@@ -186,7 +187,7 @@
             const item = selected[i];
             props.game.physics.removeParentJoint(item.entity);
             item.entity.restoreParentId();
-            item.entity.setParentId(selected[0].entity.id);
+            item.entity.setParentId(topParentId);
             props.game.physics.createParentJoint(item.entity)
           }
         },
