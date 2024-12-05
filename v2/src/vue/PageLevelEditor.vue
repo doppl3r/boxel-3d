@@ -168,14 +168,46 @@
   }
 
   function linkEntity(e, entity) {
-    console.log(entity);
+    // Store an array of selected entities with their current index
+    const selected = entitiesSelected.map(item => {
+      return {
+        index: entities.value.indexOf(item),
+        parentId: item.getParentId(),
+        entity: item
+      }
+    }).sort((a, b) => a.index - b.index);
+
+    // Assign or unassign to top selected item
+    if (selected.length > 0) {
+      history.add(
+        function() {
+          // Ignore first item (zero index)
+          for (let i = selected.length - 1; i > 0; i--) {
+            const item = selected[i];
+            props.game.physics.removeParentJoint(item.entity);
+            item.entity.restoreParentId();
+            item.entity.setParentId(selected[0].entity.id);
+            props.game.physics.createParentJoint(item.entity)
+          }
+        },
+        function() {
+          // Ignore first item (zero index)
+          for (let i = 1; i < selected.length; i++) {
+            const item = selected[i];
+            props.game.physics.removeParentJoint(item.entity);
+            item.entity.restoreParentId();
+            item.entity.setParentId(item.parentId);
+            props.game.physics.createParentJoint(item.entity)
+          }
+        }
+      ).execute();
+    }
   }
 
   function unlinkEntity(e, entity) {
     // Store an array of selected entities with their current index
     const selected = entitiesSelected.map(item => {
       return {
-        parentId: item.getParentId(),
         entity: item
       }
     });
