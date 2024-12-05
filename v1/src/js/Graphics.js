@@ -1,4 +1,4 @@
-import { PCFSoftShadowMap, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Fog, PCFSoftShadowMap, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -12,6 +12,10 @@ class Graphics {
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 100);
     this.scene = new Scene();
     this.canvas = canvas;
+
+    // Add fog
+    this.fog = new Fog('#ffffff', 180, 480);
+    this.scene.fog = this.fog;
 
     // Initialize renderer components
     this.renderer = new WebGLRenderer({ alpha: true, canvas: canvas });
@@ -89,6 +93,7 @@ class Graphics {
 
   setScene(scene) {
     this.scene = scene;
+    this.scene.fog = this.fog;
     this.renderPass.scene = scene;
     this.outlinePass.renderScene = scene;
   }

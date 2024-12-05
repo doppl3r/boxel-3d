@@ -295,6 +295,19 @@ class App {
       var description = app.level.getDescriptionByTitle(title)
       if (theme == null) theme = app.level.getThemeByTitle(title);
       app.level.entityFactory.color = theme.color;
+
+      // Set optional fog
+      if (theme.fog) {
+        console.log(theme.fog);
+        app.graphics.fog.color.set(theme.fog.color);
+        app.graphics.fog.near = theme.fog.near || 0.01;
+        app.graphics.fog.far = theme.fog.far || 240;
+      }
+      else {
+        app.graphics.fog.color.set('#ffffff');
+        app.graphics.fog.near = app.graphics.fog.far = 9999;
+      }
+
       app.background.setTheme(theme.model);
       app.updateGravity();
       app.play = true;

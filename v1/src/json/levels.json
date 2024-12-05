@@ -225,10 +225,10 @@
       ]
     },
     {
-      "title": "Tropic",
-      "url": "../svg/button-pack-tropic.svg",
-      "theme": "tropic",
-      "description": "Test out levels before they are officially released",
+      "title": "Blue City",
+      "url": "../svg/button-pack-city.svg",
+      "theme": "blue",
+      "description": "I'm walking here!",
       "levels": [
         {
           "title": "Campaign Level 36",
