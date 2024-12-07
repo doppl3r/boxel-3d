@@ -16,6 +16,8 @@
   const history = reactive(new History());
   const canUndo = computed(() => history.canUndo());
   const canRedo = computed(() => history.canRedo());
+  const ticker = reactive(props.game.ticker);
+  const isPlaying = computed(() => ticker.running);
   const contextMenuEvent = ref({});
   const contextMenuActions = ref([]);
 
@@ -313,6 +315,14 @@
     }
   }
 
+  function pause() {
+    ticker.stop()
+  }
+
+  function play() {
+    ticker.start()
+  }
+
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     entities.value = await loadLevel('../json/boxel-3d-sandbox.json');
@@ -334,10 +344,13 @@
         :entities="entities"
         :canUndo="canUndo"
         :canRedo="canRedo"
+        :isPlaying="isPlaying"
         @add-entity="addEntity"
         @delete-entity="deleteEntity"
         @link-entity="linkEntity"
         @move-entity="moveEntity"
+        @pause="pause"
+        @play="play"
         @rename-entity="renameEntity"
         @select-entity="selectEntity"
         @unlink-entity="unlinkEntity"

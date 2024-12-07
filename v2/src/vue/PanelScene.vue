@@ -2,13 +2,20 @@
   import { ref } from 'vue';
 
   // Initialize app and expose to window scope
-  const props = defineProps({ canUndo: Boolean, canRedo: Boolean, entities: Array });
+  const props = defineProps({
+    canUndo: Boolean,
+    canRedo: Boolean,
+    entities: Array,
+    isPlaying: Boolean
+  });
   const emit = defineEmits([
     'addEntity',
     'deleteEntity',
     'linkEntity',
     'moveEntity',
     'openContextMenu',
+    'pause',
+    'play',
     'renameEntity',
     'selectEntity',
     'unlinkEntity',
@@ -74,7 +81,10 @@
         <button class="action button" title="Restart level">
           <span class="material-symbols-rounded">fast_rewind</span>
         </button>
-        <button class="action button" title="Play level">
+        <button v-if="isPlaying == true" @click="emit('pause')" class="action button" title="Pause level">
+          <span class="material-symbols-rounded">pause</span>
+        </button>
+        <button v-else class="action button" @click="emit('play')" title="Play level">
           <span class="material-symbols-rounded">play_arrow</span>
         </button>
       </div>
