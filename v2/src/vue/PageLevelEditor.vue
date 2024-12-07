@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
+  import { computed, onMounted, onUnmounted, shallowReactive, ref } from 'vue';
   import { LevelFactory } from '../js/factories/LevelFactory.js';
   import { History } from '../js/core/CommandHistory';
   import PanelActions from './PanelActions.vue';
@@ -12,12 +12,12 @@
   const mode = ref({ type: 'select' });
   const entities = ref([]);
   const entityPrev = ref({});
-  const entitiesSelected = reactive([]);
-  const history = reactive(new History());
+  const entitiesSelected = [];
+  const history = shallowReactive(new History());
+  const ticker = shallowReactive(props.game.ticker);
   const canUndo = computed(() => history.canUndo());
   const canRedo = computed(() => history.canRedo());
-  const ticker = reactive(props.game.ticker);
-  const isPlaying = computed(() => ticker.running);
+  const isPlaying = computed(() => ticker.isRunning());
   const contextMenuEvent = ref({});
   const contextMenuActions = ref([]);
 
@@ -47,6 +47,7 @@
             props.game.physics.remove(item.entity);
             entities.value.splice(item.index, 1);
             deselectEntity(e, item.entity, i);
+            updateDebugger();
           }
         },
         function() {
@@ -54,6 +55,7 @@
             const item = selected[i];
             props.game.physics.add(item.entity);
             entities.value.splice(item.index, 0, item.entity);
+            updateDebugger();
           }
         }
       ).execute();
@@ -191,6 +193,7 @@
             item.entity.restoreParentId();
             item.entity.setParentId(topParentId);
             props.game.physics.createParentJoint(item.entity)
+            updateDebugger();
           }
         },
         function() {
@@ -201,6 +204,7 @@
             item.entity.restoreParentId();
             item.entity.setParentId(item.parentId);
             props.game.physics.createParentJoint(item.entity)
+            updateDebugger();
           }
         }
       ).execute();
@@ -223,6 +227,7 @@
             const item = selected[i];
             props.game.physics.removeParentJoint(item.entity);
             item.entity.setParentId(null);
+            updateDebugger();
           }
         },
         function() {
@@ -230,6 +235,7 @@
             const item = selected[i];
             item.entity.restoreParentId();
             props.game.physics.createParentJoint(item.entity);
+            updateDebugger();
           }
         }
       ).execute();
@@ -323,10 +329,18 @@
     ticker.start()
   }
 
+  function updateDebugger() {
+    // Refresh the debugger if game is paused
+    if (ticker.isRunning() == false) {
+      props.game.physics.debugger.update();
+      props.game.graphics.render();
+    }
+  }
+
   // Initialize app after canvas has been mounted
   onMounted(async function() {
-    entities.value = await loadLevel('../json/boxel-3d-sandbox.json');
     game.physics.debugger.enable();
+    entities.value = await loadLevel('../json/boxel-3d-sandbox.json');
     document.addEventListener('keydown', onKeyDown);
   });
 

@@ -79,6 +79,10 @@ class Ticker {
     this.running = false;
   }
 
+  isRunning() {
+    return this.running;
+  }
+
   getElapsedTime() {
     this.getDelta();
     return this.elapsedTime;
