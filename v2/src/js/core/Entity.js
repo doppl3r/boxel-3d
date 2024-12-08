@@ -155,16 +155,16 @@ class Entity extends EventDispatcher {
   }
 
   setParentId(parentId) {
-    this.rigidBodyDesc.userData.parentIdPrev = this.rigidBodyDesc.userData.parentId;
-    this.rigidBodyDesc.userData.parentId = parentId;
+    if (parentId != this.rigidBodyDesc.userData.parentId) {
+      this.rigidBodyDesc.userData.parentIdPrev = this.rigidBodyDesc.userData.parentId;
+      this.rigidBodyDesc.userData.parentId = parentId;
+    }
   }
 
   restoreParentId() {
     // Restore parent ID if the previous ID was set
-    if (this.rigidBodyDesc.userData.parentIdPrev) {
-      this.rigidBodyDesc.userData.parentId = this.rigidBodyDesc.userData.parentIdPrev;
-      this.rigidBodyDesc.userData.parentIdPrev = null;
-    }
+    this.rigidBodyDesc.userData.parentId = this.rigidBodyDesc.userData.parentIdPrev;
+    this.rigidBodyDesc.userData.parentIdPrev = null;
   }
 
   getPosition() {

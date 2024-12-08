@@ -182,29 +182,32 @@
     }).sort((a, b) => a.index - b.index);
     
     // Assign or unassign to top selected item
-    const topParentId = selected[0].entity.id;
     if (selected.length > 0) {
       history.add(
         function() {
           // Ignore first item (zero index)
-          for (let i = selected.length - 1; i > 0; i--) {
+          for (let i = selected.length - 1; i >= 0; i--) {
             const item = selected[i];
-            props.game.physics.removeParentJoint(item.entity);
-            item.entity.restoreParentId();
-            item.entity.setParentId(topParentId);
-            props.game.physics.createParentJoint(item.entity)
-            updateDebugger();
+            if (item.entity.id != entity.id) {
+              props.game.physics.removeParentJoint(item.entity);
+              item.entity.restoreParentId();
+              item.entity.setParentId(entity.id);
+              props.game.physics.createParentJoint(item.entity)
+              updateDebugger();
+            }
           }
         },
         function() {
           // Ignore first item (zero index)
-          for (let i = 1; i < selected.length; i++) {
+          for (let i = 0; i < selected.length; i++) {
             const item = selected[i];
-            props.game.physics.removeParentJoint(item.entity);
-            item.entity.restoreParentId();
-            item.entity.setParentId(item.parentId);
-            props.game.physics.createParentJoint(item.entity)
-            updateDebugger();
+            if (item.entity.id != entity.id) {
+              props.game.physics.removeParentJoint(item.entity);
+              item.entity.restoreParentId();
+              item.entity.setParentId(item.parentId);
+              props.game.physics.createParentJoint(item.entity)
+              updateDebugger();
+            }
           }
         }
       ).execute();
@@ -215,7 +218,8 @@
     // Store an array of selected entities with their current index
     const selected = entitiesSelected.map(item => {
       return {
-        entity: item
+        entity: item,
+        parentId: item.getParentId()
       }
     });
 
@@ -233,7 +237,7 @@
         function() {
           for (let i = 0; i < selected.length; i++) {
             const item = selected[i];
-            item.entity.restoreParentId();
+            item.entity.setParentId(item.parentId);
             props.game.physics.createParentJoint(item.entity);
             updateDebugger();
           }
