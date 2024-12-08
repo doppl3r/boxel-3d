@@ -1,5 +1,5 @@
 <script setup>
-  import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+  import { nextTick, ref, watch } from 'vue';
 
   const props = defineProps({
     event: {
@@ -57,29 +57,22 @@
   watch(() => props.event, () => {
     open(props.event);
   });
-
-  // Initialize app after canvas has been mounted
-  onMounted(function() {
-    // Add event listener
-    document.addEventListener('pointerup', close);
-  });
-
-  onUnmounted(function() {
-    document.removeEventListener('pointerup', close);
-  });
 </script>
 
 <template>
-  <Transition name="fade">
-    <ul ref="menu" :style="style" v-if="isVisible">
-      <li v-for="action in props.actions">
-        <button @click.prevent="select($event, action)" :disabled="action.disabled">
-          <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
-          {{ action.text }}
-        </button>
-      </li>
-    </ul>
-  </Transition>
+  <div>
+    <div class="background" v-if="isVisible" @click="close()" @contextmenu.prevent></div>
+    <Transition name="fade">
+      <ul ref="menu" :style="style" v-if="isVisible">
+        <li v-for="action in props.actions">
+          <button @click.prevent="select($event, action)" :disabled="action.disabled">
+            <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
+            {{ action.text }}
+          </button>
+        </li>
+      </ul>
+    </Transition>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -95,6 +88,15 @@
   @keyframes fade-in {
     0% { opacity: 0; transform: translateY(1em); }
     100% { opacity: 1; transform: translateY(0em); }
+  }
+
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
   }
   
   ul {

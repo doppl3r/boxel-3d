@@ -244,16 +244,16 @@
 
   function onKeyDown(e) {
     if (e.repeat) return;
-    if (e.code == 'KeyA' && e.ctrlKey) {
+    if (e.code == 'KeyA' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       selectAllEntities(e);
     }
-    else if (e.code == 'KeyD' && e.ctrlKey) {
+    else if (e.code == 'KeyD' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       deselectAllEntities(e);
     }
-    else if (e.code == 'KeyX' && e.ctrlKey) deleteEntity(e);
-    else if (e.code == 'KeyZ' && e.ctrlKey) {
+    else if (e.code == 'KeyX' && (e.ctrlKey || e.metaKey)) deleteEntity(e);
+    else if (e.code == 'KeyZ' && (e.ctrlKey || e.metaKey)) {
       if (e.shiftKey == true) redo();
       else undo();
     }
