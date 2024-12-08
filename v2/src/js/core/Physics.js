@@ -166,26 +166,29 @@ class Physics {
         this.createJoint(parent, entity);
       }
       else {
-        this.jointQueue.push(entity);
+        // Enqueue orphan ID if parent does not exist in the world
+        this.jointQueue.push(entity.id);
       }
     }
 
     // Loop through queue
     for (let i = this.jointQueue.length - 1; i >= 0; i--) {
-      let child = this.jointQueue[i];
-      
-      // Restore parent ID if previously removed
-      child.restoreParentId();
-
-      // Create joint if parent entity exists in the world
-      parent = this.get(child.getParentId());
-      if (parent) {
-        this.createJoint(parent, child);
-        this.jointQueue.splice(i, 1);
-      }
-      else {
-        // Reset child parent Id to null if parent entity does not exist yet
-        child.setParentId(null);
+      // Check if child exists in the world
+      let child = this.get(this.jointQueue[i]);
+      if (child) {
+        // Restore parent ID if previously removed
+        child.restoreParentId();
+  
+        // Create joint if parent entity exists in the world
+        parent = this.get(child.getParentId());
+        if (parent) {
+          this.createJoint(parent, child);
+          this.jointQueue.splice(i, 1);
+        }
+        else {
+          // Reset child parent Id to null if parent entity does not exist yet
+          child.setParentId(null);
+        }
       }
     }
   }
@@ -204,10 +207,10 @@ class Physics {
       const parent = this.get(joint.body1().userData.id);
       const child = this.get(joint.body2().userData.id);
       
-      // Enqueue orphan entity before removing joint
+      // Enqueue orphan ID before removing joint
       if (entity.id == parent.id) {
         if (child.rigidBodyDesc.userData.parentId != null) {
-          this.jointQueue.push(child);
+          this.jointQueue.push(child.id);
           child.setParentId(null);
         }
       }
