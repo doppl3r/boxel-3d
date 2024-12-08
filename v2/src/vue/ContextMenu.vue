@@ -1,5 +1,5 @@
 <script setup>
-  import { nextTick, ref, watch } from 'vue';
+  import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
   const props = defineProps({
     event: {
@@ -16,8 +16,10 @@
       type: Array
     }
   });
-  const style = ref({ animationDuration: '0.15s', left: '0px', top: '0px' });
+  const duration = 150;
+  const style = ref({ animationDuration: `${ duration }ms`, left: '0px', top: '0px' });
   const isVisible = ref(false);
+  const isOpening = ref(false);
   const menu = ref();
 
   function select(e, action) {
@@ -26,12 +28,21 @@
   }
 
   function open(e) {
-    isVisible.value = true;
-    updatePosition(e);
+    if (isVisible.value == false) {
+      isVisible.value = true;
+      updatePosition(e);
+    }
+    else {
+      // Reopen if menu is already open
+      setTimeout(() => open(e), duration);
+    }
   }
 
   function close(e) {
-    isVisible.value = false;
+    // Close only if menu is not opening
+    if (isOpening.value == false) {
+      isVisible.value = false;
+    }
   }
 
   async function updatePosition(e) {
@@ -57,22 +68,33 @@
   watch(() => props.event, () => {
     open(props.event);
   });
+
+  // Initialize app after canvas has been mounted
+  onMounted(function() {
+    // Add event listener
+    document.addEventListener('pointerup', close);
+  });
+
+  onUnmounted(function() {
+    // Remove event listeners
+    document.removeEventListener('pointerup', close);
+  });
 </script>
 
 <template>
-  <div>
-    <div class="background" v-if="isVisible" @click="close()" @contextmenu.prevent></div>
-    <Transition name="fade">
-      <ul ref="menu" :style="style" v-if="isVisible">
-        <li v-for="action in props.actions">
-          <button @click.prevent="select($event, action)" :disabled="action.disabled">
-            <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
-            {{ action.text }}
-          </button>
-        </li>
-      </ul>
-    </Transition>
-  </div>
+  <Transition name="fade"
+    @before-enter="isOpening = true"
+    @after-enter="isOpening = false"
+  >
+    <ul ref="menu" :style="style" v-if="isVisible">
+      <li v-for="action in props.actions">
+        <button @click.prevent="select($event, action)" :disabled="action.disabled">
+          <span class="material-symbols-rounded" v-if="action.icon">{{ action.icon }}</span>
+          {{ action.text }}
+        </button>
+      </li>
+    </ul>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>
@@ -88,15 +110,6 @@
   @keyframes fade-in {
     0% { opacity: 0; transform: translateY(1em); }
     100% { opacity: 1; transform: translateY(0em); }
-  }
-
-  .background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-
   }
   
   ul {
