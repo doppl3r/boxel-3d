@@ -176,18 +176,11 @@ class Physics {
       // Check if child exists in the world
       let child = this.get(this.jointQueue[i]);
       if (child) {
-        // Restore parent ID if previously removed
-        child.restoreParentId();
-  
         // Create joint if parent entity exists in the world
         parent = this.get(child.getParentId());
         if (parent) {
           this.createJoint(parent, child);
           this.jointQueue.splice(i, 1);
-        }
-        else {
-          // Reset child parent Id to null if parent entity does not exist yet
-          child.setParentId(null);
         }
       }
     }

@@ -53,6 +53,9 @@
         function() {
           for (let i = 0; i < selected.length; i++) {
             const item = selected[i];
+
+            // TODO: Restore children parentIds before adding parent back
+
             props.game.physics.add(item.entity);
             entities.value.splice(item.index, 0, item.entity);
             updateDebugger();
@@ -190,7 +193,6 @@
             const item = selected[i];
             if (item.entity.id != entity.id) {
               props.game.physics.removeParentJoint(item.entity);
-              item.entity.restoreParentId();
               item.entity.setParentId(entity.id);
               props.game.physics.createParentJoint(item.entity)
               updateDebugger();
@@ -203,7 +205,6 @@
             const item = selected[i];
             if (item.entity.id != entity.id) {
               props.game.physics.removeParentJoint(item.entity);
-              item.entity.restoreParentId();
               item.entity.setParentId(item.parentId);
               props.game.physics.createParentJoint(item.entity)
               updateDebugger();
@@ -237,6 +238,7 @@
         function() {
           for (let i = 0; i < selected.length; i++) {
             const item = selected[i];
+            props.game.physics.removeParentJoint(item.entity);
             item.entity.setParentId(item.parentId);
             props.game.physics.createParentJoint(item.entity);
             updateDebugger();
