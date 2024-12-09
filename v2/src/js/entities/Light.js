@@ -25,7 +25,6 @@ class Light extends Cube {
     // Assign new light to 3D model
     this.lightType = options.lightType;
     this.model = LightFactory.create(options.lightType, options);
-    this.object.add(this.model);
 
     // Set default properties
     this.type = 'light';

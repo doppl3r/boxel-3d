@@ -23,7 +23,7 @@ class Entity extends EventDispatcher {
     this.rigidBody;
     this.rigidBodyDesc;
     this.collidersDesc = [];
-    this.object = new Object3D();
+    this.objectDesc;
     this.snapshot = {
       position_1: new Vector3(),
       position_2: new Vector3(),
@@ -36,6 +36,7 @@ class Entity extends EventDispatcher {
     this.forceSpeedMax = Infinity;
 
     // Define initial rigidBodyDesc and colliderDesc
+    this.setObjectDesc(options);
     this.setRigidBodyDesc(options);
     this.addColliderDesc(options);
     
@@ -64,6 +65,30 @@ class Entity extends EventDispatcher {
 
     // Interpolate 3D object position
     this.lerp(alpha);
+  }
+
+  setObjectDesc(options) {
+    // Set default object options
+    const defaultOptions = {
+      scale: { x: 1, y: 1, z: 1 }
+    }
+
+    // Set options with default values
+    options = Object.assign({ ...defaultOptions }, options);
+
+    // Create object description
+    this.objectDesc = new Object3D();
+    this.objectDesc.scale.copy(options.scale);
+  }
+
+  setObject(object) {
+    this.object = object;
+  }
+
+  createObject(objectDesc) {
+    const object = new Object3D();
+    object.scale.copy(objectDesc.scale);
+    return object;
   }
 
   setRigidBodyDesc(options) {
@@ -97,7 +122,7 @@ class Entity extends EventDispatcher {
     this.rigidBodyDesc.setSleeping(options.sleeping);
     this.rigidBodyDesc.setSoftCcdPrediction(options.softCcdPrediction);
     this.rigidBodyDesc.setTranslation(options.position.x, options.position.y, options.position.z);
-    this.rigidBodyDesc.setUserData({ id: this.id, parentId: options.parentId }); // Store entity ID for Physics.js
+    this.rigidBodyDesc.setUserData({ id: this.id, parentId: options.parentId }); // Store entity IDs for Physics.js
   }
 
   setRigidBody(rigidBody) {
@@ -191,11 +216,11 @@ class Entity extends EventDispatcher {
   }
 
   setScale(scale) {
-    this.object.scale.copy(scale);
+    if (this.object) this.object.scale.copy(scale);
   }
 
   resetScale() {
-    // TODO: Store original scale in userData
+    this.setScale(this.objectDesc.scale);
   }
 
   getLinvel() {
@@ -272,8 +297,10 @@ class Entity extends EventDispatcher {
 
   lerp(alpha = 0) {
     // Linear interpolation using alpha value
-    this.object.position.lerpVectors(this.snapshot.position_1, this.snapshot.position_2, alpha);
-    this.object.quaternion.slerpQuaternions(this.snapshot.rotation_1, this.snapshot.rotation_2, alpha);
+    if (this.object) {
+      this.object.position.lerpVectors(this.snapshot.position_1, this.snapshot.position_2, alpha);
+      this.object.quaternion.slerpQuaternions(this.snapshot.rotation_1, this.snapshot.rotation_2, alpha);
+    }
   }
 
   getCollider(handle) {
@@ -311,6 +338,7 @@ class Entity extends EventDispatcher {
 
   onAdded(e) {
     // Update 3D object properties
+    this.reset();
     this.updateSnapshot();
     this.lerp(1);
 
@@ -419,9 +447,9 @@ class Entity extends EventDispatcher {
         w: this.rigidBodyDesc.rotation.w
       },
       scale: {
-        x: this.object.scale.x,
-        y: this.object.scale.y,
-        z: this.object.scale.z
+        x: this.objectDesc.scale.x,
+        y: this.objectDesc.scale.y,
+        z: this.objectDesc.scale.z
       },
       sleeping: this.rigidBodyDesc.sleeping,
       softCcdPrediction: this.rigidBodyDesc.softCcdPrediction,

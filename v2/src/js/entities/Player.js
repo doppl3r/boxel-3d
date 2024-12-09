@@ -33,7 +33,6 @@ class Player extends Cube {
 
     // Add light to player
     this.light = LightFactory.create('PointLight', { color: '#dc265a', intensity: Math.PI * 10 });
-    this.object.add(this.light);
 
     // Create camera with offset property
     this.camera = CameraFactory.create('PerspectiveCamera');
@@ -112,6 +111,9 @@ class Player extends Cube {
     this.pointerUp = this.pointerUp.bind(this);
     this.onSetMode = this.onSetMode.bind(this);
     this.onSetGravity = this.onSetGravity.bind(this);
+
+    // Add player light
+    this.object.add(this.light);
     
     // Add player event listeners
     this.addEventListener('removed', this.onPlayerRemoved);
@@ -130,6 +132,9 @@ class Player extends Cube {
     this.removeEventListener('removed', this.onPlayerRemoved);
     this.removeEventListener('setmode', this.onSetMode);
     this.removeEventListener('setgravity', this.onSetGravity);
+
+    // Remove player light
+    this.object.remove(this.light);
 
     // Remove document event listeners
     document.removeEventListener('keydown', this.keyDown);

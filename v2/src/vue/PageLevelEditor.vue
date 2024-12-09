@@ -184,7 +184,7 @@
   function resetEntities(e) {
     entities.value.forEach(entity => {
       entity.reset();
-    })
+    });
   }
 
   function linkEntity(e, entity) {
