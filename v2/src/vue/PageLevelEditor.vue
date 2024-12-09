@@ -33,6 +33,7 @@
     // Store an array of selected entities with their current index
     const selected = entitiesSelected.map(item => {
       return {
+        children: props.game.physics.getChildren(item),
         index: entities.value.indexOf(item),
         entity: item
       }
@@ -53,9 +54,7 @@
         function() {
           for (let i = 0; i < selected.length; i++) {
             const item = selected[i];
-
-            // TODO: Restore children parentIds before adding parent back
-
+            item.children.forEach(child => child.setParentId(item.entity.id));
             props.game.physics.add(item.entity);
             entities.value.splice(item.index, 0, item.entity);
             updateDebugger();
