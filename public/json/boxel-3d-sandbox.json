@@ -94,7 +94,7 @@
       "status": 1
     },
     {
-      "type": "resize",
+      "type": "control",
       "position": { "x": 8, "y": 7, "z": 0 },
       "rotation": { "x": 0, "y": 0, "z": 1, "w": 0 },
       "scale": { "x": 2, "y": 2, "z": 2 },
