@@ -154,6 +154,14 @@
     }
   }
 
+  function selectParentEntity(e, entity) {
+    const parentId = entity.getParentId();
+    const parent = props.game.physics.getEntityById(parentId);
+    if (parent) {
+      selectEntity(e, parent);
+    }
+  }
+
   function selectAllEntities(e) {
     let entityStart = entities.value[0];
     let entityEnd = entities.value[entities.value.length - 1];
@@ -372,6 +380,7 @@
         @play="play"
         @rename-entity="renameEntity"
         @select-entity="selectEntity"
+        @select-parent-entity="selectParentEntity"
         @unlink-entity="unlinkEntity"
         @open-context-menu="openContextMenu"
         @redo="redo"

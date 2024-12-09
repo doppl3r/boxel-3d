@@ -18,6 +18,7 @@
     'play',
     'renameEntity',
     'selectEntity',
+    'selectParentEntity',
     'unlinkEntity',
     'redo',
     'undo'
@@ -104,6 +105,7 @@
             @drop="onDragDrop($event, entity)"
           >
             <span
+              @dblclick="emit('selectParentEntity', $event, entity)"
               :class="{ hidden: entity.rigidBodyDesc.userData.parentId == null }"
               class="icon material-symbols-rounded"
               title="Double click to select parent"
@@ -222,7 +224,7 @@
           opacity: 1;
           padding: 0 0.25em;
           transition-duration: 0.1s;
-          transition-property: font-size, opacity, transform;
+          transition-property: background-color, font-size, opacity, transform;
           transition-timing-function: ease-in-out;
           width: 100%;
           
