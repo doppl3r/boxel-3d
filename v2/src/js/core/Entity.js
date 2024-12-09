@@ -20,10 +20,11 @@ class Entity extends EventDispatcher {
     this.name = options.name || '';
     this.id = options.id || MathUtils.generateUUID();
     this.isEntity = true;
+    this.object;
+    this.objectDesc;
     this.rigidBody;
     this.rigidBodyDesc;
     this.collidersDesc = [];
-    this.objectDesc;
     this.snapshot = {
       position_1: new Vector3(),
       position_2: new Vector3(),
@@ -85,7 +86,7 @@ class Entity extends EventDispatcher {
     this.object = object;
   }
 
-  createObject(objectDesc) {
+  createObject3D(objectDesc) {
     const object = new Object3D();
     object.scale.copy(objectDesc.scale);
     return object;
@@ -338,7 +339,6 @@ class Entity extends EventDispatcher {
 
   onAdded(e) {
     // Update 3D object properties
-    this.reset();
     this.updateSnapshot();
     this.lerp(1);
 
