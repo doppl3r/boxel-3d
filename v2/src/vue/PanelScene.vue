@@ -17,6 +17,7 @@
     'pause',
     'play',
     'renameEntity',
+    'resetEntities',
     'selectEntity',
     'selectParentEntity',
     'unlinkEntity',
@@ -79,7 +80,7 @@
         <button class="action button" @click="emit('redo')" title="Redo" :disabled="props.canRedo == false">
           <span class="material-symbols-rounded">redo</span>
         </button>
-        <button class="action button" title="Restart level">
+        <button class="action button" @click="emit('resetEntities')" title="Restart level">
           <span class="material-symbols-rounded">fast_rewind</span>
         </button>
         <button v-if="isPlaying == true" @click="emit('pause')" class="action button" title="Pause level">
@@ -224,7 +225,7 @@
           opacity: 1;
           padding: 0 0.25em;
           transition-duration: 0.1s;
-          transition-property: background-color, font-size, opacity, transform;
+          transition-property: font-size, opacity, transform;
           transition-timing-function: ease-in-out;
           width: 100%;
           

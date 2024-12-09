@@ -13,7 +13,7 @@ class LevelFactory {
       if (response.ok) { return response.json(); }
       throw new Error('Something went wrong');
     })
-    .then(function(json) { return this.loadFromJSON(json); }.bind(this))
+    .then(function(json) { return json; })
     .catch(function(error) { console.error(error); });
   }
 

@@ -298,7 +298,6 @@ class App {
 
       // Set optional fog
       if (theme.fog) {
-        console.log(theme.fog);
         app.graphics.fog.color.set(theme.fog.color);
         app.graphics.fog.near = theme.fog.near || 0.01;
         app.graphics.fog.far = theme.fog.far || 240;

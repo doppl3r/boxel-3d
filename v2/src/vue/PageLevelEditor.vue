@@ -181,6 +181,12 @@
     }
   }
 
+  function resetEntities(e) {
+    entities.value.forEach(entity => {
+      entity.reset();
+    })
+  }
+
   function linkEntity(e, entity) {
     // Store an array of selected entities with their current index
     const selected = entitiesSelected.map(item => {
@@ -280,20 +286,20 @@
     history.redo();
   }
 
-  async function loadLevel(path) {
+  function loadLevel(json) {
     game.physics.clear();
     
     // Load level from JSON
-    var entities = await LevelFactory.loadFile(path);
+    var entities = LevelFactory.loadFromJSON(json);
 
-    // Loop through entities
+    // Loop through entity list
     entities.forEach(function(entity) {
       // Add 3D object after entity is added
       entity.addEventListener('added', function(e) {
         game.graphics.scene.add(entity.object);
       });
 
-      // Add entity to physics entities map
+      // Add entity to physics entity map
       game.physics.add(entity);
 
       // Assign rendering camera from player
@@ -303,7 +309,7 @@
       }
     });
 
-    // Return final array of entities
+    // Return final entity list
     return entities;
   }
 
@@ -353,7 +359,8 @@
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     game.physics.debugger.enable();
-    entities.value = await loadLevel('../json/boxel-3d-sandbox.json');
+    const json = await LevelFactory.loadFile('../json/boxel-3d-sandbox.json');
+    entities.value = loadLevel(json);
     document.addEventListener('keydown', onKeyDown);
   });
 
@@ -379,6 +386,7 @@
         @pause="pause"
         @play="play"
         @rename-entity="renameEntity"
+        @reset-entities="resetEntities"
         @select-entity="selectEntity"
         @select-parent-entity="selectParentEntity"
         @unlink-entity="unlinkEntity"

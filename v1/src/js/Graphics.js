@@ -15,7 +15,6 @@ class Graphics {
 
     // Add fog
     this.fog = new Fog('#ffffff', 180, 480);
-    this.scene.fog = this.fog;
 
     // Initialize renderer components
     this.renderer = new WebGLRenderer({ alpha: true, canvas: canvas });
@@ -93,7 +92,6 @@ class Graphics {
 
   setScene(scene) {
     this.scene = scene;
-    this.scene.fog = this.fog;
     this.renderPass.scene = scene;
     this.outlinePass.renderScene = scene;
   }

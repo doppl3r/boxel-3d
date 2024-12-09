@@ -169,7 +169,7 @@ class Entity extends EventDispatcher {
   }
 
   resetPosition() {
-    if (this.rigidBody) this.rigidBody.setTranslation(this.rigidBodyDesc.translation);
+    this.setPosition(this.rigidBodyDesc.translation);
   }
 
   getRotation() {
@@ -183,7 +183,7 @@ class Entity extends EventDispatcher {
   }
 
   resetRotation() {
-    if (this.rigidBody) this.rigidBody.setRotation(this.rigidBodyDesc.rotation);
+    this.setRotation(this.rigidBodyDesc.rotation);
   }
 
   getScale() {
@@ -192,6 +192,44 @@ class Entity extends EventDispatcher {
 
   setScale(scale) {
     this.object.scale.copy(scale);
+  }
+
+  resetScale() {
+    // TODO: Store original scale in userData
+  }
+
+  getLinvel() {
+    if (this.rigidBody == null) return this.rigidBodyDesc.linvel;
+    else return this.rigidBody.linvel();
+  }
+
+  setLinvel(velocity) {
+    if (this.rigidBody) this.rigidBody.setLinvel(velocity);
+  }
+
+  resetLinvel() {
+    if (this.rigidBody) this.setLinvel(this.rigidBodyDesc.linvel);
+  }
+
+  getAngvel() {
+    if (this.rigidBody == null) return this.rigidBodyDesc.angvel;
+    else return this.rigidBody.angvel();
+  }
+
+  setAngvel(velocity) {
+    if (this.rigidBody) this.rigidBody.setAngvel(velocity);
+  }
+
+  resetAngvel() {
+    if (this.rigidBody) this.setAngvel(this.rigidBodyDesc.angvel);
+  }
+
+  reset() {
+    this.resetPosition();
+    this.resetRotation();
+    this.resetScale();
+    this.resetLinvel();
+    this.resetAngvel();
   }
 
   tween(options) {
