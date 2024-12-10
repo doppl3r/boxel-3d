@@ -42,10 +42,12 @@
       function() {
         props.game.physics.add(entity);
         entities.value.push(entity);
+        updateDebugger();
       },
       function() {
         props.game.physics.remove(entity);
         entities.value.pop();
+        updateDebugger();
       }
     ).execute();
   }
