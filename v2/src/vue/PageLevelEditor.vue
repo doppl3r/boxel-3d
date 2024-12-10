@@ -26,10 +26,13 @@
   }
 
   function addEntity(e, asset) {
+    // Store an array of selected entities with their current index
     const type = asset.key.replace('cube-', '');
     const entity = LevelFactory.createEntity({
       type: type
     });
+    const last = entitiesSelected[entitiesSelected.length - 1];
+    const index = last ? entities.value.indexOf(last) + 1 : 0;
 
     // Add 3D object after entity is added
     entity.addEventListener('added', function(e) {
@@ -40,12 +43,14 @@
     history.add(
       function() {
         props.game.physics.add(entity);
-        entities.value.push(entity);
+        entities.value.splice(index, 0, entity);
+        selectEntity(e, entity);
         updateDebugger();
       },
       function() {
         props.game.physics.remove(entity);
-        entities.value.pop();
+        entities.value.splice(index, 1);
+        deselectEntity(e, entity);
         updateDebugger();
       }
     ).execute();
@@ -62,26 +67,28 @@
     }).sort((a, b) => a.index - b.index);
 
     // Add delete or revert commands
-    history.add(
-      function() {
-        for (let i = selected.length - 1; i >= 0; i--) {
-          const item = selected[i];
-          props.game.physics.remove(item.entity);
-          entities.value.splice(item.index, 1);
-          deselectEntity(e, item.entity, i);
-          updateDebugger();
+    if (selected.length > 0) {
+      history.add(
+        function() {
+          for (let i = selected.length - 1; i >= 0; i--) {
+            const item = selected[i];
+            props.game.physics.remove(item.entity);
+            entities.value.splice(item.index, 1);
+            deselectEntity(e, item.entity, i);
+            updateDebugger();
+          }
+        },
+        function() {
+          for (let i = 0; i < selected.length; i++) {
+            const item = selected[i];
+            item.children.forEach(child => child.setParentId(item.entity.id));
+            props.game.physics.add(item.entity);
+            entities.value.splice(item.index, 0, item.entity);
+            updateDebugger();
+          }
         }
-      },
-      function() {
-        for (let i = 0; i < selected.length; i++) {
-          const item = selected[i];
-          item.children.forEach(child => child.setParentId(item.entity.id));
-          props.game.physics.add(item.entity);
-          entities.value.splice(item.index, 0, item.entity);
-          updateDebugger();
-        }
-      }
-    ).execute();
+      ).execute();
+    }
   }
 
   function moveEntity(e, entity) {

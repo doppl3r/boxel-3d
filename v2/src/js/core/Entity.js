@@ -284,7 +284,7 @@ class Entity extends EventDispatcher {
   }
 
   updateSnapshot(refresh = false) {
-    if (this.rigidBody == null || refresh == true) {
+    if (refresh == true) {
       // Set position/rotation from rigidBodyDesc
       this.snapshot.position_1.copy(this.rigidBodyDesc.translation);
       this.snapshot.position_2.copy(this.rigidBodyDesc.translation);
