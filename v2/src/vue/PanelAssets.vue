@@ -102,10 +102,17 @@
         font-size: 1em;
         height: 2em;
         padding: 0.25em;
+        transition-duration: 0.1s;
+        transition-property: transform, background-color;
+        transition-timing-function: ease-in-out;
         width: 2em;
 
-        &:hover {
+        &:active {
           background-color: #F52D59;
+
+          img {
+            transform: scale(0.75);
+          }
         }
 
         &.selected {
@@ -116,6 +123,8 @@
         img {
           width: 100%;
           height: 100%;
+          transition: inherit;
+          pointer-events: none;
         }
       }
     }
