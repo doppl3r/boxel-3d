@@ -283,9 +283,15 @@ class Entity extends EventDispatcher {
     return tween;
   }
 
-  updateSnapshot() {
-    // A snapshot requires a physical rigid body
-    if (this.rigidBody) {
+  updateSnapshot(refresh = false) {
+    if (this.rigidBody == null || refresh == true) {
+      // Set position/rotation from rigidBodyDesc
+      this.snapshot.position_1.copy(this.rigidBodyDesc.translation);
+      this.snapshot.position_2.copy(this.rigidBodyDesc.translation);
+      this.snapshot.rotation_1.copy(this.rigidBodyDesc.rotation);
+      this.snapshot.rotation_2.copy(this.rigidBodyDesc.rotation);
+    }
+    else {
       // Store previous snapshot position for lerp
       this.snapshot.position_1.copy(this.snapshot.position_2);
       this.snapshot.rotation_1.copy(this.snapshot.rotation_2);
@@ -300,13 +306,6 @@ class Entity extends EventDispatcher {
         this.snapshot.position_2.copy(this.rigidBody.translation());
         this.snapshot.rotation_2.copy(this.rigidBody.rotation());
       }
-    }
-    else {
-      // Set position/rotation from rigidBodyDesc
-      this.snapshot.position_1.copy(this.rigidBodyDesc.translation);
-      this.snapshot.position_2.copy(this.rigidBodyDesc.translation);
-      this.snapshot.rotation_1.copy(this.rigidBodyDesc.rotation);
-      this.snapshot.rotation_2.copy(this.rigidBodyDesc.rotation);
     }
   }
 
@@ -353,7 +352,7 @@ class Entity extends EventDispatcher {
 
   onAdded(e) {
     // Update 3D object properties
-    this.updateSnapshot();
+    this.updateSnapshot(true);
     this.lerp(1);
 
     // Add entity event listeners with "this" context

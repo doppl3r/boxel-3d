@@ -28,7 +28,6 @@
   function addEntity(e, asset) {
     const type = asset.key.replace('cube-', '');
     const entity = LevelFactory.createEntity({
-      status: 1,
       type: type
     });
 
