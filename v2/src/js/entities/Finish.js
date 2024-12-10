@@ -13,7 +13,7 @@ class Finish extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      events: [{ name: finish }]
+      events: [{ name: 'finish' }]
     }, options);
 
     // Inherit Character class

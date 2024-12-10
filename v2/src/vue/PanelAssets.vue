@@ -4,11 +4,11 @@
   // Declare component variables
   const emit = defineEmits(['addEntity']);
   const props = defineProps({
-    assets: Object,
+    cache: Object,
     mode: Object
   });
   const expanded = ref(false);
-  const assets = computed(() => getAssets(props.assets.cache));
+  const assets = computed(() => getAssets(props.cache));
   const isVisible = computed((previous) => {
     if (props.mode.type == 'add') expanded.value = !previous;
     else expanded.value = false;

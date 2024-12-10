@@ -234,7 +234,7 @@ class Entity extends EventDispatcher {
   }
 
   resetLinvel() {
-    if (this.rigidBody) this.setLinvel(this.rigidBodyDesc.linvel);
+    this.setLinvel(this.rigidBodyDesc.linvel);
   }
 
   getAngvel() {
@@ -247,7 +247,20 @@ class Entity extends EventDispatcher {
   }
 
   resetAngvel() {
-    if (this.rigidBody) this.setAngvel(this.rigidBodyDesc.angvel);
+    this.setAngvel(this.rigidBodyDesc.angvel);
+  }
+
+  getStatus() {
+    if (this.rigidBody) return this.rigidBody.bodyType;
+    else return this.rigidBodyDesc.status;
+  }
+
+  setStatus(status) {
+    if (this.rigidBody) this.rigidBody.setBodyType(status);
+  }
+
+  resetStatus() {
+    this.setStatus(this.rigidBodyDesc.status);
   }
 
   reset() {
@@ -256,6 +269,7 @@ class Entity extends EventDispatcher {
     this.resetScale();
     this.resetLinvel();
     this.resetAngvel();
+    this.resetStatus();
   }
 
   tween(options) {

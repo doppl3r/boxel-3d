@@ -26,7 +26,28 @@
   }
 
   function addEntity(e, asset) {
-    console.log(e, asset);
+    const type = asset.key.replace('cube-', '');
+    const entity = LevelFactory.createEntity({
+      status: 1,
+      type: type
+    });
+
+    // Add 3D object after entity is added
+    entity.addEventListener('added', function(e) {
+      props.game.graphics.scene.add(entity.object);
+    });
+    
+    // Add or remove entity to/from end
+    history.add(
+      function() {
+        props.game.physics.add(entity);
+        entities.value.push(entity);
+      },
+      function() {
+        props.game.physics.remove(entity);
+        entities.value.pop();
+      }
+    ).execute();
   }
 
   function deleteEntity(e, entity) {
@@ -40,28 +61,26 @@
     }).sort((a, b) => a.index - b.index);
 
     // Add delete or revert commands
-    if (selected.length > 0) {
-      history.add(
-        function() {
-          for (let i = selected.length - 1; i >= 0; i--) {
-            const item = selected[i];
-            props.game.physics.remove(item.entity);
-            entities.value.splice(item.index, 1);
-            deselectEntity(e, item.entity, i);
-            updateDebugger();
-          }
-        },
-        function() {
-          for (let i = 0; i < selected.length; i++) {
-            const item = selected[i];
-            item.children.forEach(child => child.setParentId(item.entity.id));
-            props.game.physics.add(item.entity);
-            entities.value.splice(item.index, 0, item.entity);
-            updateDebugger();
-          }
+    history.add(
+      function() {
+        for (let i = selected.length - 1; i >= 0; i--) {
+          const item = selected[i];
+          props.game.physics.remove(item.entity);
+          entities.value.splice(item.index, 1);
+          deselectEntity(e, item.entity, i);
+          updateDebugger();
         }
-      ).execute();
-    }
+      },
+      function() {
+        for (let i = 0; i < selected.length; i++) {
+          const item = selected[i];
+          item.children.forEach(child => child.setParentId(item.entity.id));
+          props.game.physics.add(item.entity);
+          entities.value.splice(item.index, 0, item.entity);
+          updateDebugger();
+        }
+      }
+    ).execute();
   }
 
   function moveEntity(e, entity) {
@@ -287,7 +306,7 @@
   }
 
   function loadLevel(json) {
-    game.physics.clear();
+    props.game.physics.clear();
     
     // Load level from JSON
     var entities = LevelFactory.loadFromJSON(json);
@@ -296,16 +315,16 @@
     entities.forEach(function(entity) {
       // Add 3D object after entity is added
       entity.addEventListener('added', function(e) {
-        game.graphics.scene.add(entity.object);
+        props.game.graphics.scene.add(entity.object);
       });
 
       // Add entity to physics entity map
-      game.physics.add(entity);
+      props.game.physics.add(entity);
 
       // Assign rendering camera from player
       if (entity.type == 'player') {
-        game.player = entity;
-        game.graphics.setCamera(entity.camera);
+        props.game.player = entity;
+        props.game.graphics.setCamera(entity.camera);
       }
     });
 
@@ -358,7 +377,7 @@
 
   // Initialize app after canvas has been mounted
   onMounted(async function() {
-    game.physics.debugger.enable();
+    props.game.physics.debugger.enable();
     const json = await LevelFactory.loadFile('../json/boxel-3d-sandbox.json');
     entities.value = loadLevel(json);
     document.addEventListener('keydown', onKeyDown);
@@ -374,7 +393,7 @@
     <div class="panels">
       <PanelActions :game="game" :mode="mode" @setMode="setMode" />
       <PanelAssets
-        :assets="game.assets"
+        :cache="game.assets.cache"
         :mode="mode"
         @add-entity="addEntity"
       />
