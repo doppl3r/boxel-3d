@@ -25,8 +25,8 @@
     mode.value = newMode;
   }
 
-  function addEntity(e) {
-    console.log(e);
+  function addEntity(e, asset) {
+    console.log(e, asset);
   }
 
   function deleteEntity(e, entity) {
@@ -373,7 +373,11 @@
   <div>
     <div class="panels">
       <PanelActions :game="game" :mode="mode" @setMode="setMode" />
-      <PanelAssets :game="game" :mode="mode" />
+      <PanelAssets
+        :assets="game.assets"
+        :mode="mode"
+        @add-entity="addEntity"
+      />
       <PanelScene
         :entities="entities"
         :canUndo="canUndo"

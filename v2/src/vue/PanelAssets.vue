@@ -1,40 +1,46 @@
 <script setup>
-  import { computed, onMounted, ref } from 'vue';
+  import { computed, ref } from 'vue';
 
   // Declare component variables
+  const emit = defineEmits(['addEntity']);
   const props = defineProps({
-    game: Object,
+    assets: Object,
     mode: Object
   });
   const expanded = ref(false);
-  const assets = ref([]);
+  const assets = computed(() => getAssets(props.assets.cache));
   const isVisible = computed((previous) => {
     if (props.mode.type == 'add') expanded.value = !previous;
     else expanded.value = false;
     return expanded.value;
   });
 
-  function loadAssets() {
-    // Loop through each asset
-    for (var key in props.game.assets.cache) {
-      var asset = props.game.assets.get(key);
-      if (asset.userData.isAsset) {
-        assets.value.push({
+  function getAssets(cache) {
+    // Return an array of assets from game cache
+    return Object.keys(cache)
+      .filter(key => {
+        // Only include assets with isAsset flag
+        const asset = cache[key];
+        if (asset.userData.isAsset) return asset;
+      })
+      .map(key => {
+        // Return a new object with basic data
+        const asset = cache[key];
+        return {
           key: key,
           src: asset.thumbnail
-        });
+        };
       }
-    }
+    );
+  }
+
+  function addEntity(e, asset) {
+    emit('addEntity', e, asset);
   }
 
   function close() {
     expanded.value = false;
   }
-  
-  // Initialize component values on mounted
-  onMounted(function() {
-    loadAssets();
-  });
 </script>
 
 <template>
@@ -43,7 +49,7 @@
       <div class="title">Add</div>
     </div>
     <div class="assets">
-      <button class="asset" v-for="asset in assets" :title="asset.key">
+      <button class="asset" v-for="asset in assets" :title="asset.key" @click="addEntity($event, asset)">
         <img :src="asset.src" />
       </button>
     </div>
