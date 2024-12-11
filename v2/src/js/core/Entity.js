@@ -368,7 +368,7 @@ class Entity extends EventDispatcher {
     this.removeEventListener('removed', this.onRemoved);
   }
 
-  applyVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
+  applyVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle = 0) {
     // Rotate and apply velocity at an angle
     const velocity = new Vector3().copy(this.rigidBody.linvel());
     velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
@@ -377,7 +377,7 @@ class Entity extends EventDispatcher {
     this.rigidBody.setLinvel(velocity, true);
   }
 
-  setAngularVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle) {
+  setAngularVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle = 0) {
     const velocity = new Vector3().copy(this.rigidBody.linvel());
     let direction = 1;
 
@@ -389,7 +389,7 @@ class Entity extends EventDispatcher {
     this.rigidBody.setAngvel(force, true);
   }
 
-  applyImpulseAtAngle(force = { x: 0, y: 0, z: 0 }, angle) {
+  applyImpulseAtAngle(force = { x: 0, y: 0, z: 0 }, angle = 0) {
     // Rotate and apply force at an angle
     force = new Vector3().copy(force);
     force.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);

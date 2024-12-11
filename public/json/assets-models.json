@@ -5,79 +5,79 @@
   "cube-bounce": {
     "url": "../glb/cube-bounce.glb",
     "userData": {
-      "isAsset": true
+      "className": "Bounce"
     }
   },
   "cube-checkpoint": {
     "url": "../glb/cube-checkpoint.glb",
     "userData": {
-      "isAsset": true
+      "className": "Checkpoint"
     }
   },
   "cube-control": {
     "url": "../glb/cube-control.glb",
     "userData": {
-      "isAsset": true
+      "className": "Control"
     }
   },
   "cube-cube": {
     "url": "../glb/cube-cube.glb",
     "userData": {
-      "isAsset": true
+      "className": "Cube"
     }
   },
   "cube-direction": {
     "url": "../glb/cube-direction.glb",
     "userData": {
-      "isAsset": true
+      "className": "Direction"
     }
   },
   "cube-finish": {
     "url": "../glb/cube-finish.glb",
     "userData": {
-      "isAsset": true
+      "className": "Finish"
     }
   },
   "cube-grapple": {
     "url": "../glb/cube-grapple.glb",
     "userData": {
-      "isAsset": true
+      "className": "Grapple"
     }
   },
   "cube-gravity": {
     "url": "../glb/cube-gravity.glb",
     "userData": {
-      "isAsset": true
+      "className": "Gravity"
     }
   },
   "cube-player": {
     "url": "../glb/cube-player.glb",
     "userData": {
-      "isAsset": true
+      "className": "Player"
     }
   },
   "cube-reset": {
     "url": "../glb/cube-reset.glb",
     "userData": {
-      "isAsset": true
+      "className": "Reset"
     }
   },
   "cube-resize": {
     "url": "../glb/cube-resize.glb",
     "userData": {
-      "isAsset": true
+      "className": "Resize"
     }
   },
   "cube-spike": {
     "url": "../glb/cube-spike.glb",
     "userData": {
-      "isAsset": true
+      "className": "Spike"
     }
   },
   "cube-tip": {
     "url": "../glb/cube-tip.glb",
     "userData": {
-      "isAsset": true
+      "className": "Tip"
     }
   }
 }

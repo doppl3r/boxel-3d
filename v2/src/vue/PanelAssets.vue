@@ -19,16 +19,16 @@
     // Return an array of assets from game cache
     return Object.keys(cache)
       .filter(key => {
-        // Only include assets with isAsset flag
+        // Only include assets with className defined in userData
         const asset = cache[key];
-        if (asset.userData.isAsset) return asset;
+        if (asset.userData.className) return asset;
       })
       .map(key => {
         // Return a new object with basic data
         const asset = cache[key];
         return {
-          key: key,
-          src: asset.thumbnail
+          src: asset.thumbnail,
+          className: asset.userData.className
         };
       }
     );
@@ -49,7 +49,7 @@
       <div class="title">Add</div>
     </div>
     <div class="assets">
-      <button class="asset" v-for="asset in assets" :title="asset.key" @click="addEntity($event, asset)">
+      <button class="asset" v-for="asset in assets" :title="asset.className" @click="addEntity($event, asset)">
         <img :src="asset.src" />
       </button>
     </div>

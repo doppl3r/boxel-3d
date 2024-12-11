@@ -27,9 +27,8 @@
 
   function addEntity(e, asset) {
     // Store an array of selected entities with their current index
-    const type = asset.key.replace('cube-', '');
     const entity = LevelFactory.createEntity({
-      type: type
+      className: asset.className
     });
     const last = entitiesSelected[entitiesSelected.length - 1];
     const index = last ? entities.value.indexOf(last) + 1 : 0;

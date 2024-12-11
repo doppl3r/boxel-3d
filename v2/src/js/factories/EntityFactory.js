@@ -39,18 +39,17 @@ class EntityFactory {
   static TriMesh = TriMesh;
 
   static create(options) {
-    // Call function by class name
-    if (options.type != null) {
-      var className = this.getClassName(options.type);
-      var fn = this['create' + className];
+    // Call function by className value
+    if (options.className != null) {
+      var fn = this['create' + options.className];
       if (fn == null) {
-        console.error(`Error: Entity type "${ className }" not found.`);
+        console.error(`Error: Entity type "${ options.className }" not found.`);
         return;
       }
       return fn(options);
     }
     else {
-      console.error(`Error: Entity type is undefined.`)
+      console.error(`Error: Entity property "className" is undefined.`)
     }
   }
   
@@ -122,19 +121,18 @@ class EntityFactory {
     return new TriMesh(options);
   }
 
-  static getClassName(type) {
+  static getClassNameByType(type) {
     return type.charAt(0).toUpperCase() + type.slice(1);
   }
 
-  static getProperty(type, property) {
-    const className = this.getClassName(type);
-    if (className) {
-      const staticClass = this[className];
-      if (staticClass) return staticClass[property];
-      else {
-        console.error(`Error: Static class "${ className }" does not exist.`)
-      }
-    }
+  static getPropertyByType(name, type) {
+    const className = this.getClassNameByType(type);
+    return this.getPropertyByClassName(name, className);
+  }
+
+  static getPropertyByClassName(name, className) {
+    const property = this[className];
+    if (property) return property[name];
     return;
   }
 }
