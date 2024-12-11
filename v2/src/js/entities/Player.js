@@ -143,6 +143,11 @@ class Player extends Cube {
     document.removeEventListener('pointerup', this.pointerUp);
   }
 
+  reset() {
+    this.jumpCount = 1;
+    super.reset();
+  }
+
   onSetMode(e) {
     this.setMode(e.mode);
   }
