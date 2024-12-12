@@ -41,97 +41,27 @@ class EntityFactory {
   static create(options) {
     // Call function by className value
     if (options.className != null) {
-      var fn = this['create' + options.className];
-      if (fn == null) {
-        console.error(`Error: Entity type "${ options.className }" not found.`);
-        return;
-      }
-      return fn(options);
+      return new EntityFactory[options.className](options);
     }
     else {
-      console.error(`Error: Entity property "className" is undefined.`)
+      console.error(`Error: Entity property "className" is undefined.`);
     }
-  }
-  
-  static createBounce(options) {
-    return new Bounce(options);
-  }
-
-  static createCheckpoint(options) {
-    return new Checkpoint(options);
-  }
-
-  static createControl(options) {
-    return new Control(options);
-  }
-
-  static createCube(options) {
-    return new Cube(options);
-  }
-
-  static createDirection(options) {
-    return new Direction(options);
-  }
-
-  static createFinish(options) {
-    return new Finish(options);
-  }
-
-  static createGrapple(options) {
-    return new Grapple(options);
-  }
-
-  static createGravity(options) {
-    return new Gravity(options);
-  }
-
-  static createLight(options) {
-    return new Light(options);
-  }
-
-  static createPlayer(options) {
-    return new Player(options);
-  }
-
-  static createReset(options) {
-    return new Reset(options);
-  }
-
-  static createResize(options) {
-    return new Resize(options);
-  }
-
-  static createSphere(options) {
-    return new Sphere(options);
-  }
-
-  static createSpike(options) {
-    return new Spike(options);
-  }
-
-  static createTip(options) {
-    return new Tip(options);
-  }
-
-  static createTrimesh(options) {
-    if (options.model == null) {
-      console.warn('Warning: Missing model for TriMesh entity.')
-      return;
-    }
-    return new TriMesh(options);
   }
 
   static getClassNameByType(type) {
-    return type.charAt(0).toUpperCase() + type.slice(1);
+    // Get className from matching (lowercase) type value
+    const properties = Object.keys(EntityFactory);
+    const className = properties.find(className => className.toLowerCase() == type);
+    return className;
   }
 
   static getPropertyByType(name, type) {
-    const className = this.getClassNameByType(type);
-    return this.getPropertyByClassName(name, className);
+    const className = EntityFactory.getClassNameByType(type);
+    return EntityFactory.getPropertyByClassName(name, className);
   }
 
   static getPropertyByClassName(name, className) {
-    const property = this[className];
+    const property = EntityFactory[className];
     if (property) return property[name];
     return;
   }

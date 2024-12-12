@@ -18,9 +18,9 @@ class TriMesh extends Entity {
     }, options);
 
     // Merge geometries from model meshes
+    let geometry;
+    let geometries = [];
     if (options.model) {
-      var geometry;
-      var geometries = [];
       options.model.traverse(function(child) {
         if (child.isMesh) {
           // Translate geometry from mesh origin
@@ -40,10 +40,11 @@ class TriMesh extends Entity {
       // Create TriMesh from merged geometry
       options.vertices = geometry.attributes.position.array;
       options.indices = geometry.index.array;
+      options.shape = new TriMeshShape(options.vertices, options.indices, TriMeshFlags['FIX_INTERNAL_EDGES']);
     }
-
-    // Create physical shape
-    options.shape = new TriMeshShape(options.vertices, options.indices, TriMeshFlags['FIX_INTERNAL_EDGES']);
+    else {
+      console.error(`Error: TriMesh missing model.`);
+    }
 
     // Inherit Entity class
     super(options);
@@ -51,10 +52,30 @@ class TriMesh extends Entity {
     // Set default properties
     this.isTriMesh = true;
     this.type = 'trimesh';
-
-    // Add model to 3D object
     this.model = options.model;
-    this.object.add(this.model);
+
+    // Bind "this" context to class function (required for event removal)
+    this.onTriMeshAdded = this.onTriMeshAdded.bind(this);
+    this.addEventListener('added', this.onTriMeshAdded);
+  }
+
+  onTriMeshAdded(e) {
+    // Bind target "this" context to class function (required for event removal)
+    this.onTriMeshRemoved = this.onTriMeshRemoved.bind(this);
+
+    // Add optional model to 3D object
+    if (this.model && this.model.isObject3D) this.object.add(this.model);
+    
+    // Add TriMesh event listeners
+    this.addEventListener('removed', this.onTriMeshRemoved);
+  }
+
+  onTriMeshRemoved(e) {
+    // Remove model from 3D object
+    if (this.model && this.model.isObject3D) this.object.remove(this.model);
+
+    // Remove entity event listeners
+    this.removeEventListener('removed', this.onTriMeshRemoved);
   }
 
   toJSON() {
