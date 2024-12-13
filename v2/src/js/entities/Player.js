@@ -18,7 +18,10 @@ class Player extends Cube {
     options = Object.assign({
       activeCollisionTypes: 'ALL',
       activeEvents: 'COLLISION_EVENTS',
-      events: [{ name: 'checkCollision' }]
+      enabledRotations: { x: false, y: false, z: true },
+      enabledTranslations: { x: true, y: true, z: false },
+      events: [{ name: 'checkCollision' }],
+      status: 0
     }, options);
 
     // Inherit Cube class

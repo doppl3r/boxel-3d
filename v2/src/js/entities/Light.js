@@ -15,6 +15,8 @@ class Light extends Cube {
     // Set options with default values
     options = Object.assign({
       collisionGroups: 0x00000000,
+      enabledRotations: { x: false, y: false, z: true },
+      enabledTranslations: { x: true, y: true, z: false },
       isSensor: true,
       status: 1
     }, options);

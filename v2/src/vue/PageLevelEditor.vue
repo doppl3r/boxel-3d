@@ -27,7 +27,12 @@
 
   function addEntity(e, prefab) {
     // Store an array of selected entities with their current index
-    const entity = LevelFactory.createEntity(prefab);
+    const position = {
+      x: Math.round(props.game.graphics.camera.position.x),
+      y: Math.round(props.game.graphics.camera.position.y),
+      z: 0,
+    };
+    const entity = LevelFactory.createEntity({ ...prefab, position });
     const last = entitiesSelected[entitiesSelected.length - 1];
     const index = last ? entities.value.indexOf(last) + 1 : 0;
 

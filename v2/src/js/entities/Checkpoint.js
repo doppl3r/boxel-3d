@@ -13,8 +13,11 @@ class Checkpoint extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
+      enabledRotations: { x: false, y: false, z: true },
+      enabledTranslations: { x: true, y: true, z: false },
       events: [{ name: 'setCheckpoint' }],
-      isSensor: true
+      isSensor: true,
+      status: 1
     }, options);
 
     // Inherit Character class

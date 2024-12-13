@@ -13,7 +13,10 @@ class Finish extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      events: [{ name: 'finish' }]
+      enabledRotations: { x: false, y: false, z: true },
+      enabledTranslations: { x: true, y: true, z: false },
+      events: [{ name: 'finish' }],
+      status: 1
     }, options);
 
     // Inherit Character class

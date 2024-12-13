@@ -14,7 +14,10 @@ class Direction extends Cube {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      events: [{ name: 'setDirection' }]
+      enabledRotations: { x: false, y: false, z: true },
+      enabledTranslations: { x: true, y: true, z: false },
+      events: [{ name: 'setDirection' }],
+      status: 1
     }, options);
 
     // Inherit Character class

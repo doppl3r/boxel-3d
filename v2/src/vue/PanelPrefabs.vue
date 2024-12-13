@@ -46,11 +46,11 @@
 
   onMounted(async () => {
     json.value = await loadFile('../json/assets-prefabs.json');
-  })
+  });
 </script>
 
 <template>
-  <div class="panel" v-if="isVisible">
+  <div class="panel" v-show="isVisible">
     <div class="header">
       <div class="title">Add</div>
     </div>

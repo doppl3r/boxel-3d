@@ -14,6 +14,9 @@
       "scale": { "x": 1, "y": 1, "z": 1 },
       "status": 0
     },
+
+
+    
     {
       "type": "cube",
       "id": "9183b20a-30b0-4cc7-be5e-8cf297fa3079",
@@ -73,27 +76,27 @@
       "type": "cube",
       "color": "#f52d59",
       "position": { "x": 0, "y": -1, "z": 0 },
-      "scale": { "x": 24, "y": 1, "z": 1 },
+      "scale": { "x": 25, "y": 1, "z": 1 },
       "status": 1
     },
     {
       "type": "cube",
       "color": "#f52d59",
       "position": { "x": 0, "y": 11, "z": 0 },
-      "scale": { "x": 24, "y": 1, "z": 1 },
+      "scale": { "x": 25, "y": 1, "z": 1 },
       "status": 1
     },
     {
       "type": "cube",
       "color": "#f52d59",
-      "position": { "x": -11.5, "y": 5, "z": 0 },
+      "position": { "x": -12, "y": 5, "z": 0 },
       "scale": { "x": 1, "y": 11, "z": 1 },
       "status": 1
     },
     {
       "type": "cube",
       "color": "#f52d59",
-      "position": { "x": 11.5, "y": 5, "z": 0 },
+      "position": { "x": 12, "y": 5, "z": 0 },
       "scale": { "x": 1, "y": 11, "z": 1 },
       "status": 1
     },

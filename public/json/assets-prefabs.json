@@ -19,10 +19,12 @@
   },
   "cube": {
     "className": "Cube",
-    "color": "#ffa217",
+    "enabledRotations": { "x": false, "y": false, "z": true },
+    "enabledTranslations": { "x": true, "y": true, "z": false },
     "model": {
       "name": "cube-cube"
-    }
+    },
+    "status": 1
   },
   "direction": {
     "className": "Direction",
