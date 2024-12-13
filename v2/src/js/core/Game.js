@@ -1,5 +1,5 @@
 import { Ticker } from './Ticker.js';
-import { AssetLoader } from '../loaders/AssetLoader.js';
+import { AssetLoader } from './loaders/AssetLoader.js';
 import { Graphics } from './Graphics.js';
 import { Physics } from './Physics.js';
 

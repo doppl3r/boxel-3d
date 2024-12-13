@@ -7,8 +7,8 @@
   import Loading from '@/v2/src/vue/Loading.vue';
   import { Ticker } from '@/v2/src/js/core/Ticker.js';
   import { Graphics } from '@/v2/src/js/core/Graphics.js';
-  import { LightFactory } from '@/v2/src/js/factories/LightFactory.js';
-  import { AssetLoader } from '@/v2/src/js/loaders/AssetLoader.js';
+  import { LightFactory } from '@/v2/src/js/core/factories/LightFactory.js';
+  import { AssetLoader } from '@/v2/src/js/core/loaders/AssetLoader.js';
 
   // Initialize components
   var canvas = ref();

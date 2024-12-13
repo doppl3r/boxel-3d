@@ -1,5 +1,5 @@
 import { Euler, Quaternion, Vector3 } from 'three';
-import { Cube } from './Cube.js';
+import { Cube } from '../core/entities/Cube.js';
 
 /*
   A Gravity is a subclass that extends the Cube class

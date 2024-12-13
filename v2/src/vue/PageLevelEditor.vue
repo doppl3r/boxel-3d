@@ -1,6 +1,6 @@
 <script setup>
   import { computed, onMounted, onUnmounted, shallowReactive, ref } from 'vue';
-  import { LevelFactory } from '../js/factories/LevelFactory.js';
+  import { LevelFactory } from '../js/core/factories/LevelFactory.js';
   import { History } from '../js/core/CommandHistory';
   import PanelActions from './PanelActions.vue';
   import PanelPrefabs from './PanelPrefabs.vue';

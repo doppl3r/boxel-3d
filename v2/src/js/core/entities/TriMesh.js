@@ -1,6 +1,6 @@
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { TriMesh as TriMeshShape, TriMeshFlags } from '@dimforge/rapier3d';
-import { Entity } from '../core/Entity.js';
+import { Entity } from './Entity.js';
 
 /*
   A TriMesh creates a rigid body from a set of vertices and
@@ -12,8 +12,6 @@ class TriMesh extends Entity {
   constructor(options) {
     // Set options with default values
     options = Object.assign({
-      enabledRotations: { x: false, y: false, z: true },
-      enabledTranslations: { x: true, y: true, z: false },
       indices: new Uint16Array(),
       status: 1,
       vertices: new Float32Array()

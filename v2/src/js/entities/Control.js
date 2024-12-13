@@ -1,4 +1,4 @@
-import { Cube } from './Cube.js';
+import { Cube } from '../core/entities/Cube.js';
 
 /*
   A Control is a subclass that extends the Cube class

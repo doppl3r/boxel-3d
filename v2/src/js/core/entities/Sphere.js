@@ -1,6 +1,6 @@
 import { SphereGeometry, Mesh, MeshStandardMaterial } from 'three';
 import { Ball } from '@dimforge/rapier3d';
-import { Entity } from '../core/Entity.js';
+import { Entity } from './Entity.js';
 
 /*
   A sphere is a ball shape that provides a 3D object (Three.js) and
@@ -17,8 +17,6 @@ class Sphere extends Entity {
     // Set options with default values
     options = Object.assign({
       color: '#ffffff',
-      enabledRotations: { x: false, y: false, z: true },
-      enabledTranslations: { x: true, y: true, z: false },
       heightSegments: 32,
       radius: 0.5,
       status: 1,

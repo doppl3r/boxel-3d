@@ -1,7 +1,7 @@
 import { Vector3 } from 'three';
-import { CameraFactory } from '../factories/CameraFactory.js';
-import { LightFactory } from '../factories/LightFactory.js';
-import { Cube } from './Cube.js';
+import { CameraFactory } from '../core/factories/CameraFactory.js';
+import { LightFactory } from '../core/factories/LightFactory.js';
+import { Cube } from '../core/entities/Cube.js';
 
 /*
   A Player is a subclass that extends the Cube class

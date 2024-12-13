@@ -1,4 +1,4 @@
-import { Cube } from './Cube.js';
+import { Cube } from '../core/entities/Cube.js';
 import { Cuboid } from '@dimforge/rapier3d';
 
 /*

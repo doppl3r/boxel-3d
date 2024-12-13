@@ -1,19 +1,19 @@
 import { Bounce } from '../entities/Bounce';
 import { Checkpoint } from '../entities/Checkpoint';
 import { Control } from '../entities/Control';
-import { Cube } from '../entities/Cube';
+import { Cube } from '../core/entities/Cube';
 import { Direction } from '../entities/Direction';
 import { Finish } from '../entities/Finish';
 import { Grapple } from '../entities/Grapple';
 import { Gravity } from '../entities/Gravity';
-import { Light } from '../entities/Light';
+import { Light } from '../core/entities/Light';
 import { Player } from '../entities/Player';
 import { Reset } from '../entities/Reset';
 import { Resize } from '../entities/Resize';
-import { Sphere } from '../entities/Sphere';
+import { Sphere } from '../core/entities/Sphere';
 import { Spike } from '../entities/Spike';
 import { Tip } from '../entities/Tip';
-import { TriMesh } from '../entities/TriMesh';
+import { TriMesh } from '../core/entities/TriMesh';
 
 /*
   This class creates new entity instances that are compatible
