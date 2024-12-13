@@ -1,56 +1,62 @@
 <script setup>
-  import { computed, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
 
   // Declare component variables
   const emit = defineEmits(['addEntity']);
   const props = defineProps({
-    cache: Object,
+    game: Object,
     mode: Object
   });
+  const json = ref({});
   const expanded = ref(false);
-  const assets = computed(() => getAssets(props.cache));
+  const prefabs = computed(() => getPrefabs());
   const isVisible = computed((previous) => {
     if (props.mode.type == 'add') expanded.value = !previous;
     else expanded.value = false;
     return expanded.value;
   });
 
-  function getAssets(cache) {
-    // Return an array of assets from game cache
-    return Object.keys(cache)
-      .filter(key => {
-        // Only include assets with className defined in userData
-        const asset = cache[key];
-        if (asset.userData.className) return asset;
-      })
-      .map(key => {
-        // Return a new object with basic data
-        const asset = cache[key];
-        return {
-          src: asset.thumbnail,
-          className: asset.userData.className
-        };
-      }
-    );
+  function getPrefabs() {
+    // Return an array of prefabs with thumbnails
+    return Object.keys(json.value).map(key => {
+      const prefab = json.value[key];
+      const model = props.game.assets.get(prefab.model.name);
+      prefab.src = props.game.assets.assetModelLoader.generateThumbnail(model);
+      return prefab;
+    });
   }
 
-  function addEntity(e, asset) {
-    emit('addEntity', e, asset);
+  async function loadFile(path) {
+    // Fetch public folder for level
+    return fetch(path).then(function (response) {
+      if (response.ok) { return response.json(); }
+      throw new Error('Something went wrong');
+    })
+    .then(function(json) { return json; })
+    .catch(function(error) { console.error(error); });
+  }
+
+  function addEntity(e, prefab) {
+    emit('addEntity', e, prefab);
   }
 
   function close() {
     expanded.value = false;
   }
+
+  onMounted(async () => {
+    json.value = await loadFile('../json/assets-prefabs.json');
+  })
 </script>
 
 <template>
-  <div class="panel" v-show="isVisible">
+  <div class="panel" v-if="isVisible">
     <div class="header">
       <div class="title">Add</div>
     </div>
-    <div class="assets">
-      <button class="asset" v-for="asset in assets" :title="asset.className" @click="addEntity($event, asset)">
-        <img :src="asset.src" />
+    <div class="prefabs">
+      <button class="prefab" v-for="prefab in prefabs" :title="prefab.className" @click="addEntity($event, prefab)">
+        <img :src="prefab.src" />
       </button>
     </div>
     <button class="close" @click="close">x</button>
@@ -83,7 +89,7 @@
       }
     }
 
-    .assets {
+    .prefabs {
       display: flex;
       flex-wrap: wrap;
       gap: 0.125em;
@@ -92,7 +98,7 @@
       overflow-y: auto;
       padding-right: 0.5em;
 
-      .asset {
+      .prefab {
         align-items: center;
         background-color: #FFA217;
         border-radius: 0.5em;

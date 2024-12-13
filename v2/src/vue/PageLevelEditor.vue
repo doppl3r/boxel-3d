@@ -3,7 +3,7 @@
   import { LevelFactory } from '../js/factories/LevelFactory.js';
   import { History } from '../js/core/CommandHistory';
   import PanelActions from './PanelActions.vue';
-  import PanelAssets from './PanelAssets.vue';
+  import PanelPrefabs from './PanelPrefabs.vue';
   import PanelScene from './PanelScene.vue';
   import ContextMenu from './ContextMenu.vue';
 
@@ -25,11 +25,9 @@
     mode.value = newMode;
   }
 
-  function addEntity(e, asset) {
+  function addEntity(e, prefab) {
     // Store an array of selected entities with their current index
-    const entity = LevelFactory.createEntity({
-      className: asset.className
-    });
+    const entity = LevelFactory.createEntity(prefab);
     const last = entitiesSelected[entitiesSelected.length - 1];
     const index = last ? entities.value.indexOf(last) + 1 : 0;
 
@@ -398,9 +396,13 @@
 <template>
   <div>
     <div class="panels">
-      <PanelActions :game="game" :mode="mode" @setMode="setMode" />
-      <PanelAssets
-        :cache="game.assets.cache"
+      <PanelActions
+        :game="game"
+        :mode="mode"
+        @setMode="setMode"
+      />
+      <PanelPrefabs
+        :game="game"
         :mode="mode"
         @add-entity="addEntity"
       />
