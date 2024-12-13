@@ -19,7 +19,6 @@ class Sphere extends Entity {
       color: '#ffffff',
       heightSegments: 32,
       radius: 0.5,
-      status: 1,
       widthSegments: 32,
     }, options);
 

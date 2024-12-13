@@ -99,7 +99,7 @@ class AssetModelLoader extends GLTFLoader {
     }
   }
 
-  generateThumbnail(model, width = 64, height = 64) {
+  renderThumbnail(model, width = 64, height = 64) {
     _scene.add(model);
     _renderer.setSize(width, height);
     _renderer.render(_scene, _camera);
