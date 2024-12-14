@@ -21,7 +21,7 @@
     return Object.keys(json.value).map(key => {
       const prefab = json.value[key];
       const model = props.game.assets.get(prefab.model.name);
-      prefab.src = props.game.assets.assetModelLoader.renderThumbnail(model);
+      prefab.thumbnail = props.game.assets.assetModelLoader.renderThumbnail(model);
       return prefab;
     });
   }
@@ -45,7 +45,7 @@
   }
 
   onMounted(async () => {
-    json.value = await loadFile('../json/assets-prefabs.json');
+    json.value = props.game.assets.get('prefabs');
   });
 </script>
 
@@ -56,7 +56,7 @@
     </div>
     <div class="prefabs">
       <button class="prefab" v-for="prefab in prefabs" :title="prefab.className" @click="addEntity($event, prefab)">
-        <img :src="prefab.src" />
+        <img :src="prefab.thumbnail" />
       </button>
     </div>
     <button class="close" @click="close">x</button>

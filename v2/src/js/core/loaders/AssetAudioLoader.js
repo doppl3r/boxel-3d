@@ -32,8 +32,8 @@ class AssetAudioLoader extends AudioLoader {
         function(xhr) {
           
         },
-        function(err) {
-          console.error(`Error: Audio "${ value.url }" not found.`);
+        function(error) {
+          console.error(error);
         });
       }
     }
