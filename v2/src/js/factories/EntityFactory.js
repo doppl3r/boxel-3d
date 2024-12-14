@@ -39,13 +39,23 @@ class EntityFactory {
   static TriMesh = TriMesh;
 
   static create(options) {
+    // Ensure className is defined
+    if (options.className == undefined) {
+      options.className = EntityFactory.getClassNameByType(options.type);
+    }
+
+    // Create default model json from entity class static model field
+    if (options.model == undefined) {
+      options.model = EntityFactory.getPropertyByClassName('model', options.className);
+    }
+
+    // Duplicate 3D model from model json
+    if (options.model && game.assets.get(options.model.name)) {
+      options.model = game.assets.duplicate(options.model.name);
+    }
+
     // Call function by className value
-    if (options.className != null) {
-      return new EntityFactory[options.className](options);
-    }
-    else {
-      console.error(`Error: Entity property "className" is undefined.`);
-    }
+    return new EntityFactory[options.className](options);
   }
 
   static getClassNameByType(type) {

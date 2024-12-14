@@ -26,16 +26,6 @@
     });
   }
 
-  async function loadFile(path) {
-    // Fetch public folder for level
-    return fetch(path).then(function (response) {
-      if (response.ok) { return response.json(); }
-      throw new Error('Something went wrong');
-    })
-    .then(function(json) { return json; })
-    .catch(function(error) { console.error(error); });
-  }
-
   function addEntity(e, prefab) {
     emit('addEntity', e, prefab);
   }

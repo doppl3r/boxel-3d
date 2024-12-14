@@ -1,11 +1,12 @@
 <script setup>
   import { computed, onMounted, onUnmounted, shallowReactive, ref } from 'vue';
-  import { LevelFactory } from '../js/core/factories/LevelFactory.js';
+  import { EntityFactory } from '../js/factories/EntityFactory.js';
   import { History } from '../js/core/CommandHistory';
   import PanelActions from './PanelActions.vue';
   import PanelPrefabs from './PanelPrefabs.vue';
   import PanelScene from './PanelScene.vue';
   import ContextMenu from './ContextMenu.vue';
+  import CustomEvents from '../js/mixins/CustomEvents.js';
 
   // Initialize app and expose to window scope
   const props = defineProps({ game: Object });
@@ -32,7 +33,7 @@
       y: Math.round(props.game.graphics.camera.position.y),
       z: 0,
     };
-    const entity = LevelFactory.createEntity({ ...prefab, position });
+    const entity = EntityFactory.create({ ...prefab, position });
     const last = entitiesSelected[entitiesSelected.length - 1];
     const index = last ? entities.value.indexOf(last) + 1 : 0;
 
@@ -315,28 +316,43 @@
     history.redo();
   }
 
-  function loadLevel(json) {
+  function loadLevel(name) {
+    // Reset physics entities
     props.game.physics.clear();
     
     // Load level from JSON
-    var entities = LevelFactory.loadFromJSON(json);
-
-    // Loop through entity list
-    entities.forEach(function(entity) {
-      // Add 3D object after entity is added
-      entity.addEventListener('added', function(e) {
-        props.game.graphics.scene.add(entity.object);
+    const json = props.game.assets.get(name);
+    const entities = [];
+    
+    // Loop through level children
+    if (json) {
+      json.children.forEach(function(child) {
+        const entity = EntityFactory.create({
+          ccd: true,
+          friction: json.friction || 0,
+          softCcdPrediction: 0.5,
+          ...child,
+        });
+  
+        // Add 3D object after entity is added
+        entity.addEventListener('added', function(e) {
+          props.game.graphics.scene.add(entity.object);
+        });
+  
+        // Add custom mixin functions to entity
+        Object.assign(entity, CustomEvents);
+  
+        // Assign rendering camera from player
+        if (entity.type == 'player') {
+          props.game.player = entity;
+          props.game.graphics.setCamera(entity.camera);
+        }
+  
+        // Add entity to physics entity map
+        props.game.physics.add(entity);
+        entities.push(entity);
       });
-
-      // Add entity to physics entity map
-      props.game.physics.add(entity);
-
-      // Assign rendering camera from player
-      if (entity.type == 'player') {
-        props.game.player = entity;
-        props.game.graphics.setCamera(entity.camera);
-      }
-    });
+    }
 
     // Return final entity list
     return entities;
@@ -388,8 +404,7 @@
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     props.game.physics.debugger.enable();
-    const json = await LevelFactory.loadFile('../json/boxel-3d-sandbox.json');
-    entities.value = loadLevel(json);
+    entities.value = loadLevel('boxel-3d-sandbox');
     document.addEventListener('keydown', onKeyDown);
   });
 

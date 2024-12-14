@@ -22,7 +22,7 @@ class AssetJSONLoader extends FileLoader {
           
         },
         function(error) {
-          console.error(error);
+          console.error(`Error: File ${ value.url } not found.`);
         });
       }
     }
