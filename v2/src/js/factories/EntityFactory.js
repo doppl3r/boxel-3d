@@ -1,49 +1,42 @@
+import { EntityFactory as EntityFactoryCore } from '../core/factories/EntityFactory.js';
 import { Bounce } from '../entities/Bounce';
 import { Checkpoint } from '../entities/Checkpoint';
 import { Control } from '../entities/Control';
-import { Cube } from '../core/entities/Cube';
 import { Direction } from '../entities/Direction';
 import { Finish } from '../entities/Finish';
 import { Grapple } from '../entities/Grapple';
 import { Gravity } from '../entities/Gravity';
-import { Light } from '../core/entities/Light';
 import { Player } from '../entities/Player';
 import { Reset } from '../entities/Reset';
 import { Resize } from '../entities/Resize';
-import { Sphere } from '../core/entities/Sphere';
 import { Spike } from '../entities/Spike';
 import { Tip } from '../entities/Tip';
-import { TriMesh } from '../core/entities/TriMesh';
 
 /*
   This class creates new entity instances that are compatible
   with Three.js and Rapier.js
 */
 
-class EntityFactory {
+class EntityFactory extends EntityFactoryCore {
   static Bounce = Bounce;
   static Checkpoint = Checkpoint;
   static Control = Control;
-  static Cube = Cube;
   static Direction = Direction;
   static Finish = Finish;
   static Grapple = Grapple;
   static Gravity = Gravity;
-  static Light = Light;
   static Player = Player;
   static Reset = Reset;
-  static Sphere = Sphere;
   static Resize = Resize;
   static Spike = Spike;
   static Tip = Tip;
-  static TriMesh = TriMesh;
 
   static create(options) {
     // Ensure className is defined
     if (options.className == undefined) {
       options.className = EntityFactory.getClassNameByType(options.type);
     }
-
+    
     // Create default model json from entity class static model field
     if (options.model == undefined) {
       options.model = EntityFactory.getPropertyByClassName('model', options.className);
@@ -55,25 +48,7 @@ class EntityFactory {
     }
 
     // Call function by className value
-    return new EntityFactory[options.className](options);
-  }
-
-  static getClassNameByType(type) {
-    // Get className from matching (lowercase) type value
-    const properties = Object.keys(EntityFactory);
-    const className = properties.find(className => className.toLowerCase() == type);
-    return className;
-  }
-
-  static getPropertyByType(name, type) {
-    const className = EntityFactory.getClassNameByType(type);
-    return EntityFactory.getPropertyByClassName(name, className);
-  }
-
-  static getPropertyByClassName(name, className) {
-    const property = EntityFactory[className];
-    if (property) return property[name];
-    return;
+    return super.create(options);
   }
 }
 

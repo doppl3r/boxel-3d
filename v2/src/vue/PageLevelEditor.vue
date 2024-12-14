@@ -41,6 +41,9 @@
     entity.addEventListener('added', function(e) {
       props.game.graphics.scene.add(entity.object);
     });
+
+    // Add custom mixin functions to entity
+    Object.assign(entity, CustomEvents);
     
     // Add or remove entity to/from end
     history.add(

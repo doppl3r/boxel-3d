@@ -19,6 +19,7 @@
   },
   "cube": {
     "className": "Cube",
+    "color": "#FFCB4C",
     "enabledRotations": { "x": false, "y": false, "z": true },
     "enabledTranslations": { "x": true, "y": true, "z": false },
     "model": {
