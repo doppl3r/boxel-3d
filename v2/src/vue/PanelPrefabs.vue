@@ -21,7 +21,7 @@
     return Object.keys(json.value).map(key => {
       const prefab = json.value[key];
       const model = props.game.assets.get(prefab.model.name);
-      prefab.thumbnail = props.game.assets.assetModelLoader.renderThumbnail(model);
+      prefab.thumbnail = props.game.assets.assetModelLoader.renderThumbnail(model, prefab);
       return prefab;
     });
   }

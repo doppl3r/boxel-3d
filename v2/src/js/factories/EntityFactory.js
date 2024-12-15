@@ -13,7 +13,7 @@ import { Spike } from '../entities/Spike';
 import { Tip } from '../entities/Tip';
 
 /*
-  This class creates new entity instances that are compatible
+  This subclass creates new entity instances that are compatible
   with Three.js and Rapier.js
 */
 
@@ -34,12 +34,12 @@ class EntityFactory extends EntityFactoryCore {
   static create(options) {
     // Ensure className is defined
     if (options.className == undefined) {
-      options.className = EntityFactory.getClassNameByType(options.type);
+      options.className = super.getClassNameByType(options.type);
     }
     
     // Create default model json from entity class static model field
     if (options.model == undefined) {
-      options.model = EntityFactory.getPropertyByClassName('model', options.className);
+      options.model = super.getPropertyByClassName('model', options.className);
     }
 
     // Duplicate 3D model from model json

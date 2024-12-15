@@ -71,6 +71,34 @@
     },
 
 
+
+    {
+      "type": "bounce",
+      "color": "#FFCB4C",
+      "position": { "x": 4, "y": 2, "z": 0 },
+      "status": 0
+    },
+    {
+      "type": "bounce",
+      "color": "#FFCB4C",
+      "position": { "x": 4, "y": 3, "z": 0 },
+      "status": 0
+    },
+    {
+      "type": "bounce",
+      "color": "#FFCB4C",
+      "position": { "x": 4, "y": 4, "z": 0 },
+      "status": 0
+    },
+    {
+      "type": "bounce",
+      "color": "#FFCB4C",
+      "position": { "x": 4, "y": 5, "z": 0 },
+      "status": 0
+    },
+
+
+
     
     {
       "type": "cube",
