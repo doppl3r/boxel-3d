@@ -79,7 +79,7 @@ class Player extends Cube {
         
         // Update velocity and apply jump
         this.setAngularVelocityAtAngle({ x: 0, y: 0, z: 8 }, angle); // Set angular velocity
-        this.applyVelocityAtAngle({ x: 1, y: 0, z: 1 }, angle); // Cancel y-velocity
+        this.applyVelocityAtAxisAngle({ x: 1, y: 0, z: 1 }, { x: 0, y: 0, z: 1 }, angle); // Cancel y-velocity
         this.applyImpulseAtAngle(force, angle); // Jump
         this.jumpCount--;
       }

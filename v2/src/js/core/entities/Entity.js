@@ -235,13 +235,17 @@ class Entity extends EventDispatcher {
     if (this.rigidBody) this.rigidBody.setLinvel(velocity);
   }
 
-  applyVelocityAtAngle(force = { x: 1, y: 1, z: 1 }, angle = 0) {
-    // Rotate and apply velocity at an angle
-    const velocity = new Vector3().copy(this.getLinearVelocity());
-    velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, -angle);
-    velocity.multiply(force);
-    velocity.applyAxisAngle({ x: 0, y: 0, z: 1 }, angle);
-    this.setLinearVelocity(velocity, true);
+  applyVelocityAtAxisAngle(velocity = { x: 1, y: 1, z: 1 }, axis = { x: 0, y: 0, z: 0 }, angle = 0) {
+    // Get current linear velocity
+    _vector.copy(this.getLinearVelocity());
+
+    // Rotate velocity along axis, apply scale, then revert rotation
+    _vector.applyAxisAngle(axis, -angle);
+    _vector.multiply(velocity);
+    _vector.applyAxisAngle(axis, angle);
+
+    // Set new linear velocity
+    this.setLinearVelocity(_vector, true);
   }
 
   applyImpulse(force = { x: 0, y: 0, z: 0 }) {
