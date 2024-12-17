@@ -41,7 +41,7 @@
 
 <style lang="scss" scoped>
   canvas {
-    background-color: #333333;
+    background-color: #f1f1f1;
     height: 100%;
     image-rendering: pixelated;
     left: 0;
