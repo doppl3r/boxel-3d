@@ -26,6 +26,10 @@
     mode.value = newMode;
   }
 
+  function editEntity(e, entity) {
+    console.log(e, entity);
+  }
+
   function addEntity(e, prefab) {
     // Store an array of selected entities with their current index
     const position = {
@@ -364,6 +368,7 @@
   function openContextMenu(e, entity) {
     if (entity.isSelected) {
       let actions = [];
+      let actionEdit = { text: 'Edit', icon: 'settings', callback: () => editEntity(e, entity) }
       let actionLink = { text: 'Link', icon: 'link', callback: () => linkEntity(e, entity) }
       let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => unlinkEntity(e, entity) }
       let actionDelete = { text: 'Delete', icon: 'delete', callback: () => deleteEntity(e, entity) }
@@ -373,9 +378,13 @@
         actionLink.disabled = true;
         if (entity.getParentId() == null) actionUnlink.disabled = true;
       }
-
+      else {
+        // Entities can only be edited individually
+        actionEdit.disabled = true;
+      }
+      
       // Add delete action
-      actions.push(actionLink, actionUnlink, actionDelete);
+      actions.push(actionEdit, actionLink, actionUnlink, actionDelete);
 
       // Dispatch event to the global context menu
       contextMenuEvent.value = e;

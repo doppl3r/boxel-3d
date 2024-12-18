@@ -41,7 +41,8 @@
 
 <style lang="scss" scoped>
   canvas {
-    background-color: #f1f1f1;
+    background: rgba(#f1f1f1, 1);
+    background: linear-gradient(180deg, rgba(#ffffff, 1) 45%, rgba(#c8e7ff,1) 55%);
     height: 100%;
     image-rendering: pixelated;
     left: 0;

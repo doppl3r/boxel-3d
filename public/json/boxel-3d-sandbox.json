@@ -18,7 +18,7 @@
 
     
     {
-      "type": "prop",
+      "type": "cube",
       "id": "9183b20a-30b0-4cc7-be5e-8cf297fa3079",
       "model": { "name": "cube-tip" },
       "events": [
