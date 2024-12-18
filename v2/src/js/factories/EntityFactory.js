@@ -2,6 +2,7 @@ import { EntityFactory as EntityFactoryCore } from '../core/factories/EntityFact
 import { Bounce } from '../entities/Bounce';
 import { Checkpoint } from '../entities/Checkpoint';
 import { Control } from '../entities/Control';
+import { Cube } from '../entities/Cube';
 import { Direction } from '../entities/Direction';
 import { Finish } from '../entities/Finish';
 import { Grapple } from '../entities/Grapple';
@@ -21,6 +22,7 @@ class EntityFactory extends EntityFactoryCore {
   static Bounce = Bounce;
   static Checkpoint = Checkpoint;
   static Control = Control;
+  static Cube = Cube;
   static Direction = Direction;
   static Finish = Finish;
   static Grapple = Grapple;
