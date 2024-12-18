@@ -8,6 +8,7 @@ import { Finish } from '../entities/Finish';
 import { Grapple } from '../entities/Grapple';
 import { Gravity } from '../entities/Gravity';
 import { Player } from '../entities/Player';
+import { Prop } from '../entities/Prop';
 import { Reset } from '../entities/Reset';
 import { Resize } from '../entities/Resize';
 import { Spike } from '../entities/Spike';
@@ -28,6 +29,7 @@ class EntityFactory extends EntityFactoryCore {
   static Grapple = Grapple;
   static Gravity = Gravity;
   static Player = Player;
+  static Prop = Prop;
   static Reset = Reset;
   static Resize = Resize;
   static Spike = Spike;
