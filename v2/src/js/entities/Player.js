@@ -59,6 +59,10 @@ class Player extends Cube {
     super.animate(delta, alpha);
 
     // Update camera position
+    this.updateCameraPosition();
+  }
+
+  updateCameraPosition() {
     this.camera.position.copy(this.object.position).add(this.cameraOffset);
   }
 
@@ -117,6 +121,9 @@ class Player extends Cube {
 
     // Add player light
     this.object.add(this.light);
+
+    // Update player camera position
+    this.updateCameraPosition();
     
     // Add player event listeners
     this.addEventListener('removed', this.onPlayerRemoved);

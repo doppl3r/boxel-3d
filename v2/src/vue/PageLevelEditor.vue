@@ -1,7 +1,10 @@
 <script setup>
+  import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
+  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
   import { computed, onMounted, onUnmounted, shallowReactive, ref } from 'vue';
   import { EntityFactory } from '../js/factories/EntityFactory.js';
   import { History } from '../js/core/CommandHistory';
+  import { CameraFactory } from '../js/core/factories/CameraFactory';
   import PanelActions from './PanelActions.vue';
   import PanelPrefabs from './PanelPrefabs.vue';
   import PanelScene from './PanelScene.vue';
@@ -21,6 +24,14 @@
   const isPlaying = computed(() => ticker.isRunning());
   const contextMenuEvent = ref({});
   const contextMenuActions = ref([]);
+  const controlsTransform = new TransformControls(props.game.graphics.camera, props.game.graphics.canvas);
+  const controlsOrbit = new OrbitControls(CameraFactory.create(), props.game.graphics.canvas);
+  controlsOrbit.zoomToCursor = true;
+  controlsOrbit.zoomSpeed = 3;
+  controlsOrbit.minDistance = 1;
+  controlsOrbit.maxDistance = 100;
+  controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 2 };
+  enableControlsOrbit(false);
 
   function setMode(newMode) {
     mode.value = newMode;
@@ -222,6 +233,7 @@
     entities.value.forEach(entity => {
       entity.reset();
     });
+    props.game.graphics.render();
   }
 
   function linkEntity(e, entity) {
@@ -395,11 +407,16 @@
   }
 
   function pause() {
-    ticker.stop()
+    ticker.stop();
+    props.game.graphics.setCamera(controlsOrbit.object);
+    props.game.graphics.render();
+    enableControlsOrbit(true);
   }
 
   function play() {
     ticker.start()
+    props.game.graphics.setCamera(props.game.player.camera);
+    enableControlsOrbit(false);
   }
 
   function updateDebugger() {
@@ -410,15 +427,38 @@
     }
   }
 
+  function onControlsOrbitStart() {
+    
+  }
+
+  function onControlsOrbitChange() {
+    if (props.game.ticker.isRunning() == false) {
+      props.game.graphics.render();
+    }
+  }
+
+  function enableControlsOrbit(enabled = true) {
+    controlsOrbit.enablePan = enabled;
+    controlsOrbit.enableRotate = enabled;
+    controlsOrbit.enableZoom = enabled;
+  }
+
   // Initialize app after canvas has been mounted
   onMounted(async function() {
     props.game.physics.debugger.enable();
     entities.value = loadLevel('boxel-3d-sandbox');
     document.addEventListener('keydown', onKeyDown);
+    controlsOrbit.addEventListener('start', onControlsOrbitStart);
+    controlsOrbit.addEventListener('change', onControlsOrbitChange);
+    controlsOrbit.object.rotation.set(0, 0, 0);
+    controlsOrbit.target.copy(props.game.player.getPosition());
+    props.game.player.camera.getWorldPosition(controlsOrbit.object.position);
   });
 
   onUnmounted(function() {
     document.removeEventListener('keydown', onKeyDown);
+    controlsOrbit.removeEventListener('start', onControlsOrbitStart);
+    controlsOrbit.removeEventListener('change', onControlsOrbitChange);
   });
 </script>
 
