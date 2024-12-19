@@ -452,5 +452,11 @@
       "Renamed \"Alpha\" levels to \"Blue City\"",
       "Added 5 new community levels"
     ]
+  },
+  {
+    "version": "2.2.9",
+    "revisions": [
+      "Fixed missing level numbers for Old UI"
+    ]
   }
 ]

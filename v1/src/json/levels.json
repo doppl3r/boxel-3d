@@ -232,23 +232,28 @@
       "levels": [
         {
           "title": "Campaign Level 36",
-          "description": "Small Boi"
+          "description": "Small Boi",
+          "label": "8-1"
         },
         {
           "title": "Campaign Level 37",
-          "description": "Doppler's Plinko"
+          "description": "Doppler's Plinko",
+          "label": "8-2"
         },
         {
           "title": "Campaign Level 38",
-          "description": "Ping Pong"
+          "description": "Ping Pong",
+          "label": "8-3"
         },
         {
           "title": "Campaign Level 39",
-          "description": "Boxel Nomad"
+          "description": "Boxel Nomad",
+          "label": "8-4"
         },
         {
           "title": "Campaign Level 40",
-          "description": "Homework"
+          "description": "Homework",
+          "label": "8-5"
         }
       ]
     },
