@@ -368,20 +368,10 @@
   function openContextMenu(e, entity) {
     if (entity.isSelected) {
       let actions = [];
-      let actionEdit = { text: 'Edit', icon: 'settings', callback: () => editEntity(e, entity) }
-      let actionLink = { text: 'Link', icon: 'link', callback: () => linkEntity(e, entity) }
-      let actionUnlink = { text: 'Unlink', icon: 'link_off', callback: () => unlinkEntity(e, entity) }
+      let actionEdit = { text: 'Edit', icon: 'settings', disabled: entitiesSelected.length != 1, callback: () => editEntity(e, entity) }
+      let actionLink = { text: 'Link', icon: 'link', disabled: entitiesSelected.length <= 1, callback: () => linkEntity(e, entity) }
+      let actionUnlink = { text: 'Unlink', icon: 'link_off', disabled: isLinked() == false, callback: () => unlinkEntity(e, entity) }
       let actionDelete = { text: 'Delete', icon: 'delete', callback: () => deleteEntity(e, entity) }
-
-      // Conditionally disable link actions
-      if (entitiesSelected.length == 1) {
-        actionLink.disabled = true;
-        if (entity.getParentId() == null) actionUnlink.disabled = true;
-      }
-      else {
-        // Entities can only be edited individually
-        actionEdit.disabled = true;
-      }
       
       // Add delete action
       actions.push(actionEdit, actionLink, actionUnlink, actionDelete);
@@ -395,6 +385,13 @@
       selectEntity(e, entity);
       openContextMenu(e, entity);
     }
+  }
+
+  function isLinked() {
+    for (let i = entitiesSelected.length - 1; i >= 0; i--) {
+      if (entitiesSelected[i].getParentId()) return true;
+    }
+    return false;
   }
 
   function pause() {
