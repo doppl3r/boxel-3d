@@ -47,7 +47,7 @@
     window.dispatchEvent(new CustomEvent('openModal', {
       detail: {
         title: 'Coming Soon!',
-        text: 'Boxel 3D "Pro" is currently in development and will Be available in early 2025!',
+        text: 'Boxel 3D "Pro" is currently in development and will be available to wishlist on Steam in the near future!',
         inputs: [
           {
             type: 'button',

@@ -449,7 +449,8 @@
   {
     "version": "2.2.8",
     "revisions": [
-      "Renamed \"Alpha\" levels to \"Blue City\""
+      "Renamed \"Alpha\" levels to \"Blue City\"",
+      "Added 5 new community levels"
     ]
   }
 ]
