@@ -66,9 +66,9 @@ class Player extends Cube {
     this.camera.position.copy(this.object.position).add(this.cameraOffset);
   }
 
-  checkCollision(e) {
-    if (e.started == true) {
-      e.target.jumpCount = 1;
+  checkCollision({ started, target }) {
+    if (started == true) {
+      target.jumpCount = 1;
     }
   }
 
@@ -158,18 +158,18 @@ class Player extends Cube {
     super.reset();
   }
 
-  onSetMode(e) {
-    this.setMode(e.mode);
+  onSetMode({ value }) {
+    this.setMode(value);
   }
 
   setMode(mode) {
     this.mode = mode;
   }
 
-  onSetGravity(e) {
+  onSetGravity({ value }) {
     this.tween({
       object: { z: this.camera.rotation.z },
-      to: { z: e.angle + Math.PI / 2 },
+      to: { z: value + Math.PI / 2 },
       dynamic: true,
       duration: 250,
       easing: 'Quadratic.InOut',
@@ -177,31 +177,31 @@ class Player extends Cube {
     }).start();
   }
 
-  keyDown(e) {
+  keyDown({ code, repeat }) {
     // Assign key inputs to true (once)
-    if (e.repeat) return;
-    this.keys[e.code] = true;
+    if (repeat) return;
+    this.keys[code] = true;
 
     // Add keybindings
     if (this.keys['Space'] == true || this.keys['ArrowUp'] == true) this.jump();
   }
 
-  keyUp(e) {
+  keyUp({ code }) {
     // Set key values to false
-    this.keys[e.code] = false;
+    this.keys[code] = false;
   }
 
-  pointerDown(e) {
+  pointerDown({ target, which }) {
     // Cancel input for non-canvas elements
-    if (e.target.nodeName != 'CANVAS') return;
+    if (target.nodeName != 'CANVAS') return;
     
     // Add touch bindings
-    this.pointer[e.which] = true;
+    this.pointer[which] = true;
     if (this.pointer[1] == true) this.jump();
   }
   
-  pointerUp(e) {
-    this.pointer[e.which] = false;
+  pointerUp({ which }) {
+    this.pointer[which] = false;
   }
 }
 

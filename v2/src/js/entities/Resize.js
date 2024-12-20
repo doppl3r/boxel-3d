@@ -38,10 +38,10 @@ class Resize extends Cube {
     super.animate(delta, alpha);
   }
 
-  setPairScale(e) {
-    var collider = e.target.rigidBody.collider(0); // First collider
+  setPairScale({ pair, target }) {
+    var collider = target.rigidBody.collider(0); // First collider
     var scale = new Vector3().copy(collider.halfExtents()).multiplyScalar(2);
-    e.pair.setScale(scale)
+    pair.setScale(scale); // Call Cube setScale function
   }
 }
 

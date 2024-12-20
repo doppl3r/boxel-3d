@@ -38,10 +38,10 @@ class Gravity extends Cube {
     super.animate(delta, alpha);
   }
 
-  setGravity(e) {
+  setGravity({ pair, target }) {
     var gravity = new Vector3().copy(game.physics.world.gravity);
     var magnitude = gravity.length();
-    var quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
+    var quaternion = new Quaternion().copy(target.rigidBody.rotation());
     var euler = new Euler().setFromQuaternion(quaternion);
     var angle = -((Math.PI / 2) - euler.z);
 
@@ -50,7 +50,7 @@ class Gravity extends Cube {
     game.physics.world.gravity.y = magnitude * Math.sin(angle);
 
     // Dispatch event to pair
-    e.pair.dispatchEvent({ type: 'setgravity', gravity: gravity, angle: angle });
+    pair.dispatchEvent({ type: 'setgravity', gravity: gravity, value: angle });
   }
 }
 

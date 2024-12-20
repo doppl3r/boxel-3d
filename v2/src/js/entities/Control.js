@@ -37,9 +37,9 @@ class Control extends Cube {
     super.animate(delta, alpha);
   }
 
-  setMode(e) {
+  setMode({ pair }) {
     // Safely dispatch event to listener (ex: Player)
-    e.pair.dispatchEvent({ type: 'setmode', mode: 'control' })
+    pair.dispatchEvent({ type: 'setmode', value: 'control' })
   }
 }
 

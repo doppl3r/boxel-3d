@@ -37,8 +37,8 @@ class Reset extends Cube {
     super.animate(delta, alpha);
   }
 
-  reset(e) {
-
+  reset({ pair }) {
+    pair.reset();
   }
 }
 

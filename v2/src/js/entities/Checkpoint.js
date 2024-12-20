@@ -27,8 +27,8 @@ class Checkpoint extends Cube {
     this.type = 'checkpoint';
   }
 
-  setCheckpoint(e) {
-
+  setCheckpoint({ pair }) {
+    console.log(pair)
   }
 
   update(delta) {

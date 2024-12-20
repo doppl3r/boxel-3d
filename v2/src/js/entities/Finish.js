@@ -36,8 +36,8 @@ class Finish extends Cube {
     super.animate(delta, alpha);
   }
 
-  finish(e) {
-    console.log(e);
+  finish({ pair }) {
+    console.log(pair);
   }
 }
 

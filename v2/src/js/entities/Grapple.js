@@ -36,8 +36,9 @@ class Grapple extends Cube {
     super.animate(delta, alpha);
   }
 
-  setMode(e) {
-
+  setMode({ pair }) {
+    // Safely dispatch event to listener (ex: Player)
+    pair.dispatchEvent({ type: 'setmode', value: 'grapple' })
   }
 }
 

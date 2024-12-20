@@ -37,9 +37,9 @@ class Direction extends Cube {
     super.animate(delta, alpha);
   }
 
-  setDirection(e) {
+  setDirection({ pair, target }) {
     var direction = new Vector3(1, 0, 0); // Default "right"
-    var quaternion = new Quaternion().copy(e.target.rigidBody.rotation());
+    var quaternion = new Quaternion().copy(target.rigidBody.rotation());
     var euler = new Euler().setFromQuaternion(quaternion);
     var angle = euler.z;
     
@@ -48,7 +48,7 @@ class Direction extends Cube {
     direction.y = Math.sin(angle);
 
     // Set force direction
-    e.pair.setForce(direction, 0.5, 14);
+    pair.setForce(direction, 0.5, 14);
   }
 }
 

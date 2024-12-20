@@ -15,7 +15,7 @@ class Tip extends Cube {
     options = Object.assign({
       enabledRotations: { x: false, y: false, z: true },
       enabledTranslations: { x: true, y: true, z: false },
-      events: [{ name: 'showTip', text: 'Say something nice!' }],
+      events: [{ name: 'showTip', value: 'Say something nice!' }],
       isSensor: true,
       status: 1
     }, options);
@@ -37,8 +37,23 @@ class Tip extends Cube {
     super.animate(delta, alpha);
   }
 
-  showTip(e) {
-
+  showTip({ value }) {
+    // Dispatch new modal from event
+    window.dispatchEvent(new CustomEvent('openModal', {
+      detail: {
+        title: 'Tip',
+        text: value,
+        inputs: [
+          {
+            type: 'button',
+            value: 'Continue',
+            callback: function() {
+              window.dispatchEvent(new CustomEvent('closeModal'));
+            }
+          }
+        ]
+      }
+    }));
   }
 }
 
