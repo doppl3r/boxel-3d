@@ -56,6 +56,11 @@
     callback(e);
   }
 
+  function runFirstInputCallback(e) {
+    var firstInput = inputs.value[0];
+    if (firstInput) runCallback(firstInput.callback, e);
+  }
+
   function runLastInputCallback(e) {
     var lastInput = inputs.value[inputs.value.length - 1];
     if (lastInput) runCallback(lastInput.callback, e);
@@ -70,6 +75,13 @@
           // Close popup
           e.preventDefault();
           runLastInputCallback(e);
+        }
+
+        // Replay level
+        if (e.code == 'KeyR') {
+          // Close popup
+          e.preventDefault();
+          runFirstInputCallback(e);
         }
       }
     }

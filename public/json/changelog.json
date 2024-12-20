@@ -456,6 +456,8 @@
   {
     "version": "2.2.9",
     "revisions": [
+      "Added \"R\" shortcut after finishing a level",
+      "Updated community level \"Wallclimb Ascension\"",
       "Fixed missing level numbers for Old UI"
     ]
   }
