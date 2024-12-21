@@ -192,7 +192,7 @@
     }
     else {
       // Deselect all entities before selecting new entity
-      deselectAllEntities(e);
+      deselectAllEntities(e, entity);
     }
 
     // Add entities to selected array and set selected boolean
@@ -220,12 +220,16 @@
   function deselectEntity(e, entity, index) {
     if (index == null) index = entitiesSelected.indexOf(entity);
     entity.isSelected = false;
+    entity.isExpanded = false;
     entitiesSelected.splice(index, 1);
   }
 
-  function deselectAllEntities(e) {
+  function deselectAllEntities(e, entity) {
     for (let i = entitiesSelected.length - 1; i >= 0; i--) {
-      deselectEntity(e, entitiesSelected[i], i);
+      // Prevent deselecting entity if provided
+      if (entity != entitiesSelected[i]) {
+        deselectEntity(e, entitiesSelected[i], i);
+      }
     }
   }
 
@@ -490,6 +494,7 @@
         @reset-entities="resetEntities"
         @select-entity="selectEntity"
         @select-parent-entity="selectParentEntity"
+        @setMode="setMode"
         @unlink-entity="unlinkEntity"
         @open-context-menu="openContextMenu"
         @redo="redo"

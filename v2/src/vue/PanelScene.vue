@@ -20,6 +20,7 @@
     'resetEntities',
     'selectEntity',
     'selectParentEntity',
+    'setMode',
     'unlinkEntity',
     'redo',
     'undo'
@@ -67,6 +68,10 @@
   function onDragDrop(e, entity) {
     emit('moveEntity', e, entity);
   }
+
+  function toggleEntity(e, entity) {
+    entity.isExpanded = !entity.isExpanded;
+  }
 </script>
 
 <template>
@@ -105,29 +110,41 @@
             @dragend="onDragEnd($event, entity)"
             @drop="onDragDrop($event, entity)"
           >
-            <span
-              @dblclick="emit('selectParentEntity', $event, entity)"
-              :class="{ hidden: entity.rigidBodyDesc.userData.parentId == null }"
-              class="icon material-symbols-rounded"
-              title="Double click to select parent"
-            >
-              link
-            </span>
-            <input
-              type="text"
-              readonly
-              :id="entity.id"
-              :value="entity.name || entity.type"
-              @change="emit('renameEntity', $event, entity)"
-              @keyup.enter="unfocusInput"
-              @focusout="unfocusInput"
-              @dblclick="focusInput"
-            />
+            <label>
+              <span
+                @dblclick="emit('selectParentEntity', $event, entity)"
+                :class="{ hidden: entity.rigidBodyDesc.userData.parentId == null }"
+                class="link material-symbols-rounded"
+                title="Double click to select parent"
+              >
+                link
+              </span>
+              <input
+                type="text"
+                readonly
+                :id="entity.id"
+                :value="entity.name || entity.type"
+                @change="emit('renameEntity', $event, entity)"
+                @keyup.enter="unfocusInput"
+                @focusout="unfocusInput"
+                @dblclick="focusInput"
+              />
+              <span
+                v-if="entity.isSelected"
+                @click="toggleEntity($event, entity)"
+                class="toggle material-symbols-rounded"
+                :class="{ isExpanded: entity.isExpanded }"
+              >
+                keyboard_arrow_down
+              </span>
+            </label>
           </li>
         </TransitionGroup>
-        <li v-if="props.entities.length == 0" @click="emit('addEntity', $event);">
-          <span class="material-symbols-rounded">add</span>
-          Add entity
+        <li v-if="props.entities.length == 0" @click="emit('setMode', { type: 'add' });">
+          <label>
+            <span class="material-symbols-rounded">add</span>
+            <span>Add entity</span>
+          </label>
         </li>
       </ul>
     </div>
@@ -217,54 +234,70 @@
         padding: 0;
 
         li {
-          align-items: center;
-          background-color: #FFA217;
-          border-radius: 0.25em;
           cursor: pointer;
-          display: flex;
           opacity: 1;
-          padding: 0 0.25em;
           transition-duration: 0.1s;
           transition-property: font-size, opacity, transform;
           transition-timing-function: ease-in-out;
           width: 100%;
           
           &.selected {
-            background-color: rgba(#F52D59, 1);
+            label {
+              background-color: rgba(#F52D59, 1);
+            }
           }
           
           &.list-leave-active {
             opacity: 0;
             font-size: 0;
 
-            .icon {
-              font-size: 0;
+            label {
+              .link {
+                font-size: 0;
+              }
             }
           }
 
-          .icon {
-            padding-right: 0.125em;
-            transition: inherit;
+          label {
+            align-items: center;
+            background-color: #FFA217;
+            border-radius: 0.25em;
+            cursor: pointer;
+            display: flex;
+            padding: 0 0.25em;
 
-            &.hidden {
-              font-size: 0;
+            .link {
+              padding-right: 0.125em;
+              transition: inherit;
+
+              &.hidden {
+                font-size: 0;
+              }
             }
-          }
-          
-          input {
-            background-color: transparent;
-            border-width: 0;
-            color: inherit;
-            font-family: inherit;
-            font-size: 1em;
-            line-height: 1.5em;
-            outline: none;
-            padding: 0;
-            text-shadow: inherit;
-            width: 100%;
 
-            &[readonly] {
-              cursor: pointer;
+            .toggle {
+              transition: transform 0.15s ease-in-out;
+
+              &.isExpanded {
+                transform: scaleY(-1);
+              }
+            }
+            
+            input {
+              background-color: transparent;
+              border-width: 0;
+              color: inherit;
+              font-family: inherit;
+              font-size: 1em;
+              line-height: 1.5em;
+              outline: none;
+              padding: 0;
+              text-shadow: inherit;
+              width: 100%;
+
+              &[readonly] {
+                cursor: pointer;
+              }
             }
           }
         }
