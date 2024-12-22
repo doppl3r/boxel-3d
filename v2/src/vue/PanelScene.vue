@@ -72,6 +72,31 @@
   function toggleEntity(e, entity) {
     entity.isExpanded = !entity.isExpanded;
   }
+
+  function getEntityEventValue(entity) {
+    if (entity.collidersDesc[0]) {
+      if (entity.collidersDesc[0].events[0]) {
+        let str = JSON.stringify(entity.collidersDesc[0].events[0].value);
+        return str;
+      }
+    }
+  }
+
+  function setEntityEventValue(entity, value) {
+    console.log(value);
+    if (entity.collidersDesc[0]) {
+      if (entity.collidersDesc[0].events[0]) {
+        let newValue;
+        try {
+          newValue = JSON.parse(value)
+        }
+        catch {
+          newValue = value;
+        }
+        entity.collidersDesc[0].events[0].value = newValue;
+      }
+    }
+  }
 </script>
 
 <template>
@@ -158,12 +183,13 @@
               <div class="row">
                 <span class="material-symbols-rounded">bolt</span>
                 <select>
+                  <option>None</option>
                   <option v-for="name in Object.getOwnPropertyNames(entity).filter(n => typeof entity[n] == 'function')">{{ name }}</option>
                 </select>
               </div>
               <div class="row">
                 <span class="material-symbols-rounded">ink_pen</span>
-                <input type="text" v-model="entity.getEvent(0).value" />
+                <input type="text" :value="getEntityEventValue(entity)" @change="setEntityEventValue(entity, $event.target.value)" placeholder="{x:0,y:0,z:0}"/>
               </div>
             </div>
           </li>
@@ -359,6 +385,10 @@
                 min-width: 0;
                 outline: none;
                 padding: 0 0.25em;
+
+                &::placeholder {
+                  color: rgba(#000000, 0.25);
+                }
               }
 
               select {

@@ -399,14 +399,6 @@ class Entity extends EventDispatcher {
     }
   }
 
-  getEvent(index = 0) {
-    let colliderDesc = this.collidersDesc[0];
-    if (colliderDesc) {
-      if (colliderDesc.events.length > 0) return colliderDesc.events[index];
-    }
-    return {};
-  }
-
   onCollision(e) {
     // Get the collider from the event handle
     const collider = this.getCollider(e.handle);
