@@ -11,6 +11,7 @@
   const emit = defineEmits([
     'addEntity',
     'deleteEntity',
+    'editEntity',
     'linkEntity',
     'moveEntity',
     'openContextMenu',
@@ -73,29 +74,8 @@
     entity.isExpanded = !entity.isExpanded;
   }
 
-  function getEntityEventValue(entity) {
-    if (entity.collidersDesc[0]) {
-      if (entity.collidersDesc[0].events[0]) {
-        let str = JSON.stringify(entity.collidersDesc[0].events[0].value);
-        return str;
-      }
-    }
-  }
-
-  function setEntityEventValue(entity, value) {
-    console.log(value);
-    if (entity.collidersDesc[0]) {
-      if (entity.collidersDesc[0].events[0]) {
-        let newValue;
-        try {
-          newValue = JSON.parse(value)
-        }
-        catch {
-          newValue = value;
-        }
-        entity.collidersDesc[0].events[0].value = newValue;
-      }
-    }
+  function onEditEntity(e, entity, key) {
+    emit('editEntity', e, entity, key);
   }
 </script>
 
@@ -161,37 +141,39 @@
                 keyboard_arrow_down
               </span>
             </div>
-            <div class="entity-properties" v-if="entity.isExpanded" :class="{ expanded: entity.isExpanded }">
-              <div class="row">
-                <span class="material-symbols-rounded">location_on</span>
-                <input type="text" v-model="entity.rigidBodyDesc.translation.x" />
-                <input type="text" v-model="entity.rigidBodyDesc.translation.y" />
-                <input type="text" v-model="entity.rigidBodyDesc.translation.z" />
+            <Transition name="properties">
+              <div class="entity-properties" v-if="entity.isExpanded" :class="{ expanded: entity.isExpanded }">
+                <div class="row">
+                  <span class="material-symbols-rounded">location_on</span>
+                  <input type="text" :value="entity.rigidBodyDesc.translation.x" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.rigidBodyDesc.translation.y" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.rigidBodyDesc.translation.z" @change="onEditEntity($event, entity)" />
+                </div>
+                <div class="row">
+                  <span class="material-symbols-rounded">orbit</span>
+                  <input type="text" :value="entity.rigidBodyDesc.rotation.x" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.rigidBodyDesc.rotation.y" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.rigidBodyDesc.rotation.z" @change="onEditEntity($event, entity)" />
+                </div>
+                <div class="row">
+                  <span class="material-symbols-rounded">package_2</span>
+                  <input type="text" :value="entity.objectDesc.scale.x" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.objectDesc.scale.y" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.objectDesc.scale.z" @change="onEditEntity($event, entity)" />
+                </div>
+                <div class="row">
+                  <span class="material-symbols-rounded">bolt</span>
+                  <select @change="onEditEntity($event, entity)">
+                    <option>None</option>
+                    <option v-for="name in Object.getOwnPropertyNames(entity).filter(n => typeof entity[n] == 'function')">{{ name }}</option>
+                  </select>
+                </div>
+                <div class="row">
+                  <span class="material-symbols-rounded hidden">format_size</span>
+                  <input type="text" :value="'{x:0,y:0,z:0}'" @change="onEditEntity($event, entity)" placeholder="{x:0,y:0,z:0}"/>
+                </div>
               </div>
-              <div class="row">
-                <span class="material-symbols-rounded">orbit</span>
-                <input type="text" v-model="entity.rigidBodyDesc.rotation.x" />
-                <input type="text" v-model="entity.rigidBodyDesc.rotation.y" />
-                <input type="text" v-model="entity.rigidBodyDesc.rotation.z" />
-              </div>
-              <div class="row">
-                <span class="material-symbols-rounded">package_2</span>
-                <input type="text" v-model="entity.objectDesc.scale.x" />
-                <input type="text" v-model="entity.objectDesc.scale.y" />
-                <input type="text" v-model="entity.objectDesc.scale.z" />
-              </div>
-              <div class="row">
-                <span class="material-symbols-rounded">bolt</span>
-                <select>
-                  <option>None</option>
-                  <option v-for="name in Object.getOwnPropertyNames(entity).filter(n => typeof entity[n] == 'function')">{{ name }}</option>
-                </select>
-              </div>
-              <div class="row">
-                <span class="material-symbols-rounded">ink_pen</span>
-                <input type="text" :value="getEntityEventValue(entity)" @change="setEntityEventValue(entity, $event.target.value)" placeholder="{x:0,y:0,z:0}"/>
-              </div>
-            </div>
+            </Transition>
           </li>
         </TransitionGroup>
         <li v-if="props.entities.length == 0" @click="emit('setMode', { type: 'add' });">
@@ -304,6 +286,10 @@
                 font-size: 0;
               }
             }
+
+            .entity-properties {
+              font-size: 0;
+            }
           }
 
           .entity-title {
@@ -356,13 +342,16 @@
           .entity-properties {
             display: flex;
             flex-direction: column;
-            font-size: 0;
             gap: 0.125em;
+            opacity: 1;
             padding-top: 0.125em;
-            transition: font-size 0.15s ease-in-out;
+            transition-duration: 0.1s;
+            transition-property: font-size, opacity, transform;
+            transition-timing-function: ease-in-out;
 
-            &.expanded {
-              font-size: 1em;
+            &.properties-leave-active {
+              opacity: 0;
+              font-size: 0;
             }
 
             .row {
@@ -372,6 +361,10 @@
 
               .material-symbols-rounded {
                 font-size: 1.5em;
+
+                &.hidden {
+                  opacity: 0;
+                }
               }
 
               input {
@@ -398,6 +391,7 @@
                 color: inherit;
                 font-family: inherit;
                 font-size: inherit;
+                height: 1.5em;
                 line-height: 1.5em;
                 min-width: 0;
                 padding: 0 0.25em;

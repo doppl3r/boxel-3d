@@ -383,13 +383,12 @@
   function openContextMenu(e, entity) {
     if (entity.isSelected) {
       let actions = [];
-      let actionEdit = { text: 'Edit', icon: 'settings', disabled: entitiesSelected.length != 1, callback: () => editEntity(e, entity) }
       let actionLink = { text: 'Link', icon: 'link', disabled: entitiesSelected.length <= 1, callback: () => linkEntity(e, entity) }
       let actionUnlink = { text: 'Unlink', icon: 'link_off', disabled: isLinked() == false, callback: () => unlinkEntity(e, entity) }
       let actionDelete = { text: 'Delete', icon: 'delete', callback: () => deleteEntity(e, entity) }
       
       // Add delete action
-      actions.push(actionEdit, actionLink, actionUnlink, actionDelete);
+      actions.push(actionLink, actionUnlink, actionDelete);
 
       // Dispatch event to the global context menu
       contextMenuEvent.value = e;
@@ -466,40 +465,39 @@
 </script>
 
 <template>
-  <div>
-    <div class="panels">
-      <PanelActions
-        :game="game"
-        :mode="mode"
-        @setMode="setMode"
-      />
-      <PanelPrefabs
-        :game="game"
-        :mode="mode"
-        @add-entity="addEntity"
-      />
-      <PanelScene
-        :entities="entities"
-        :canUndo="canUndo"
-        :canRedo="canRedo"
-        :isPlaying="isPlaying"
-        @add-entity="addEntity"
-        @delete-entity="deleteEntity"
-        @link-entity="linkEntity"
-        @move-entity="moveEntity"
-        @pause="pause"
-        @play="play"
-        @rename-entity="renameEntity"
-        @reset-entities="resetEntities"
-        @select-entity="selectEntity"
-        @select-parent-entity="selectParentEntity"
-        @setMode="setMode"
-        @unlink-entity="unlinkEntity"
-        @open-context-menu="openContextMenu"
-        @redo="redo"
-        @undo="undo"
-      />
-    </div>
+  <div class="panels">
+    <PanelActions
+      :game="game"
+      :mode="mode"
+      @setMode="setMode"
+    />
+    <PanelPrefabs
+      :game="game"
+      :mode="mode"
+      @add-entity="addEntity"
+    />
+    <PanelScene
+      :entities="entities"
+      :canUndo="canUndo"
+      :canRedo="canRedo"
+      :isPlaying="isPlaying"
+      @add-entity="addEntity"
+      @delete-entity="deleteEntity"
+      @edit-entity="editEntity"
+      @link-entity="linkEntity"
+      @move-entity="moveEntity"
+      @pause="pause"
+      @play="play"
+      @rename-entity="renameEntity"
+      @reset-entities="resetEntities"
+      @select-entity="selectEntity"
+      @select-parent-entity="selectParentEntity"
+      @setMode="setMode"
+      @unlink-entity="unlinkEntity"
+      @open-context-menu="openContextMenu"
+      @redo="redo"
+      @undo="undo"
+    />
     <ContextMenu :event="contextMenuEvent" :actions="contextMenuActions" />
   </div>
 </template>
