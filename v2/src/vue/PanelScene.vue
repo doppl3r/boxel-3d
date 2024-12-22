@@ -99,18 +99,17 @@
     <div ref="content" class="content" v-show="isExpanded()">
       <ul>
         <TransitionGroup name="list">
-          <li v-for="entity in props.entities"
-            :key="entity.id"
-            :class="{ selected: entity.isSelected }"
-            draggable="true"
-            @click="onClick($event, entity)"
-            @contextmenu.prevent="onContextMenu($event, entity)"
-            @dragstart="onDragStart($event, entity)"
-            @dragover.prevent="onDragOver($event, entity)"
-            @dragend="onDragEnd($event, entity)"
-            @drop="onDragDrop($event, entity)"
-          >
-            <label>
+          <li v-for="entity in props.entities" :key="entity.id">
+            <div class="entity-title"
+              :class="{ selected: entity.isSelected }"
+              draggable="true"
+              @click="onClick($event, entity)"
+              @contextmenu.prevent="onContextMenu($event, entity)"
+              @dragstart="onDragStart($event, entity)"
+              @dragover.prevent="onDragOver($event, entity)"
+              @dragend="onDragEnd($event, entity)"
+              @drop="onDragDrop($event, entity)"
+            >
               <span
                 @dblclick="emit('selectParentEntity', $event, entity)"
                 :class="{ hidden: entity.rigidBodyDesc.userData.parentId == null }"
@@ -130,21 +129,50 @@
                 @dblclick="focusInput"
               />
               <span
-                v-if="entity.isSelected"
                 @click="toggleEntity($event, entity)"
                 class="toggle material-symbols-rounded"
                 :class="{ isExpanded: entity.isExpanded }"
               >
                 keyboard_arrow_down
               </span>
-            </label>
+            </div>
+            <div class="entity-properties" v-if="entity.isExpanded" :class="{ expanded: entity.isExpanded }">
+              <div class="row">
+                <span class="material-symbols-rounded">location_on</span>
+                <input type="text" v-model="entity.rigidBodyDesc.translation.x" />
+                <input type="text" v-model="entity.rigidBodyDesc.translation.y" />
+                <input type="text" v-model="entity.rigidBodyDesc.translation.z" />
+              </div>
+              <div class="row">
+                <span class="material-symbols-rounded">orbit</span>
+                <input type="text" v-model="entity.rigidBodyDesc.rotation.x" />
+                <input type="text" v-model="entity.rigidBodyDesc.rotation.y" />
+                <input type="text" v-model="entity.rigidBodyDesc.rotation.z" />
+              </div>
+              <div class="row">
+                <span class="material-symbols-rounded">package_2</span>
+                <input type="text" v-model="entity.objectDesc.scale.x" />
+                <input type="text" v-model="entity.objectDesc.scale.y" />
+                <input type="text" v-model="entity.objectDesc.scale.z" />
+              </div>
+              <div class="row">
+                <span class="material-symbols-rounded">bolt</span>
+                <select>
+                  <option v-for="name in Object.getOwnPropertyNames(entity).filter(n => typeof entity[n] == 'function')">{{ name }}</option>
+                </select>
+              </div>
+              <div class="row">
+                <span class="material-symbols-rounded">ink_pen</span>
+                <input type="text" v-model="entity.getEvent(0).value" />
+              </div>
+            </div>
           </li>
         </TransitionGroup>
         <li v-if="props.entities.length == 0" @click="emit('setMode', { type: 'add' });">
-          <label>
+          <div class="entity-title">
             <span class="material-symbols-rounded">add</span>
             <span>Add entity</span>
-          </label>
+          </div>
         </li>
       </ul>
     </div>
@@ -241,30 +269,28 @@
           transition-timing-function: ease-in-out;
           width: 100%;
           
-          &.selected {
-            label {
-              background-color: rgba(#F52D59, 1);
-            }
-          }
-          
           &.list-leave-active {
             opacity: 0;
             font-size: 0;
 
-            label {
+            .entity-title {
               .link {
                 font-size: 0;
               }
             }
           }
 
-          label {
+          .entity-title {
             align-items: center;
             background-color: #FFA217;
             border-radius: 0.25em;
             cursor: pointer;
             display: flex;
             padding: 0 0.25em;
+
+            &.selected {
+              background-color: rgba(#F52D59, 1);
+            }
 
             .link {
               padding-right: 0.125em;
@@ -297,6 +323,54 @@
 
               &[readonly] {
                 cursor: pointer;
+              }
+            }
+          }
+
+          .entity-properties {
+            display: flex;
+            flex-direction: column;
+            font-size: 0;
+            gap: 0.125em;
+            padding-top: 0.125em;
+            transition: font-size 0.15s ease-in-out;
+
+            &.expanded {
+              font-size: 1em;
+            }
+
+            .row {
+              align-items: center;
+              display: flex;
+              gap: 0.125em;
+
+              .material-symbols-rounded {
+                font-size: 1.5em;
+              }
+
+              input {
+                background-color: #FFA217;
+                border-width: 0;
+                border-radius: 0.25em;
+                color: inherit;
+                font-family: inherit;
+                font-size: 1em;
+                line-height: 1.5em;
+                min-width: 0;
+                outline: none;
+                padding: 0 0.25em;
+              }
+
+              select {
+                background-color: #FFA217;
+                border-radius: 0.25em;
+                border-width: 0;
+                color: inherit;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: 1.5em;
+                min-width: 0;
+                padding: 0 0.25em;
               }
             }
           }

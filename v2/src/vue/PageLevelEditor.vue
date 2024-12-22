@@ -220,16 +220,13 @@
   function deselectEntity(e, entity, index) {
     if (index == null) index = entitiesSelected.indexOf(entity);
     entity.isSelected = false;
-    entity.isExpanded = false;
     entitiesSelected.splice(index, 1);
   }
 
   function deselectAllEntities(e, entity) {
     for (let i = entitiesSelected.length - 1; i >= 0; i--) {
       // Prevent deselecting entity if provided
-      if (entity != entitiesSelected[i]) {
-        deselectEntity(e, entitiesSelected[i], i);
-      }
+      deselectEntity(e, entitiesSelected[i], i);
     }
   }
 
