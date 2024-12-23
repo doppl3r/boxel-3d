@@ -30,15 +30,22 @@
   controlsOrbit.zoomSpeed = 3;
   controlsOrbit.minDistance = 1;
   controlsOrbit.maxDistance = 100;
-  controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 2 };
+  controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 };
   enableControlsOrbit(false);
 
   function setMode(newMode) {
     mode.value = newMode;
   }
 
-  function editEntity(e, entity) {
-    console.log(e, entity);
+  function editEntity(e, entity, path) {
+    // TODO: Store entity previous state
+
+    // Update entity property with new value
+    const keys = path.replace(/\[/g, '.').replace(/]/g, '').split('.');
+    const key = keys[keys.length - 1]; // Last key in path
+    const obj = keys.reduce((o, k) => typeof o[k] == 'object' ? o[k] : o, entity);
+    obj[key] = e.target.value;
+    entity.reset();
   }
 
   function addEntity(e, prefab) {

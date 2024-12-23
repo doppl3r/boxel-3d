@@ -74,8 +74,8 @@
     entity.isExpanded = !entity.isExpanded;
   }
 
-  function onEditEntity(e, entity, key) {
-    emit('editEntity', e, entity, key);
+  function onEditEntity(e, entity, path) {
+    emit('editEntity', e, entity, path);
   }
 </script>
 
@@ -145,25 +145,25 @@
               <div class="entity-properties" v-if="entity.isExpanded" :class="{ expanded: entity.isExpanded }">
                 <div class="row">
                   <span class="material-symbols-rounded">location_on</span>
-                  <input type="text" :value="entity.rigidBodyDesc.translation.x" @change="onEditEntity($event, entity)" />
-                  <input type="text" :value="entity.rigidBodyDesc.translation.y" @change="onEditEntity($event, entity)" />
-                  <input type="text" :value="entity.rigidBodyDesc.translation.z" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.rigidBodyDesc.translation.x" @change="onEditEntity($event, entity, 'rigidBodyDesc.translation.x')" />
+                  <input type="text" :value="entity.rigidBodyDesc.translation.y" @change="onEditEntity($event, entity, 'rigidBodyDesc.translation.y')" />
+                  <input type="text" :value="entity.rigidBodyDesc.translation.z" @change="onEditEntity($event, entity, 'rigidBodyDesc.translation.z')" />
                 </div>
                 <div class="row">
                   <span class="material-symbols-rounded">orbit</span>
-                  <input type="text" :value="entity.rigidBodyDesc.rotation.x" @change="onEditEntity($event, entity)" />
-                  <input type="text" :value="entity.rigidBodyDesc.rotation.y" @change="onEditEntity($event, entity)" />
-                  <input type="text" :value="entity.rigidBodyDesc.rotation.z" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.rigidBodyDesc.rotation.x" @change="onEditEntity($event, entity, 'rigidBodyDesc.rotation.x')" />
+                  <input type="text" :value="entity.rigidBodyDesc.rotation.y" @change="onEditEntity($event, entity, 'rigidBodyDesc.rotation.y')" />
+                  <input type="text" :value="entity.rigidBodyDesc.rotation.z" @change="onEditEntity($event, entity, 'rigidBodyDesc.rotation.z')" />
                 </div>
                 <div class="row">
                   <span class="material-symbols-rounded">package_2</span>
-                  <input type="text" :value="entity.objectDesc.scale.x" @change="onEditEntity($event, entity)" />
-                  <input type="text" :value="entity.objectDesc.scale.y" @change="onEditEntity($event, entity)" />
-                  <input type="text" :value="entity.objectDesc.scale.z" @change="onEditEntity($event, entity)" />
+                  <input type="text" :value="entity.objectDesc.scale.x" @change="onEditEntity($event, entity, 'objectDesc.scale.x')" />
+                  <input type="text" :value="entity.objectDesc.scale.y" @change="onEditEntity($event, entity, 'objectDesc.scale.y')" />
+                  <input type="text" :value="entity.objectDesc.scale.z" @change="onEditEntity($event, entity, 'objectDesc.scale.z')" />
                 </div>
                 <div class="row">
                   <span class="material-symbols-rounded">bolt</span>
-                  <select @change="onEditEntity($event, entity)">
+                  <select @change="onEditEntity($event, entity, 'collidersDesc[0].events[0].name')">
                     <option>None</option>
                     <option v-for="name in Object.getOwnPropertyNames(entity).filter(n => typeof entity[n] == 'function')">{{ name }}</option>
                   </select>
