@@ -38,14 +38,24 @@
   }
 
   function editEntity(e, entity, path) {
-    // TODO: Store entity previous state
-
     // Update entity property with new value
     const keys = path.replace(/\[/g, '.').replace(/]/g, '').split('.');
     const key = keys[keys.length - 1]; // Last key in path
     const obj = keys.reduce((o, k) => typeof o[k] == 'object' ? o[k] : o, entity);
-    obj[key] = e.target.value;
-    entity.reset();
+    const valOld = obj[key];
+    const valNew = e.target.value;
+
+    // Edit entity property with undo/redo support
+    history.add(
+      function() {
+        obj[key] = valNew;
+        entity.reset();
+      },
+      function() {
+        obj[key] = valOld;
+        entity.reset();
+      }
+    ).execute();
   }
 
   function addEntity(e, prefab) {
@@ -319,21 +329,19 @@
   }
 
   function onKeyDown(e) {
-    if (e.target.tagName != 'INPUT' || e.target.readOnly == true) {
-      if (e.repeat) return;
-      if (e.code == 'KeyA' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        selectAllEntities(e);
-      }
-      else if (e.code == 'KeyD' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        deselectAllEntities(e);
-      }
-      else if (e.code == 'KeyX' && (e.ctrlKey || e.metaKey)) deleteEntity(e);
-      else if (e.code == 'KeyZ' && (e.ctrlKey || e.metaKey)) {
-        if (e.shiftKey == true) redo();
-        else undo();
-      }
+    if (e.repeat) return;
+    if (e.code == 'KeyA' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      selectAllEntities(e);
+    }
+    else if (e.code == 'KeyD' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      deselectAllEntities(e);
+    }
+    else if (e.code == 'KeyX' && (e.ctrlKey || e.metaKey)) deleteEntity(e);
+    else if (e.code == 'KeyZ' && (e.ctrlKey || e.metaKey)) {
+      if (e.shiftKey == true) redo();
+      else undo();
     }
   }
 
