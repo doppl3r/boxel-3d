@@ -1,4 +1,4 @@
-import { Fog, PCFSoftShadowMap, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { SubtractiveBlending, Fog, PCFSoftShadowMap, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -37,12 +37,13 @@ class Graphics {
 
     // Initialize (optional) effects
     this.outlinePass = new OutlinePass({ x: window.innerWidth, y: window.innerHeight }, this.scene, this.camera);
-    this.outlinePass.edgeStrength = 3; // Default 3
+    this.outlinePass.edgeStrength = 5; // Default 3
 		this.outlinePass.edgeGlow = 0; // Default 0
-		this.outlinePass.edgeThickness = 1; // Default 1
+		this.outlinePass.edgeThickness = 0.1; // Default 1
     this.outlinePass.enabled = true;
-		this.outlinePass.visibleEdgeColor.set('#000000');
-		this.outlinePass.hiddenEdgeColor.set('#dc265a');
+		this.outlinePass.visibleEdgeColor.set('#ffffff');
+		this.outlinePass.hiddenEdgeColor.set('#000000');
+    this.outlinePass.overlayMaterial.blending = SubtractiveBlending;
     this.smaaPass = new SMAAPass(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
     
     // Disable passes by default

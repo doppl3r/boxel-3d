@@ -79,7 +79,7 @@ class App {
     this.graphics = new Graphics(canvas);
     this.graphics.setCamera(this.camera);
     this.graphics.setScene(this.scene);
-    this.graphics.setSelectedObjects([this.player]);
+    this.graphics.setSelectedObjects([this.level]);
     
     // Initialize level editor
     this.levelEditor = new LevelEditor(this.camera, canvas);
