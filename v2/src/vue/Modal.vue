@@ -228,6 +228,7 @@
             border-radius: 99em;
             box-shadow: 0em $border-width 0em #000000;
             color: #000000;
+            cursor: pointer;
             font-family: inherit;
             padding: 0.5em 1em;
 
@@ -249,6 +250,7 @@
           border: $border-width solid #000000;
           box-shadow: 0em 0.25em 0em #000000;
           color: #000000;
+          cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;

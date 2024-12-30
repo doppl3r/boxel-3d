@@ -46,13 +46,14 @@
     // Dispatch new modal from event
     window.dispatchEvent(new CustomEvent('openModal', {
       detail: {
-        title: 'Coming Soon!',
+        title: 'Level Editor v2',
         text: 'Boxel 3D "Pro" is currently in development and will be available to wishlist on Steam in the near future!',
         inputs: [
           {
             type: 'button',
             value: 'Continue',
             callback: function() {
+              openLink('./v2/index.html#level-editor')
               window.dispatchEvent(new CustomEvent('closeModal'));
             }
           }
@@ -77,10 +78,10 @@
 <template>
   <canvas ref="canvas"></canvas>
   <div class="ui">
-    <Banner>Select Edition</Banner>
+    <Banner>Boxel 3D</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
-      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openModal()"></Card>
+      <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">Play</Card>
+      <Card :src="'./svg/button-play-pro.svg'" @click="openModal()">Level Editor</Card>
     </div>
     <Modal />
     <Loading />

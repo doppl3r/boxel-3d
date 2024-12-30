@@ -2,13 +2,15 @@
   import { ref } from 'vue';
 
   // Initialize props
-  var props = defineProps(['src', 'text']);
+  var props = defineProps(['src']);
 </script>
 
 <template>
   <div class="card">
     <img :src="src" />
-    <label>{{ text }}</label>
+    <label>
+      <slot></slot>
+    </label>
   </div>
 </template>
 
