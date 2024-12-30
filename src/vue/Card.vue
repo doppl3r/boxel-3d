@@ -20,6 +20,7 @@
     border: 0.25em solid #000000;
     border-radius: calc($border-width * 4);
     box-shadow: 0 $border-width 0 #000000;
+    cursor: pointer;
     position: relative;
     transition: transform 0.1s ease-out;
 

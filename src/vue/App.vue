@@ -80,7 +80,7 @@
     <Banner>Select Edition</Banner>
     <div class="cards">
       <Card :src="'./svg/button-play.svg'" :text="'Classic'" @click="openLink('./v1/index.html')"></Card>
-      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openModal()" v-on:click.shift="openLink('./v2/index.html#/level-editor')"></Card>
+      <Card :src="'./svg/button-play-pro.svg'" :text="'Pro'" @click="openModal()"></Card>
     </div>
     <Modal />
     <Loading />

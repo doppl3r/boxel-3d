@@ -112,6 +112,10 @@
     history.back();
   }
 
+  function isExtension() {
+    return chrome.extension;
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     updateVersion();
@@ -145,7 +149,7 @@
         <span class="material-symbols-rounded">ink_pen</span>
         {{ version }}
       </a>
-      <a class="button right fade-in" @click="openReviewLink">
+      <a class="button right fade-in" @click="openReviewLink" v-if="isExtension()">
         <span class="material-symbols-rounded">favorite</span>
         Write a review
       </a>

@@ -44,8 +44,8 @@
 
 ## Deploy to Steam - Part 2: Building to Steam (Use Mac for building)
 - Copy app files into each steamworks content folder.
-  - Win: `C:\steamworks\sdk\tools\ContentBuilder\content\windows`
-  - Mac: copy the contents from `mac` or `boxel-golf.zip` and paste into the `/Users/jacob/Steam/sdk/tools/ContentBuilder/content/mac` folder.
+  - Win: `C:\steamworks\sdk\tools\ContentBuilder\content\boxel-3d\windows`
+  - Mac: copy the contents from `mac` or `boxel-3d.zip` and paste into the `/Users/jacob/Steam/sdk/tools/ContentBuilder/content/boxel-3d/mac` folder.
 - Build your game
   - Option 1: Watch videos showing how to do it: `https://partner.steamgames.com/doc/sdk/uploading`
   - Option 2:
@@ -56,7 +56,7 @@
   - Mac: `cd /Users/jacob/Steam && ./steamcmd.sh`
 - Login using `login <username>`
 - Run build script. 
-  - Win: `run_app_build C:\steamworks\sdk\tools\ContentBuilder\scripts\app_build_1945820.vdf`. Alternatively, you can run the `run_build.bat` file outside of the `/scripts` folder
-  - Mac: `run_app_build /Users/jacob/Steam/sdk/tools/ContentBuilder/scripts/app_build_1945820.vdf`
-- Navigate to the Partner Builds page: `https://partner.steamgames.com/apps/builds/1945820`
+  - Win: `run_app_build C:\steamworks\sdk\tools\ContentBuilder\scripts\app_build_3208440.vdf`. Alternatively, you can run the `run_build.bat` file outside of the `/scripts` folder
+  - Mac: `run_app_build /Users/jacob/Steam/sdk/tools/ContentBuilder/scripts/app_build_3208440.vdf`
+- Navigate to the Partner Builds page: `https://partner.steamgames.com/apps/builds/3208440`
 - Scroll to the latest `BuildID` and set the dropdown to the `default` branch, the click "Preview Change" to "publish" to Steam users.

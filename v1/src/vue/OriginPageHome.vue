@@ -109,6 +109,10 @@
     el.focus();
   }
 
+  function isExtension() {
+    return chrome.extension;
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     updateVersion();
@@ -135,6 +139,6 @@
         <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img :src="'../svg/play.svg'"></a>
       </div>
     </div>
-    <a class="review fade-in" @click="openReviewLink"><img :src="'../svg/heart.svg'">Write a review</a>
+    <a class="review fade-in" @click="openReviewLink" v-if="isExtension()"><img :src="'../svg/heart.svg'">Write a review</a>
   </div>
 </template>
