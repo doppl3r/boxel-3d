@@ -2,6 +2,8 @@
   import '@/v2/src/scss/Global.scss';
   import { onMounted, ref } from 'vue';
   import Banner from './Banner.vue';
+  import ButtonFullscreen from './ButtonFullscreen.vue';
+  import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
   import Modal from '@/v2/src/vue/Modal.vue';
   import Loading from '@/v2/src/vue/Loading.vue';
@@ -21,7 +23,6 @@
   function onLoad() {
     // Initialize 3D objects
     background = assets.get('background-island-night');
-    console.log(assets)
     light = LightFactory.create('AmbientLight');
 
     // Update camera and scene
@@ -79,6 +80,10 @@
 <template>
   <canvas ref="canvas"></canvas>
   <div class="ui">
+    <div class="actions">
+      <ButtonVolume />
+      <ButtonFullscreen />
+    </div>
     <Banner>Boxel 3D</Banner>
     <div class="cards">
       <Card :src="'./svg/button-play-steam.svg'" @click="openModal()">News</Card>
@@ -109,6 +114,14 @@
     justify-content: center;
     position: relative;
     width: 100%;
+
+    .actions {
+      display: flex;
+      gap: 0.5em;
+      left: 1em;
+      position: absolute;
+      top: 1em;
+    }
   }
 
   .cards {

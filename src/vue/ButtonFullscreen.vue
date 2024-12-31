@@ -1,5 +1,6 @@
 <script setup>
   import { ref } from 'vue';
+  import ButtonAction from './ButtonAction.vue';
 
   const fullscreen = ref(false);
 
@@ -36,8 +37,12 @@
 </script>
 
 <template>
-  <a @click="toggleFullscreen" title="Fullscreen">
+  <ButtonAction @click="toggleFullscreen">
     <span class="material-symbols-rounded" v-if="fullscreen == true">fullscreen_exit</span>
     <span class="material-symbols-rounded" v-else>fullscreen</span>
-  </a>
+  </ButtonAction>
 </template>
+
+<style lang="scss" scoped>
+  
+</style>

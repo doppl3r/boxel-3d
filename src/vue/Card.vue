@@ -1,17 +1,15 @@
 <script setup>
-  import { ref } from 'vue';
-
   // Initialize props
   var props = defineProps(['src']);
 </script>
 
 <template>
-  <div class="card">
+  <button class="card">
     <img :src="src" />
     <label>
       <slot></slot>
     </label>
-  </div>
+  </button>
 </template>
 
 <style lang="scss" scoped>
@@ -23,10 +21,14 @@
     border-radius: calc($border-width * 4);
     box-shadow: 0 $border-width 0 #000000;
     cursor: pointer;
+    font-family: inherit;
+    outline: none;
+    padding: 0;
     position: relative;
     transition: transform 0.1s ease-out;
 
-    &:hover {
+    &:hover,
+    &:focus {
       transform: scale(1.1);
     }
 
