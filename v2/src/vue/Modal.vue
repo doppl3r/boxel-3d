@@ -47,7 +47,7 @@
   function closeModal() {
     isOpen.value = false;
 
-    // Trigger opened event
+    // Trigger closed event
     setTimeout(function() {
       window.dispatchEvent(new CustomEvent('modalClosed'));
     }, 100);
@@ -86,7 +86,7 @@
 <template>
   <Transition name="fade-modal">
     <div class="modal" v-if="isOpen == true">
-      <div class="background" @click="runLastInputCallback"></div>
+      <div class="background" @click="closeModal"></div>
       <div class="container">
         <div class="content">
           <h1 class="title" v-if="title != ''">{{ title }}</h1>
@@ -96,7 +96,7 @@
               <input :class="input.class" :id="'modal-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">
             </template>
           </div>
-          <a class="close" @click="runLastInputCallback">
+          <a class="close" @click="closeModal">
             <span>x</span>
           </a>
         </div>

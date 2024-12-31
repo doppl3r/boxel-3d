@@ -20,7 +20,8 @@
 
   function onLoad() {
     // Initialize 3D objects
-    background = assets.get('background-island');
+    background = assets.get('background-island-night');
+    console.log(assets)
     light = LightFactory.create('AmbientLight');
 
     // Update camera and scene
@@ -38,28 +39,32 @@
     graphics.render();
   }
 
-  function openLink(url) {
-    window.open(url, '_self');
+  function openLink(url, target = '_self') {
+    window.open(url, target);
   }
 
   function openModal() {
     // Dispatch new modal from event
     window.dispatchEvent(new CustomEvent('openModal', {
       detail: {
-        title: 'Level Editor v2',
-        text: 'Boxel 3D "Pro" is currently in development and will be available to wishlist on Steam in the near future!',
+        title: 'News & Events',
+        text: 'Boxel 3D is coming soon to Steam in early 2025!\n\nWishlist on Steam today!',
         inputs: [
           {
             type: 'button',
-            value: 'Continue',
+            value: 'View Steam Page',
             callback: function() {
-              openLink('./v2/index.html#level-editor')
+              openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank');
               window.dispatchEvent(new CustomEvent('closeModal'));
             }
           }
         ]
       }
     }));
+  }
+
+  function isExtension() {
+    return chrome.extension;
   }
 
   // Redirect app after loading
@@ -80,8 +85,8 @@
   <div class="ui">
     <Banner>Boxel 3D</Banner>
     <div class="cards">
+      <Card :src="'./svg/button-play-steam.svg'" @click="openModal()">News</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">Play</Card>
-      <Card :src="'./svg/button-play-pro.svg'" @click="openModal()">Level Editor</Card>
     </div>
     <Modal />
     <Loading />

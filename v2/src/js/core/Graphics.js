@@ -14,10 +14,6 @@ class Graphics {
     this.scene = new Scene();
     this.canvas = canvas;
 
-    // Add fog
-    this.fog = new Fog('#ffffff');
-    this.scene.fog = this.fog;
-
     // Add stats
     this.stats = new Stats();
 
