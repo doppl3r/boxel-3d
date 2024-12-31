@@ -63,10 +63,6 @@
     }));
   }
 
-  function isExtension() {
-    return chrome.extension;
-  }
-
   // Redirect app after loading
   onMounted(function() {
     ticker = new Ticker();

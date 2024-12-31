@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -26,9 +26,9 @@ function createWindow() {
   mainWindow.once('ready-to-show', function() { mainWindow.show(); });
 
   // Allow game to send users to default browser
-  mainWindow.webContents.on('new-window', function(e, url) {
-    e.preventDefault();
-    require('electron').shell.openExternal(url);
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
   });
 
   // Set localStorage for app platforms
