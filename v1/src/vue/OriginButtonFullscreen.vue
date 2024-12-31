@@ -36,8 +36,6 @@
 </script>
 
 <template>
-  <a @click="toggleFullscreen" title="Fullscreen">
-    <span class="material-symbols-rounded" v-if="fullscreen == true">fullscreen_exit</span>
-    <span class="material-symbols-rounded" v-else>fullscreen</span>
-  </a>
+  <a class="button top-right four" @click="toggleFullscreen" title="Enable fullscreen" v-if="fullscreen == false"><img :src="'../svg/grow.svg'"></a>
+  <a class="button top-right four" @click="toggleFullscreen" title="Exit fullscreen" v-else><img :src="'../svg/shrink.svg'"></a>
 </template>

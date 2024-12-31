@@ -109,7 +109,7 @@
   }
 
   function goBack() {
-    history.back();
+    window.location.href = '../index.html';
   }
 
   function isExtension() {

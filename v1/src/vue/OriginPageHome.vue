@@ -1,5 +1,6 @@
 <script setup>
   import { ref, onMounted } from 'vue';
+  import OriginButtonFullscreen from './OriginButtonFullscreen.vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
   import messages from '../json/messages.json';
 
@@ -25,7 +26,7 @@
   }
 
   function goBack() {
-    history.back();
+    window.location.href = '../index.html';
   }
 
   function openMessageLink() {
@@ -130,7 +131,7 @@
         <div class="message"><img class="google-icon" :src="'../svg/google-icon.svg'" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
-        <a class="button top-right four" @click="openFullscreen" v-if="!isFullscreen()" title="Enable fullscreen"><img :src="'../svg/grow.svg'"></a>
+        <OriginButtonFullscreen class="button top-right" />
         <a class="button top-right three"  @click="goBack" title="Go back"><img :src="'../svg/back.svg'"></a>
         <a class="button top-right two" @click="showAccountOptions" title="Account"><img :src="'../svg/cloud-check.svg'"></a>
         <OriginButtonSettings class="button top-right" />
