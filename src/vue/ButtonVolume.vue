@@ -2,8 +2,8 @@
   import { ref } from 'vue';
   import ButtonAction from './ButtonAction.vue';
 
-  var settings = ref(JSON.parse(localStorage.getItem('settings') || '{}'));
-  var volume = ref(settings.value.volume || 0);
+  const settings = ref(JSON.parse(localStorage.getItem('settings') || '{}'));
+  const volume = ref(settings.value.volume || 0);
 
   function toggleVolume() {
     volume.value = volume.value == 0 ? 1 : 0;

@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
+  import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import messages from '../json/messages.json';
 
@@ -135,6 +136,7 @@
       <a class="button left fade-in" @click="goBack">
         <span class="material-symbols-rounded">undo</span>
       </a>
+      <BubbleButtonFullscreen class="button fade-in" />
       <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">

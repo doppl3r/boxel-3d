@@ -2,7 +2,6 @@
   import '@/v2/src/scss/Global.scss';
   import { onMounted, ref } from 'vue';
   import Banner from './Banner.vue';
-  import ButtonFullscreen from './ButtonFullscreen.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
   import Modal from '@/v2/src/vue/Modal.vue';
@@ -92,7 +91,6 @@
   <div class="ui">
     <div class="actions">
       <ButtonVolume @click="playSound('click');"/>
-      <ButtonFullscreen @click="playSound('click');"/>
     </div>
     <Banner>Boxel 3D</Banner>
     <div class="cards">
