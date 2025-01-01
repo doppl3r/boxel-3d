@@ -35,16 +35,26 @@
     ticker.start();
   }
 
+  function playSound(name) {
+    const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+    if (settings.volume == 0) return;
+    var sound = assets.get(name);
+    sound.play();
+  }
+
   function render(data) {
     background.mixer.update(data.delta)
     graphics.render();
   }
 
   function openLink(url, target = '_self') {
+    playSound('click');
     window.open(url, target);
   }
 
   function openModal() {
+    playSound('click');
+
     // Dispatch new modal from event
     window.dispatchEvent(new CustomEvent('openModal', {
       detail: {
@@ -68,7 +78,7 @@
   onMounted(function() {
     ticker = new Ticker();
     graphics = new Graphics(canvas.value);
-    assets = new AssetLoader(onLoad);
+    assets = window.assets = new AssetLoader(onLoad);
     assets.load({
       models: './json/menu-models.json',
       textures: './json/menu-textures.json',
@@ -81,8 +91,8 @@
   <canvas ref="canvas"></canvas>
   <div class="ui">
     <div class="actions">
-      <ButtonVolume />
-      <ButtonFullscreen />
+      <ButtonVolume @click="playSound('click');"/>
+      <ButtonFullscreen @click="playSound('click');"/>
     </div>
     <Banner>Boxel 3D</Banner>
     <div class="cards">
