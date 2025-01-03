@@ -44,9 +44,9 @@
     "file-saver": "^2.0.5",
     "matter-js": "^0.19.0",
     "peerjs": "^1.5.4",
-    "sanitize-html": "^2.13.1",
-    "sass": "^1.81.1",
-    "three": "^0.171.0",
+    "sanitize-html": "^2.14.0",
+    "sass": "^1.83.0",
+    "three": "^0.172.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
@@ -55,8 +55,8 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "electron": "^33.2.1",
     "electron-builder": "^25.1.8",
-    "vite": "^6.0.2",
+    "vite": "^6.0.7",
     "vite-plugin-top-level-await": "^1.4.4",
-    "vite-plugin-wasm": "^3.3.0"
+    "vite-plugin-wasm": "^3.4.1"
   }
 }

@@ -1,6 +1,6 @@
 <script setup>
   import '@/v2/src/scss/Global.scss';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, shallowReactive, reactive, ref } from 'vue';
   import Banner from './Banner.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
@@ -12,12 +12,13 @@
   import { AssetLoader } from '@/v2/src/js/core/loaders/AssetLoader.js';
 
   // Initialize components
-  var canvas = ref();
-  var ticker;
-  var graphics;
-  var assets;
-  var background;
-  var light;
+  const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
+  const assets = shallowReactive(new AssetLoader(onLoad));
+  const canvas = ref();
+  let ticker;
+  let graphics;
+  let background;
+  let light;
 
   function onLoad() {
     // Initialize 3D objects
@@ -32,11 +33,12 @@
     // Start render loop
     ticker.add(render, -1);
     ticker.start();
+
+    // Play background music
+    //playSound('boxel');
   }
 
   function playSound(name) {
-    const settings = JSON.parse(localStorage.getItem('settings') || '{}');
-    if (settings.volume == 0) return;
     var sound = assets.get(name);
     sound.play();
   }
@@ -44,6 +46,12 @@
   function render(data) {
     background.mixer.update(data.delta)
     graphics.render();
+  }
+
+  function toggleVolume() {
+    settings.volume ^= 1; // Toggle volume between 0 and 1 (bitwise hack)
+    localStorage.setItem('settings', JSON.stringify(settings));
+    assets.assetAudioLoader.listener.setMasterVolume(settings.volume);
   }
 
   function openLink(url, target = '_self') {
@@ -73,11 +81,14 @@
     }));
   }
 
+  document.addEventListener('click', function(e) {
+    playSound('click');
+  });
+
   // Redirect app after loading
   onMounted(function() {
     ticker = new Ticker();
     graphics = new Graphics(canvas.value);
-    assets = window.assets = new AssetLoader(onLoad);
     assets.load({
       models: './json/menu-models.json',
       textures: './json/menu-textures.json',
@@ -90,11 +101,11 @@
   <canvas ref="canvas"></canvas>
   <div class="ui">
     <div class="actions">
-      <ButtonVolume @click="playSound('click');"/>
+      <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
     </div>
     <Banner>Boxel 3D</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-play-steam.svg'" @click="openModal()">News</Card>
+      <Card :src="'./svg/button-play-steam.svg'" @click="openModal();">News</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">Play</Card>
     </div>
     <Modal />

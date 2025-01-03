@@ -1,4 +1,10 @@
 {
+  "boxel": {
+    "url": "./ogg/boxel.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
   "click": {
     "url": "./ogg/click.ogg",
     "userData": {
