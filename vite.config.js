@@ -17,7 +17,8 @@ export default defineConfig({
         v2: path.resolve(__dirname, 'v2/index.html')
       },
       treeshake: false
-    }
+    },
+    target: "ES2022"
   },
   css: {
     preprocessorOptions : {
