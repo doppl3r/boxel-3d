@@ -75,7 +75,7 @@
   "teleport": {
     "url": "../ogg/teleport.ogg",
     "userData": {
-      "volume": 1
+      "volume": 0.75
     }
   },
   "theme": {

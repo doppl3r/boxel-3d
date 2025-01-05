@@ -8,7 +8,7 @@
   })
 
   function isExtension() {
-    return chrome.extension;
+    return window.chrome?.extension;
   }
 
   function isFullscreen() {

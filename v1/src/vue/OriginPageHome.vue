@@ -111,7 +111,7 @@
   }
 
   function isExtension() {
-    return chrome.extension;
+    return window.chrome?.extension;
   }
 
   // Run function after being mounted (visible)
