@@ -46,7 +46,10 @@ class Collision {
                 }
               }
               else if (objectA.body.class == 'checkpoint') {
-                if (objectB.body.class ==  'player') { app.player.saveCheckpoint(objectA.position); }
+                if (objectB.body.class ==  'player') {
+                  app.player.saveCheckpoint(objectA.position);
+                  app.assets.audio.play('success');
+                }
               }
               else if (objectA.body.class == 'spike') {
                 if (objectB.body.class ==  'player') { app.player.kill(); }
@@ -66,20 +69,32 @@ class Collision {
               else if (objectA.body.class == 'resize') {
                 if (objectB.isStatic() == false) {
                   objectB.setScale(objectA.scale, false);
+
+                  // Play resize sound (only for player)
+                  if (objectB.body.class == 'player') {
+                    app.assets.audio.play('resize');
+                  }
                 }
               }
               else if (objectA.body.class == 'direction') {
                 var force = objectB.calculateForceDirection(objectA.body, objectB.body);
                 objectB.setForceDirection(force, false);
+
+                // Play teleport sound (only for player)
+                if (objectB.body.class == 'player') {
+                  app.assets.audio.play('teleport');
+                }
               }
               else if (objectA.body.class == 'gravity') {
                 if (objectB.body.class ==  'player') {
                   app.updateGravity(objectA.body.angle);
+                  app.assets.audio.play('teleport');
                 }
               }
               else if (objectA.body.class == 'grapple') {
                 if (objectB.body.class ==  'player') {
                   app.player.setMode('grapple', false);
+                  app.assets.audio.play('teleport');
                 }
               }
               else if (objectA.body.class == 'finish') {
@@ -95,6 +110,7 @@ class Collision {
               else if (objectA.body.class == 'control') {
                 if (objectB.body.class ==  'player') {
                   app.player.setMode('control', false);
+                  app.assets.audio.play('teleport');
                 }
               }
             }

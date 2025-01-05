@@ -3,7 +3,7 @@
     "url": "../ogg/boxel.ogg",
     "userData": {
       "loop": true,
-      "volume": 0.75
+      "volume": 0.5
     }
   },
   "bounce": {
@@ -12,8 +12,26 @@
       "volume": 1
     }
   },
+  "clap": {
+    "url": "../ogg/clap.ogg",
+    "userData": {
+      "volume": 2
+    }
+  },
   "click": {
     "url": "../ogg/click.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
+  "glass": {
+    "url": "../ogg/glass.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
+  "ice": {
+    "url": "../ogg/ice.ogg",
     "userData": {
       "volume": 1
     }
@@ -30,10 +48,34 @@
       "volume": 1
     }
   },
+  "pop1": {
+    "url": "../ogg/pop1.ogg",
+    "userData": {
+      "volume": 0.5
+    }
+  },
+  "pop2": {
+    "url": "../ogg/pop2.ogg",
+    "userData": {
+      "volume": 0.5
+    }
+  },
+  "resize": {
+    "url": "../ogg/resize.ogg",
+    "userData": {
+      "volume": 2
+    }
+  },
   "success": {
     "url": "../ogg/success.ogg",
     "userData": {
-      "volume": 0.75
+      "volume": 1
+    }
+  },
+  "teleport": {
+    "url": "../ogg/teleport.ogg",
+    "userData": {
+      "volume": 1
     }
   },
   "theme": {
@@ -45,6 +87,12 @@
   },
   "tip": {
     "url": "../ogg/tip.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
+  "wood": {
+    "url": "../ogg/wood.ogg",
     "userData": {
       "volume": 1
     }

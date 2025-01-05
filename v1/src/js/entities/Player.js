@@ -66,7 +66,7 @@ class Player extends Cube {
         Body.applyForce(this.body, this.body.position, force);
 
         // Play jump sound
-        app.assets.audio.play('jump');
+        app.assets.audio.play('pop2');
       }
     }
   }
@@ -134,6 +134,9 @@ class Player extends Cube {
           }
         }
       }
+
+      // Play ice sound
+      app.assets.audio.play('ice');
     }
   }
 
@@ -188,11 +191,11 @@ class Player extends Cube {
       }
     }
 
-    // Dispatch finished event
+    // Dispatch kill event
     window.dispatchEvent(new CustomEvent('playerKill', { detail: { player: this }}));
 
     // Play kill sound
-    app.assets.audio.play('kill');
+    app.assets.audio.play('glass');
   }
 
   cancelRestart() {
@@ -228,7 +231,7 @@ class Player extends Cube {
       this.resetToOrigin();
       this.setPositionToCheckpoint();
 
-      // Dispatch finished event
+      // Dispatch respawn event
       window.dispatchEvent(new CustomEvent('playerRespawn', { detail: { player: this }}));
     }
   }
@@ -270,6 +273,7 @@ class Player extends Cube {
       }));
 
       // Play success sound
+      app.assets.audio.play('clap');
       app.assets.audio.play('success');
     }
   }
@@ -316,6 +320,9 @@ class Player extends Cube {
     this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
     this.setMode(this.modeOrigin, false);
     this.controls.left = this.controls.right = 0;
+
+    // Play teleport audio
+    app.assets.audio.play('teleport');
   }
 
   addTexture(skin) {
