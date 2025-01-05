@@ -114,6 +114,13 @@ class Collision {
                 }
               }
             }
+            else {
+              if (objectA.body.class == 'cube') {
+                if (objectB.body.class ==  'player') {
+                  app.assets.audio.play('pop1');
+                }
+              }
+            }
           }
         }
       }

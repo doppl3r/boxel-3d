@@ -36,6 +36,18 @@
       "volume": 1
     }
   },
+  "impact1": {
+    "url": "../ogg/impact1.ogg",
+    "userData": {
+      "volume": 2
+    }
+  },
+  "impact2": {
+    "url": "../ogg/impact2.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
   "jump": {
     "url": "../ogg/jump.ogg",
     "userData": {
@@ -51,7 +63,7 @@
   "pop1": {
     "url": "../ogg/pop1.ogg",
     "userData": {
-      "volume": 0.5
+      "volume": 0.25
     }
   },
   "pop2": {
@@ -94,7 +106,7 @@
   "wood": {
     "url": "../ogg/wood.ogg",
     "userData": {
-      "volume": 1
+      "volume": 0.5
     }
   }
 }
