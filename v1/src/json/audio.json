@@ -1,8 +1,51 @@
 {
-  "theme": {
-    "url": "../mp3/theme.mp3",
+  "boxel": {
+    "url": "../ogg/boxel.ogg",
     "userData": {
       "loop": true,
+      "volume": 0.75
+    }
+  },
+  "bounce": {
+    "url": "../ogg/bounce.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
+  "click": {
+    "url": "../ogg/click.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
+  "jump": {
+    "url": "../ogg/jump.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
+  "kill": {
+    "url": "../ogg/kill.ogg",
+    "userData": {
+      "volume": 1
+    }
+  },
+  "success": {
+    "url": "../ogg/success.ogg",
+    "userData": {
+      "volume": 0.75
+    }
+  },
+  "theme": {
+    "url": "../ogg/theme.ogg",
+    "userData": {
+      "loop": true,
+      "volume": 1
+    }
+  },
+  "tip": {
+    "url": "../ogg/tip.ogg",
+    "userData": {
       "volume": 1
     }
   }

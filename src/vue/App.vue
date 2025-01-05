@@ -35,6 +35,7 @@
     ticker.start();
 
     // Play background music
+    updateVolume();
     //playSound('boxel');
   }
 
@@ -50,18 +51,22 @@
 
   function toggleVolume() {
     settings.volume ^= 1; // Toggle volume between 0 and 1 (bitwise hack)
+    updateVolume()
+  }
+
+  function updateVolume() {
     localStorage.setItem('settings', JSON.stringify(settings));
-    assets.assetAudioLoader.listener.setMasterVolume(settings.volume);
+    const listener = assets.assetAudioLoader.listener;
+    const currentTime = listener.context.currentTime;
+    const gain = listener.gain.gain;
+    gain.setTargetAtTime(settings.volume, currentTime, 0);
   }
 
   function openLink(url, target = '_self') {
-    playSound('click');
     window.open(url, target);
   }
 
   function openModal() {
-    playSound('click');
-
     // Dispatch new modal from event
     window.dispatchEvent(new CustomEvent('openModal', {
       detail: {

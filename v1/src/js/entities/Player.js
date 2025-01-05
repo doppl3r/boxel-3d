@@ -64,6 +64,9 @@ class Player extends Cube {
         Body.setVelocity(this.body, velocity);
         Body.setAngularVelocity(this.body, angularVelocity);
         Body.applyForce(this.body, this.body.position, force);
+
+        // Play jump sound
+        app.assets.audio.play('jump');
       }
     }
   }
@@ -187,6 +190,9 @@ class Player extends Cube {
 
     // Dispatch finished event
     window.dispatchEvent(new CustomEvent('playerKill', { detail: { player: this }}));
+
+    // Play kill sound
+    app.assets.audio.play('kill');
   }
 
   cancelRestart() {
@@ -262,6 +268,9 @@ class Player extends Cube {
           ]
         }
       }));
+
+      // Play success sound
+      app.assets.audio.play('success');
     }
   }
 

@@ -215,6 +215,9 @@ class Level extends Group {
         }}]
       }
     }));
+
+    // Play tip sound
+    app.assets.audio.play('tip');
   }
 
   showHelpers(visible = true) {

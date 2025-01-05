@@ -105,7 +105,7 @@ class App {
 
   load(callback = function(){}) {
     // Start music
-    this.assets.audio.play('theme', true);
+    this.assets.audio.play('boxel', true);
 
     // Initialize background with model
     this.background.setTarget(this.player);
@@ -277,6 +277,9 @@ class App {
   playLevel() {
     app.play = true;
     app.timer.start();
+
+    // Play jump sound
+    this.assets.audio.play('jump');
   }
 
   async playLevelByTitle(title, theme) {

@@ -21,6 +21,9 @@
     scrollToSelected(el, behavior);
     selectedItem.value = item;
     window.dispatchEvent(new CustomEvent('itemSelected', { detail: item }));
+
+    // Play click sound
+    app.assets.audio.play('click');
   }
 
   function selectNext() {

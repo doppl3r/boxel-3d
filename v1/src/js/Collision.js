@@ -39,6 +39,11 @@ class Collision {
                 var force = objectA.scale.y / 2; // Use bounce height
                 if (objectA.body.isStatic == false) { objectA.setForce(force, objectB, true); } // Yeet bounce cube backwards
                 if (objectB.body.isStatic == false) { objectB.setForce(force, objectA); }
+
+                // Play bounce sound (only for player)
+                if (objectB.body.class == 'player') {
+                  app.assets.audio.play('bounce');
+                }
               }
               else if (objectA.body.class == 'checkpoint') {
                 if (objectB.body.class ==  'player') { app.player.saveCheckpoint(objectA.position); }
