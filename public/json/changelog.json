@@ -460,5 +460,11 @@
       "Updated community level \"Wallclimb Ascension\"",
       "Fixed missing level numbers for Old UI"
     ]
+  },
+  {
+    "version": "2.3.0",
+    "revisions": [
+      "Added new music and sound effects"
+    ]
   }
 ]
