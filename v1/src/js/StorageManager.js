@@ -97,6 +97,8 @@ class StorageManager {
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
       'volume': 0,
+      'volumeMusic': 1,
+      'volumeEffects': 1,
       'quality': 10,
       'theme': 'bubble',
       'snap': 8,

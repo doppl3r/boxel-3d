@@ -14,13 +14,6 @@
 </script>
 <template>
   <div class="panel">
-    <p>Gameplay</p>
-    <div class="group">
-      <div class="option">
-        <input type="checkbox" id="motion" :checked="settings.motion == true" @change="$emit('updateSettings', $event)">
-        <label for="motion">Camera Motion</label>
-      </div>
-    </div>
     <p>Mods</p>
     <div class="group">
       <div class="option">

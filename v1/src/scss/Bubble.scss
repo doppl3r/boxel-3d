@@ -353,6 +353,20 @@
     height: 100%;
     z-index: 2;
 
+    &.settings {
+      .container {
+        width: auto;
+
+        .tabs {
+          width: 8em;
+        }
+
+        .content {
+          width: 16em;
+        }
+      }
+    }
+
     /* Scrollbar */
     ::-webkit-scrollbar { width: 0.25em; }
     ::-webkit-scrollbar-track { background: rgba(#FF674C, 1); border-radius: 99em; }
@@ -371,9 +385,10 @@
     .container {
       display: flex;
       max-height: 100%;
-      width: 16em; // 256px
+      width: 16em;
 
       .tabs {
+        align-items: flex-end;
         display: flex;
         flex-direction: column;
         position: relative;
@@ -381,7 +396,7 @@
         row-gap: 0.5em;
 
         .tab {
-          background-color: #FF674C;
+          background-color: #eb2b6d;
           border-top-left-radius: 0.75em;
           border-bottom-left-radius: 0.75em;
           box-shadow: 0 0.25em 0 rgba(#000000, 0.15);
@@ -390,10 +405,12 @@
           cursor: pointer;
           text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
           display: flex;
+          gap: 0.5em;
+          padding: 0 0.5em;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-end;
           color: #ffffff;
-          width: 2.5em;
+          width: auto;
           height: 2.5em;
 
           &:hover {
@@ -406,6 +423,11 @@
           &.selected {
             background-color: #FF8A4C;
             border-color: transparent;
+          }
+
+          label {
+            cursor: pointer;
+            font-size: 0.75em;
           }
         }
       }
@@ -654,8 +676,9 @@
             }
 
             & + label {
-              width: 25%;
+              margin: 0.5em 0 1em;
               text-align: center;
+              width: 25%;
             }
           }
 

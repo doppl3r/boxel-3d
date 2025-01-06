@@ -21,13 +21,20 @@
         <label for="quality">{{ (settings.quality * 10) }}%</label>
       </div>
       <div class="option">
-        <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="$emit('updateSettings', $event, { true: 'origin', false: 'bubble' }, setTheme)">
-        <label for="theme">Old UI</label>
+        <label for="motion">Camera</label>
+      </div>
+      <div class="option">
+        <input type="checkbox" id="motion" :checked="settings.motion == true" @change="$emit('updateSettings', $event)">
+        <label for="motion">Auto Rotate</label>
       </div>
     </div>
     <div class="group">
       <div class="option">
         <label>Developer Tools</label>
+      </div>
+      <div class="option">
+        <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="$emit('updateSettings', $event, { true: 'origin', false: 'bubble' }, setTheme)">
+        <label for="theme">Old UI</label>
       </div>
       <div class="option">
         <input type="checkbox" id="stats" :checked="settings.stats == true" @change="$emit('updateSettings', $event)">

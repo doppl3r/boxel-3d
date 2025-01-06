@@ -3,12 +3,12 @@
   import BubbleSettingsTabs from './BubbleSettingsTabs.vue';
   import BubbleSettingsPanelGraphics from './BubbleSettingsPanelGraphics.vue';
   import BubbleSettingsPanelMultiplayer from './BubbleSettingsPanelMultiplayer.vue';
-  import BubbleSettingsPanelGameplay from './BubbleSettingsPanelGameplay.vue';
+  import BubbleSettingsPanelMods from './BubbleSettingsPanelMods.vue';
   import BubbleSettingsPanelAudio from './BubbleSettingsPanelAudio.vue';
   import BubbleSettingsPanelData from './BubbleSettingsPanelData.vue';
 
   // Initialize attributes
-  var tab = ref('graphics');
+  var tab = ref('audio');
   var inputs = ref([]);
   var isOpen = ref(false);
   var settings = ref();
@@ -109,10 +109,10 @@
       <div class="container">
         <BubbleSettingsTabs :tab="tab" @changeTab="changeTab" />
         <div class="content compact">
+          <BubbleSettingsPanelAudio :settings="settings" v-if="tab == 'audio'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelGraphics :settings="settings" v-if="tab == 'graphics'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelMultiplayer :settings="settings" v-if="tab == 'multiplayer'" @updateSettings="updateSettings" />
-          <BubbleSettingsPanelGameplay :settings="settings" v-if="tab == 'gameplay'" @updateSettings="updateSettings" />
-          <BubbleSettingsPanelAudio :settings="settings" v-if="tab == 'audio'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelMods :settings="settings" v-if="tab == 'mods'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelData :settings="settings" v-if="tab == 'data'" @updateSettings="updateSettings" />
           <a class="close" @click="runLastInputCallback">
             <span class="material-symbols-rounded">close</span>
