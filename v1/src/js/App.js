@@ -225,6 +225,11 @@ class App {
     
     // Update application from settings
     a.assets.audio.setMasterVolume(settings.volume);
+
+    // TODO: Update volumeMusic and volumeEffects
+
+
+
     a.updateQuality(settings.quality, a);
     a.mouse.setSnap(settings.snap);
     a.player.setSkin(settings.skin, a);
