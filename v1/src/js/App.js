@@ -105,7 +105,7 @@ class App {
 
   load(callback = function(){}) {
     // Start music
-    this.assets.audio.play('boxel', true);
+    this.assets.audio.play('boxel', { queue: true });
 
     // Initialize background with model
     this.background.setTarget(this.player);

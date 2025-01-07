@@ -37,13 +37,19 @@ class Audio {
     window.addEventListener('pointerup', function(e) { _this.playQueue(e.detail); });
   }
 
-  play(name, queue = false) {
-    if (queue == true) this.enqueue(name);
+  play(name, options = {}) {
+    options = Object.assign({
+      detune: 0, // 100 = semitone, 1200 = octave
+      queue: false
+    }, options);
+
+    if (options.queue == true) this.enqueue(name);
     else {
       const audio = this.cache[name];
       if (audio) {
         if (this.volume > 0) {
           if (audio.isPlaying) audio.stop();
+          audio.setDetune(options.detune);
           audio.play();
         }
       }

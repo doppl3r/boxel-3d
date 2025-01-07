@@ -1,3 +1,5 @@
+import { MathUtils } from 'three';
+
 class Collision {
   constructor() {
     
@@ -117,7 +119,8 @@ class Collision {
             else {
               if (objectA.body.class == 'cube') {
                 if (objectB.body.class ==  'player') {
-                  app.assets.audio.play('click');
+                  const detune = MathUtils.randInt(-1200, 1200);
+                  app.assets.audio.play('pop1', { detune: detune });
                 }
               }
             }
