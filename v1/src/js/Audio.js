@@ -5,7 +5,10 @@ class Audio {
   constructor(manager) {
     this.cache = {};
     this.muted = false;
-    this.listener = new AudioListener();
+    this.listenerEffects = new AudioListener();
+    this.listenerEffects.name = 'effects';
+    this.listenerMusic = new AudioListener();
+    this.listenerMusic.name = 'music';
     this.loader = new AudioLoader(manager);
     this.volume = 1;
     this.queue = [];
@@ -15,7 +18,15 @@ class Audio {
     var _this = this;
     for (const [key, value] of Object.entries(json)) {
       this.loader.load(value.url, function(buffer) {
-        var sound = new TAudio(_this.listener);
+        var listener;
+        var sound;
+
+        // Assign listener by type
+        if (value?.userData?.type == 'music') listener = _this.listenerMusic;
+        else if (value?.userData?.type == 'effect') listener = _this.listenerEffects;
+
+        // Create sound with listener
+        var sound = new TAudio(listener);
         sound.name = key;
         sound.setBuffer(buffer);
 
@@ -47,11 +58,9 @@ class Audio {
     else {
       const audio = this.cache[name];
       if (audio) {
-        if (this.volume > 0) {
-          if (audio.isPlaying) audio.stop();
-          audio.setDetune(options.detune);
-          audio.play();
-        }
+        if (audio.isPlaying) audio.stop();
+        audio.setDetune(options.detune);
+        audio.play();
       }
     }
   }
@@ -67,31 +76,23 @@ class Audio {
     this.queue = [];
   }
 
-  toggleVolume() {
-    if (this.muted == true) {
-      this.muted = false;
-      this.setMasterVolume(this.volume); // Use previous volume
-    }
-    else {
-      this.muted = true;
-      this.volume = this.getMasterVolume(); // Update previous volume
-      this.setMasterVolume(0);
-    }
-  }
+  setMasterVolume(volume = 1, type = 'master') {
+    let listener;
 
-  mute(mute) {
-    this.muted = !mute; // Set state to opposite
-    this.toggleVolume();
-  }
-
-  setMasterVolume(volume) {
-    if (volume == 0) volume = 0.000001; // A zero value causes Audio "isPlaying" to be false, and will not play
-    this.volume = volume;
+    // Set global volume (A zero value causes Audio "isPlaying" to be false, and will not play)
+    if (volume == 0) volume = 0.000001;
+    
+    // Assign listener by type
+    if (type == 'effects') listener = this.listenerEffects;
+    else if (type == 'music') listener = this.listenerMusic;
+    else if (type == 'master') this.volume = volume;
 
     // Set master volume (like 'listener.setMasterVolume')
-    const currentTime = this.listener.context.currentTime;
-    const gain = this.listener.gain.gain;
-    gain.setTargetAtTime(volume, currentTime, 0);
+    if (listener) {
+      const currentTime = listener.context.currentTime;
+      const gain = listener.gain.gain;
+      gain.setTargetAtTime(volume * this.volume, currentTime, 0);
+    }
   }
 
   getMasterVolume() {

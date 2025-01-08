@@ -224,12 +224,9 @@ class App {
     });
     
     // Update application from settings
-    a.assets.audio.setMasterVolume(settings.volume);
-
-    // TODO: Update volumeMusic and volumeEffects
-
-
-
+    a.assets.audio.setMasterVolume(settings.volume, 'master');
+    a.assets.audio.setMasterVolume(settings.volumeEffects, 'effects');
+    a.assets.audio.setMasterVolume(settings.volumeMusic, 'music');
     a.updateQuality(settings.quality, a);
     a.mouse.setSnap(settings.snap);
     a.player.setSkin(settings.skin, a);
@@ -342,7 +339,6 @@ class App {
       }, 500);
     })
     .catch((error) => {
-      //console.log(error);
       return false;
     });
 

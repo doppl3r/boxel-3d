@@ -3,90 +3,105 @@
     "url": "../ogg/boxel.ogg",
     "userData": {
       "loop": true,
+      "type": "music",
       "volume": 0.5
     }
   },
   "bounce": {
     "url": "../ogg/bounce.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "clap": {
     "url": "../ogg/clap.ogg",
     "userData": {
+      "type": "effect",
       "volume": 2
     }
   },
   "click": {
     "url": "../ogg/click.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "glass": {
     "url": "../ogg/glass.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "ice": {
     "url": "../ogg/ice.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "impact1": {
     "url": "../ogg/impact1.ogg",
     "userData": {
+      "type": "effect",
       "volume": 2
     }
   },
   "impact2": {
     "url": "../ogg/impact2.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "jump": {
     "url": "../ogg/jump.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "kill": {
     "url": "../ogg/kill.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "pop1": {
     "url": "../ogg/pop1.ogg",
     "userData": {
+      "type": "effect",
       "volume": 0.25
     }
   },
   "pop2": {
     "url": "../ogg/pop2.ogg",
     "userData": {
+      "type": "effect",
       "volume": 0.5
     }
   },
   "resize": {
     "url": "../ogg/resize.ogg",
     "userData": {
+      "type": "effect",
       "volume": 2
     }
   },
   "success": {
     "url": "../ogg/success.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "teleport": {
     "url": "../ogg/teleport.ogg",
     "userData": {
+      "type": "effect",
       "volume": 0.75
     }
   },
@@ -94,18 +109,21 @@
     "url": "../ogg/theme.ogg",
     "userData": {
       "loop": true,
+      "type": "music",
       "volume": 1
     }
   },
   "tip": {
     "url": "../ogg/tip.ogg",
     "userData": {
+      "type": "effect",
       "volume": 1
     }
   },
   "wood": {
     "url": "../ogg/wood.ogg",
     "userData": {
+      "type": "effect",
       "volume": 0.5
     }
   }
