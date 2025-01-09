@@ -66,20 +66,41 @@
     window.open(url, target);
   }
 
+  function isExtension() {
+    return window.chrome?.extension;
+  }
+
   function openModal() {
+    let button;
+    let callback;
+    let text;
+
+    // Set the news based on the user agent
+    if (isExtension()) {
+      button = 'View Steam Page';
+      text = `Boxel 3D is coming soon to Steam for $5.99 (USD)\n
+        Boxel 3D will always be free, but you can support me by adding it to your Steam wishlist or buy purchasing a copy on Steam.\n
+        Thank you for all the support and I hope you enjoy the game!`;
+      callback = function() {
+        openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank');
+        window.dispatchEvent(new CustomEvent('closeModal'));
+      }
+    }
+    else {
+      button = 'Continue';
+      text = 'Thank you for supporting the launch of Boxel 3D on Steam!\n\nGood luck beating the community levels lol';
+    };
+
     // Dispatch new modal from event
     window.dispatchEvent(new CustomEvent('openModal', {
       detail: {
         title: 'News & Events',
-        text: 'Boxel 3D is coming soon to Steam in early 2025!\n\nWishlist on Steam today!',
+        text: text,
         inputs: [
           {
             type: 'button',
-            value: 'View Steam Page',
-            callback: function() {
-              openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank');
-              window.dispatchEvent(new CustomEvent('closeModal'));
-            }
+            value: button,
+            callback: callback
           }
         ]
       }
