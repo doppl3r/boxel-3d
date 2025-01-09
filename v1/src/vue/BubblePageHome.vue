@@ -26,7 +26,7 @@
       }
     },
     {
-      "title": "Play Online",
+      "title": "Multi-player",
       "url": "../svg/button-multiplayer.svg",
       "callback": function() {
         window.dispatchEvent(new CustomEvent('openSettings', { detail: 'multiplayer' }));
