@@ -8,7 +8,7 @@
   import BubbleSettingsPanelData from './BubbleSettingsPanelData.vue';
 
   // Initialize attributes
-  var tab = ref('audio');
+  var tab = ref('');
   var inputs = ref([]);
   var isOpen = ref(false);
   var settings = ref();
@@ -30,6 +30,7 @@
   function openSettings(e) {
     isOpen.value = true;
     settings.value = app.storage.getSettings();
+    tab.value = e.detail || 'audio';
     window.dispatchEvent(new CustomEvent('beforeSettingsOpened'));
     
     // Trigger opened event

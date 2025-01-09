@@ -26,6 +26,13 @@
       }
     },
     {
+      "title": "Play Online",
+      "url": "../svg/button-multiplayer.svg",
+      "callback": function() {
+        window.dispatchEvent(new CustomEvent('openSettings', { detail: 'multiplayer' }));
+      }
+    },
+    {
       "title": "Play",
       "url": "../svg/button-play.svg",
       "callback": function() { emit('setPage', 'level-picker') }
