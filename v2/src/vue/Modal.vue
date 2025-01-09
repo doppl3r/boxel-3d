@@ -90,7 +90,7 @@
       <div class="container">
         <div class="content">
           <h1 class="title" v-if="title != ''">{{ title }}</h1>
-          <p class="text">{{ text }}</p>
+          <p class="text" v-html="text"></p>
           <div class="inputs">
             <template v-for="(input, index) of inputs">
               <input :class="input.class" :id="'modal-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">
@@ -210,6 +210,10 @@
           text-align: center;
           text-shadow: 0 0.125em 0 #000000;
           white-space: pre-line;
+
+          :deep(strong) {
+            color: #ffcb4c;
+          }
         }
   
         .inputs {
