@@ -7,7 +7,7 @@
   // Initialize attributes
   var manifest = ref();
   var version = ref();
-  var message = ref('Tiny Tycoon is now available on Google Chrome!'); // Optional: getRandomMessage()
+  var message = ref(getRandomMessage()); // Optional: getRandomMessage()
 
   async function updateVersion() {
     var response = await fetch('../manifest.json');
@@ -27,10 +27,6 @@
 
   function goBack() {
     window.location.href = '../index.html';
-  }
-
-  function openMessageLink() {
-    openLink('https://chrome.google.com/webstore/detail/tiny-tycoon/bamdkjfjhhnjcgcjmmjdnncpglihepoi');
   }
 
   function isFullscreen() {
@@ -127,8 +123,8 @@
     <a class="version fade-in" @click="showChangelog">v{{ version }}</a>
     <div class="wrapper fade-in">
       <img :src="'../svg/logo-white.svg'" class="logo">
-      <div class="message-bar" @click="openMessageLink">
-        <div class="message"><img class="google-icon" :src="'../svg/google-icon.svg'" /> <span class="message-text" v-html="message"></span></div>
+      <div class="message-bar">
+        <div class="message"><img class="google-icon" :src="'../svg/light.svg'" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
         <OriginButtonFullscreen class="button top-right" />

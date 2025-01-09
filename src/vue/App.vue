@@ -36,7 +36,6 @@
 
     // Play background music
     updateVolume();
-    //playSound('boxel');
   }
 
   function playSound(name) {
@@ -50,6 +49,7 @@
   }
 
   function toggleVolume() {
+    if (settings.volume > 0) settings.volume = 1;
     settings.volume ^= 1; // Toggle volume between 0 and 1 (bitwise hack)
     updateVolume()
   }

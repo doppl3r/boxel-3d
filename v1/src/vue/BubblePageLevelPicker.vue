@@ -29,6 +29,7 @@
   async function playLevel(title) {
     await app.playLevelByTitle(title);
     emit('setPage', 'campaign');
+    settings = app.storage.getSettings();
     settings.progress = getLevelIndex(title) + 1;
     app.updateSettings(settings);
   }
