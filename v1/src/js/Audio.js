@@ -55,15 +55,14 @@ class Audio {
       queue: false
     }, options);
 
-    if (this.volume > this.volumeMin) {
-      if (options.queue == true) this.enqueue(name);
-      else {
-        const audio = this.cache[name];
-        if (audio) {
-          if (audio.isPlaying == false) {
-            audio.setDetune(options.detune);
-            audio.play();
-          }
+    if (options.queue == true) this.enqueue(name);
+    else {
+      const audio = this.cache[name];
+      if (audio) {
+        // Only play audio if volume is above minimum OR audio is a music type
+        if (this.volume > this.volumeMin || audio.userData.type == 'music') {
+          audio.setDetune(options.detune);
+          audio.play();
         }
       }
     }
