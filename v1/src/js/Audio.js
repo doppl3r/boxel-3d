@@ -11,6 +11,7 @@ class Audio {
     this.listenerMusic.name = 'music';
     this.loader = new AudioLoader(manager);
     this.volume = 1;
+    this.volumeMin = 0.000001;
     this.queue = [];
   }
 
@@ -54,13 +55,16 @@ class Audio {
       queue: false
     }, options);
 
-    if (options.queue == true) this.enqueue(name);
-    else {
-      const audio = this.cache[name];
-      if (audio) {
-        if (audio.isPlaying) audio.stop();
-        audio.setDetune(options.detune);
-        audio.play();
+    if (this.volume > this.volumeMin) {
+      if (options.queue == true) this.enqueue(name);
+      else {
+        const audio = this.cache[name];
+        if (audio) {
+          if (audio.isPlaying == false) {
+            audio.setDetune(options.detune);
+            audio.play();
+          }
+        }
       }
     }
   }
@@ -80,7 +84,7 @@ class Audio {
     let listener;
 
     // Set global volume (A zero value causes Audio "isPlaying" to be false, and will not play)
-    if (volume == 0) volume = 0.000001;
+    if (volume == 0) volume = this.volumeMin;
     
     // Assign listener by type
     if (type == 'effects') listener = this.listenerEffects;
