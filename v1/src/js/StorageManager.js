@@ -89,6 +89,10 @@ class StorageManager {
     return JSON.parse(scores); // Return player scores
   }
 
+  isExtension() {
+    return window.chrome?.extension;
+  }
+
   setSettings(settings) {
     localStorage.setItem('settings', JSON.stringify(settings));
   }
@@ -96,8 +100,9 @@ class StorageManager {
   getSettings(a = app) {
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
-      'volume': 0,
-      'volumeMusic': 1,
+      'music': 'boxel-3d-pro',
+      'volume': this.isExtension() ? 0 : 0.5,
+      'volumeMusic': 0.5,
       'volumeEffects': 1,
       'quality': 10,
       'theme': 'bubble',

@@ -472,5 +472,11 @@
     "revisions": [
       "Added multiplayer shortcut to home page"
     ]
+  },
+  {
+    "version": "2.3.2",
+    "revisions": [
+      "Added music selector (currently 3 songs)"
+    ]
   }
 ]

@@ -1,9 +1,40 @@
 <script setup>
-  var props = defineProps(['settings']);
+  // Import audio data
+  import audio from '../json/audio.json';
+
+  // Initialize props and emits
+  const props = defineProps(['settings']);
+  const emit = defineEmits(['updateSettings']);
+
+  // Get music list from audio data
+  var songs = Object.keys(audio).filter(key => audio[key].userData.type == 'music').map(key => ({ text: audio[key].userData.name, value: key }));
+
+  function updateMusic(e) {
+    // Pause current song
+    songs.forEach(music => {
+      app.assets.audio.cache[music.value].stop();
+    });
+
+    // Play new song
+    app.assets.audio.cache[e.target.value].play();
+
+    // Update settings
+    emit('updateSettings', e)
+  }
 </script>
 <template>
   <div class="panel">
     <p>Audio</p>
+    <div class="group">
+      <div class="option">
+        <label for="music">Music</label>
+      </div>
+      <div class="option">
+        <select id="music" :value="settings.music" @change="updateMusic($event)">
+          <option v-for="(music, index) of songs" :value="music.value" :key="music.value" :selected="settings.music == music.value">{{ music.text }}</option>
+        </select>
+      </div>
+    </div>
     <div class="group">
       <div class="option">
         <label for="volume">Main Volume</label>
@@ -13,18 +44,18 @@
         <label for="volume">{{ (settings.volume * 100) }}%</label>
       </div>
       <div class="option">
-        <label for="volume">Music Volume</label>
+        <label for="volumeMusic">Music Volume</label>
       </div>
       <div class="option">
         <input type="range" id="volumeMusic" min="0" max="1" step="0.1" :value="settings.volumeMusic" @change="$emit('updateSettings', $event)">
-        <label for="volume">{{ (settings.volumeMusic * 100) }}%</label>
+        <label for="volumeMusic">{{ (settings.volumeMusic * 100) }}%</label>
       </div>
       <div class="option">
-        <label for="volume">Sound Effects</label>
+        <label for="volumeEffects">Sound Effects</label>
       </div>
       <div class="option">
         <input type="range" id="volumeEffects" min="0" max="1" step="0.1" :value="settings.volumeEffects" @change="$emit('updateSettings', $event)">
-        <label for="volume">{{ (settings.volumeEffects * 100) }}%</label>
+        <label for="volumeEffects">{{ (settings.volumeEffects * 100) }}%</label>
       </div>
     </div>
   </div>

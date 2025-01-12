@@ -1,16 +1,35 @@
 {
-  "boxel": {
-    "url": "../ogg/boxel.ogg",
-    "userData": {
-      "loop": true,
-      "type": "music",
-      "volume": 0.5
-    }
-  },
   "bounce": {
     "url": "../ogg/bounce.ogg",
     "userData": {
       "type": "effect",
+      "volume": 1
+    }
+  },
+  "boxel-3d-classic": {
+    "url": "../ogg/boxel-3d-classic.ogg",
+    "userData": {
+      "loop": true,
+      "name": "Classic",
+      "type": "music",
+      "volume": 1
+    }
+  },
+  "boxel-3d-pro": {
+    "url": "../ogg/boxel-3d-pro.ogg",
+    "userData": {
+      "loop": true,
+      "name": "Pro",
+      "type": "music",
+      "volume": 1
+    }
+  },
+  "boxel-rebound": {
+    "url": "../ogg/boxel-rebound.ogg",
+    "userData": {
+      "loop": true,
+      "name": "Rebound",
+      "type": "music",
       "volume": 1
     }
   },
@@ -103,14 +122,6 @@
     "userData": {
       "type": "effect",
       "volume": 0.75
-    }
-  },
-  "theme": {
-    "url": "../ogg/theme.ogg",
-    "userData": {
-      "loop": true,
-      "type": "music",
-      "volume": 1
     }
   },
   "tip": {

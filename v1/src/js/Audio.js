@@ -59,10 +59,12 @@ class Audio {
     else {
       const audio = this.cache[name];
       if (audio) {
-        // Only play audio if volume is above minimum OR audio is a music type
-        if (this.volume > this.volumeMin || audio.userData.type == 'music') {
-          audio.setDetune(options.detune);
-          audio.play();
+        // Only play audio if volume is above minimum OR audio can loop
+        if (this.volume > this.volumeMin || audio.userData.loop == true) {
+          if (audio.isPlaying == false) {
+            audio.setDetune(options.detune);
+            audio.play();
+          }
         }
       }
     }
