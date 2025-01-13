@@ -6,20 +6,11 @@
       "volume": 1
     }
   },
-  "boxel-3d-classic": {
-    "url": "../ogg/boxel-3d-classic.ogg",
+  "boxel-1": {
+    "url": "../ogg/boxel-1.ogg",
     "userData": {
       "loop": true,
-      "name": "Classic",
-      "type": "music",
-      "volume": 1
-    }
-  },
-  "boxel-3d-pro": {
-    "url": "../ogg/boxel-3d-pro.ogg",
-    "userData": {
-      "loop": true,
-      "name": "Pro",
+      "name": "Boxel 1",
       "type": "music",
       "volume": 1
     }
@@ -28,7 +19,25 @@
     "url": "../ogg/boxel-rebound.ogg",
     "userData": {
       "loop": true,
-      "name": "Rebound",
+      "name": "Boxel Rebound",
+      "type": "music",
+      "volume": 1
+    }
+  },
+  "boxel-3d-classic": {
+    "url": "../ogg/boxel-3d-classic.ogg",
+    "userData": {
+      "loop": true,
+      "name": "Boxel 3D Classic",
+      "type": "music",
+      "volume": 1
+    }
+  },
+  "boxel-3d-pro": {
+    "url": "../ogg/boxel-3d-pro.ogg",
+    "userData": {
+      "loop": true,
+      "name": "Boxel 3D Pro",
       "type": "music",
       "volume": 1
     }
