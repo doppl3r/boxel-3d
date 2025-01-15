@@ -33,15 +33,6 @@
       "volume": 1
     }
   },
-  "boxel-golf-space": {
-    "url": "../ogg/boxel-golf-space.ogg",
-    "userData": {
-      "loop": true,
-      "name": "Boxel Golf Space",
-      "type": "music",
-      "volume": 1
-    }
-  },
   "boxel-3d-classic": {
     "url": "../ogg/boxel-3d-classic.ogg",
     "userData": {
