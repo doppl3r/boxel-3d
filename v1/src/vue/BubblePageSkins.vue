@@ -1,9 +1,11 @@
 <script setup>
   import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import skins from '../json/skins.json';
 
+  const i18n = useI18n();
   var emit = defineEmits(['setPage']);
   var defaultSkin = ref()
 
@@ -29,10 +31,10 @@
       // Open custom skin options
       window.dispatchEvent(new CustomEvent('openPopup', {
         detail: {
-          text: 'Custom Skin',
+          text: i18n.t('skins.popup.title'),
           inputs: [
-            { type: 'file', label: 'Upload', class: 'button', style: 'width: 100%', accept: 'image/png, image/jpeg', callback: changeImage },
-            { type: 'button', value: 'Close' }
+            { type: 'file', label: i18n.t('skins.popup.button.upload'), class: 'button', style: 'width: 100%', accept: 'image/png, image/jpeg', callback: changeImage },
+            { type: 'button', value: i18n.t('skins.popup.button.close') }
           ]
         }
       }));
@@ -114,14 +116,14 @@
       <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="content fade-in">
-      <h1>Skins</h1>
-      <p>Select your player skin</p>
+      <h1>{{ i18n.t('skins.title') }}</h1>
+      <p>{{ i18n.t('skins.description') }}</p>
       <BubbleCarousel :items="skins" :selected="defaultSkin" class="hide-titles" />
     </div>
     <div class="footer">
       <a class="button center fade-in" @click="exitSkins">
         <span class="material-symbols-rounded">check_box</span>
-        Select
+        {{ i18n.t('skins.button.select') }}
       </a>
     </div>
   </div>

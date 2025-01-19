@@ -1,10 +1,12 @@
 <script setup>
   import { ref, onMounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import OriginButtonFullscreen from './OriginButtonFullscreen.vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
   import messages from '../json/messages.json';
 
   // Initialize attributes
+  const i18n = useI18n();
   var manifest = ref();
   var version = ref();
   var message = ref(getRandomMessage()); // Optional: getRandomMessage()
@@ -17,7 +19,9 @@
   }
 
   function getRandomMessage() {
-    return messages[Math.floor(Math.random() * messages.length)];
+    const index = Math.floor(Math.random() * messages.length);
+    const message = i18n.t('home.messages.' + index);
+    return message;
   }
 
   function openLink(url) {

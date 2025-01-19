@@ -64,7 +64,9 @@
   }
 
   function getRandomMessage() {
-    return messages[Math.floor(Math.random() * messages.length)];
+    const index = Math.floor(Math.random() * messages.length);
+    const message = i18n.t('home.messages.' + index);
+    return message;
   }
 
   async function openChangelog() {
