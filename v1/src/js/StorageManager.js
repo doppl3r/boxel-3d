@@ -100,21 +100,22 @@ class StorageManager {
   getSettings(a = app) {
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
+      'connection': '',
+      'debug': false,
+      'language': 'es',
+      'motion': true,
       'music': 'boxel-3d-pro',
+      'name': 'Player',
+      'peer': this.generateUUID(),
+      'progress': 1,
+      'quality': 10,
+      'skin': { id: 466, title: "Smile", url: "../png/smile.png" },
+      'snap': 8,
+      'stats': false,
+      'theme': 'bubble',
       'volume': this.isExtension() ? 0 : 0.5,
       'volumeMusic': 0.5,
       'volumeEffects': 1,
-      'quality': 10,
-      'theme': 'bubble',
-      'snap': 8,
-      'skin': { id: 466, title: "Smile", url: "../png/smile.png" },
-      'motion': true,
-      'stats': false,
-      'debug': false,
-      'peer': this.generateUUID(),
-      'connection': '',
-      'name': 'Player',
-      'progress': 1
     };
     var settings = defaultSettings; // Use default
 

@@ -1,11 +1,13 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import messages from '../json/messages.json';
 
   // Initialize attributes
+  const i18n = useI18n();
   var emit = defineEmits(['setPage']);
   var manifest = ref();
   var version = ref();
