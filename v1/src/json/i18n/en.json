@@ -1,5 +1,15 @@
 {
   "home": {
+    "button": {
+      "back": "Back",
+      "changelog": "Changelog",
+      "fullscreen": "Fullscreen (F11)",
+      "level_editor": "Level Editor",
+      "multi_player": "Multi-player",
+      "play": "Play",
+      "settings": "Settings",
+      "skins": "Skins"
+    },
     "messages": {
       "0": "Welcome!",
       "1": "Is it Christmas yet?",

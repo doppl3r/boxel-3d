@@ -14,12 +14,12 @@
   var message = ref(getRandomMessage()); // Optional: getRandomMessage()
   var menu = [
     {
-      "title": "Skins",
+      "title": i18n.t('home.button.skins'),
       "url": "../svg/button-skins.svg",
       "callback": function() { emit('setPage', 'skins') }
     },
     {
-      "title": "Level Editor",
+      "title": i18n.t('home.button.level_editor'),
       "url": "../svg/button-level-editor.svg",
       "callback": function() {
         // TODO: Replace events after developing Level Editor 2.0
@@ -28,14 +28,14 @@
       }
     },
     {
-      "title": "Multi-player",
+      "title": i18n.t('home.button.multi_player'),
       "url": "../svg/button-multiplayer.svg",
       "callback": function() {
         window.dispatchEvent(new CustomEvent('openSettings', { detail: 'multiplayer' }));
       }
     },
     {
-      "title": "Play",
+      "title": i18n.t('home.button.play'),
       "url": "../svg/button-play.svg",
       "callback": function() { emit('setPage', 'level-picker') }
     }
@@ -144,11 +144,11 @@
       <img :src="'../svg/background-purple.svg'">
     </div>
     <div class="nav">
-      <a class="button left fade-in" @click="goBack">
+      <a class="button left fade-in" @click="goBack" :title="i18n.t('home.button.back')">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <BubbleButtonFullscreen class="button fade-in" />
-      <BubbleButtonSettings class="button fade-in" />
+      <BubbleButtonFullscreen class="button fade-in" :title="i18n.t('home.button.fullscreen')" />
+      <BubbleButtonSettings class="button fade-in" :title="i18n.t('home.button.settings')" />
     </div>
     <div class="content fade-in">
       <h1>BOXEL3D</h1>
@@ -156,7 +156,7 @@
       <BubbleCarousel :items="menu" scrolling="no" />
     </div>
     <div class="footer">
-      <a class="button fade-in" :class="{ hidden: version == '' }" @click="openChangelog">
+      <a class="button fade-in" :class="{ hidden: version == '' }" @click="openChangelog" :title="i18n.t('home.button.changelog')">
         <span class="material-symbols-rounded">ink_pen</span>
         {{ version }}
       </a>

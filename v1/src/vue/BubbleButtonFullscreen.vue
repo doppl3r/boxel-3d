@@ -36,7 +36,7 @@
 </script>
 
 <template>
-  <a @click="toggleFullscreen" title="Fullscreen (F11)">
+  <a @click="toggleFullscreen">
     <span class="material-symbols-rounded" v-if="fullscreen == true">fullscreen_exit</span>
     <span class="material-symbols-rounded" v-else>fullscreen</span>
   </a>
