@@ -1,11 +1,5 @@
 // All of the Node.js APIs are available in the preload process.
 window.addEventListener('DOMContentLoaded', function () {
-    const replaceText = function(selector, text) {
-        const element = document.getElementById(selector)
-        if (element) element.innerText = text;
-    }
-
-    for (const type of ['chrome', 'node', 'electron']) {
-        replaceText(`${type}-version`, process.versions[type]);
-    }
+  // Request fullscreen
+  document.body.requestFullscreen();
 });

@@ -102,7 +102,7 @@ class StorageManager {
     var defaultSettings = { 
       'connection': '',
       'debug': false,
-      'language': 'es',
+      'language': 'en',
       'motion': true,
       'music': 'boxel-3d-pro',
       'name': 'Player',
