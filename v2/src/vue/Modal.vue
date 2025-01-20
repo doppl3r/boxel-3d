@@ -106,7 +106,6 @@
 </template>
 <style lang="scss" scoped>
   // Variables
-  $border-width: 0.25em;
   $color-blue: #47D2FD;
   $color-green: #00BC57;
   $color-lime: #A3EB2B;
@@ -152,7 +151,7 @@
     z-index: 2;
 
     /* Scrollbar */
-    ::-webkit-scrollbar { width: $border-width; }
+    ::-webkit-scrollbar { width: 0.25em; }
     ::-webkit-scrollbar-track { background: rgba(#000000, 1); border-radius: 99em; }
     ::-webkit-scrollbar-thumb { background: rgba($color-yellow, 1); border-radius: 99em; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(#ffffff, 1); border-radius: 99em; }
@@ -175,13 +174,13 @@
         align-items: center;
         animation: translateBackground 5s linear;
         animation-iteration-count: infinite;
-        background-color: $color-purple;
+        background-color: $color-yellow;
         background-image: url('/svg/background-stars-purple.svg');
         background-size: 8em;
         background-position: center;
-        border-radius: calc($border-width * 4);
-        border: $border-width solid #000000;
-        box-shadow: 0em $border-width 0em #000000;
+        border-radius: 1em;
+        border: 0 solid #000000;
+        box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
         display: flex;
         flex-direction: column;
         flex-grow: 1;
@@ -195,7 +194,7 @@
           font-size: 1.5em;
           line-height: 1.5em;
           margin: 0 auto 1em;
-          padding: $border-width 1em;
+          padding: 0.25em 1em;
         }
         
         .text {
@@ -228,9 +227,9 @@
         input {
           &[type="button"] {
             background-color: $color-red;
-            border: $border-width solid #000000;
+            border: 0 solid #000000;
             border-radius: 99em;
-            box-shadow: 0em $border-width 0em #000000;
+            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
             color: #000000;
             cursor: pointer;
             font-family: inherit;
@@ -251,7 +250,7 @@
         .close {
           background-color: $color-yellow;
           border-radius: 99em;
-          border: $border-width solid #000000;
+          border: 0 solid #000000;
           box-shadow: 0em 0.25em 0em #000000;
           color: #000000;
           cursor: pointer;

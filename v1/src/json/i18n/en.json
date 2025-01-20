@@ -6,6 +6,7 @@
       "fullscreen": "Fullscreen (F11)",
       "level_editor": "Level Editor",
       "multi_player": "Multi-player",
+      "news": "News",
       "play": "Play",
       "settings": "Settings",
       "skins": "Skins"
@@ -48,7 +49,8 @@
       "34": "Have you tried turning it off and on again?",
       "35": "All bugs have been fixed (lol jk)",
       "36": "(╯°□°)╯︵ ■"
-    }
+    },
+    "title": "Boxel 3D"
   },
   "skins": {
     "button": {

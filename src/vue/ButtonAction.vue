@@ -8,9 +8,9 @@
   .action {
     align-items: center;
     background-color: #FFCB4C;
-    border: 0.25em solid #000000;
+    border: 0 solid #000000;
     border-radius: 0.5em;
-    box-shadow: 0 0.25em 0 #000000;
+    box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
     color: #000000;
     cursor: pointer;
     display: flex;

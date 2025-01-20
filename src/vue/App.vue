@@ -1,6 +1,7 @@
 <script setup>
   import '@/v2/src/scss/Global.scss';
   import { onMounted, shallowReactive, reactive, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
@@ -12,6 +13,7 @@
   import { AssetLoader } from '@/v2/src/js/core/loaders/AssetLoader.js';
 
   // Initialize components
+  const i18n = useI18n();
   const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
@@ -131,10 +133,10 @@
     <div class="actions">
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
     </div>
-    <Banner>Boxel 3D</Banner>
+    <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-play-steam.svg'" @click="openModal();">News</Card>
-      <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">Play</Card>
+      <Card :src="'./svg/button-play-steam.svg'" @click="openModal();">{{ i18n.t('home.button.news') }}</Card>
+      <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <Modal />
     <Loading />

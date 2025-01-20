@@ -13,13 +13,11 @@
 </template>
 
 <style lang="scss" scoped>
-  $border-width: 0.25em;
-
   .card {
     background-color: #000000;
-    border: 0.25em solid #000000;
-    border-radius: calc($border-width * 4);
-    box-shadow: 0 $border-width 0 #000000;
+    border: 0 solid #000000;
+    border-radius: calc(0.25em * 4);
+    box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
     cursor: pointer;
     font-family: inherit;
     outline: none;
@@ -37,7 +35,7 @@
     }
 
     img {
-      border-radius: calc(($border-width * 2) + $border-width);
+      border-radius: 0.75em;
       display: block;
       height: 6.25em; // 100px
       object-fit: cover;
@@ -48,11 +46,12 @@
     label {
       background-color: #000000;
       border-radius: 99em;
-      bottom: calc(($border-width * -4));
+      bottom: -0.75em;
+      box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
       color: #ffffff;
       left: 50%;
       line-height: 1em;
-      padding: 0.125em 0.75em $border-width;
+      padding: 0.125em 0.75em 0.25em;
       position: absolute;
       transform: translate(-50%, 0%);
       white-space: nowrap;

@@ -23,8 +23,7 @@
     background-image: url('/svg/background-stars.svg');
     background-size: 8em;
     background-position: center;
-    border-top: 0.25em solid #000000;
-    border-bottom: 0.5em solid #000000;
+    box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
     display: flex;
     justify-content: center;
     padding: 0.5em;
