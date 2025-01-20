@@ -3,7 +3,6 @@
   import { useI18n } from 'vue-i18n';
   import OriginButtonFullscreen from './OriginButtonFullscreen.vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
-  import messages from '../json/messages.json';
 
   // Initialize attributes
   const i18n = useI18n();
@@ -19,6 +18,7 @@
   }
 
   function getRandomMessage() {
+    const messages = Object.keys(i18n.messages.value.en.home.messages);
     const index = Math.floor(Math.random() * messages.length);
     const message = i18n.t('home.messages.' + index);
     return message;
