@@ -20,8 +20,9 @@
 
 <template>
   <Transition name="fade-loading">
-    <div class="loading" v-show="isFinished() == false">
+    <div class="loading" v-if="isFinished() == false">
       <div class="bar">
+        <div class="boxel" :style="{ left: `calc(${ progress.percent }% - 1em)` }"></div>
         <div class="progress" :style="{ width: progress.percent + '%' }"></div>
       </div>
       <label>Loading: {{ progress.percent }}%</label>
