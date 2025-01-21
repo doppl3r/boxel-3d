@@ -1,4 +1,10 @@
 {
+  "campaign": {
+    "button": {
+      "pause": "Pause",
+      "settings": "Settings"
+    }
+  },
   "home": {
     "button": {
       "back": "Back",
@@ -70,17 +76,21 @@
       "cancel": "Cancel",
       "close": "Close",
       "continue": "Continue",
+      "exit": "Exit (E)",
+      "play": "Play",
       "restore": "Restore",
+      "retry": "Retry (R)",
       "upload": "Upload"
     },
     "text": {
       "cloud_data_restored": "Success! Your data was restored from your account.",
       "cloud_data_saved": "Success! Your data was backed up to your account.",
       "custom_skin": "Custom Skin",
-      "save_data_to_cloud": "Save all local data to the cloud?",
       "file_data_restored": "File Data Restored!",
+      "paused": "Paused",
       "restore_cloud_data": "Restore all data from the cloud?",
-      "restore_file_data": "Restore all data from a file?"
+      "restore_file_data": "Restore all data from a file?",
+      "save_data_to_cloud": "Save all local data to the cloud?"
     }
   },
   "settings": {

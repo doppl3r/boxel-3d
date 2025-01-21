@@ -1,10 +1,12 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleControls from './BubbleControls.vue';
   import BubbleStats from './BubbleStats.vue';
 
   // Initialize variables
+  const i18n = useI18n();
   var credit = ref('');
   var isClosed = ref(true); // Popup animation state
   var record = ref();
@@ -39,11 +41,11 @@
     app.pauseLevel();
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: 'Paused',
+        text: i18n.t('popup.text.paused'),
         inputs: [
-          { value: 'Exit (E)', type: 'button', callback: function(e) { app.exitCampaign(); }},
-          { value: 'Retry (R)', type: 'button', callback: function(e) { app.level.retryLevel(); }},
-          { value: 'Play', type: 'button', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
+          { value: i18n.t('popup.button.exit'), type: 'button', callback: function(e) { app.exitCampaign(); }},
+          { value: i18n.t('popup.button.retry'), type: 'button', callback: function(e) { app.level.retryLevel(); }},
+          { value: i18n.t('popup.button.play'), type: 'button', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
         ]
       }
     }));
@@ -138,7 +140,7 @@
 <template>
   <div class="page">
     <div class="nav">
-      <div class="score fade-in" @click="pauseLevel()">
+      <div class="score fade-in" @click="pauseLevel()" :title="i18n.t('campaign.button.settings')">
         <div class="current">
           <span class="material-symbols-rounded">pause_circle</span>
           <div id="timer"></div>
@@ -148,7 +150,7 @@
           <div v-html="record"></div>
         </div>
       </div>
-      <BubbleButtonSettings class="button right fade-in" />
+      <BubbleButtonSettings class="button right fade-in" :title="i18n.t('campaign.button.settings')" />
     </div>
     <div class="footer">
       <BubbleStats />
