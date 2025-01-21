@@ -52,6 +52,14 @@
     },
     "title": "Boxel 3D"
   },
+  "level_picker": {
+    "button": {
+      "exit": "Exit to home (ESC)",
+      "play": "Play",
+      "settings": "Settings"
+    },
+    "title": "Play"
+  },
   "locales": {
     "en": "English",
     "es": "Spanish"

@@ -1,10 +1,12 @@
 <script setup>
   import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import levels from '../json/levels.json';
 
   // Initialize variables
+  const i18n = useI18n();
   var description = ref('Select a level');
   var items = ref([]); // Carousel items
   var key = ref(0);
@@ -162,20 +164,20 @@
       <img :src="'../svg/background-purple.svg'">
     </div>
     <div class="nav">
-      <a class="button fade-in" @click="exitLevelPicker" title="Exit to home (ESC)">
+      <a class="button fade-in" @click="exitLevelPicker" :title="i18n.t('level_picker.button.exit')">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <BubbleButtonSettings class="button right fade-in" />
+      <BubbleButtonSettings class="button right fade-in"  :title="i18n.t('level_picker.button.settings')" />
     </div>
     <div class="content fade-in">
-      <h1>Play</h1>
+      <h1>{{ i18n.t('level_picker.title') }}</h1>
       <p v-html="description"></p>
       <BubbleCarousel :items="items" :selected="selectedItem" :key="key" />
     </div>
     <div class="footer">
       <a class="button center fade-in" @click="playSelectedItem">
         <span class="material-symbols-rounded">slideshow</span>
-        Play
+        {{ i18n.t('level_picker.button.play') }}
       </a>
     </div>
   </div>
