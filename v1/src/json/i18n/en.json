@@ -14,25 +14,25 @@
     "messages": {
       "0": "Welcome!",
       "1": "Is it Christmas yet?",
-      "2": "Maybe some day I'll add new levels",
-      "3": "Aren't you suppose to be doing homework?",
+      "2": "Maybe some day I will add new levels",
+      "3": "Are not you suppose to be doing homework?",
       "4": "Tip: Drink lots of water!",
       "5": "Made by the creators of Boxel Rebound.",
       "6": "Terraria is a pretty cool game.",
       "7": "Good luck!",
       "8": "Kargoh is my favorite Youtuber.",
-      "9": "Fact: I'm bad at Fortnite.",
-      "10": "Don't get caught!",
+      "9": "Fact: I am bad at Fortnite.",
+      "10": "Do not get caught!",
       "11": "3D games are hard to make.",
       "12": "You should make a level during class.",
-      "13": "Made with 20 coffee's a day.",
+      "13": "Made with 20 cups of coffee every day.",
       "14": "Lower the graphics to speed up the game.",
       "15": "I hope you have a great day.",
       "16": "More addicting than TikTok!",
-      "17": "I tried doing homework once, didn't like it.",
+      "17": "I tried doing homework once, did not like it.",
       "18": "I make levels during my day job.",
-      "19": "\"I wish this game had more levels.\" -Everyone",
-      "20": "Don't share your friend code with strangers!",
+      "19": "I wish this game had more levels.",
+      "20": "Do not share your friend code with strangers!",
       "21": "Nothing in life is free, except for this game.",
       "22": "My score is way better than your score.",
       "23": "Backup your data so you can play on other computers.",
@@ -51,6 +51,52 @@
       "36": "(╯°□°)╯︵ ■"
     },
     "title": "Boxel 3D"
+  },
+  "settings": {
+    "audio": {
+      "music": "Music",
+      "title": "Audio",
+      "volume_effects": "Sound Effects",
+      "volume_main": "Main Volume",
+      "volume_music": "Music Volume"
+    },
+    "button": {
+      "close": "Close"
+    },
+    "data": {
+      "backup_to": "Backup to...",
+      "file": "File",
+      "google": "Google",
+      "restore_from": "Restore from...",
+      "title": "Data"
+    },
+    "graphics": {
+      "auto_rotate": "Auto Rotate",
+      "camera": "Camera",
+      "debug_mode": "Debug Mode",
+      "developer_tools": "Developer Tools",
+      "old_ui": "Old UI",
+      "quality": "Quality",
+      "show_fps": "Show FPS",
+      "title": "Graphics"
+    },
+    "mods": {
+      "clipboard": "Clipboard",
+      "download_instructions": "Copy mods from trusted websites and paste them in the clipboard for later.",
+      "inspect_instructions": "Right-click this game and select Inspect.",
+      "paste_instructions": "Select the Console tab, paste mods from the clipboard, then press the enter key to load mods.",
+      "security": "For your security, mods must be manually loaded each time the game is launched.",
+      "title": "Mods",
+      "trusted_mods": "Trusted mods"
+    },
+    "multiplayer": {
+      "host_server": "Host Server",
+      "join_server": "Join Server",
+      "paste_friend_code": "Paste friend code",
+      "share_friend_code": "Share friend code",
+      "title": "Multiplayer",
+      "your_name": "Your name"
+    }
   },
   "skins": {
     "button": {

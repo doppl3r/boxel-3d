@@ -1,5 +1,6 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import BubbleSettingsTabs from './BubbleSettingsTabs.vue';
   import BubbleSettingsPanelGraphics from './BubbleSettingsPanelGraphics.vue';
   import BubbleSettingsPanelMultiplayer from './BubbleSettingsPanelMultiplayer.vue';
@@ -8,6 +9,7 @@
   import BubbleSettingsPanelData from './BubbleSettingsPanelData.vue';
 
   // Initialize attributes
+  const i18n = useI18n();
   var tab = ref('');
   var inputs = ref([]);
   var isOpen = ref(false);
@@ -115,7 +117,7 @@
           <BubbleSettingsPanelMultiplayer :settings="settings" v-if="tab == 'multiplayer'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelMods :settings="settings" v-if="tab == 'mods'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelData :settings="settings" v-if="tab == 'data'" @updateSettings="updateSettings" />
-          <a class="close" @click="runLastInputCallback">
+          <a class="close" @click="runLastInputCallback" :title="i18n.t('settings.button.close')">
             <span class="material-symbols-rounded">close</span>
           </a>
         </div>

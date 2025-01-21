@@ -1,8 +1,10 @@
 <script setup>
   // Import audio data
+  import { useI18n } from 'vue-i18n';
   import audio from '../json/audio.json';
 
   // Initialize props and emits
+  const i18n = useI18n();
   const props = defineProps(['settings']);
   const emit = defineEmits(['updateSettings']);
 
@@ -24,10 +26,10 @@
 </script>
 <template>
   <div class="panel">
-    <p>Audio</p>
+    <p>{{ i18n.t('settings.audio.title') }}</p>
     <div class="group">
       <div class="option">
-        <label for="music">Music</label>
+        <label for="music">{{ i18n.t('settings.audio.music') }}</label>
       </div>
       <div class="option">
         <select id="music" :value="settings.music" @change="updateMusic($event)">
@@ -37,21 +39,21 @@
     </div>
     <div class="group">
       <div class="option">
-        <label for="volume">Main Volume</label>
+        <label for="volume">{{ i18n.t('settings.audio.volume_main') }}</label>
       </div>
       <div class="option">
         <input type="range" id="volume" min="0" max="1" step="0.1" :value="settings.volume" @change="$emit('updateSettings', $event)">
         <label for="volume">{{ (settings.volume * 100) }}%</label>
       </div>
       <div class="option">
-        <label for="volumeMusic">Music Volume</label>
+        <label for="volumeMusic">{{ i18n.t('settings.audio.volume_music') }}</label>
       </div>
       <div class="option">
         <input type="range" id="volumeMusic" min="0" max="1" step="0.1" :value="settings.volumeMusic" @change="$emit('updateSettings', $event)">
         <label for="volumeMusic">{{ (settings.volumeMusic * 100) }}%</label>
       </div>
       <div class="option">
-        <label for="volumeEffects">Sound Effects</label>
+        <label for="volumeEffects">{{ i18n.t('settings.audio.volume_effects') }}</label>
       </div>
       <div class="option">
         <input type="range" id="volumeEffects" min="0" max="1" step="0.1" :value="settings.volumeEffects" @change="$emit('updateSettings', $event)">

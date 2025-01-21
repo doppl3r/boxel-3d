@@ -1,7 +1,9 @@
 <script setup>
   import { ref, nextTick, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import sanitizeHtml from 'sanitize-html';
 
+  const i18n = useI18n();
   var tab = ref('chat');
   var online = ref(false);
   var collapsed = ref(false);

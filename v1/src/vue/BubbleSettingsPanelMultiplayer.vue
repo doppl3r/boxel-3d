@@ -1,4 +1,7 @@
 <script setup>
+  import { useI18n } from 'vue-i18n';
+  
+  const i18n = useI18n();
   var props = defineProps(['settings']);
 
   function connect(e) {
@@ -65,31 +68,31 @@
 </script>
 <template>
   <div class="panel">
-    <p>Multiplayer</p>
+    <p>{{ i18n.t('settings.multiplayer.title') }}</p>
     <div class="group">
       <div class="option">
-        <label for="name">Your name</label>
+        <label for="name">{{ i18n.t('settings.multiplayer.your_name') }}</label>
         <input type="text" id="name" :value="settings.name" @change="$emit('updateSettings', $event)">
       </div>
     </div>
     <div class="group">
       <div class="option">
-        <label for="connection">Paste friend code</label>
+        <label for="connection">{{ i18n.t('settings.multiplayer.paste_friend_code') }}</label>
         <input type="text" id="connection" :value="settings.connection" @change="$emit('updateSettings', $event)" placeholder="ex: 4630cba6-b969-46f3-8d32-e77324054612">
       </div>
       <div class="option">
         <input type="checkbox" id="join-multiplayer" :checked="isOnline() && isHost() == false" @change="connect($event)">
-        <label for="join-multiplayer">Join Server</label>
+        <label for="join-multiplayer">{{ i18n.t('settings.multiplayer.join_server') }}</label>
       </div>
     </div>
     <div class="group">
       <div class="option">
-        <label for="peer-id">Share friend code</label>
+        <label for="peer-id">{{ i18n.t('settings.multiplayer.share_friend_code') }}</label>
         <input type="text" id="peer-id" :value="settings.peer" @click="copyInput($event)" readonly>
       </div>
       <div class="option">
         <input type="checkbox" id="host-multiplayer" :checked="isHost()" @change="toggleHost($event)">
-        <label for="host-multiplayer">Host Server</label>
+        <label for="host-multiplayer">{{ i18n.t('settings.multiplayer.host_server') }}</label>
       </div>
     </div>
   </div>

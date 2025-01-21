@@ -1,4 +1,7 @@
 <script setup>
+  import { useI18n } from 'vue-i18n';
+
+  const i18n = useI18n();
   var props = defineProps(['settings']);
 
   function loadMods() {
@@ -14,31 +17,35 @@
 </script>
 <template>
   <div class="panel">
-    <p>Mods</p>
+    <p>{{ i18n.t('settings.mods.title') }}</p>
     <div class="group">
       <div class="option">
-        <label for="mods"><span class="material-symbols-rounded">assignment</span> Clipboard</label>
+        <label for="mods"><span class="material-symbols-rounded">assignment</span> {{ i18n.t('settings.mods.clipboard') }}</label>
         <textarea :value="loadMods()" id="mods" @change="saveMods" spellcheck="false"></textarea>
       </div>
     </div>
     <div class="group">
       <div class="option">
-        <label><span class="material-symbols-rounded">security</span> For your security, mods must be manually loaded each time the game is launched.</label>
+        <label><span class="material-symbols-rounded">security</span> {{ i18n.t('settings.mods.security') }}</label>
       </div>
     </div>
     <div class="group">
       <div class="option">
-        <label><span class="material-symbols-rounded">content_copy</span> Copy mods from trusted websites and paste them in the clipboard for later.<br><br>Trusted mods: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
+        <label>
+          <span class="material-symbols-rounded">content_copy</span> {{ i18n.t('settings.mods.security') }}
+          <br>
+          <br>
+          {{ i18n.t('settings.mods.trusted_mods') }}: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
       </div>
     </div>
     <div class="group">
       <div class="option">
-        <label><span class="material-symbols-rounded">arrow_selector_tool</span> Right-click this game and select <em>Inspect</em>.</label>
+        <label><span class="material-symbols-rounded">arrow_selector_tool</span> {{ i18n.t('settings.mods.inspect_instructions') }}</label>
       </div>
     </div>
     <div class="group">
       <div class="option">
-        <label><span class="material-symbols-rounded">slideshow</span> Select the <em>Console</em> tab, paste mods from the clipboard, then press the <em>enter</em> key to load mods.</label>
+        <label><span class="material-symbols-rounded">slideshow</span> {{ i18n.t('settings.mods.paste_instructions') }}</label>
       </div>
     </div>
   </div>

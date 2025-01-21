@@ -1,27 +1,18 @@
 <script setup>
   import { ref, onMounted } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import OriginButtonFullscreen from './OriginButtonFullscreen.vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
   // Initialize attributes
-  const i18n = useI18n();
   var manifest = ref();
   var version = ref();
-  var message = ref(getRandomMessage()); // Optional: getRandomMessage()
+  var message = ref('You are currently using the old UI');
 
   async function updateVersion() {
     var response = await fetch('../manifest.json');
     var json = await response.json();
     manifest.value = json;
     version.value = json.version;
-  }
-
-  function getRandomMessage() {
-    const messages = Object.keys(i18n.messages.value.en.home.messages);
-    const index = Math.floor(Math.random() * messages.length);
-    const message = i18n.t('home.messages.' + index);
-    return message;
   }
 
   function openLink(url) {

@@ -178,7 +178,7 @@ class StorageManager {
     // Open confirmation window
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: 'Restore all data from a file?<br><em>(scores, levels, etc.)</em>',
+        text: 'Restore all data from a file?',
         inputs: [
           { value: 'Restore', type: 'button',
             callback: function() {
