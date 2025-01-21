@@ -140,7 +140,7 @@
 <template>
   <div class="page">
     <div class="nav">
-      <div class="score fade-in" @click="pauseLevel()" :title="i18n.t('campaign.button.settings')">
+      <div class="score fade-in" @click="pauseLevel()" :title="i18n.t('campaign.button.pause')">
         <div class="current">
           <span class="material-symbols-rounded">pause_circle</span>
           <div id="timer"></div>
@@ -150,7 +150,7 @@
           <div v-html="record"></div>
         </div>
       </div>
-      <BubbleButtonSettings class="button right fade-in" :title="i18n.t('campaign.button.settings')" />
+      <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="footer">
       <BubbleStats />

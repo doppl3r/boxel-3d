@@ -148,7 +148,7 @@
         <span class="material-symbols-rounded">undo</span>
       </a>
       <BubbleButtonFullscreen class="button fade-in" :title="i18n.t('home.button.fullscreen')" />
-      <BubbleButtonSettings class="button fade-in" :title="i18n.t('home.button.settings')" />
+      <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">
       <h1>BOXEL3D</h1>

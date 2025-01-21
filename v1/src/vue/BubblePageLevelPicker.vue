@@ -167,7 +167,7 @@
       <a class="button fade-in" @click="exitLevelPicker" :title="i18n.t('level_picker.button.exit')">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <BubbleButtonSettings class="button right fade-in"  :title="i18n.t('level_picker.button.settings')" />
+      <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="content fade-in">
       <h1>{{ i18n.t('level_picker.title') }}</h1>
