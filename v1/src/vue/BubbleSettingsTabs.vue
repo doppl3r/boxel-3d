@@ -19,6 +19,10 @@
       <label>{{ i18n.t('settings.multiplayer.title') }}</label>
       <span class="material-symbols-rounded">group</span>
     </div>
+    <div class="tab" :class="{ 'selected': tab == 'language' }" @click="$emit('changeTab', 'language');">
+      <label>{{ i18n.t('settings.language.title') }}</label>
+      <span class="material-symbols-rounded">translate</span>
+    </div>
     <div class="tab" :class="{ 'selected': tab == 'mods' }" @click="$emit('changeTab', 'mods');">
       <label>{{ i18n.t('settings.mods.title') }}</label>
       <span class="material-symbols-rounded">power</span>

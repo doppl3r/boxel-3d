@@ -7,6 +7,7 @@
   import BubbleSettingsPanelMods from './BubbleSettingsPanelMods.vue';
   import BubbleSettingsPanelAudio from './BubbleSettingsPanelAudio.vue';
   import BubbleSettingsPanelData from './BubbleSettingsPanelData.vue';
+  import BubbleSettingsPanelLanguage from './BubbleSettingsPanelLanguage.vue';
 
   // Initialize attributes
   const i18n = useI18n();
@@ -117,6 +118,7 @@
           <BubbleSettingsPanelMultiplayer :settings="settings" v-if="tab == 'multiplayer'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelMods :settings="settings" v-if="tab == 'mods'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelData :settings="settings" v-if="tab == 'data'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelLanguage :settings="settings" v-if="tab == 'language'" @updateSettings="updateSettings" />
           <a class="close" @click="runLastInputCallback" :title="i18n.t('popup.button.close')">
             <span class="material-symbols-rounded">close</span>
           </a>

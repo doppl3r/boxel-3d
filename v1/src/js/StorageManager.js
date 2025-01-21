@@ -178,7 +178,7 @@ class StorageManager {
     // Open confirmation window
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: 'popup.text.restore_file',
+        text: 'popup.text.restore_file_data',
         inputs: [
           { value: 'popup.button.restore', type: 'button',
             callback: function() {
@@ -203,7 +203,7 @@ class StorageManager {
                     // Open confirmation window
                     window.dispatchEvent(new CustomEvent('openPopup', {
                       detail: {
-                        text: 'popup.text.data_restored',
+                        text: 'popup.text.file_data_restored',
                         inputs: [{ value: 'popup.button.continue', type: 'button'}]
                       }
                     }));
@@ -224,9 +224,9 @@ class StorageManager {
     // Open confirmation window
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: 'Save all local data to the cloud?<br><em>(scores, levels, etc.)</em>',
+        text: 'popup.text.save_data_to_cloud',
         inputs: [
-          { value: 'Backup', type: 'button',
+          { value: 'popup.button.backup', type: 'button',
             callback: function() {
               var index = 0;
               if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
@@ -241,8 +241,8 @@ class StorageManager {
                     // Show confirmation
                     window.dispatchEvent(new CustomEvent('openPopup', {
                       detail: {
-                        text: 'Success! Your data was backed up to your account.',
-                        inputs: [{ value: 'Continue', type: 'button' }]
+                        text: 'popup.text.cloud_data_saved',
+                        inputs: [{ value: 'popup.button.continue', type: 'button' }]
                       }
                     }));
                   }
@@ -250,7 +250,7 @@ class StorageManager {
               }
             }
           },
-          { value: 'Cancel', type: 'button' }
+          { value: 'popup.button.cancel', type: 'button' }
         ]
       }
     }));
@@ -260,9 +260,9 @@ class StorageManager {
     // Open confirmation window
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: 'Restore all data from the cloud?<br><em>(scores, levels, etc.)</em>',
+        text: 'popup.text.restore_cloud_data',
         inputs: [
-          { value: 'Restore', type: 'button',
+          { value: 'popup.button.restore', type: 'button',
             callback: function() {
               // Restore
               chrome.storage.sync.get(null, function(items) {
@@ -277,14 +277,14 @@ class StorageManager {
                 // Show confirmation
                 window.dispatchEvent(new CustomEvent('openPopup', {
                   detail: {
-                    text: 'Success! Your data was restored from your account.',
-                    inputs: [{ value: 'Continue', type: 'button' }]
+                    text: 'popup.text.cloud_data_restored',
+                    inputs: [{ value: 'popup.button.continue', type: 'button' }]
                   }
                 }));
               });
             }
           },
-          { value: 'Cancel', type: 'button' }
+          { value: 'popup.button.cancel', type: 'button' }
         ]
       }
     }));
