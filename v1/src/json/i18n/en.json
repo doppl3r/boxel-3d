@@ -101,7 +101,8 @@
       "title": "Graphics"
     },
     "language": {
-      "title": "Language"
+      "title": "Language",
+      "select_language": "Select Language"
     },
     "mods": {
       "clipboard": "Clipboard",

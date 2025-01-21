@@ -10,7 +10,6 @@
     const langObj = Object.fromEntries(langArr);
     return langObj
   });
-
   
   function updateLanguage(e) {
     // Dynamically update i18n locale
@@ -25,7 +24,7 @@
     <p>{{ i18n.t('settings.language.title') }}</p>
     <div class="group">
       <div class="option">
-        <label>{{ i18n.t('settings.language.title') }}</label>
+        <label>{{ i18n.t('settings.language.select_language') }}</label>
       </div>
       <div class="option">
         <select id="language" :value="settings.language" @change="updateLanguage($event)">

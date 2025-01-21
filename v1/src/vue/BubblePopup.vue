@@ -28,8 +28,8 @@
     // Assign values from custom event detail
     if (e.detail) {
       if (e.detail.text) {
-        // Check i18n first
-        const hasTranslation = i18n.te(e.detail.text);
+        // Check if i18n fallback value exists
+        const hasTranslation = i18n.te(e.detail.text, i18n.fallbackLocale.value);
         if (hasTranslation) {
           text.value = i18n.t(e.detail.text);
         }
@@ -46,8 +46,8 @@
 
           // Check i18n value
           if (input.value) {
-            // Check i18n first
-            const hasTranslation = i18n.te(input.value);
+            // Check if i18n fallback value exists
+            const hasTranslation = i18n.te(input.value, i18n.fallbackLocale.value);
             if (hasTranslation) {
               input.value = i18n.t(input.value);
             }
