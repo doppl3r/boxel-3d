@@ -266,8 +266,8 @@ class Player extends Cube {
         detail: {
           text: text,
           inputs: [
-            { value: 'Retry', type: 'button', callback: function() { app.level.retryLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'Continue', type: 'button', callback: function() { app.level.exitLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }}
+            { value: 'popup.button.retry', type: 'button', callback: function() { app.level.retryLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'popup.button.continue', type: 'button', callback: function() { app.level.exitLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }}
           ]
         }
       }));

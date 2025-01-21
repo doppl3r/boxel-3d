@@ -92,7 +92,7 @@
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: '<div style="font-size: 0.75em; padding-right: 1em; text-align: left;">' + text + '</div>',
-        inputs: [{ type: 'button', value: 'Close' }]
+        inputs: [{ type: 'button', value: 'popup.button.close' }]
       }
     }));
   }
