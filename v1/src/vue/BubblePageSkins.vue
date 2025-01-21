@@ -31,10 +31,10 @@
       // Open custom skin options
       window.dispatchEvent(new CustomEvent('openPopup', {
         detail: {
-          text: i18n.t('skins.popup.title'),
+          text: i18n.t('popup.text.custom_skin'),
           inputs: [
-            { type: 'file', label: i18n.t('skins.popup.button.upload'), class: 'button', style: 'width: 100%', accept: 'image/png, image/jpeg', callback: changeImage },
-            { type: 'button', value: i18n.t('skins.popup.button.close') }
+            { type: 'file', label: i18n.t('popup.button.upload'), class: 'button', style: 'width: 100%', accept: 'image/png, image/jpeg', callback: changeImage },
+            { type: 'button', value: i18n.t('popup.button.close') }
           ]
         }
       }));

@@ -117,7 +117,7 @@
           <BubbleSettingsPanelMultiplayer :settings="settings" v-if="tab == 'multiplayer'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelMods :settings="settings" v-if="tab == 'mods'" @updateSettings="updateSettings" />
           <BubbleSettingsPanelData :settings="settings" v-if="tab == 'data'" @updateSettings="updateSettings" />
-          <a class="close" @click="runLastInputCallback" :title="i18n.t('settings.button.close')">
+          <a class="close" @click="runLastInputCallback" :title="i18n.t('popup.button.close')">
             <span class="material-symbols-rounded">close</span>
           </a>
         </div>

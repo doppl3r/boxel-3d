@@ -52,6 +52,20 @@
     },
     "title": "Boxel 3D"
   },
+  "popup": {
+    "button": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "continue": "Continue",
+      "restore": "Restore",
+      "upload": "Upload"
+    },
+    "text": {
+      "custom_skin": "Custom Skin",
+      "data_restored": "Data Restored!",
+      "restore_file": "Restore all data from a file?"
+    }
+  },
   "settings": {
     "audio": {
       "music": "Music",
@@ -59,9 +73,6 @@
       "volume_effects": "Sound Effects",
       "volume_main": "Main Volume",
       "volume_music": "Music Volume"
-    },
-    "button": {
-      "close": "Close"
     },
     "data": {
       "backup_to": "Backup to...",
@@ -103,13 +114,6 @@
       "select": "Select"
     },
     "description": "Select your player skin",
-    "popup": {
-      "title": "Custom Skin",
-      "button": {
-        "close": "Close",
-        "upload": "Upload"
-      }
-    },
     "title": "Skins"
   }
 }

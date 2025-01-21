@@ -209,7 +209,7 @@ class Level extends Group {
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
         text: text,
-        inputs: [{ type: 'button', value: 'Continue', callback: function() {
+        inputs: [{ type: 'button', value: 'popup.button.continue', callback: function() {
           app.playLevel();
           window.dispatchEvent(new CustomEvent('closePopup'));
         }}]

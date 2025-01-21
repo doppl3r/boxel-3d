@@ -1,7 +1,9 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
-
+  import { useI18n } from 'vue-i18n';
+  
   // Initialize attributes
+  const i18n = useI18n();
   var text = ref('');
   var inputs = ref([]);
   var isOpen = ref(false);
@@ -25,13 +27,31 @@
 
     // Assign values from custom event detail
     if (e.detail) {
-      if (e.detail.text) text.value = e.detail.text;
+      if (e.detail.text) {
+        // Check i18n first
+        const hasTranslation = i18n.te(e.detail.text);
+        if (hasTranslation) {
+          text.value = i18n.t(e.detail.text);
+        }
+        else {
+          text.value = e.detail.text;
+        }
+      }
       if (e.detail.inputs) {
         inputs.value = e.detail.inputs;
         inputs.value.forEach(function(input) {
           // Set input event type (ex: click vs change)
           if (input.type == 'file' || input.type == 'range' || input.type == 'text') input.event = 'change';
           else input.event = 'click';
+
+          // Check i18n value
+          if (input.value) {
+            // Check i18n first
+            const hasTranslation = i18n.te(input.value);
+            if (hasTranslation) {
+              input.value = i18n.t(input.value);
+            }
+          }
         })
       }
     }
@@ -106,7 +126,7 @@
               <input :class="input.class" :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">
             </template>
           </div>
-          <a class="close" @click="runLastInputCallback">
+          <a class="close" @click="runLastInputCallback" :title="i18n.t('popup.button.close')">
             <span class="material-symbols-rounded">close</span>
           </a>
         </div>

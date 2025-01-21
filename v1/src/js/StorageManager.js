@@ -178,9 +178,9 @@ class StorageManager {
     // Open confirmation window
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: 'Restore all data from a file?',
+        text: 'popup.text.restore_file',
         inputs: [
-          { value: 'Restore', type: 'button',
+          { value: 'popup.button.restore', type: 'button',
             callback: function() {
               var input = document.createElement("input");
               input.setAttribute('type', 'file');
@@ -203,8 +203,8 @@ class StorageManager {
                     // Open confirmation window
                     window.dispatchEvent(new CustomEvent('openPopup', {
                       detail: {
-                        text: 'Data restored!',
-                        inputs: [{ value: 'Continue', type: 'button'}]
+                        text: 'popup.text.data_restored',
+                        inputs: [{ value: 'popup.button.continue', type: 'button'}]
                       }
                     }));
                   };
@@ -214,7 +214,7 @@ class StorageManager {
               performClick();
             }
           },
-          { value: 'Cancel', type: 'button' }
+          { value: 'popup.button.cancel', type: 'button' }
         ]
       }
     }));
