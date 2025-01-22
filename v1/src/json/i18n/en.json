@@ -63,6 +63,15 @@
     },
     "title": "Play"
   },
+  "levels": {
+    "campaign_level_1": "Welcome to Boxel 3D! The easiest game ever made!",
+    "campaign_level_3": "I meant to tell you this earlier, DO NOT TOUCH THE SPIKES!",
+    "campaign_level_5": "Did you know you can jump after you fall?",
+    "campaign_level_18": "Do not forget to jump after you touch the jump pad!",
+    "campaign_level_33": "Try going up!",
+    "campaign_level_35": "Halt! You should not be here!",
+    "campaign_level_39": "Use your keyboard to move left and right."
+  },
   "locales": {
     "en": "English",
     "es": "Spanish"
