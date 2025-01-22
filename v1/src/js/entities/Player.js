@@ -249,13 +249,11 @@ class Player extends Cube {
       var levelName = app.level.name;
       var time = app.timer.toString();
       var hasNewScore = app.storage.saveScore(levelName, time);
-      var text = 'Finished!<br>Score: ' + time;
   
       // Rerender timer
       app.timer.render(time);
   
       // Show new record text
-      if (hasNewScore == true) text += '<br><em>New record!</em>';
       app.play = false;
   
       // Dispatch finished event
@@ -264,7 +262,9 @@ class Player extends Cube {
       // Dispatch new popup from event
       window.dispatchEvent(new CustomEvent('openPopup', {
         detail: {
-          text: text,
+          title: time,
+          text: 'popup.text.seconds',
+          description: hasNewScore ? 'popup.description.new_record' : null,
           inputs: [
             { value: 'popup.button.retry', type: 'button', callback: function() { app.level.retryLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }},
             { value: 'popup.button.continue', type: 'button', callback: function() { app.level.exitLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }}

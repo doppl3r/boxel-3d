@@ -91,6 +91,9 @@
       "upload": "Upload",
       "yes": "Yes"
     },
+    "description": {
+      "new_record": "New record!"
+    },
     "text": {
       "cloud_data_restored": "Success! Your data was restored from your account.",
       "cloud_data_saved": "Success! Your data was backed up to your account.",
@@ -100,7 +103,8 @@
       "restore_cloud_data": "Restore all data from the cloud?",
       "restore_file_data": "Restore all data from a file?",
       "save_data_to_cloud": "Save all local data to the cloud?",
-      "save_level": "Would you like to save your level?"
+      "save_level": "Would you like to save your level?",
+      "seconds": "Seconds"
     }
   },
   "settings": {

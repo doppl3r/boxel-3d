@@ -4,7 +4,9 @@
   
   // Initialize attributes
   const i18n = useI18n();
+  var title = ref('');
   var text = ref('');
+  var description = ref('');
   var inputs = ref([]);
   var isOpen = ref(false);
 
@@ -28,14 +30,17 @@
     // Assign values from custom event detail
     if (e.detail) {
       if (e.detail.text) {
-        // Check if i18n fallback value exists
-        const hasTranslation = i18n.te(e.detail.text, i18n.fallbackLocale.value);
-        if (hasTranslation) {
-          text.value = i18n.t(e.detail.text);
-        }
-        else {
-          text.value = e.detail.text;
-        }
+        // Check title i18n
+        if (i18n.te(e.detail.title, i18n.fallbackLocale.value)) title.value = i18n.t(e.detail.title);
+        else title.value = e.detail.title;
+
+        // Check text i18n
+        if (i18n.te(e.detail.text, i18n.fallbackLocale.value)) text.value = i18n.t(e.detail.text);
+        else text.value = e.detail.text;
+
+        // Check description i18n
+        if (i18n.te(e.detail.description, i18n.fallbackLocale.value)) description.value = i18n.t(e.detail.description);
+        else description.value = e.detail.description;
       }
       if (e.detail.inputs) {
         inputs.value = e.detail.inputs;
@@ -47,8 +52,7 @@
           // Check i18n value
           if (input.value) {
             // Check if i18n fallback value exists
-            const hasTranslation = i18n.te(input.value, i18n.fallbackLocale.value);
-            if (hasTranslation) {
+            if (i18n.te(input.value, i18n.fallbackLocale.value)) {
               input.value = i18n.t(input.value);
             }
           }
@@ -119,7 +123,9 @@
       <div class="background" @click="runLastInputCallback"></div>
       <div class="container">
         <div class="content">
-          <p class="text" v-html="text"></p>
+          <h1 class="title" v-html="title" v-if="title"></h1>
+          <p class="text" v-html="text" v-if="text"></p>
+          <p class="description" v-html="description" v-if="description"></p>
           <div class="inputs">
             <template v-for="(input, index) of inputs">
               <label v-if="input.label" :for="'popup-' + input.type + '-' + index">{{ input.label }}</label>

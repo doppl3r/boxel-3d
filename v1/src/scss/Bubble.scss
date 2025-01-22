@@ -447,14 +447,28 @@
           background-image: none;
           padding: 1.5em 0.75em 1.5em 1em;
         }
+
+        .title {
+          font-size: 2em;
+          text-align: center;
+        }
         
         .text {
           overflow-y: auto;
           margin: 0;
-          height: 100%;
           max-height: 14em;
           padding-bottom: 0.5em;
           text-align: center;
+          white-space: pre-line;
+        }
+
+        .description {
+          animation: shake 1s ease-in-out;
+          animation-fill-mode: forwards;
+          margin: 0;
+          padding-bottom: 0.5em;
+          text-align: center;
+          font-style: italic;
           white-space: pre-line;
         }
   

@@ -882,11 +882,18 @@
 
       & > *:last-child { padding: 0; }
 
-      p {
+      .title {
+        font-size: 2em;
+        line-height: 1em;
+        margin: 0;
+        text-align: center;
+      }
+
+      .text {
         margin: 0;
         font-size: 1em;
-        line-height: 24px;
-        padding: 0 0 16px;
+        line-height: 1em;
+        padding-bottom: 1em;
         white-space: pre-line;
 
         em { position: relative; }
@@ -896,6 +903,17 @@
           text-decoration: none;
           border-bottom: 2px solid;
         }
+      }
+
+      .description {
+        animation: shake 1s ease-in-out;
+        animation-fill-mode: forwards;
+        margin: 0;
+        font-size: 1em;
+        font-style: italic;
+        line-height: 1em;
+        padding-bottom: 1em;
+        white-space: pre-line;
       }
 
       .inputs {
