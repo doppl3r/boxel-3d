@@ -152,10 +152,10 @@ class LevelEditor {
       // Dispatch new popup from event
       window.dispatchEvent(new CustomEvent('openPopup', {
         detail: {
-          text: 'Would you like to <em>save</em> your level?',
+          text: 'popup.text.save_level',
           inputs: [
-            { value: 'No', type: 'button', callback: function() { app.levelEditor.saveAndExitLevelEditor(false); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'Yes', type: 'button', callback: function() { app.levelEditor.saveAndExitLevelEditor(true); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'popup.button.no', type: 'button', callback: function() { app.levelEditor.saveAndExitLevelEditor(false); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'popup.button.yes', type: 'button', callback: function() { app.levelEditor.saveAndExitLevelEditor(true); window.dispatchEvent(new CustomEvent('closePopup')); }},
           ]
         }
       }));

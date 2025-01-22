@@ -1,7 +1,9 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
   // Initialize attributes
+  const i18n = useI18n();
   var text = ref('');
   var inputs = ref([]);
   var isOpen = ref(false);
@@ -25,13 +27,31 @@
 
     // Assign values from custom event detail
     if (e.detail) {
-      if (e.detail.text) text.value = e.detail.text;
+      if (e.detail.text) {
+        // Check if i18n fallback value exists
+        const hasTranslation = i18n.te(e.detail.text, i18n.fallbackLocale.value);
+        if (hasTranslation) {
+          text.value = i18n.t(e.detail.text);
+        }
+        else {
+          text.value = e.detail.text;
+        }
+      }
       if (e.detail.inputs) {
         inputs.value = e.detail.inputs;
         inputs.value.forEach(function(input) {
           // Set input event type (ex: click vs change)
           if (input.type == 'file' || input.type == 'range' || input.type == 'text') input.event = 'change';
           else input.event = 'click';
+
+          // Check i18n value
+          if (input.value) {
+            // Check if i18n fallback value exists
+            const hasTranslation = i18n.te(input.value, i18n.fallbackLocale.value);
+            if (hasTranslation) {
+              input.value = i18n.t(input.value);
+            }
+          }
         })
       }
     }

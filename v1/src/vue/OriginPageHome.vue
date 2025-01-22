@@ -62,7 +62,7 @@
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: '<img src="svg/cloud-check.svg">',
+        text: '<img src="../svg/cloud-check.svg">',
         inputs: inputs
       }
     }));
