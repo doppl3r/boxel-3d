@@ -19,7 +19,7 @@
       "0": "Welcome!",
       "1": "Is it Christmas yet?",
       "2": "Maybe some day I will add new levels",
-      "3": "Are not you suppose to be doing homework?",
+      "3": "Aren't you suppose to be doing homework?",
       "4": "Tip: Drink lots of water!",
       "5": "Made by the creators of Boxel Rebound.",
       "6": "Terraria is a pretty cool game.",
@@ -133,8 +133,9 @@
       "title": "Graphics"
     },
     "language": {
-      "title": "Language",
-      "select_language": "Select Language"
+      "credit": "Credit",
+      "select_language": "Select Language",
+      "title": "Language"
     },
     "mods": {
       "clipboard": "Clipboard",

@@ -1,6 +1,165 @@
 {
+  "campaign": {
+    "button": {
+      "pause": "Pause"
+    }
+  },
+  "home": {
+    "button": {
+      "back": "Back",
+      "changelog": "Changelog",
+      "fullscreen": "Fullscreen (F11)",
+      "level_editor": "Level Editor",
+      "multi_player": "Multi-player",
+      "news": "News",
+      "play": "Play",
+      "skins": "Skins"
+    },
+    "messages": {
+      "0": "Welcome!",
+      "1": "Is it Christmas yet?",
+      "2": "Maybe some day I will add new levels",
+      "3": "Are not you suppose to be doing homework?",
+      "4": "Tip: Drink lots of water!",
+      "5": "Made by the creators of Boxel Rebound.",
+      "6": "Terraria is a pretty cool game.",
+      "7": "Good luck!",
+      "8": "Kargoh is my favorite Youtuber.",
+      "9": "Fact: I am bad at Fortnite.",
+      "10": "Do not get caught!",
+      "11": "3D games are hard to make.",
+      "12": "You should make a level during class.",
+      "13": "Made with 20 cups of coffee every day.",
+      "14": "Lower the graphics to speed up the game.",
+      "15": "I hope you have a great day.",
+      "16": "More addicting than TikTok!",
+      "17": "I tried doing homework once, did not like it.",
+      "18": "I make levels during my day job.",
+      "19": "I wish this game had more levels.",
+      "20": "Do not share your friend code with strangers!",
+      "21": "Nothing in life is free, except for this game.",
+      "22": "My score is way better than your score.",
+      "23": "Backup your data so you can play on other computers.",
+      "24": "If you want to make games for a living, start by making levels.",
+      "25": "Are cats better than dogs?",
+      "26": "Shoutout to Stack Overflow for all the help!",
+      "27": "Now available on the TI-84+ Silver Edition.",
+      "28": "I think you are a pretty neat person.",
+      "29": "I am glad you are alive today!",
+      "30": "Happy Friday! (or whatever day it is)",
+      "31": "Share kindness (or Boxel 3D) with someone today.",
+      "32": "You might not feel special today, but you are special to me!",
+      "33": "01101100 01101111 01101100",
+      "34": "Have you tried turning it off and on again?",
+      "35": "All bugs have been fixed (lol jk)",
+      "36": "(╯°□°)╯︵ ■"
+    },
+    "title": "Boxel 3D"
+  },
+  "level_picker": {
+    "button": {
+      "exit": "Exit to home (ESC)",
+      "play": "Play"
+    },
+    "title": "Play"
+  },
+  "levels": {
+    "campaign_level_1": "Welcome to Boxel 3D! The easiest game ever made!",
+    "campaign_level_3": "I meant to tell you this earlier, DO NOT TOUCH THE SPIKES!",
+    "campaign_level_5": "Did you know you can jump after you fall?",
+    "campaign_level_18": "Do not forget to jump after you touch the jump pad!",
+    "campaign_level_33": "Try going up!",
+    "campaign_level_35": "Halt! You should not be here!",
+    "campaign_level_39": "Use your keyboard to move left and right."
+  },
   "locales": {
     "en": "Inglés",
     "es": "Español"
+  },
+  "popup": {
+    "button": {
+      "backup": "Backup",
+      "cancel": "Cancel",
+      "close": "Close",
+      "continue": "Continue",
+      "exit": "Exit (E)",
+      "no": "No",
+      "play": "Play",
+      "restore": "Restore",
+      "retry": "Retry (R)",
+      "settings": "Settings",
+      "upload": "Upload",
+      "yes": "Yes"
+    },
+    "description": {
+      "new_record": "New record!"
+    },
+    "text": {
+      "cloud_data_restored": "Success! Your data was restored from your account.",
+      "cloud_data_saved": "Success! Your data was backed up to your account.",
+      "custom_skin": "Custom Skin",
+      "file_data_restored": "File Data Restored!",
+      "paused": "Paused",
+      "restore_cloud_data": "Restore all data from the cloud?",
+      "restore_file_data": "Restore all data from a file?",
+      "save_data_to_cloud": "Save all local data to the cloud?",
+      "save_level": "Would you like to save your level?",
+      "seconds": "Seconds"
+    }
+  },
+  "settings": {
+    "audio": {
+      "music": "Music",
+      "title": "Audio",
+      "volume_effects": "Sound Effects",
+      "volume_main": "Main Volume",
+      "volume_music": "Music Volume"
+    },
+    "data": {
+      "backup_to": "Backup to...",
+      "file": "File",
+      "google": "Google",
+      "restore_from": "Restore from...",
+      "title": "Data"
+    },
+    "graphics": {
+      "auto_rotate": "Auto Rotate",
+      "camera": "Camera",
+      "debug_mode": "Debug Mode",
+      "developer_tools": "Developer Tools",
+      "old_ui": "Old UI",
+      "quality": "Quality",
+      "show_fps": "Show FPS",
+      "title": "Graphics"
+    },
+    "language": {
+      "credit": "Credit",
+      "select_language": "Select Language",
+      "title": "Language"
+    },
+    "mods": {
+      "clipboard": "Clipboard",
+      "download_instructions": "Copy mods from trusted websites and paste them in the clipboard for later.",
+      "inspect_instructions": "Right-click this game and select Inspect.",
+      "paste_instructions": "Select the Console tab, paste mods from the clipboard, then press the enter key to load mods.",
+      "security": "For your security, mods must be manually loaded each time the game is launched.",
+      "title": "Mods",
+      "trusted_mods": "Trusted mods"
+    },
+    "multiplayer": {
+      "host_server": "Host Server",
+      "join_server": "Join Server",
+      "paste_friend_code": "Paste friend code",
+      "share_friend_code": "Share friend code",
+      "title": "Multiplayer",
+      "your_name": "Your name"
+    }
+  },
+  "skins": {
+    "button": {
+      "select": "Select"
+    },
+    "description": "Select your player skin",
+    "title": "Skins"
   }
 }

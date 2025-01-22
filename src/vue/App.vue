@@ -1,6 +1,6 @@
 <script setup>
   import '@/v2/src/scss/Global.scss';
-  import { onMounted, shallowReactive, reactive, ref } from 'vue';
+  import { onMounted, shallowReactive, reactive, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
   import ButtonVolume from './ButtonVolume.vue';
@@ -115,6 +115,16 @@
     playSound('click');
   });
 
+  // Update <html> language value
+  function updateLanguageAttribute() {
+    document.documentElement.lang = i18n.locale.value;
+  }
+
+  // Watch the i18n locale changes
+  watch(i18n.locale, () => {
+    updateLanguageAttribute();
+  });
+
   // Redirect app after loading
   onMounted(function() {
     ticker = new Ticker();
@@ -124,6 +134,7 @@
       textures: './json/menu-textures.json',
       audio: './json/menu-audio.json',
     });
+    updateLanguageAttribute();
   });
 </script>
 

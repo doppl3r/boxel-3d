@@ -50,6 +50,27 @@
     text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
   }
 
+  ul {
+    color: #ffffff;
+    font-size: 0.75em;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+
+    li {
+      position: relative;
+      padding-left: 1em;
+
+      &:before {
+        content: '•';
+        left: 0;
+        position: absolute;
+        top: 0;
+      }
+    }
+  }
+
   .page {
     display: flex;
     flex-direction: column;

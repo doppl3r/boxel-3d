@@ -32,5 +32,15 @@
         </select>
       </div>
     </div>
+    <div class="group">
+      <div class="option">
+        <label>{{ i18n.t('settings.language.credit') }}</label>
+      </div>
+      <div class="option">
+        <ul>
+          <li>outerbound (Spanish)</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
