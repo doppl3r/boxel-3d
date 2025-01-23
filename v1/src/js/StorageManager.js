@@ -229,13 +229,13 @@ class StorageManager {
           { value: 'popup.button.backup', type: 'button',
             callback: function() {
               var index = 0;
-              if (clearChromeStorage == true) chrome.storage.sync.clear(); //initially clear online storage
+              if (clearChromeStorage == true) window.chrome?.storage.sync.clear(); //initially clear online storage
               for (var i = 0; i < localStorage.length; i++) {
                 var key = localStorage.key(i);
                 var value = localStorage.getItem(key);
                 var obj = {};
                 obj[key] = value;
-                chrome.storage.sync.set(obj, function() {
+                window.chrome?.storage.sync.set(obj, function() {
                   index++; // Show message on last item
                   if (index == localStorage.length) {
                     // Show confirmation
@@ -265,7 +265,7 @@ class StorageManager {
           { value: 'popup.button.restore', type: 'button',
             callback: function() {
               // Restore
-              chrome.storage.sync.get(null, function(items) {
+              chrome?.storage.sync.get(null, function(items) {
                 if (clearLocalStorage == true) localStorage.clear(); // Empty out old data
                 var keys = Object.keys(items);
                 for (var i = 0; i < keys.length; i++){

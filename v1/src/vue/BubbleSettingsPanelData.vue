@@ -5,7 +5,7 @@
   var props = defineProps(['settings']);
 
   function hasChromeStorage() {
-    return chrome.storage != null;
+    return window.chrome?.storage != null;
   }
 
   function backupToFile() {

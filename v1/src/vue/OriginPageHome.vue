@@ -52,7 +52,7 @@
     ]
 
     // Add Chrome sync options
-    if (chrome.storage) {
+    if (window.chrome?.storage) {
       inputs.unshift(
         { value: 'Backup to Google', type: 'button', style: 'width: 100%', callback: app.storage.backupToChrome },
         { value: 'Restore from Google', type: 'button', style: 'width: 100%', callback: app.storage.restoreFromChrome }
