@@ -39,6 +39,7 @@
       <div class="option">
         <ul>
           <li>outerbound (Spanish)</li>
+          <li>Zeta (Persian/Farsi)</li>
         </ul>
       </div>
     </div>

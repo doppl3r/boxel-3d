@@ -74,7 +74,8 @@
   },
   "locales": {
     "en": "English",
-    "es": "Spanish"
+    "es": "Spanish",
+    "fa": "Persian/Farsi"
   },
   "popup": {
     "button": {

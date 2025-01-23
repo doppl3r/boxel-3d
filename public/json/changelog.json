@@ -491,5 +491,11 @@
     "revisions": [
       "Added Spanish translation (credit: outerbound)"
     ]
+  },
+  {
+    "version": "2.3.5",
+    "revisions": [
+      "Added Persian/Farsi translation (credit: Zeta)"
+    ]
   }
 ]
