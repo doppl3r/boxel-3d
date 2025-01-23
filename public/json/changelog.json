@@ -482,7 +482,14 @@
   {
     "version": "2.3.3",
     "revisions": [
+      "Added Boxel 1 music",
       "Added Boxel Golf music"
+    ]
+  },
+  {
+    "version": "2.3.4",
+    "revisions": [
+      "Added Spanish translation (credit: outerbound)"
     ]
   }
 ]
