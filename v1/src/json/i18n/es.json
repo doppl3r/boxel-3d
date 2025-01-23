@@ -73,9 +73,9 @@
     "campaign_level_39": "Utilice WASD, las teclas de flecha, y la barra espaciadora para moverse hacia la izquierda y hacia la derecha."
   },
   "locales": {
-    "en": "Ingles",
-    "es": "Español",
-    "fa": "Persa/Farsi"
+    "en": "English",
+    "es": "Español (Spanish)",
+    "fa": "فارسی (Persian)"
   },
   "popup": {
     "button": {
