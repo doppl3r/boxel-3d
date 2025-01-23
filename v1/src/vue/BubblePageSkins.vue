@@ -5,7 +5,7 @@
   import BubbleCarousel from './BubbleCarousel.vue';
   import skins from '../json/skins.json';
 
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   var emit = defineEmits(['setPage']);
   var defaultSkin = ref()
 

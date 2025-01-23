@@ -10,7 +10,7 @@
   import BubbleSettingsPanelLanguage from './BubbleSettingsPanelLanguage.vue';
 
   // Initialize attributes
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   var tab = ref('');
   var inputs = ref([]);
   var isOpen = ref(false);

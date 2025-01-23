@@ -1,17 +1,19 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { computed, ref, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
 
   // Initialize attributes
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   var emit = defineEmits(['setPage']);
   var manifest = ref();
   var version = ref();
-  var message = ref(getRandomMessage()); // Optional: getRandomMessage()
-  var menu = [
+  var messageIndex = getRandomMessageIndex();
+  var message = computed(() => getRandomMessage(messageIndex));
+  var menuKey = ref(0);
+  var menu = computed(() => [
     {
       "title": i18n.t('home.button.skins'),
       "url": "../svg/button-skins.svg",
@@ -38,7 +40,7 @@
       "url": "../svg/button-play.svg",
       "callback": function() { emit('setPage', 'level-picker') }
     }
-  ];
+  ]);
 
   // Add event listener(s)
   function addEventListeners() {
@@ -62,9 +64,12 @@
     version.value = 'v' + json.version;
   }
 
-  function getRandomMessage() {
+  function getRandomMessageIndex() {
     const messages = Object.keys(i18n.messages.value.en.home.messages);
-    const index = Math.floor(Math.random() * messages.length);
+    return Math.floor(Math.random() * messages.length);
+  }
+
+  function getRandomMessage(index) {
     const message = i18n.t('home.messages.' + index);
     return message;
   }
@@ -139,7 +144,7 @@
 </script>
 
 <template>
-  <div class="page">
+  <div class="page" :key="menuKey">
     <div class="background">
       <img :src="'../svg/background-purple.svg'">
     </div>

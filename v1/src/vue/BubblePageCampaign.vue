@@ -6,7 +6,7 @@
   import BubbleStats from './BubbleStats.vue';
 
   // Initialize variables
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   var credit = ref('');
   var isClosed = ref(true); // Popup animation state
   var record = ref();

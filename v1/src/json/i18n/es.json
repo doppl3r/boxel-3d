@@ -65,7 +65,7 @@
   },
   "levels": {
     "campaign_level_1": "¡Bienvenido al Boxel 3D! El juego mas facil del mundo!",
-    "campaign_level_3": "Quería decirte esto antes: ¡NO TOQUES LOS PICOS!",
+    "campaign_level_3": "Olvidé decirte esto antes: ¡NO TOQUES LOS PICOS!",
     "campaign_level_5": "¿Sabías que puedes saltar después de caer?",
     "campaign_level_18": "¡No olvides de saltar después de tocar la plataforma de salto!",
     "campaign_level_33": "¡Trata ir ariba!",
@@ -78,7 +78,7 @@
   },
   "popup": {
     "button": {
-      "backup": "Backup",
+      "backup": "Progreso",
       "cancel": "Cancelar",
       "close": "Cerrar",
       "continue": "Continuar",
@@ -86,9 +86,9 @@
       "no": "No",
       "play": "Jugar",
       "restore": "Restore",
-      "retry": "Retry (R)",
-      "settings": "Settings",
-      "upload": "Upload",
+      "retry": "Volver (R)",
+      "settings": "Ajuste",
+      "upload": "Subir",
       "yes": "Si"
     },
     "description": {
@@ -123,7 +123,7 @@
       "title": "Informacion"
     },
     "graphics": {
-      "auto_rotate": "Auto Rotate",
+      "auto_rotate": "Rotación de Cámara Automática",
       "camera": "Cámara",
       "debug_mode": "Modo de Depuración",
       "developer_tools": "Herramientas para Desarrolladores",

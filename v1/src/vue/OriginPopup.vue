@@ -3,7 +3,7 @@
   import { useI18n } from 'vue-i18n';
 
   // Initialize attributes
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   var title = ref('');
   var text = ref('');
   var description = ref('');

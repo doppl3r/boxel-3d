@@ -6,7 +6,7 @@
   import levels from '../json/levels.json';
 
   // Initialize variables
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   var description = ref('Select a level');
   var items = ref([]); // Carousel items
   var key = ref(0);

@@ -6,7 +6,7 @@
   import UI from './UI.vue';
 
   // Initialize app and expose to window scope
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   var canvas = ref();
   var app = window.app = new App();
 

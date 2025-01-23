@@ -4,7 +4,7 @@
   import audio from '../json/audio.json';
 
   // Initialize props and emits
-  const i18n = useI18n();
+  const i18n = useI18n({ useScope: 'global' });
   const props = defineProps(['settings']);
   const emit = defineEmits(['updateSettings']);
 
