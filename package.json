@@ -45,7 +45,7 @@
     "matter-js": "^0.19.0",
     "peerjs": "^1.5.4",
     "sanitize-html": "^2.14.0",
-    "sass": "^1.83.1",
+    "sass": "^1.83.4",
     "three": "^0.172.0",
     "vue": "^3.5.13",
     "vue-i18n": "^11.0.1",
@@ -54,9 +54,9 @@
   "devDependencies": {
     "@dimforge/rapier3d": "^0.14.0",
     "@vitejs/plugin-vue": "^5.2.1",
-    "electron": "^33.3.1",
+    "electron": "^34.0.1",
     "electron-builder": "^25.1.8",
-    "vite": "^6.0.7",
+    "vite": "^6.0.11",
     "vite-plugin-top-level-await": "^1.4.4",
     "vite-plugin-wasm": "^3.4.1"
   }

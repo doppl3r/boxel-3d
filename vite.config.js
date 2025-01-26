@@ -16,7 +16,7 @@ export default defineConfig({
         v1: path.resolve(__dirname, 'v1/index.html'),
         v2: path.resolve(__dirname, 'v2/index.html')
       },
-      treeshake: false
+      treeshake: true // was false for Rapier.js build
     },
     target: "ES2022"
   },
