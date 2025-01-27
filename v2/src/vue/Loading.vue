@@ -22,6 +22,7 @@
   <Transition name="fade-loading">
     <div class="loading" v-if="isFinished() == false">
       <div class="bar">
+        <div class="boxel" :style="{ left: `calc(${ progress.percent }% - 1em)` }"></div>
         <div class="progress" :style="{ width: progress.percent + '%' }"></div>
       </div>
       <div class="label">Loading: {{ progress.percent }}%</div>
@@ -56,6 +57,18 @@
       margin: 1em 0em;
       border: 0.25em solid #fff;
       border-radius: 0.5em;
+      position: relative;
+
+      .boxel {
+        animation: spin 1s linear infinite;
+        background-color: #ffcb4c;
+        border-radius: 0.25em;
+        bottom: 2em;
+        height: 2em;
+        position: absolute;
+        transition: all 0.25s ease;
+        width: 2em;
+      }
 
       .progress {
         background-color: #ffffff;
@@ -70,4 +83,6 @@
       font-size: 1em;
     }
   }
+
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>

@@ -495,7 +495,8 @@
   {
     "version": "2.3.5",
     "revisions": [
-      "Added Persian/Farsi translation (credit: Zeta)"
+      "Added Persian/Farsi translation (credit: Zeta)",
+      "Added loading animation to home screen"
     ]
   }
 ]
