@@ -498,5 +498,11 @@
       "Added Persian/Farsi translation (credit: Zeta)",
       "Added loading animation to home screen"
     ]
+  },
+  {
+    "version": "2.3.6",
+    "revisions": [
+      "Fixed chat font"
+    ]
   }
 ]

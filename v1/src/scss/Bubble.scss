@@ -51,16 +51,16 @@
   }
 
   ul {
-    color: #ffffff;
-    font-size: 0.75em;
     list-style: none;
     margin: 0;
     padding: 0;
-    text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
-
+    
     li {
+      color: #ffffff;
+      font-size: 0.75em;
       position: relative;
       padding-left: 1em;
+      text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
 
       &:before {
         content: '•';
@@ -902,11 +902,16 @@
             padding: 0;
             scroll-behavior: smooth;
 
-            .message {
+            .message { // <li>
               color: #ffffff;
               font-size: 0.75em;
+              padding: 0;
               text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
               word-break: break-word;
+
+              &:before {
+                content: initial;
+              }
 
               * {
                 user-select: text;
