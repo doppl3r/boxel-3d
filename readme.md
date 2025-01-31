@@ -9,7 +9,7 @@
 ## Update NPM libraries
 
 - Run `npm outdated`
-- Run `npm i package-name@latest` (replace "package-name" for each package listed)
+- Run `npm i package-name@latest` (for Rapier.js, replace `latest` with `canary`)
 
 ## Build for release
 
