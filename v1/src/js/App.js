@@ -300,6 +300,7 @@ class App {
     .then((json) => {
       // Do something with the response
       var description = app.level.getDescriptionByTitle(title)
+      var author = app.level.getAuthorByTitle(title);
       if (theme == null) theme = app.level.getThemeByTitle(title);
       app.level.entityFactory.color = theme.color;
 
@@ -335,8 +336,8 @@ class App {
       
       // Send event to show credits
       setTimeout(function() {
-        if (json.author) {
-          window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: 'Level by ' + json.author }}));
+        if (author) {
+          window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: 'Level by ' + author }}));
         }
       }, 500);
     })

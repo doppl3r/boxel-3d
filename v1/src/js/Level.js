@@ -254,6 +254,17 @@ class Level extends Group {
     });
     return description;
   }
+
+  getAuthorByTitle(title) {
+    var author;
+    levels.packs.forEach(function(pack) {
+      pack.levels.forEach(function(level) {
+        // Assign theme using theme pack key
+        if (title == level.title) author = level.author;
+      })
+    });
+    return author;
+  }
 }
 
 export { Level };
