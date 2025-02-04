@@ -291,7 +291,7 @@ class App {
     var levelExists = false;
 
     // Fetch public folder for level
-    await fetch('../json/' + title + '.json').then((response) => {
+    await fetch('../json/levels/' + title + '.json').then((response) => {
       if (response.ok) {
         return response.json();
       }
