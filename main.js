@@ -34,6 +34,16 @@ function createWindow() {
   // Set localStorage for app platforms
   mainWindow.webContents.executeJavaScript('localStorage.setItem("setting-timestamp", ' + (new Date().getTime()) + ');');
 
+  // TEST: Load mods from URL
+  /* const url = 'https://raw.githubusercontent.com';
+  const file = '/Charlieee1/Boxel-3d-Mods/main/Boxel 3d Modding API.user.js';
+  fetch(url + file)
+    .then(response => response.text())
+    .then(code => {
+      // Execute code
+      mainWindow.webContents.executeJavaScript(code);
+    }); */
+
   // Load the index.html of the app
   mainWindow.loadFile('./build/v1/index.html', { query: { "fullscreen": true }});
 }
