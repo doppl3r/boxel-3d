@@ -1,9 +1,44 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { computed, ref, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import levelData from '../json/levels.json';
   
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
+  const packs = computed(() => {
+    // Set array from level data
+    const arr = levelData.packs;
+
+    // Add "All" as a pack option
+    arr.unshift({ title: 'All', levels: [] })
+
+    // Return array of level packs
+    return arr;
+  });
+  const levels = computed(() => {
+    // Return a shallow array of levels and their pack Data
+    const arr = [];
+
+    // Loop through each pack
+    packs.value.forEach(pack => {
+      // Check if pack has levels
+      if (pack.levels.length > 0) {
+        // Add objects to levelsarray
+        arr.push(...pack.levels.map(level => {
+          // Return level objects with their theme data
+          return {
+            ...level,
+            theme: pack.theme,
+            url: pack.url,
+          }
+        }))
+      }
+    })
+
+    // Return array of levels
+    return arr;
+  });
+
   const search = ref('');
   var isOpen = ref(true);
 
@@ -52,7 +87,9 @@
         <div class="level-selector__packs">
           <div class="level-selector__packs-header">{{ i18n.t('popup.text.level_packs') }}</div>
           <ul class="level-selector__packs-list">
-
+            <li v-for="pack in packs">
+              <button>{{ pack.title }}</button>
+            </li>
           </ul>
         </div>
         <div class="level-selector__levels">
@@ -60,7 +97,9 @@
             <input class="level-selector__search" v-model="search" :placeholder="`${ i18n.t('popup.text.search') }...`" type="text">
           </div>
           <ul class="level-selector__levels-list">
-
+            <li v-for="level in levels">
+              <button>{{ level.title }}</button>
+            </li>
           </ul>
         </div>
         <div class="level-selector__info">
@@ -103,15 +142,18 @@
     }
 
     .level-selector__container {
+      display: flex;
       position: relative;
 
       .level-selector__packs {
         .level-selector__packs-header {
-
+          color: #ffffff;
+          font-size: 1em;
+          text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
         }
 
         .level-selector__packs-list {
-
+          
         }
       }
 
