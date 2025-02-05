@@ -96,15 +96,19 @@
       "new_record": "¡Nuevo Record!"
     },
     "text": {
+      "all": "Todo",
       "cloud_data_restored": "¡Éxito! Tu información fue restaurada de tu cuenta.",
       "cloud_data_saved": "¡Éxito! Tu información fue copiada a tu cuenta.",
       "custom_skin": "Apariencia Personalizada",
       "file_data_restored": "¡Información de archivo fue restaurado!",
+      "info": "Información",
+      "level_packs": "Paquetes de Niveles",
       "paused": "Pausado",
       "restore_cloud_data": "¿Restaurar todo tu informacion del cloud?",
       "restore_file_data": "¿Restaurar todo tu informacion de un Archivo?",
       "save_data_to_cloud": "¿Copia toda tu información local al cloud?",
       "save_level": "¿Queres mantener tu nivel?",
+      "search": "Buscar",
       "seconds": "Segundos"
     }
   },

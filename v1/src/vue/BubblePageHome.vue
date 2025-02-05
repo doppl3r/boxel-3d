@@ -1,9 +1,10 @@
 <script setup>
   import { computed, ref, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import BubbleCarousel from './BubbleCarousel.vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
-  import BubbleCarousel from './BubbleCarousel.vue';
+  import BubblePopupLevelSelector from './BubblePopupLevelSelector.vue';
 
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
@@ -170,5 +171,7 @@
         Write a review
       </a>
     </div>
+    
+    <BubblePopupLevelSelector />
   </div>
 </template>
