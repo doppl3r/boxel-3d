@@ -295,6 +295,7 @@
         list-style: none;
         overflow-y: scroll;
         padding-right: 0.5em;
+        scroll-padding: 2.5em 0;
 
         li {
           font-size: 1em;
