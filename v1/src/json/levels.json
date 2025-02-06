@@ -72,27 +72,32 @@
         {
           "title": "Campaign Level 11",
           "description": "Tippy Tap",
-          "label": "3-1"
+          "label": "3-1",
+          "author": "King Of Shapes"
         },
         {
           "title": "Campaign Level 12",
           "description": "Agility Jumps",
-          "label": "3-2"
+          "label": "3-2",
+          "author": "King Of Shapes"
         },
         {
           "title": "Campaign Level 13",
           "description": "Zack's Coaster",
-          "label": "3-3"
+          "label": "3-3",
+          "author": "King Of Shapes"
         },
         {
           "title": "Campaign Level 14",
           "description": "Simon Says",
-          "label": "3-4"
+          "label": "3-4",
+          "author": "King Of Shapes"
         },
         {
           "title": "Campaign Level 15",
           "description": "Wall of Finish",
-          "label": "3-5"
+          "label": "3-5",
+          "author": "King Of Shapes"
         }
       ]
     },
@@ -104,27 +109,32 @@
         {
           "title": "Campaign Level 16",
           "description": "Kargoh's World",
-          "label": "4-1"
+          "label": "4-1",
+          "author": "Kargoh"
         },
         {
           "title": "Campaign Level 17",
           "description": "Kargoh's Bobsled",
-          "label": "4-2"
+          "label": "4-2",
+          "author": "Kargoh"
         },
         {
           "title": "Campaign Level 18",
           "description": "Kargoh's Plinko",
-          "label": "4-3"
+          "label": "4-3",
+          "author": "Kargoh"
         },
         {
           "title": "Campaign Level 19",
           "description": "Kargoh's Obstacles",
-          "label": "4-4"
+          "label": "4-4",
+          "author": "Kargoh"
         },
         {
           "title": "Campaign Level 20",
           "description": "Kargoh's Ramp",
-          "label": "4-5"
+          "label": "4-5",
+          "author": "Kargoh"
         }
       ]
     },
@@ -210,7 +220,8 @@
         {
           "title": "Campaign Level 33",
           "description": "Kargoh's Spider",
-          "label": "7-3"
+          "label": "7-3",
+          "author": "Kargoh"
         },
         {
           "title": "Campaign Level 34",

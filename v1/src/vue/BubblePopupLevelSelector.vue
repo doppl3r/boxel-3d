@@ -4,7 +4,7 @@
   import levelData from '../json/levels.json';
   
   // Initialize attributes
-  const isOpen = ref(true);
+  const isOpen = ref(false);
   const i18n = useI18n({ useScope: 'global' });
 
   // Set packs and levels from level data
@@ -14,7 +14,7 @@
     const arr = [...levelData.packs];
     
     // Add "All" as a pack option
-    arr.unshift({ title: 'All', levels: [] })
+    arr.unshift({ title: i18n.t('popup.text.all'), levels: [] })
     
     // Return array of level packs
     return arr;
@@ -58,23 +58,23 @@
 
   // Add event listener(s)
   function addEventListeners() {
-    window.addEventListener('openPopup', openPopup);
-	  window.addEventListener('closePopup', closePopup);
+    window.addEventListener('openLevelSelectorPopup', openLevelSelectorPopup);
+	  window.addEventListener('closeLevelSelectorPopup', closeLevelSelectorPopup);
     window.addEventListener('keydown', keydown);
   }
   
   // Remove event listeners
   function removeEventListeners() {
-    window.removeEventListener('openPopup', openPopup);
-	  window.removeEventListener('closePopup', closePopup);
+    window.removeEventListener('openLevelSelectorPopup', openLevelSelectorPopup);
+	  window.removeEventListener('closeLevelSelectorPopup', closeLevelSelectorPopup);
     window.removeEventListener('keydown', keydown);
   }
 
-  function openPopup(e) {
+  function openLevelSelectorPopup(e) {
     isOpen.value = true;
   }
 
-  function closePopup() {
+  function closeLevelSelectorPopup() {
     isOpen.value = false;
   }
 
@@ -86,7 +86,7 @@
 
   function isVisible(level) {
     const hasMatchingPack = selectedPack.value.title == level.pack;
-    const hasAllSelected = selectedPack.value.title == 'All';
+    const hasAllSelected = selectedPack.value.title == i18n.t('popup.text.all');
     return hasMatchingPack || hasAllSelected;
   }
 
@@ -121,16 +121,26 @@
     return scores[title];
   }
 
-  watch(selectedPack, () => {
+  function updateScroll() {
     // Scroll to selected items after next render
     nextTick(() => {
       scrollToSelected(selectedPack, packs, packsRef, 'title');
       scrollToSelected(selectedLevel, levels, levelsRef, 'title');
     });
+  }
+
+  watch(selectedPack, () => {
+    // Scroll to selected items after next render
+    updateScroll();
   });
+
+  watch(search, () => {
+    selectedPack.value = packs.value[0];
+  })
 
   onMounted(function() {
     addEventListeners();
+    updateScroll();
   });
 
   onUnmounted(function() {
@@ -141,7 +151,7 @@
 <template>
   <Transition name="fade">
     <div class="level-selector" v-if="isOpen == true">
-      <div class="level-selector__background" @click="closePopup()"></div>
+      <div class="level-selector__background" @click="closeLevelSelectorPopup()"></div>
       <div class="level-selector__container">
         <div class="level-selector__packs">
           <div class="level-selector__packs-header">{{ i18n.t('popup.text.level_packs') }}</div>
@@ -194,7 +204,7 @@
             </button>
           </div>
         </div>
-        <a class="level-selector__close" @click="closePopup()" :title="i18n.t('popup.button.close')">
+        <a class="level-selector__close" @click="closeLevelSelectorPopup()" :title="i18n.t('popup.button.close')">
           <span class="material-symbols-rounded">close</span>
         </a>
       </div>

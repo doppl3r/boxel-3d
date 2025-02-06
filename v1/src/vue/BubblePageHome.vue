@@ -39,7 +39,9 @@
     {
       "title": i18n.t('home.button.play'),
       "url": "../svg/button-play.svg",
-      "callback": function() { emit('setPage', 'level-picker') }
+      "callback": function() {
+        window.dispatchEvent(new CustomEvent('openLevelSelectorPopup'));
+      }
     }
   ]);
 
