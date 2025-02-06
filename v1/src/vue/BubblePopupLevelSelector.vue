@@ -47,8 +47,8 @@
   });
 
   // Set selected level and pack from settings
-  const scores = app.storage.getScores();
-  const settings = app.storage.getSettings();
+  let scores = app.storage.getScores();
+  let settings = app.storage.getSettings();
   const selectedLevel = ref(levels.value[settings.progress - 1]);
   const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
 
@@ -129,6 +129,7 @@
     await app.playLevelByTitle(selectedLevel.value.title);
     window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
     const progress = levels.value.findIndex(level => level.title == selectedLevel.value.title) + 1;
+    settings = app.storage.getSettings();
     settings.progress = progress;
     app.updateSettings(settings);
   }
