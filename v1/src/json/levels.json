@@ -8,27 +8,42 @@
         {
           "title": "Campaign Level 1",
           "description": "Slip & Slide",
-          "label": "1-1"
+          "label": "1-1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_1-Glitchless&x=l_5d7p1gvd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 2",
           "description": "Olympic Ramp",
-          "label": "1-2"
+          "label": "1-2",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_2-Glitchless&x=l_kwj0g2zd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 3",
           "description": "Easy Hop",
-          "label": "1-3"
+          "label": "1-3",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_3-Glitchless&x=l_owo8jryd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 4",
           "description": "Spike Hurdles",
-          "label": "1-4"
+          "label": "1-4",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_4-Glitchless&x=l_xd1pmn6d-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 5",
           "description": "Air Jump",
-          "label": "1-5"
+          "label": "1-5",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_5-Glitchless&x=l_ewpn3lz9-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -40,27 +55,42 @@
         {
           "title": "Campaign Level 6",
           "description": "Secret Agent",
-          "label": "2-1"
+          "label": "2-1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_6-Glitchless&x=l_y9m06n1w-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 7",
           "description": "Long Boi",
-          "label": "2-2"
+          "label": "2-2",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_7-Glitchless&x=l_5wk0x3q9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 8",
           "description": "Bigger Boi",
-          "label": "2-3"
+          "label": "2-3",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_8-Glitchless&x=l_592mkyrw-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 9",
           "description": "Spider Box",
-          "label": "2-4"
+          "label": "2-4",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_9-Glitchless&x=l_29vg6qn9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 10",
           "description": "Rock Climber",
-          "label": "2-5"
+          "label": "2-5",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_10-Glitchless&x=l_xd4p1lpd-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -73,31 +103,46 @@
           "title": "Campaign Level 11",
           "description": "Tippy Tap",
           "label": "3-1",
-          "author": "King Of Shapes"
+          "author": "King Of Shapes",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_11-Glitchless&x=l_xd0p181w-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 12",
           "description": "Agility Jumps",
           "label": "3-2",
-          "author": "King Of Shapes"
+          "author": "King Of Shapes",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_12-Glitchless&x=l_rw621z7d-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 13",
           "description": "Zack's Coaster",
           "label": "3-3",
-          "author": "King Of Shapes"
+          "author": "King Of Shapes",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_13-Glitchless&x=l_n93k1rew-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 14",
           "description": "Simon Says",
           "label": "3-4",
-          "author": "King Of Shapes"
+          "author": "King Of Shapes",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_14-Glitchless&x=l_z98p3xlw-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 15",
           "description": "Wall of Finish",
           "label": "3-5",
-          "author": "King Of Shapes"
+          "author": "King Of Shapes",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_15-Glitchless&x=l_rdn37yvw-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -110,31 +155,46 @@
           "title": "Campaign Level 16",
           "description": "Kargoh's World",
           "label": "4-1",
-          "author": "Kargoh"
+          "author": "Kargoh",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_16-Glitchless&x=l_ldyqxozw-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 17",
           "description": "Kargoh's Bobsled",
           "label": "4-2",
-          "author": "Kargoh"
+          "author": "Kargoh",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_17-Glitchless&x=l_gdrrnzzd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 18",
           "description": "Kargoh's Plinko",
           "label": "4-3",
-          "author": "Kargoh"
+          "author": "Kargoh",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_18-Glitchless&x=l_nwl058rw-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 19",
           "description": "Kargoh's Obstacles",
           "label": "4-4",
-          "author": "Kargoh"
+          "author": "Kargoh",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_19-Glitchless&x=l_ywe0yor9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 20",
           "description": "Kargoh's Ramp",
           "label": "4-5",
-          "author": "Kargoh"
+          "author": "Kargoh",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_20-Glitchless&x=l_69z751ow-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -146,27 +206,42 @@
         {
           "title":"Campaign Level 21",
           "description": "Gravity Loop",
-          "label": "5-1"
+          "label": "5-1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_21-Glitchless&x=l_r9g6lvkw-jdzlv7v2"
+          ]
         },
         {
           "title":"Campaign Level 22",
           "description": "Gravity Sewer",
-          "label": "5-2"
+          "label": "5-2",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_22-Glitchless&x=l_o9x6gp19-jdzlv7v2"
+          ]
         },
         {
           "title":"Campaign Level 23",
           "description": "Gravity Twist",
-          "label": "5-3"
+          "label": "5-3",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_23-Glitchless&x=l_495p27jw-jdzlv7v2"
+          ]
         },
         {
           "title":"Campaign Level 24",
           "description": "Gravity Ramps",
-          "label": "5-4"
+          "label": "5-4",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_24-Glitchless&x=l_rdqy8x19-jdzlv7v2"
+          ]
         },
         {
           "title":"Campaign Level 25",
           "description": "Gravity Spikes",
-          "label": "5-5"
+          "label": "5-5",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_25-Glitchless&x=l_5d7p1ovd-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -178,27 +253,42 @@
         {
           "title": "Campaign Level 26",
           "description": "Stairway to Stairs",
-          "label": "6-1"
+          "label": "6-1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_26-Glitchless&x=l_kwj0gnzd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 27",
           "description": "Extra Hops",
-          "label": "6-2"
+          "label": "6-2",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_27-Glitchless&x=l_owo8jzyd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 28",
           "description": "Butterfly Knot",
-          "label": "6-3"
+          "label": "6-3",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_28-Glitchless&x=l_xd1pmg6d-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 29",
           "description": "Jericho",
-          "label": "6-4"
+          "label": "6-4",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_29-Glitchless&x=l_ewpn3gz9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 30",
           "description": "Rock Climber 2",
-          "label": "6-5"
+          "label": "6-5",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_30-Glitchless&x=l_y9m06l1w-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -210,28 +300,43 @@
         {
           "title": "Campaign Level 31",
           "description": "Escape Room",
-          "label": "7-1"
+          "label": "7-1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_31-Glitchless&x=l_5wk0xyq9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 32",
           "description": "Spider Room",
-          "label": "7-2"
+          "label": "7-2",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_32-Glitchless&x=l_592mkxrw-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 33",
           "description": "Kargoh's Spider",
           "label": "7-3",
-          "author": "Kargoh"
+          "author": "Kargoh",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_33-Glitchless&x=l_29vg6on9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 34",
           "description": "Spider Tower",
-          "label": "7-4"
+          "label": "7-4",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_34-Glitchless&x=l_xd4p1qpd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 35",
           "description": "Spider Cave",
-          "label": "7-5"
+          "label": "7-5",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_35-Glitchless&x=l_z983617d-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -244,27 +349,42 @@
         {
           "title": "Campaign Level 36",
           "description": "Small Boi",
-          "label": "8-1"
+          "label": "8-1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_36-Glitchless&x=l_ldyrvkk9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 37",
           "description": "Doppler's Plinko",
-          "label": "8-2"
+          "label": "8-2",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=level-37-Glitchless&x=l_rdnj8qv9-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 38",
           "description": "Ping Pong",
-          "label": "8-3"
+          "label": "8-3",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=level-38-ping-pong-Glitchless&x=l_dy14z5rd-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 39",
           "description": "Boxel Nomad",
-          "label": "8-4"
+          "label": "8-4",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=boxel-nomad-level-39-Glitchless&x=l_dqzz66od-jdzlv7v2"
+          ]
         },
         {
           "title": "Campaign Level 40",
           "description": "Homework",
-          "label": "8-5"
+          "label": "8-5",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=level-40-homework-Glitchless&x=l_wkk27lxw-jdzlv7v2"
+          ]
         }
       ]
     },
@@ -293,152 +413,242 @@
         {
           "title": "Junsie",
           "description": "Junsie",
-          "author": "Junsie"
+          "author": "Junsie",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_37-Glitchless&x=l_xd0y241w-jdzlv7v2"
+          ]
         },
         {
           "title": "Junsie 2",
           "description": "Junsie 2",
-          "author": "Junsie"
+          "author": "Junsie",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_38-Glitchless&x=l_rw6xlm7w-jdzlv7v2"
+          ]
         },
         {
           "title": "Metal Machine",
           "description": "Metal Machine",
-          "author": "Metal Machine"
+          "author": "Metal Machine",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_39-Glitchless&x=l_n93enmew-jdzlv7v2"
+          ]
         },
         {
           "title": "0123xrulez",
           "description": "0123xrulez",
-          "author": "0123xrulez"
+          "author": "0123xrulez",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_40-Glitchless&x=l_z98qzml9-jdzlv7v2"
+          ]
         },
         {
           "title": "Jack TVYT",
           "description": "Jack TVYT",
-          "author": "Jack TVYT"
+          "author": "Jack TVYT",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_41-Glitchless&x=l_rdn8lqvd-jdzlv7v2"
+          ]
         },
         {
           "title": "16BitPlayer",
           "description": "16BitPlayer",
-          "author": "16BitPlayer"
+          "author": "16BitPlayer",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_42-Glitchless&x=l_xd0y6g0w-jdzlv7v2"
+          ]
         },
         {
           "title": "uncoho3",
           "description": "uncoho3",
-          "author": "uncoho3"
+          "author": "uncoho3",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_43-Glitchless&x=l_rw6x54nw-jdzlv7v2"
+          ]
         },
         {
           "title": "Metal Machine 2",
           "description": "Metal Machine 2",
-          "author": "Metal Machine"
+          "author": "Metal Machine",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_44-Glitchless&x=l_n93ez77w-jdzlv7v2"
+          ]
         },
         {
           "title": "Vyom",
           "description": "Vyom",
-          "author": "Vyom"
+          "author": "Vyom",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_45-Glitchless&x=l_rw6x12gw-jdzlv7v2"
+          ]
         },
         {
           "title": "0123xrulez 2",
           "description": "0123xrulez 2",
-          "author": "0123xrulez"
+          "author": "0123xrulez",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_46-Glitchless&x=l_n93e1kzw-jdzlv7v2"
+          ]
         },
         {
           "title": "16BitPlayer 2",
           "description": "16BitPlayer 2",
-          "author": "16BitPlayer"
+          "author": "16BitPlayer",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_47-Glitchless&x=l_z98qvo79-jdzlv7v2"
+          ]
         },
         {
           "title": "0123xrulez 3",
           "description": "0123xrulez 3",
-          "author": "0123xrulez"
+          "author": "0123xrulez",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_48-Glitchless&x=l_rdn8jmnd-jdzlv7v2"
+          ]
         },
         {
           "title": "Zozo",
           "description": "Zozo",
-          "author": "Zozo"
+          "author": "Zozo",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_49-Glitchless&x=l_ldy67rj9-jdzlv7v2"
+          ]
         },
         {
           "title": "Junsie 3",
           "description": "Junsie 3",
-          "author": "Junsie"
+          "author": "Junsie",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_50-Glitchless&x=l_n93e5xnw-jdzlv7v2"
+          ]
         },
         {
           "title": "! __kf",
           "description": "! __kf",
-          "author": "! __kf"
+          "author": "! __kf",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=Level_51-Glitchless&x=l_rdqkl8od-jdzlv7v2"
+          ]
         },
         {
           "title": "Ice Dodo",
           "description": "Ice Dodo",
-          "author": "Winderthedrone"
+          "author": "Winderthedrone",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=level-53-ice-dodo-Glitchless&x=l_9zpm2ggw-jdzlv7v2"
+          ]
         },
         {
           "title": "Kllixto",
           "description": "Kllixto",
-          "author": "Kllixto"
+          "author": "Kllixto",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=kllixto-Glitchless&x=l_dqz6kqgd-jdzlv7v2"
+          ]
         },
         {
           "title": "Mountain Climb",
           "description": "Mountain Climb",
-          "author": "Charlieee1"
+          "author": "Charlieee1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=mountain-climb-Glitchless&x=l_92003z6d-jdzlv7v2"
+          ]
         },
         {
           "title": "The Arcadium",
           "description": "The Arcadium",
-          "author": "rubymaster13"
+          "author": "rubymaster13",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=the-arcadium-Glitchless&x=l_9vmmj3x9-jdzlv7v2"
+          ]
         },
         {
           "title": "The Box Escape",
           "description": "The Box Escape",
-          "author": "DonW15"
+          "author": "DonW15",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=the-box-escape-Glitchless&x=l_d400nj89-jdzlv7v2"
+          ]
         },
         {
           "title": "Average level attempt",
           "description": "Average level attempt",
-          "author": "Charlieee1"
+          "author": "Charlieee1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-average-level-attempt-Glitchless&x=l_dno5m85w-jdzlv7v2"
+          ]
         },
         {
           "title": "Speed Spider",
           "description": "Speed Spider",
-          "author": "Charlieee1"
+          "author": "Charlieee1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-speed-spider-Glitchless&x=l_dy1er6pd-jdzlv7v2"
+          ]
         },
         {
           "title": "Dancing on nothing",
           "description": "Dancing on nothing",
-          "author": "Charlieee1"
+          "author": "Charlieee1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-dancing-on-nothing-Glitchless&x=l_drpj0lew-jdzlv7v2"
+          ]
         },
         {
           "title": "Strawberry Jam",
           "description": "Strawberry Jam",
-          "author": "Charlieee1"
+          "author": "Charlieee1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-strawberry-jam-Glitchless&x=l_wlg6m1o9-jdzlv7v2"
+          ]
         },
         {
           "title": "Up, Down, and Through",
           "description": "Up, Down, and Through",
-          "author": "Ember"
+          "author": "Ember",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-up-down-and-through-Glitchless&x=l_we24vglw-jdzlv7v2"
+          ]
         },
         {
           "title": "The Bonce House",
           "description": "The Bonce House",
-          "author": "rubymaster13"
+          "author": "rubymaster13",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-the-bonce-house-Glitchless&x=l_dy1p36kd-jdzlv7v2"
+          ]
         },
         {
           "title": "Wallclimb Ascension",
           "description": "Wallclimb Ascension",
-          "author": "noobus"
+          "author": "noobus",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-wallclimb-ascension-Glitchless&x=l_drpqyl6w-jdzlv7v2"
+          ]
         },
         {
           "title": "Spider Number 1",
           "description": "Spider Number 1",
-          "author": "Potato Man"
+          "author": "Potato Man",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-spider-number-1-Glitchless&x=l_wlg72109-jdzlv7v2"
+          ]
         },
         {
           "title": "Roller Coaster",
           "description": "Roller Coaster",
-          "author": "rubymaster13"
+          "author": "rubymaster13",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-roller-coaster-Glitchless&x=l_we28qgyw-jdzlv7v2"
+          ]
         },
         {
           "title": "Creation Roulette",
           "description": "Creation Roulette",
-          "author": "Fisher, Ember, & Charlieee1"
+          "author": "Fisher, Ember, & Charlieee1",
+          "links": [
+            "https://www.speedrun.com/boxel_3d?h=community-level-creation-roulette-Glitchless&x=l_9zp48jlw-jdzlv7v2"
+          ]
         }
       ]
     }

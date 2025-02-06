@@ -51,11 +51,6 @@
   const settings = app.storage.getSettings();
   const selectedLevel = ref(levels.value[settings.progress - 1]);
   const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
-  const selectedColor = computed(() => {
-    const colorPack = themeData[selectedPack.value.theme]?.background_color;
-    const colorLevel = themeData[selectedLevel.value.theme]?.background_color
-    return colorPack || colorLevel;
-  });
 
   // Set search logic from search values
   const search = ref('');
@@ -229,9 +224,10 @@
                 <li class="author">
                   <span>Level by {{ selectedLevel.author || 'Doppler' }}</span>
                 </li>
-                <li class="links">
-                  <a :href="link.url" :target="link.target" :key="link.class" v-for="link in selectedPack.links" :title="link.text">
-                    <img :src="link.icon" :alt="link.class" />
+                <li class="links" v-for="link in selectedLevel.links">
+                  <a :href="link" target="_blank" :title="link">
+                    <img :src="'../svg/speedrun.svg'" v-if="link.includes('speedrun')">
+                    <span v-else class="material-symbols-rounded">link</span>
                   </a>
                 </li>
               </ul>
@@ -521,26 +517,30 @@
 
               li {
                 line-height: 0.75em;
-
+                
                 &.links {
                   align-items: center;
                   display: flex;
                   flex-wrap: wrap;
                   gap: 0.25em;
+                }
 
-                  a {
-                    background-color: rgba(#000000, 0.1);
-                    border-radius: 0.25em;
-                    padding: 0.25em;
+                a {
+                  background-color: rgba(#000000, 0.1);
+                  border-radius: 0.25em;
+                  padding: 0.25em;
 
-                    &:hover {
-                      background-color: rgba(#000000, 0.2);
-                    }
+                  &:hover {
+                    background-color: rgba(#000000, 0.2);
+                  }
 
-                    img {
-                      height: 1em;
-                      width: 1em;
-                    }
+                  img {
+                    height: 1em;
+                    width: 1em;
+                  }
+
+                  span {
+                    font-size: 1em;
                   }
                 }
 
