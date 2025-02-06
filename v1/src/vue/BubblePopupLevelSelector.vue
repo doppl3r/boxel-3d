@@ -1,23 +1,26 @@
 <script setup>
-  import { computed, ref, onMounted, onUnmounted } from 'vue';
+  import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import levelData from '../json/levels.json';
   
   // Initialize attributes
+  const isOpen = ref(true);
   const i18n = useI18n({ useScope: 'global' });
-  const emit = defineEmits(['setPage']);
 
   // Set packs and levels from level data
+  const packsRef = ref([]);
   const packs = computed(() => {
     // Set array from level data
-    const arr = levelData.packs;
-
+    const arr = [...levelData.packs];
+    
     // Add "All" as a pack option
     arr.unshift({ title: 'All', levels: [] })
-
+    
     // Return array of level packs
     return arr;
   });
+
+  const levelsRef = ref([]);
   const levels = computed(() => {
     // Return a shallow array of levels and their pack Data
     const arr = [];
@@ -41,16 +44,17 @@
   });
 
   // Set selected level and pack from settings
+  const scores = app.storage.getScores();
   const settings = app.storage.getSettings();
   const selectedLevel = ref(levels.value[settings.progress - 1]);
   const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
 
+  // Set search logic from search values
   const search = ref('');
   const filteredLevels = computed(() => levels.value.filter(level =>
     // Evaluate true if any object value matches
     Object.values(level).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase()))
   ));
-  var isOpen = ref(true);
 
   // Add event listener(s)
   function addEventListeners() {
@@ -106,6 +110,25 @@
     app.updateSettings(settings);
   }
 
+  function scrollToSelected(needle, haystack, ref, key) {
+    const index = haystack.value.findIndex(item => item[key] == needle.value[key]);
+    if (ref.value[index]) {
+      ref.value[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function getScore(title) {
+    return scores[title];
+  }
+
+  watch(selectedPack, () => {
+    // Scroll to selected items after next render
+    nextTick(() => {
+      scrollToSelected(selectedPack, packs, packsRef, 'title');
+      scrollToSelected(selectedLevel, levels, levelsRef, 'title');
+    });
+  });
+
   onMounted(function() {
     addEventListeners();
   });
@@ -124,7 +147,7 @@
           <div class="level-selector__packs-header">{{ i18n.t('popup.text.level_packs') }}</div>
           <ul class="level-selector__packs-list">
             <template v-for="pack in packs" :key="pack.title">
-              <li>
+              <li ref="packsRef">
                 <button :class="{ selected: selectedPack.title == pack.title }" @click="selectPack(pack)">
                   <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
                   <span>{{ pack.title }}</span>
@@ -145,10 +168,14 @@
           </div>
           <ul class="level-selector__levels-list">
             <template v-for="level in filteredLevels" :key="level.title">
-              <li v-if="isVisible(level)">
+              <li v-show="isVisible(level)" ref="levelsRef">
                 <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
                   <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
                   <span>{{ level.description }}</span>
+                  <div class="score" v-if="getScore(level.title)">
+                    <span class="material-symbols-rounded">star</span>
+                    <span>{{ getScore(level.title) }}</span>
+                  </div>
                 </button>
               </li>
             </template>
@@ -352,6 +379,21 @@
               top: 0;
               right: 0.75em;
             }
+          }
+        }
+
+        .level-selector__levels-list {
+          .material-symbols-rounded {
+            color: #FFC24C;
+            font-size: 1.5em;
+          }
+
+          .score {
+            align-items: center;
+            display: flex;
+            margin-left: auto;
+            text-align: left;
+            flex-basis: 5em;
           }
         }
       }
