@@ -90,7 +90,7 @@
         playSelectedLevel();
       }
 
-      if (e.code == 'Escape' || e.code == 'KeyE') {
+      if (e.code == 'Escape') {
         closeLevelSelectorPopup();
       }
     }
@@ -106,6 +106,7 @@
     selectedPack.value = pack;
     if (filteredLevels.value[0]) selectedLevel.value = filteredLevels.value[0];
     packsRef.value = [];
+    search.value = '';
     app.assets.audio.play('click');
   }
 

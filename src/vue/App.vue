@@ -3,6 +3,7 @@
   import { onMounted, shallowReactive, reactive, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
+  import ButtonAction from './ButtonAction.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
   import Modal from '@/v2/src/vue/Modal.vue';
@@ -143,6 +144,9 @@
   <div class="ui">
     <div class="actions">
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
+      <ButtonAction @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" :color="'#5865F2'" title="Join our Discord!">
+        <img :src="'./svg/discord.svg'">
+      </ButtonAction>
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">

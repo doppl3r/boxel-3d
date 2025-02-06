@@ -1,5 +1,11 @@
+<script setup>
+  const props = defineProps({
+    color: String
+  });
+</script>
+
 <template>
-  <button class="action" title="Fullscreen">
+  <button class="action" title="Fullscreen" :style="{ 'background-color': props.color }">
     <slot></slot>
   </button>
 </template>
@@ -19,6 +25,12 @@
     outline: none;
     transition: transform 0.1s ease-out;
     width: 2em;
+
+    :deep(img) {
+      filter: drop-shadow(0 0.125em 0 rgba(#000000, 0.25));
+      width: 1.5em;
+      height: 1.5em;
+    }
 
     &:hover,
     &:focus {
