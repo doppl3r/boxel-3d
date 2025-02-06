@@ -53,7 +53,7 @@
   const search = ref('');
   const filteredLevels = computed(() => levels.value.filter(level =>
     // Evaluate true if any object value matches
-    Object.values(level).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase()))
+    isVisible(level) && Object.values(level).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase()))
   ));
 
   // Add event listener(s)
@@ -76,11 +76,20 @@
 
   function closeLevelSelectorPopup() {
     isOpen.value = false;
+    app.assets.audio.play('click');
   }
 
   function keydown(e) {
     if (isOpen.value == true) {
-      
+      var jumpKeys = ['Space', 'Enter'];
+      if (jumpKeys.indexOf(e.code) > -1) {
+        e.preventDefault(); // Prevent scrolling
+        playSelectedLevel();
+      }
+
+      if (e.code == 'Escape') {
+        closeLevelSelectorPopup();
+      }
     }
   }
 
@@ -92,10 +101,19 @@
 
   function selectPack(pack) {
     selectedPack.value = pack;
+    packsRef.value = [];
+    app.assets.audio.play('click');
   }
 
   function selectLevel(level) {
+    // Play selected level if selected
+    if (level.title == selectedLevel.value.title) {
+      playSelectedLevel(level.title);
+    }
+
+    // Set new selected level value
     selectedLevel.value = level;
+    app.assets.audio.play('click');
   }
 
   function clearSearch() {
@@ -122,25 +140,22 @@
   }
 
   function updateScroll() {
-    // Scroll to selected items after next render
     nextTick(() => {
       scrollToSelected(selectedPack, packs, packsRef, 'title');
-      scrollToSelected(selectedLevel, levels, levelsRef, 'title');
+      scrollToSelected(selectedLevel, filteredLevels, levelsRef, 'title');
     });
   }
 
-  watch(selectedPack, () => {
-    // Scroll to selected items after next render
+  watch(search, () => {
+    selectedPack.value = packs.value[0];
+  });
+
+  watch(levelsRef.value, () => {
     updateScroll();
   });
 
-  watch(search, () => {
-    selectedPack.value = packs.value[0];
-  })
-
   onMounted(function() {
     addEventListeners();
-    updateScroll();
   });
 
   onUnmounted(function() {
@@ -178,7 +193,7 @@
           </div>
           <ul class="level-selector__levels-list">
             <template v-for="level in filteredLevels" :key="level.title">
-              <li v-show="isVisible(level)" ref="levelsRef">
+              <li ref="levelsRef">
                 <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
                   <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
                   <span>{{ level.description }}</span>
@@ -198,7 +213,7 @@
             <div class="level-selector__info-details">
               <span>Level by {{ selectedLevel.author || 'Doppler' }}</span>
             </div>
-            <button class="level-selector__info-play" @click="playSelectedLevel()">
+            <button @click="playSelectedLevel()">
               <span class="material-symbols-rounded">play_arrow</span>
               <span>{{ i18n.t('popup.button.play') }}</span>
             </button>
@@ -292,11 +307,13 @@
             gap: 0.25em;
             height: 2em;
             justify-content: flex-start;
+            outline: none;
             padding: 0.25em;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             white-space: nowrap;
             width: 100%;
 
+            &:focus,
             &:hover,
             &.selected {
               background-color: #4CA9FF;
@@ -373,6 +390,7 @@
             font-size: 1em;
             height: 2em; 
             justify-content: center;
+            outline: none;
             padding: 0;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             width: 2em;
@@ -449,11 +467,12 @@
             word-wrap: break-word;
           }
 
-          .level-selector__info-play {
+          button {
             align-items: center;
             background-color: #4CA9FF;
             border-radius: 99em;
             border-width: 0;
+            bottom: -1.5em;
             box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
             color: #ffffff;
             cursor: pointer;
@@ -462,12 +481,25 @@
             font-size: 1em;
             gap: 0.5em;
             height: 2em;
+            left: 50%;
+            outline: none;
             padding: 0.5em;
             position: absolute;
-            left: 50%;
-            bottom: -1.5em;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             transform: translateX(-50%);
+
+            &:focus,
+            &:hover {
+              animation: wiggle 0.25s ease-in-out;
+              animation-fill-mode: forwards;
+            }
+
+            @keyframes wiggle {
+              0% { transform: translateX(-50%) rotate(0); }
+              33% { transform: translateX(-50%) rotate(10deg); }
+              66% { transform: translateX(-50%) rotate(-10deg); }
+              100% { transform: translateX(-50%) rotate(0); }
+            }
 
             .material-symbols-rounded {
               background-color: #000000;

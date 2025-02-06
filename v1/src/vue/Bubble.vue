@@ -1,6 +1,6 @@
 <script setup>
   import '../scss/Bubble.scss';
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { nextTick, onMounted, onUnmounted, ref } from 'vue';
   import BubblePageHome from './BubblePageHome.vue';
   import BubblePageSkins from './BubblePageSkins.vue';
   import BubblePageLevelPicker from './BubblePageLevelPicker.vue';
@@ -27,6 +27,16 @@
   function setPage(name) {
     page.value = name;
     app.state = name;
+
+    // Redirect to home page
+    if (name == 'level-picker') {
+      page.value = 'home';
+
+      // Open popup after first render
+      nextTick(() => {
+        window.dispatchEvent(new CustomEvent('openLevelSelectorPopup'));
+      })
+    }
   }
 
   // Run function after being mounted (visible)
