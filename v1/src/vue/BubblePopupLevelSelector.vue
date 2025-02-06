@@ -2,6 +2,7 @@
   import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import levelData from '../json/levels.json';
+  import themeData from '../json/themes.json';
   
   // Initialize attributes
   const isOpen = ref(false);
@@ -31,7 +32,9 @@
         // Add level objects with their pack data
         arr.push({
           ...level,
+          background_color: themeData[pack.theme].background_color,
           pack: pack.title,
+          theme: pack.theme,
           thumbnail: {
             url: pack.url
           }
@@ -48,6 +51,11 @@
   const settings = app.storage.getSettings();
   const selectedLevel = ref(levels.value[settings.progress - 1]);
   const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
+  const selectedColor = computed(() => {
+    const colorPack = themeData[selectedPack.value.theme]?.background_color;
+    const colorLevel = themeData[selectedLevel.value.theme]?.background_color
+    return colorPack || colorLevel;
+  });
 
   // Set search logic from search values
   const search = ref('');
@@ -101,6 +109,7 @@
 
   function selectPack(pack) {
     selectedPack.value = pack;
+    selectedLevel.value = filteredLevels.value[0];
     packsRef.value = [];
     app.assets.audio.play('click');
   }
@@ -173,7 +182,11 @@
           <ul class="level-selector__packs-list">
             <template v-for="pack in packs" :key="pack.title">
               <li ref="packsRef">
-                <button :class="{ selected: selectedPack.title == pack.title }" @click="selectPack(pack)">
+                <button
+                  :class="{ selected: selectedPack.title == pack.title }"
+                  :style="{ 'background-color': selectedPack.title == pack.title ? selectedColor : null }"
+                  @click="selectPack(pack)"
+                >
                   <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
                   <span>{{ pack.title }}</span>
                 </button>
@@ -194,7 +207,11 @@
           <ul class="level-selector__levels-list">
             <template v-for="level in filteredLevels" :key="level.title">
               <li ref="levelsRef">
-                <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
+                <button
+                  :class="{ selected: selectedLevel.title == level.title }"
+                  :style="{ 'background-color': selectedLevel.title == level.title ? selectedColor : null }"
+                  @click="selectLevel(level)"
+                >
                   <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
                   <span>{{ level.description }}</span>
                   <div class="score" v-if="getScore(level.title)">
@@ -216,7 +233,16 @@
               </label>
             </div>
             <div class="level-selector__info-details">
-              <span>Level by {{ selectedLevel.author || 'Doppler' }}</span>
+              <ul>
+                <li class="author">
+                  <span>Level by {{ selectedLevel.author || 'Doppler' }}</span>
+                </li>
+                <li class="links">
+                  <a :href="link.url" :target="link.target" :key="link.class" v-for="link in selectedPack.links" :title="link.text">
+                    <img :src="link.icon" :alt="link.class" />
+                  </a>
+                </li>
+              </ul>
             </div>
             <button @click="playSelectedLevel()">
               <span class="material-symbols-rounded">play_arrow</span>
@@ -257,7 +283,7 @@
     z-index: 1;
 
     /* Scrollbar */
-    ::-webkit-scrollbar { width: 0.25em; }
+    ::-webkit-scrollbar { height: 0.25em; width: 0.25em; }
     ::-webkit-scrollbar-track { background: rgba(#000000, 0.1); border-radius: 99em; }
     ::-webkit-scrollbar-thumb { background: rgba(#FFC24C, 1); border-radius: 99em; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(#FFFFFF, 1); border-radius: 99em; }
@@ -319,9 +345,12 @@
             width: 100%;
 
             &:focus,
-            &:hover,
             &.selected {
               background-color: #4CA9FF;
+            }
+
+            &:hover {
+              background-color: rgba(#000000, 0.25);
             }
 
             img {
@@ -487,11 +516,47 @@
             border-radius: 0.5em;
             color: #ffffff;
             flex-grow: 1;
-            font-size: 0.75em;
+            font-size: 1em;
+            max-height: 6em;
             padding: 0.5em;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             width: 100%;
             word-wrap: break-word;
+
+            ul {
+              overflow-x: hidden;
+              overflow-y: auto;
+
+              li {
+                line-height: 0.75em;
+
+                &.links {
+                  align-items: center;
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 0.25em;
+
+                  a {
+                    background-color: rgba(#000000, 0.1);
+                    border-radius: 0.25em;
+                    padding: 0.25em;
+
+                    &:hover {
+                      background-color: rgba(#000000, 0.2);
+                    }
+
+                    img {
+                      height: 1em;
+                      width: 1em;
+                    }
+                  }
+                }
+
+                span {
+                  font-size: 0.75em;
+                }
+              }
+            }
           }
 
           button {

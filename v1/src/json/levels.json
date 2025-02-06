@@ -280,6 +280,13 @@
           "target": "_blank",
           "text": "Join the Discord",
           "url": "https://discord.gg/j8fvd4UvbE"
+        },
+        {
+          "class": "speedrun",
+          "icon": "../svg/speedrun.svg",
+          "target": "_blank",
+          "text": "Speedrun.com",
+          "url": "https://www.speedrun.com/boxel_3d"
         }
       ],
       "levels": [
