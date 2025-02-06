@@ -40,6 +40,7 @@
         <ul>
           <li>outerbound (Spanish)</li>
           <li>Zeta (Persian/Farsi)</li>
+          <li>SangSang2 (Korean)</li>
         </ul>
       </div>
     </div>

@@ -75,7 +75,8 @@
   "locales": {
     "en": "English",
     "es": "Español (Spanish)",
-    "fa": "فارسی (Persian)"
+    "fa": "فارسی (Persian)",
+    "ko": "한국인 (Korean)"
   },
   "popup": {
     "button": {

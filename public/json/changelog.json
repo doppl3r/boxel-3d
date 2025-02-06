@@ -502,6 +502,8 @@
   {
     "version": "2.3.6",
     "revisions": [
+      "Added new level selector menu",
+      "Added Korean translation (credit: SangSang2)",
       "Fixed chat font"
     ]
   }
