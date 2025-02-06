@@ -46,6 +46,10 @@
   const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
 
   const search = ref('');
+  const filteredLevels = computed(() => levels.value.filter(level =>
+    // Evaluate true if any object value matches
+    Object.values(level).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase()))
+  ));
   var isOpen = ref(true);
 
   // Add event listener(s)
@@ -90,6 +94,10 @@
     selectedLevel.value = level;
   }
 
+  function clearSearch() {
+    search.value = '';
+  }
+
   async function playSelectedLevel() {
     await app.playLevelByTitle(selectedLevel.value.title);
     window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
@@ -115,7 +123,7 @@
         <div class="level-selector__packs">
           <div class="level-selector__packs-header">{{ i18n.t('popup.text.level_packs') }}</div>
           <ul class="level-selector__packs-list">
-            <template v-for="pack in packs">
+            <template v-for="pack in packs" :key="pack.title">
               <li>
                 <button :class="{ selected: selectedPack.title == pack.title }" @click="selectPack(pack)">
                   <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
@@ -128,9 +136,15 @@
         <div class="level-selector__levels">
           <div class="level-selector__levels-header">
             <input class="level-selector__search" v-model="search" :placeholder="`${ i18n.t('popup.text.search') }...`" type="text">
+            <button class="search-icon" tabindex="-1">
+              <span class="material-symbols-rounded">search</span>
+            </button>
+            <button class="clear-icon" @click="clearSearch()" v-if="search.length > 0">
+              <span class="material-symbols-rounded">close</span>
+            </button>
           </div>
           <ul class="level-selector__levels-list">
-            <template v-for="level in levels">
+            <template v-for="level in filteredLevels" :key="level.title">
               <li v-if="isVisible(level)">
                 <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
                   <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
@@ -145,7 +159,7 @@
           <div class="level-selector__info-content">
             <img :src="selectedLevel.thumbnail.url" :alt="selectedLevel.description" />
             <div class="level-selector__info-details">
-              <span>By {{ selectedLevel.author || 'Doppler' }}</span>
+              <span>Level by {{ selectedLevel.author || 'Doppler' }}</span>
             </div>
             <button class="level-selector__info-play" @click="playSelectedLevel()">
               <span class="material-symbols-rounded">play_arrow</span>
@@ -187,7 +201,7 @@
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 0.25em; }
-    ::-webkit-scrollbar-track { background: rgba(#000000, 0.25); border-radius: 99em; }
+    ::-webkit-scrollbar-track { background: rgba(#000000, 0.1); border-radius: 99em; }
     ::-webkit-scrollbar-thumb { background: rgba(#FFC24C, 1); border-radius: 99em; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(#FFFFFF, 1); border-radius: 99em; }
 
@@ -215,8 +229,9 @@
         display: flex;
         flex-direction: column;
         gap: 0.5em;
+        height: 100%;
         list-style: none;
-        overflow-y: auto;
+        overflow-y: scroll;
         padding-right: 0.5em;
 
         li {
@@ -248,7 +263,6 @@
             &:hover,
             &.selected {
               background-color: #4CA9FF;
-              box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
             }
 
             img {
@@ -288,11 +302,56 @@
         width: 17em;
 
         .level-selector__levels-header {
+          color: #ffffff;
           font-size: 1em;
           line-height: 2em;
+          padding-right: 0.75em;
+          position: relative;
 
           .level-selector__search { // <input>
+            background-color: rgba(#000000, 0.1);
+            border-width: 0;
+            border-radius: 0.5em;
+            color: inherit;
+            height: 2em;
+            font-family: inherit;
+            outline: none;
+            padding: 0.25em 2em 0.25em 2em;
+            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+            width: 100%;
 
+            &::placeholder {
+              color: inherit;
+              opacity: 0.5;
+            }
+          }
+
+          button {
+            align-items: center;
+            background-color: transparent;
+            border-width: 0;
+            color: inherit;
+            cursor: pointer;
+            display: flex;
+            font-size: 1em;
+            height: 2em; 
+            justify-content: center;
+            padding: 0;
+            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+            width: 2em;
+
+            &.search-icon {
+              pointer-events: none;
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
+  
+            &.clear-icon {
+              position: absolute;
+              top: 0;
+              right: 0.75em;
+            }
           }
         }
       }
@@ -332,9 +391,10 @@
             color: #ffffff;
             flex-grow: 1;
             font-size: 0.75em;
-            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             padding: 0.5em;
+            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             width: 100%;
+            word-wrap: break-word;
           }
 
           .level-selector__info-play {
