@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+  import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import levelData from '../json/levels.json';
   import themeData from '../json/themes.json';
@@ -9,7 +9,7 @@
   const i18n = useI18n({ useScope: 'global' });
 
   // Set packs and levels from level data
-  const packsRef = ref([]);
+  const packsRef = ref();
   const packs = computed(() => {
     // Set array from level data
     const arr = [...levelData.packs];
@@ -21,7 +21,7 @@
     return arr;
   });
 
-  const levelsRef = ref([]);
+  const levelsRef = ref();
   const levels = computed(() => {
     // Return a shallow array of levels and their pack Data
     const arr = [];
@@ -75,6 +75,7 @@
 
   function openLevelSelectorPopup(e) {
     isOpen.value = true;
+    updateScroll();
   }
 
   function closeLevelSelectorPopup() {
@@ -105,7 +106,6 @@
   function selectPack(pack) {
     selectedPack.value = pack;
     if (filteredLevels.value[0]) selectedLevel.value = filteredLevels.value[0];
-    packsRef.value = [];
     search.value = '';
     app.assets.audio.play('click');
   }
@@ -133,15 +133,13 @@
     app.updateSettings(settings);
   }
 
-  function scrollToSelected(needle, haystack, ref, key) {
-    const index = haystack.value.findIndex(item => item[key] == needle.value[key]);
-    if (ref.value[index]) {
-      ref.value[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }
-
   function getScore(title) {
     return scores[title];
+  }
+
+  function scrollToSelected(needle, haystack, ref, key) {
+    const index = haystack.value.findIndex(item => item[key] == needle.value[key]);
+    ref.value.children[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function updateScroll() {
@@ -150,14 +148,6 @@
       scrollToSelected(selectedLevel, filteredLevels, levelsRef, 'title');
     });
   }
-
-  watch(search, () => {
-    selectedPack.value = packs.value[0];
-  });
-
-  watch(levelsRef.value, () => {
-    updateScroll();
-  });
 
   onMounted(function() {
     addEventListeners();
@@ -175,9 +165,9 @@
       <div class="level-selector__container">
         <div class="level-selector__packs">
           <div class="level-selector__packs-header">{{ i18n.t('popup.text.level_packs') }}</div>
-          <ul class="level-selector__packs-list">
+          <ul class="level-selector__packs-list" ref="packsRef">
             <template v-for="pack in packs" :key="pack.title">
-              <li ref="packsRef">
+              <li>
                 <button :class="{ selected: selectedPack.title == pack.title }" @click="selectPack(pack)">
                   <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
                   <span>{{ pack.title }}</span>
@@ -188,7 +178,7 @@
         </div>
         <div class="level-selector__levels">
           <div class="level-selector__levels-header">
-            <input class="level-selector__search" v-model="search" :placeholder="`${ i18n.t('popup.text.search') }...`" type="text">
+            <input class="level-selector__search" v-model="search" :placeholder="`${ i18n.t('popup.text.search') }...`" type="text" @focus="selectPack(packs[0])">
             <button class="search-icon" tabindex="-1">
               <span class="material-symbols-rounded">search</span>
             </button>
@@ -196,9 +186,9 @@
               <span class="material-symbols-rounded">close</span>
             </button>
           </div>
-          <ul class="level-selector__levels-list">
+          <ul class="level-selector__levels-list" ref="levelsRef">
             <template v-for="level in filteredLevels" :key="level.title">
-              <li ref="levelsRef">
+              <li>
                 <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
                   <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
                   <span>{{ level.description }}</span>
