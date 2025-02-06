@@ -95,7 +95,7 @@
         playSelectedLevel();
       }
 
-      if (e.code == 'Escape') {
+      if (e.code == 'Escape' || e.code == 'KeyE') {
         closeLevelSelectorPopup();
       }
     }
@@ -109,7 +109,7 @@
 
   function selectPack(pack) {
     selectedPack.value = pack;
-    selectedLevel.value = filteredLevels.value[0];
+    if (filteredLevels.value[0]) selectedLevel.value = filteredLevels.value[0];
     packsRef.value = [];
     app.assets.audio.play('click');
   }
@@ -182,11 +182,7 @@
           <ul class="level-selector__packs-list">
             <template v-for="pack in packs" :key="pack.title">
               <li ref="packsRef">
-                <button
-                  :class="{ selected: selectedPack.title == pack.title }"
-                  :style="{ 'background-color': selectedPack.title == pack.title ? selectedColor : null }"
-                  @click="selectPack(pack)"
-                >
+                <button :class="{ selected: selectedPack.title == pack.title }" @click="selectPack(pack)">
                   <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
                   <span>{{ pack.title }}</span>
                 </button>
@@ -207,11 +203,7 @@
           <ul class="level-selector__levels-list">
             <template v-for="level in filteredLevels" :key="level.title">
               <li ref="levelsRef">
-                <button
-                  :class="{ selected: selectedLevel.title == level.title }"
-                  :style="{ 'background-color': selectedLevel.title == level.title ? selectedColor : null }"
-                  @click="selectLevel(level)"
-                >
+                <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
                   <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
                   <span>{{ level.description }}</span>
                   <div class="score" v-if="getScore(level.title)">
@@ -344,13 +336,13 @@
             white-space: nowrap;
             width: 100%;
 
-            &:focus,
-            &.selected {
-              background-color: #4CA9FF;
-            }
-
             &:hover {
               background-color: rgba(#000000, 0.25);
+            }
+
+            &:focus,
+            &.selected {
+              background-color: rgba(#000000, 0.5);
             }
 
             img {
