@@ -5,6 +5,9 @@
   
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
+  const emit = defineEmits(['setPage']);
+
+  // Set packs and levels from level data
   const packs = computed(() => {
     // Set array from level data
     const arr = levelData.packs;
@@ -19,11 +22,10 @@
     // Return a shallow array of levels and their pack Data
     const arr = [];
 
-    // Loop through each pack
+    // Loop through each pack and level
     packs.value.forEach(pack => {
-      // Add objects to levels array
       pack.levels.forEach(level => {
-        // Return level objects with their theme data
+        // Add level objects with their pack data
         arr.push({
           ...level,
           pack: pack.title,
@@ -37,8 +39,11 @@
     // Return array of levels
     return arr;
   });
-  const selectedPack = ref(packs.value[0]);
-  const selectedLevel = ref(levels.value[0]);
+
+  // Set selected level and pack from settings
+  const settings = app.storage.getSettings();
+  const selectedLevel = ref(levels.value[settings.progress - 1]);
+  const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
 
   const search = ref('');
   var isOpen = ref(true);
@@ -71,6 +76,28 @@
     }
   }
 
+  function isVisible(level) {
+    const hasMatchingPack = selectedPack.value.title == level.pack;
+    const hasAllSelected = selectedPack.value.title == 'All';
+    return hasMatchingPack || hasAllSelected;
+  }
+
+  function selectPack(pack) {
+    selectedPack.value = pack;
+  }
+
+  function selectLevel(level) {
+    selectedLevel.value = level;
+  }
+
+  async function playSelectedLevel() {
+    await app.playLevelByTitle(selectedLevel.value.title);
+    window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+    const progress = levels.value.findIndex(level => level.title == selectedLevel.value.title) + 1;
+    settings.progress = progress;
+    app.updateSettings(settings);
+  }
+
   onMounted(function() {
     addEventListeners();
   });
@@ -88,12 +115,14 @@
         <div class="level-selector__packs">
           <div class="level-selector__packs-header">{{ i18n.t('popup.text.level_packs') }}</div>
           <ul class="level-selector__packs-list">
-            <li v-for="pack in packs">
-              <button>
-                <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
-                <span>{{ pack.title }}</span>
-              </button>
-            </li>
+            <template v-for="pack in packs">
+              <li>
+                <button :class="{ selected: selectedPack.title == pack.title }" @click="selectPack(pack)">
+                  <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
+                  <span>{{ pack.title }}</span>
+                </button>
+              </li>
+            </template>
           </ul>
         </div>
         <div class="level-selector__levels">
@@ -101,12 +130,14 @@
             <input class="level-selector__search" v-model="search" :placeholder="`${ i18n.t('popup.text.search') }...`" type="text">
           </div>
           <ul class="level-selector__levels-list">
-            <li v-for="level in levels">
-              <button>
-                <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
-                <span>{{ level.description }}</span>
-              </button>
-            </li>
+            <template v-for="level in levels">
+              <li v-if="isVisible(level)">
+                <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
+                  <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
+                  <span>{{ level.description }}</span>
+                </button>
+              </li>
+            </template>
           </ul>
         </div>
         <div class="level-selector__info">
@@ -116,7 +147,7 @@
             <div class="level-selector__info-details">
               <span>By {{ selectedLevel.author || 'Doppler' }}</span>
             </div>
-            <button class="level-selector__info-play">
+            <button class="level-selector__info-play" @click="playSelectedLevel()">
               <span class="material-symbols-rounded">play_arrow</span>
               <span>{{ i18n.t('popup.button.play') }}</span>
             </button>
@@ -206,13 +237,19 @@
             display: flex;
             font-family: inherit;
             font-size: 1em;
-            gap: 0.5em;
+            gap: 0.25em;
             height: 2em;
             justify-content: flex-start;
             padding: 0.25em;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             white-space: nowrap;
             width: 100%;
+
+            &:hover,
+            &.selected {
+              background-color: #4CA9FF;
+              box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+            }
 
             img {
               box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
