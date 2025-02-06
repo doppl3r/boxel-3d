@@ -209,7 +209,12 @@
         <div class="level-selector__info">
           <div class="level-selector__info-header">{{ i18n.t('popup.text.info') }}</div>
           <div class="level-selector__info-content">
-            <img :src="selectedLevel.thumbnail.url" :alt="selectedLevel.description" />
+            <div class="level-selector__info-thumbnail">
+              <img :src="selectedLevel.thumbnail.url" :alt="selectedLevel.description" />
+              <label v-if="selectedLevel.label">
+                <span>{{ selectedLevel.label }}</span>
+              </label>
+            </div>
             <div class="level-selector__info-details">
               <span>Level by {{ selectedLevel.author || 'Doppler' }}</span>
             </div>
@@ -450,9 +455,31 @@
           padding-bottom: 1em;
           position: relative;
 
-          img {
-            border-radius: 0.5em;
-            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+          .level-selector__info-thumbnail {
+            position: relative;
+            width: 100%;
+
+            img {
+              border-radius: 0.5em;
+              box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+            }
+
+            label {
+              background-color: #000000;
+              border-radius: 99em;
+              color: #ffffff;
+              font-size: 1em;
+              line-height: 1em;
+              left: 50%;
+              padding: 0 0.5em;
+              position: absolute;
+              top: 0;
+              transform: translate(-50%, -50%);
+
+              span {
+                font-size: 0.75em;
+              }
+            }
           }
 
           .level-selector__info-details {
