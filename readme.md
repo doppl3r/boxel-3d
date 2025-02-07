@@ -54,7 +54,7 @@
 - Run SteamCMD
   - Win: `C:\steamworks\sdk\tools\ContentBuilder\builder\steamcmd.exe`
   - Mac: `cd /Users/jacob/Steam && ./steamcmd.sh`
-- Login using `login <username>`
+- Login using `login fragem123`
 - Run build script. 
   - Win: `run_app_build C:\steamworks\sdk\tools\ContentBuilder\scripts\app_build_3208440.vdf`. Alternatively, you can run the `run_build.bat` file outside of the `/scripts` folder
   - Mac: `run_app_build /Users/jacob/Steam/sdk/tools/ContentBuilder/scripts/app_build_3208440.vdf`

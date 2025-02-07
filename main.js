@@ -45,7 +45,7 @@ function createWindow() {
     }); */
 
   // Load the index.html of the app
-  mainWindow.loadFile('./build/v1/index.html', { query: { "fullscreen": true }});
+  mainWindow.loadFile('./build/index.html', { query: { "fullscreen": true }});
 }
 
 // This method will be called when Electron has finished initialization and is ready to create browser windows. Some APIs can only be used after this event occurs.
