@@ -61,7 +61,7 @@
       "exit": "홈으로 바로가기 (ESC)",
       "play": "플레이"
     },
-    "title": "플레이이"
+    "title": "플레이"
   },
   "levels": {
     "campaign_level_1": "Welcome to Boxel 3D! The easiest game ever made!",
@@ -116,7 +116,7 @@
   "settings": {
     "audio": {
       "music": "음악",
-      "title": "오디오오",
+      "title": "오디오",
       "volume_effects": "효과음",
       "volume_main": "메인 볼륨",
       "volume_music": "음악 볼륨"
@@ -126,7 +126,7 @@
       "file": "파일",
       "google": "구글",
       "restore_from": "...에서 저장",
-      "title": "데이터터"
+      "title": "데이터"
     },
     "graphics": {
       "auto_rotate": "자동 회전",
