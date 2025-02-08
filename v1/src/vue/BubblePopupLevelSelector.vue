@@ -163,7 +163,7 @@
   <Transition name="fade">
     <div class="level-selector" v-if="isOpen == true">
       <div class="level-selector__background" @click="closeLevelSelectorPopup()"></div>
-      <div class="level-selector__container">
+      <div class="level-selector__container" :style="{ 'background-color': selectedLevel.background_color }">
         <div class="level-selector__packs">
           <div class="level-selector__packs-header">{{ i18n.t('popup.text.level_packs') }}</div>
           <ul class="level-selector__packs-list" ref="packsRef">
@@ -205,7 +205,7 @@
         <div class="level-selector__info">
           <div class="level-selector__info-header">{{ i18n.t('popup.text.info') }}</div>
           <div class="level-selector__info-content">
-            <div class="level-selector__info-thumbnail">
+            <div class="level-selector__info-thumbnail" :key="selectedPack.title">
               <img :src="selectedLevel.thumbnail.url" :alt="selectedLevel.description" />
               <label v-if="selectedLevel.label">
                 <span>{{ selectedLevel.label }}</span>
@@ -265,7 +265,7 @@
     /* Scrollbar */
     ::-webkit-scrollbar { height: 0.25em; width: 0.25em; }
     ::-webkit-scrollbar-track { background: rgba(#000000, 0.1); border-radius: 99em; }
-    ::-webkit-scrollbar-thumb { background: rgba(#FFC24C, 1); border-radius: 99em; }
+    ::-webkit-scrollbar-thumb { background: rgba(#FFFFFF, 1); border-radius: 99em; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(#FFFFFF, 1); border-radius: 99em; }
 
     .level-selector__background {
@@ -286,6 +286,7 @@
       height: 17.5em;
       padding: 0.5em;
       position: relative;
+      transition: background-color 0.5s ease-out;
       width: 35em;
 
       ul {
@@ -466,12 +467,20 @@
           position: relative;
 
           .level-selector__info-thumbnail {
+            display: flex;
             position: relative;
             width: 100%;
 
             img {
+              animation: fadeIn 1s ease-out;
+              animation-fill-mode: forwards;
               border-radius: 0.5em;
               box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+              filter: contrast(1.25);
+              height: 6.25em;
+              width: 6.25em;
+              position: relative;
+              z-index: 0;
             }
 
             label {
@@ -485,10 +494,39 @@
               position: absolute;
               top: 0;
               transform: translate(-50%, -50%);
+              z-index: 2;
 
               span {
                 font-size: 0.75em;
               }
+            }
+
+            &:after {
+              animation: slide 1s ease-out;
+              animation-fill-mode: forwards;
+              background-image: url('/svg/glass-overlay.svg');
+              background-position: 0em 0em;
+              background-size: 6.25em 6.25em;
+              background-repeat: repeat-y;
+              border-radius: 0.5em;
+              content: '';
+              display: block;
+              height: 100%;
+              left: 0;
+              opacity: 0.25;
+              position: absolute;
+              top: 0;
+              width: 100%;
+            }
+
+            @keyframes slide {
+              0% { background-position: 0em 0em; }
+              100% { background-position: 0em 6.25em; }
+            }
+
+            @keyframes fadeIn {
+              0% { opacity: 0; }
+              100% { opacity: 1; }
             }
           }
 

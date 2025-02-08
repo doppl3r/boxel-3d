@@ -506,5 +506,12 @@
       "Added Korean translation (credit: SangSang2)",
       "Fixed chat font"
     ]
+  },
+  {
+    "version": "2.3.7",
+    "revisions": [
+      "Added level selector color themes",
+      "Updated Korean translations"
+    ]
   }
 ]
