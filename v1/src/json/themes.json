@@ -5,27 +5,27 @@
     "model": "background-city"
   },
   "classic": {
-    "background_color": "#5f045d",
+    "background_color": "#990799",
     "color": "#620460",
     "model": "background-classic"
   },
   "green": {
-    "background_color": "#8dd21b",
+    "background_color": "#9F00FF",
     "color": "#ffffff",
     "model": "background-forest"
   },
   "orange": {
-    "background_color": "#ff8a4c",
+    "background_color": "#c40c4b",
     "color": "#c40c4b",
     "model": "background-desert"
   },
   "pink": {
-    "background_color": "#e47Fea",
+    "background_color": "#EB2B6D",
     "color": "#C40C4B",
     "model": "background-tokyo"
   },
   "purple": {
-    "background_color": "#5303a3",
+    "background_color": "#5503A8",
     "color": "#ffffff",
     "model": "background-kargoh"
   },
