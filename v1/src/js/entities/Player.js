@@ -18,6 +18,7 @@ class Player extends Cube {
     this.util = new Utility();
     this.mass = 5;
     this.allowJump = false;
+    this.jumpBuffer = 0;
     this.addLight('#dc265a', 16000, 500, false);
     this.controls = { left: 0, right: 0, acceleration: 0.5, speed: 4 };
     this.rope = new Rope();
@@ -30,6 +31,22 @@ class Player extends Cube {
 
   setScale(scale = {}, updateOrigin = true) {
     super.setScale(scale, updateOrigin);
+  }
+
+  update(delta, alpha) {
+    // Calculate input buffer
+    if (this.jumpBuffer > 0) {
+      this.jumpBuffer -= delta * 1000; // ms
+
+      // Automatically jump if buffer is set
+      if (this.allowJump == true) {
+        this.jumpBuffer = 0;
+        this.jump();
+      }
+    }
+
+    // Update cube properties
+    super.update(delta, alpha);
   }
 
   jump() {
@@ -67,6 +84,10 @@ class Player extends Cube {
 
         // Play jump sound
         app.assets.audio.play('pop2');
+      }
+      else {
+        // Add jump buffer (ms)
+        this.jumpBuffer = 100;
       }
     }
   }
@@ -320,6 +341,7 @@ class Player extends Cube {
     this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
     this.setMode(this.modeOrigin, false);
     this.controls.left = this.controls.right = 0;
+    this.jumpBuffer = 0;
 
     // Play teleport audio
     app.assets.audio.play('teleport');
