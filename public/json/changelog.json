@@ -510,8 +510,8 @@
   {
     "version": "2.3.7",
     "revisions": [
-      "Added input buffer (100ms)",
-      "Added level selector color themes",
+      "Added input buffer option",
+      "Updated level selector",
       "Updated Korean translations",
       "Fix crash caused by finishing the last level"
     ]
