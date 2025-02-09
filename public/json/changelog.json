@@ -511,7 +511,8 @@
     "version": "2.3.7",
     "revisions": [
       "Added level selector color themes",
-      "Updated Korean translations"
+      "Updated Korean translations",
+      "Fix crash caused by finishing the last level"
     ]
   }
 ]

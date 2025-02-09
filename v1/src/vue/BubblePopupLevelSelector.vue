@@ -99,7 +99,8 @@
   }
 
   function getProgressFromSettings(settings) {
-    let p = Number(settings.progress);
+    // Limit progress to max level count
+    let p = Number(settings.progress || 1);
     while (levels.value[p - 1] == undefined && p > 1) p--;
     return p;
   }
