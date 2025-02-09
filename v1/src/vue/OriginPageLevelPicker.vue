@@ -52,11 +52,15 @@
   function getLevelTitle(index) {
     var title;
     var count = 0;
+    var last = {};
 
     // Loop through packs array
     levels.packs.forEach(function(pack) {
       // Loop through each levels array
       pack.levels.forEach(function(level) {
+        // Store temp reference to last level
+        last = level;
+
         // Set title and increment count
         if (index == count) {
           title = level.title;
@@ -64,6 +68,13 @@
         count++;
       });
     });
+
+    // Limit progress to max level count
+    if (title == undefined) {
+      title = last.title;
+    }
+
+    // Return title
     return title;
   }
 

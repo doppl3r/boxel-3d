@@ -4,7 +4,6 @@
   import BubbleCarousel from './BubbleCarousel.vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
-  import BubblePopupLevelSelector from './BubblePopupLevelSelector.vue';
 
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
@@ -40,7 +39,7 @@
       "title": i18n.t('home.button.play'),
       "url": "../svg/button-play.svg",
       "callback": function() {
-        window.dispatchEvent(new CustomEvent('openLevelSelectorPopup'));
+        emit('setPage', 'level-picker')
       }
     }
   ]);
@@ -173,7 +172,5 @@
         Write a review
       </a>
     </div>
-    
-    <BubblePopupLevelSelector />
   </div>
 </template>

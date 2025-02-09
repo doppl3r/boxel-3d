@@ -103,7 +103,6 @@
           "title": "Campaign Level 11",
           "description": "Tippy Tap",
           "label": "3-1",
-          "author": "King Of Shapes",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_11-Glitchless&x=l_xd0p181w-jdzlv7v2"
           ]
@@ -112,7 +111,6 @@
           "title": "Campaign Level 12",
           "description": "Agility Jumps",
           "label": "3-2",
-          "author": "King Of Shapes",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_12-Glitchless&x=l_rw621z7d-jdzlv7v2"
           ]
@@ -121,7 +119,6 @@
           "title": "Campaign Level 13",
           "description": "Zack's Coaster",
           "label": "3-3",
-          "author": "King Of Shapes",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_13-Glitchless&x=l_n93k1rew-jdzlv7v2"
           ]
@@ -130,7 +127,6 @@
           "title": "Campaign Level 14",
           "description": "Simon Says",
           "label": "3-4",
-          "author": "King Of Shapes",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_14-Glitchless&x=l_z98p3xlw-jdzlv7v2"
           ]
@@ -139,7 +135,6 @@
           "title": "Campaign Level 15",
           "description": "Wall of Finish",
           "label": "3-5",
-          "author": "King Of Shapes",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_15-Glitchless&x=l_rdn37yvw-jdzlv7v2"
           ]
@@ -155,7 +150,6 @@
           "title": "Campaign Level 16",
           "description": "Kargoh's World",
           "label": "4-1",
-          "author": "Kargoh",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_16-Glitchless&x=l_ldyqxozw-jdzlv7v2"
           ]
@@ -164,7 +158,6 @@
           "title": "Campaign Level 17",
           "description": "Kargoh's Bobsled",
           "label": "4-2",
-          "author": "Kargoh",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_17-Glitchless&x=l_gdrrnzzd-jdzlv7v2"
           ]
@@ -173,7 +166,6 @@
           "title": "Campaign Level 18",
           "description": "Kargoh's Plinko",
           "label": "4-3",
-          "author": "Kargoh",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_18-Glitchless&x=l_nwl058rw-jdzlv7v2"
           ]
@@ -182,7 +174,6 @@
           "title": "Campaign Level 19",
           "description": "Kargoh's Obstacles",
           "label": "4-4",
-          "author": "Kargoh",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_19-Glitchless&x=l_ywe0yor9-jdzlv7v2"
           ]
@@ -191,7 +182,6 @@
           "title": "Campaign Level 20",
           "description": "Kargoh's Ramp",
           "label": "4-5",
-          "author": "Kargoh",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_20-Glitchless&x=l_69z751ow-jdzlv7v2"
           ]
@@ -317,7 +307,6 @@
           "title": "Campaign Level 33",
           "description": "Kargoh's Spider",
           "label": "7-3",
-          "author": "Kargoh",
           "links": [
             "https://www.speedrun.com/boxel_3d?h=Level_33-Glitchless&x=l_29vg6on9-jdzlv7v2"
           ]
@@ -400,13 +389,6 @@
           "target": "_blank",
           "text": "Join the Discord",
           "url": "https://discord.gg/j8fvd4UvbE"
-        },
-        {
-          "class": "speedrun",
-          "icon": "../svg/speedrun.svg",
-          "target": "_blank",
-          "text": "Speedrun.com",
-          "url": "https://www.speedrun.com/boxel_3d"
         }
       ],
       "levels": [

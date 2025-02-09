@@ -27,16 +27,6 @@
   function setPage(name) {
     page.value = name;
     app.state = name;
-
-    // Redirect to home page
-    if (name == 'level-picker') {
-      page.value = 'home';
-
-      // Open popup after first render
-      nextTick(() => {
-        window.dispatchEvent(new CustomEvent('openLevelSelectorPopup'));
-      })
-    }
   }
 
   // Run function after being mounted (visible)

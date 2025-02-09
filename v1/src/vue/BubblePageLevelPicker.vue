@@ -3,6 +3,7 @@
   import { useI18n } from 'vue-i18n';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
+  import BubblePopupLevelSelector from './BubblePopupLevelSelector.vue';
   import levels from '../json/levels.json';
 
   // Initialize variables
@@ -94,11 +95,15 @@
   function setSelectedItem() {
     var index = progress - 1;
     var count = 0;
+    var last = {};
 
     // Loop through packs array
     levels.packs.forEach(function(pack) {
       // Loop through each levels array
       pack.levels.forEach(function(level) {
+        // Store temp reference to last level
+        last = level;
+
         // Set title and increment count
         if (index == count || index == count + 1) { // count + 1 == last item
           selectedItem.value = level;
@@ -106,6 +111,12 @@
         count++;
       });
     });
+
+    // Limit progress to max level count
+    if (selectedItem.value == undefined) {
+      progress = count;
+      selectedItem.value = last;
+    };
   }
 
   function exitLevelPicker() {
@@ -124,6 +135,10 @@
         items.value.push(item);
       })
     });
+  }
+
+  function openLevelSelector() {
+    window.dispatchEvent(new CustomEvent('openLevelSelectorPopup'));
   }
 
   function keydown(e) {
@@ -167,7 +182,10 @@
       <a class="button fade-in" @click="exitLevelPicker" :title="i18n.t('level_picker.button.exit')">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <BubbleButtonSettings class="button right fade-in" />
+      <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
+        <span class="material-symbols-rounded">search</span>
+      </a>
+      <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">
       <h1>{{ i18n.t('level_picker.title') }}</h1>
@@ -180,5 +198,7 @@
         {{ i18n.t('level_picker.button.play') }}
       </a>
     </div>
+
+    <BubblePopupLevelSelector />
   </div>
 </template>
