@@ -129,6 +129,7 @@
       "title": "Data"
     },
     "graphics": {
+      "buffer": "Input Buffer",
       "auto_rotate": "Auto Rotate",
       "camera": "Camera",
       "debug_mode": "Debug Mode",

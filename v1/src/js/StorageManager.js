@@ -100,6 +100,7 @@ class StorageManager {
   getSettings(a = app) {
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
+      'buffer': 100,
       'connection': '',
       'debug': false,
       'language': 'en',

@@ -129,6 +129,7 @@
       "title": "Informacion"
     },
     "graphics": {
+      "buffer": "Búfer de Entrada",
       "auto_rotate": "Rotación de Cámara Automática",
       "camera": "Cámara",
       "debug_mode": "Modo de Depuración",

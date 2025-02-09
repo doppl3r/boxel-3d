@@ -232,6 +232,7 @@ class App {
     a.updateQuality(settings.quality, a);
     a.mouse.setSnap(settings.snap);
     a.player.setSkin(settings.skin, a);
+    a.player.setInputBuffer(settings.buffer, a);
     a.storage.setSettings(settings); // Store locally
     a.updateCameraMotion(settings.motion, a);
     window.dispatchEvent(new CustomEvent('updateStatsVisibility'));

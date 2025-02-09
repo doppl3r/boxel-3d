@@ -19,6 +19,7 @@ class Player extends Cube {
     this.mass = 5;
     this.allowJump = false;
     this.jumpBuffer = 0;
+    this.inputBuffer = 0;
     this.addLight('#dc265a', 16000, 500, false);
     this.controls = { left: 0, right: 0, acceleration: 0.5, speed: 4 };
     this.rope = new Rope();
@@ -87,13 +88,17 @@ class Player extends Cube {
       }
       else {
         // Add jump buffer (ms)
-        this.jumpBuffer = 100;
+        this.jumpBuffer = this.inputBuffer;
       }
     }
   }
 
   setControls(name, value) {
     this.controls[name] = value;
+  }
+
+  setInputBuffer(value) {
+    this.inputBuffer = value;
   }
 
   updateControls() {
