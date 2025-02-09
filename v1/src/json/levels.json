@@ -343,7 +343,7 @@
     {
       "title": "Blue City",
       "url": "../svg/button-pack-city.svg",
-      "theme": "blue",
+      "theme": "city",
       "description": "I'm walking here!",
       "levels": [
         {

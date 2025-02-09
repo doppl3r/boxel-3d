@@ -1,4 +1,7 @@
 {
+  "background-blue": {
+    "url": "../glb/background-blue.glb"
+  },
   "background-city": {
     "url": "../glb/background-city.glb"
   },

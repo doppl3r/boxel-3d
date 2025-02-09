@@ -2,6 +2,11 @@
   "blue": {
     "background_color": "#4c7dff",
     "color": "#ffffff",
+    "model": "background-blue"
+  },
+  "city": {
+    "background_color": "#4c7dff",
+    "color": "#ffffff",
     "model": "background-city"
   },
   "classic": {
@@ -11,7 +16,7 @@
   },
   "green": {
     "background_color": "#9F00FF",
-    "color": "#ffffff",
+    "color": "#5503A8",
     "model": "background-forest"
   },
   "orange": {
@@ -31,7 +36,7 @@
   },
   "red": {
     "background_color": "#de004a",
-    "color": "#8c004a",
+    "color": "#620460",
     "model": "background-hell"
   }
 }
