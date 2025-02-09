@@ -49,7 +49,8 @@
   // Set selected level and pack from settings
   let scores = app.storage.getScores();
   let settings = app.storage.getSettings();
-  const selectedLevel = ref(levels.value[settings.progress - 1]);
+  let progress = getProgressFromSettings(settings);
+  const selectedLevel = ref(levels.value[progress - 1]);
   const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
 
   // Set search logic from search values
@@ -95,6 +96,12 @@
         closeLevelSelectorPopup();
       }
     }
+  }
+
+  function getProgressFromSettings(settings) {
+    let p = Number(settings.progress);
+    while (levels.value[p - 1] == undefined && p > 1) p--;
+    return p;
   }
 
   function isVisible(level) {
