@@ -513,7 +513,13 @@
       "Added input buffer option",
       "Updated level selector",
       "Updated Korean translations",
-      "Fix crash caused by finishing the last level"
+      "Fixed crash caused by finishing the last level"
+    ]
+  },
+  {
+    "version": "2.3.8",
+    "revisions": [
+      "Updated translations"
     ]
   }
 ]

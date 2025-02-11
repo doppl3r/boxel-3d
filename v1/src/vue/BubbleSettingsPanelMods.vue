@@ -26,13 +26,8 @@
     </div>
     <div class="group">
       <div class="option">
-        <label><span class="material-symbols-rounded">security</span> {{ i18n.t('settings.mods.security') }}</label>
-      </div>
-    </div>
-    <div class="group">
-      <div class="option">
         <label>
-          <span class="material-symbols-rounded">content_copy</span> {{ i18n.t('settings.mods.security') }}
+          <span class="material-symbols-rounded">security</span> {{ i18n.t('settings.mods.security') }}
           <br>
           <br>
           {{ i18n.t('settings.mods.trusted_mods') }}: <a href="https://github.com/Charlieee1/Boxel-3d-Mods/" target="_blank">github.com/Charlieee1</a></label>
