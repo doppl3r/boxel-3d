@@ -610,6 +610,7 @@
             position: absolute;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             transform: translateX(-50%);
+            white-space: nowrap;
 
             &:focus,
             &:hover {
