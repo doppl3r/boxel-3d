@@ -129,8 +129,8 @@
       "title": "데이터"
     },
     "graphics": {
-      "buffer": "입력 버퍼",
       "auto_rotate": "자동 회전",
+      "buffer": "입력 버퍼",
       "camera": "카메라",
       "debug_mode": "디버그 모드",
       "developer_tools": "개발자 툴",

@@ -129,8 +129,8 @@
       "title": "داده‌ها"
     },
     "graphics": {
-      "buffer": "بافر ورودی",
       "auto_rotate": "چرخش خودکار",
+      "buffer": "بافر ورودی",
       "camera": "دوربین",
       "debug_mode": "حالت اشکال‌گیری",
       "developer_tools": "ابزارهای سازندگان",

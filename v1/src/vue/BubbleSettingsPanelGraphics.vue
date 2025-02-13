@@ -23,6 +23,8 @@
         <input type="range" id="quality" min="1" max="10" step="1" :value="settings.quality" @change="$emit('updateSettings', $event)">
         <label for="quality">{{ (settings.quality * 10) }}%</label>
       </div>
+    </div>
+    <div class="group">
       <div class="option">
         <label for="buffer">{{ i18n.t('settings.graphics.buffer') }}</label>
       </div>
@@ -30,6 +32,8 @@
         <input type="range" id="buffer" min="0" max="100" step="10" :value="settings.buffer" @change="$emit('updateSettings', $event)">
         <label for="buffer">{{ settings.buffer }}ms</label>
       </div>
+    </div>
+    <div class="group">
       <div class="option">
         <label for="motion">{{ i18n.t('settings.graphics.camera') }}</label>
       </div>
