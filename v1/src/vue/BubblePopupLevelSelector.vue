@@ -48,10 +48,8 @@
 
   // Set selected level and pack from settings
   let scores = app.storage.getScores();
-  let settings = app.storage.getSettings();
-  let progress = getProgressFromSettings(settings);
-  const selectedLevel = ref(levels.value[progress - 1]);
-  const selectedPack = ref(packs.value.find(pack => pack.title == selectedLevel.value.pack));
+  const selectedLevel = ref({});
+  const selectedPack = ref({});
 
   // Set search logic from search values
   const search = ref('');
@@ -76,6 +74,10 @@
 
   function openLevelSelectorPopup(e) {
     isOpen.value = true;
+    const settings = app.storage.getSettings();
+    const progress = getProgressFromSettings(settings);
+    selectedLevel.value = levels.value[progress - 1];
+    selectedPack.value = packs.value.find(pack => pack.title == selectedLevel.value.pack);
     updateScroll();
   }
 
@@ -137,7 +139,7 @@
     await app.playLevelByTitle(selectedLevel.value.title);
     window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
     const progress = levels.value.findIndex(level => level.title == selectedLevel.value.title) + 1;
-    settings = app.storage.getSettings();
+    const settings = app.storage.getSettings();
     settings.progress = progress;
     app.updateSettings(settings);
   }

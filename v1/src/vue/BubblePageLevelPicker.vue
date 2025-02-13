@@ -32,9 +32,6 @@
   async function playLevel(title) {
     await app.playLevelByTitle(title);
     emit('setPage', 'campaign');
-    settings = app.storage.getSettings();
-    settings.progress = getLevelIndex(title) + 1;
-    app.updateSettings(settings);
   }
 
   function getScore(title) {
@@ -62,6 +59,9 @@
   function updateSelectedItem(e) {
     if (selectedItem.value == e.detail) playSelectedItem();
     selectedItem.value = e.detail;
+    settings = app.storage.getSettings();
+    settings.progress = getLevelIndex(selectedItem.value.title) + 1;
+    app.updateSettings(settings);
     updateDescription();
   }
 
@@ -192,7 +192,7 @@
     <div class="footer">
       <div class="center">
         <a class="button fade-in" @click="openLevelSelector">
-          <span class="material-symbols-rounded">bar_chart</span>
+          <span class="material-symbols-rounded">identity_platform</span>
           {{ i18n.t('popup.text.info') }}
         </a>
         <a class="button fade-in" @click="playSelectedItem">
