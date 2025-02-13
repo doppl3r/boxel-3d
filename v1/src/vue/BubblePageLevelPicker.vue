@@ -182,10 +182,7 @@
       <a class="button fade-in" @click="exitLevelPicker" :title="i18n.t('level_picker.button.exit')">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
-        <span class="material-symbols-rounded">search</span>
-      </a>
-      <BubbleButtonSettings class="button fade-in" />
+      <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="content fade-in">
       <h1>{{ i18n.t('level_picker.title') }}</h1>
@@ -193,10 +190,16 @@
       <BubbleCarousel :items="items" :selected="selectedItem" :key="key" />
     </div>
     <div class="footer">
-      <a class="button center fade-in" @click="playSelectedItem">
-        <span class="material-symbols-rounded">slideshow</span>
-        {{ i18n.t('level_picker.button.play') }}
-      </a>
+      <div class="center">
+        <a class="button fade-in" @click="openLevelSelector">
+          <span class="material-symbols-rounded">bar_chart</span>
+          {{ i18n.t('popup.text.info') }}
+        </a>
+        <a class="button fade-in" @click="playSelectedItem">
+          <span class="material-symbols-rounded">slideshow</span>
+          {{ i18n.t('level_picker.button.play') }}
+        </a>
+      </div>
     </div>
 
     <BubblePopupLevelSelector />

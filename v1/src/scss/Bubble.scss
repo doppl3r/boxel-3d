@@ -339,10 +339,25 @@
           justify-content: center;
           margin-right: 0.5em;
         }
-    
-        &.left { margin-right: auto; }
-        &.center { margin-left: auto; margin-right: auto; }
-        &.right { margin-left: auto; }
+      }
+
+      .left {
+        display: flex;
+        gap: 0.5em;
+        margin-right: auto;
+      }
+
+      .center {
+        display: flex;
+        gap: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .right {
+        display: flex;
+        gap: 0.5em;
+        margin-left: auto;
       }
 
       .stats {
