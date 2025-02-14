@@ -35,9 +35,7 @@
           background_color: themeData[pack.theme].background_color,
           pack: pack.title,
           theme: pack.theme,
-          thumbnail: {
-            url: pack.url
-          }
+          thumbnail: themeData[pack.theme].thumbnail
         });
       });
     });
@@ -88,14 +86,17 @@
 
   function keydown(e) {
     if (isOpen.value == true) {
-      var jumpKeys = ['Space', 'Enter'];
-      if (jumpKeys.indexOf(e.code) > -1) {
-        e.preventDefault(); // Prevent scrolling
-        playSelectedLevel();
-      }
-
-      if (e.code == 'Escape') {
-        closeLevelSelectorPopup();
+      // Disable key bindings while using input
+      if (e.target.tagName != 'INPUT') {
+        var jumpKeys = ['Space', 'Enter'];
+        if (jumpKeys.indexOf(e.code) > -1) {
+          e.preventDefault(); // Prevent scrolling
+          playSelectedLevel();
+        }
+  
+        if (e.code == 'Escape') {
+          closeLevelSelectorPopup();
+        }
       }
     }
   }
@@ -180,7 +181,7 @@
             <template v-for="pack in packs" :key="pack.title">
               <li>
                 <button :class="{ selected: selectedPack.title == pack.title }" @click="selectPack(pack)">
-                  <img v-if="pack.url" :src="pack.url" :alt="pack.title" />
+                  <img v-if="pack.theme" :src="themeData[pack.theme].thumbnail" :alt="pack.title" />
                   <span>{{ pack.title }}</span>
                 </button>
               </li>
@@ -201,7 +202,7 @@
             <template v-for="level in filteredLevels" :key="level.title">
               <li>
                 <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
-                  <img v-if="level.thumbnail.url" :src="level.thumbnail.url" :alt="level.title" />
+                  <img v-if="level.thumbnail" :src="level.thumbnail" :alt="level.title" />
                   <span>{{ level.description }}</span>
                   <div class="score" v-if="getScore(level.title)">
                     <span class="material-symbols-rounded">star</span>
@@ -216,7 +217,7 @@
           <div class="level-selector__info-header">{{ i18n.t('popup.text.info') }}</div>
           <div class="level-selector__info-content">
             <div class="level-selector__info-thumbnail" :key="selectedPack.title">
-              <img :src="selectedLevel.thumbnail.url" :alt="selectedLevel.description" />
+              <img :src="selectedLevel.thumbnail" :alt="selectedLevel.description" />
               <label v-if="selectedLevel.label">
                 <span>{{ selectedLevel.label }}</span>
               </label>
@@ -524,6 +525,7 @@
               height: 100%;
               left: 0;
               opacity: 0.25;
+              pointer-events: none;
               position: absolute;
               top: 0;
               width: 100%;

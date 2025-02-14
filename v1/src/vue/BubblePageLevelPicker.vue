@@ -5,6 +5,7 @@
   import BubbleCarousel from './BubbleCarousel.vue';
   import BubblePopupLevelSelector from './BubblePopupLevelSelector.vue';
   import levels from '../json/levels.json';
+  import themes from '../json/themes.json';
 
   // Initialize variables
   const i18n = useI18n({ useScope: 'global' });
@@ -126,7 +127,7 @@
   function setItems() {
     items.value = []; // Empty array
     levels.packs.forEach(function(pack, i) {
-      var url = pack.url;
+      var url = themes[pack.theme].thumbnail;
       pack.levels.forEach(function(item, j) {
         var score = getScore(item.title);
         if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + getScore(item.title);

@@ -2,7 +2,6 @@
   "packs": [
     {
       "title": "Easy Peasy",
-      "url": "../svg/button-pack-easy-peasy.svg",
       "theme": "blue-mountains",
       "levels": [
         {
@@ -49,7 +48,6 @@
     },
     {
       "title": "Lemon Difficult",
-      "url": "../svg/button-pack-lemon-difficult.svg",
       "theme": "orange",
       "levels": [
         {
@@ -96,7 +94,6 @@
     },
     {
       "title": "Zack's Pack",
-      "url": "../svg/button-pack-zacks-levels.svg",
       "theme": "green",
       "levels": [
         {
@@ -143,7 +140,6 @@
     },
     {
       "title": "Kargoh's Pack",
-      "url": "../svg/button-pack-kargohs-levels.svg",
       "theme": "purple",
       "levels": [
         {
@@ -190,7 +186,6 @@
     },
     {
       "title": "Gravity Hell",
-      "url": "../svg/button-pack-gravity-hell.svg",
       "theme": "red",
       "levels": [
         {
@@ -237,7 +232,6 @@
     },
     {
       "title": "Boxel Classics",
-      "url": "../svg/button-pack-boxel-classics.svg",
       "theme": "classic",
       "levels": [
         {
@@ -284,7 +278,6 @@
     },
     {
       "title": "Spider Cube",
-      "url": "../svg/button-pack-spider-cube.svg",
       "theme": "pink",
       "levels": [
         {
@@ -331,7 +324,6 @@
     },
     {
       "title": "Blue City",
-      "url": "../svg/button-pack-city.svg",
       "theme": "city",
       "description": "I'm walking here!",
       "levels": [
@@ -379,8 +371,7 @@
     },
     {
       "title": "Community Pack",
-      "url": "../svg/button-pack-boxel-classics.svg",
-      "theme": "classic",
+      "theme": "purple-mountains",
       "description": "Levels are made by the Boxel Community and are picked by the developer.",
       "links": [
         {
