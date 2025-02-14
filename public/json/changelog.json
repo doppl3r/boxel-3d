@@ -519,7 +519,7 @@
   {
     "version": "2.3.8",
     "revisions": [
-      "Added speedrun verification badge (appears when input buffer is zero and debugger is disabled)",
+      "Added speedrun verification badge (appears when input buffer is 0ms and the debug mode is disabled)",
       "Updated translations"
     ]
   }
