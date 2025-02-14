@@ -232,7 +232,12 @@ class Level extends Group {
     })
   }
 
-  getThemeByTitle(title) {
+  getTheme(name) {
+    // Return theme object by name
+    return themes[name];
+  }
+
+  getPackTheme(title) {
     // Loop through levels json
     var theme;
     levels.packs.forEach(function(pack) {

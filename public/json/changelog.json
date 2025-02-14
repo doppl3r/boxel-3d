@@ -522,5 +522,11 @@
       "Added speedrun verification badge (appears when input buffer is 0ms and the debug mode is disabled)",
       "Updated translations"
     ]
+  },
+  {
+    "version": "2.3.9",
+    "revisions": [
+      "Added optional themes for custom levels"
+    ]
   }
 ]

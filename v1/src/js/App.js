@@ -302,7 +302,8 @@ class App {
       // Do something with the response
       var description = app.level.getDescriptionByTitle(title)
       var author = app.level.getAuthorByTitle(title);
-      if (theme == null) theme = app.level.getThemeByTitle(title);
+      if (theme == null) theme = app.level.getTheme(json.theme);
+      if (theme == null) theme = app.level.getPackTheme(title);
       app.level.entityFactory.color = theme.color;
 
       // Set optional fog
