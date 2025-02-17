@@ -33,8 +33,7 @@ export default defineConfig({
     wasm()
   ],
   resolve: {
-    alias: [ // Resolve html sanitizer paths
-      { find: '@', replacement: path.resolve('./') },
+    alias: [
       { find: 'source-map-js', replacement: path.resolve('jsconfig.json') },
       { find: 'path', replacement: path.resolve('jsconfig.json') },
       { find: 'url', replacement: path.resolve('jsconfig.json') },

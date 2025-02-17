@@ -3,7 +3,7 @@
   import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router'
   import { Game } from '../js/core/Game.js';
-  import Modal from '@/v2/src/vue/Modal.vue';
+  import Modal from './Modal.vue';
   import Loading from './Loading.vue';
 
   // Initialize app and expose to window scope

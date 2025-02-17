@@ -1,17 +1,17 @@
 <script setup>
-  import '@/v2/src/scss/Global.scss';
+  import '../../v2/src/scss/Global.scss';
   import { onMounted, shallowReactive, reactive, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
   import ButtonAction from './ButtonAction.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
-  import Modal from '@/v2/src/vue/Modal.vue';
-  import Loading from '@/v2/src/vue/Loading.vue';
-  import { Ticker } from '@/v2/src/js/core/Ticker.js';
-  import { Graphics } from '@/v2/src/js/core/Graphics.js';
-  import { LightFactory } from '@/v2/src/js/core/factories/LightFactory.js';
-  import { AssetLoader } from '@/v2/src/js/core/loaders/AssetLoader.js';
+  import Modal from '../../v2/src/vue/Modal.vue';
+  import Loading from '../../v2/src/vue/Loading.vue';
+  import { Ticker } from '../../v2/src/js/core/Ticker.js';
+  import { Graphics } from '../../v2/src/js/core/Graphics.js';
+  import { LightFactory } from '../../v2/src/js/core/factories/LightFactory.js';
+  import { AssetLoader } from '../../v2/src/js/core/loaders/AssetLoader.js';
 
   // Initialize components
   const i18n = useI18n();
