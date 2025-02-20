@@ -6,7 +6,7 @@
   import ButtonAction from './ButtonAction.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
-  import Modal from '../../v2/src/vue/Modal.vue';
+  import ModalNews from './ModalNews.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
   import { Ticker } from '../../v2/src/js/core/Ticker.js';
   import { Graphics } from '../../v2/src/js/core/Graphics.js';
@@ -18,6 +18,7 @@
   const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
+  const isOpen = ref(false);
   let ticker;
   let graphics;
   let background;
@@ -69,49 +70,6 @@
     window.open(url, target);
   }
 
-  function isExtension() {
-    return window.chrome?.extension;
-  }
-
-  function openModal() {
-    let button;
-    let callback;
-    let text;
-
-    // Set the news based on the user agent
-    if (isExtension()) {
-      button = 'View Steam Page';
-      text = `Boxel 3D is coming soon to Steam for <strong>$5.99</strong> (USD)\n
-        Boxel 3D will always be <strong>free</strong> on Chrome, Edge and Firefox 😄\n
-        You can support me by adding it to your <strong>wishlist</strong> or by purchasing a copy on Steam.\n
-        Thank you for all the support and I hope you enjoy the game!`;
-      callback = function() {
-        openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank');
-        window.dispatchEvent(new CustomEvent('closeModal'));
-      }
-    }
-    else {
-      button = 'Continue';
-      text = `Thank you for supporting the launch of Boxel 3D on Steam!\n
-      Good luck beating the community levels lol`;
-    };
-
-    // Dispatch new modal from event
-    window.dispatchEvent(new CustomEvent('openModal', {
-      detail: {
-        title: 'News & Events',
-        text: text,
-        inputs: [
-          {
-            type: 'button',
-            value: button,
-            callback: callback
-          }
-        ]
-      }
-    }));
-  }
-
   document.addEventListener('click', function(e) {
     playSound('click');
   });
@@ -150,10 +108,10 @@
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-play-steam.svg'" @click="openModal();">{{ i18n.t('home.button.news') }}</Card>
+      <Card :src="'./svg/button-news.svg'" @click="isOpen = true">{{ i18n.t('home.button.news') }}</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
     </div>
-    <Modal />
+    <ModalNews @close="isOpen = false" v-show="isOpen == true" />
     <Loading />
   </div>
 </template>
