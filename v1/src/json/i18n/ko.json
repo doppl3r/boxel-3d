@@ -13,7 +13,8 @@
       "multi_player": "멀티플레이어",
       "news": "뉴스",
       "play": "게임플레이",
-      "skins": "스킨"
+      "skins": "스킨",
+      "steam": "Steam"
     },
     "messages": {
       "0": "Welcome!",

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <Transition name="fade-modal" >
+  <Transition name="fade-modal">
     <div class="modal">
       <div class="background" @click="$emit('close')"></div>
       <div class="container">
@@ -122,7 +122,17 @@
           text-align: center;
           text-shadow: 0 0.125em 0 #000000;
           width: 100%;
-          white-space: pre-line;
+
+          :deep(h1),
+          :deep(h2),
+          :deep(h3),
+          :deep(h4),
+          :deep(h5),
+          :deep(h6),
+          :deep(p) {
+            font-size: inherit;
+            margin: 0 0 1em;
+          }
 
           :deep(a) {
             color: #ffcb4c;
@@ -138,10 +148,6 @@
 
           :deep(strong) {
             color: #ffcb4c;
-          }
-
-          :deep(p) {
-            margin: 0;
           }
         }
   
