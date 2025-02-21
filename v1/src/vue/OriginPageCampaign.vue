@@ -101,6 +101,9 @@
   onMounted(function() {
     app.showCanvas();
     addEventListeners();
+
+    // Dispatch ready event to listeners
+    window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'campaign' }));
   });
 
   onUnmounted(function() {

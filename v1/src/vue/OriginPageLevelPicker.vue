@@ -131,6 +131,9 @@
   onMounted(function() {
     scrollToLevel();
     addEventListeners();
+
+    // Dispatch ready event to listeners
+    window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'level-picker' }));
   });
 
   onUnmounted(function() {

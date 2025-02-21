@@ -528,5 +528,11 @@
     "revisions": [
       "Added optional themes for custom levels"
     ]
+  },
+  {
+    "version": "2.4.0",
+    "revisions": [
+      "Added mod event hooks"
+    ]
   }
 ]

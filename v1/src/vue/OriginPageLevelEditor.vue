@@ -221,6 +221,9 @@
     // Run function after being mounted (visible)
     app.canvas.classList.remove('hidden');
     addEventListeners();
+
+    // Dispatch ready event to listeners
+    window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'level-editor' }));
   })
 
   onUnmounted(function() {

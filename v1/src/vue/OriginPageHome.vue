@@ -109,6 +109,9 @@
   onMounted(function() {
     updateVersion();
     focus('.focus');
+
+    // Dispatch ready event to listeners
+    window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'home' }));
   });
 </script>
 

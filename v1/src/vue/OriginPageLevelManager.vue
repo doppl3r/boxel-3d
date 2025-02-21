@@ -121,6 +121,9 @@
   onMounted(function() {
     updateLevelItems();
     addEventListeners();
+
+    // Dispatch ready event to listeners
+    window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'level-manager' }));
   });
 
   onUnmounted(function() {

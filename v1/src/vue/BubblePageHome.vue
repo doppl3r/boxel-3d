@@ -138,6 +138,9 @@
   onMounted(function() {
     updateVersion();
     addEventListeners();
+
+    // Dispatch ready event to listeners
+    window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'home' }));
   });
   
   onUnmounted(function() {

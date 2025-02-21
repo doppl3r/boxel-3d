@@ -167,6 +167,9 @@
   // Run function after being mounted (visible)
   onMounted(function() {
     addEventListeners();
+
+    // Dispatch ready event to listeners
+    window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'level-picker' }));
   });
 
   onUnmounted(function() {
