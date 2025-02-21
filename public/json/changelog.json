@@ -532,7 +532,8 @@
   {
     "version": "2.4.0",
     "revisions": [
-      "Added mod event hooks"
+      "Added mod event hooks",
+      "Added 360 rotations to level editor (Press \"R\" twice)"
     ]
   }
 ]

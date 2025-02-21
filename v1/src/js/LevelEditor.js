@@ -246,8 +246,8 @@ class LevelEditor {
       this.controlsTransform.showZ = true;
     }
     else if (mode == 'rotate') {
-      this.controlsTransform.showX = false;
-      this.controlsTransform.showY = false;
+      this.controlsTransform.showX = !this.controlsTransform.showX; // Default false
+      this.controlsTransform.showY = !this.controlsTransform.showY; // Default false
       this.controlsTransform.showZ = true;
     }
   }
