@@ -69,11 +69,13 @@
 
   function keydown(e) {
     if (isOpen.value == true) {
-      var exitKeys = ['Escape', 'KeyE'];
-      if (exitKeys.indexOf(e.code) > -1) {
-        // Close popup
-        e.preventDefault();
-        runLastInputCallback(e);
+      if (e.target.tagName != 'INPUT') {
+        var exitKeys = ['Escape', 'KeyE'];
+        if (exitKeys.indexOf(e.code) > -1) {
+          // Close popup
+          e.preventDefault();
+          runLastInputCallback(e);
+        }
       }
     }
   }
