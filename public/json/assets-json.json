@@ -3,6 +3,6 @@
     "url": "../json/assets-prefabs.json"
   },
   "boxel-3d-sandbox": {
-    "url": "../json/boxel-3d-sandbox.json"
+    "url": "../json/levels/boxel-3d-sandbox.json"
   }
 }
