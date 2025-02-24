@@ -115,12 +115,12 @@
       <div class="container">
         <BubbleSettingsTabs :tab="tab" @changeTab="changeTab" />
         <div class="content compact">
-          <BubbleSettingsPanelAudio :settings="settings" v-if="tab == 'audio'" @updateSettings="updateSettings" />
-          <BubbleSettingsPanelGraphics :settings="settings" v-if="tab == 'graphics'" @updateSettings="updateSettings" />
-          <BubbleSettingsPanelMultiplayer :settings="settings" v-if="tab == 'multiplayer'" @updateSettings="updateSettings" />
-          <BubbleSettingsPanelMods :settings="settings" v-if="tab == 'mods'" @updateSettings="updateSettings" />
-          <BubbleSettingsPanelData :settings="settings" v-if="tab == 'data'" @updateSettings="updateSettings" />
-          <BubbleSettingsPanelLanguage :settings="settings" v-if="tab == 'language'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelAudio :settings="settings" v-show="tab == 'audio'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelGraphics :settings="settings" v-show="tab == 'graphics'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelMultiplayer :settings="settings" v-show="tab == 'multiplayer'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelMods :settings="settings" v-show="tab == 'mods'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelData :settings="settings" v-show="tab == 'data'" @updateSettings="updateSettings" />
+          <BubbleSettingsPanelLanguage :settings="settings" v-show="tab == 'language'" @updateSettings="updateSettings" />
           <a class="close" @click="runLastInputCallback" :title="i18n.t('popup.button.close')">
             <span class="material-symbols-rounded">close</span>
           </a>

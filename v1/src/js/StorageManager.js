@@ -107,7 +107,7 @@ class StorageManager {
       'motion': true,
       'music': 'boxel-3d-pro',
       'name': 'Player',
-      'peer': this.generateUUID(),
+      'peer': this.generateHex(''),
       'progress': 1,
       'quality': 10,
       'skin': { id: 466, title: "Smile", url: "../png/smile.png" },
@@ -131,6 +131,11 @@ class StorageManager {
         settings[key] = defaultSettings[key];
       }
     }
+
+    // Reformat old settings
+    if (settings['peer'].length > 6) settings['peer'] = this.generateHex('');
+
+    // Return settings object
     return settings;
   }
 
@@ -291,9 +296,9 @@ class StorageManager {
     }));
   }
 
-  generateHex() {
+  generateHex(prefix = '#') {
     // https://stackoverflow.com/questions/1484506/random-color-generator
-    return '#' + (Math.random()*0xFFFFFF<<0).toString(16).padStart(6, '0');
+    return prefix + (Math.random()*0xFFFFFF<<0).toString(16).padStart(6, '0');
   }
 
   generateUUID() {

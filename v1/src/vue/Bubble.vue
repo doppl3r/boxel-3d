@@ -1,6 +1,6 @@
 <script setup>
   import '../scss/Bubble.scss';
-  import { nextTick, onMounted, onUnmounted, ref } from 'vue';
+  import { onMounted, onUnmounted, ref } from 'vue';
   import BubblePageHome from './BubblePageHome.vue';
   import BubblePageSkins from './BubblePageSkins.vue';
   import BubblePageLevelPicker from './BubblePageLevelPicker.vue';

@@ -33,11 +33,11 @@
       </div>
       <div class="option">
         <button @click="backupToFile">
-          <span class="material-symbols-rounded">description</span>
+          <span class="material-symbols-rounded">folder</span>
           {{ i18n.t('settings.data.file') }}
         </button>
         <button v-if="hasChromeStorage()" @click="backupToChrome">
-          <span class="material-symbols-rounded">cloud_upload</span>
+          <span class="material-symbols-rounded">cloud_done</span>
           {{ i18n.t('settings.data.google') }}
         </button>
       </div>
@@ -48,11 +48,11 @@
       </div>
       <div class="option">
         <button @click="restoreFromFile">
-          <span class="material-symbols-rounded">description</span>
+          <span class="material-symbols-rounded">folder</span>
           {{ i18n.t('settings.data.file') }}
         </button>
         <button v-if="hasChromeStorage()" @click="restoreFromChrome">
-          <span class="material-symbols-rounded">cloud_upload</span>
+          <span class="material-symbols-rounded">cloud_done</span>
           {{ i18n.t('settings.data.google') }}
         </button>
       </div>

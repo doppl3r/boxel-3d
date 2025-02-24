@@ -7,11 +7,15 @@ class Network extends EventDispatcher {
 
     // Create map of connections
     this.connections = new Map();
+    this.prefix = 'boxel-3d';
   }
 
   open(id) {
     // Generate new id
     if (id == null) id = MathUtils.generateUUID();
+
+    // Prepend prefix to id (introduced in v2.4.0)
+    id = (this.prefix + '-' + id).toLowerCase();
 
     // Reset peer if already created
     if (this.peer) this.peer.destroy();
@@ -22,6 +26,9 @@ class Network extends EventDispatcher {
   }
 
   connect(id, options) {
+    // Prepend prefix to id (introduced in v2.4.0)
+    id = (this.prefix + '-' + id).toLowerCase();
+
     // Create connection
     var connection = this.peer.connect(id, options);
     
