@@ -155,8 +155,8 @@
       "trusted_mods": "Trusted mods"
     },
     "multiplayer": {
-      "host_server": "서버 만들기",
-      "join_server": "서버 참가하기",
+      "host": "만들기",
+      "join": "참가하기",
       "paste_friend_code": "코드 붙여넣기",
       "share_friend_code": "코드 공유하기",
       "title": "멀티플레이어",

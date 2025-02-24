@@ -155,8 +155,8 @@
       "trusted_mods": "مودهای مورد اعتماد"
     },
     "multiplayer": {
-      "host_server": "سرور میزبان",
-      "join_server": "پیوستن به سرور",
+      "host": "میزبان",
+      "join": "بپیوندید",
       "paste_friend_code": "جای‌گذاری کد دوست",
       "share_friend_code": "اشتراک‌گذاری کد دوست",
       "title": "چند نفره",

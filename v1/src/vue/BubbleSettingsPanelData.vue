@@ -32,8 +32,14 @@
         <label>{{ i18n.t('settings.data.backup_to') }}</label>
       </div>
       <div class="option">
-        <input type="button" :value="i18n.t('settings.data.file')" @click="backupToFile">
-        <input v-if="hasChromeStorage()" type="button" :value="i18n.t('settings.data.google')" @click="backupToChrome">
+        <button @click="backupToFile">
+          <span class="material-symbols-rounded">description</span>
+          {{ i18n.t('settings.data.file') }}
+        </button>
+        <button v-if="hasChromeStorage()" @click="backupToChrome">
+          <span class="material-symbols-rounded">cloud_upload</span>
+          {{ i18n.t('settings.data.google') }}
+        </button>
       </div>
     </div>
     <div class="group">
@@ -41,8 +47,14 @@
         <label>{{ i18n.t('settings.data.restore_from') }}</label>
       </div>
       <div class="option">
-        <input type="button" :value="i18n.t('settings.data.file')" @click="restoreFromFile">
-        <input v-if="hasChromeStorage()" type="button" :value="i18n.t('settings.data.google')" @click="restoreFromChrome">
+        <button @click="restoreFromFile">
+          <span class="material-symbols-rounded">description</span>
+          {{ i18n.t('settings.data.file') }}
+        </button>
+        <button v-if="hasChromeStorage()" @click="restoreFromChrome">
+          <span class="material-symbols-rounded">cloud_upload</span>
+          {{ i18n.t('settings.data.google') }}
+        </button>
       </div>
     </div>
   </div>

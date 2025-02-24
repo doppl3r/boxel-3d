@@ -71,6 +71,12 @@
     <p>{{ i18n.t('settings.multiplayer.title') }}</p>
     <div class="group">
       <div class="option">
+        <button>{{ i18n.t('settings.multiplayer.join') }}</button>
+        <button>{{ i18n.t('settings.multiplayer.host') }}</button>
+      </div>
+    </div>
+    <div class="group">
+      <div class="option">
         <label for="name">{{ i18n.t('settings.multiplayer.your_name') }}</label>
         <input type="text" id="name" :value="settings.name" @change="$emit('updateSettings', $event)">
       </div>
@@ -82,7 +88,7 @@
       </div>
       <div class="option">
         <input type="checkbox" id="join-multiplayer" :checked="isOnline() && isHost() == false" @change="connect($event)">
-        <label for="join-multiplayer">{{ i18n.t('settings.multiplayer.join_server') }}</label>
+        <label for="join-multiplayer">{{ i18n.t('settings.multiplayer.join') }}</label>
       </div>
     </div>
     <div class="group">
@@ -92,7 +98,7 @@
       </div>
       <div class="option">
         <input type="checkbox" id="host-multiplayer" :checked="isHost()" @change="toggleHost($event)">
-        <label for="host-multiplayer">{{ i18n.t('settings.multiplayer.host_server') }}</label>
+        <label for="host-multiplayer">{{ i18n.t('settings.multiplayer.host') }}</label>
       </div>
     </div>
   </div>

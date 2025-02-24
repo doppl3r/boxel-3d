@@ -155,8 +155,8 @@
       "trusted_mods": "Modificaciones Confiables"
     },
     "multiplayer": {
-      "host_server": "Servidor Anfitrión",
-      "join_server": "Unirse al Servidor",
+      "host": "Anfitrión",
+      "join": "Unirse",
       "paste_friend_code": "Pegue código de amigo",
       "share_friend_code": "Comparte código de amigo",
       "title": "Multijugador",
