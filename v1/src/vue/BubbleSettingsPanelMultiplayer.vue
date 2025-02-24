@@ -102,7 +102,7 @@
           {{ i18n.t('settings.multiplayer.host') }}
         </button>
       </div>
-      <template class="group" v-if="peerMode != ''">
+      <template v-if="peerMode != ''">
         <br>
         <div class="option">
           <label for="name">{{ i18n.t('settings.multiplayer.your_name') }}</label>

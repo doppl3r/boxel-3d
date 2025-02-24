@@ -532,9 +532,10 @@
   {
     "version": "2.4.0",
     "revisions": [
-      "Added mod event hooks",
       "Added 360 rotations to level editor (Press \"R\" twice)",
-      "Updated settings menu"
+      "Added mod event hooks",
+      "Updated friend codes",
+      "Updated multiplayer menu options"
     ]
   }
 ]
