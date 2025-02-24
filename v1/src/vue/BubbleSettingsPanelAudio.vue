@@ -29,16 +29,6 @@
     <p>{{ i18n.t('settings.audio.title') }}</p>
     <div class="group">
       <div class="option">
-        <label for="music">{{ i18n.t('settings.audio.music') }}</label>
-      </div>
-      <div class="option">
-        <select id="music" :value="settings.music" @change="updateMusic($event)">
-          <option v-for="(music, index) of songs" :value="music.value" :key="music.value" :selected="settings.music == music.value">{{ music.text }}</option>
-        </select>
-      </div>
-    </div>
-    <div class="group">
-      <div class="option">
         <label for="volume">{{ i18n.t('settings.audio.volume_main') }}</label>
       </div>
       <div class="option">
@@ -58,6 +48,16 @@
       <div class="option">
         <input type="range" id="volumeEffects" min="0" max="1" step="0.1" :value="settings.volumeEffects" @change="$emit('updateSettings', $event)">
         <label for="volumeEffects">{{ (settings.volumeEffects * 100) }}%</label>
+      </div>
+    </div>
+    <div class="group">
+      <div class="option">
+        <label for="music">{{ i18n.t('settings.audio.music') }}</label>
+      </div>
+      <div class="option">
+        <select id="music" :value="settings.music" @change="updateMusic($event)">
+          <option v-for="(music, index) of songs" :value="music.value" :key="music.value" :selected="settings.music == music.value">{{ music.text }}</option>
+        </select>
       </div>
     </div>
   </div>

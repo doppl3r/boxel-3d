@@ -291,6 +291,11 @@ class StorageManager {
     }));
   }
 
+  generateHex() {
+    // https://stackoverflow.com/questions/1484506/random-color-generator
+    return '#' + (Math.random()*0xFFFFFF<<0).toString(16).padStart(6, '0');
+  }
+
   generateUUID() {
     return MathUtils.generateUUID();
   }

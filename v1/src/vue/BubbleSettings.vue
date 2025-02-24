@@ -11,10 +11,10 @@
 
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
-  var tab = ref('');
+  var tab = ref('audio');
   var inputs = ref([]);
   var isOpen = ref(false);
-  var settings = ref();
+  var settings = ref({});
 
   // Add event listener(s)
   function addEventListeners() {
@@ -33,7 +33,7 @@
   function openSettings(e) {
     isOpen.value = true;
     settings.value = app.storage.getSettings();
-    tab.value = e.detail || 'audio';
+    if (e.detail) tab.value = e.detail;
     window.dispatchEvent(new CustomEvent('beforeSettingsOpened'));
     
     // Trigger opened event
@@ -110,7 +110,7 @@
 
 <template>
   <Transition name="fade-settings">
-    <div class="popup settings" v-if="isOpen == true">
+    <div class="popup settings" v-show="isOpen == true">
       <div class="background" @click="runLastInputCallback"></div>
       <div class="container">
         <BubbleSettingsTabs :tab="tab" @changeTab="changeTab" />
