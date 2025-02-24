@@ -513,10 +513,11 @@
         }
   
         .inputs {
-          position: absolute;
-          display: flex;
           bottom: 0;
+          display: flex;
+          gap: 0.5em;
           left: 50%;
+          position: absolute;
           transform: translate(-50%, 50%);
 
           label {
@@ -580,9 +581,13 @@
             padding: 0.75em;
             
             .option {
+              align-items: center;
               display: flex;
               flex-wrap: wrap;
-              align-items: center;
+
+              &.gap {
+                gap: 0.5em;
+              }
             }
           }
         }
@@ -597,7 +602,6 @@
           display: inline-flex;
           font-family: inherit;
           gap: 0.25em;
-          margin-right: 0.5em;
           padding: 0.5em 0.5em;
           text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
           white-space: nowrap;
@@ -605,10 +609,6 @@
           &:hover {
             animation: shake 0.25s ease-in-out;
             animation-fill-mode: forwards;
-          }
-
-          &:last-of-type {
-            margin-right: 0;
           }
 
           &.selected {

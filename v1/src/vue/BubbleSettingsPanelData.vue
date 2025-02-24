@@ -31,7 +31,7 @@
       <div class="option">
         <label>{{ i18n.t('settings.data.backup_to') }}</label>
       </div>
-      <div class="option">
+      <div class="option gap">
         <button @click="backupToFile">
           <span class="material-symbols-rounded">folder</span>
           {{ i18n.t('settings.data.file') }}
@@ -46,7 +46,7 @@
       <div class="option">
         <label>{{ i18n.t('settings.data.restore_from') }}</label>
       </div>
-      <div class="option">
+      <div class="option gap">
         <button @click="restoreFromFile">
           <span class="material-symbols-rounded">folder</span>
           {{ i18n.t('settings.data.file') }}

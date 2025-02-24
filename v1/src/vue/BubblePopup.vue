@@ -130,7 +130,7 @@
             <template v-for="(input, index) of inputs">
               <label v-if="input.label" :for="'popup-' + input.type + '-' + index">{{ input.label }}</label>
               <template v-if="input.type == 'button'">
-                <button :class="input.class" :id="'popup-' + input.type + '-' + index" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">{{ input.value }}</button>
+                <button :class="{ [input.class]: input.class, 'selected': index == inputs.length - 1 }" :id="'popup-' + input.type + '-' + index" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">{{ input.value }}</button>
               </template>
               <template v-else>
                 <input :class="input.class" :id="'popup-' + input.type + '-' + index" :type="input.type" :value="input.value" :min="input.min" :max="input.max" :step="input.step" :accept="input.accept" :style="input.style" v-on:[input.event]="runCallback(input.callback, $event)">

@@ -92,7 +92,7 @@
   <div class="panel">
     <p>{{ i18n.t('settings.multiplayer.title') }}</p>
     <div class="group">
-      <div class="option">
+      <div class="option gap">
         <button :class="{ 'selected': peerMode == 'guest' }" @click="peerMode = 'guest'">
           <span class="material-symbols-rounded">login</span>
           {{ i18n.t('settings.multiplayer.join') }}
