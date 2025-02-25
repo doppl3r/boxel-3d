@@ -583,7 +583,6 @@
             .option {
               align-items: center;
               display: flex;
-              flex-wrap: wrap;
             }
           }
 
@@ -602,6 +601,10 @@
           .flex-basis-50 {
             flex-basis: 50%;
           }
+
+          .wrap {
+            flex-wrap: wrap;
+          }
         }
 
         button {
@@ -614,6 +617,7 @@
           display: inline-flex;
           font-family: inherit;
           gap: 0.25em;
+          justify-content: center;
           padding: 0.5em;
           text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
           white-space: nowrap;

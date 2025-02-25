@@ -92,22 +92,22 @@
   <div class="panel">
     <p>{{ i18n.t('settings.multiplayer.title') }}</p>
     <div class="group gap">
-      <div class="option">
+      <div class="option wrap">
         <label for="name">{{ i18n.t('settings.multiplayer.your_name') }}</label>
         <input type="text" id="name" autocomplete="off" :value="settings.name" @change="$emit('updateSettings', $event)">
       </div>
       <div class="option gap">
-        <button :class="{ 'selected': peerMode == 'guest' }" @click="peerMode = 'guest'">
+        <button :class="{ 'selected': peerMode == 'guest' }" class="center flex-basis-50" @click="peerMode = 'guest'">
           <span class="material-symbols-rounded">login</span>
           {{ i18n.t('settings.multiplayer.join') }}
         </button>
-        <button :class="{ 'selected': peerMode == 'host' }" @click="peerMode = 'host'">
+        <button :class="{ 'selected': peerMode == 'host' }" class="center flex-basis-50" @click="peerMode = 'host'">
           <span class="material-symbols-rounded">home</span>
           {{ i18n.t('settings.multiplayer.host') }}
         </button>
       </div>
       <template v-if="peerMode != ''">
-        <div class="option" v-if="peerMode == 'guest'">
+        <div class="option wrap" v-if="peerMode == 'guest'">
           <label for="connection">{{ i18n.t('settings.multiplayer.paste_friend_code') }}</label>
           <div class="flex gap">
             <input
@@ -126,7 +126,7 @@
             </div>
           </div>
         </div>
-        <div class="option" v-if="peerMode == 'host'">
+        <div class="option wrap" v-if="peerMode == 'host'">
           <label for="peer">{{ i18n.t('settings.multiplayer.share_friend_code') }}</label>
           <div class="flex gap">
             <input

@@ -19,7 +19,7 @@
   <div class="panel">
     <p>{{ i18n.t('settings.mods.title') }}</p>
     <div class="group">
-      <div class="option">
+      <div class="option wrap">
         <label for="mods"><span class="material-symbols-rounded">assignment</span> {{ i18n.t('settings.mods.clipboard') }}</label>
         <textarea :value="loadMods()" id="mods" @change="saveMods" spellcheck="false"></textarea>
       </div>
