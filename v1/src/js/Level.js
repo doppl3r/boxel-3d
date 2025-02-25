@@ -270,6 +270,24 @@ class Level extends Group {
     });
     return author;
   }
+
+  getLevelIndex(title) {
+    var count = 0;
+    var index = -1;
+    
+    // Loop through packs array
+    levels.packs.forEach(function(pack) {
+      // Loop through each levels array
+      pack.levels.forEach(function(level) {
+        // Set level index and increment count
+        if (title == level.title) {
+          index = count;
+        }
+        count++;
+      });
+    });
+    return index;
+  }
 }
 
 export { Level };

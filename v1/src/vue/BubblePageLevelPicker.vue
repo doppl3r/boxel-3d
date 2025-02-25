@@ -39,35 +39,17 @@
     return scores[title];
   }
 
-  function getLevelIndex(title) {
-    var count = 0;
-    var index = -1;
-    
-    // Loop through packs array
-    levels.packs.forEach(function(pack) {
-      // Loop through each levels array
-      pack.levels.forEach(function(level) {
-        // Set level index and increment count
-        if (title == level.title) {
-          index = count;
-        }
-        count++;
-      });
-    });
-    return index;
-  }
-
   function updateSelectedItem(e) {
     if (selectedItem.value == e.detail) playSelectedItem();
     selectedItem.value = e.detail;
     settings = app.storage.getSettings();
-    settings.progress = getLevelIndex(selectedItem.value.title) + 1;
+    settings.progress = app.level.getLevelIndex(selectedItem.value.title) + 1;
     app.updateSettings(settings);
     updateDescription();
   }
 
   function updateDescription() {
-    var index = getLevelIndex(selectedItem.value.title);
+    var index = app.level.getLevelIndex(selectedItem.value.title);
     var count = 0;
 
     // Loop through packs array

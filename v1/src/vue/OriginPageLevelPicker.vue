@@ -23,30 +23,12 @@
   async function playLevel(title) {
     await app.playLevelByTitle(title, { "model": "background-classic", "color": "#620460" });
     emit('setPage', 'campaign');
-    settings.progress = getLevelIndex(title) + 1;
+    settings.progress = app.level.getLevelIndex(title) + 1;
     app.updateSettings(settings);
   }
 
   function getScore(title) {
     return scores[title];
-  }
-
-  function getLevelIndex(title) {
-    var count = 0;
-    var index = -1;
-    
-    // Loop through packs array
-    levels.packs.forEach(function(pack) {
-      // Loop through each levels array
-      pack.levels.forEach(function(level) {
-        // Set level index and increment count
-        if (title == level.title) {
-          index = count;
-        }
-        count++;
-      });
-    });
-    return index;
   }
 
   function getLevelTitle(index) {

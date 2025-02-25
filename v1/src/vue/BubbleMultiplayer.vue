@@ -12,6 +12,7 @@
   var messages = ref([]);
   var messageBox = ref();
   var players = ref([]);
+  var settings = app.storage.getSettings();
   var timeout;
 
   function addEventListeners() {
@@ -284,37 +285,53 @@
     app.multiplayer.closeConnectionByUUID(player.uuid);
   }
 
-  async function goToPlayer(player) {
-    if (player.level != 'My Level') {
-      
-      // Change level to target player
-      var load = await app.playLevelByTitle(player.level);
-      if (load) {
-        // Update game state
-        window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
-  
-        // Set player position
-        var target = app.multiplayer.getPlayer({ uuid: player.uuid })
-        if (target) app.player.setPosition(target.position, false);
-      }
+  async function loadLevelByTitle(title, success, error) {
+    // Change level to target player
+    var load = await app.playLevelByTitle(title);
+    if (load) {
+      // Update game state
+      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+
+      // Update progress
+      settings = app.storage.getSettings();
+      settings.progress = app.level.getLevelIndex(title) + 1;
+      app.updateSettings(settings);
+
+      // Run optional success callback
+      if (typeof success == 'function') success();
+    }
+    else {
+      // Run optional error callback
+      if (typeof error == 'function') error();
       else {
         // Notify user that the level is not official
         addMessage({
           name: 'Server',
-          text: player.text + ' is not playing an official level! 😔',
+          text: player.text + ' is not playing an official level... 😔',
           time: getTime(),
           color: '#4ca9ff'
         });
       }
     }
-    else {
-      addMessage({
-        name: 'Server',
-        text: player.text + ' is currently picking a level... ⏳',
-        time: getTime(),
-        color: '#4ca9ff'
-      });
-    }
+  }
+
+  function goToPlayer(player) {
+    loadLevelByTitle(player.level,
+      () => {
+        // On success, set player position after loading
+        var target = app.multiplayer.getPlayer({ uuid: player.uuid })
+        if (target) app.player.setPosition(target.position, false);
+      },
+      () => {
+        // On error, return reason
+        addMessage({
+          name: 'Server',
+          text: player.text + ' is currently picking a level... ⏳',
+          time: getTime(),
+          color: '#4ca9ff'
+        });
+      }
+    );
   }
 
   function changeTab(name) {
@@ -341,20 +358,7 @@
     if (target.nodeName == 'A') {
       // Check if link has attribute to play a specific level
       var title = target.getAttribute('href');
-      var load = await app.playLevelByTitle(title); // Change level
-      if (load) {
-        // Update game state if level is returned
-        window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
-      }
-      else {
-        // Notify user that level does not exist
-        addMessage({
-          name: 'Server',
-          text: 'Level does not exist! 😔',
-          time: getTime(),
-          color: '#4ca9ff'
-        });
-      }
+      loadLevelByTitle(title);
     }
   }
 
