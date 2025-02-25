@@ -533,7 +533,7 @@
     "version": "2.4.0",
     "revisions": [
       "Updated multiplayer menu options",
-      "Updated level editor rotation behavior (press \"R\" twice to enable 360 mode)"
+      "Updated level editor rotation behavior (press \"R\" twice to unlock x/y axis)"
     ]
   }
 ]
