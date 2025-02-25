@@ -91,7 +91,11 @@
 <template>
   <div class="panel">
     <p>{{ i18n.t('settings.multiplayer.title') }}</p>
-    <div class="group">
+    <div class="group gap">
+      <div class="option">
+        <label for="name">{{ i18n.t('settings.multiplayer.your_name') }}</label>
+        <input type="text" id="name" autocomplete="off" :value="settings.name" @change="$emit('updateSettings', $event)">
+      </div>
       <div class="option gap">
         <button :class="{ 'selected': peerMode == 'guest' }" @click="peerMode = 'guest'">
           <span class="material-symbols-rounded">login</span>
@@ -103,43 +107,44 @@
         </button>
       </div>
       <template v-if="peerMode != ''">
-        <br>
-        <div class="option">
-          <label for="name">{{ i18n.t('settings.multiplayer.your_name') }}</label>
-          <input type="text" id="name" autocomplete="off" :value="settings.name" @change="$emit('updateSettings', $event)">
-        </div>
         <div class="option" v-if="peerMode == 'guest'">
           <label for="connection">{{ i18n.t('settings.multiplayer.paste_friend_code') }}</label>
-          <input
-            type="text"
-            id="connection"
-            autocomplete="off"
-            maxlength="6"
-            :value="settings.connection"
-            :placeholder="`ex: DC265A`"
-            @change="$emit('updateSettings', $event)"
-          >
-        </div>
-        <div class="option" v-if="peerMode == 'guest'">
-          <input type="checkbox" id="join-multiplayer" :checked="isOnline() && isHost() == false" @change="connect($event)">
-          <label for="join-multiplayer">{{ i18n.t('settings.multiplayer.join') }}</label>
+          <div class="flex gap">
+            <input
+              type="text"
+              id="connection"
+              autocomplete="off"
+              maxlength="6"
+              class="flex-basis-50"
+              :value="settings.connection"
+              :placeholder="`ex: DC265A`"
+              @change="$emit('updateSettings', $event)"
+            >
+            <div class="option flex-basis-50" v-if="peerMode == 'guest'">
+              <input type="checkbox" id="join-multiplayer" :checked="isOnline() && isHost() == false" @change="connect($event)">
+              <label for="join-multiplayer">{{ i18n.t('settings.multiplayer.join') }}</label>
+            </div>
+          </div>
         </div>
         <div class="option" v-if="peerMode == 'host'">
           <label for="peer">{{ i18n.t('settings.multiplayer.share_friend_code') }}</label>
-          <input
-            type="text"
-            id="peer"
-            autocomplete="off"
-            maxlength="6"
-            readonly
-            :class="{ 'hex': settings.peer.length <= 6 }"
-            :value="settings.peer"
-            @click="copyInput($event)"
-          >
-        </div>
-        <div class="option" v-if="peerMode == 'host'">
-          <input type="checkbox" id="host-multiplayer" :checked="isHost()" @change="toggleHost($event)">
-          <label for="host-multiplayer">{{ i18n.t('settings.multiplayer.host') }}</label>
+          <div class="flex gap">
+            <input
+              type="text"
+              id="peer"
+              autocomplete="off"
+              maxlength="6"
+              class="flex-basis-50"
+              readonly
+              :class="{ 'hex': settings.peer.length <= 6 }"
+              :value="settings.peer"
+              @click="copyInput($event)"
+            >
+            <div class="option flex-basis-50" v-if="peerMode == 'host'">
+              <input type="checkbox" id="host-multiplayer" :checked="isHost()" @change="toggleHost($event)">
+              <label for="host-multiplayer">{{ i18n.t('settings.multiplayer.host') }}</label>
+            </div>
+          </div>
         </div>
       </template>
     </div>

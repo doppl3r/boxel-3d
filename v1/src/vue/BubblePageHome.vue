@@ -10,6 +10,7 @@
   var emit = defineEmits(['setPage']);
   var manifest = ref();
   var version = ref();
+  var versionButtonVisible = ref(app.network.isOnline() == false);
   var messageIndex = getRandomMessageIndex();
   var message = computed(() => getRandomMessage(messageIndex));
   var menuKey = ref(0);
@@ -47,11 +48,15 @@
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('itemSelected', selectMenuItem)
+    app.network.on('peer_open', hideVersionButton);
+    app.network.on('peer_close', showVersionButton);
   }
   
   // Remove event listeners
   function removeEventListeners() {
     window.removeEventListener('itemSelected', selectMenuItem)
+    app.network.off('peer_open', hideVersionButton);
+    app.network.off('peer_close', showVersionButton);
   }
 
   function selectMenuItem(e) {
@@ -64,6 +69,14 @@
     var json = await response.json();
     manifest.value = json;
     version.value = 'v' + json.version;
+  }
+
+  function hideVersionButton() {
+    versionButtonVisible.value = false;
+  }
+  
+  function showVersionButton() {
+    versionButtonVisible.value = true;
   }
 
   function getRandomMessageIndex() {
@@ -166,7 +179,7 @@
       <BubbleCarousel :items="menu" scrolling="no" />
     </div>
     <div class="footer">
-      <a class="button fade-in" :class="{ hidden: version == '' }" @click="openChangelog" :title="i18n.t('home.button.changelog')">
+      <a class="button fade-in" v-if="versionButtonVisible" :class="{ hidden: version == '' }" @click="openChangelog" :title="i18n.t('home.button.changelog')">
         <span class="material-symbols-rounded">ink_pen</span>
         {{ version }}
       </a>
