@@ -185,6 +185,10 @@
           setTransformMode({ detail: 'translate' });
         }
         else if (e.code == 'KeyR') {
+          // Toggle rotation axis visibility before setting mode
+          if (app.levelEditor.controlsTransform.mode == 'rotate') {
+            app.levelEditor.controlsTransform.showAll = !app.levelEditor.controlsTransform.showAll;
+          }
           setTransformMode({ detail: 'rotate' });
         }
         else if (e.code == 'KeyS') {

@@ -10,6 +10,7 @@ class LevelEditor {
     this.controlsTransform = new TransformControls(camera, domElement);
     this.controlsTransform.showZ = true;
     this.controlsTransform.space = 'world';
+    this.controlsTransform.showAll = false;
     this.controlsOrbit = new OrbitControls(camera, domElement);
     this.controlsOrbit.enabled = false; // Default disabled for campaign
     this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 };
@@ -246,8 +247,8 @@ class LevelEditor {
       this.controlsTransform.showZ = true;
     }
     else if (mode == 'rotate') {
-      this.controlsTransform.showX = !this.controlsTransform.showX; // Default false
-      this.controlsTransform.showY = !this.controlsTransform.showY; // Default false
+      this.controlsTransform.showX = this.controlsTransform.showAll; // Default false
+      this.controlsTransform.showY = this.controlsTransform.showAll; // Default false
       this.controlsTransform.showZ = true;
     }
   }
