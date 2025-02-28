@@ -13,6 +13,7 @@ function createWindow() {
     autoHideMenuBar: true,
     width: 640,
     height: 360,
+    title: 'Boxel 3D',
     fullscreen: false,
     icon: './build/png/icon128.png',
     show: true,
@@ -47,6 +48,9 @@ function createWindow() {
   // Load the index.html of the app
   mainWindow.loadFile('./build/index.html', { query: { "fullscreen": true }});
 }
+
+// Enable hardware acceleration
+//app.commandLine.appendSwitch('force_high_performance_gpu');
 
 // This method will be called when Electron has finished initialization and is ready to create browser windows. Some APIs can only be used after this event occurs.
 app.whenReady().then(function () {
