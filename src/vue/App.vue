@@ -3,8 +3,9 @@
   import { onMounted, shallowReactive, reactive, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
-  import ButtonAction from './ButtonAction.vue';
   import ButtonVolume from './ButtonVolume.vue';
+  import ButtonDiscord from './ButtonDiscord.vue';
+  import ButtonNews from './ButtonNews.vue';
   import Card from './Card.vue';
   import ModalSteam from './ModalSteam.vue';
   import ModalNews from './ModalNews.vue';
@@ -108,14 +109,12 @@
   <div class="ui">
     <div class="actions">
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
-      <ButtonAction @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" :color="'#5865F2'" title="Join our Discord!">
-        <img :src="'./svg/discord.svg'">
-      </ButtonAction>
+      <ButtonNews  @click="modalNewsVisible = true" />
+      <ButtonDiscord @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" />
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
       <Card :src="'./svg/button-steam.svg'" @click="modalSteamVisible = true" v-if="isExtension()">{{ i18n.t('home.button.steam') }}</Card>
-      <Card :src="'./svg/button-news.svg'" @click="modalNewsVisible = true">{{ i18n.t('home.button.news') }}</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <ModalSteam @close="modalSteamVisible = false" v-show="modalSteamVisible == true" />

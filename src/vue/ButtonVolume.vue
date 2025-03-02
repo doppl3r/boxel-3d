@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <ButtonAction class="action">
+  <ButtonAction class="action" title="Volume">
     <span class="material-symbols-rounded" v-if="volume != 0">volume_up</span>
     <span class="material-symbols-rounded" v-else>volume_off</span>
   </ButtonAction>

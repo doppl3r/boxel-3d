@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <button class="action" title="Fullscreen" :style="{ 'background-color': props.color }">
+  <button class="action" :style="{ 'background-color': props.color }">
     <slot></slot>
   </button>
 </template>
@@ -23,6 +23,7 @@
     height: 2em;
     justify-content: center;
     outline: none;
+    position: relative;
     transition: transform 0.1s ease-out;
     width: 2em;
 
