@@ -535,5 +535,11 @@
       "Updated multiplayer menu options",
       "Updated level editor rotation behavior (press \"R\" twice to unlock x/y axis)"
     ]
+  },
+  {
+    "version": "2.4.1",
+    "revisions": [
+      "Updated news"
+    ]
   }
 ]

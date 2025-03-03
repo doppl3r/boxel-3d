@@ -21,18 +21,16 @@
 
     &.notification {
       &:after {
-        background-color: #ff0000;
+        background-color: #0287ef;
         border-radius: 99em;
-        box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
-        box-sizing: border-box;
         content: '';
         display: block;
-        height: 0.75em;
+        height: 0.5em;
+        left: 50%;
         position: absolute;
-        right: 0;
-        top: 0;
-        transform: translate(50%, -50%);
-        width: 0.75em;
+        top: 50%;
+        transform: translate(50%, -150%);
+        width: 0.5em;
       }
     }
   }
