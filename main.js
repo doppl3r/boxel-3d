@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, Menu, shell } from 'electron';
 import { fileURLToPath } from 'url';
 import Store from 'electron-store';
 import steamworks from 'steamworks.js';
@@ -9,28 +9,31 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Remove hidden menu behaviors
+Menu.setApplicationMenu(Menu.buildFromTemplate([]));
+
 function createWindow() {
   // Initialize state keeper
   const store = new Store();
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    autoHideMenuBar: true,
-    width: store.get('width') || 640,
-    height: store.get('height') || 360,
-    x: store.get('x'),
-    y: store.get('y'),
-    maximized: true,
-    title: 'Boxel 3D',
+    autoHideMenuBar: false,
     fullscreen: false,
+    height: store.get('height') || 360,
     icon: './build/png/icon128.png',
+    maximized: true,
     show: true,
+    title: 'Boxel 3D',
     useContentSize: true,
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    width: store.get('width') || 640,
+    x: store.get('x'),
+    y: store.get('y')
   });
 
   function storeWindow() {
@@ -45,7 +48,10 @@ function createWindow() {
   mainWindow.on('moved', storeWindow);
 
   // Show the game only after it is done loading (requires "show": false above to work properly)
-  mainWindow.once('ready-to-show', function() { mainWindow.show(); });
+  mainWindow.once('ready-to-show', function() {
+    mainWindow.webContents.setZoomFactor(1);
+    mainWindow.show();
+  });
 
   // Allow game to send users to default browser
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
