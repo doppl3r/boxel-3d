@@ -27,10 +27,19 @@
     transition: transform 0.1s ease-out;
     width: 2em;
 
-    :deep(img) {
-      filter: drop-shadow(0 0.125em 0 rgba(#000000, 0.25));
-      width: 1.5em;
-      height: 1.5em;
+    &.notification {
+      &:after {
+        background-color: #ff0000;
+        border-radius: 99em;
+        content: '';
+        display: block;
+        height: 0.5em;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(50%, -150%);
+        width: 0.5em;
+      }
     }
 
     &:hover,
@@ -40,6 +49,12 @@
 
     &:active {
       transform: scale(0.9);
+    }
+
+    :deep(img) {
+      filter: drop-shadow(0 0.125em 0 rgba(#000000, 0.25));
+      width: 1.5em;
+      height: 1.5em;
     }
   }
 </style>
