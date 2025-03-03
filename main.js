@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 import { app, BrowserWindow, shell } from 'electron';
 import { fileURLToPath } from 'url';
+import steamworks from 'steamworks.js';
 import path from 'path';
 
 // Configure directory
@@ -19,6 +20,8 @@ function createWindow() {
     show: true,
     useContentSize: true,
     webPreferences: {
+      contextIsolation: false,
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js')
     }
   });
@@ -68,3 +71,4 @@ app.on('window-all-closed', function () {
 });
 
 // In this file you can include the rest of your app's specific main process code. You can also put them in separate files and require them here.
+steamworks.electronEnableSteamOverlay();
