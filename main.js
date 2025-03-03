@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 import { app, BrowserWindow, shell } from 'electron';
 import { fileURLToPath } from 'url';
+import Store from 'electron-store';
 import steamworks from 'steamworks.js';
 import path from 'path';
 
@@ -9,11 +10,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function createWindow() {
+  // Initialize state keeper
+  const store = new Store();
+
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
-    width: 640,
-    height: 360,
+    width: store.get('width') || 640,
+    height: store.get('height') || 360,
+    x: store.get('x'),
+    y: store.get('y'),
+    maximized: true,
     title: 'Boxel 3D',
     fullscreen: false,
     icon: './build/png/icon128.png',
@@ -25,6 +32,17 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   });
+
+  function storeWindow() {
+    const [width, height] = mainWindow.getSize();
+    const [x, y] = mainWindow.getPosition();
+    store.set({ width, height, x, y });
+  } 
+
+  mainWindow.on('resized', storeWindow);
+  mainWindow.on('maximize', storeWindow);
+  mainWindow.on('unmaximize', storeWindow);
+  mainWindow.on('moved', storeWindow);
 
   // Show the game only after it is done loading (requires "show": false above to work properly)
   mainWindow.once('ready-to-show', function() { mainWindow.show(); });
@@ -38,22 +56,21 @@ function createWindow() {
   // Set localStorage for app platforms
   mainWindow.webContents.executeJavaScript('localStorage.setItem("setting-timestamp", ' + (new Date().getTime()) + ');');
 
+  // Load the index.html of the app
+  mainWindow.loadFile('./build/index.html', { query: { "fullscreen": true }});
+}
+
+function loadMods(file = '/Charlieee1/Boxel-3d-Mods/main/Boxel 3d Modding API.user.js') {
   // TEST: Load mods from URL
-  /* const url = 'https://raw.githubusercontent.com';
-  const file = '/Charlieee1/Boxel-3d-Mods/main/Boxel 3d Modding API.user.js';
+  const url = 'https://raw.githubusercontent.com';
+  file = '/Charlieee1/Boxel-3d-Mods/main/Boxel 3d Modding API.user.js';
   fetch(url + file)
     .then(response => response.text())
     .then(code => {
       // Execute code
       mainWindow.webContents.executeJavaScript(code);
-    }); */
-
-  // Load the index.html of the app
-  mainWindow.loadFile('./build/index.html', { query: { "fullscreen": true }});
+    });
 }
-
-// Enable hardware acceleration
-//app.commandLine.appendSwitch('force_high_performance_gpu');
 
 // This method will be called when Electron has finished initialization and is ready to create browser windows. Some APIs can only be used after this event occurs.
 app.whenReady().then(function () {
