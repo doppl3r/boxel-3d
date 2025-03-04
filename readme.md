@@ -51,16 +51,14 @@
 - Copy app files:
   - Copy: `D:\Development\boxel-3d\dist`
   - Paste: `C:\steamworks\sdk\tools\ContentBuilder\content\boxel-3d\windows`
-- Run SteamCMD `C:\steamworks\sdk\tools\ContentBuilder\builder\steamcmd.exe`
-- Login using `login fragem123`
+- Run SteamCMD `C:\steamworks\sdk\tools\ContentBuilder\builder\steamcmd.exe +login fragem123`
 - Run build script `run_app_build C:\steamworks\sdk\tools\ContentBuilder\scripts\app_build_3208440.vdf`.
 
 ## Building to Steam (Mac)
 - Copy app files (from `boxel-3d.zip` content):
   - Copy: `/Users/jacob/Development/boxel-3d/dist/boxel-3d.zip`
   - Paste: `/Users/jacob/Steam/sdk/tools/ContentBuilder/content/boxel-3d/mac`
-- Run SteamCMD `cd /Users/jacob/Steam && ./steamcmd.sh`
-- Login using `login fragem123`
+- Run SteamCMD `cd /Users/jacob/Steam && ./steamcmd.sh +login fragem123`
 - Run build script `run_app_build /Users/jacob/Steam/sdk/tools/ContentBuilder/scripts/app_build_3208440.vdf`
 
 ## Publish on Steam
