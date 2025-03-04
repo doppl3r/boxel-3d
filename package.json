@@ -19,9 +19,9 @@
     },
     "icon": "png/icon512.png",
     "files": [
+      "build",
       "main.js",
-      "preload.js",
-      "build"
+      "preload.mjs"
     ],
     "mac": {
       "category": "public.app-category.arcade-games",

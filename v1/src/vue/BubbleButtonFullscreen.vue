@@ -31,7 +31,7 @@
 
     // Toggle fullscreen
     if (window.api) {
-      // Send message to preload.js
+      // Send message to preload.mjs
       window.api.toggleFullScreen();
     }
     else {
