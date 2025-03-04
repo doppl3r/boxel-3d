@@ -9,7 +9,7 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Remove hidden menu behaviors
+// Remove hidden menu behaviors (ex: zoom)
 Menu.setApplicationMenu(Menu.buildFromTemplate([]));
 
 function createWindow() {
@@ -22,7 +22,6 @@ function createWindow() {
     fullscreen: false,
     height: store.get('height') || 360,
     icon: './build/png/icon128.png',
-    maximized: true,
     show: true,
     title: 'Boxel 3D',
     useContentSize: true,
@@ -36,19 +35,40 @@ function createWindow() {
     y: store.get('y')
   });
 
-  function storeWindow() {
+  function storeWindowSize() {
     const [width, height] = mainWindow.getSize();
+    store.set({ width, height });
+  }
+
+  function storeWindowPosition() {
     const [x, y] = mainWindow.getPosition();
-    store.set({ width, height, x, y });
+    store.set({ x, y });
+  }
+
+  function storeWindowMaximized() {
+    const maximized = mainWindow.isMaximized();
+    store.set({ maximized });
+  }
+
+  function storeWindowFullscreen() {
+    const fullscreen = mainWindow.isFullScreen();
+    store.set({ fullscreen });
   } 
 
-  mainWindow.on('resized', storeWindow);
-  mainWindow.on('maximize', storeWindow);
-  mainWindow.on('unmaximize', storeWindow);
-  mainWindow.on('moved', storeWindow);
+  mainWindow.on('resized', storeWindowSize);
+  mainWindow.on('moved', storeWindowPosition);
+  mainWindow.on('maximize', storeWindowMaximized);
+  mainWindow.on('unmaximize', storeWindowMaximized);
+  mainWindow.on('enter-full-screen', storeWindowFullscreen);
+  mainWindow.on('leave-full-screen', storeWindowFullscreen);
 
   // Show the game only after it is done loading (requires "show": false above to work properly)
   mainWindow.once('ready-to-show', function() {
+    // Maximize/fullscreen window if already set
+    if (store.get('maximized')) mainWindow.maximize();
+    mainWindow.setFullScreen(store.get('fullscreen'));
+
+    // Reset zoom before showing app
     mainWindow.webContents.setZoomFactor(1);
     mainWindow.show();
   });
