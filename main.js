@@ -50,6 +50,11 @@ function createWindow() {
     store.set({ maximized });
   }
 
+  function toggleFullScreen() {
+    mainWindow.setFullScreen(!store.get('fullscreen'));
+    store.set('fullscreen', !store.get('fullscreen'));
+  }
+
   // Add event listeners
   mainWindow.on('resized', storeWindowSize);
   mainWindow.on('moved', storeWindowPosition);
@@ -57,11 +62,13 @@ function createWindow() {
   mainWindow.on('unmaximize', storeWindowMaximized);
 
   // Add event listener to preload.js (bridged to renderer)
-  ipcMain.on('messageFromRenderer', (event, data) => {
-    if ('fullscreen' in data) {
-      mainWindow.setFullScreen(data.fullscreen);
-      store.set('fullscreen', data.fullscreen);
-    }
+  ipcMain.on('toggleFullScreen', toggleFullScreen);
+  
+  // Add keyboard shortcuts
+  globalShortcut.register('F11', toggleFullScreen);
+  globalShortcut.register('Escape', function() {
+    mainWindow.setFullScreen(false);
+    store.set('fullscreen', false);
   });
 
   // Show the game only after it is done loading (requires "show": false above to work properly)
@@ -69,7 +76,6 @@ function createWindow() {
     // Maximize/fullscreen window if already set
     if (store.get('maximized')) mainWindow.maximize();
     mainWindow.setFullScreen(store.get('fullscreen'));
-    globalShortcut.register('Escape', function(){ mainWindow.setFullScreen(false); });
 
     // Reset zoom before showing app
     mainWindow.webContents.setZoomFactor(1);

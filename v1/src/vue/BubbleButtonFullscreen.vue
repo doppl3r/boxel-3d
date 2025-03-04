@@ -31,9 +31,8 @@
 
     // Toggle fullscreen
     if (window.api) {
-      // Request fullscreen from Electron main.js
-      fullscreen.value = !fullscreen.value;
-      window.api.sendMessageToMain({ fullscreen: fullscreen.value });
+      // Send message to preload.js
+      window.api.toggleFullScreen();
     }
     else {
       if (isFullscreen()) document.exitFullscreen();

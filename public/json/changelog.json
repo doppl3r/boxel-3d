@@ -539,7 +539,8 @@
   {
     "version": "2.4.1",
     "revisions": [
-      "Added Steam Overlay (Steam version)"
+      "Added Steam Overlay (Steam version)",
+      "Updated fullscreen behavior (Steam version)"
     ]
   }
 ]
