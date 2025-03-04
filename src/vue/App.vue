@@ -3,8 +3,9 @@
   import { onMounted, shallowReactive, reactive, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
-  import ButtonVolume from './ButtonVolume.vue';
   import ButtonDiscord from './ButtonDiscord.vue';
+  import ButtonFullScreen from './ButtonFullScreen.vue';
+  import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
   import ModalSteam from './ModalSteam.vue';
   import ModalNews from './ModalNews.vue';
@@ -108,6 +109,7 @@
   <div class="ui">
     <div class="actions">
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
+      <ButtonFullScreen />
       <ButtonDiscord @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" />
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
@@ -146,9 +148,9 @@
     .actions {
       display: flex;
       gap: 0.5em;
-      left: 1em;
+      right: 1.5em;
       position: absolute;
-      top: 1em;
+      top: 1.5em;
     }
   }
 

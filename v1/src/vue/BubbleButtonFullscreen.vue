@@ -30,9 +30,9 @@
     }
 
     // Toggle fullscreen
-    if (window.api) {
+    if (window.electron) {
       // Send message to preload.mjs
-      window.api.toggleFullScreen();
+      window.electron.toggleFullScreen();
     }
     else {
       if (isFullscreen()) document.exitFullscreen();

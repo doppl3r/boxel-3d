@@ -13,10 +13,6 @@
 
 <style lang="scss" scoped>
   .action {
-    :deep(img) {
-      filter: invert(1);
-      width: 1.5em;
-      height: 1.5em;
-    }
+    
   }
 </style>

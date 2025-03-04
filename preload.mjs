@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 // Predefine message for renderer to request
-contextBridge.exposeInMainWorld('api', {
+contextBridge.exposeInMainWorld('electron', {
   toggleFullScreen: message => {
     // Send message to main.js
     ipcRenderer.send('toggleFullScreen', message);
