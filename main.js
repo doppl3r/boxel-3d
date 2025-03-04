@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, Menu, shell } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, shell } from 'electron';
 import { fileURLToPath } from 'url';
 import Store from 'electron-store';
 import steamworks from 'steamworks.js';
@@ -26,9 +26,9 @@ function createWindow() {
     title: 'Boxel 3D',
     useContentSize: true,
     webPreferences: {
-      contextIsolation: false,
+      contextIsolation: true,
       nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, './preload.mjs')
     },
     width: store.get('width') || 640,
     x: store.get('x'),
@@ -50,23 +50,26 @@ function createWindow() {
     store.set({ maximized });
   }
 
-  function storeWindowFullscreen() {
-    const fullscreen = mainWindow.isFullScreen();
-    store.set({ fullscreen });
-  } 
-
+  // Add event listeners
   mainWindow.on('resized', storeWindowSize);
   mainWindow.on('moved', storeWindowPosition);
   mainWindow.on('maximize', storeWindowMaximized);
   mainWindow.on('unmaximize', storeWindowMaximized);
-  mainWindow.on('enter-full-screen', storeWindowFullscreen);
-  mainWindow.on('leave-full-screen', storeWindowFullscreen);
+
+  // Add event listener to preload.js (bridged to renderer)
+  ipcMain.on('messageFromRenderer', (event, data) => {
+    if ('fullscreen' in data) {
+      mainWindow.setFullScreen(data.fullscreen);
+      store.set('fullscreen', data.fullscreen);
+    }
+  });
 
   // Show the game only after it is done loading (requires "show": false above to work properly)
   mainWindow.once('ready-to-show', function() {
     // Maximize/fullscreen window if already set
     if (store.get('maximized')) mainWindow.maximize();
     mainWindow.setFullScreen(store.get('fullscreen'));
+    globalShortcut.register('Escape', function(){ mainWindow.setFullScreen(false); });
 
     // Reset zoom before showing app
     mainWindow.webContents.setZoomFactor(1);
@@ -100,7 +103,7 @@ function loadMods(file = '/Charlieee1/Boxel-3d-Mods/main/Boxel 3d Modding API.us
 
 // This method will be called when Electron has finished initialization and is ready to create browser windows. Some APIs can only be used after this event occurs.
 app.whenReady().then(function () {
-  createWindow()
+  createWindow();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.

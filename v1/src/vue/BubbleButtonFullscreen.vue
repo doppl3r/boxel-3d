@@ -5,7 +5,7 @@
 
   document.addEventListener('fullscreenchange', function() {
     fullscreen.value = isFullscreen();
-  })
+  });
 
   function isExtension() {
     return window.chrome?.extension;
@@ -30,8 +30,15 @@
     }
 
     // Toggle fullscreen
-    if (isFullscreen()) document.exitFullscreen();
-    else document.body.requestFullscreen();
+    if (window.api) {
+      // Request fullscreen from Electron main.js
+      fullscreen.value = !fullscreen.value;
+      window.api.sendMessageToMain({ fullscreen: fullscreen.value });
+    }
+    else {
+      if (isFullscreen()) document.exitFullscreen();
+      else document.body.requestFullscreen();
+    }
   }
 </script>
 
