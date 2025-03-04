@@ -3,7 +3,7 @@
   "version": "2.2.4",
   "description": "Boxel 3D is the 3rd release of your favorite box jumping game made by the developers of Boxel Rebound.",
   "author": "Jacob DeBenedetto",
-  "main": "main.js",
+  "main": "main.mjs",
   "type": "module",
   "scripts": {
     "build": "vite build",
@@ -20,7 +20,7 @@
     "icon": "png/icon512.png",
     "files": [
       "build",
-      "main.js",
+      "main.mjs",
       "preload.mjs"
     ],
     "mac": {
