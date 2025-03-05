@@ -174,20 +174,31 @@
       <h1>{{ i18n.t('level_picker.title') }}</h1>
       <p v-html="description"></p>
       <BubbleCarousel :items="items" :selected="selectedItem" :key="key" />
-    </div>
-    <div class="footer">
-      <div class="center">
-        <a class="button fade-in" @click="openLevelSelector">
-          <span class="material-symbols-rounded">identity_platform</span>
-          {{ i18n.t('popup.text.info') }}
-        </a>
-        <a class="button fade-in" @click="playSelectedItem">
-          <span class="material-symbols-rounded">slideshow</span>
-          {{ i18n.t('level_picker.button.play') }}
-        </a>
+      <div class="footer">
+        <div class="center">
+          <a class="button fade-in" @click="openLevelSelector">
+            <span class="material-symbols-rounded">identity_platform</span>
+            {{ i18n.t('popup.text.info') }}
+          </a>
+          <a class="button fade-in" @click="playSelectedItem">
+            <span class="material-symbols-rounded">slideshow</span>
+            {{ i18n.t('level_picker.button.play') }}
+          </a>
+        </div>
       </div>
     </div>
 
     <BubblePopupLevelSelector />
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .ui-bubble {
+    .page {
+      .footer {
+        padding: 1em 0 0;
+        position: relative;
+      }
+    }
+  }
+</style>

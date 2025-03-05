@@ -122,12 +122,27 @@
       <h1>{{ i18n.t('skins.title') }}</h1>
       <p>{{ i18n.t('skins.description') }}</p>
       <BubbleCarousel :items="skins" :selected="defaultSkin" class="hide-titles" />
-    </div>
-    <div class="footer">
-      <a class="button center fade-in" @click="exitSkins">
-        <span class="material-symbols-rounded">check_box</span>
-        {{ i18n.t('skins.button.select') }}
-      </a>
+      <div class="footer">
+        <a class="button center fade-in" @click="exitSkins">
+          <span class="material-symbols-rounded">check_box</span>
+          {{ i18n.t('skins.button.select') }}
+        </a>
+      </div>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .ui-bubble {
+    .page {
+      .footer {
+        padding: 1em 0 0;
+        position: relative;
+
+        .center {
+          gap: 0;
+        }
+      }
+    }
+  }
+</style>
