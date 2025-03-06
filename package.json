@@ -54,7 +54,7 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@dimforge/rapier3d": "^0.14.0",
+    "@dimforge/rapier3d": "^0.15.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "electron": "^34.3.0",
     "electron-builder": "^25.1.8",
