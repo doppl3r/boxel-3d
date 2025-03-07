@@ -195,6 +195,10 @@
 <style lang="scss" scoped>
   .ui-bubble {
     .page {
+      .content {
+        padding-bottom: 0;
+      }
+      
       .footer {
         padding: 1em 0 0;
         position: relative;
