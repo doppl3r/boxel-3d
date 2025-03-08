@@ -1,5 +1,5 @@
-const { ipcRenderer } = require('electron/renderer');
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
+const steamworks = require('steamworks.js');
 
 // All of the Node.js APIs are available in the preload process.
 window.addEventListener('DOMContentLoaded', function () {
@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 // Predefine message for renderer to request
 contextBridge.exposeInMainWorld('electron', {
+  steamworks,
   toggleFullScreen: message => {
     // Send message to main.mjs
     ipcRenderer.send('toggleFullScreen', message);
