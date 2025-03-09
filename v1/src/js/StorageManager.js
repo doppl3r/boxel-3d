@@ -60,7 +60,7 @@ class StorageManager {
 
   saveScore(levelName, score) {
     var scores = this.getScores();
-    var oldScore = 999999; // Default bad score
+    var oldScore = 999999999; // Default bad score
     var newScore = parseInt(score.replace(/[^\d]/g, ''));
     var hasNewScore = false;
     var data = scores[levelName];
