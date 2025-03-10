@@ -1,11 +1,16 @@
 <script setup>
-  import { onMounted, onUnmounted, ref } from 'vue';
+  import { computed, onMounted, onUnmounted, ref } from 'vue';
 
   var isVisible = ref(false);
   var prevTime = Date.now();
   var running = false;
   var frames = 0;
+  var mode = ref(app?.stats?.mode || 'fps');
   var fps = ref(0);
+  var position = ref('');
+  var coordinates = computed(() => {
+    return '<span>' + position.value.split('').join('</span><span>') + '</span>'
+  })
 
   function addEventListeners() {
     window.addEventListener('updateStatsVisibility', updateStatsVisibility);
@@ -21,12 +26,17 @@
       requestAnimationFrame(function() { checkFPS(); });
   
       // Calculate new time between frames
-      var time = Date.now();
-      frames++;
-      if (time > prevTime + 1000) {
-        fps.value = Math.round(( frames * 1000 ) / ( time - prevTime ));
-        prevTime = time;
-        frames = 0;
+      if (mode.value == 'fps') {
+        var time = Date.now();
+        frames++;
+        if (time > prevTime + 1000) {
+          fps.value = Math.round(( frames * 1000 ) / ( time - prevTime ));
+          prevTime = time;
+          frames = 0;
+        }
+      }
+      else {
+        position.value = `x:${ Math.floor(app.player.position.x) }, y:${ Math.floor(app.player.position.y) }, z:${ Math.floor(app.player.position.z) }`;
       }
     }
   }
@@ -45,6 +55,14 @@
     isVisible.value = settings.stats;
   }
 
+  function changeStats() {
+    if (mode.value == 'fps') mode.value = 'position'; 
+    else mode.value = 'fps';
+    
+    // Store stats mode in global memory
+    app.stats = Object.assign(app.stats || {}, { mode: mode.value });
+  }
+
   onMounted(function() {
     start();
     updateStatsVisibility();
@@ -58,8 +76,26 @@
 </script>
 
 <template>
-  <a class="stats button left fade-in disabled" v-if="isVisible">
-    <span class="material-symbols-rounded">speed</span>
-    <span class="fps">{{ fps }} FPS</span>
+  <a class="stats button left fade-in" :class="mode" v-if="isVisible" @click="changeStats">
+    <span class="material-symbols-rounded" v-if="mode == 'fps'">speed</span>
+    <span class="material-symbols-rounded" v-if="mode == 'position'">my_location</span>
+    <span class="fps" v-if="mode == 'fps'">{{ fps }} FPS</span>
+    <div class="position" v-if="mode == 'position'" v-html="coordinates"></div>
   </a>
 </template>
+
+<style lang="scss" scoped>
+  .stats {
+    gap: 0 ;
+    pointer-events: all;
+
+    > * { pointer-events: none; }
+
+    .position {
+      :deep(span) {
+        display: inline-block;
+        min-width: 0.75em;
+      }
+    }
+  }
+</style>

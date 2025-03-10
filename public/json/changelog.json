@@ -546,6 +546,7 @@
   {
     "version": "2.4.2",
     "revisions": [
+      "Added player coordinates (Settings > Graphics > Show FPS > then click FPS while playing)",
       "Updated max time from 16 minutes to 11 days"
     ]
   }
