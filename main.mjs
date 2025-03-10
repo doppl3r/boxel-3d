@@ -13,8 +13,11 @@ const __dirname = path.dirname(__filename);
 const store = new Store();
 
 // Enable Steam overlay
-const client = steamworks.init(3208440);
+steamworks.init(3208440);
 steamworks.electronEnableSteamOverlay();
+
+// Add event listener to preload.js (bridged to renderer)
+ipcMain.handle('toggleFullScreen', toggleFullScreen);
 
 // Initialize main window outside creation
 let mainWindow;
@@ -40,14 +43,6 @@ function storeWindowMaximized() {
 function toggleFullScreen() {
   mainWindow.setFullScreen(!store.get('fullscreen'));
   store.set('fullscreen', !store.get('fullscreen'));
-}
-
-function handleWorkshop(event, ...args) {
-  const fnName = args[0];
-  const fnParams = args.slice(1);
-  try { return client.workshop[fnName](...fnParams); }
-  catch (error) { console.error(error); }
-  return;
 }
 
 function openDevTools() {
@@ -84,10 +79,6 @@ function createWindow() {
     // Reset zoom before showing app
     mainWindow.webContents.setZoomFactor(1);
     mainWindow.show();
-
-    // Add event listener to preload.js (bridged to renderer)
-    ipcMain.handle('toggleFullScreen', toggleFullScreen);
-    ipcMain.handle('workshop', handleWorkshop);
 
     // Add event listeners
     mainWindow.on('resized', storeWindowSize);
