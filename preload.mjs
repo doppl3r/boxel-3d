@@ -8,9 +8,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
 // Predefine message for renderer to request
 contextBridge.exposeInMainWorld('electron', {
-  steamworks,
-  toggleFullScreen: message => {
-    // Send message to main.mjs
-    ipcRenderer.send('toggleFullScreen', message);
-  }
+  toggleFullScreen: () => ipcRenderer.invoke('toggleFullScreen'),
+  workshop: async (...args) => await ipcRenderer.invoke('workshop', ...args)
 });

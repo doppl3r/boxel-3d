@@ -12,6 +12,10 @@ const __dirname = path.dirname(__filename);
 // Initialize state keeper
 const store = new Store();
 
+// Enable Steam overlay
+const client = steamworks.init(3208440);
+steamworks.electronEnableSteamOverlay();
+
 // Initialize main window outside creation
 let mainWindow;
 
@@ -38,20 +42,16 @@ function toggleFullScreen() {
   store.set('fullscreen', !store.get('fullscreen'));
 }
 
-function openDevTools() {
-  mainWindow.webContents.openDevTools();
+function handleWorkshop(event, ...args) {
+  const fnName = args[0];
+  const fnParams = args.slice(1);
+  try { return client.workshop[fnName](...fnParams); }
+  catch (error) { console.error(error); }
+  return;
 }
 
-function loadMods(file = '/Charlieee1/Boxel-3d-Mods/main/Boxel 3d Modding API.user.js') {
-  // TEST: Load mods from URL
-  const url = 'https://raw.githubusercontent.com';
-  file = '/Charlieee1/Boxel-3d-Mods/main/Boxel 3d Modding API.user.js';
-  fetch(url + file)
-    .then(response => response.text())
-    .then(code => {
-      // Execute code
-      mainWindow.webContents.executeJavaScript(code);
-    });
+function openDevTools() {
+  mainWindow.webContents.openDevTools();
 }
 
 function createWindow() {
@@ -86,7 +86,8 @@ function createWindow() {
     mainWindow.show();
 
     // Add event listener to preload.js (bridged to renderer)
-    ipcMain.on('toggleFullScreen', toggleFullScreen);
+    ipcMain.handle('toggleFullScreen', toggleFullScreen);
+    ipcMain.handle('workshop', handleWorkshop);
 
     // Add event listeners
     mainWindow.on('resized', storeWindowSize);
@@ -131,7 +132,3 @@ app.whenReady().then(function () {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit();
 });
-
-// Enable Steam overlay
-steamworks.init(3208440);
-steamworks.electronEnableSteamOverlay();
