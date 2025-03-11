@@ -7,8 +7,9 @@
   import ButtonFullScreen from './ButtonFullScreen.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import Card from './Card.vue';
-  import ModalSteam from './ModalSteam.vue';
   import ModalNews from './ModalNews.vue';
+  import ModalSteam from './ModalSteam.vue';
+  import ModalWorkshop from './ModalWorkshop.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
   import { Ticker } from '../../v2/src/js/core/Ticker.js';
   import { Graphics } from '../../v2/src/js/core/Graphics.js';
@@ -20,6 +21,7 @@
   const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
+  const modalWorkshopVisible = ref(false);
   const modalSteamVisible = ref(false);
   const modalNewsVisible = ref(false);
   let ticker;
@@ -114,10 +116,11 @@
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-steam.svg'" @click="modalSteamVisible = true" v-if="isExtension()">{{ i18n.t('home.button.steam') }}</Card>
+      <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true">{{ i18n.t('home.button.workshop') }}</Card>
       <Card :src="'./svg/button-news.svg'" @click="modalNewsVisible = true">{{ i18n.t('home.button.news') }}</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
     </div>
+    <ModalWorkshop @close="modalWorkshopVisible = false" v-show="modalWorkshopVisible == true" />
     <ModalSteam @close="modalSteamVisible = false" v-show="modalSteamVisible == true" />
     <ModalNews @close="modalNewsVisible = false" v-show="modalNewsVisible == true" />
     <Loading />

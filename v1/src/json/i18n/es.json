@@ -14,7 +14,8 @@
       "news": "Informacion",
       "play": "Jugar",
       "skins": "Apariencia",
-      "steam": "Steam"
+      "steam": "Steam",
+      "workshop": "Workshop"
     },
     "messages": {
       "0": "¡Bienvenidos!",

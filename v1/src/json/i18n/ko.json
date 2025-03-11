@@ -14,7 +14,8 @@
       "news": "뉴스",
       "play": "게임플레이",
       "skins": "스킨",
-      "steam": "Steam"
+      "steam": "Steam",
+      "workshop": "Workshop"
     },
     "messages": {
       "0": "Welcome!",
