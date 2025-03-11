@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <Modal>
+  <Modal class="steam">
     <template #title>
       Steam Edition
     </template>

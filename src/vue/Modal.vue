@@ -88,7 +88,7 @@
         align-items: center;
         animation: translateBackground 5s linear;
         animation-iteration-count: infinite;
-        background-color: #FFCB4C;
+        background-color: #9F00FF;
         background-image: url('/svg/background-stars-purple.svg');
         background-size: 8em;
         background-position: center;

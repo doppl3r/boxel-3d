@@ -1,20 +1,22 @@
 <script setup>
   import { computed, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import Loader from './Loader.vue';
   
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
+  const isLoading = ref(false);
   const itemTypes = ref([
-    { title: 'Subscriptions', value: 'subscriptions' },
-    { title: 'Creations', value: 'creations' }
-  ])
+    { title: 'Subscriptions', id: 'subscriptions' },
+    { title: 'Creations', id: 'creations' }
+  ]);
   const itemsSubscriptions = ref([]);
   const itemsCreations = ref([]);
-  const selectedItemType = ref('subscriptions');
+  const selectedItemType = ref(itemTypes.value[0]);
   const selectedItem = ref({});
   const search = ref('');
   const filteredItems = computed(() => {
-    const items = selectedItemType.value == 'subscriptions' ? itemsSubscriptions : itemsCreations;
+    const items = selectedItemType.value.id == 'subscriptions' ? itemsSubscriptions : itemsCreations;
     
     // Evaluate true if any object value matches
     return items.value.filter(item => Object.values(item).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase())))
@@ -24,27 +26,51 @@
     search.value = '';
   }
 
-  function selectItemType(item) {
-    selectedItemType.value = item.value;
+  function selectItemType(type) {
+    selectedItemType.value = type;
   }
 
-  function selectItem(type) {
+  function selectItem(item) {
     // Set new selected item value
-    selectedItem.value = type.value;
+    selectedItem.value = item;
+  }
+
+  function openLink(url, target = '_self') {
+    window.open(url, target);
+  }
+
+  async function getSubscriptions() {
+    isLoading.value = true;
+    if (window.electron) {
+      // Get array of item ids
+      const itemIds = window.electron.client.workshop.getSubscribedItems();
+
+      if (itemIds.length > 0) {
+        // Get array of item objects
+        const data = await window.electron.client.workshop.getItems(itemIds);
+        const items = data.items;
+        itemsSubscriptions.value = items;
+      }
+    }
+    isLoading.value = false;
+  }
+
+  function createItem() {
+    
   }
 </script>
 
 <template>
-  <Transition name="fade">
-    <div class="workshop">
+  <Transition name="fade-modal" @before-enter="getSubscriptions()">
+    <div class="modal workshop">
       <div class="workshop__background" @click="$emit('close')"></div>
       <div class="workshop__container">
         <div class="workshop__types">
           <div class="workshop__types-header">Workshop</div>
           <ul class="workshop__types-list">
-            <template v-for="itemType in itemTypes" :key="itemType.value">
+            <template v-for="itemType in itemTypes" :key="itemType.id">
               <li>
-                <button :class="{ selected: selectedItemType == itemType.value }" @click="selectItemType(itemType)">
+                <button :class="{ selected: selectedItemType == itemType }" @click="selectItemType(itemType)">
                   <span>{{ itemType.title }}</span>
                 </button>
               </li>
@@ -64,9 +90,21 @@
           <ul class="workshop__items-list">
             <template v-for="item in filteredItems" :key="item.title">
               <li>
-                <button :class="{ selected: selectedItem.title == item.title }" @click="selectItem(item)">
-                  <img v-if="item.thumbnail" :src="item.thumbnail" :alt="item.title" />
-                  <span>{{ item.description }}</span>
+                <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
+                  <img :src="item.thumbnail" :alt="item.title" />
+                  <span>{{ item.title }}</span>
+                </button>
+              </li>
+            </template>
+            <template v-if="filteredItems.length == 0">
+              <li>
+                <button v-if="selectedItemType.id == 'subscriptions'" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                  <span class="material-symbols-rounded">open_in_new</span>
+                  <span>Add Subscriptions</span>
+                </button>
+                <button v-else @click="createItem()">
+                  <span class="material-symbols-rounded">add</span>
+                  <span>Add Creation</span>
                 </button>
               </li>
             </template>
@@ -75,7 +113,7 @@
         <div class="workshop__info">
           <div class="workshop__info-header">{{ i18n.t('popup.text.info') }}</div>
           <div class="workshop__info-content">
-            <div class="workshop__info-thumbnail" :key="selectedItemType">
+            <div class="workshop__info-thumbnail" :key="selectedItem.title">
               <img :src="selectedItem.thumbnail" :alt="selectedItem.description" />
               <label v-if="selectedItem.label">
                 <span>{{ selectedItem.label }}</span>
@@ -83,11 +121,18 @@
             </div>
             <div class="workshop__info-details">
               <ul>
-                <li>{{ selectedItem.description }}</li>
+                <li>
+                  <span>{{ selectedItem.description }}</span>
+                </li>
               </ul>
             </div>
           </div>
         </div>
+        <Transition name="loading">
+          <div class="workshop__loading" v-if="isLoading">
+            <Loader />
+          </div>
+        </Transition>
         <a class="workshop__close" @click="$emit('close')" :title="i18n.t('popup.button.close')">
           <span class="material-symbols-rounded">close</span>
         </a>
@@ -97,13 +142,37 @@
 </template>
 
 <style lang="scss" scoped>
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.1s ease;
+  // Animations
+  @keyframes translateBackground { 0% { background-position: 0em 0em; } 100% { background-position: -8em -8em; } }
+  @keyframes grow { 0% { transform: scale(1); } 50% { transform: scale(1.20); } 100% { transform: scale(1); } }
+  @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(10deg); } 66% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
+  @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+  @keyframes twist { 0% { opacity: 0; transform: rotate(15deg) scale(0.75); } 100% { opacity: 1; transform: rotate(0deg) scale(1); } }
+
+  // Modal fade transition
+  .fade-modal-enter-active {
+    animation: fade 0.2s;
+
+    .workshop__container {
+      animation: twist 0.2s;
+    }
+  }
+  
+  .fade-modal-leave-active {
+    animation: fade 0.2s reverse;
+
+    .workshop__container {
+      animation: twist 0.2s reverse;
+    }
   }
 
-  .fade-enter-from,
-  .fade-leave-to {
+  .loading-enter-active,
+  .loading-leave-active {
+    transition: opacity 1s ease;
+  }
+
+  .loading-enter-from,
+  .loading-leave-to {
     opacity: 0;
   }
 
@@ -128,7 +197,6 @@
     ::-webkit-scrollbar-thumb:hover { background: rgba(#FFFFFF, 1); border-radius: 99em; }
 
     .workshop__background {
-      background-color: rgba(#000000, 0.5);
       height: inherit;
       left: 0;
       position: absolute;
@@ -137,7 +205,12 @@
     }
 
     .workshop__container {
+      animation: translateBackground 5s linear;
+      animation-iteration-count: infinite;
       background-color: #9F00FF;
+      background-image: url('/svg/background-stars-purple.svg');
+      background-size: 8em;
+      background-position: center;
       border-radius: 0.75em;
       box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
       display: flex;
@@ -200,6 +273,11 @@
               border-radius: 0.25em;
               height: 1.5em;
               width: 1.5em;
+              visibility: hidden
+
+              [src] {
+                visibility: visible;
+              }
             }
 
             span {
@@ -288,7 +366,6 @@
 
         .workshop__items-list {
           .material-symbols-rounded {
-            color: #FFC24C;
             font-size: 1.5em;
           }
 
@@ -327,6 +404,9 @@
           position: relative;
 
           .workshop__info-thumbnail {
+            background-color: rgba(#000000, 0.1);
+            border-radius: 0.5em;
+            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
             display: flex;
             position: relative;
             width: 100%;
@@ -334,13 +414,16 @@
             img {
               animation: fadeIn 1s ease-out;
               animation-fill-mode: forwards;
-              border-radius: 0.5em;
-              box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
               filter: contrast(1.25);
               height: 6.25em;
-              width: 6.25em;
               position: relative;
+              visibility: hidden;
+              width: 6.25em;
               z-index: 0;
+
+              [src] {
+                visibility: visible;
+              }
             }
 
             label {
@@ -426,11 +509,6 @@
                     background-color: rgba(#000000, 0.2);
                   }
 
-                  img {
-                    height: 1em;
-                    width: 1em;
-                  }
-
                   span {
                     font-size: 1em;
                   }
@@ -487,6 +565,18 @@
             }
           }
         }
+      }
+
+      .workshop__loading {
+        align-items: center;
+        background-color: rgba(#9F00FF, 0.5);
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
       }
 
       .workshop__close {

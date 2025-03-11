@@ -32,7 +32,7 @@
 </script>
 
 <template>
-  <Modal @before-enter="updateModal($el)">
+  <Modal @before-enter="updateModal($el)" class="news">
     <template #title>
       News & Events
     </template>
