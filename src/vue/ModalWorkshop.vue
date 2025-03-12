@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, ref, toRaw } from 'vue';
+  import { computed, nextTick, ref, toRaw } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Loader from './Loader.vue';
   
@@ -7,6 +7,7 @@
   const i18n = useI18n({ useScope: 'global' });
   const isElectronApp = ref(window.electron != undefined);
   const isLoading = ref(false);
+  const itemsRef = ref();
   const itemTypes = ref([
     { title: 'Subscriptions', id: 'subscriptions' },
     { title: 'Creations', id: 'creations' }
@@ -43,7 +44,7 @@
       selectedItemType.value = type;
       if (selectedItemType.value.id == 'subscriptions') await getSubscriptions();
       else await getCreations();
-      selectItem(filteredItems.value[0] || {});
+      selectLastItem();
     }
   }
 
@@ -52,6 +53,20 @@
     if (selectedItem.value != item) {
       selectedItemUpdateDetails.value = {}; // Reset changes
       selectedItem.value = item;
+    }
+  }
+
+  function selectFirstItem() {
+    selectItem(filteredItems.value[0] || {});
+    scrollToSelected();
+  }
+
+  function selectLastItem() {
+    const length = filteredItems.value.length;
+    const index = length - 1;
+    if (length > 0) {
+      selectItem(filteredItems.value[index] || {});
+      scrollToSelected();
     }
   }
 
@@ -124,11 +139,18 @@
       // Update item for later
       Object.assign(item, meta);
       itemsCreations.value.push(item);
-      selectItem(item);
+      selectLastItem();
     }
     catch (error) {
       console.log(error);
     }
+  }
+
+  function scrollToSelected() {
+    nextTick(() => {
+      const index = filteredItems.value.findIndex(item => item == selectedItem.value);
+      itemsRef.value.children[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
   }
 
   async function updateItem(item, updateDetails) {
@@ -184,8 +206,9 @@
     }
   }
 
-  function loadModal() {
-    getSubscriptions();
+  async function loadModal() {
+    await selectItemType(selectedItemType.value);
+    selectLastItem()
   }
 </script>
 
@@ -216,7 +239,7 @@
               <span class="material-symbols-rounded">close</span>
             </button>
           </div>
-          <ul class="workshop__items-list">
+          <ul class="workshop__items-list" ref="itemsRef">
             <li>
               <button v-if="selectedItemType.id == 'subscriptions'" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
                 <span class="material-symbols-rounded">open_in_new</span>
