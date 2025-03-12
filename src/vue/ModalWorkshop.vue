@@ -84,6 +84,7 @@
           try {
             const data = await window.electron.client.workshop.getItems(itemIds);
             const items = data.items;
+            items.sort((a, b) => a.timeUpdated - b.timeUpdated);
             itemsSubscriptions.value = items;
           }
           catch (getItemsError) {
@@ -108,6 +109,7 @@
       try {
         const data = await window.electron.client.workshop.getUserItems(1, appOwner.accountId, 0, 13, 0, { creator: appId });
         const items = data.items;
+        items.sort((a, b) => a.timeCreated - b.timeCreated);
         itemsCreations.value = items;
       }
       catch (error) {
@@ -319,7 +321,7 @@
               </button>
             </div>
             <div class="workshop__info-details">
-              <textarea :disabled="selectedItemType.id == 'subscriptions'" @change="updateDescription(selectedItem, $event)">{{ selectedItem.description }}</textarea>
+              <textarea :disabled="selectedItemType.id == 'subscriptions'" @change="updateDescription(selectedItem, $event)" :key="selectedItem.publishedFileId">{{ selectedItem.description }}</textarea>
               <span class="accept material-symbols-rounded">check</span>
             </div>
             <button
