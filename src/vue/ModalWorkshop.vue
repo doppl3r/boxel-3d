@@ -16,6 +16,7 @@
   const selectedItemType = ref(itemTypes.value[0]);
   const selectedItem = ref({});
   const selectedItemUpdateDetails = ref({});
+  const itemIsSelected = computed(() => Object.keys(selectedItem.value).length > 0);
   const search = ref('');
   const filteredItems = computed(() => {
     const items = selectedItemType.value.id == 'subscriptions' ? itemsSubscriptions : itemsCreations;
@@ -35,6 +36,7 @@
 
   function selectItemType(type) {
     selectedItemType.value = type;
+    selectItem({});
 
     if (selectedItemType.value.id == 'subscriptions') {
       getSubscriptions();
@@ -45,6 +47,8 @@
   }
 
   function selectItem(item) {
+    console.log(item);
+
     // Set new selected item value
     if (selectedItem.value != item) {
       selectedItemUpdateDetails.value = {}; // Reset changes
@@ -54,7 +58,12 @@
 
   function openLink(url, target = '_self') {
     if (isElectronApp.value == true) {
-      window.electron.client.overlay.activateToWebPage(url);
+      try {
+        window.electron.client.overlay.activateToWebPage(url);
+      }
+      catch (error) {
+        console.error(error);
+      }
     }
     else {
       window.open(url, target);
@@ -65,13 +74,23 @@
     isLoading.value = true;
     if (isElectronApp.value == true) {
       // Get array of item ids
-      const itemIds = window.electron.client.workshop.getSubscribedItems();
-
-      if (itemIds.length > 0) {
-        // Get array of item objects
-        const data = await window.electron.client.workshop.getItems(itemIds);
-        const items = data.items;
-        itemsSubscriptions.value = items;
+      try {
+        const itemIds = window.electron.client.workshop.getSubscribedItems();
+        
+        if (itemIds.length > 0) {
+          // Get array of item objects
+          try {
+            const data = await window.electron.client.workshop.getItems(itemIds);
+            const items = data.items;
+            itemsSubscriptions.value = items;
+          }
+          catch (getItemsError) {
+            console.error(getItemsError)
+          }
+        }
+      }
+      catch (subscribedError) {
+        console.error(subscribedError);
       }
     }
     isLoading.value = false;
@@ -84,9 +103,14 @@
       const appId = window.electron.client.utils.getAppId();
 
       // page: 1, accountId: 37133196, listType: Published, itemType: All, sortOrder: CreationOrderAsc, appIds: {}
-      const data = await window.electron.client.workshop.getUserItems(1, appOwner.accountId, 0, 13, 0, { creator: appId });
-      const items = data.items;
-      itemsCreations.value = items;
+      try {
+        const data = await window.electron.client.workshop.getUserItems(1, appOwner.accountId, 0, 13, 0, { creator: appId });
+        const items = data.items;
+        itemsCreations.value = items;
+      }
+      catch (error) {
+        console.log(error);
+      }
     }
     isLoading.value = false;
   }
@@ -96,8 +120,14 @@
   }
 
   async function updateItem(item, updateDetails) {
-    // updateDetails: title, description, changeNote, previewPath, contentPath, tags, visibility
-    return await window.electron.client.workshop.updateItem(item.publishedFileId, updateDetails);
+    console.log(item, updateDetails);
+    try {
+      // updateDetails: title, description, changeNote, previewPath, contentPath, tags, visibility
+      return await window.electron.client.workshop.updateItem(item.publishedFileId, updateDetails);
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
 
   async function updateSelectedItem() {
@@ -121,7 +151,23 @@
     // Update if data is not canceled
     if (data.canceled == false) {
       selectedItemUpdateDetails.value.contentPath = data.filePaths[0];
-      item.contentPath = data.filePaths[0];
+    }
+  }
+
+  async function selectImage(item) {
+    // Ensure item is selected
+    selectItem(item);
+
+    // Prompt dialog for data
+    const data = await electron.dialog({
+      properties: ['openFile'],
+      filters: [{ 'name': 'Preview Image', 'extensions': ['png', 'jpg', 'gif'] }]
+    });
+
+    // Update if data is not canceled
+    if (data.canceled == false) {
+      item.previewPath = data.filePaths[0];
+      selectedItemUpdateDetails.value.previewPath = data.filePaths[0];
     }
   }
 
@@ -176,10 +222,10 @@
             </li>
             <li v-for="item in filteredItems" :key="item.title">
               <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
-                <img :src="item.thumbnail" :alt="item.title" />
+                <img :src="item.previewUrl" :alt="item.title" />
                 <span>{{ item.title }}</span>
               </button>
-              <button v-if="selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content">
+              <button v-if="itemIsSelected && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content">
                 <span class="material-symbols-rounded">folder_open</span>
               </button>
             </li>
@@ -189,10 +235,16 @@
           <div class="workshop__info-header">{{ i18n.t('popup.text.info') }}</div>
           <div class="workshop__info-content">
             <div class="workshop__info-thumbnail" :key="selectedItem.title">
-              <img :src="selectedItem.thumbnail" :alt="selectedItem.description" />
+              <img :src="selectedItem.previewUrl" :alt="selectedItem.description" />
               <label v-if="selectedItem.label">
                 <span>{{ selectedItem.label }}</span>
               </label>
+              <button
+                v-if="itemIsSelected && selectedItemType.id == 'creations' && isElectronApp == true"
+                @click="selectImage(selectedItem)"
+              >
+                <span class="material-symbols-rounded">edit</span>
+              </button>
             </div>
             <div class="workshop__info-details">
               <ul>
@@ -348,9 +400,9 @@
               border-radius: 0.25em;
               height: 1.5em;
               width: 1.5em;
-              visibility: hidden
+              visibility: hidden;
 
-              [src] {
+              &[src] {
                 visibility: visible;
               }
             }
@@ -481,8 +533,8 @@
           .workshop__info-thumbnail {
             background-color: rgba(#000000, 0.1);
             border-radius: 0.5em;
-            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
             display: flex;
+            overflow: hidden;
             position: relative;
             width: 100%;
 
@@ -496,7 +548,7 @@
               width: 6.25em;
               z-index: 0;
 
-              [src] {
+              &[src] {
                 visibility: visible;
               }
             }
@@ -517,6 +569,12 @@
               span {
                 font-size: 0.75em;
               }
+            }
+
+            button {
+              bottom: 50%;
+              left: 50%;
+              transform: translate(-50%, 50%);
             }
 
             &:after {
@@ -618,19 +676,6 @@
             transform: translateX(-50%);
             white-space: nowrap;
             z-index: 2;
-
-            &:focus,
-            &:hover {
-              animation: wiggle 0.25s ease-in-out;
-              animation-fill-mode: forwards;
-            }
-
-            @keyframes wiggle {
-              0% { transform: translateX(-50%) rotate(0); }
-              33% { transform: translateX(-50%) rotate(10deg); }
-              66% { transform: translateX(-50%) rotate(-10deg); }
-              100% { transform: translateX(-50%) rotate(0); }
-            }
           }
         }
       }
