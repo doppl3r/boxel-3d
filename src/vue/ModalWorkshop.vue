@@ -154,6 +154,12 @@
   async function updateItem(item, updateDetails) {
     let ugcResult;
     try {
+      // Assign additional details
+      Object.assign(updateDetails, {
+        tags: ['Level'], // TODO: Use contentPath to determine tags
+        visibility: 0 // 0 = Public, 1 = FriendsOnly, 2 = Private, 3 = Unlisted
+      });
+      
       // updateDetails: title, description, changeNote, previewPath, contentPath, tags, visibility
       isLoading.value = true;
       ugcResult = await window.electron.client.workshop.updateItem(item.publishedFileId, updateDetails);
@@ -250,24 +256,32 @@
           <ul class="workshop__items-list" ref="itemsRef">
             <li>
               <template v-if="selectedItemType.id == 'subscriptions'">
-                <button v-if="isElectronApp == true" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                  <span class="material-symbols-rounded">open_in_new</span>
-                  <span>Add Subscription</span>
-                </button>
-                <button v-else @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                  <span class="material-symbols-rounded">open_in_new</span>
-                  <span>Add Subscription (Steam)</span>
-                </button>
+                <template v-if="isElectronApp == true">
+                  <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                    <span class="material-symbols-rounded">open_in_new</span>
+                    <span>Browse items</span>
+                  </button>
+                </template>
+                <template v-else>
+                  <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                    <span class="material-symbols-rounded">open_in_new</span>
+                    <span>Browse items (Requires Steam)</span>
+                  </button>
+                </template>
               </template>
               <template v-else-if="selectedItemType.id == 'creations'">
-                <button v-if="isElectronApp == true" @click="createItem()">
-                  <span class="material-symbols-rounded">add</span>
-                  <span>Add Creation</span>
-                </button>
-                <button v-else @click="openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">
-                  <span class="material-symbols-rounded">add</span>
-                  <span>Add Creation (Steam)</span>
-                </button>
+                <template v-if="isElectronApp == true">
+                  <button @click="createItem()">
+                    <span class="material-symbols-rounded">add</span>
+                    <span>Create item</span>
+                  </button>
+                </template>
+                <template v-else>
+                  <button @click="openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">
+                    <span class="material-symbols-rounded">add</span>
+                    <span>Create item (Requires Steam)</span>
+                  </button>
+                </template>
               </template>
             </li>
             <li v-for="item in filteredItems" :key="item.title">
