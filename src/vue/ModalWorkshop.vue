@@ -27,7 +27,7 @@
     const items = selectedItemType.value.id == 'subscriptions' ? itemsSubscriptions : itemsCreations;
     
     // Evaluate true if any object value matches
-    return items.value.filter(item => Object.values(item).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase())))
+    return items.value.filter(item => item && Object.values(item).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase())))
   });
   const showSaveButton = computed(() => {
     const isCreation = selectedItemType.value.id == 'creations';
@@ -124,7 +124,7 @@
       const appId = window.electron.client.utils.getAppId();
       const data = await window.electron.client.workshop.createItem(appId);
       const item = await window.electron.client.workshop.getItem(data.itemId);
-      const preview = await window.electron.getFilePath('png/workshop-thumbnail.png');
+      const preview = await window.electron.getFilePath('public/png/workshop-thumbnail.png');
       const meta = {
         title: 'New Workshop Item',
         description: 'Workshop item description',
@@ -239,18 +239,24 @@
           </div>
           <ul class="workshop__items-list" ref="itemsRef">
             <li>
-              <button v-if="selectedItemType.id == 'subscriptions'" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                <span class="material-symbols-rounded">open_in_new</span>
-                <span>Add Subscription</span>
-              </button>
+              <template v-if="selectedItemType.id == 'subscriptions'">
+                <button v-if="isElectronApp == true" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                  <span class="material-symbols-rounded">open_in_new</span>
+                  <span>Add Subscription</span>
+                </button>
+                <button v-else @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                  <span class="material-symbols-rounded">open_in_new</span>
+                  <span>Add Subscription (Steam)</span>
+                </button>
+              </template>
               <template v-else-if="selectedItemType.id == 'creations'">
                 <button v-if="isElectronApp == true" @click="createItem()">
                   <span class="material-symbols-rounded">add</span>
                   <span>Add Creation</span>
                 </button>
                 <button v-else @click="openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">
-                  <span class="material-symbols-rounded">warning</span>
-                  <span>Only available on Steam</span>
+                  <span class="material-symbols-rounded">add</span>
+                  <span>Add Creation (Steam)</span>
                 </button>
               </template>
             </li>
@@ -329,7 +335,7 @@
 
   .loading-enter-active,
   .loading-leave-active {
-    transition: opacity 1s ease;
+    transition: opacity 0.2s ease;
   }
 
   .loading-enter-from,
@@ -430,7 +436,8 @@
               background-color: rgba(#000000, 0.5);
             }
 
-            &:hover {
+            &:hover,
+            &.selected:hover {
               background-color: rgba(#000000, 0.25);
             }
 
@@ -730,7 +737,8 @@
 
       .workshop__loading {
         align-items: center;
-        background-color: rgba(#9F00FF, 0.5);
+        background-color: rgba(#9F00FF, 0.75);
+        border-radius: inherit;
         height: 100%;
         display: flex;
         justify-content: center;
@@ -756,6 +764,7 @@
         top: 0;
         transform: translate(50%, -50%);
         width: 2em;
+        z-index: 2;
       }
     }
   }

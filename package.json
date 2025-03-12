@@ -17,6 +17,9 @@
     "directories": {
       "output": "dist"
     },
+    "extraFiles": [
+      "public/png/workshop-thumbnail.png"
+    ],
     "icon": "png/icon512.png",
     "files": [
       "build",

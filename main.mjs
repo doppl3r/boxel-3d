@@ -52,7 +52,8 @@ async function openDialog(event, args) {
 }
 
 async function getFilePath(event, args) {
-  return path.resolve(__dirname, 'public', args)
+  // Note: Add "extraFiles" value to package.json to access outside app.asar archive
+  return path.resolve(__dirname, app.isPackaged ? '../../' : '', args);
 }
 
 function openDevTools() {
