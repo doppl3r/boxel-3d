@@ -19,6 +19,7 @@ steamworks.electronEnableSteamOverlay();
 // Add event listener to preload.js (bridged to renderer)
 ipcMain.handle('toggleFullScreen', toggleFullScreen);
 ipcMain.handle('dialog', openDialog);
+ipcMain.handle('getFilePath', getFilePath);
 
 // Initialize main window outside creation
 let mainWindow;
@@ -48,6 +49,10 @@ function toggleFullScreen() {
 
 async function openDialog(event, args) {
   return await dialog.showOpenDialog(args);
+}
+
+async function getFilePath(event, args) {
+  return path.resolve(__dirname, 'public', args)
 }
 
 function openDevTools() {

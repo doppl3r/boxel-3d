@@ -16,7 +16,11 @@
   const selectedItemType = ref(itemTypes.value[0]);
   const selectedItem = ref({});
   const selectedItemUpdateDetails = ref({});
-  const itemIsSelected = computed(() => Object.keys(selectedItem.value).length > 0);
+  const itemIsSelected = computed(() => item => {
+    const itemEqualsSelected = item == selectedItem.value;
+    const itemHasKeys = (item == null && Object.keys(selectedItem.value).length > 0);
+    return itemEqualsSelected || itemHasKeys;
+  });
   const search = ref('');
   const filteredItems = computed(() => {
     const items = selectedItemType.value.id == 'subscriptions' ? itemsSubscriptions : itemsCreations;
@@ -34,15 +38,12 @@
     search.value = '';
   }
 
-  function selectItemType(type) {
-    selectedItemType.value = type;
-    selectItem({});
-
-    if (selectedItemType.value.id == 'subscriptions') {
-      getSubscriptions();
-    }
-    else {
-      getCreations();
+  async function selectItemType(type) {
+    if (selectedItemType.value != type) {
+      selectedItemType.value = type;
+      if (selectedItemType.value.id == 'subscriptions') await getSubscriptions();
+      else await getCreations();
+      selectItem(filteredItems.value[0] || {});
     }
   }
 
@@ -55,17 +56,7 @@
   }
 
   function openLink(url, target = '_self') {
-    if (isElectronApp.value == true) {
-      try {
-        window.electron.client.overlay.activateToWebPage(url);
-      }
-      catch (error) {
-        console.error(error);
-      }
-    }
-    else {
-      window.open(url, target);
-    }
+    window.open(url, target);
   }
 
   async function getSubscriptions() {
@@ -113,26 +104,50 @@
     isLoading.value = false;
   }
 
-  function createItem() {
-    
+  async function createItem() {
+    try {
+      // Create item and select it
+      isLoading.value = true;
+      const appId = window.electron.client.utils.getAppId();
+      const data = await window.electron.client.workshop.createItem(appId);
+      const item = await window.electron.client.workshop.getItem(data.itemId);
+      const preview = await window.electron.getFilePath('png/workshop-thumbnail.png');
+      const meta = {
+        title: 'New Workshop Item',
+        description: 'Workshop item description',
+        previewPath: preview,
+        previewUrl: preview
+      };
+      await updateItem(item, meta);
+      isLoading.value = false;
+
+      // Update item for later
+      Object.assign(item, meta);
+      itemsCreations.value.push(item);
+      selectItem(item);
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
   async function updateItem(item, updateDetails) {
-    console.log(item, updateDetails);
+    let ugcResult;
     try {
       // updateDetails: title, description, changeNote, previewPath, contentPath, tags, visibility
-      return await window.electron.client.workshop.updateItem(item.publishedFileId, updateDetails);
+      isLoading.value = true;
+      ugcResult = await window.electron.client.workshop.updateItem(item.publishedFileId, updateDetails);
     }
     catch (error) {
       console.error(error);
     }
+    isLoading.value = false;
+    return ugcResult;
   }
 
   async function updateSelectedItem() {
-    isLoading.value = true;
     const ugcResult = await updateItem(toRaw(selectedItem.value), toRaw(selectedItemUpdateDetails.value));
     selectedItemUpdateDetails.value = {};
-    isLoading.value = false;
     return ugcResult
   }
 
@@ -220,11 +235,14 @@
             </li>
             <li v-for="item in filteredItems" :key="item.title">
               <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
-                <img :src="item.previewUrl" :alt="item.title" />
+                <img :src="item.previewUrl || undefined" :alt="item.title" />
                 <span>{{ item.title }}</span>
               </button>
-              <button v-if="itemIsSelected && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content">
+              <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content">
                 <span class="material-symbols-rounded">folder_open</span>
+              </button>
+              <button v-if="itemIsSelected(item)" @click="openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')" title="View item">
+                <span class="material-symbols-rounded">link</span>
               </button>
             </li>
           </ul>
@@ -233,15 +251,16 @@
           <div class="workshop__info-header">{{ i18n.t('popup.text.info') }}</div>
           <div class="workshop__info-content">
             <div class="workshop__info-thumbnail" :key="selectedItem.title">
-              <img :src="selectedItem.previewUrl" :alt="selectedItem.description" />
+              <img :src="selectedItem.previewUrl || undefined" :alt="selectedItem.description" />
               <label v-if="selectedItem.label">
                 <span>{{ selectedItem.label }}</span>
               </label>
               <button
-                v-if="itemIsSelected && selectedItemType.id == 'creations' && isElectronApp == true"
+                v-if="itemIsSelected(null) && selectedItemType.id == 'creations' && isElectronApp == true"
                 @click="selectImage(selectedItem)"
               >
                 <span class="material-symbols-rounded">edit</span>
+                <span>Edit</span>
               </button>
             </div>
             <div class="workshop__info-details">
@@ -318,6 +337,7 @@
     ::-webkit-scrollbar-thumb:hover { background: rgba(#FFFFFF, 1); border-radius: 99em; }
 
     .workshop__background {
+      background-color: rgba(#000000, 0.5);
       height: inherit;
       left: 0;
       position: absolute;
@@ -385,6 +405,10 @@
               width: 100%;
             }
 
+            &:nth-child(n+2) {
+              background-color: rgba(#000000, 0.5);
+            }
+
             &:hover {
               background-color: rgba(#000000, 0.25);
             }
@@ -397,7 +421,7 @@
               box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
               border-radius: 0.25em;
               height: 1.5em;
-              object-fit: contain;
+              object-fit: cover;
               width: 1.5em;
               visibility: hidden;
 
@@ -542,7 +566,7 @@
               animation-fill-mode: forwards;
               filter: contrast(1.25);
               height: 6.25em;
-              object-fit: contain;
+              object-fit: cover;
               position: relative;
               visibility: hidden;
               width: 6.25em;
@@ -572,6 +596,7 @@
             }
 
             button {
+              background-color: #000000;
               bottom: initial;
               font-size: 0.75em;
               left: 0.5em;
