@@ -47,8 +47,6 @@
   }
 
   function selectItem(item) {
-    console.log(item);
-
     // Set new selected item value
     if (selectedItem.value != item) {
       selectedItemUpdateDetails.value = {}; // Reset changes
@@ -166,7 +164,7 @@
 
     // Update if data is not canceled
     if (data.canceled == false) {
-      item.previewPath = data.filePaths[0];
+      item.previewUrl = data.filePaths[0];
       selectedItemUpdateDetails.value.previewPath = data.filePaths[0];
     }
   }
@@ -399,6 +397,7 @@
               box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
               border-radius: 0.25em;
               height: 1.5em;
+              object-fit: contain;
               width: 1.5em;
               visibility: hidden;
 
@@ -543,6 +542,7 @@
               animation-fill-mode: forwards;
               filter: contrast(1.25);
               height: 6.25em;
+              object-fit: contain;
               position: relative;
               visibility: hidden;
               width: 6.25em;
@@ -572,9 +572,11 @@
             }
 
             button {
-              bottom: 50%;
-              left: 50%;
-              transform: translate(-50%, 50%);
+              bottom: initial;
+              font-size: 0.75em;
+              left: 0.5em;
+              top: 0.5em;
+              transform: initial;
             }
 
             &:after {
