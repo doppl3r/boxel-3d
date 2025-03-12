@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, ref } from 'vue';
+  import { computed, ref, toRaw } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Loader from './Loader.vue';
   
@@ -15,12 +15,18 @@
   const itemsCreations = ref([]);
   const selectedItemType = ref(itemTypes.value[0]);
   const selectedItem = ref({});
+  const selectedItemUpdateDetails = ref({});
   const search = ref('');
   const filteredItems = computed(() => {
     const items = selectedItemType.value.id == 'subscriptions' ? itemsSubscriptions : itemsCreations;
     
     // Evaluate true if any object value matches
     return items.value.filter(item => Object.values(item).some(val => val?.toString().toLowerCase().includes(search.value.toLowerCase())))
+  });
+  const showSaveButton = computed(() => {
+    const isCreation = selectedItemType.value.id == 'creations';
+    const isChanged = Object.keys(selectedItemUpdateDetails.value).length > 0;
+    return isCreation && isChanged && isLoading.value == false;
   });
 
   function clearSearch() {
@@ -40,7 +46,10 @@
 
   function selectItem(item) {
     // Set new selected item value
-    selectedItem.value = item;
+    if (selectedItem.value != item) {
+      selectedItemUpdateDetails.value = {}; // Reset changes
+      selectedItem.value = item;
+    }
   }
 
   function openLink(url, target = '_self') {
@@ -86,7 +95,24 @@
     
   }
 
+  async function updateItem(item, updateDetails) {
+    // updateDetails: title, description, changeNote, previewPath, contentPath, tags, visibility
+    return await window.electron.client.workshop.updateItem(item.publishedFileId, updateDetails);
+  }
+
+  async function updateSelectedItem() {
+    isLoading.value = true;
+    const ugcResult = await updateItem(toRaw(selectedItem.value), toRaw(selectedItemUpdateDetails.value));
+    selectedItemUpdateDetails.value = {};
+    isLoading.value = false;
+    return ugcResult
+  }
+
   async function selectContent(item) {
+    // Ensure item is selected
+    selectItem(item);
+
+    // Prompt dialog for data
     const data = await electron.dialog({
       properties: ['openFile'],
       filters: [{ 'name': 'Level File', 'extensions': ['json'] }]
@@ -94,12 +120,8 @@
 
     // Update if data is not canceled
     if (data.canceled == false) {
-      // title, description, changeNote, previewPath, contentPath, tags, visibility
-      const results = await window.electron.client.workshop.updateItem(item.publishedFileId, {
-        contentPath: data.filePaths[0]
-      });
-
-      console.log(results)
+      selectedItemUpdateDetails.value.contentPath = data.filePaths[0];
+      item.contentPath = data.filePaths[0];
     }
   }
 
@@ -179,6 +201,13 @@
                 </li>
               </ul>
             </div>
+            <button
+              v-if="showSaveButton"
+              @click="updateSelectedItem()"
+            >
+              <span class="material-symbols-rounded">save</span>
+              <span>Save</span>
+            </button>
           </div>
         </div>
         <Transition name="loading">
@@ -566,6 +595,43 @@
               }
             }
           }
+
+          button {
+            align-items: center;
+            background-color: #4CA9FF;
+            border-radius: 99em;
+            border-width: 0;
+            bottom: -1.5em;
+            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            font-family: inherit;
+            font-size: 1em;
+            gap: 0.5em;
+            height: 2em;
+            left: 50%;
+            outline: none;
+            padding: 0.5em;
+            position: absolute;
+            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+            transform: translateX(-50%);
+            white-space: nowrap;
+            z-index: 2;
+
+            &:focus,
+            &:hover {
+              animation: wiggle 0.25s ease-in-out;
+              animation-fill-mode: forwards;
+            }
+
+            @keyframes wiggle {
+              0% { transform: translateX(-50%) rotate(0); }
+              33% { transform: translateX(-50%) rotate(10deg); }
+              66% { transform: translateX(-50%) rotate(-10deg); }
+              100% { transform: translateX(-50%) rotate(0); }
+            }
+          }
         }
       }
 
@@ -579,6 +645,7 @@
         position: absolute;
         top: 0;
         width: 100%;
+        z-index: 1;
       }
 
       .workshop__close {
