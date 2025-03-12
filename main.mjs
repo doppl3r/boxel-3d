@@ -76,8 +76,11 @@ function createWindow() {
   // Set fullscreen state from store
   mainWindow.setFullScreen(store.get('fullscreen'));
 
-  // Maximize/fullscreen window if already set
+  // Automatically maximize window
   if (store.get('maximized')) mainWindow.maximize();
+
+  // Automatically open devtools
+  if (store.get('devtools')) openDevTools();
 
   // Show the game only after it is done loading (requires "show": false above to work properly)
   mainWindow.once('ready-to-show', function() {
@@ -91,6 +94,10 @@ function createWindow() {
     mainWindow.on('maximize', storeWindowMaximized);
     mainWindow.on('unmaximize', storeWindowMaximized);
   });
+
+  // Store devtools visibility
+  mainWindow.webContents.on('devtools-opened', () => store.set('devtools', true))
+  mainWindow.webContents.on('devtools-closed', () => store.set('devtools', false))
 
   // Allow game to send users to default browser
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
