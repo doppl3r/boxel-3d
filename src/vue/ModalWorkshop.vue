@@ -40,12 +40,10 @@
   }
 
   async function selectItemType(type) {
-    if (selectedItemType.value != type) {
-      selectedItemType.value = type;
-      if (selectedItemType.value.id == 'subscriptions') await getSubscriptions();
-      else await getCreations();
-      selectLastItem();
-    }
+    selectedItemType.value = type;
+    if (selectedItemType.value.id == 'subscriptions') await getSubscriptions();
+    else await getCreations();
+    selectLastItem();
   }
 
   function selectItem(item) {
