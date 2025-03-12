@@ -146,6 +146,36 @@ class StorageManager {
     saveAs(blob, levelData.name);
   }
 
+  screenshot(width = 160, height = 90, save = false) {
+    var src = '';
+    var widthOrigin = window.innerWidth;
+    var heightOrigin = window.innerHeight;
+    var pixelRatioOrigin = app.graphics.renderer.getPixelRatio();
+
+    // Update camera and renderer for screenshot
+    app.graphics.camera.aspect = width / height;
+    app.graphics.camera.updateProjectionMatrix();
+    app.graphics.renderer.setPixelRatio(1);
+    app.graphics.renderer.setSize(width, height);
+    app.graphics.renderer.render(app.graphics.scene, app.graphics.camera);
+    src = app.graphics.renderer.domElement.toDataURL('image/png');
+    
+    // Save to file
+    if (save == true) {
+      app.graphics.renderer.domElement.toBlob(blob => saveAs(blob, 'screenshot.png'));
+    }
+    
+    // Reset camera and renderer
+    app.graphics.camera.aspect = widthOrigin / heightOrigin;
+    app.graphics.camera.updateProjectionMatrix();
+    app.graphics.renderer.setPixelRatio(pixelRatioOrigin);
+    app.graphics.renderer.setSize(widthOrigin, heightOrigin);
+    app.graphics.renderer.render(app.graphics.scene, app.graphics.camera);
+
+    // Return src for data save
+    return src;
+  }
+
   loadLevelFromFile() {
     var input = document.createElement("input");
     input.setAttribute('type', 'file');

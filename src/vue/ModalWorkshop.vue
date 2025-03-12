@@ -630,6 +630,7 @@
               left: 0.5em;
               top: 0.5em;
               transform: initial;
+              z-index: 2;
             }
 
             &:after {
@@ -649,6 +650,7 @@
               position: absolute;
               top: 0;
               width: 100%;
+              z-index: 1;
             }
 
             @keyframes slide {
@@ -746,7 +748,7 @@
         position: absolute;
         top: 0;
         width: 100%;
-        z-index: 1;
+        z-index: 3;
       }
 
       .workshop__close {
