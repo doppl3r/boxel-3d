@@ -111,7 +111,7 @@
         itemsCreations.value = items;
       }
       catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     isLoading.value = false;
@@ -140,7 +140,7 @@
       selectLastItem();
     }
     catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -185,6 +185,16 @@
     if (data.canceled == false) {
       selectedItemUpdateDetails.value.contentPath = data.filePaths[0];
     }
+  }
+
+  function updateTitle(item, e) {
+    item.title = e.target.value;
+    selectedItemUpdateDetails.value.title = e.target.value;
+  }
+
+  function updateDescription(item, e) {
+    item.description = e.target.value;
+    selectedItemUpdateDetails.value.description = e.target.value;
   }
 
   async function selectImage(item) {
@@ -263,7 +273,11 @@
             <li v-for="item in filteredItems" :key="item.title">
               <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
                 <img :src="item.previewUrl || undefined" :alt="item.title" />
-                <span>{{ item.title }}</span>
+                <span v-if="selectedItemType.id == 'subscriptions'">{{ item.title }}</span>
+                <template v-else>
+                  <input type="text" :value="item.title" @change="updateTitle(item, $event)" />
+                  <span class="accept material-symbols-rounded">check</span>
+                </template>
               </button>
               <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content">
                 <span class="material-symbols-rounded">folder_open</span>
@@ -277,7 +291,7 @@
         <div class="workshop__info">
           <div class="workshop__info-header">{{ i18n.t('popup.text.info') }}</div>
           <div class="workshop__info-content">
-            <div class="workshop__info-thumbnail" :key="selectedItem.title">
+            <div class="workshop__info-thumbnail">
               <img :src="selectedItem.previewUrl || undefined" :alt="selectedItem.description" />
               <label v-if="selectedItem.label">
                 <span>{{ selectedItem.label }}</span>
@@ -291,11 +305,8 @@
               </button>
             </div>
             <div class="workshop__info-details">
-              <ul>
-                <li>
-                  <span>{{ selectedItem.description }}</span>
-                </li>
-              </ul>
+              <textarea :disabled="selectedItemType.id == 'subscriptions'" @change="updateDescription(selectedItem, $event)">{{ selectedItem.description }}</textarea>
+              <span class="accept material-symbols-rounded">check</span>
             </div>
             <button
               v-if="showSaveButton"
@@ -460,6 +471,29 @@
 
             span {
               font-size: 0.75em;
+            }
+
+            input[type="text"] {
+              background-color: transparent;
+              border-width: 0;
+              color: inherit;
+              padding: 0;
+              text-shadow: inherit;
+              font-family: inherit;
+              font-size: 0.75em;
+              width: 100%;
+
+              &:focus {
+                outline: none;
+
+                + .accept {
+                  display: block;
+                }
+              }
+            }
+
+            .accept {
+              display: none;
             }
           }
         }
@@ -672,42 +706,38 @@
             font-size: 1em;
             max-height: 6em;
             padding: 0.5em;
+            position: relative;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             width: 100%;
             word-wrap: break-word;
 
-            ul {
-              overflow-x: hidden;
-              overflow-y: auto;
+            textarea {
+              background-color: transparent;
+              border-width: 0;
+              color: inherit;
+              font-family: inherit;
+              font-size: 0.75em;
+              height: 100%;
+              padding: 0;
+              resize: none;
+              text-shadow: inherit;
+              width: 100%;
 
-              li {
-                line-height: 0.75em;
-                
-                &.links {
-                  align-items: center;
-                  display: flex;
-                  flex-wrap: wrap;
-                  gap: 0.25em;
-                }
+              &:focus {
+                outline: none;
 
-                a {
-                  background-color: rgba(#000000, 0.1);
-                  border-radius: 0.25em;
-                  padding: 0.25em;
-
-                  &:hover {
-                    background-color: rgba(#000000, 0.2);
-                  }
-
-                  span {
-                    font-size: 1em;
-                  }
-                }
-
-                span {
-                  font-size: 0.75em;
+                + .accept {
+                  display: block
                 }
               }
+            }
+
+            .accept {
+              bottom: 0;
+              cursor: pointer;
+              display: none;
+              position: absolute;
+              right: 0;
             }
           }
 
