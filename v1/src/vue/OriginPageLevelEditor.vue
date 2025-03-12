@@ -52,6 +52,10 @@
     app.levelEditor.saveLevel();
   }
 
+  function saveScreenshot() {
+    app.storage.screenshot(640, 360, true);
+  }
+
   function undo() {
     app.levelEditor.undo();
   }
@@ -248,6 +252,7 @@
         <a class="item" :class="{ selected: drawMode == 'erase' }" @click="setDrawMode('erase')" action="erase" title="Erase cubes"><img :src="'../svg/eraser.svg'"></a>
         <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img :src="'../svg/home.svg'"></a>
         <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img :src="'../svg/save.svg'"></a>
+        <a class="item" @click="saveScreenshot" title="Save Screenshot"><img :src="'../svg/eye.svg'"></a>
         <a class="item" @click="undo" title="Undo edit (Ctrl + Z)"><img :src="'../svg/undo.svg'"></a>
         <a class="item" @click="redo" title="Redo edit (Ctrl + Shift + Z)"><img :src="'../svg/redo.svg'"></a>
         <a class="item" @click="rewind" title="Restart level"><img :src="'../svg/rewind.svg'"></a>
