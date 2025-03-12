@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, shell } from 'electron';
+import { app, BrowserWindow, dialog, globalShortcut, ipcMain, Menu, shell } from 'electron';
 import { fileURLToPath } from 'url';
 import Store from 'electron-store';
 import steamworks from 'steamworks.js';
@@ -18,6 +18,7 @@ steamworks.electronEnableSteamOverlay();
 
 // Add event listener to preload.js (bridged to renderer)
 ipcMain.handle('toggleFullScreen', toggleFullScreen);
+ipcMain.handle('dialog', openDialog);
 
 // Initialize main window outside creation
 let mainWindow;
@@ -43,6 +44,10 @@ function storeWindowMaximized() {
 function toggleFullScreen() {
   mainWindow.setFullScreen(!store.get('fullscreen'));
   store.set('fullscreen', !store.get('fullscreen'));
+}
+
+async function openDialog(event, args) {
+  return await dialog.showOpenDialog(args);
 }
 
 function openDevTools() {

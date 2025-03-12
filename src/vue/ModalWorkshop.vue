@@ -5,6 +5,7 @@
   
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
+  const isElectronApp = ref(window.electron != undefined);
   const isLoading = ref(false);
   const itemTypes = ref([
     { title: 'Subscriptions', id: 'subscriptions' },
@@ -28,6 +29,13 @@
 
   function selectItemType(type) {
     selectedItemType.value = type;
+
+    if (selectedItemType.value.id == 'subscriptions') {
+      getSubscriptions();
+    }
+    else {
+      getCreations();
+    }
   }
 
   function selectItem(item) {
@@ -36,12 +44,17 @@
   }
 
   function openLink(url, target = '_self') {
-    window.open(url, target);
+    if (isElectronApp.value == true) {
+      window.electron.client.overlay.activateToWebPage(url);
+    }
+    else {
+      window.open(url, target);
+    }
   }
 
   async function getSubscriptions() {
     isLoading.value = true;
-    if (window.electron) {
+    if (isElectronApp.value == true) {
       // Get array of item ids
       const itemIds = window.electron.client.workshop.getSubscribedItems();
 
@@ -55,13 +68,48 @@
     isLoading.value = false;
   }
 
+  async function getCreations() {
+    isLoading.value = true;
+    if (isElectronApp.value == true) {
+      const appOwner = window.electron.client.apps.appOwner();
+      const appId = window.electron.client.utils.getAppId();
+
+      // page: 1, accountId: 37133196, listType: Published, itemType: All, sortOrder: CreationOrderAsc, appIds: {}
+      const data = await window.electron.client.workshop.getUserItems(1, appOwner.accountId, 0, 13, 0, { creator: appId });
+      const items = data.items;
+      itemsCreations.value = items;
+    }
+    isLoading.value = false;
+  }
+
   function createItem() {
     
+  }
+
+  async function selectContent(item) {
+    const data = await electron.dialog({
+      properties: ['openFile'],
+      filters: [{ 'name': 'Level File', 'extensions': ['json'] }]
+    });
+
+    // Update if data is not canceled
+    if (data.canceled == false) {
+      // title, description, changeNote, previewPath, contentPath, tags, visibility
+      const results = await window.electron.client.workshop.updateItem(item.publishedFileId, {
+        contentPath: data.filePaths[0]
+      });
+
+      console.log(results)
+    }
+  }
+
+  function loadModal() {
+    getSubscriptions();
   }
 </script>
 
 <template>
-  <Transition name="fade-modal" @before-enter="getSubscriptions()">
+  <Transition name="fade-modal" @before-enter="loadModal">
     <div class="modal workshop">
       <div class="workshop__background" @click="$emit('close')"></div>
       <div class="workshop__container">
@@ -88,26 +136,31 @@
             </button>
           </div>
           <ul class="workshop__items-list">
-            <template v-for="item in filteredItems" :key="item.title">
-              <li>
-                <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
-                  <img :src="item.thumbnail" :alt="item.title" />
-                  <span>{{ item.title }}</span>
-                </button>
-              </li>
-            </template>
-            <template v-if="filteredItems.length == 0">
-              <li>
-                <button v-if="selectedItemType.id == 'subscriptions'" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                  <span class="material-symbols-rounded">open_in_new</span>
-                  <span>Add Subscriptions</span>
-                </button>
-                <button v-else @click="createItem()">
+            <li>
+              <button v-if="selectedItemType.id == 'subscriptions'" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                <span class="material-symbols-rounded">open_in_new</span>
+                <span>Add Subscription</span>
+              </button>
+              <template v-else-if="selectedItemType.id == 'creations'">
+                <button v-if="isElectronApp == true" @click="createItem()">
                   <span class="material-symbols-rounded">add</span>
                   <span>Add Creation</span>
                 </button>
-              </li>
-            </template>
+                <button v-else @click="openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">
+                  <span class="material-symbols-rounded">warning</span>
+                  <span>Only available on Steam</span>
+                </button>
+              </template>
+            </li>
+            <li v-for="item in filteredItems" :key="item.title">
+              <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
+                <img :src="item.thumbnail" :alt="item.title" />
+                <span>{{ item.title }}</span>
+              </button>
+              <button v-if="selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content">
+                <span class="material-symbols-rounded">folder_open</span>
+              </button>
+            </li>
           </ul>
         </div>
         <div class="workshop__info">
@@ -144,26 +197,15 @@
 <style lang="scss" scoped>
   // Animations
   @keyframes translateBackground { 0% { background-position: 0em 0em; } 100% { background-position: -8em -8em; } }
-  @keyframes grow { 0% { transform: scale(1); } 50% { transform: scale(1.20); } 100% { transform: scale(1); } }
-  @keyframes shake { 0% { transform: rotate(0); } 33% { transform: rotate(10deg); } 66% { transform: rotate(-10deg); } 100% { transform: rotate(0); } }
   @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
-  @keyframes twist { 0% { opacity: 0; transform: rotate(15deg) scale(0.75); } 100% { opacity: 1; transform: rotate(0deg) scale(1); } }
 
   // Modal fade transition
   .fade-modal-enter-active {
     animation: fade 0.2s;
-
-    .workshop__container {
-      animation: twist 0.2s;
-    }
   }
   
   .fade-modal-leave-active {
     animation: fade 0.2s reverse;
-
-    .workshop__container {
-      animation: twist 0.2s reverse;
-    }
   }
 
   .loading-enter-active,
@@ -218,7 +260,6 @@
       height: 17.5em;
       padding: 0.5em;
       position: relative;
-      transition: background-color 0.5s ease-out;
       width: 35em;
 
       ul {
@@ -233,7 +274,9 @@
         scroll-padding: 2.5em 0;
 
         li {
+          display: flex;
           font-size: 1em;
+          gap: 0.5em;
           padding: 0;
 
           &:before {
@@ -257,13 +300,16 @@
             padding: 0.25em;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
             white-space: nowrap;
-            width: 100%;
+            
+            &:first-of-type {
+              flex-grow: 1;
+              width: 100%;
+            }
 
             &:hover {
               background-color: rgba(#000000, 0.25);
             }
 
-            &:focus,
             &.selected {
               background-color: rgba(#000000, 0.5);
             }
@@ -518,50 +564,6 @@
                   font-size: 0.75em;
                 }
               }
-            }
-          }
-
-          button {
-            align-items: center;
-            background-color: #4CA9FF;
-            border-radius: 99em;
-            border-width: 0;
-            bottom: -1.5em;
-            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
-            color: #ffffff;
-            cursor: pointer;
-            display: flex;
-            font-family: inherit;
-            font-size: 1em;
-            gap: 0.5em;
-            height: 2em;
-            left: 50%;
-            outline: none;
-            padding: 0.5em;
-            position: absolute;
-            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
-            transform: translateX(-50%);
-            white-space: nowrap;
-
-            &:focus,
-            &:hover {
-              animation: wiggle 0.25s ease-in-out;
-              animation-fill-mode: forwards;
-            }
-
-            @keyframes wiggle {
-              0% { transform: translateX(-50%) rotate(0); }
-              33% { transform: translateX(-50%) rotate(10deg); }
-              66% { transform: translateX(-50%) rotate(-10deg); }
-              100% { transform: translateX(-50%) rotate(0); }
-            }
-
-            .material-symbols-rounded {
-              background-color: #000000;
-              border-radius: 0.5em;
-              font-size: 1em;
-              width: 1em;
-              height: 1em;
             }
           }
         }
