@@ -296,7 +296,7 @@
                   <span class="accept material-symbols-rounded">check</span>
                 </template>
               </button>
-              <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content">
+              <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content (ex: My Level.json)">
                 <span class="material-symbols-rounded">folder_open</span>
               </button>
               <button v-if="itemIsSelected(item)" @click="openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')" title="View item">

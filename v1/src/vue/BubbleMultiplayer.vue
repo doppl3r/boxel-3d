@@ -303,15 +303,6 @@
     else {
       // Run optional error callback
       if (typeof error == 'function') error();
-      else {
-        // Notify user that the level is not official
-        addMessage({
-          name: 'Server',
-          text: player.text + ' is not playing an official level... 😔',
-          time: getTime(),
-          color: '#4ca9ff'
-        });
-      }
     }
   }
 
@@ -334,6 +325,30 @@
     );
   }
 
+  async function clickMessage(e) {
+    e.preventDefault(); // Prevent linking out
+    var target = e.target;
+    if (target.nodeName == 'A') {
+      // Check if link has attribute to play a specific level
+      var title = target.getAttribute('href');
+      playLevelByTitle(title,
+        () => {
+          // On success
+          
+        },
+        () => {
+          // On error, return reason
+          addMessage({
+            name: 'Server',
+            text: title + ' is not an official level... 😔',
+            time: getTime(),
+            color: '#4ca9ff'
+          });
+        }
+      );
+    }
+  }
+
   function changeTab(name) {
     // Toggle multiplayer section
     if (name == tab.value) collapsed.value = !collapsed.value;
@@ -350,16 +365,6 @@
 
   function getTime() {
     return new Date().getTime();
-  }
-
-  async function clickMessage(e) {
-    e.preventDefault(); // Prevent linking out
-    var target = e.target;
-    if (target.nodeName == 'A') {
-      // Check if link has attribute to play a specific level
-      var title = target.getAttribute('href');
-      playLevelByTitle(title);
-    }
   }
 
   // Run function after being mounted (visible)

@@ -288,11 +288,11 @@ class App {
   }
 
   async playLevelByPath(path) {
-    await app.playLevel(path);
+    return await app.playLevel(path);
   }
 
   async playLevelByTitle(title) {
-    await app.playLevel('../json/levels/' + title + '.json');
+    return await app.playLevel('../json/levels/' + title + '.json');
   }
 
   async playLevel(path) {
@@ -352,8 +352,8 @@ class App {
         }
       }, 500);
     })
-    .catch((error) => {
-      return false;
+    .catch(error => {
+      console.error(error)
     });
 
     // Return level existence state
