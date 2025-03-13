@@ -43,7 +43,7 @@
     selectedItemType.value = type;
     if (selectedItemType.value.id == 'subscriptions') await getSubscriptions();
     else await getCreations();
-    selectLastItem();
+    selectFirstItem();
   }
 
   function selectItem(item) {
@@ -83,8 +83,8 @@
           // Get array of item objects
           try {
             const data = await window.electron.client.workshop.getItems(itemIds);
-            const items = data.items;
-            items.sort((a, b) => a.timeUpdated - b.timeUpdated);
+            const items = data.items.filter(item => item !== null);
+            items.sort((a, b) => b.timeUpdated - a.timeUpdated);
             itemsSubscriptions.value = items;
           }
           catch (getItemsError) {
@@ -109,7 +109,7 @@
       try {
         const data = await window.electron.client.workshop.getUserItems(1, appOwner.accountId, 0, 13, 0, { creator: appId });
         const items = data.items;
-        items.sort((a, b) => a.timeCreated - b.timeCreated);
+        items.sort((a, b) => b.timeUpdated - a.timeUpdated);
         itemsCreations.value = items;
       }
       catch (error) {
@@ -138,8 +138,8 @@
 
       // Update item for later
       Object.assign(item, meta);
-      itemsCreations.value.push(item);
-      selectLastItem();
+      itemsCreations.value.unshift(item);
+      selectFirstItem();
     }
     catch (error) {
       console.error(error);
@@ -149,7 +149,7 @@
   function scrollToSelected() {
     nextTick(() => {
       const index = filteredItems.value.findIndex(item => item == selectedItem.value);
-      itemsRef.value.children[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (index >= 0) itemsRef.value.children[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   }
 
@@ -224,7 +224,7 @@
 
   async function loadModal() {
     await selectItemType(selectedItemType.value);
-    selectLastItem()
+    selectFirstItem()
   }
 </script>
 
