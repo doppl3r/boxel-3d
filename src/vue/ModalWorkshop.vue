@@ -9,8 +9,8 @@
   const isLoading = ref(false);
   const itemsRef = ref();
   const itemTypes = ref([
-    { title: 'Subscriptions', id: 'subscriptions' },
-    { title: 'Creations', id: 'creations' }
+    { title: 'Subscriptions', id: 'subscriptions', icon: 'check_box' },
+    { title: 'Creations', id: 'creations', icon: 'add_box' }
   ]);
   const itemsSubscriptions = ref([]);
   const itemsCreations = ref([]);
@@ -239,6 +239,7 @@
             <template v-for="itemType in itemTypes" :key="itemType.id">
               <li>
                 <button :class="{ selected: selectedItemType == itemType }" @click="selectItemType(itemType)">
+                  <span class="material-symbols-rounded">{{ itemType.icon }}</span>
                   <span>{{ itemType.title }}</span>
                 </button>
               </li>
@@ -528,6 +529,12 @@
           line-height: 2em;
           text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
         }
+
+        .workshop__types-list {
+          .material-symbols-rounded {
+            font-size: 1.5em;
+          }
+        }
       }
 
       .workshop__items {
@@ -595,14 +602,6 @@
         .workshop__items-list {
           .material-symbols-rounded {
             font-size: 1.5em;
-          }
-
-          .score {
-            align-items: center;
-            display: flex;
-            margin-left: auto;
-            text-align: left;
-            flex-basis: 5em;
           }
         }
       }

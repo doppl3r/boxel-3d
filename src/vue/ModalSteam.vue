@@ -9,11 +9,12 @@
 <template>
   <Modal class="steam">
     <template #title>
-      Steam Edition
+      Steam Workshop
     </template>
     
     <template #text>
-      <p>Support me by adding Boxel 3D to your Steam <strong>wishlist</strong> or by purchasing a copy today!</p>
+      <p>The <strong>Steam Workshop</strong> is coming soon to Boxel 3D!</p>
+      <p>Purchase Boxel 3D to unlock <strong>unlimited</strong> community levels!</p>
     </template>
 
     <template #buttons>

@@ -18,6 +18,7 @@
 
   // Initialize components
   const i18n = useI18n();
+  const isElectronApp = ref(window.electron != undefined);
   const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
@@ -88,6 +89,15 @@
     return window.chrome?.extension;
   }
 
+  function openSteamModal() {
+    if (isElectronApp.value == true) {
+      modalWorkshopVisible.value = true;
+    }
+    else {
+      modalSteamVisible.value = true;
+    }
+  }
+
   // Watch the i18n locale changes
   watch(i18n.locale, () => {
     updateLanguageAttribute();
@@ -116,7 +126,7 @@
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true">{{ i18n.t('home.button.workshop') }}</Card>
+      <Card :src="'./svg/button-steam.svg'" @click="openSteamModal()">{{ i18n.t('home.button.workshop') }}</Card>
       <Card :src="'./svg/button-news.svg'" @click="modalNewsVisible = true">{{ i18n.t('home.button.news') }}</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
     </div>
