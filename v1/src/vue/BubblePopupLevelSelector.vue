@@ -137,7 +137,7 @@
   }
 
   async function playSelectedLevel() {
-    if (selectedItem.value.path) {
+    if (selectedLevel.value.path) {
       await app.playLevelByPath(selectedLevel.value.path);
       window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
     }

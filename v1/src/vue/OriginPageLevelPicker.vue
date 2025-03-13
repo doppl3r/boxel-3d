@@ -25,7 +25,7 @@
       emit('setPage', 'campaign');
     }
     else {
-      await app.playLevelByTitle(level.title, { "model": "background-classic", "color": "#620460" });
+      await app.playLevelByTitle(level.title);
       emit('setPage', 'campaign');
     }
 

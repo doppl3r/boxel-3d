@@ -288,25 +288,30 @@ class App {
   }
 
   async playLevelByPath(path) {
-    console.log(path);
+    await app.playLevel(path);
   }
 
-  async playLevelByTitle(title, theme) {
+  async playLevelByTitle(title) {
+    await app.playLevel('../json/levels/' + title + '.json');
+  }
+
+  async playLevel(path) {
     // Initialize level state
     var levelExists = false;
 
     // Fetch public folder for level
-    await fetch('../json/levels/' + title + '.json').then((response) => {
+    await fetch(path).then((response) => {
       if (response.ok) {
         return response.json();
       }
       throw new Error('Something went wrong');
     })
-    .then((json) => {
+    .then(json => {
       // Do something with the response
+      var title = json.name;
       var description = app.level.getDescriptionByTitle(title)
       var author = app.level.getAuthorByTitle(title);
-      if (theme == null) theme = app.level.getTheme(json.theme);
+      var theme = app.level.getTheme(json.theme);
       if (theme == null) theme = app.level.getPackTheme(title);
       app.level.entityFactory.color = theme.color;
 
