@@ -287,6 +287,10 @@ class App {
     this.assets.audio.play('jump');
   }
 
+  async playLevelByPath(path) {
+    console.log(path);
+  }
+
   async playLevelByTitle(title, theme) {
     // Initialize level state
     var levelExists = false;

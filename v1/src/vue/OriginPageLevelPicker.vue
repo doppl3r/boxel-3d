@@ -19,10 +19,18 @@
     window.removeEventListener('keydown', keydown);
   }
 
-  async function playLevel(title) {
-    await app.playLevelByTitle(title, { "model": "background-classic", "color": "#620460" });
-    emit('setPage', 'campaign');
-    settings.progress = app.level.getLevelIndex(title) + 1;
+  async function playLevel(level) {
+    if (level.path) {
+      await app.playLevelByPath(level.path);
+      emit('setPage', 'campaign');
+    }
+    else {
+      await app.playLevelByTitle(level.title, { "model": "background-classic", "color": "#620460" });
+      emit('setPage', 'campaign');
+    }
+
+    // Update progress
+    settings.progress = app.level.getLevelIndex(level.title) + 1;
     app.updateSettings(settings);
   }
 
@@ -141,7 +149,7 @@
               </a>
             </div>
             <template v-for="(level, j) of pack.levels">
-              <div class="level" :class="{ completed: getScore(level.title) }" :title="level.title" @click="playLevel(level.title)" tabindex="0" @focus="updateProgressTitle($event)">
+              <div class="level" :class="{ completed: getScore(level.title) }" :title="level.title" @click="playLevel(level)" tabindex="0" @focus="updateProgressTitle($event)">
                 <span class="index" v-if="level.label">{{ level.label }}</span>
                 <span class="score" v-if="getScore(level.title)">{{ scores[level.title] }}</span>
                 <span class="title">{{ level.description }}</span>

@@ -30,9 +30,15 @@
     window.removeEventListener('itemSelected', updateSelectedItem);
   }
 
-  async function playLevel(title) {
-    await app.playLevelByTitle(title);
-    emit('setPage', 'campaign');
+  async function playSelectedItem() {
+    if (selectedItem.value.path) {
+      await app.playLevelByPath(selectedItem.value.path);
+      emit('setPage', 'campaign');
+    }
+    else {
+      await app.playLevelByTitle(selectedItem.value.title);
+      emit('setPage', 'campaign');
+    }
   }
 
   function getScore(title) {
@@ -69,10 +75,6 @@
         count++;
       });
     });
-  }
-
-  function playSelectedItem() {
-    playLevel(selectedItem.value.title);
   }
 
   function setSelectedItem() {
@@ -113,7 +115,8 @@
       pack.levels.forEach(function(item, j) {
         var score = getScore(item.title);
         if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + getScore(item.title);
-        item.url = url; // Assign pack image
+        if (item.thumbnail) url = item.thumbnail;
+        item.url = url;
         item.theme = pack.theme;
         items.value.push(item);
       })

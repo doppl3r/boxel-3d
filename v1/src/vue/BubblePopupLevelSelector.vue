@@ -137,8 +137,16 @@
   }
 
   async function playSelectedLevel() {
-    await app.playLevelByTitle(selectedLevel.value.title);
-    window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+    if (selectedItem.value.path) {
+      await app.playLevelByPath(selectedLevel.value.path);
+      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+    }
+    else {
+      await app.playLevelByTitle(selectedLevel.value.title);
+      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
+    }
+
+    // Update progress
     const progress = levels.value.findIndex(level => level.title == selectedLevel.value.title) + 1;
     const settings = app.storage.getSettings();
     settings.progress = progress;

@@ -784,7 +784,6 @@
 
       .workshop__loading {
         align-items: center;
-        background-color: rgba(#9F00FF, 0.75);
         border-radius: inherit;
         height: 100%;
         display: flex;

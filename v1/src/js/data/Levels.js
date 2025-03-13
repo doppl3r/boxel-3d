@@ -2,17 +2,16 @@ import levels from '../../json/levels.json';
 
 if (window.electron) {
   // Add Workshop pack with empty levels
-  levels.packs.push({
+  const pack = {
     title: "Workshop",
     theme: "blue-mountains",
     description: "Your Steam Workshop subscriptions.",
     levels: []
-  });
+  }
+  levels.packs.push(pack);
 
   try {
     // Get array of item ids
-    const appId = window.electron.client.utils.getAppId();
-    const appInstallDir = window.electron.client.apps.appInstallDir(appId);
     const itemIds = window.electron.client.workshop.getSubscribedItems();
     
     if (itemIds.length > 0) {
@@ -22,15 +21,29 @@ if (window.electron) {
         const items = data.items.filter(item => item !== null);
         items.sort((a, b) => b.timeUpdated - a.timeUpdated);
 
-        // TODO: Get files and add them to the Workshop pack
+        // Loop through each item for unique data
         items.forEach(async item => {
           const installInfo = window.electron.client.workshop.installInfo(item.publishedFileId);
           if (installInfo) {
-            const files = await window.electron.getFileNames(installInfo.folder);
-            const file = await window.electron.getFile(installInfo.folder, files[0]);
-
-            // TODO: Add level to workshop pack
-            console.log(installInfo, files, file)
+            const fileNames = await window.electron.getFileNames(installInfo.folder);
+            
+            // Loop through each file name
+            fileNames.forEach(async fileName => {
+              if (fileName.includes('.json')) {
+                pack.levels.push({
+                  title: item.title,
+                  description: item.title,
+                  thumbnail: item.previewUrl,
+                  path: `${ installInfo.folder }\\${ fileName }`,
+                  links: [
+                    `https://steamcommunity.com/sharedfiles/filedetails/?id=${ item.publishedFileId.toString() }`
+                  ]
+                });
+              }
+              
+              // Get local file data
+              //const file = await window.electron.getFile(installInfo.folder, fileName);
+            })
           }
         });
       }
