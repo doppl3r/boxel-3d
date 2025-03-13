@@ -17,34 +17,34 @@ if (window.electron) {
     if (itemIds.length > 0) {
       // Get array of item objects
       try {
-        const data = await window.electron.client.workshop.getItems(itemIds);
-        const items = data.items.filter(item => item !== null);
-        items.sort((a, b) => b.timeUpdated - a.timeUpdated);
+        // Get workshop items using a promise
+        window.electron.client.workshop.getItems(itemIds).then(data => {
+          const items = data.items.filter(item => item !== null);
+          items.sort((a, b) => b.timeUpdated - a.timeUpdated);
 
-        // Loop through each item for unique data
-        items.forEach(async item => {
-          const installInfo = window.electron.client.workshop.installInfo(item.publishedFileId);
-          if (installInfo) {
-            const fileNames = await window.electron.getFileNames(installInfo.folder);
-            
-            // Loop through each file name
-            fileNames.forEach(async fileName => {
-              if (fileName.includes('.json')) {
-                pack.levels.push({
-                  title: item.title,
-                  description: item.title,
-                  thumbnail: item.previewUrl,
-                  path: `${ installInfo.folder }\\${ fileName }`,
-                  links: [
-                    `https://steamcommunity.com/sharedfiles/filedetails/?id=${ item.publishedFileId.toString() }`
-                  ]
-                });
-              }
-              
-              // Get local file data
-              //const file = await window.electron.getFile(installInfo.folder, fileName);
-            })
-          }
+          // Loop through each item for unique data
+          items.forEach(item => {
+            const installInfo = window.electron.client.workshop.installInfo(item.publishedFileId);
+            if (installInfo) {
+              // Get filenames using a Promise
+              window.electron.getFileNames(installInfo.folder).then(fileNames => {
+                // Loop through each file name
+                fileNames.forEach(fileName => {
+                  if (fileName.includes('.json')) {
+                    pack.levels.push({
+                      title: item.title,
+                      description: item.title,
+                      thumbnail: item.previewUrl,
+                      path: `${ installInfo.folder }\\${ fileName }`,
+                      links: [
+                        `https://steamcommunity.com/sharedfiles/filedetails/?id=${ item.publishedFileId.toString() }`
+                      ]
+                    });
+                  }
+                })
+              });
+            }
+          });
         });
       }
       catch (getItemsError) {
