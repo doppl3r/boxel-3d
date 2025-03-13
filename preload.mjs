@@ -10,6 +10,8 @@ window.addEventListener('DOMContentLoaded', function () {
 // Predefine message for renderer to request
 contextBridge.exposeInMainWorld('electron', {
   client,
+  getFile: (...path) => ipcRenderer.invoke('getFile', ...path),
+  getFileNames: (...path) => ipcRenderer.invoke('getFileNames', ...path),
   getFilePath: file => ipcRenderer.invoke('getFilePath', file),
   dialog: (options) => ipcRenderer.invoke('dialog', options),
   toggleFullScreen: () => ipcRenderer.invoke('toggleFullScreen')

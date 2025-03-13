@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import Store from 'electron-store';
 import steamworks from 'steamworks.js';
 import path from 'path';
+import { promises as fs } from 'fs';
 
 // Configure directory
 const __filename = fileURLToPath(import.meta.url);
@@ -19,6 +20,8 @@ steamworks.electronEnableSteamOverlay();
 // Add event listener to preload.js (bridged to renderer)
 ipcMain.handle('toggleFullScreen', toggleFullScreen);
 ipcMain.handle('dialog', openDialog);
+ipcMain.handle('getFile', getFile);
+ipcMain.handle('getFileNames', getFileNames);
 ipcMain.handle('getFilePath', getFilePath);
 
 // Initialize main window outside creation
@@ -49,6 +52,20 @@ function toggleFullScreen() {
 
 async function openDialog(event, args) {
   return await dialog.showOpenDialog(args);
+}
+
+async function getFile(event, ...args) {
+  // Note: Add "extraFiles" value to package.json to access outside app.asar archive
+  const filePath = path.resolve(...args);
+  const file = fs.readFile(filePath, 'utf-8');
+  return file;
+}
+
+async function getFileNames(event, ...args) {
+  // Note: Add "extraFiles" value to package.json to access outside app.asar archive
+  const dir = path.resolve(...args);
+  const fileNames = fs.readdir(dir);
+  return fileNames;
 }
 
 async function getFilePath(event, args) {

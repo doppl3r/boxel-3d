@@ -23,7 +23,16 @@ if (window.electron) {
         items.sort((a, b) => b.timeUpdated - a.timeUpdated);
 
         // TODO: Get files and add them to the Workshop pack
-        console.log(appInstallDir, items);
+        items.forEach(async item => {
+          const installInfo = window.electron.client.workshop.installInfo(item.publishedFileId);
+          if (installInfo) {
+            const files = await window.electron.getFileNames(installInfo.folder);
+            const file = await window.electron.getFile(installInfo.folder, files[0]);
+
+            // TODO: Add level to workshop pack
+            console.log(installInfo, files, file)
+          }
+        });
       }
       catch (getItemsError) {
         console.error(getItemsError)
