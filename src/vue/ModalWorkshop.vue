@@ -75,8 +75,8 @@
   async function getSubscriptions() {
     isLoading.value = true;
     if (isElectronApp.value == true) {
-      // Get array of item ids
       try {
+        // Get array of item ids
         const itemIds = window.electron.client.workshop.getSubscribedItems();
         
         if (itemIds.length > 0) {

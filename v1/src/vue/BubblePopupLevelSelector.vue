@@ -1,8 +1,8 @@
 <script setup>
   import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import levelData from '../json/levels.json';
-  import themeData from '../json/themes.json';
+  import levelData from '../js/data/Levels.js';
+  import themeData from '../js/data/Themes.js';
   
   // Initialize attributes
   const isOpen = ref(false);

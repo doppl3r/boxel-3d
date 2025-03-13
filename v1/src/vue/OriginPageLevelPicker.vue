@@ -1,7 +1,6 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
-  import levels from '../json/levels.json';
-  import themes from '../json/themes.json';
+  import { onMounted, onUnmounted } from 'vue';
+  import levels from '../js/data/Levels.js';
 
   // Initialize variables
   var scores = app.storage.getScores();
