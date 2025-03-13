@@ -82,14 +82,14 @@
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
   
-  function playLevel() {
+  function playCurrentLevel() {
     objectTypeVisible.value = false;
     app.level.deselectLevel(app);
     app.levelEditor.controlsOrbit.enabled = false;
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
-    app.playLevel();
+    app.startLevel();
   }
 
   function selectObjectType(e) {
@@ -257,7 +257,7 @@
         <a class="item" @click="redo" title="Redo edit (Ctrl + Shift + Z)"><img :src="'../svg/redo.svg'"></a>
         <a class="item" @click="rewind" title="Restart level"><img :src="'../svg/rewind.svg'"></a>
         <a class="item" @click="pauseLevel" title="Pause level"><img :src="'../svg/pause.svg'"></a>
-        <a class="item" @click="playLevel" title="Play level"><img :src="'../svg/play.svg'"></a>
+        <a class="item" @click="playCurrentLevel" title="Play level"><img :src="'../svg/play.svg'"></a>
         <OriginButtonSettings class="item last" />
       </div>
     </div>

@@ -279,7 +279,7 @@ class App {
     window.dispatchEvent(new CustomEvent('closePopup'));
   }
 
-  playLevel() {
+  startLevel() {
     app.play = true;
     app.timer.start();
 
@@ -328,7 +328,7 @@ class App {
       app.level.clearLevel(app);
       app.level.importFromJSON(json, app);
       app.background.visible = true;
-      app.playLevel();
+      app.startLevel();
       app.resetScene();
       levelExists = true;
 
