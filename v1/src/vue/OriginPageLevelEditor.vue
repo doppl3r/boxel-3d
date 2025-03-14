@@ -53,7 +53,7 @@
   }
 
   function saveScreenshot() {
-    app.storage.screenshot(640, 360, true);
+    app.storage.screenshot(1280, 720, true);
   }
 
   function undo() {

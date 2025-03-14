@@ -558,5 +558,11 @@
       "Fixed multiplayer bugs",
       "Fixed Level Editor axis rotation bug"
     ]
+  },
+  {
+    "version": "2.5.1",
+    "revisions": [
+      "Updated Steam Workshop UI"
+    ]
   }
 ]

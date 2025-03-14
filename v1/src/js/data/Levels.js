@@ -37,6 +37,7 @@ if (window.electron) {
                       description: item.title,
                       thumbnail: item.previewUrl,
                       path: `${ installInfo.folder }\\${ fileName }`,
+                      overlay: true,
                       links: [
                         `https://steamcommunity.com/sharedfiles/filedetails/?id=${ item.publishedFileId.toString() }`
                       ]
