@@ -306,7 +306,7 @@
               <button v-if="itemIsSelected(item) && selectedItemType.id == 'subscriptions'" @click="downloadContent(item)" title="Force update">
                 <span class="material-symbols-rounded">refresh</span>
               </button>
-              <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content (ex: My Level.json)">
+              <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload new content (ex: My Level.json)">
                 <span class="material-symbols-rounded">folder_open</span>
               </button>
               <button v-if="itemIsSelected(item)" @click="openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')" title="View item">
