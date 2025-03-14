@@ -247,6 +247,7 @@
               position: absolute;
               top: 0;
               width: 100%;
+              z-index: 0;
             }
 
             img {
@@ -254,8 +255,10 @@
               box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
               object-fit: cover;
               pointer-events: none;
+              position: relative;
               height: 6.25em;
               width: 6.25em;
+              z-index: 0;
             }
           }
 
