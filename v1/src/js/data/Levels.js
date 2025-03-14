@@ -4,7 +4,7 @@ if (window.electron) {
   // Add Workshop pack with empty levels
   const pack = {
     title: "Workshop",
-    theme: "blue-mountains",
+    theme: "workshop",
     description: "Your Steam Workshop subscriptions.",
     levels: []
   }

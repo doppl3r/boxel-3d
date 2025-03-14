@@ -52,5 +52,11 @@
     "color": "#620460",
     "model": "background-hell",
     "thumbnail": "../svg/button-pack-gravity-hell.svg"
+  },
+  "workshop": {
+    "background_color": "#4c7dff",
+    "color": "#ffffff",
+    "model": "background-blue",
+    "thumbnail": "../svg/button-level-editor.svg"
   }
 }

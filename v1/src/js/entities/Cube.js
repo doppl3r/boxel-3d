@@ -126,10 +126,19 @@ class Cube extends Mesh {
     return this.position;
   }
 
-  setRotation(angle, updateOrigin = true) {
-    this.rotation.z = angle;
-    Body.setAngle(this.body, -angle);
-    if (updateOrigin == true) { this.setRotationOrigin(angle); }
+  setRotation(rotation, updateOrigin = true) {
+    if (typeof rotation == 'object') {
+      this.rotation.x = rotation.x;
+      this.rotation.y = rotation.y;
+      this.rotation.z = rotation.z;
+      Body.setAngle(this.body, -rotation.z);
+      if (updateOrigin == true) { this.setRotationOrigin(rotation.z); }
+    }
+    else {
+      this.rotation.z = rotation;
+      Body.setAngle(this.body, -rotation);
+      if (updateOrigin == true) { this.setRotationOrigin(rotation); }
+    }
   }
 
   setRotationOrigin(angle) {

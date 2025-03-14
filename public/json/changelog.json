@@ -549,5 +549,14 @@
       "Added player coordinates (Settings > Graphics > Show FPS > then click FPS while playing)",
       "Updated max time from 16 minutes to 11 days"
     ]
+  },
+  {
+    "version": "2.5.0",
+    "revisions": [
+      "Added Steam Workshop (Steam only)",
+      "Added Workshop UI for publishing levels to Steam",
+      "Fixed multiplayer bugs",
+      "Fixed Level Editor axis rotation bug"
+    ]
   }
 ]

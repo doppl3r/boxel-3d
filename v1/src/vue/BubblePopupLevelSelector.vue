@@ -35,7 +35,7 @@
           background_color: themeData[pack.theme].background_color,
           pack: pack.title,
           theme: pack.theme,
-          thumbnail: themeData[pack.theme].thumbnail
+          thumbnail: level.thumbnail ? level.thumbnail : themeData[pack.theme].thumbnail
         });
       });
     });
@@ -233,7 +233,8 @@
             <div class="level-selector__info-details">
               <ul>
                 <li class="author">
-                  <span>Level by {{ selectedLevel.author || 'Doppler' }}</span>
+                  <span v-if="selectedLevel.author">Level by {{ selectedLevel.author || 'Doppler' }}</span>
+                  <span v-else>{{ selectedLevel.description }}</span>
                 </li>
                 <li class="links" v-for="link in selectedLevel.links">
                   <a :href="link" target="_blank" :title="link">

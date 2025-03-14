@@ -194,7 +194,7 @@ class Level extends Group {
   setObjectProperties(object, objectData) {
     object.setPosition({ x: objectData.position.x, y: objectData.position.y, z: objectData.position.z });
     object.setScale({ x: objectData.scale.x, y: objectData.scale.y, z: objectData.scale.z });
-    object.setRotation(objectData.rotation.z);
+    object.setRotation({ x: objectData.rotation.x, y: objectData.rotation.y, z: objectData.rotation.z });
     object.setStatic(objectData.isStatic);
     object.setText(objectData.text);
     object.setFriction(objectData.friction);
