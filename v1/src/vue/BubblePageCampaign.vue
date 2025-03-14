@@ -57,7 +57,7 @@
   
   function popupClosed() {
     isClosed.value = true;
-    getCurrentScore(); // Refresh record score
+    getHighScore(); // Refresh record score
   }
 
   function settingsOpened() {
@@ -116,9 +116,10 @@
     }
   }
 
-  function getCurrentScore() {
-    var name = app.level.name;
-    var score = app.storage.getScores()[name];
+  function getHighScore() {
+    var scores = app.storage.getScores();
+    var score = scores[app.level.publishedFileId || app.level.name];
+
     if (score) {
       record.value = app.timer.toHTML(score);
     }
@@ -127,7 +128,7 @@
   // Run function after being mounted (visible)
   onMounted(function() {
     app.showCanvas();
-    getCurrentScore();
+    getHighScore();
     addEventListeners();
     
     // Dispatch ready event to listeners

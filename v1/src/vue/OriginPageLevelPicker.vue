@@ -21,7 +21,7 @@
 
   async function playSelectedLevel(level) {
     if (level.path) {
-      await app.playLevelByPath(level.path);
+      await app.playLevelByPath(level.path, level.publishedFileId);
       emit('setPage', 'campaign');
     }
     else {
@@ -34,8 +34,8 @@
     app.updateSettings(settings);
   }
 
-  function getScore(title) {
-    return scores[title];
+  function getScore(key) {
+    return scores[key];
   }
 
   function getLevelTitle(index) {
@@ -149,9 +149,9 @@
               </a>
             </div>
             <template v-for="(level, j) of pack.levels">
-              <div class="level" :class="{ completed: getScore(level.title) }" :title="level.title" @click="playSelectedLevel(level)" tabindex="0" @focus="updateProgressTitle($event)">
+              <div class="level" :class="{ completed: getScore(level.publishedFileId || level.title) }" :title="level.title" @click="playSelectedLevel(level)" tabindex="0" @focus="updateProgressTitle($event)">
                 <span class="index" v-if="level.label">{{ level.label }}</span>
-                <span class="score" v-if="getScore(level.title)">{{ scores[level.title] }}</span>
+                <span class="score" v-if="getScore(level.publishedFileId || level.title)">{{ getScore(level.publishedFileId || level.title) }}</span>
                 <span class="title">{{ level.description }}</span>
               </div>
             </template>

@@ -58,12 +58,12 @@ class StorageManager {
     this.setLevelData(key, levelData);
   }
 
-  saveScore(levelName, score) {
+  saveScore(key, score) {
     var scores = this.getScores();
     var oldScore = 999999999; // Default bad score
     var newScore = parseInt(score.replace(/[^\d]/g, ''));
     var hasNewScore = false;
-    var data = scores[levelName];
+    var data = scores[key];
 
     // Update old score if it exists
     if (data != null) {
@@ -74,7 +74,7 @@ class StorageManager {
     // Check high score
     if (newScore < oldScore) {
       hasNewScore = true;
-      scores[levelName] = score;
+      scores[key] = score;
       localStorage.setItem('scores', JSON.stringify(scores));
     }
     return hasNewScore;

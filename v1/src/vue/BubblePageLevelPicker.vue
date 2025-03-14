@@ -32,7 +32,7 @@
 
   async function playSelectedItem() {
     if (selectedItem.value.path) {
-      await app.playLevelByPath(selectedItem.value.path);
+      await app.playLevelByPath(selectedItem.value.path, selectedItem.value.publishedFileId);
       emit('setPage', 'campaign');
     }
     else {
@@ -41,8 +41,8 @@
     }
   }
 
-  function getScore(title) {
-    return scores[title];
+  function getScore(key) {
+    return scores[key];
   }
 
   function updateSelectedItem(e) {
@@ -113,8 +113,8 @@
     levels.packs.forEach(function(pack, i) {
       var url = themes[pack.theme].thumbnail;
       pack.levels.forEach(function(item, j) {
-        var score = getScore(item.title);
-        if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + getScore(item.title);
+        var score = getScore(item.publishedFileId || item.title);
+        if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + score;
         if (item.thumbnail) url = item.thumbnail;
         item.url = url;
         item.theme = pack.theme;

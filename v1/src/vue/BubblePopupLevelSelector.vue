@@ -138,7 +138,7 @@
 
   async function playSelectedLevel() {
     if (selectedLevel.value.path) {
-      await app.playLevelByPath(selectedLevel.value.path);
+      await app.playLevelByPath(selectedLevel.value.path, selectedLevel.value.publishedFileId);
       window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
     }
     else {
@@ -153,8 +153,8 @@
     app.updateSettings(settings);
   }
 
-  function getScore(title) {
-    return scores[title];
+  function getScore(key) {
+    return scores[key];
   }
 
   function scrollToSelected(needle, haystack, ref, key) {
@@ -212,9 +212,9 @@
                 <button :class="{ selected: selectedLevel.title == level.title }" @click="selectLevel(level)">
                   <img v-if="level.thumbnail" :src="level.thumbnail" :alt="level.title" />
                   <span>{{ level.description }}</span>
-                  <div class="score" v-if="getScore(level.title)">
+                  <div class="score" v-if="getScore(level.publishedFileId || level.title)">
                     <span class="material-symbols-rounded">star</span>
-                    <span>{{ getScore(level.title) }}</span>
+                    <span>{{ getScore(level.publishedFileId || level.title) }}</span>
                   </div>
                 </button>
               </li>
@@ -498,8 +498,9 @@
               box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
               filter: contrast(1.25);
               height: 6.25em;
-              width: 6.25em;
+              object-fit: cover;
               position: relative;
+              width: 6.25em;
               z-index: 0;
             }
 

@@ -179,6 +179,13 @@
     return ugcResult
   }
 
+  async function downloadContent(item) {
+    isLoading.value = true;
+    let downloaded = await window.electron.client.workshop.download(item.publishedFileId, true);
+    isLoading.value = false;
+    return downloaded;
+  }
+
   async function selectContent(item) {
     // Ensure item is selected
     selectItem(item);
@@ -295,6 +302,9 @@
                   <input type="text" :value="item.title" @change="updateTitle(item, $event)" />
                   <span class="accept material-symbols-rounded">check</span>
                 </template>
+              </button>
+              <button v-if="itemIsSelected(item) && selectedItemType.id == 'subscriptions'" @click="downloadContent(item)" title="Force update">
+                <span class="material-symbols-rounded">refresh</span>
               </button>
               <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload content (ex: My Level.json)">
                 <span class="material-symbols-rounded">folder_open</span>

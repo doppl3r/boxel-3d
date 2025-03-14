@@ -8,7 +8,9 @@ class Level extends Group {
   constructor() {
     super();
     this.name = this.defaultName = 'My Level';
+    this.theme = this.defaultTheme = 'classic';
     this.entityFactory = new EntityFactory();
+    this.publishedFileId = null; // Reserved for Steam itemIds
   }
 
   addObject(object, a) {
@@ -37,6 +39,7 @@ class Level extends Group {
   clearLevel(a) {
     var length = a.level.children.length;
     this.name = this.defaultName;
+    this.theme = this.defaultTheme;
     a.player.removeRope();
     for (var i=0; i < length; i++) {
       var child = a.level.children[0];
@@ -113,6 +116,8 @@ class Level extends Group {
   exportToJSON(a) {
     var levelJSON = {};
     levelJSON.name = this.name;
+    levelJSON.theme = this.theme;
+    levelJSON.description = this.description;
     levelJSON.children = [];
 
     // Loop through group children
@@ -132,6 +137,8 @@ class Level extends Group {
 
   importFromJSON(levelData, a) {
     this.name = levelData.name;
+    this.theme = levelData.theme;
+    this.description = levelData.description;
 
     // Loop through JSON level data
     for (var i = 0; i < levelData.children.length; i++) {

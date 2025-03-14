@@ -287,15 +287,15 @@ class App {
     this.assets.audio.play('jump');
   }
 
-  async playLevelByPath(path) {
-    return await app.playLevel(path);
+  async playLevelByPath(path, publishedFileId) {
+    return await app.playLevel(path, publishedFileId);
   }
 
   async playLevelByTitle(title) {
     return await app.playLevel('../json/levels/' + title + '.json');
   }
 
-  async playLevel(path) {
+  async playLevel(path, publishedFileId) {
     // Initialize level state
     var levelExists = false;
 
@@ -308,11 +308,13 @@ class App {
     })
     .then(json => {
       // Do something with the response
+      var storageSettings = app.storage.getSettings(app);
       var title = json.name;
       var description = app.level.getDescriptionByTitle(title)
       var author = app.level.getAuthorByTitle(title);
       var theme = app.level.getTheme(json.theme);
       if (theme == null) theme = app.level.getPackTheme(title);
+      if (storageSettings.theme == 'origin') theme = app.level.getTheme('classic');
       app.level.entityFactory.color = theme.color;
 
       // Set optional fog
@@ -332,6 +334,7 @@ class App {
       app.timer.reset();
       app.level.clearLevel(app);
       app.level.importFromJSON(json, app);
+      app.level.publishedFileId = publishedFileId; // Optional (for Steam item high scores)
       app.background.visible = true;
       app.startLevel();
       app.resetScene();

@@ -32,6 +32,7 @@ if (window.electron) {
                 fileNames.forEach(fileName => {
                   if (fileName.includes('.json')) {
                     pack.levels.push({
+                      ...item,
                       title: item.title,
                       description: item.title,
                       thumbnail: item.previewUrl,

@@ -272,9 +272,9 @@ class Player extends Cube {
   finish() {
     if (app.play == true) {
       // Set time values
-      var levelName = app.level.name;
+      var levelKey = app.level.publishedFileId || app.level.name;
       var time = app.timer.toString();
-      var hasNewScore = app.storage.saveScore(levelName, time);
+      var hasNewScore = app.storage.saveScore(levelKey, time);
       var settings = app.storage.getSettings(app);
   
       // Rerender timer
@@ -284,7 +284,7 @@ class Player extends Cube {
       app.play = false;
   
       // Dispatch finished event
-      window.dispatchEvent(new CustomEvent('levelFinish', { detail: { time: time, level: levelName }}));
+      window.dispatchEvent(new CustomEvent('levelFinish', { detail: { time: time, level: levelKey }}));
 
       // Add verified badge for speedrunners
       if (settings.buffer == 0 && settings.debug == false) {
