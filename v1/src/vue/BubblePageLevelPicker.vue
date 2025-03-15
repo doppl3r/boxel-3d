@@ -109,7 +109,7 @@
         var score = getScore(item.publishedFileId || item.title);
         if (item.thumbnail) url = item.thumbnail;
         if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + score;
-        else item.tag = '<span class="material-symbols-rounded">play_arrow</span>'
+        else item.tag = '<span class="material-symbols-rounded">play_arrow</span>';
         item.url = url;
         item.theme = pack.theme;
         items.value.push(item);
