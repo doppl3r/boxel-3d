@@ -59,10 +59,6 @@
     app.storage.screenshot(1280, 720, true);
   }
 
-  function openThemeOptions() {
-    themeOptionsVisible.value = true
-  }
-
   function selectTheme(name) {
     selectedTheme.value = name;
     app.level.theme = name;
@@ -266,9 +262,9 @@
         <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img :src="'../svg/home.svg'"></a>
         <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img :src="'../svg/save.svg'"></a>
         <a class="item" @click="saveScreenshot" title="Save Screenshot"><img :src="'../svg/eye.svg'"></a>
-        <a class="item" @click="openThemeOptions" title="Change Theme">
+        <a class="item" :class="{ selected: themeOptionsVisible == true }" title="Change Theme" @click="themeOptionsVisible = !themeOptionsVisible">
           <img :src="'../svg/color.svg'">
-          <ul class="options">
+          <ul v-if="themeOptionsVisible == true">
             <li v-for="(theme, name) in themes">
               <a class="item" :class="{ selected: selectedTheme == name }" @click="selectTheme(name)">
                 <img :src="theme.thumbnail" :title="name" />

@@ -166,7 +166,7 @@
         <span class="material-symbols-rounded">undo</span>
       </a>
       <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
-        <span class="material-symbols-rounded">search</span>
+        <span class="material-symbols-rounded">view_list</span>
       </a>
       <BubbleButtonSettings class="button fade-in" />
     </div>

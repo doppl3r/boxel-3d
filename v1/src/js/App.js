@@ -301,66 +301,67 @@ class App {
 
     // Fetch public folder for level
     await fetch(path).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+      if (response.ok) return response.json();
       throw new Error('Something went wrong');
     })
     .then(json => {
-      // Do something with the response
-      var storageSettings = app.storage.getSettings(app);
-      var title = json.name;
-      var description = app.level.getDescriptionByTitle(title)
-      var author = app.level.getAuthorByTitle(title);
-      var theme = app.level.getTheme(json.theme);
-      if (theme == null) theme = app.level.getPackTheme(title);
-      if (storageSettings.theme == 'origin') theme = app.level.getTheme('classic');
-      app.level.entityFactory.color = theme.color;
-
-      // Set optional fog
-      if (theme.fog) {
-        app.graphics.fog.color.set(theme.fog.color);
-        app.graphics.fog.near = theme.fog.near || 0.01;
-        app.graphics.fog.far = theme.fog.far || 240;
-      }
-      else {
-        app.graphics.fog.color.set('#ffffff');
-        app.graphics.fog.near = app.graphics.fog.far = 9999;
-      }
-
-      app.background.setTheme(theme.model);
-      app.updateGravity();
-      app.play = true;
-      app.timer.reset();
-      app.level.clearLevel(app);
-      app.level.importFromJSON(json, app);
-      app.level.publishedFileId = publishedFileId; // Optional (for Steam item high scores)
-      app.background.visible = true;
-      app.startLevel();
-      app.resetScene();
+      json.publishedFileId = publishedFileId;
+      app.playLevelJSON(json);
       levelExists = true;
-
-      // Dispatch level start event
-      window.dispatchEvent(new CustomEvent('levelStart', {
-        detail: {
-          title: title,
-          description: description
-        }
-      }));
-      
-      // Send event to show credits
-      setTimeout(function() {
-        if (author) {
-          window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: 'Level by ' + author }}));
-        }
-      }, 500);
     })
-    .catch(error => {
-      console.error(error)
-    });
+    .catch(error => { console.error(error); });
 
     // Return level existence state
     return levelExists;
+  }
+
+  async playLevelJSON(json) {
+    // Do something with the response
+    var storageSettings = app.storage.getSettings(app);
+    var title = json.name;
+    var description = app.level.getDescriptionByTitle(title)
+    var author = app.level.getAuthorByTitle(title);
+    var theme = app.level.getTheme(json.theme);
+    if (theme == null) theme = app.level.getPackTheme(title);
+    if (storageSettings.theme == 'origin') theme = app.level.getTheme('classic');
+    app.level.entityFactory.color = theme.color;
+
+    // Set optional fog
+    if (theme.fog) {
+      app.graphics.fog.color.set(theme.fog.color);
+      app.graphics.fog.near = theme.fog.near || 0.01;
+      app.graphics.fog.far = theme.fog.far || 240;
+    }
+    else {
+      app.graphics.fog.color.set('#ffffff');
+      app.graphics.fog.near = app.graphics.fog.far = 9999;
+    }
+
+    app.background.setTheme(theme.model);
+    app.updateGravity();
+    app.play = true;
+    app.timer.reset();
+    app.level.clearLevel(app);
+    app.level.importFromJSON(json, app);
+    app.level.publishedFileId = json.publishedFileId; // Optional (for Steam item high scores)
+    app.background.visible = true;
+    app.startLevel();
+    app.resetScene();
+
+    // Dispatch level start event
+    window.dispatchEvent(new CustomEvent('levelStart', {
+      detail: {
+        title: title,
+        description: description
+      }
+    }));
+    
+    // Send event to show credits
+    setTimeout(function() {
+      if (author) {
+        window.dispatchEvent(new CustomEvent('setCredit', { detail: { text: 'Level by ' + author }}));
+      }
+    }, 500);
   }
 
   pauseLevel() {
