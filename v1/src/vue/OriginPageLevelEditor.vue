@@ -2,12 +2,15 @@
   import { onMounted, onUnmounted, ref } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
   import OriginControls from './OriginControls.vue';
+  import themes from '../js/data/Themes.js';
 
   var emit = defineEmits(['setPage']);
   var drawMode = ref('draw');
   var objectType = ref(app.levelEditor.selectedObjectType || 'cube');
   var objectTypeVisible = ref(true);
   var selectedObject = ref();
+  var selectedTheme = ref(app.level.theme);
+  var themeOptionsVisible = ref(false);
   var controlsTransform = ref(app.levelEditor.controlsTransform);
   var isClosed = ref(true); // Popup animation state
 
@@ -54,6 +57,16 @@
 
   function saveScreenshot() {
     app.storage.screenshot(1280, 720, true);
+  }
+
+  function openThemeOptions() {
+    themeOptionsVisible.value = true
+  }
+
+  function selectTheme(name) {
+    selectedTheme.value = name;
+    app.level.theme = name;
+    app.levelHistory.save('Updated level theme', app);
   }
 
   function undo() {
@@ -253,6 +266,16 @@
         <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img :src="'../svg/home.svg'"></a>
         <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img :src="'../svg/save.svg'"></a>
         <a class="item" @click="saveScreenshot" title="Save Screenshot"><img :src="'../svg/eye.svg'"></a>
+        <a class="item" @click="openThemeOptions" title="Change Theme">
+          <img :src="'../svg/color.svg'">
+          <ul class="options">
+            <li v-for="(theme, name) in themes">
+              <a class="item" :class="{ selected: selectedTheme == name }" @click="selectTheme(name)">
+                <img :src="theme.thumbnail" :title="name" />
+              </a>
+            </li>
+          </ul>
+        </a>
         <a class="item" @click="undo" title="Undo edit (Ctrl + Z)"><img :src="'../svg/undo.svg'"></a>
         <a class="item" @click="redo" title="Redo edit (Ctrl + Shift + Z)"><img :src="'../svg/redo.svg'"></a>
         <a class="item" @click="rewind" title="Restart level"><img :src="'../svg/rewind.svg'"></a>

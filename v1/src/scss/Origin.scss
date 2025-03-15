@@ -178,12 +178,51 @@
           display: inline-flex;
         }
       }
+
+      ul {
+        display: flex;
+      }
     }
 
     img {
       filter: invert(50%);
       pointer-events: none;
       scale: 1;
+    }
+
+    &:hover {
+      ul {
+        display: flex;
+      }
+    }
+
+    ul {
+      display: none;
+      left: 0;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+
+      li {
+        transform: translateY(100%);
+
+        a {
+          &:hover,
+          &.selected {
+            img {
+              filter: contrast(100%) invert(0%) saturate(100%) !important;
+            }
+          }
+
+          img {
+            scale: 1;
+            filter: contrast(50%) invert(0%) saturate(0%) !important;
+          }
+        }
+      }
     }
   }
 
@@ -248,7 +287,6 @@
 
       .col {
         display: flex;
-        overflow-x: auto;
         width: 100%;
 
         &.object-type { overflow-y: auto; }
