@@ -227,7 +227,7 @@
 
         .item {
           cursor: pointer;
-          padding: 0.5em 0;
+          padding: 1em 0;
           position: relative;
           transform: scale(0.84);
           transition: transform 0.15s ease-out;
@@ -253,6 +253,7 @@
             img {
               border-radius: 0.75em;
               box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+              display: block;
               object-fit: cover;
               pointer-events: none;
               position: relative;
@@ -260,53 +261,53 @@
               width: 6.25em;
               z-index: 0;
             }
-          }
 
-          .label {
-            background-color: #000000;
-            border-radius: 99em;
-            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25); 
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            font-size: 0.75em;
-            height: 1.5em;
-            padding: 0 0.5em;
-            position: absolute;
-            margin: 0;
-            top: 0.75em;
-            left: 50%;
-            transform: translate(-50%, -50%);
-          }
-
-          .title {
-            padding: 0 0.5em;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: 0;
-            transform: translate(-50%, -50%);
-            width: 100%;
-          }
-
-          .tag {
-            background-color: #000000;
-            border-radius: 99em;
-            box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            font-size: 0.75em;
-            height: 1.5em;
-            padding: 0 0.5em;
-            position: absolute;
-            bottom: 1em;
-            left: 50%;
-            margin: 0;
-            transform: translate(-50%, 50%);
-
-            .material-symbols-rounded {
-              color: #FFC24C;
+            .label {
+              background-color: #000000;
+              border-radius: 99em;
+              box-shadow: 0em 0.25em 0em rgba(#000000, 0.25); 
+              color: #ffffff;
+              display: flex;
+              align-items: center;
+              font-size: 0.75em;
+              height: 1.5em;
+              padding: 0 0.5em;
+              position: absolute;
+              margin: 0;
+              top: 0;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+  
+            .title {
+              padding: 0 0.5em;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              margin: 0;
+              transform: translate(-50%, -50%);
+              width: 100%;
+            }
+  
+            .tag {
+              background-color: #000000;
+              border-radius: 99em;
+              box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+              color: #ffffff;
+              display: flex;
+              align-items: center;
+              font-size: 0.75em;
+              height: 1.5em;
+              padding: 0 0.5em;
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              margin: 0;
+              transform: translate(-50%, 50%);
+  
+              .material-symbols-rounded {
+                color: #FFC24C;
+              }
             }
           }
         }

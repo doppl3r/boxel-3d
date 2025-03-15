@@ -2,7 +2,13 @@
   import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
 
   // Define items for carousel
-  var props = defineProps(['items', 'selected']);
+  const props = defineProps({
+    hideLabel: Boolean,
+    hideTag: Boolean,
+    hideTitle: Boolean,
+    items: Object,
+    selected: Object,
+  });
   var selectedItem = ref();
 
   // Add event listener(s)
@@ -102,10 +108,10 @@
         <div class="thumbnail">
           <div v-if="item.overlay" class="overlay"></div>
           <img :src="item.url">
+          <p class="label" v-if="hideLabel != true && item.label" v-html="item.label"></p>
+          <p class="title" v-if="hideTitle != true" v-html="item.description || item.title"></p>
+          <p class="tag" v-if="hideTag != true && item.tag" v-html="item.tag"></p>
         </div>
-        <p class="label" v-if="item.label" v-html="item.label"></p>
-        <p class="title" v-html="item.description || item.title"></p>
-        <p class="tag" v-if="item.tag" v-html="item.tag"></p>
       </div>
     </template>
   </div>

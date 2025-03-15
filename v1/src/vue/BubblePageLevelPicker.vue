@@ -11,7 +11,6 @@
   const i18n = useI18n({ useScope: 'global' });
   var description = ref('Select a level');
   var items = ref([]); // Carousel items
-  var key = ref(0);
   var selectedItem = ref();
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
@@ -64,13 +63,7 @@
       pack.levels.forEach(function(level) {
         // Set title and increment count
         if (index == count) {
-          description.value = pack.title;
-
-          if (pack.links) {
-            pack.links.forEach(function(link) {
-              description.value += ' <a class="' + link.class + '" href="' + link.url + '" target="' + link.target + '"><img src="' + link.icon + '"> ' + link.text + '</a>'
-            })
-          }
+          description.value = `${pack.title}: <em>${ selectedItem.value.description || selectedItem.value.title }</em>`;
         }
         count++;
       });
@@ -114,8 +107,9 @@
       var url = themes[pack.theme].thumbnail;
       pack.levels.forEach(function(item, j) {
         var score = getScore(item.publishedFileId || item.title);
-        if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + score;
         if (item.thumbnail) url = item.thumbnail;
+        if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + score;
+        else item.tag = '<span class="material-symbols-rounded">play_arrow</span>'
         item.url = url;
         item.theme = pack.theme;
         items.value.push(item);
@@ -171,18 +165,21 @@
       <a class="button fade-in" @click="exitLevelPicker" :title="i18n.t('level_picker.button.exit')">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <BubbleButtonSettings class="button right fade-in" />
+      <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
+        <span class="material-symbols-rounded">search</span>
+      </a>
+      <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">
       <h1>{{ i18n.t('level_picker.title') }}</h1>
       <p v-html="description"></p>
-      <BubbleCarousel :items="items" :selected="selectedItem" :key="key" />
+      <BubbleCarousel
+        :items="items"
+        :selected="selectedItem"
+        :hideTitle="true"
+      />
       <div class="footer">
         <div class="center">
-          <a class="button fade-in" @click="openLevelSelector">
-            <span class="material-symbols-rounded">identity_platform</span>
-            {{ i18n.t('popup.text.info') }}
-          </a>
           <a class="button fade-in" @click="playSelectedItem">
             <span class="material-symbols-rounded">slideshow</span>
             {{ i18n.t('level_picker.button.play') }}

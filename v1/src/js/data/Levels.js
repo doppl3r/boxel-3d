@@ -1,5 +1,13 @@
 import levels from '../../json/levels.json';
 
+// Format existing levels
+levels.packs.forEach(function(pack, i) {
+  pack.levels.forEach(function(level, j) {
+    // Add level number to label
+    level.label = level.label || `${ i + 1 }-${ j + 1 }`;
+  })
+});
+
 if (window.electron) {
   // Add Workshop pack with empty levels
   const pack = {
@@ -37,7 +45,6 @@ if (window.electron) {
                       description: item.title,
                       thumbnail: item.previewUrl,
                       path: `${ installInfo.folder }\\${ fileName }`,
-                      overlay: true,
                       links: [
                         `https://steamcommunity.com/sharedfiles/filedetails/?id=${ item.publishedFileId.toString() }`
                       ]

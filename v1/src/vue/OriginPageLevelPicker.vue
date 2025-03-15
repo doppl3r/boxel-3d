@@ -67,24 +67,6 @@
     return title;
   }
 
-  function getLevelTheme(index) {
-    var theme;
-    var count = 0;
-
-    // Loop through packs array
-    levels.packs.forEach(function(pack) {
-      // Loop through each levels array
-      pack.levels.forEach(function(level) {
-        // Set theme and increment count
-        if (index == count) {
-          theme = pack.theme;
-        }
-        count++;
-      });
-    });
-    return theme;
-  }
-
   function scrollToLevel() {
     var el = document.querySelector("[title='" + progressTitle + "']");
 
