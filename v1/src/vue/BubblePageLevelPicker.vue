@@ -30,11 +30,7 @@
   }
 
   async function playSelectedItem() {
-    await app.playLevel({
-      path: selectedItem.value.path,
-      publishedFileId: selectedItem.value.publishedFileId,
-      title: selectedItem.value.title
-    });
+    await app.playLevel({ ...selectedItem.value });
     emit('setPage', 'campaign');
   }
 

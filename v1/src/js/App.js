@@ -333,7 +333,7 @@ class App {
       app.timer.reset();
       app.level.clearLevel(app);
       app.level.importFromJSON(options.json, app);
-      app.level.publishedFileId = options.json.publishedFileId; // Steam level ID
+      app.level.publishedFileId = options.publishedFileId; // Steam level ID
       app.background.visible = true;
       app.startLevel();
       app.resetScene();

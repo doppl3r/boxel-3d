@@ -137,11 +137,7 @@
   }
 
   async function playSelectedLevel() {
-    await app.playLevel({
-      path: selectedLevel.value.path,
-      publishedFileId: selectedLevel.value.publishedFileId,
-      title: selectedLevel.value.title
-    });
+    await app.playLevel({ ...selectedLevel.value });
     window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
 
     // Update progress

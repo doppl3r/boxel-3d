@@ -285,7 +285,7 @@
     app.multiplayer.closeConnectionByUUID(player.uuid);
   }
 
-  async function playLevel(options, success, error) {
+  async function loadPlayerLevel(options, success, error) {
     // Change level to target player
     var load = await app.playLevel(options);
     if (load) {
@@ -307,7 +307,7 @@
   }
 
   function goToPlayer(player) {
-    playLevel({ title: player.level },
+    loadPlayerLevel({ title: player.level },
       () => {
         // On success, set player position after loading
         var target = app.multiplayer.getPlayer({ uuid: player.uuid })
@@ -331,7 +331,7 @@
     if (target.nodeName == 'A') {
       // Check if link has attribute to play a specific level
       var title = target.getAttribute('href');
-      playLevel({ title },
+      loadPlayerLevel({ title },
         () => {
           // On success
           
