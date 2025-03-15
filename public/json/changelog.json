@@ -563,6 +563,7 @@
   {
     "version": "2.5.1",
     "revisions": [
+      "Added theme selector to Level Editor",
       "Updated Steam Workshop UI"
     ]
   }
