@@ -63,7 +63,7 @@
       pack.levels.forEach(function(level) {
         // Set title and increment count
         if (index == count) {
-          description.value = `${pack.title}: <em>${ selectedItem.value.description || selectedItem.value.title }</em>`;
+          description.value = `${pack.title} - <em>${ selectedItem.value.description || selectedItem.value.title }</em>`;
         }
         count++;
       });
@@ -197,6 +197,10 @@
     .page {
       .content {
         padding-bottom: 0;
+
+        p {
+          margin-bottom: 0;
+        }
       }
       
       .footer {

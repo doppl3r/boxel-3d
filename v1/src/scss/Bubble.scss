@@ -189,6 +189,10 @@
       max-width: 100%;
       z-index: 0;
 
+      p {
+        margin: 0 0 0.5em;
+      }
+
       .carousel {
         display: flex;
         max-width: 100vw; /* Fixes Firefox expanding popup */
