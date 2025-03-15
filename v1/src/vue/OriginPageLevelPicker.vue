@@ -20,14 +20,12 @@
   }
 
   async function playSelectedLevel(level) {
-    if (level.path) {
-      await app.playLevelByPath(level.path, level.publishedFileId);
-      emit('setPage', 'campaign');
-    }
-    else {
-      await app.playLevelByTitle(level.title);
-      emit('setPage', 'campaign');
-    }
+    await app.playLevel({
+      path: level.path,
+      publishedFileId: level.publishedFileId,
+      title: level.title
+    });
+    emit('setPage', 'campaign');
 
     // Update progress
     settings.progress = app.level.getLevelIndex(level.title) + 1;

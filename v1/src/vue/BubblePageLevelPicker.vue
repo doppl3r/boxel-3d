@@ -30,14 +30,12 @@
   }
 
   async function playSelectedItem() {
-    if (selectedItem.value.path) {
-      await app.playLevelByPath(selectedItem.value.path, selectedItem.value.publishedFileId);
-      emit('setPage', 'campaign');
-    }
-    else {
-      await app.playLevelByTitle(selectedItem.value.title);
-      emit('setPage', 'campaign');
-    }
+    await app.playLevel({
+      path: selectedItem.value.path,
+      publishedFileId: selectedItem.value.publishedFileId,
+      title: selectedItem.value.title
+    });
+    emit('setPage', 'campaign');
   }
 
   function getScore(key) {

@@ -285,9 +285,9 @@
     app.multiplayer.closeConnectionByUUID(player.uuid);
   }
 
-  async function playLevelByTitle(title, success, error) {
+  async function playLevel(options, success, error) {
     // Change level to target player
-    var load = await app.playLevelByTitle(title);
+    var load = await app.playLevel(options);
     if (load) {
       // Update game state
       window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
@@ -307,7 +307,7 @@
   }
 
   function goToPlayer(player) {
-    playLevelByTitle(player.level,
+    playLevel({ title: player.level },
       () => {
         // On success, set player position after loading
         var target = app.multiplayer.getPlayer({ uuid: player.uuid })
@@ -331,7 +331,7 @@
     if (target.nodeName == 'A') {
       // Check if link has attribute to play a specific level
       var title = target.getAttribute('href');
-      playLevelByTitle(title,
+      playLevel({ title },
         () => {
           // On success
           

@@ -137,14 +137,12 @@
   }
 
   async function playSelectedLevel() {
-    if (selectedLevel.value.path) {
-      await app.playLevelByPath(selectedLevel.value.path, selectedLevel.value.publishedFileId);
-      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
-    }
-    else {
-      await app.playLevelByTitle(selectedLevel.value.title);
-      window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
-    }
+    await app.playLevel({
+      path: selectedLevel.value.path,
+      publishedFileId: selectedLevel.value.publishedFileId,
+      title: selectedLevel.value.title
+    });
+    window.dispatchEvent(new CustomEvent('setPage', { detail: 'campaign' }));
 
     // Update progress
     const progress = levels.value.findIndex(level => level.title == selectedLevel.value.title) + 1;
