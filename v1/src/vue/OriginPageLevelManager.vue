@@ -36,11 +36,13 @@
       var reader = new FileReader();
       reader.onload = function() {
         var level = JSON.parse(reader.result);
+        var theme = app.level.getTheme(level.theme) || {};
+        console.log(theme);
         app.level.clearLevel(app);
         app.level.key = null; // Reset key to generate new save key
         app.background.visible = false;
-        app.level.entityFactory.color = '#620460';
-        app.background.setTheme('background-classic');
+        app.level.entityFactory.color = theme.color || '#620460';
+        app.background.setTheme(theme.model || 'background-classic');
         app.level.clearLevel(app);
         app.level.importFromJSON(level, app);
         app.levelHistory.save('Downloaded level', app);
@@ -56,10 +58,11 @@
 
   function editLevel(item) {
     var levelData = app.storage.getLevelData(item.key);
+    var theme = app.level.getTheme(levelData.theme) || {};
     var settings = app.storage.getSettings(app);
     levelData.name = item.level.name;
-    app.level.entityFactory.color = '#620460';
-    app.background.setTheme('background-classic');
+    app.level.entityFactory.color = theme.color || '#620460';
+    app.background.setTheme(theme.model || 'background-classic');
     app.level.clearLevel(app);
     app.level.importFromJSON(levelData, app);
     app.level.key = item.key;

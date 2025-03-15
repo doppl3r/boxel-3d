@@ -5,41 +5,17 @@
     "model": "background-blue",
     "thumbnail": "../svg/button-pack-easy-peasy.svg"
   },
-  "purple-mountains": {
-    "background_color": "#9F00FF",
-    "color": "#5503A8",
-    "model": "background-purple",
-    "thumbnail": "../svg/button-pack-community.svg"
-  },
-  "city": {
-    "background_color": "#4c7dff",
-    "color": "#ffffff",
-    "model": "background-city",
-    "thumbnail": "../svg/button-pack-city.svg"
-  },
-  "classic": {
-    "background_color": "#990799",
-    "color": "#620460",
-    "model": "background-classic",
-    "thumbnail": "../svg/button-pack-boxel-classics.svg"
-  },
-  "green": {
-    "background_color": "#9F00FF",
-    "color": "#5503A8",
-    "model": "background-forest",
-    "thumbnail": "../svg/button-pack-zacks-levels.svg"
-  },
   "orange": {
     "background_color": "#c40c4b",
     "color": "#c40c4b",
     "model": "background-desert",
     "thumbnail": "../svg/button-pack-lemon-difficult.svg"
   },
-  "pink": {
-    "background_color": "#EB2B6D",
-    "color": "#C40C4B",
-    "model": "background-tokyo",
-    "thumbnail": "../svg/button-pack-spider-cube.svg"
+  "green": {
+    "background_color": "#9F00FF",
+    "color": "#5503A8",
+    "model": "background-forest",
+    "thumbnail": "../svg/button-pack-zacks-levels.svg"
   },
   "purple": {
     "background_color": "#5503A8",
@@ -53,6 +29,30 @@
     "model": "background-hell",
     "thumbnail": "../svg/button-pack-gravity-hell.svg"
   },
+  "classic": {
+    "background_color": "#990799",
+    "color": "#620460",
+    "model": "background-classic",
+    "thumbnail": "../svg/button-pack-boxel-classics.svg"
+  },
+  "pink": {
+    "background_color": "#EB2B6D",
+    "color": "#C40C4B",
+    "model": "background-tokyo",
+    "thumbnail": "../svg/button-pack-spider-cube.svg"
+  },
+  "city": {
+    "background_color": "#4c7dff",
+    "color": "#ffffff",
+    "model": "background-city",
+    "thumbnail": "../svg/button-pack-city.svg"
+  },
+  "purple-mountains": {
+    "background_color": "#9F00FF",
+    "color": "#5503A8",
+    "model": "background-purple",
+    "thumbnail": "../svg/button-pack-community.svg"
+  }, 
   "workshop": {
     "background_color": "#4c7dff",
     "color": "#ffffff",

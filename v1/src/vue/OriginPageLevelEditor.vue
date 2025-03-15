@@ -60,8 +60,20 @@
   }
 
   function selectTheme(name) {
+    // Deselect before recoloring level children
+    app.level.deselectLevel(app);
+    app.levelEditor.controlsTransform.detach();
+
+    // Store current theme settings
+    const theme = app.level.getTheme(name);
     selectedTheme.value = name;
+    app.level.entityFactory.color = theme.color;
     app.level.theme = name;
+    
+    // Recreate current level with new theme data
+    const json = app.level.exportToJSON(app);
+    app.level.clearLevel(app);
+    app.level.importFromJSON(json, app);
     app.levelHistory.save('Updated level theme', app);
   }
 
@@ -98,7 +110,7 @@
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
-    app.startLevel();
+    app.playLevel({ json: app.level.exportToJSON(app) });
   }
 
   function selectObjectType(e) {
@@ -262,12 +274,17 @@
         <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img :src="'../svg/home.svg'"></a>
         <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img :src="'../svg/save.svg'"></a>
         <a class="item" @click="saveScreenshot" title="Save Screenshot"><img :src="'../svg/eye.svg'"></a>
-        <a class="item" :class="{ selected: themeOptionsVisible == true }" title="Change Theme" @click="themeOptionsVisible = !themeOptionsVisible">
+        <a class="item" :class="{ selected: themeOptionsVisible == true }" @click="themeOptionsVisible = !themeOptionsVisible">
           <img :src="'../svg/color.svg'">
           <ul v-if="themeOptionsVisible == true">
             <li v-for="(theme, name) in themes">
-              <a class="item" :class="{ selected: selectedTheme == name }" @click="selectTheme(name)">
-                <img :src="theme.thumbnail" :title="name" />
+              <a
+                class="item"
+                :class="{ selected: selectedTheme == name }"
+                :title="name"
+                @click="selectTheme(name)"
+              >
+                <img :src="theme.thumbnail" />
               </a>
             </li>
           </ul>
