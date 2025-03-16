@@ -56,11 +56,13 @@
   }
 
   function saveScreenshot() {
+    app.pauseLevel();
     app.storage.screenshot(1280, 720, true);
   }
 
   function selectTheme(name) {
     // Deselect before recoloring level children
+    rewind();
     app.level.deselectLevel(app);
     app.levelEditor.controlsTransform.detach();
 
