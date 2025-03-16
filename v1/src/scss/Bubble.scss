@@ -238,20 +238,39 @@
           
           &.selected {
             transform: scale(1);
+
+            .thumbnail {
+              .overlay {
+                animation: slide 0.5s ease-out;
+                animation-fill-mode: forwards;
+              }
+            }
           }
 
           .thumbnail {
             position: relative;
 
+            @keyframes slide {
+              0% { background-position: 0em 0em; opacity: 1; }
+              100% { background-position: 0em 6.25em; opacity: 0; }
+            }
+
             .overlay {
-              background-color: rgba(#000000, 0.25);
-              border-radius: 0.75em;
+              background-image: url('/svg/glass-overlay.svg');
+              background-position: 0em 0em;
+              background-size: 6.25em 6.25em;
+              background-repeat: repeat-y;
+              border-radius: 0.5em;
+              content: '';
+              display: block;
               height: 100%;
               left: 0;
+              opacity: 0.25;
+              pointer-events: none;
               position: absolute;
               top: 0;
               width: 100%;
-              z-index: 0;
+              z-index: 1;
             }
 
             img {
@@ -281,6 +300,8 @@
               top: 0;
               left: 50%;
               transform: translate(-50%, -50%);
+              white-space: nowrap;
+              z-index: 2;
             }
   
             .title {
@@ -291,6 +312,7 @@
               margin: 0;
               transform: translate(-50%, -50%);
               width: 100%;
+              z-index: 2;
             }
   
             .tag {
@@ -308,6 +330,8 @@
               left: 50%;
               margin: 0;
               transform: translate(-50%, 50%);
+              white-space: nowrap;
+              z-index: 2;
   
               .material-symbols-rounded {
                 color: #FFC24C;

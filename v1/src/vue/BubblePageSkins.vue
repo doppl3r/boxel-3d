@@ -3,7 +3,7 @@
   import { useI18n } from 'vue-i18n';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
-  import skins from '../json/skins.json';
+  import skins from '../js/data/Skins.js';
 
   const i18n = useI18n({ useScope: 'global' });
   var emit = defineEmits(['setPage']);
