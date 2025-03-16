@@ -59,7 +59,7 @@
   "devDependencies": {
     "@dimforge/rapier3d": "^0.15.0",
     "@vitejs/plugin-vue": "^5.2.1",
-    "electron": "^35.0.2",
+    "electron": "^34.3.0",
     "electron-builder": "^25.1.8",
     "vite": "^6.2.2",
     "vite-plugin-top-level-await": "^1.5.0",

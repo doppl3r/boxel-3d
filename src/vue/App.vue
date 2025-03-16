@@ -18,13 +18,13 @@
 
   // Initialize components
   const i18n = useI18n();
-  const isElectronApp = ref(window.electron != undefined);
   const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
   const modalWorkshopVisible = ref(false);
   const modalSteamVisible = ref(false);
   const modalNewsVisible = ref(false);
+  const isExiting = ref(false);
   let ticker;
   let graphics;
   let background;
@@ -73,7 +73,13 @@
   }
 
   function openLink(url, target = '_self') {
-    window.open(url, target);
+    if (target == '_self') {
+      isExiting.value = true;
+      
+      setTimeout(() => {
+        window.open(url, target);
+      }, 250);
+    }
   }
 
   document.addEventListener('click', function(e) {
@@ -83,10 +89,6 @@
   // Update <html> language value
   function updateLanguageAttribute() {
     document.documentElement.lang = i18n.locale.value;
-  }
-
-  function isExtension() {
-    return window.chrome?.extension;
   }
 
   // Watch the i18n locale changes
@@ -125,10 +127,28 @@
     <ModalSteam @close="modalSteamVisible = false" v-show="modalSteamVisible == true" />
     <ModalNews @close="modalNewsVisible = false" v-show="modalNewsVisible == true" />
     <Loading />
+
+    <div class="fade-exit" :class="{ 'is-exiting': isExiting }"></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  .fade-exit {
+    background-color: #000000;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transition: opacity 0.25s ease;
+    width: 100%;
+
+    &.is-exiting {
+      opacity: 1;
+    }
+  }
+
   canvas {
     image-rendering: pixelated;
     width: 100%;
