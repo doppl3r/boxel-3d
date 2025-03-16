@@ -1,6 +1,6 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
-  import skins from '../json/skins.json';
+  import { skins } from '../js/Data.js';
 
   var emit = defineEmits(['setPage']);
 

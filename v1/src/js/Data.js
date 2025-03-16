@@ -1,4 +1,6 @@
-import levels from '../../json/levels.json';
+import levels from '../json/levels.json';
+import themes from '../json/themes.json';
+import skins from '../json/skins.json';
 
 // Format existing levels
 levels.packs.forEach(function(pack, i) {
@@ -9,6 +11,13 @@ levels.packs.forEach(function(pack, i) {
   })
 });
 
+// Format existing skins
+skins.forEach(skin => {
+  skin.overlay = true;
+  skin.tag = skin.title;
+});
+
+// Add workshop items to data points
 if (window.electron) {
   // Add Workshop pack with empty levels
   const pack = {
@@ -19,6 +28,7 @@ if (window.electron) {
   }
   levels.packs.push(pack);
 
+  // Make a request to Steam Workshop API
   try {
     // Get array of item ids
     const itemIds = window.electron.client.workshop.getSubscribedItems();
@@ -39,18 +49,24 @@ if (window.electron) {
               window.electron.getFileNames(installInfo.folder).then(fileNames => {
                 // Loop through each file name
                 fileNames.forEach(fileName => {
-                  if (fileName.includes('.json')) {
-                    pack.levels.push({
-                      ...item,
-                      title: item.title,
-                      description: item.title,
-                      thumbnail: item.previewUrl,
-                      path: `${ installInfo.folder }\\${ fileName }`,
-                      overlay: true,
-                      links: [
-                        `https://steamcommunity.com/sharedfiles/filedetails/?id=${ item.publishedFileId.toString() }`
-                      ]
-                    });
+                  // Assign keys/values to item (BubbleCarousel.vue format)
+                  Object.assign(item, {
+                    title: item.title,
+                    description: item.description,
+                    thumbnail: item.previewUrl,
+                    path: `${ installInfo.folder }\\${ fileName }`,
+                    overlay: true,
+                    links: [
+                      `https://steamcommunity.com/sharedfiles/filedetails/?id=${ item.publishedFileId.toString() }`
+                    ]
+                  });
+
+                  // Conditionally populate data by file extensions
+                  if (['.json'].some(ext => fileName.includes(ext))) {
+                    pack.levels.push(item);
+                  }
+                  else if (['.png', '.jpg'].some(ext => fileName.includes(ext))) {
+                    skins.push(item);
                   }
                 })
               });
@@ -68,5 +84,4 @@ if (window.electron) {
   }
 }
 
-// Export levels as json data
-export default levels;
+export { levels, themes, skins };

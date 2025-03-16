@@ -1,9 +1,9 @@
 <script setup>
   import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { skins } from '../js/Data.js';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
-  import skins from '../js/data/Skins.js';
 
   const i18n = useI18n({ useScope: 'global' });
   var emit = defineEmits(['setPage']);
@@ -41,7 +41,7 @@
     }
     else {
       // Immediately change skin
-      app.player.setSkin({ id: skin.id, url: skin.url });
+      app.player.setSkin({ id: skin.id || skin.publishedFileId, url: skin.url || skin.contentPath });
       app.updateSettings(settings.value);
     }
   }

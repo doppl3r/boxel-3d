@@ -1,8 +1,7 @@
 import { Group } from 'three';
 import { World } from 'matter-js';
 import { EntityFactory } from './entities/EntityFactory.js';
-import levels from './data/Levels.js';
-import themes from './data/Themes.js';
+import { levels, themes } from '../js/Data.js';
 
 class Level extends Group {
   constructor() {

@@ -2,7 +2,7 @@
   import { onMounted, onUnmounted, ref } from 'vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
   import OriginControls from './OriginControls.vue';
-  import themes from '../js/data/Themes.js';
+  import { themes } from '../js/Data.js';
 
   var emit = defineEmits(['setPage']);
   var drawMode = ref('draw');

@@ -4,8 +4,7 @@
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import BubblePopupLevelSelector from './BubblePopupLevelSelector.vue';
-  import levels from '../js/data/Levels.js';
-  import themes from '../js/data/Themes.js';
+  import { levels, themes } from '../js/Data.js';
 
   // Initialize variables
   const i18n = useI18n({ useScope: 'global' });
