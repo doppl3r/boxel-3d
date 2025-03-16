@@ -192,8 +192,11 @@
 
     // Prompt dialog for data
     const data = await electron.dialog({
-      properties: ['openFile'],
-      filters: [{ 'name': 'Level File', 'extensions': ['json'] }]
+      properties: ['openFile', 'multiSelections'],
+      filters: [
+        { 'name': 'Level File(s)', 'extensions': ['json'] },
+        { 'name': 'Skin File(s)', 'extensions': ['jpg', 'png'] }
+      ]
     });
 
     // Update if data is not canceled

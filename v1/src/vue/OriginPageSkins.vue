@@ -18,7 +18,7 @@
   var settings = ref(app.storage.getSettings());
 
   function selectSkin(skin, e) {
-    settings.value.skin = skin;
+    settings.value.skin = { id: skin.id, title: skin.title, url: skin.url };
     if (skin.id == 680) {
       // Open custom skin options
       window.dispatchEvent(new CustomEvent('openPopup', {
@@ -96,12 +96,16 @@
     <div class="wrapper fade-in">
       <h1>My<strong>Skins</strong></h1>
       <div class="skin-group">
-        <template v-for="(skin, key) of skins">
-          <div class="skin" :class="{ selected: isSelected(skin) }" :id="skin.id" @click="selectSkin(skin, $event)">
-            <div class="image" :style="{ 'background-image': 'url(' + (isSelected(skin) ? settings.skin.url : skin.url) + ')' }"></div>
-            <div class="title">{{ skin.title }}</div>
-          </div>
-        </template>
+        <div v-for="(skin, key) of skins"
+          class="skin"
+          :class="{ selected: isSelected(skin) }"
+          :id="skin.id"
+          :key="key"
+          @click="selectSkin(skin, $event)"
+        >
+          <img :src="skin.url" class="image" />
+          <div class="title">{{ skin.title }}</div>
+        </div>
       </div>
       <div class="buttons">
         <a class="button top-left" @click="exitSkins" title="Exit to home (ESC)"><img :src="'../svg/home.svg'"></a>

@@ -797,8 +797,8 @@
         }
 
         .image {
-          background-size: cover;
-          padding-bottom: 100%;
+          object-fit: fill;
+          max-width: 100%;
           height: auto;
           margin: auto;
           border-radius: 4px;

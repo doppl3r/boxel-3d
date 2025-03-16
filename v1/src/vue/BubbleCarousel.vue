@@ -108,9 +108,11 @@
         <div class="thumbnail">
           <img :src="item.url">
           <div v-if="item.overlay" class="overlay"></div>
-          <p class="label" v-if="hideLabel != true && item.label" v-html="item.label"></p>
-          <p class="title" v-if="hideTitle != true" v-html="item.description || item.title"></p>
-          <p class="tag" v-if="hideTag != true && item.tag" v-html="item.tag"></p>
+          <div class="label" v-if="hideLabel != true && item.label" v-html="item.label"></div>
+          <div class="title" v-if="hideTitle != true" v-html="item.description || item.title"></div>
+          <div class="tag" v-if="hideTag != true && item.tag">
+            <div v-html="item.tag"></div>
+          </div>
         </div>
       </div>
     </template>

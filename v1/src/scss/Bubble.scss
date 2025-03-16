@@ -305,11 +305,13 @@
             }
   
             .title {
-              padding: 0 0.5em;
-              position: absolute;
-              top: 50%;
+              color: #ffffff;
               left: 50%;
               margin: 0;
+              padding: 0 0.5em;
+              position: absolute;
+              text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+              top: 50%;
               transform: translate(-50%, -50%);
               width: 100%;
               z-index: 2;
@@ -329,12 +331,24 @@
               bottom: 0;
               left: 50%;
               margin: 0;
+              max-width: 100%;
               transform: translate(-50%, 50%);
-              white-space: nowrap;
               z-index: 2;
-  
-              .material-symbols-rounded {
-                color: #FFC24C;
+              
+              div {
+                display: inline;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                span {
+                  vertical-align: middle;
+                }
+
+                .material-symbols-rounded {
+                  color: #FFC24C;
+                }
               }
             }
           }

@@ -26,7 +26,7 @@
 
   function updatePlayerSkin(e) {
     var skin = e.detail;
-    settings.value.skin = skin;
+    settings.value.skin = { id: skin.id, title: skin.title, url: skin.url };
     if (skin.id == 680) {
       // Open custom skin options
       window.dispatchEvent(new CustomEvent('openPopup', {
@@ -41,7 +41,7 @@
     }
     else {
       // Immediately change skin
-      app.player.setSkin({ id: skin.id || skin.publishedFileId, url: skin.url || skin.contentPath });
+      app.player.setSkin({ id: skin.id, url: skin.url });
       app.updateSettings(settings.value);
     }
   }

@@ -63,9 +63,18 @@ if (window.electron) {
 
                   // Conditionally populate data by file extensions
                   if (['.json'].some(ext => fileName.includes(ext))) {
+                    Object.assign(item, {
+                      description: item.title
+                    })
                     pack.levels.push(item);
                   }
                   else if (['.png', '.jpg'].some(ext => fileName.includes(ext))) {
+                    Object.assign(item, {
+                      id: item.publishedFileId.toString(),
+                      url: item.path,
+                      title: item.title,
+                      tag: item.title
+                    });
                     skins.push(item);
                   }
                 })
