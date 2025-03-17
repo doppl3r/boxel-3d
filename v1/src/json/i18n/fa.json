@@ -100,6 +100,7 @@
     },
     "text": {
       "all": "همه",
+      "browse": "مرور کنید",
       "cloud_data_restored": "تمام! اطلاعات شما از حسابتان بازیابی شد",
       "cloud_data_saved": "تمام! اطلاعات شما در حسابتان ذخیره شد",
       "custom_skin": "پوسته سفارشی",
@@ -170,5 +171,15 @@
     },
     "description": "پوسته بازیکن خود را انتخاب کنید",
     "title": "پوسته‌ها"
+  },
+  "workshop": {
+    "text": {
+      "browse_items": "موارد را مرور کنید",
+      "creations": "آفرینش ها",
+      "edit": "ویرایش کنید",
+      "requires_steam": "نیاز دارد Steam",
+      "subscriptions": "اشتراک ها",
+      "workshop": "Workshop"
+    }
   }
 }

@@ -100,6 +100,7 @@
     },
     "text": {
       "all": "모두",
+      "browse": "먹다",
       "cloud_data_restored": "데이터 불러오기 성공!",
       "cloud_data_saved": "데이터 백업 성공!",
       "custom_skin": "커스텀 스킨",
@@ -170,5 +171,15 @@
     },
     "description": "스킨을 고르시오.",
     "title": "스킨"
+  },
+  "workshop": {
+    "text": {
+      "browse_items": "항목 찾아보기",
+      "creations": "창작물",
+      "edit": "편집하다",
+      "requires_steam": "필요하다 Steam",
+      "subscriptions": "구독",
+      "workshop": "Workshop"
+    }
   }
 }

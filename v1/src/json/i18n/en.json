@@ -100,6 +100,7 @@
     },
     "text": {
       "all": "All",
+      "browse": "Browse",
       "cloud_data_restored": "Success! Your data was restored from your account.",
       "cloud_data_saved": "Success! Your data was backed up to your account.",
       "custom_skin": "Custom Skin",
@@ -170,5 +171,15 @@
     },
     "description": "Select your player skin",
     "title": "Skins"
+  },
+  "workshop": {
+    "text": {
+      "browse_items": "Browse items",
+      "creations": "Creations",
+      "edit": "Edit",
+      "requires_steam": "Requires Steam",
+      "subscriptions": "Subscriptions",
+      "workshop": "Workshop"
+    }
   }
 }
