@@ -175,9 +175,10 @@
   "workshop": {
     "text": {
       "browse_items": "موارد را مرور کنید",
+      "create_item": "مورد ایجاد کنید",
       "creations": "آفرینش ها",
       "edit": "ویرایش کنید",
-      "requires_steam": "نیاز دارد Steam",
+      "steam_version": "Steam نسخه",
       "subscriptions": "اشتراک ها",
       "workshop": "Workshop"
     }

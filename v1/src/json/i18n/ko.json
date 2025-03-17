@@ -175,9 +175,10 @@
   "workshop": {
     "text": {
       "browse_items": "항목 찾아보기",
+      "create_item": "아이템 생성",
       "creations": "창작물",
       "edit": "편집하다",
-      "requires_steam": "필요하다 Steam",
+      "steam_version": "Steam 버전",
       "subscriptions": "구독",
       "workshop": "Workshop"
     }

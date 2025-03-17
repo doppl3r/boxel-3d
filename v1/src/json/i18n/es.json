@@ -175,9 +175,10 @@
   "workshop": {
     "text": {
       "browse_items": "Explorar artículos",
+      "create_item": "Crear artículo",
       "creations": "Creaciones",
       "edit": "Editar",
-      "requires_steam": "Requiere Steam",
+      "steam_version": "Steam versión",
       "subscriptions": "Suscripciones",
       "workshop": "Workshop"
     }

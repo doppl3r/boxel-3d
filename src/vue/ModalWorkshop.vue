@@ -269,7 +269,7 @@
       <div class="workshop__background" @click="$emit('close')"></div>
       <div class="workshop__container">
         <div class="workshop__types">
-          <div class="workshop__types-header">Workshop</div>
+          <div class="workshop__types-header">{{ i18n.t('workshop.text.workshop') }}</div>
           <ul class="workshop__types-list">
             <template v-for="itemType in itemTypes" :key="itemType.id">
               <li>
@@ -297,13 +297,13 @@
                 <template v-if="isElectronApp == true">
                   <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
                     <span class="material-symbols-rounded">open_in_new</span>
-                    <span>Browse items</span>
+                    <span>{{ i18n.t('workshop.text.browse_items') }}</span>
                   </button>
                 </template>
                 <template v-else>
                   <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
                     <span class="material-symbols-rounded">open_in_new</span>
-                    <span>Browse items (Requires Steam)</span>
+                    <span>{{ i18n.t('workshop.text.browse_items') }} ({{ i18n.t('workshop.text.steam_version') }})</span>
                   </button>
                 </template>
               </template>
@@ -311,13 +311,13 @@
                 <template v-if="isElectronApp == true">
                   <button @click="createItem()">
                     <span class="material-symbols-rounded">add</span>
-                    <span>Create item</span>
+                    <span>{{ i18n.t('workshop.text.create_item') }}</span>
                   </button>
                 </template>
                 <template v-else>
                   <button @click="openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">
                     <span class="material-symbols-rounded">add</span>
-                    <span>Create item (Requires Steam)</span>
+                    <span>{{ i18n.t('workshop.text.create_item') }} ({{ i18n.t('workshop.text.steam_version') }})</span>
                   </button>
                 </template>
               </template>
@@ -356,7 +356,7 @@
                 @click="selectImage(selectedItem)"
               >
                 <span class="material-symbols-rounded">edit</span>
-                <span>Edit</span>
+                <span>{{ i18n.t('workshop.text.edit') }}</span>
               </button>
             </div>
             <div class="workshop__info-details">
