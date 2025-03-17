@@ -1,6 +1,7 @@
 import levels from '../json/levels.json';
 import themes from '../json/themes.json';
 import skins from '../json/skins.json';
+import mods from '../json/mods.json';
 
 // Format existing levels
 levels.packs.forEach(function(pack, i) {
@@ -68,6 +69,9 @@ if (window.electron) {
                     })
                     pack.levels.push(item);
                   }
+                  else if (['.js'].some(ext => fileName.includes(ext))) {
+                    mods.push(item);
+                  }
                   else if (['.png', '.jpg'].some(ext => fileName.includes(ext))) {
                     Object.assign(item, {
                       id: item.publishedFileId.toString(),
@@ -93,4 +97,4 @@ if (window.electron) {
   }
 }
 
-export { levels, themes, skins };
+export { levels, mods, skins, themes};

@@ -195,7 +195,8 @@
       properties: ['openFile', 'multiSelections'],
       filters: [
         { 'name': 'Level File(s)', 'extensions': ['json'] },
-        { 'name': 'Skin File(s)', 'extensions': ['jpg', 'png'] }
+        { 'name': 'Skin File(s)', 'extensions': ['jpg', 'png'] },
+        { 'name': 'Mod File(s)', 'extensions': ['js'] },
       ]
     });
 

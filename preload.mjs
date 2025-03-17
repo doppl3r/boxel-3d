@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('electron', {
   getFile: (...path) => ipcRenderer.invoke('getFile', ...path),
   getFileNames: (...path) => ipcRenderer.invoke('getFileNames', ...path),
   getFilePath: file => ipcRenderer.invoke('getFilePath', file),
+  loadScript: (...path) => ipcRenderer.invoke('loadScript', ...path),
   dialog: (options) => ipcRenderer.invoke('dialog', options),
   toggleFullScreen: () => ipcRenderer.invoke('toggleFullScreen')
 });

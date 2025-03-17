@@ -23,6 +23,7 @@ ipcMain.handle('dialog', openDialog);
 ipcMain.handle('getFile', getFile);
 ipcMain.handle('getFileNames', getFileNames);
 ipcMain.handle('getFilePath', getFilePath);
+ipcMain.handle('loadScript', loadScript);
 
 // Initialize main window outside creation
 let mainWindow;
@@ -52,6 +53,11 @@ function toggleFullScreen() {
 
 async function openDialog(event, args) {
   return await dialog.showOpenDialog(args);
+}
+
+async function loadScript(event, ...args) {
+  const file = await getFile(event, ...args);
+  return await mainWindow.webContents.executeJavaScript(file);
 }
 
 async function getFile(event, ...args) {

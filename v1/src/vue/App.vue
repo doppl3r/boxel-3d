@@ -3,6 +3,7 @@
   import { onMounted, ref, watch  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { App } from '../js/App.js';
+  import { mods } from '../js/Data.js';
   import UI from './UI.vue';
 
   // Initialize app and expose to window scope
@@ -14,6 +15,16 @@
   function updateLanguageAttribute() {
     document.documentElement.lang = i18n.locale.value;
   }
+
+  function loadMods() {
+    // Check if electron app exists
+    if (window.electron) {
+      // Loop through each mod item
+      mods.forEach(mod => {
+        window.electron.loadScript(mod.path);
+      });
+    }
+  }
   
   // Watch the i18n locale changes
   watch(i18n.locale, () => {
@@ -22,7 +33,7 @@
 
   // Initialize app after canvas has been mounted
   onMounted(function() {
-    app.init(canvas.value);
+    app.init(canvas.value, loadMods);
     updateLanguageAttribute();
   });
 </script>
