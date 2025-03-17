@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import Store from 'electron-store';
 import steamworks from 'steamworks.js';
 import path from 'path';
-import { promises as fs } from 'fs';
+import fs from 'fs';
 
 // Configure directory
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +23,7 @@ ipcMain.handle('dialog', openDialog);
 ipcMain.handle('getFile', getFile);
 ipcMain.handle('getFileNames', getFileNames);
 ipcMain.handle('getFilePath', getFilePath);
+ipcMain.handle('getFileExists', getFileExists);
 ipcMain.handle('loadScript', loadScript);
 
 // Initialize main window outside creation
@@ -61,22 +62,27 @@ async function loadScript(event, ...args) {
 }
 
 async function getFile(event, ...args) {
-  // Note: Add "extraFiles" value to package.json to access outside app.asar archive
   const filePath = path.resolve(...args);
-  const file = fs.readFile(filePath, 'utf-8');
+  const file = fs.promises.readFile(filePath, 'utf-8');
   return file;
 }
 
 async function getFileNames(event, ...args) {
-  // Note: Add "extraFiles" value to package.json to access outside app.asar archive
   const dir = path.resolve(...args);
-  const fileNames = fs.readdir(dir);
-  return fileNames;
+  const exists = await getFileExists(event, ...args);
+  if (exists == true) return fs.promises.readdir(dir);
+  return [];
 }
 
 async function getFilePath(event, args) {
   // Note: Add "extraFiles" value to package.json to access outside app.asar archive
   return path.resolve(__dirname, app.isPackaged ? '../../' : '', args);
+}
+
+async function getFileExists(event, ...args) {
+  const filePath = path.resolve(...args);
+  const exists = await fs.existsSync(filePath);
+  return exists;
 }
 
 function openDevTools() {

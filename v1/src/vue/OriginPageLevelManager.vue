@@ -37,7 +37,6 @@
       reader.onload = function() {
         var level = JSON.parse(reader.result);
         var theme = app.level.getTheme(level.theme) || {};
-        console.log(theme);
         app.level.clearLevel(app);
         app.level.key = null; // Reset key to generate new save key
         app.background.visible = false;

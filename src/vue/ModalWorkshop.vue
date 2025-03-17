@@ -86,6 +86,16 @@
             const items = data.items.filter(item => item !== null);
             items.sort((a, b) => b.timeUpdated - a.timeUpdated);
             itemsSubscriptions.value = items;
+
+            // Download immediately if the file is missing
+            items.forEach(async item => {
+              const installInfo = await window.electron.client.workshop.installInfo(item.publishedFileId);
+              if (installInfo) {
+                // Download if no file names exist
+                const fileNames = await window.electron.getFileNames(installInfo.folder);
+                if (fileNames.length == 0) downloadContent(item);
+              }
+            })
           }
           catch (getItemsError) {
             console.error(getItemsError)
