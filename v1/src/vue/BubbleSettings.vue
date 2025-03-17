@@ -69,7 +69,7 @@
 
   function keydown(e) {
     if (isOpen.value == true) {
-      if (e.target.tagName != 'INPUT') {
+      if (e.target.tagName != 'INPUT' && e.target.tagName != 'TEXTAREA') {
         var exitKeys = ['Escape', 'KeyE'];
         if (exitKeys.indexOf(e.code) > -1) {
           // Close popup
