@@ -155,10 +155,10 @@
 
   async function updateItem(item, updateDetails) {
     let ugcResult;
+
     try {
       // Assign additional details
       Object.assign(updateDetails, {
-        tags: ['Level'], // TODO: Use contentPath to determine tags
         visibility: 0 // 0 = Public, 1 = FriendsOnly, 2 = Private, 3 = Unlisted
       });
       
@@ -177,6 +177,14 @@
     const ugcResult = await updateItem(toRaw(selectedItem.value), toRaw(selectedItemUpdateDetails.value));
     selectedItemUpdateDetails.value = {};
     return ugcResult
+  }
+
+  function getTagFromPath(path) {
+    let tag;
+    if (['.json'].some(ext => path.includes(ext))) tag = 'Level';
+    else if (['.js'].some(ext => path.includes(ext))) tag = 'Mod';
+    else if (['.png', '.jpg'].some(ext => path.includes(ext))) tag = 'Skin';
+    return tag;
   }
 
   async function downloadContent(item) {
@@ -202,7 +210,13 @@
 
     // Update if data is not canceled
     if (data.canceled == false) {
-      selectedItemUpdateDetails.value.contentPath = data.filePaths[0];
+      const tags = [getTagFromPath(data.filePaths[0])];
+
+      // Assign new data to updateDetails object
+      Object.assign(selectedItemUpdateDetails.value, {
+        contentPath: data.filePaths[0],
+        tags: tags // Ex: "Level", "Skin", or "Mod"
+      });
     }
   }
 
