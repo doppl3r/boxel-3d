@@ -4,42 +4,12 @@
     "color": "#ffffff",
     "model": "background-blue",
     "thumbnail": "../svg/button-pack-easy-peasy.svg"
-  },
-  "orange": {
-    "background_color": "#c40c4b",
-    "color": "#c40c4b",
-    "model": "background-desert",
-    "thumbnail": "../svg/button-pack-lemon-difficult.svg"
-  },
-  "green": {
-    "background_color": "#9F00FF",
-    "color": "#5503A8",
-    "model": "background-forest",
-    "thumbnail": "../svg/button-pack-zacks-levels.svg"
-  },
-  "purple": {
-    "background_color": "#5503A8",
+  }, 
+  "workshop": {
+    "background_color": "#4c7dff",
     "color": "#ffffff",
-    "model": "background-kargoh",
-    "thumbnail": "../svg/button-pack-kargohs-levels.svg"
-  },
-  "red": {
-    "background_color": "#de004a",
-    "color": "#620460",
-    "model": "background-hell",
-    "thumbnail": "../svg/button-pack-gravity-hell.svg"
-  },
-  "classic": {
-    "background_color": "#990799",
-    "color": "#620460",
-    "model": "background-classic",
-    "thumbnail": "../svg/button-pack-boxel-classics.svg"
-  },
-  "pink": {
-    "background_color": "#EB2B6D",
-    "color": "#C40C4B",
-    "model": "background-tokyo",
-    "thumbnail": "../svg/button-pack-spider-cube.svg"
+    "model": "background-blue",
+    "thumbnail": "../svg/button-level-editor.svg"
   },
   "city": {
     "background_color": "#4c7dff",
@@ -48,15 +18,51 @@
     "thumbnail": "../svg/button-pack-city.svg"
   },
   "purple-mountains": {
-    "background_color": "#9F00FF",
+    "background_color": "#5503A8",
     "color": "#5503A8",
     "model": "background-purple",
     "thumbnail": "../svg/button-pack-community.svg"
-  }, 
-  "workshop": {
-    "background_color": "#4c7dff",
+  },
+  "purple": {
+    "background_color": "#5503A8",
     "color": "#ffffff",
-    "model": "background-blue",
-    "thumbnail": "../svg/button-level-editor.svg"
+    "model": "background-kargoh",
+    "thumbnail": "../svg/button-pack-kargohs-levels.svg"
+  },
+  "classic": {
+    "background_color": "#990799",
+    "color": "#620460",
+    "model": "background-classic",
+    "thumbnail": "../svg/button-pack-boxel-classics.svg"
+  },
+  "red": {
+    "background_color": "#de004a",
+    "color": "#620460",
+    "model": "background-hell",
+    "thumbnail": "../svg/button-pack-gravity-hell.svg"
+  },
+  "orange": {
+    "background_color": "#c40c4b",
+    "color": "#c40c4b",
+    "model": "background-desert",
+    "thumbnail": "../svg/button-pack-lemon-difficult.svg"
+  },
+  "pink": {
+    "background_color": "#EB2B6D",
+    "color": "#C40C4B",
+    "model": "background-tokyo",
+    "thumbnail": "../svg/button-pack-spider-cube.svg"
+  },
+  "pink-mountains": {
+    "background_color": "#9F00FF",
+    "color": "#5503A8",
+    "model": "background-pink",
+    "thumbnail": "../svg/button-pack-pink.svg"
+  },
+  "green": {
+    "background_color": "#9F00FF",
+    "color": "#5503A8",
+    "model": "background-forest",
+    "thumbnail": "../svg/button-pack-zacks-levels.svg"
   }
 }

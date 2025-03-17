@@ -2,6 +2,9 @@
   "background-blue": {
     "url": "../glb/background-blue.glb"
   },
+  "background-pink": {
+    "url": "../glb/background-pink.glb"
+  },
   "background-purple": {
     "url": "../glb/background-purple.glb"
   },
