@@ -564,6 +564,8 @@
     "version": "2.5.1",
     "revisions": [
       "Added theme selector to Level Editor",
+      "Added skins to Workshop (Steam only)",
+      "Added mods to Workshop (Steam only)",
       "Updated Steam Workshop UI"
     ]
   }
