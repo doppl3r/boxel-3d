@@ -21,7 +21,7 @@
         </label>
       </div>
     </div>
-    <div class="group" v-if="isElectronApp">
+    <div class="group" v-if="isElectronApp && modData.length > 0">
       <div class="option">
         <ul>
           <li v-for="mod in modData">

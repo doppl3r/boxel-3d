@@ -568,5 +568,11 @@
       "Added mods to Workshop (Steam only)",
       "Updated Steam Workshop UI"
     ]
+  },
+  {
+    "version": "2.5.2",
+    "revisions": [
+      "Updated Mods UI"
+    ]
   }
 ]
