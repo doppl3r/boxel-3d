@@ -294,33 +294,38 @@
           <ul class="workshop__items-list" ref="itemsRef">
             <li>
               <template v-if="selectedItemType.id == 'subscriptions'">
-                <template v-if="isElectronApp == true">
-                  <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                    <span class="material-symbols-rounded">open_in_new</span>
-                    <span>{{ i18n.t('workshop.text.browse_items') }}</span>
-                  </button>
-                </template>
-                <template v-else>
-                  <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                    <span class="material-symbols-rounded">open_in_new</span>
-                    <span>{{ i18n.t('workshop.text.browse_items') }} ({{ i18n.t('workshop.text.steam_version') }})</span>
-                  </button>
-                </template>
+                <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                  <span class="material-symbols-rounded">open_in_new</span>
+                  <span>{{ i18n.t('workshop.text.browse_items') }}</span>
+                </button>
               </template>
               <template v-else-if="selectedItemType.id == 'creations'">
+                <button @click="createItem()" :disabled="isElectronApp == false">
+                  <span class="material-symbols-rounded">add</span>
+                  <span>{{ i18n.t('workshop.text.create_item') }}</span>
+                </button>
+              </template>
+            </li>
+            <li v-if="filteredItems.length == 0">
+              <div>
                 <template v-if="isElectronApp == true">
-                  <button @click="createItem()">
-                    <span class="material-symbols-rounded">add</span>
-                    <span>{{ i18n.t('workshop.text.create_item') }}</span>
-                  </button>
+                  <ol>
+                    <li><span><em>Browse</em> the Steam Workshop for community levels, skins, and mods.</span></li>
+                    <li><span>Select any item you want to download, then click <em>Subscribe</em>.</span></li>
+                    <li><span>If you do not see your in-game subscriptions, <em>restart</em> Boxel 3D.</span></li>
+                  </ol>
                 </template>
                 <template v-else>
-                  <button @click="openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">
-                    <span class="material-symbols-rounded">add</span>
-                    <span>{{ i18n.t('workshop.text.create_item') }} ({{ i18n.t('workshop.text.steam_version') }})</span>
-                  </button>
+                  <p>The <em>Steam Workshop</em> is only available to players who have purchased & installed Boxel 3D on Steam.</p>
+                  <p>Unlock unlimited free <em>levels</em>, <em>skins</em>, and <em>mods</em> by purchasing a copy today!</p>
+                  <p>
+                    <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
+                      <span>View Steam Page</span>
+                      <span class="material-symbols-rounded">open_in_new</span>
+                    </a>
+                  </p>
                 </template>
-              </template>
+              </div>
             </li>
             <li v-for="item in filteredItems" :key="item.title">
               <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
@@ -511,6 +516,10 @@
               background-color: rgba(#000000, 0.5);
             }
 
+            &[disabled] {
+              cursor: not-allowed;
+            }
+
             img {
               box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
               border-radius: 0.25em;
@@ -550,6 +559,53 @@
             .accept {
               display: none;
             }
+          }
+
+          p {
+            color: #ffffff;
+            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+            font-size: 0.75em;
+
+            em {
+              border-bottom: 1px dashed #ffffff;
+            }
+
+            a {
+              align-items: center;
+              background-color: #000000;
+              border-radius: 99em;
+              color: inherit;
+              display: inline-flex;
+              gap: 0.25em;
+              padding: 0.25em 1em;
+              text-decoration: none;
+            }
+          }
+        }
+      }
+
+      ol {
+        color: #ffffff;
+        counter-reset: item;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.75em;
+        gap: 1em;
+        list-style: none;
+        margin: 1em 0;
+        padding: 0;
+        text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+        
+        li {
+          counter-increment: item;
+          list-style: initial;
+
+          em {
+            border-bottom: 1px dashed #ffffff;
+          }
+
+          &:before {
+            content: counter(item) '.';
           }
         }
       }
