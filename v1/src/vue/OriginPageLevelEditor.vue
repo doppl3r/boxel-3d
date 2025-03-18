@@ -69,6 +69,7 @@
     // Store current theme settings
     const theme = app.level.getTheme(name);
     selectedTheme.value = name;
+    app.background.setTheme(theme.model);
     app.level.entityFactory.color = theme.color;
     app.level.theme = name;
     
@@ -107,6 +108,7 @@
   
   function playCurrentLevel() {
     objectTypeVisible.value = false;
+    app.background.visible = true;
     app.level.deselectLevel(app);
     app.levelEditor.controlsOrbit.enabled = false;
     app.levelEditor.controlsOrbit.reset();
