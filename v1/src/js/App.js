@@ -316,7 +316,7 @@ class App {
       var author = app.level.getAuthorByTitle(title);
       var theme = app.level.getTheme(options.json.theme);
       if (theme == null) theme = app.level.getPackTheme(title);
-      if (storageSettings.theme == 'origin') theme = app.level.getTheme('classic');
+      if (storageSettings.theme == 'origin' || theme == null) theme = app.level.getTheme('classic');
       app.level.entityFactory.color = theme.color;
 
       // Set optional fog
