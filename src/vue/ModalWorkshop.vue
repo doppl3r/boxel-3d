@@ -306,7 +306,7 @@
                 </button>
               </template>
             </li>
-            <li v-if="filteredItems.length == 0">
+            <li v-if="filteredItems.length == 0 && isLoading == false">
               <div>
                 <template v-if="isElectronApp == true">
                   <ol>
