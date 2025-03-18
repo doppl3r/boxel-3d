@@ -156,19 +156,8 @@ class App {
   updateRender(delta, alpha) {
     // Loop through scene for all children
     if (this.play == true) {
-      // Update engine to loop engine rate
-      var index = this.level.children.length - 1;
-      while (index >= 0) {
-        var child = this.level.children[index];
-
-        // Update child if it has a collision box
-        if (child.body != null && child.isFrozen() == false) {
-          child.update(delta, alpha);
-        }
-        index--; // Update iterator
-      }
-
       // Update from new position
+      this.updateChildren(delta, alpha)
       this.updateCamera(this);
       this.timer.render();
       
@@ -184,6 +173,20 @@ class App {
 
     // Update 3D renderer
     this.graphics.update(delta);
+  }
+
+  updateChildren(delta, alpha) {
+    // Loop through all children and update all 3D objects
+    var index = this.level.children.length - 1;
+    while (index >= 0) {
+      var child = this.level.children[index];
+
+      // Update child if it has a collision box
+      if (child.body != null && child.isFrozen() == false) {
+        child.update(delta, alpha);
+      }
+      index--; // Update iterator
+    }
   }
 
   updateNetwork(delta, alpha) {

@@ -57,7 +57,7 @@
 
   function saveScreenshot() {
     app.pauseLevel();
-    app.storage.screenshot(1280, 720, true);
+    app.storage.screenshot({ width: 1280, height: 720, save: true });
   }
 
   function selectTheme(name) {

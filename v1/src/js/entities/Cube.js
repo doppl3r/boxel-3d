@@ -53,7 +53,7 @@ class Cube extends Mesh {
   }
 
   update(delta, alpha) {
-    if (delta) {
+    if (alpha) {
       // Interpolate position and rotation
       this.position.x = (this.body.positionPrev.x + (this.body.position.x - this.body.positionPrev.x) * alpha);
       this.position.y = -(this.body.positionPrev.y + (this.body.position.y - this.body.positionPrev.y) * alpha);

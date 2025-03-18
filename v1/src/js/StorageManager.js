@@ -10,8 +10,12 @@ class StorageManager {
     var a = {};
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
-      var v = localStorage.getItem(k);
-      a[k] = v;
+
+      // Ignore screenshots (very large)
+      if (k.includes('screenshot_') == false) {
+        var v = localStorage.getItem(k);
+        a[k] = v;
+      }
     }
     return a;
   }
@@ -76,7 +80,15 @@ class StorageManager {
       hasNewScore = true;
       scores[key] = score;
       localStorage.setItem('scores', JSON.stringify(scores));
+      this.saveScreenshot(key);
     }
+
+    // Save missing screenshot
+    if (this.getScreenshot(key) == null) {
+      this.saveScreenshot(key);
+    }
+
+    // Return new score state
     return hasNewScore;
   }
 
@@ -87,6 +99,20 @@ class StorageManager {
       localStorage.setItem('scores', scores);
     }
     return JSON.parse(scores); // Return player scores
+  }
+
+  saveScreenshot(key) {
+    // Prepare screenshot
+    //app.updateChildren(1, 1);
+    //app.updateCamera(app);
+
+    // Store screenshot
+    var screenshot = app.storage.screenshot({ width: 200, height: 200, zoom: 1 });
+    localStorage.setItem('screenshot_' + key, screenshot);
+  }
+
+  getScreenshot(key) {
+    return localStorage.getItem('screenshot_' + key);
   }
 
   isExtension() {
@@ -146,26 +172,37 @@ class StorageManager {
     saveAs(blob, levelData.name);
   }
 
-  screenshot(width = 160, height = 90, save = false) {
+  screenshot(options) {
+    // Set default options
+    options = Object.assign({
+      width: 640,
+      height: 360,
+      zoom: 1,
+      save: false
+    }, options);
+
     var src = '';
     var widthOrigin = window.innerWidth;
     var heightOrigin = window.innerHeight;
+    var zoomOrigin = app.graphics.camera.zoom;
     var pixelRatioOrigin = app.graphics.renderer.getPixelRatio();
 
     // Update camera and renderer for screenshot
-    app.graphics.camera.aspect = width / height;
+    app.graphics.camera.zoom = options.zoom;
+    app.graphics.camera.aspect = options.width / options.height;
     app.graphics.camera.updateProjectionMatrix();
     app.graphics.renderer.setPixelRatio(1);
-    app.graphics.renderer.setSize(width, height);
+    app.graphics.renderer.setSize(options.width, options.height);
     app.graphics.renderer.render(app.graphics.scene, app.graphics.camera);
     src = app.graphics.renderer.domElement.toDataURL('image/png');
     
     // Save to file
-    if (save == true) {
+    if (options.save == true) {
       app.graphics.renderer.domElement.toBlob(blob => saveAs(blob, 'screenshot.png'));
     }
     
     // Reset camera and renderer
+    app.graphics.camera.zoom = zoomOrigin;
     app.graphics.camera.aspect = widthOrigin / heightOrigin;
     app.graphics.camera.updateProjectionMatrix();
     app.graphics.renderer.setPixelRatio(pixelRatioOrigin);

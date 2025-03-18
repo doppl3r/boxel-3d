@@ -37,6 +37,10 @@
     return scores[key];
   }
 
+  function getScreenshot(key) {
+    return app.storage.getScreenshot(key);
+  }
+
   function updateSelectedItem(e) {
     if (selectedItem.value == e.detail) playSelectedItem();
     selectedItem.value = e.detail;
@@ -97,12 +101,20 @@
   function setItems() {
     items.value = []; // Empty array
     levels.packs.forEach(function(pack, i) {
-      var url = themes[pack.theme].thumbnail;
       pack.levels.forEach(function(item, j) {
-        var score = getScore(item.publishedFileId || item.title);
+        // Update image url
+        let key = item.publishedFileId || item.title;
+        let url = themes[pack.theme].thumbnail;
+        let screenshot = getScreenshot(key);
+        if (screenshot != null) url = screenshot;
         if (item.thumbnail) url = item.thumbnail;
+
+        // Update score
+        let score = getScore(key);
         if (score) item.tag = '<span class="material-symbols-rounded">star</span>' + '<span>' + score + '</span>';
         else item.tag = '<span class="material-symbols-rounded">more_horiz</span>';
+
+        // Assign item values
         item.url = url;
         item.theme = pack.theme;
         items.value.push(item);

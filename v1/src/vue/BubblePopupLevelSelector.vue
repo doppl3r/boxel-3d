@@ -28,13 +28,20 @@
     // Loop through each pack and level
     packs.value.forEach(pack => {
       pack.levels.forEach(level => {
+        // Update image url
+        let key = level.publishedFileId || level.title;
+        let url = themeData[pack.theme].thumbnail;
+        let screenshot = getScreenshot(key);
+        if (screenshot != null) url = screenshot;
+        if (level.thumbnail) url = level.thumbnail;
+
         // Add level objects with their pack data
         arr.push({
           ...level,
           background_color: themeData[pack.theme].background_color,
           pack: pack.title,
           theme: pack.theme,
-          thumbnail: level.thumbnail ? level.thumbnail : themeData[pack.theme].thumbnail
+          thumbnail: url
         });
       });
     });
@@ -148,6 +155,10 @@
 
   function getScore(key) {
     return scores[key];
+  }
+
+  function getScreenshot(key) {
+    return app.storage.getScreenshot(key);
   }
 
   function scrollToSelected(needle, haystack, ref, key) {
