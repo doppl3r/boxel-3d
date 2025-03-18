@@ -112,7 +112,7 @@
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
-    app.playLevel({ json: app.level.exportToJSON(app) });
+    app.startLevel();
   }
 
   function selectObjectType(e) {
