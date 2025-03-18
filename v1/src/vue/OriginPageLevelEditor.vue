@@ -55,7 +55,7 @@
     app.levelEditor.saveLevel();
   }
 
-  function saveScreenshot() {
+  function saveThumbnail() {
     app.pauseLevel();
     app.storage.screenshot({ width: 1280, height: 720, save: true });
   }
@@ -275,7 +275,7 @@
         <a class="item" :class="{ selected: drawMode == 'erase' }" @click="setDrawMode('erase')" action="erase" title="Erase cubes"><img :src="'../svg/eraser.svg'"></a>
         <a class="item" @click="exitLevel" title="Exit level editor (ESC)"><img :src="'../svg/home.svg'"></a>
         <a class="item" @click="saveLevel" title="Save level (Ctrl + S)"><img :src="'../svg/save.svg'"></a>
-        <a class="item" @click="saveScreenshot" title="Save Screenshot"><img :src="'../svg/eye.svg'"></a>
+        <a class="item" @click="saveThumbnail" title="Save Screenshot"><img :src="'../svg/eye.svg'"></a>
         <a class="item" :class="{ selected: themeOptionsVisible == true }" @click="themeOptionsVisible = !themeOptionsVisible">
           <img :src="'../svg/color.svg'">
           <ul v-if="themeOptionsVisible == true">

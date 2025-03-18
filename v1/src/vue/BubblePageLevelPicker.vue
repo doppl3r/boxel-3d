@@ -37,8 +37,8 @@
     return scores[key];
   }
 
-  function getScreenshot(key) {
-    return app.storage.getScreenshot(key);
+  function getThumbnail(key) {
+    return app.storage.getThumbnail(key);
   }
 
   function updateSelectedItem(e) {
@@ -105,7 +105,7 @@
         // Update image url
         let key = item.publishedFileId || item.title;
         let url = themes[pack.theme].thumbnail;
-        let screenshot = getScreenshot(key);
+        let screenshot = getThumbnail(key);
         if (screenshot != null) url = screenshot;
         if (item.thumbnail) url = item.thumbnail;
 
@@ -116,6 +116,7 @@
 
         // Assign item values
         item.url = url;
+        item.subtitle = item.description || item.title;
         item.theme = pack.theme;
         items.value.push(item);
       })
@@ -205,6 +206,12 @@
 
         p {
           margin-bottom: 0;
+        }
+
+        :deep(.carousel) {
+          .item {
+            padding-bottom: 0;
+          }
         }
       }
       

@@ -31,7 +31,7 @@
         // Update image url
         let key = level.publishedFileId || level.title;
         let url = themeData[pack.theme].thumbnail;
-        let screenshot = getScreenshot(key);
+        let screenshot = getThumbnail(key);
         if (screenshot != null) url = screenshot;
         if (level.thumbnail) url = level.thumbnail;
 
@@ -157,8 +157,8 @@
     return scores[key];
   }
 
-  function getScreenshot(key) {
-    return app.storage.getScreenshot(key);
+  function getThumbnail(key) {
+    return app.storage.getThumbnail(key);
   }
 
   function scrollToSelected(needle, haystack, ref, key) {

@@ -12,7 +12,7 @@ class StorageManager {
       var k = localStorage.key(i);
 
       // Ignore screenshots (very large)
-      if (k.includes('screenshot_') == false) {
+      if (k.includes('thumbnail_') == false) {
         var v = localStorage.getItem(k);
         a[k] = v;
       }
@@ -80,12 +80,12 @@ class StorageManager {
       hasNewScore = true;
       scores[key] = score;
       localStorage.setItem('scores', JSON.stringify(scores));
-      this.saveScreenshot(key);
+      this.saveThumbnail(key);
     }
 
     // Save missing screenshot
-    if (this.getScreenshot(key) == null) {
-      this.saveScreenshot(key);
+    if (this.getThumbnail(key) == null) {
+      this.saveThumbnail(key);
     }
 
     // Return new score state
@@ -101,18 +101,18 @@ class StorageManager {
     return JSON.parse(scores); // Return player scores
   }
 
-  saveScreenshot(key) {
+  saveThumbnail(key) {
     // Prepare screenshot
     //app.updateChildren(1, 1);
     //app.updateCamera(app);
 
     // Store screenshot
     var screenshot = app.storage.screenshot({ width: 200, height: 200, zoom: 1 });
-    localStorage.setItem('screenshot_' + key, screenshot);
+    localStorage.setItem('thumbnail_' + key, screenshot);
   }
 
-  getScreenshot(key) {
-    return localStorage.getItem('screenshot_' + key);
+  getThumbnail(key) {
+    return localStorage.getItem('thumbnail_' + key);
   }
 
   isExtension() {

@@ -352,6 +352,21 @@
               }
             }
           }
+
+          .subtitle {
+            color: #ffffff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+            width: 6.25em;
+            white-space: nowrap;
+            padding-top: 0.75em;
+
+            span {
+              color: inherit;
+              font-size: 0.75em;
+            }
+          }
         }
       }
     }

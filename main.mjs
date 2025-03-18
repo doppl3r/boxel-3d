@@ -139,10 +139,7 @@ function createWindow() {
     shell.openExternal(url);
     return { action: 'deny' };
   });
-
-  // Set localStorage for app platforms
-  mainWindow.webContents.executeJavaScript('localStorage.setItem("setting-timestamp", ' + (new Date().getTime()) + ');');
-
+  
   // Load the index.html of the app
   mainWindow.loadFile('./build/index.html', { query: { "fullscreen": true }});
 }

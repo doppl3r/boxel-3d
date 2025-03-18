@@ -572,6 +572,9 @@
   {
     "version": "2.5.2",
     "revisions": [
+      "Added screenshots to completed levels",
+      "Updated Workshop UI",
+      "Updated Levels UI",
       "Updated Mods UI"
     ]
   }

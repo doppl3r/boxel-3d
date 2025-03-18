@@ -6,6 +6,7 @@
     hideLabel: Boolean,
     hideTag: Boolean,
     hideTitle: Boolean,
+    hideSubtitle: Boolean,
     items: Object,
     selected: Object,
   });
@@ -113,6 +114,9 @@
           <div class="tag" v-if="hideTag != true && item.tag">
             <div v-html="item.tag"></div>
           </div>
+        </div>
+        <div class="subtitle" v-if="hideSubtitle != true">
+          <span v-html="item.subtitle"></span>
         </div>
       </div>
     </template>
