@@ -15,6 +15,7 @@
   var isClosed = ref(true); // Popup animation state
 
   function addEventListeners() {
+    window.addEventListener('exitLevel', resetBackground);
     window.addEventListener('setSelectedObject', setSelectedObject);
     window.addEventListener('selectObjectType', selectObjectType);
     window.addEventListener('setTransformMode', setTransformMode);
@@ -25,6 +26,7 @@
   }
   
   function removeEventListeners() {
+    window.removeEventListener('exitLevel', resetBackground);
     window.removeEventListener('setSelectedObject', setSelectedObject);
     window.removeEventListener('selectObjectType', selectObjectType);
     window.removeEventListener('setTransformMode', setTransformMode);
@@ -115,6 +117,10 @@
     app.levelEditor.controlsTransform.detach();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
     app.startLevel();
+  }
+
+  function resetBackground() {
+    objectTypeVisible.value = true;
   }
 
   function selectObjectType(e) {

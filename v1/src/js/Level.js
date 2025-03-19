@@ -195,6 +195,9 @@ class Level extends Group {
       app.levelEditor.controlsOrbit.reset();
       app.background.visible = false;
     }
+
+    // Dispatch event after exiting level
+    window.dispatchEvent(new CustomEvent('exitLevel', { detail: a.state }));
   }
 
   setObjectProperties(object, objectData) {
