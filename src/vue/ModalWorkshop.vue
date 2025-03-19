@@ -68,6 +68,13 @@
     }
   }
 
+  function focusEnd(e) {
+    setTimeout(() => {
+      e.target.scrollLeft = e.target.scrollWidth;
+      e.target.setSelectionRange(e.target.value.length, e.target.value.length);
+    }, 100);
+  }
+
   function openLink(url, target = '_self') {
     window.open(url, target);
   }
@@ -294,13 +301,13 @@
           <ul class="workshop__items-list" ref="itemsRef">
             <li>
               <template v-if="selectedItemType.id == 'subscriptions'">
-                <button @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                  <span class="material-symbols-rounded">open_in_new</span>
+                <button class="primary" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                  <span class="material-symbols-rounded">check</span>
                   <span>{{ i18n.t('workshop.text.browse_items') }}</span>
                 </button>
               </template>
               <template v-else-if="selectedItemType.id == 'creations'">
-                <button @click="createItem()" :disabled="isElectronApp == false">
+                <button class="primary" @click="createItem()" :disabled="isElectronApp == false">
                   <span class="material-symbols-rounded">add</span>
                   <span>{{ i18n.t('workshop.text.create_item') }}</span>
                 </button>
@@ -332,7 +339,7 @@
                 <img :src="item.previewUrl || undefined" :alt="item.title" />
                 <span v-if="selectedItemType.id == 'subscriptions'">{{ item.title }}</span>
                 <template v-else>
-                  <input type="text" :value="item.title" @change="updateTitle(item, $event)" />
+                  <input type="text" :value="item.title" @change="updateTitle(item, $event)" @focus="focusEnd($event)" />
                   <span class="accept material-symbols-rounded">check</span>
                 </template>
               </button>
@@ -369,7 +376,8 @@
               <span class="accept material-symbols-rounded">check</span>
             </div>
             <button
-              v-if="showSaveButton"
+              :disabled="showSaveButton == false"
+              v-if="selectedItemType.id == 'creations'"
               @click="updateSelectedItem()"
             >
               <span class="material-symbols-rounded">save</span>
@@ -392,8 +400,9 @@
 
 <style lang="scss" scoped>
   // Animations
-  @keyframes translateBackground { 0% { background-position: 0em 0em; } 100% { background-position: -8em -8em; } }
   @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+  @keyframes throb { 0% { transform: scale(1); } 25% { transform: scale(1.20); } 50% { transform: scale(1); } }
+  @keyframes translateBackground { 0% { background-position: 0em 0em; } 100% { background-position: -8em -8em; } }
 
   // Modal fade transition
   .fade-modal-enter-active {
@@ -516,8 +525,24 @@
               background-color: rgba(#000000, 0.5);
             }
 
+            &.primary {
+              .material-symbols-rounded {
+                animation: throb 2s ease-in-out infinite;
+                background-color: #4CA9FF;
+                border-radius: 0.25em;
+                box-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
+                color: #ffffff;
+              }
+            }
+
             &[disabled] {
               cursor: not-allowed;
+
+              .material-symbols-rounded {
+                animation: none;
+                background-color: rgba(#000000, 0);
+                box-shadow: none;
+              }
             }
 
             img {
@@ -720,8 +745,7 @@
           flex-direction: column;
           flex-grow: 1;
           gap: 0.5em;
-          justify-content: center;
-          padding-bottom: 1em;
+          justify-content: flex-start;
           position: relative;
 
           .workshop__info-thumbnail {
@@ -813,7 +837,6 @@
             color: #ffffff;
             flex-grow: 1;
             font-size: 1em;
-            max-height: 6em;
             padding: 0.5em;
             position: relative;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
@@ -852,6 +875,7 @@
 
           button {
             align-items: center;
+            animation: throb 2s ease-in-out infinite;
             background-color: #4CA9FF;
             border-radius: 99em;
             border-width: 0;
@@ -867,11 +891,16 @@
             left: 50%;
             outline: none;
             padding: 0.5em;
-            position: absolute;
             text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
-            transform: translateX(-50%);
             white-space: nowrap;
             z-index: 2;
+
+            &[disabled] {
+              animation: none;
+              background-color: rgba(#000000, 0.1);
+              box-shadow: none;
+              cursor: not-allowed;
+            }
           }
         }
       }
