@@ -795,6 +795,7 @@
               bottom: initial;
               font-size: 0.75em;
               left: 0.5em;
+              position: absolute;
               top: 0.5em;
               transform: initial;
               z-index: 2;
