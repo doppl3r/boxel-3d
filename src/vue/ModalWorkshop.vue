@@ -302,7 +302,7 @@
             <li>
               <template v-if="selectedItemType.id == 'subscriptions'">
                 <button class="primary" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                  <span class="material-symbols-rounded">check</span>
+                  <span class="material-symbols-rounded">arrow_selector_tool</span>
                   <span>{{ i18n.t('workshop.text.browse_items') }}</span>
                 </button>
               </template>
@@ -317,17 +317,17 @@
               <div>
                 <template v-if="isSteamEnabled == true">
                   <ol>
-                    <li><span><em>Browse</em> the Steam Workshop for community levels, skins, and mods.</span></li>
-                    <li><span>Select any item you want to download, then click <em>Subscribe</em>.</span></li>
-                    <li><span>If you do not see your in-game subscriptions, <em>restart</em> Boxel 3D.</span></li>
+                    <li><span><strong>Browse</strong> the Steam Workshop for community levels, skins, and mods.</span></li>
+                    <li><span>Select any item you want to download, then click <strong>Subscribe</strong>.</span></li>
+                    <li><span>If you do not see your in-game subscriptions, <strong>restart</strong> Boxel 3D.</span></li>
                   </ol>
                 </template>
                 <template v-else>
-                  <p>The <em>Steam Workshop</em> is only available to players who have purchased & installed Boxel 3D on Steam.</p>
-                  <p>Unlock unlimited free <em>levels</em>, <em>skins</em>, and <em>mods</em> by purchasing a copy today!</p>
+                  <p>The Steam Workshop is a feature that allows you to download or share community <strong>levels</strong>, <strong>skins</strong>, and <strong>mods</strong>.</p>
+                  <p>Want to support me? Add Boxel 3D to your Steam <strong>wishlist</strong> or purchase a copy on Steam today!</p>
                   <p>
                     <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
-                      <span>View Steam Page</span>
+                      <span>Add to Wishlist</span>
                       <span class="material-symbols-rounded">open_in_new</span>
                     </a>
                   </p>
@@ -343,8 +343,8 @@
                   <span class="accept material-symbols-rounded">check</span>
                 </template>
               </button>
-              <button v-if="itemIsSelected(item) && selectedItemType.id == 'subscriptions'" @click="downloadContent(item)" title="Force update">
-                <span class="material-symbols-rounded">refresh</span>
+              <button v-if="itemIsSelected(item) && selectedItemType.id == 'subscriptions'" @click="downloadContent(item)" title="Force download">
+                <span class="material-symbols-rounded">download</span>
               </button>
               <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload new content (ex: My Level.json)">
                 <span class="material-symbols-rounded">folder_open</span>
@@ -592,7 +592,18 @@
             font-size: 0.75em;
 
             em {
+              background-color: rgba(#000000, 0.15);
               border-bottom: 1px dashed #ffffff;
+              border-radius: 99em;
+            }
+
+            strong {
+              background-color: #FFC24C;
+              border-radius: 99em;
+              padding: 0 0.5em;
+              color: #000;
+              text-shadow: none;
+              font-style: normal;
             }
 
             a {
@@ -627,6 +638,15 @@
 
           em {
             border-bottom: 1px dashed #ffffff;
+          }
+
+          strong {
+            background-color: #FFC24C;
+            border-radius: 99em;
+            padding: 0 0.5em;
+            color: #000;
+            text-shadow: none;
+            font-style: normal;
           }
 
           &:before {
