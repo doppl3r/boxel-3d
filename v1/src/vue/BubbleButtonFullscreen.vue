@@ -7,6 +7,9 @@
     fullscreen.value = isFullscreen();
   });
 
+  // Declare Steam variables
+  const isElectronApp = ref(window.electron != undefined);
+
   function isExtension() {
     return window.chrome?.extension;
   }
@@ -30,7 +33,7 @@
     }
 
     // Toggle fullscreen
-    if (window.electron) {
+    if (isElectronApp.value) {
       // Send message to preload.mjs
       window.electron.toggleFullScreen();
     }

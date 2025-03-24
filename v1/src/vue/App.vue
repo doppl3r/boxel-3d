@@ -11,6 +11,9 @@
   var canvas = ref();
   var app = window.app = new App();
 
+  // Declare Steam variables
+  const isSteamEnabled = window.electron?.client != undefined;
+
   // Update <html> language value
   function updateLanguageAttribute() {
     document.documentElement.lang = i18n.locale.value;
@@ -18,7 +21,7 @@
 
   function loadMods() {
     // Check if electron app exists
-    if (window.electron) {
+    if (isSteamEnabled) {
       // Loop through each mod item
       mods.forEach(mod => {
         window.electron.loadScript(mod.path);

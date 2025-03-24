@@ -3,6 +3,9 @@ import themes from '../json/themes.json';
 import skins from '../json/skins.json';
 import mods from '../json/mods.json';
 
+// Declare Steam variables
+const isSteamEnabled = window.electron?.client != undefined;
+
 // Format existing levels
 levels.packs.forEach(function(pack, i) {
   pack.levels.forEach(function(level, j) {
@@ -19,7 +22,7 @@ skins.forEach(skin => {
 });
 
 // Add workshop items to data points
-if (window.electron) {
+if (isSteamEnabled) {
   // Add Workshop pack with empty levels
   const pack = {
     title: "Workshop",

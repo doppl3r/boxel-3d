@@ -5,7 +5,7 @@
   
   // Initialize attributes
   const i18n = useI18n({ useScope: 'global' });
-  const isElectronApp = ref(window.electron != undefined);
+  const isSteamEnabled = ref(window.electron?.client != undefined);
   const isLoading = ref(false);
   const itemsRef = ref();
   const itemTypes = ref([
@@ -81,7 +81,7 @@
 
   async function getSubscriptions() {
     isLoading.value = true;
-    if (isElectronApp.value == true) {
+    if (isSteamEnabled.value == true) {
       try {
         // Get array of item ids
         const itemIds = window.electron.client.workshop.getSubscribedItems();
@@ -118,7 +118,7 @@
 
   async function getCreations() {
     isLoading.value = true;
-    if (isElectronApp.value == true) {
+    if (isSteamEnabled.value == true) {
       const appOwner = window.electron.client.apps.appOwner();
       const appId = window.electron.client.utils.getAppId();
 
@@ -307,7 +307,7 @@
                 </button>
               </template>
               <template v-else-if="selectedItemType.id == 'creations'">
-                <button class="primary" @click="createItem()" :disabled="isElectronApp == false">
+                <button class="primary" @click="createItem()" :disabled="isSteamEnabled == false">
                   <span class="material-symbols-rounded">add</span>
                   <span>{{ i18n.t('workshop.text.create_item') }}</span>
                 </button>
@@ -315,7 +315,7 @@
             </li>
             <li v-if="filteredItems.length == 0 && isLoading == false">
               <div>
-                <template v-if="isElectronApp == true">
+                <template v-if="isSteamEnabled == true">
                   <ol>
                     <li><span><em>Browse</em> the Steam Workshop for community levels, skins, and mods.</span></li>
                     <li><span>Select any item you want to download, then click <em>Subscribe</em>.</span></li>
@@ -364,7 +364,7 @@
                 <span>{{ selectedItem.label }}</span>
               </label>
               <button
-                v-if="itemIsSelected(null) && selectedItemType.id == 'creations' && isElectronApp == true"
+                v-if="itemIsSelected(null) && selectedItemType.id == 'creations' && isSteamEnabled == true"
                 @click="selectImage(selectedItem)"
               >
                 <span class="material-symbols-rounded">edit</span>
