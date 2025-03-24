@@ -14,8 +14,13 @@ const __dirname = path.dirname(__filename);
 const store = new Store();
 
 // Enable Steam overlay
-steamworks.init(3208440);
-steamworks.electronEnableSteamOverlay();
+try {
+  steamworks.init(3208440);
+  steamworks.electronEnableSteamOverlay();
+}
+catch (error) {
+  console.error(error);
+}
 
 // Add event listener to preload.js (bridged to renderer)
 ipcMain.handle('toggleFullScreen', toggleFullScreen);

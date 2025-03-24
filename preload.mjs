@@ -1,11 +1,21 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const steamworks = require('steamworks.js');
-const client = steamworks.init(3208440);
+
+// Declare Steam variables
+let steamworks;
+let client;
 
 // All of the Node.js APIs are available in the preload process.
 window.addEventListener('DOMContentLoaded', function () {
   // Renderer DOM changes go here
 });
+
+try {
+  steamworks = require('steamworks.js');
+  client = steamworks.init(3208440);
+}
+catch (error) {
+  console.error(error);
+}
 
 // Predefine message for renderer to request
 contextBridge.exposeInMainWorld('electron', {

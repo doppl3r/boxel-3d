@@ -578,5 +578,11 @@
       "Updated Mods UI",
       "Fixed Level Editor bugs"
     ]
+  },
+  {
+    "version": "2.5.3",
+    "revisions": [
+      "Fixed Steam Errors"
+    ]
   }
 ]
