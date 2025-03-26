@@ -65,21 +65,21 @@
     "version": "0.1.5",
     "revisions": [
       "Added theme music",
-      "Update skin render behavior"
+      "Updated skin render behavior"
     ]
   },
   {
     "version": "0.1.6",
     "revisions": [
-      "Update Tip cube behavior - now disappears when selected",
-      "Update level 1, 5, 12 & 14",
-      "Add final level dialog"
+      "Updated Tip cube behavior - now disappears when selected",
+      "Updated level 1, 5, 12 & 14",
+      "Added final level dialog"
     ]
   },
   {
     "version": "0.1.7",
     "revisions": [
-      "Add resize block",
+      "Added resize block",
       "Remove shrink block",
       "Remove grow block"
     ]
@@ -119,15 +119,15 @@
   {
     "version": "0.3.0",
     "revisions": [
-      "Add tester license for everyone",
-      "Add Google integration (backup, restore, etc.)"
+      "Added tester license for everyone",
+      "Added Google integration (backup, restore, etc.)"
     ]
   },
   {
     "version": "1.0.0",
     "revisions": [
       "Remove licenses, everything is free",
-      "Update logo"
+      "Updated logo"
     ]
   },
   {
@@ -170,7 +170,7 @@
     "version": "1.1.4.4",
     "revisions": [
       "Fixed menu height issue",
-      "Update manifest version from 2 to 3"
+      "Updated manifest version from 2 to 3"
     ]
   },
   {
@@ -286,7 +286,7 @@
     "revisions": [
       "Added a new community level",
       "Added a new community Discord link",
-      "Update render logic"
+      "Updated render logic"
     ]
   },
   {
@@ -583,6 +583,12 @@
     "version": "2.5.3",
     "revisions": [
       "Fixed Steam Errors"
+    ]
+  },
+  {
+    "version": "2.5.4",
+    "revisions": [
+      "Added Workshop links"
     ]
   }
 ]
