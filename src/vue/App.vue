@@ -46,6 +46,9 @@
 
     // Play background music
     updateVolume();
+
+    // Check URL
+    checkParameters();
   }
 
   function playSound(name) {
@@ -89,6 +92,12 @@
   // Update <html> language value
   function updateLanguageAttribute() {
     document.documentElement.lang = i18n.locale.value;
+  }
+
+  function checkParameters() {
+    if (location.href.includes('workshop=true')) {
+      modalWorkshopVisible.value = true;
+    }
   }
 
   // Watch the i18n locale changes

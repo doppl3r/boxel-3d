@@ -31,6 +31,9 @@
         }
       }));
     }
+    else if (skin.id == 999) {
+      window.location.href = '../index.html?workshop=true';
+    }
     else {
       // Immediately change skin
       app.player.setSkin({ id: skin.id, url: skin.url });
