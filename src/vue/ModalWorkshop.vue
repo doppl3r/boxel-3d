@@ -302,7 +302,7 @@
             <li>
               <template v-if="selectedItemType.id == 'subscriptions'">
                 <button class="primary" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
-                  <span class="material-symbols-rounded">arrow_selector_tool</span>
+                  <span class="material-symbols-rounded">add</span>
                   <span>{{ i18n.t('workshop.text.browse_items') }}</span>
                 </button>
               </template>
@@ -323,12 +323,13 @@
                   </ol>
                 </template>
                 <template v-else>
-                  <p>The Steam Workshop is a feature that allows you to download or share community <strong>levels</strong>, <strong>skins</strong>, and <strong>mods</strong>.</p>
-                  <p>Want to support me? Add Boxel 3D to your Steam <strong>wishlist</strong> or purchase a copy on Steam today!</p>
+                  <p>The Steam Workshop allows players to download & share community content such as <strong>levels</strong>, <strong>skins</strong>, & <strong>mods</strong></p>
+                  <p>Players must own a copy of Boxel 3D  on Steam to use the Workshop.</p>
+                  <p>Want to support me?</p>
                   <p>
                     <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
-                      <span>Add to Wishlist</span>
-                      <span class="material-symbols-rounded">open_in_new</span>
+                      <img :src="'../svg/steam.svg'" />
+                      <span>Wishlist on Steam</span>
                     </a>
                   </p>
                 </template>
@@ -612,9 +613,14 @@
               border-radius: 99em;
               color: inherit;
               display: inline-flex;
-              gap: 0.25em;
-              padding: 0.25em 1em;
+              gap: 0.5em;
+              padding: 0.25em 0.75em 0.25em 0.25em;
               text-decoration: none;
+
+              img {
+                width: 1.5em;
+                height: auto;
+              }
             }
           }
         }
