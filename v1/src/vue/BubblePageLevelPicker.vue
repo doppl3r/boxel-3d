@@ -174,6 +174,9 @@
       <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
         <span class="material-symbols-rounded">view_list</span>
       </a>
+      <a class="button fade-in" href="../index.html?workshop=true" :title="i18n.t('workshop.text.workshop')">
+        <img :src="'../svg/steam.svg'">
+      </a>
       <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">

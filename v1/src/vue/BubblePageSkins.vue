@@ -116,7 +116,10 @@
       <a class="button fade-in" @click="exitSkins" title="Exit to home (ESC)">
         <span class="material-symbols-rounded">undo</span>
       </a>
-      <BubbleButtonSettings class="button right fade-in" />
+      <a class="button fade-in right" href="../index.html?workshop=true" :title="i18n.t('workshop.text.workshop')">
+        <img :src="'../svg/steam.svg'">
+      </a>
+      <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">
       <h1>{{ i18n.t('skins.title') }}</h1>
