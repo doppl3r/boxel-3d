@@ -128,10 +128,5 @@
         "id": 500,
         "title": "Boxel Golf",
         "url": "../png/boxel-golf.png"
-    },
-    {
-        "id": 999,
-        "title": "Workshop",
-        "url": "../svg/button-steam.svg"
     }
 ]
