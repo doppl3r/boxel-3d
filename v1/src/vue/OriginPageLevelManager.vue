@@ -49,6 +49,7 @@
         app.resetScene(app);
         app.levelEditor.controlsOrbit.enabled = true;
         app.levelEditor.controlsOrbit.reset();
+        app.graphics.render();
         emit('setPage', 'level-editor');
       }
       reader.readAsText(file);
@@ -72,6 +73,7 @@
     app.resetScene(app);
     app.levelEditor.controlsOrbit.enabled = true;
     app.levelEditor.controlsOrbit.reset();
+    app.graphics.render();
     emit('setPage', 'level-editor');
   }
 

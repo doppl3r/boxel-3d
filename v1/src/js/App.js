@@ -165,14 +165,14 @@ class App {
       this.background.update(delta, alpha, app.motion == false);
 
       // Update animations
-      app.animation.update(delta, alpha)
+      this.animation.update(delta, alpha);
+
+      // Update network rendering
+      this.multiplayer.render(delta, alpha);
+
+      // Update 3D renderer
+      this.graphics.update(delta);
     }
-
-    // Update network rendering
-    this.multiplayer.render(delta, alpha);
-
-    // Update 3D renderer
-    this.graphics.update(delta);
   }
 
   updateChildren(delta, alpha) {

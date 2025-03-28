@@ -590,5 +590,11 @@
     "revisions": [
       "Added Workshop links"
     ]
+  },
+  {
+    "version": "2.5.5",
+    "revisions": [
+      "Improved performance"
+    ]
   }
 ]

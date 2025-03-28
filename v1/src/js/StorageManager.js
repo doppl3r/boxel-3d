@@ -80,12 +80,12 @@ class StorageManager {
       hasNewScore = true;
       scores[key] = score;
       localStorage.setItem('scores', JSON.stringify(scores));
-      this.saveThumbnail(key);
+      this.saveThumbnailAfterPopupOpened(key);
     }
 
     // Save missing screenshot
     if (this.getThumbnail(key) == null) {
-      this.saveThumbnail(key);
+      this.saveThumbnailAfterPopupOpened(key);
     }
 
     // Return new score state
@@ -102,13 +102,20 @@ class StorageManager {
   }
 
   saveThumbnail(key) {
-    // Prepare screenshot
-    //app.updateChildren(1, 1);
-    //app.updateCamera(app);
-
     // Store screenshot
     var screenshot = app.storage.screenshot({ width: 200, height: 200, zoom: 1 });
     localStorage.setItem('thumbnail_' + key, screenshot);
+  }
+
+  saveThumbnailAfterPopupOpened(key) {
+    // Create event function that removes itself when finished
+    const saveThumbnailEvent = () => {
+      app.storage.saveThumbnail(key);
+      window.removeEventListener('popupOpened', saveThumbnailEvent);
+    };
+
+    // Add event listeners
+    window.addEventListener('popupOpened', saveThumbnailEvent);
   }
 
   getThumbnail(key) {

@@ -25,6 +25,22 @@ class LevelEditor {
     this.controlsTransform.addEventListener('objectChange', function() { _this.controlsTransform.moved = true; });
     this.controlsOrbit.addEventListener('start', function() { _this.controlsOrbit.moved = false; })
     this.controlsOrbit.addEventListener('change', function() { _this.controlsOrbit.moved = true; })
+
+    // Add render listeners
+    domElement.addEventListener('pointerdown', this.updateRender);
+    domElement.addEventListener('pointermove', this.updateRender);
+    domElement.addEventListener('pointerup', this.updateRender);
+    domElement.addEventListener('wheel', this.updateRender);
+    window.addEventListener('resize', this.updateRender);
+    window.addEventListener('setSelectedObject', this.updateRender);
+    window.addEventListener('keyup', this.updateRender);
+  }
+
+  updateRender() {
+    // Only force render level editor if app is paused
+    if (app.state == 'level-editor' && app.play == false) {
+      app.graphics.render();
+    }
   }
 
   mouseDown(e, a) {
