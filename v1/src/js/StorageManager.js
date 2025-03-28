@@ -10,12 +10,8 @@ class StorageManager {
     var a = {};
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
-
-      // Ignore screenshots (very large)
-      if (k.includes('thumbnail_') == false) {
-        var v = localStorage.getItem(k);
-        a[k] = v;
-      }
+      var v = localStorage.getItem(k);
+      a[k] = v;
     }
     return a;
   }

@@ -594,6 +594,7 @@
   {
     "version": "2.5.5",
     "revisions": [
+      "Added thumbnails to backup files",
       "Improved performance"
     ]
   }
