@@ -77,8 +77,11 @@ class Shapes extends Group {
     // Add mesh to shape
     var extrudeSettings = { 
       steps: 1,
-      depth: options.depth,
-      bevelEnabled: false
+      depth: options.depth, // Default = 1
+      bevelEnabled: true, // Default = true
+      bevelSize: 0, // Default = bevelThickness - 0.1
+      bevelSegments: 1, // Default = 3
+      bevelThickness: 0 // Default = 0.2
     }
     var geometry = new ExtrudeGeometry(shape, extrudeSettings);
     var material = new MeshPhongMaterial({ color: options.color });
