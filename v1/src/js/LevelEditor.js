@@ -33,6 +33,8 @@ class LevelEditor {
     domElement.addEventListener('wheel', this.updateRender);
     window.addEventListener('resize', this.updateRender);
     window.addEventListener('setSelectedObject', this.updateRender);
+    window.addEventListener('setSelectedMode', this.updateRender);
+    window.addEventListener('themeSelected', this.updateRender);
     window.addEventListener('keyup', this.updateRender);
   }
 
@@ -267,6 +269,9 @@ class LevelEditor {
       this.controlsTransform.showY = this.controlsTransform.showAll; // Default false
       this.controlsTransform.showZ = true;
     }
+
+    // Dispatch level editor more change
+    window.dispatchEvent(new CustomEvent('setSelectedMode', { detail: mode }));
   }
 
   selectObjectType(type, checkNull = true) {

@@ -80,6 +80,9 @@
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
     app.levelHistory.save('Updated level theme', app);
+
+    // Dispatch event
+    window.dispatchEvent(new CustomEvent('themeSelected', { detail: theme }));
   }
 
   function undo() {
@@ -163,6 +166,7 @@
   function duplicateSelectedObject() {
     app.levelEditor.duplicateSelectedObject();
     setSelectedObject({ detail: app.selectedObject });
+    window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
   }
 
   function deleteSelectedObject() {
@@ -325,7 +329,7 @@
       <div class="col object-options" v-if="selectedObject != null">
         <a class="item" :class="{ selected: controlsTransform.mode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img :src="'../svg/move.svg'"></a>
         <a class="item" :class="{ selected: controlsTransform.mode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img :src="'../svg/scale-out-x.svg'"></a>
-        <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="setTransformMode({ detail: 'rotate' })" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
+        <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="keydown({ code: 'KeyR' });" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
         <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img :src="'../svg/pin.svg'"></a>
         <div class="item" :class="{ disabled: selectedObject.isStatic() }">
           <a action="friction" title="Friction"><img :src="'../svg/friction.svg'"></a>
