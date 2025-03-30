@@ -597,5 +597,11 @@
       "Added thumbnails to backup files",
       "Improved performance"
     ]
+  },
+  {
+    "version": "2.5.6",
+    "revisions": [
+      "Fixed multiplayer bug"
+    ]
   }
 ]
