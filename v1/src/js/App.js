@@ -161,18 +161,14 @@ class App {
       this.updateCamera(this);
       this.timer.render();
       
-      // Update background
+      // Update game objects
       this.background.update(delta, alpha, app.motion == false);
-
-      // Update animations
       this.animation.update(delta, alpha);
-
-      // Update network rendering
-      this.multiplayer.render(delta, alpha);
-
-      // Update 3D renderer
       this.graphics.update(delta);
     }
+
+    // Update network animations (tweens)
+    this.multiplayer.render(delta, alpha);
   }
 
   updateChildren(delta, alpha) {
