@@ -20,6 +20,8 @@
     color: #000000;
     cursor: pointer;
     display: flex;
+    font-family: inherit;
+    gap: 0.5em;
     height: 2em;
     justify-content: center;
     outline: none;

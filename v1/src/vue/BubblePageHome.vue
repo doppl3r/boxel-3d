@@ -117,18 +117,6 @@
     }));
   }
 
-  function openReviewLink() {
-    var url = '';
-
-    // Other userAgents: https://stackoverflow.com/a/26358856/2510368
-    if (navigator.userAgent.indexOf("Edg") != -1) { url = 'https://microsoftedge.microsoft.com/addons/detail/boxel-3d/gcklngphfijejfnnicbadhghhdifidek'; }
-    else if (navigator.userAgent.indexOf("Chrome") != -1) { url = 'https://chromewebstore.google.com/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews'; }
-    else if (navigator.userAgent.indexOf("Firefox") != -1) { url = 'https://addons.mozilla.org/en-US/firefox/addon/boxel-3d-game/'; }
-
-    // Open the link
-    openLink(url);
-  }
-
   function clickLink(e) {
     e.preventDefault(e);
     if (e.target.href) openLink(e.target.href);
@@ -182,10 +170,6 @@
       <a class="button fade-in" v-if="versionButtonVisible" :class="{ hidden: version == '' }" @click="openChangelog" :title="i18n.t('home.button.changelog')">
         <span class="material-symbols-rounded">ink_pen</span>
         {{ version }}
-      </a>
-      <a class="button right fade-in" @click="openReviewLink" v-if="isExtension()">
-        <span class="material-symbols-rounded">favorite</span>
-        Write a review
       </a>
     </div>
   </div>

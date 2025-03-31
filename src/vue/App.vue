@@ -6,6 +6,7 @@
   import ButtonDiscord from './ButtonDiscord.vue';
   import ButtonFullScreen from './ButtonFullScreen.vue';
   import ButtonVolume from './ButtonVolume.vue';
+  import ButtonReview from './ButtonReview.vue';
   import Card from './Card.vue';
   import ModalNews from './ModalNews.vue';
   import ModalSteam from './ModalSteam.vue';
@@ -100,6 +101,10 @@
     }
   }
 
+  function isExtension() {
+    return window.chrome?.extension;
+  }
+
   // Watch the i18n locale changes
   watch(i18n.locale, () => {
     updateLanguageAttribute();
@@ -121,7 +126,7 @@
 <template>
   <canvas ref="canvas"></canvas>
   <div class="ui">
-    <div class="actions">
+    <div class="nav">
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
       <ButtonFullScreen />
       <ButtonDiscord @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" />
@@ -131,6 +136,9 @@
       <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('home.button.workshop') }}</Card>
       <Card :src="'./svg/button-news.svg'" @click="modalNewsVisible = true">{{ i18n.t('home.button.news') }}</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
+    </div>
+    <div class="footer">
+      <ButtonReview v-if="isExtension()" />
     </div>
     <ModalWorkshop @close="modalWorkshopVisible = false" v-show="modalWorkshopVisible == true" />
     <ModalSteam @close="modalSteamVisible = false" v-show="modalSteamVisible == true" />
@@ -178,12 +186,20 @@
     position: relative;
     width: 100%;
 
-    .actions {
+    .nav {
       display: flex;
       gap: 0.5em;
       right: 1.5em;
       position: absolute;
       top: 1.5em;
+    }
+
+    .footer {
+      display: flex;
+      gap: 0.5em;
+      right: 1.5em;
+      position: absolute;
+      bottom: 1.5em;
     }
   }
 

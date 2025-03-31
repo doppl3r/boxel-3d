@@ -15,33 +15,8 @@
     version.value = json.version;
   }
 
-  function openLink(url) {
-    if (chrome.tabs) chrome.tabs.create({ url: url });
-    else window.open(url, '_blank');
-  }
-
   function goBack() {
     window.location.href = '../index.html';
-  }
-
-  function isFullscreen() {
-    return location.href.indexOf('?fullscreen=true') > 0;
-  }
-
-  function openFullscreen() {
-    openLink(location.href + '?fullscreen=true');
-  }
-
-  function openReviewLink() {
-    var url = '';
-
-    // Other userAgents: https://stackoverflow.com/a/26358856/2510368
-    if (navigator.userAgent.indexOf("Edg") != -1) { url = 'https://microsoftedge.microsoft.com/addons/detail/boxel-3d/gcklngphfijejfnnicbadhghhdifidek'; }
-    else if (navigator.userAgent.indexOf("Chrome") != -1) { url = 'https://chromewebstore.google.com/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews'; }
-    else if (navigator.userAgent.indexOf("Firefox") != -1) { url = 'https://addons.mozilla.org/en-US/firefox/addon/boxel-3d-game/'; }
-
-    // Open the link
-    openLink(url);
   }
 
   function showAccountOptions() {
@@ -101,10 +76,6 @@
     el.focus();
   }
 
-  function isExtension() {
-    return window.chrome?.extension;
-  }
-
   // Run function after being mounted (visible)
   onMounted(function() {
     updateVersion();
@@ -134,6 +105,5 @@
         <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img :src="'../svg/play.svg'"></a>
       </div>
     </div>
-    <a class="review fade-in" @click="openReviewLink" v-if="isExtension()"><img :src="'../svg/heart.svg'">Write a review</a>
   </div>
 </template>
