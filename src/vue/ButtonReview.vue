@@ -42,6 +42,6 @@
     }
   }
 
-  @keyframes shake { 0% { transform: rotate(0); } 10% { transform: rotate(-10deg); } 20% { transform: rotate(10deg); } 30% { transform: rotate(0deg); } }
+  @keyframes shake { 0% { transform: rotate(0); } 10% { transform: rotate(-5deg); } 20% { transform: rotate(5deg); } 30% { transform: rotate(0deg); } }
   @keyframes throb { 0% { transform: scale(1); } 10% { transform: scale(1.20); } 20% { transform: scale(1); } 30% { transform: scale(1.20); } 40% { transform: scale(1); }}
 </style>
