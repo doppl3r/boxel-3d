@@ -603,5 +603,11 @@
     "revisions": [
       "Fixed multiplayer bug"
     ]
+  },
+  {
+    "version": "2.5.7",
+    "revisions": [
+      "Update volume for sound effects"
+    ]
   }
 ]
