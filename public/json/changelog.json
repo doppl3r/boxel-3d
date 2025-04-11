@@ -610,5 +610,11 @@
       "Added 5 new community levels",
       "Update volume for sound effects"
     ]
+  },
+  {
+    "version": "2.5.8",
+    "revisions": [
+      "Fixed Dungeon Escape high score bug"
+    ]
   }
 ]
