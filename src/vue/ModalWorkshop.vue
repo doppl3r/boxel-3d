@@ -324,11 +324,11 @@
                 </template>
                 <template v-else>
                   <p>The Steam Workshop allows players to download & share community content such as <strong>levels</strong>, <strong>skins</strong>, & <strong>mods</strong></p>
-                  <p>This feature is only available on Steam. Want to support me?</p>
+                  <p>This feature is only available on Steam</p>
                   <p>
                     <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
                       <img :src="'../svg/steam.svg'" />
-                      <span>Purchase on Steam</span>
+                      <span>View Steam Page</span>
                     </a>
                   </p>
                 </template>
@@ -592,9 +592,7 @@
             font-size: 0.75em;
 
             em {
-              background-color: rgba(#000000, 0.15);
               border-bottom: 1px dashed #ffffff;
-              border-radius: 99em;
             }
 
             strong {

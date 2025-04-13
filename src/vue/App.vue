@@ -131,7 +131,7 @@
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('popup.text.browse') }}</Card>
+      <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('home.button.workshop') }}</Card>
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <div class="footer">
