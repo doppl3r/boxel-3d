@@ -9,8 +9,8 @@
   const isLoading = ref(false);
   const itemsRef = ref();
   const itemTypes = ref([
-    { title: 'Subscriptions', id: 'subscriptions', icon: 'check_box' },
-    { title: 'Creations', id: 'creations', icon: 'add_box' }
+    { title: 'My Downloads', id: 'subscriptions', icon: 'check_box' },
+    { title: 'My Creations', id: 'creations', icon: 'add_box' }
   ]);
   const itemsSubscriptions = ref([]);
   const itemsCreations = ref([]);
@@ -324,12 +324,11 @@
                 </template>
                 <template v-else>
                   <p>The Steam Workshop allows players to download & share community content such as <strong>levels</strong>, <strong>skins</strong>, & <strong>mods</strong></p>
-                  <p>Players must own a copy of Boxel 3D  on Steam to use the Workshop.</p>
-                  <p>Want to support me?</p>
+                  <p>This feature is only available on Steam. Want to support me?</p>
                   <p>
                     <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
                       <img :src="'../svg/steam.svg'" />
-                      <span>Wishlist on Steam</span>
+                      <span>Purchase on Steam</span>
                     </a>
                   </p>
                 </template>
