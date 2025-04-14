@@ -62,10 +62,10 @@
   }
 
   function keydown(e) {
-    if (e.code === 'Escape' || e.code == 'KeyE') {
+    /* if (e.code === 'Escape' || e.code == 'KeyE') {
       e.preventDefault();
       goBack();
-    }
+    } */
   }
 
   function selectMenuItem(e) {
