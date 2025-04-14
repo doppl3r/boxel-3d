@@ -8,7 +8,6 @@
   import ButtonVolume from './ButtonVolume.vue';
   import ButtonReview from './ButtonReview.vue';
   import Card from './Card.vue';
-  import ModalSteam from './ModalSteam.vue';
   import ModalWorkshop from './ModalWorkshop.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
   import { Ticker } from '../../v2/src/js/core/Ticker.js';
@@ -22,7 +21,6 @@
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
   const modalWorkshopVisible = ref(false);
-  const modalSteamVisible = ref(false);
   const isExiting = ref(false);
   let ticker;
   let graphics;
@@ -115,7 +113,11 @@
       if (e.code === 'KeyI' && ((e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey))) {
         window.electron.openDevTools();
       }
-      else if (e.code === 'Escape' || e.code === 'F11') {
+      else if (e.code === 'Escape') {
+        if (modalWorkshopVisible.value == true) modalWorkshopVisible.value = false;
+        else window.electron.toggleFullScreen();
+      }
+      else if (e.code === 'F11') {
         window.electron.toggleFullScreen();
       }
     }
@@ -165,7 +167,6 @@
       <ButtonReview v-if="isExtension()" />
     </div>
     <ModalWorkshop @close="modalWorkshopVisible = false" v-show="modalWorkshopVisible == true" />
-    <ModalSteam @close="modalSteamVisible = false" v-show="modalSteamVisible == true" />
     <Loading />
 
     <div class="fade-exit" :class="{ 'is-exiting': isExiting }"></div>
