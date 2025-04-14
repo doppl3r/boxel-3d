@@ -324,7 +324,7 @@
                 </template>
                 <template v-else>
                   <p>The Steam Workshop allows players to download & share community content such as <strong>levels</strong>, <strong>skins</strong>, & <strong>mods</strong></p>
-                  <p>This feature is only available on Steam</p>
+                  <p>This feature is only available on Steam. Add Boxel 3D to your <em>Steam Wishlist<span>Get emails for<br>Boxel 3D discounts</span></em> or purchase a copy today!</p>
                   <p>
                     <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
                       <img :src="'../svg/steam.svg'" />
@@ -593,6 +593,43 @@
 
             em {
               border-bottom: 1px dashed #ffffff;
+              cursor: help;
+              position: relative;
+
+              &:hover {
+                span {
+                  display: block;
+                }
+              }
+
+              span {
+                background-color: #000000;
+                border-radius: 0.5em;
+                bottom: calc(100% + 1rem);
+                box-shadow: 0em 0.25em 0em rgba(#000000, 0.25);
+                display: none;
+                font-style: normal;
+                left: 50%;
+                padding: 0.5rem;
+                position: absolute;
+                text-align: center;
+                transform: translateX(-50%);
+                width: 12em;
+
+                &:after {
+                  content: '';
+                  border-color: #000000 transparent transparent transparent;
+                  border-style: solid;
+                  border-width: 1em 1em 0 1em;
+                  display: block;
+                  height: 0;
+                  left: 50%;
+                  position: absolute;
+                  top: 100%;
+                  transform: translateX(-50%);
+                  width: 0;
+                }
+              }
             }
 
             strong {
