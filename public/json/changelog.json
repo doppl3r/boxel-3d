@@ -618,5 +618,11 @@
       "Fixed Dungeon Escape high score bug",
       "Fixed shortcuts"
     ]
+  },
+  {
+    "version": "2.5.9",
+    "revisions": [
+      "Updated Workshop"
+    ]
   }
 ]

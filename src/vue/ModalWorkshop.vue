@@ -349,7 +349,7 @@
                   <p>This feature is only available on Steam. Add Boxel 3D to your <em>Steam Wishlist<span>Get emails for<br>Boxel 3D discounts</span></em> or purchase a copy today!</p>
                   <p>
                     <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
-                      <img :src="'../svg/steam.svg'" />
+                      <img :src="'./svg/steam.svg'" />
                       <span>View Steam Page</span>
                     </a>
                   </p>
