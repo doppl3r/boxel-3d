@@ -615,7 +615,8 @@
     "version": "2.5.8",
     "revisions": [
       "Added option to enable or disable Steam Workshop items",
-      "Fixed Dungeon Escape high score bug"
+      "Fixed Dungeon Escape high score bug",
+      "Fixed shortcuts"
     ]
   }
 ]

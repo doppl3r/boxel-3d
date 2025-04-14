@@ -24,6 +24,7 @@ catch (error) {
 
 // Add event listener to preload.js (bridged to renderer)
 ipcMain.handle('toggleFullScreen', toggleFullScreen);
+ipcMain.handle('openDevTools', openDevTools);
 ipcMain.handle('dialog', openDialog);
 ipcMain.handle('getFile', getFile);
 ipcMain.handle('getFileNames', getFileNames);
@@ -151,14 +152,6 @@ function createWindow() {
 
 // This method will be called when Electron has finished initialization and is ready to create browser windows. Some APIs can only be used after this event occurs.
 app.whenReady().then(function () {
-  // Add keyboard shortcuts
-  globalShortcut.register('F11', toggleFullScreen);
-  globalShortcut.register('Ctrl+Shift+I', openDevTools);
-  globalShortcut.register('Escape', function() {
-    mainWindow.setFullScreen(false);
-    store.set('fullscreen', false);
-  });
-
   // Create window
   createWindow();
 

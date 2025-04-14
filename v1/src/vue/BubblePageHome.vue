@@ -47,16 +47,25 @@
 
   // Add event listener(s)
   function addEventListeners() {
-    window.addEventListener('itemSelected', selectMenuItem)
+    window.addEventListener('itemSelected', selectMenuItem);
+    document.addEventListener('keydown', keydown);
     app.network.on('peer_open', hideVersionButton);
     app.network.on('peer_close', showVersionButton);
   }
   
   // Remove event listeners
   function removeEventListeners() {
-    window.removeEventListener('itemSelected', selectMenuItem)
+    window.removeEventListener('itemSelected', selectMenuItem);
+    document.removeEventListener('keydown', keydown);
     app.network.off('peer_open', hideVersionButton);
     app.network.off('peer_close', showVersionButton);
+  }
+
+  function keydown(e) {
+    if (e.code === 'Escape' || e.code == 'KeyE') {
+      e.preventDefault();
+      goBack();
+    }
   }
 
   function selectMenuItem(e) {

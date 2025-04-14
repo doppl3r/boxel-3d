@@ -1,6 +1,6 @@
 <script setup>
   import '../../v2/src/scss/Global.scss';
-  import { onMounted, shallowReactive, reactive, ref, watch } from 'vue';
+  import { onMounted, onUnmounted, shallowReactive, reactive, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
   import ButtonDiscord from './ButtonDiscord.vue';
@@ -84,10 +84,6 @@
     }
   }
 
-  document.addEventListener('click', function(e) {
-    playSound('click');
-  });
-
   // Update <html> language value
   function updateLanguageAttribute() {
     document.documentElement.lang = i18n.locale.value;
@@ -101,6 +97,32 @@
 
   function isExtension() {
     return window.chrome?.extension;
+  }
+
+  function addEventListeners() {
+    document.addEventListener('keydown', keydown);
+    document.addEventListener('click', function(e) {
+      playSound('click');
+    });
+  }
+
+  function removeEventListeners() {
+    document.removeEventListener('keydown', keydown);
+  }
+
+  function keydown(e) {
+    if (isElectronApp()) {
+      if (e.code === 'KeyI' && ((e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey))) {
+        window.electron.openDevTools();
+      }
+      else if (e.code === 'Escape' || e.code === 'F11') {
+        window.electron.toggleFullScreen();
+      }
+    }
+  }
+
+  function isElectronApp() {
+    return window.electron != null;
   }
 
   // Watch the i18n locale changes
@@ -117,7 +139,12 @@
       textures: './json/menu-textures.json',
       audio: './json/menu-audio.json',
     });
+    addEventListeners();
     updateLanguageAttribute();
+  });
+
+  onUnmounted(function() {
+    removeEventListeners();
   });
 </script>
 

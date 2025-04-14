@@ -1,6 +1,6 @@
 <script setup>
   import '../scss/App.scss';
-  import { onMounted, ref, watch  } from 'vue';
+  import { onMounted, onUnmounted, ref, watch  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { App } from '../js/App.js';
   import { mods } from '../js/Data.js';
@@ -28,6 +28,29 @@
       });
     }
   }
+
+  function addEventListeners() {
+    document.addEventListener('keydown', keydown);
+  }
+
+  function removeEventListeners() {
+    document.removeEventListener('keydown', keydown);
+  }
+
+  function keydown(e) {
+    if (isElectronApp()) {
+      if (e.code === 'KeyI' && ((e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey))) {
+        window.electron.openDevTools();
+      }
+      else if (e.code === 'F11') {
+        window.electron.toggleFullScreen();
+      }
+    }
+  }
+
+  function isElectronApp() {
+    return window.electron != null;
+  }
   
   // Watch the i18n locale changes
   watch(i18n.locale, () => {
@@ -37,7 +60,12 @@
   // Initialize app after canvas has been mounted
   onMounted(function() {
     app.init(canvas.value, loadMods);
+    addEventListeners();
     updateLanguageAttribute();
+  });
+
+  onUnmounted(function() {
+    removeEventListeners();
   });
 </script>
 

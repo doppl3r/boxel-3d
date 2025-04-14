@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import OriginButtonFullscreen from './OriginButtonFullscreen.vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
@@ -76,13 +76,33 @@
     el.focus();
   }
 
+  function addEventListeners() {
+    window.addEventListener('keydown', keydown);
+  }
+
+  function removeEventListeners() {
+    window.removeEventListener('keydown', keydown);
+  }
+
+  function keydown(e) {
+    if (e.code == 'Escape' || e.code == 'KeyE') {
+      e.preventDefault();
+      goBack();
+    }
+  }
+
   // Run function after being mounted (visible)
   onMounted(function() {
     updateVersion();
     focus('.focus');
+    addEventListeners();
 
     // Dispatch ready event to listeners
     window.dispatchEvent(new CustomEvent('pageMounted', { detail: 'home' }));
+  });
+
+  onUnmounted(function() {
+    removeEventListeners();
   });
 </script>
 

@@ -86,7 +86,7 @@
       if (el == document.activeElement) el.click();
     }
     
-    if (e.code == 'Escape') {
+    if (e.code == 'Escape' || e.code == 'KeyE') {
       e.preventDefault();
       exitLevelPicker();
     }
