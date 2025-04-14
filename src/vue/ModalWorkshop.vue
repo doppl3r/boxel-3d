@@ -68,6 +68,21 @@
     }
   }
 
+  function getItemState(item, key) {
+    return localStorage.getItem(`item_${ item.publishedFileId }_${ key }`);
+  }
+
+  function setItemState(item, key, value) {
+    item[key] = value;
+    localStorage.setItem(`item_${ item.publishedFileId }_${ key }`, value);
+  }
+
+  function toggleEnabled(item) {
+    let enabled = getItemState(item, 'enabled') === 'true';
+    if (enabled === false) downloadContent(item); // Redownload files
+    setItemState(item, 'enabled', !enabled); // Toggle state
+  }
+
   function focusEnd(e) {
     setTimeout(() => {
       e.target.scrollLeft = e.target.scrollWidth;
@@ -94,8 +109,15 @@
             items.sort((a, b) => b.timeUpdated - a.timeUpdated);
             itemsSubscriptions.value = items;
 
-            // Download immediately if the file is missing
+            // Format items
             items.forEach(async item => {
+              // Set enabled state for item
+              let enabled = getItemState(item, 'enabled');
+              if (enabled === null) enabled = true; // Default enabled
+              else enabled = enabled === 'true'; // Convert string to boolean
+              setItemState(item, 'enabled', enabled);
+              
+              // Download immediately if the file is missing
               const installInfo = await window.electron.client.workshop.installInfo(item.publishedFileId);
               if (installInfo) {
                 // Download if no file names exist
@@ -334,7 +356,7 @@
                 </template>
               </div>
             </li>
-            <li v-for="item in filteredItems" :key="item.title">
+            <li v-for="item in filteredItems" :key="item.publishedFileId">
               <button :class="{ selected: selectedItem == item }" @click="selectItem(item)">
                 <img :src="item.previewUrl || undefined" :alt="item.title" />
                 <span v-if="selectedItemType.id == 'subscriptions'">{{ item.title }}</span>
@@ -343,13 +365,26 @@
                   <span class="accept material-symbols-rounded">check</span>
                 </template>
               </button>
-              <button v-if="itemIsSelected(item) && selectedItemType.id == 'subscriptions'" @click="downloadContent(item)" title="Force download">
-                <span class="material-symbols-rounded">download</span>
+              <button
+                v-if="itemIsSelected(item) && selectedItemType.id == 'subscriptions'"
+                @click="toggleEnabled(item)"
+                :title="item.enabled ? 'Enabled' : 'Disabled'"
+              >
+                <span class="material-symbols-rounded" v-if="item.enabled === true">select_check_box</span>
+                <span class="material-symbols-rounded" v-else>check_box_outline_blank</span>
               </button>
-              <button v-if="itemIsSelected(item) && selectedItemType.id == 'creations'" @click="selectContent(item)" title="Upload new content (ex: My Level.json)">
+              <button
+                v-if="itemIsSelected(item) && selectedItemType.id == 'creations'"
+                @click="selectContent(item)"
+                title="Upload new content (ex: My Level.json)"
+              >
                 <span class="material-symbols-rounded">folder_open</span>
               </button>
-              <button v-if="itemIsSelected(item)" @click="openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')" title="View item">
+              <button
+                v-if="itemIsSelected(item)"
+                @click="openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')"
+                title="View item"
+              >
                 <span class="material-symbols-rounded">link</span>
               </button>
             </li>

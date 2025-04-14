@@ -21,6 +21,10 @@ skins.forEach(skin => {
   skin.tag = skin.title;
 });
 
+function getItemState(item, key) {
+  return localStorage.getItem(`item_${ item.publishedFileId }_${ key }`);
+}
+
 // Add workshop items to data points
 if (isSteamEnabled) {
   // Add Workshop pack with empty levels
@@ -47,8 +51,14 @@ if (isSteamEnabled) {
 
           // Loop through each item for unique data
           items.forEach(item => {
+            // Get item enabled state
+            let enabled = getItemState(item, 'enabled');
+            if (enabled === null) enabled = true; // Default enabled
+            else enabled = enabled === 'true'; // Convert string to boolean
+
+            // Get item install information
             const installInfo = window.electron.client.workshop.installInfo(item.publishedFileId);
-            if (installInfo) {
+            if (installInfo && enabled === true) {
               // Get filenames using a Promise
               window.electron.getFileNames(installInfo.folder).then(fileNames => {
                 // Loop through each file name
