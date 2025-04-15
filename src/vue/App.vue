@@ -38,7 +38,7 @@
     graphics.scene.add(background, light);
 
     // Start render loop
-    ticker.add(render, -1);
+    ticker.add(render, 1000 / 60);
     ticker.start();
 
     // Play background music
@@ -54,8 +54,10 @@
   }
 
   function render(data) {
-    background.mixer.update(data.delta)
-    graphics.render();
+    if (modalWorkshopVisible.value == false) {
+      background.mixer.update(data.delta)
+      graphics.render();
+    }
   }
 
   function toggleVolume() {
