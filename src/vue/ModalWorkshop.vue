@@ -9,8 +9,8 @@
   const isLoading = ref(false);
   const itemsRef = ref();
   const itemTypes = ref([
-    { title: 'My Downloads', id: 'subscriptions', icon: 'check_box' },
-    { title: 'My Creations', id: 'creations', icon: 'add_box' }
+    { title: 'My Downloads', id: 'subscriptions', icon: 'download' },
+    { title: 'My Uploads', id: 'creations', icon: 'upload' }
   ]);
   const itemsSubscriptions = ref([]);
   const itemsCreations = ref([]);
@@ -366,7 +366,7 @@
                 </template>
               </button>
               <button
-                v-if="itemIsSelected(item) && selectedItemType.id == 'subscriptions'"
+                v-if="selectedItemType.id == 'subscriptions'"
                 @click="toggleEnabled(item)"
                 :title="item.enabled ? 'Enabled' : 'Disabled'"
               >
@@ -374,14 +374,13 @@
                 <span class="material-symbols-rounded" v-else>check_box_outline_blank</span>
               </button>
               <button
-                v-if="itemIsSelected(item) && selectedItemType.id == 'creations'"
+                v-if="selectedItemType.id == 'creations'"
                 @click="selectContent(item)"
                 title="Upload new content (ex: My Level.json)"
               >
                 <span class="material-symbols-rounded">folder_open</span>
               </button>
               <button
-                v-if="itemIsSelected(item)"
                 @click="openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')"
                 title="View item"
               >
@@ -456,6 +455,11 @@
   .loading-enter-from,
   .loading-leave-to {
     opacity: 0;
+  }
+
+  ::selection {
+    color: #000000;
+    background: #FFC24C;
   }
 
   .workshop {
@@ -547,17 +551,18 @@
               width: 100%;
             }
 
-            &:nth-child(n+2) {
-              background-color: rgba(#000000, 0.5);
-            }
-
-            &:hover,
-            &.selected:hover {
+            &:hover {
               background-color: rgba(#000000, 0.25);
             }
 
-            &.selected {
+            &.selected,
+            &.selected ~ button {
               background-color: rgba(#000000, 0.5);
+            }
+
+            &.selected:hover,
+            &.selected ~ button:hover {
+              background-color: rgba(#000000, 0.75);
             }
 
             &.primary {
