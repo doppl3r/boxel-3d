@@ -625,5 +625,11 @@
       "Updated Workshop",
       "Fixed author names"
     ]
+  },
+  {
+    "version": "2.6.0",
+    "revisions": [
+      "Fixed Discord link"
+    ]
   }
 ]

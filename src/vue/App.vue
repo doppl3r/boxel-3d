@@ -22,6 +22,7 @@
   const canvas = ref();
   const modalWorkshopVisible = ref(false);
   const isExiting = ref(false);
+  let volumePrev = settings.volume;
   let ticker;
   let graphics;
   let background;
@@ -61,8 +62,16 @@
   }
 
   function toggleVolume() {
-    if (settings.volume > 0) settings.volume = 1;
-    settings.volume ^= 1; // Toggle volume between 0 and 1 (bitwise hack)
+    // Toggle volume state
+    if (settings.volume > 0) {
+      volumePrev = settings.volume;
+      settings.volume = 0;
+    }
+    else {
+      settings.volume = volumePrev || 0.5;
+    }
+
+    // Update audio listener
     updateVolume()
   }
 
@@ -74,14 +83,16 @@
     gain.setTargetAtTime(settings.volume, currentTime, 0);
   }
 
-  function openLink(url, target = '_self') {
+  function openLink(url, target = '_self', delay = 0) {
     if (target == '_self') {
       isExiting.value = true;
-      
-      setTimeout(() => {
-        window.open(url, target);
-      }, 250);
+      delay = 250;
     }
+
+    // Open link with a delay (for fade animation)
+    setTimeout(() => {
+      window.open(url, target);
+    }, delay);
   }
 
   // Update <html> language value
