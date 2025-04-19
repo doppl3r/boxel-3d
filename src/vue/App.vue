@@ -102,6 +102,7 @@
 
   function checkParameters() {
     if (location.href.includes('workshop=true')) {
+      graphics.render();
       modalWorkshopVisible.value = true;
     }
   }
