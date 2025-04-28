@@ -11,5 +11,6 @@
 	{
 		// file mapping instructions for each depot are in separate script files
 		"3208441" "depot_build_3208441.vdf"
+		"3208442" "depot_build_3208442.vdf"
 	}
 }
