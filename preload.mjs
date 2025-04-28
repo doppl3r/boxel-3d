@@ -27,5 +27,6 @@ contextBridge.exposeInMainWorld('electron', {
   loadScript: (...path) => ipcRenderer.invoke('loadScript', ...path),
   dialog: (options) => ipcRenderer.invoke('dialog', options),
   toggleFullScreen: () => ipcRenderer.invoke('toggleFullScreen'),
-  openDevTools: () => ipcRenderer.invoke('openDevTools')
+  openDevTools: () => ipcRenderer.invoke('openDevTools'),
+  quit: () => ipcRenderer.invoke('quit'),
 });

@@ -134,6 +134,9 @@
       else if (e.code === 'F11') {
         window.electron.toggleFullScreen();
       }
+      else if (e.code === 'KeyQ' && e.metaKey) {
+        window.electron.quit();
+      }
     }
   }
 

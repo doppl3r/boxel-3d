@@ -25,6 +25,7 @@ catch (error) {
 // Add event listener to preload.js (bridged to renderer)
 ipcMain.handle('toggleFullScreen', toggleFullScreen);
 ipcMain.handle('openDevTools', openDevTools);
+ipcMain.handle('quit', quit);
 ipcMain.handle('dialog', openDialog);
 ipcMain.handle('getFile', getFile);
 ipcMain.handle('getFileNames', getFileNames);
@@ -93,6 +94,10 @@ async function getFileExists(event, ...args) {
 
 function openDevTools() {
   mainWindow.webContents.openDevTools();
+}
+
+function quit() {
+  app.quit();
 }
 
 function createWindow() {
