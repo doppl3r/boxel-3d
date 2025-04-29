@@ -11,13 +11,16 @@
 
   // Conditionally render components
   var page = ref('home');
+  var fontSize = ref();
 
   function addEventListeners() {
     window.addEventListener('setPage', setPageFromEvent);
+    window.addEventListener('updateScale', updateScale);
   }
 
   function removeEventListeners() {
     window.removeEventListener('setPage', setPageFromEvent);
+    window.removeEventListener('updateScale', updateScale);
   }
 
   function setPageFromEvent(e) {
@@ -27,6 +30,13 @@
   function setPage(name) {
     page.value = name;
     app.state = name;
+  }
+
+  function updateScale(e) {
+    fontSize.value = null;
+    if (e.detail < 1 || e.detail > 1) {
+      fontSize.value = (e.detail * 4) + 'vh';
+    }
   }
 
   // Run function after being mounted (visible)
@@ -40,7 +50,7 @@
 </script>
 
 <template>
-  <div class="ui-bubble">
+  <div class="ui-bubble" :style="{ fontSize }">
     <BubblePageHome v-if="page == 'home'" @set-page="setPage" />
     <BubblePageSkins v-if="page == 'skins'" @set-page="setPage" />
     <BubblePageLevelPicker v-if="page == 'level-picker'" @set-page="setPage" />

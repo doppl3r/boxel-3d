@@ -139,6 +139,7 @@ class StorageManager {
       'peer': this.generateHex(''),
       'progress': 1,
       'quality': 10,
+      'scale': 1,
       'skin': { id: 466, title: "Smile", url: "../png/smile.png" },
       'snap': 8,
       'stats': false,

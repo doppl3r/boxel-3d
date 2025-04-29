@@ -235,6 +235,7 @@ class App {
     a.storage.setSettings(settings); // Store locally
     a.updateCameraMotion(settings.motion, a);
     window.dispatchEvent(new CustomEvent('updateStatsVisibility'));
+    window.dispatchEvent(new CustomEvent('updateScale', { detail: settings.scale }));
   }
 
   updateGravity(angle) { // between -1, and 1 directionally

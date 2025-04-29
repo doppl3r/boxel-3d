@@ -23,6 +23,13 @@
         <input type="range" id="quality" min="1" max="10" step="1" :value="settings.quality" @change="$emit('updateSettings', $event)">
         <label for="quality">{{ (settings.quality * 10) }}%</label>
       </div>
+      <div class="option">
+        <label for="scale">{{ i18n.t('settings.graphics.scale') }}</label>
+      </div>
+      <div class="option">
+        <input type="range" id="scale" min="0.5" max="1.5" step="0.125" :value="settings.scale" @change="$emit('updateSettings', $event)">
+        <label for="scale">{{ (settings.scale * 100) }}%</label>
+      </div>
     </div>
     <div class="group">
       <div class="option">
