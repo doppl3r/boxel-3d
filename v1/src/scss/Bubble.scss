@@ -1188,28 +1188,42 @@
   }
 
   .controls {
-    margin-left: auto;
+    flex-grow: 1;
+
+    &.desktop {
+      .key {
+        height: 2.5em;
+      }
+    }
+
+    .wasd {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
     
     .key {
       background-color: rgba(0, 0, 0, 0.25);
       border-radius: 0.5em;
       color: #ffffff;
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1em;
-      margin-left: 0.5em;
       text-align: center;
       text-shadow: 0em 0.125em 0 rgba(#000000, 0.25);
-      width: 2.5em;
-      height: 2.5em;
+      width: 5em;
+      height: 5em;
       opacity: 0;
       pointer-events: all;
-      transition: none;
+      transition: height 0.5s ease-in-out;
 
       &.active {
         background-color: #EB2B6D;
+      }
+
+      &.left {
+        margin-right: auto;
       }
 
       &.visible {
@@ -1219,8 +1233,9 @@
 
     .row {
       align-items: center;
-      justify-content: center;
       display: flex;
+      gap: 0.5em;
+      justify-content: center;
       position: relative;
     }
 
