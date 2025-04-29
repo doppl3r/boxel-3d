@@ -73,12 +73,11 @@
 
 ## Build on Android/iOS
 
-- Run build with `npm run build` to create a fresh `/build` folder
-- Run sync script to copy files to device folders: `npx cap sync` 
+- Run build & sync with `npm run sync`
 - Open Android Studio: `npx cap open android`
 - Select Build > Generate Signed App Bundle or APK...
 
 ## Update App Icon/Splash
 
-- Update the assets within the `/files` directory
-- Run asset plugin with `npx @capacitor/assets generate --android --assetPath 'files/png/assets' --iconBackgroundColor '#4110DB' --splashBackgroundColor '#580d9e' --splashBackgroundColor '#580d9e'`
+- Update the assets within the `/files/png/assets` directory
+- Run asset plugin with `npm run generate`

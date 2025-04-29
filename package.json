@@ -9,6 +9,7 @@
     "build": "vite build",
     "dev": "vite",
     "dist": "vite build && electron-builder",
+    "generate": "npx @capacitor/assets generate --android --assetPath files/png/assets --iconBackgroundColor #9016ff --splashBackgroundColor #9016ff --splashBackgroundColorDark #9016ff",
     "start": "vite build && electron .",
     "sync": "npm run build && npx cap sync"
   },

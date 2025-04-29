@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">boxel-3d</string>
-    <string name="title_activity_main">boxel-3d</string>
+    <string name="app_name">Boxel 3D</string>
+    <string name="title_activity_main">Boxel 3D</string>
     <string name="package_name">com.boxel3d.app</string>
     <string name="custom_url_scheme">com.boxel3d.app</string>
 </resources>
