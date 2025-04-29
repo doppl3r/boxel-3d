@@ -80,4 +80,5 @@
 
 ## Update App Icon/Splash
 
-- Run asset plugin with `npx capacitor-assets generate --android`
+- Update the assets within the `/files` directory
+- Run asset plugin with `npx @capacitor/assets generate --android --assetPath 'files/png/assets' --iconBackgroundColor '#4110DB' --splashBackgroundColor '#580d9e' --splashBackgroundColor '#580d9e'`
