@@ -1226,6 +1226,10 @@
         margin-right: auto;
       }
 
+      &.right {
+        margin-left: auto;
+      }
+
       &.visible {
         opacity: 1;
       }

@@ -4,13 +4,14 @@
   var keys = ref({});
   var isVisible = ref(false);
   var isDesktop = ref(true);
+  var settings = ref(app.storage.getSettings());
 
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);
     window.addEventListener('setMode', setMode);
-    
+    window.addEventListener('updateStatsVisibility', updateSettings);
   }
   
   // Remove event listeners
@@ -18,7 +19,7 @@
     window.removeEventListener('keydown', keydown);
     window.removeEventListener('keyup', keyup);
     window.removeEventListener('setMode', setMode);
-    
+    window.removeEventListener('updateStatsVisibility', updateSettings);
   }
 
   function keydown(e) {
@@ -48,6 +49,10 @@
     else isVisible.value = false;
   }
 
+  function updateSettings() {
+    settings.value = app.storage.getSettings();
+  }
+
   onMounted(function() {
     addEventListeners();
   });
@@ -62,7 +67,8 @@
     <div class="wasd">
       <div class="row">
         <div
-          class="key left fade-in"
+          v-if="settings.stats == false"
+          class="key fade-in"
           :class="{ 'active': (keys['KeyW'] || keys['ArrowUp'] || keys['Space']) }"
           @touchstart.prevent="triggerKeyEvent({ type: 'keydown', code: 'KeyW' })"
           @touchend="triggerKeyEvent({ type: 'keyup', code: 'KeyW' })"
@@ -70,7 +76,7 @@
           <span class="material-symbols-rounded">shift</span>
         </div>
         <div
-          class="key fade-in"
+          class="key right fade-in"
           :class="{ 'active': (keys['KeyA'] || keys['ArrowLeft']) }"
           @touchstart.prevent="triggerKeyEvent({ type: 'keydown', code: 'KeyA' })"
           @touchend="triggerKeyEvent({ type: 'keyup', code: 'KeyA' })"

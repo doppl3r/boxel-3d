@@ -635,7 +635,8 @@
   {
     "version": "2.6.1",
     "revisions": [
-      "Added UI scale option"
+      "Added UI scale option",
+      "Updated controller buttons"
     ]
   }
 ]
