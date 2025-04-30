@@ -642,7 +642,9 @@
   {
     "version": "2.6.2",
     "revisions": [
-      "Fixed bugs"
+      "Added Android support",
+      "Updated Android controls",
+      "Fixed Level Editor for Android devices"
     ]
   }
 ]

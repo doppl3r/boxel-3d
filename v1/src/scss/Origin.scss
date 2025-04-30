@@ -315,8 +315,9 @@
 
     &.left {
       bottom: 0;
-      top: 48px;
+      height: calc(100vh - 48px);
       left: 0;
+      top: 48px;
 
       .col {
         display: flex;
@@ -332,6 +333,7 @@
 
       &.object-options {
         background-color: #252526;
+        overflow-y: auto;
       }
 
       .item {
@@ -1191,7 +1193,10 @@
     }
 
     .row {
-      &.left { top: 32px; }
+      &.left {
+        height: calc(100vh - 32px);
+        top: 32px;
+      }
     }
 
     .level-picker {

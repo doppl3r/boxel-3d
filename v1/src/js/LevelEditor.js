@@ -1,3 +1,4 @@
+import { Vector2 } from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -13,10 +14,20 @@ class LevelEditor {
     this.controlsTransform.showAll = false;
     this.controlsOrbit = new OrbitControls(camera, domElement);
     this.controlsOrbit.enabled = false; // Default disabled for campaign
-    this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 };
+    this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 }; // 0 = Left/Rotate, 1 = Middle/Dolly, 2 = Right/Pan
+    this.controlsOrbit.touches = { ONE: 1, TWO: 0 }; // 0 = Rotate, 1 = Pan, 2 = Dolly pan, 3 = Dolly rotate
     this.controlsOrbit.zoomSpeed = 3;
     this.controlsOrbit.minDistance = 10;
     this.controlsOrbit.maxDistance = 1000;
+    this.controlsOrbit.rotateSpeed = 0.5 // Default 1;
+		this.controlsOrbit.rotateSpeedDefault = 0.5 // Default 1;
+    this.controlsOrbit.panSpeed = 1;
+		this.controlsOrbit.panSpeedDefault = 1;
+    this.down = new Vector2();
+    this.move = new Vector2();
+    this.up = new Vector2();
+    this.drag = false;
+    this.snap = 16;
 
     // Set events
     var _this = this;
@@ -27,15 +38,45 @@ class LevelEditor {
     this.controlsOrbit.addEventListener('change', function() { _this.controlsOrbit.moved = true; })
 
     // Add render listeners
-    domElement.addEventListener('pointerdown', this.updateRender);
-    domElement.addEventListener('pointermove', this.updateRender);
-    domElement.addEventListener('pointerup', this.updateRender);
+    domElement.addEventListener('pointerdown', this.pointerDown.bind(this));
+    domElement.addEventListener('pointermove', this.pointerMove.bind(this));
+    domElement.addEventListener('pointerup', this.pointerUp.bind(this));
     domElement.addEventListener('wheel', this.updateRender);
     window.addEventListener('resize', this.updateRender);
     window.addEventListener('setSelectedObject', this.updateRender);
     window.addEventListener('setSelectedMode', this.updateRender);
     window.addEventListener('themeSelected', this.updateRender);
     window.addEventListener('keyup', this.updateRender);
+  }
+
+  pointerDown(e) {
+    this.down.set(e.clientX, e.clientY);
+    this.drag = true;
+    this.controlsOrbit.rotateSpeed = 0; // Deactivate camera by default
+    this.controlsOrbit.panSpeed = 0;
+    this.updateRender();
+  }
+
+  pointerMove(e) {
+    this.move.set(e.clientX, e.clientY);
+
+    // Check if orbit controls can be updated
+    if (this.isSnapped() == false) {
+      this.controlsOrbit.rotateSpeed = this.controlsOrbit.rotateSpeedDefault;
+      this.controlsOrbit.panSpeed = this.controlsOrbit.panSpeedDefault;
+    }
+    this.updateRender();
+  }
+
+  pointerUp(e) {
+    this.up.set(e.clientX, e.clientY);
+    this.drag = false;
+    this.updateRender();
+  }
+
+  isSnapped() {
+    var distance = this.down.distanceTo(this.move);
+    return distance < this.snap;
   }
 
   updateRender() {
