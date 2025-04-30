@@ -1,9 +1,9 @@
 <script setup>
+  import { Utility } from '../../v1/src/js/Utility.js';
   import Modal from './Modal.vue';
 
-  function openLink(url, target = '_self') {
-    window.open(url, target);
-  }
+  // Initialize attributes
+  const util = new Utility();
 </script>
 
 <template>
@@ -18,7 +18,7 @@
     </template>
 
     <template #buttons>
-      <button @click="openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">View Steam Page</button>
+      <button @click="util.openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">View Steam Page</button>
     </template>
   </Modal>
 </template>

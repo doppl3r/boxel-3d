@@ -1,11 +1,13 @@
 <script setup>
   import { computed, ref, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Utility } from '../js/Utility.js';
   import BubbleCarousel from './BubbleCarousel.vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleButtonFullscreen from './BubbleButtonFullscreen.vue';
 
   // Initialize attributes
+  const util = new Utility();
   const i18n = useI18n({ useScope: 'global' });
   var emit = defineEmits(['setPage']);
   var manifest = ref();
@@ -128,20 +130,11 @@
 
   function clickLink(e) {
     e.preventDefault(e);
-    if (e.target.href) openLink(e.target.href);
-  }
-
-  function openLink(url, target = '_blank') {
-    if (window.chrome?.tabs) window.chrome.tabs.create({ url: url });
-    else window.open(url, target);
+    if (e.target.href) util.openLink(e.target.href);
   }
 
   function goBack() {
     window.location.href = '../index.html';
-  }
-
-  function isExtension() {
-    return window.chrome?.extension;
   }
 
   // Run function after being mounted (visible)

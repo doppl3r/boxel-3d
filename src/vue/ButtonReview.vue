@@ -1,12 +1,15 @@
 <script setup>
-  import { Capacitor } from '@capacitor/core';
+  import { Utility } from '../../v1/src/js/Utility.js';
   import ButtonAction from './ButtonAction.vue';
+
+  // Initialize utility library
+  const util = new Utility();
 
   async function openReviewLink() {
     var url = '';
 
-    if (isAndroidApp()) {
-      url = 'https://play.google.com/store/apps/details?id=com.boxel3d.app'
+    if (util.isNativeApp()) {
+      url = 'https://play.google.com/store/apps/details?id=com.boxel3d.app';
     }
     else {
       // Other userAgents: https://stackoverflow.com/a/26358856/2510368
@@ -16,26 +19,13 @@
     }
 
     // Open the link
-    openLink(url);
-  }
-  
-  function openLink(url, target = '_blank') {
-    if (window.chrome?.tabs) window.chrome.tabs.create({ url: url });
-    else window.open(url, target);
-  }
-
-  function isExtension() {
-    return window.chrome?.extension;
-  }
-
-  function isAndroidApp() {
-    return Capacitor.isNativePlatform()
+    util.openLink(url);
   }
 </script>
 
 <template>
   <ButtonAction
-    v-if="isExtension() || isAndroidApp()"
+    v-if="util.isExtension() || util.isNativeApp()"
     class="action"
     @click="openReviewLink()"
   >

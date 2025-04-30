@@ -1,11 +1,12 @@
 <script setup>
-  import { ref  } from 'vue';
+  import { ref } from 'vue';
+  import { Utility } from '../js/Utility.js';
   import { useI18n } from 'vue-i18n';
   import { mods as modData } from '../js/Data.js';
 
+  const util = new Utility();
   const i18n = useI18n({ useScope: 'global' });
   const props = defineProps(['settings']);
-  const isElectronApp = ref(window.electron != undefined);
   const showOldMods = ref(false);
 
   function loadMods() {
@@ -35,7 +36,7 @@
         </label>
       </div>
     </div>
-    <div class="group" v-if="isElectronApp && modData.length > 0">
+    <div class="group" v-if="util.isElectronApp() && modData.length > 0">
       <div class="option">
         <ul>
           <li v-for="mod in modData">

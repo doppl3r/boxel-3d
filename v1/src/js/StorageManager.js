@@ -1,4 +1,5 @@
 import { MathUtils } from 'three';
+import { Utility } from './Utility.js';
 import { saveAs } from 'file-saver';
 
 class StorageManager {
@@ -118,15 +119,12 @@ class StorageManager {
     return localStorage.getItem('thumbnail_' + key);
   }
 
-  isExtension() {
-    return window.chrome?.extension;
-  }
-
   setSettings(settings) {
     localStorage.setItem('settings', JSON.stringify(settings));
   }
 
   getSettings(a = app) {
+    var util = new Utility();
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
       'buffer': 100,
@@ -144,7 +142,7 @@ class StorageManager {
       'snap': 8,
       'stats': false,
       'theme': 'bubble',
-      'volume': this.isExtension() ? 0 : 0.5,
+      'volume': util.isExtension() ? 0 : 0.5,
       'volumeMusic': 0.5,
       'volumeEffects': 1,
     };

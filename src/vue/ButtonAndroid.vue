@@ -1,21 +1,16 @@
 <script setup>
-  import { Capacitor } from '@capacitor/core';
+  import { Utility } from '../../v1/src/js/Utility.js';
   import ButtonAction from './ButtonAction.vue';
 
-  function isElectronApp() {
-    return window.electron != null;
-  }
-
-  function isAndroidApp() {
-    return Capacitor.isNativePlatform()
-  }
+  // Initialize utility library
+  const util = new Utility();
 </script>
 
 <template>
   <ButtonAction
     class="action notification"
     title="Download Android app"
-    v-if="isAndroidApp() == false && isElectronApp() == false"
+    v-if="util.isNativeApp() == false && util.isElectronApp() == false"
   >
     <span class="material-symbols-rounded">phone_android</span>
   </ButtonAction>

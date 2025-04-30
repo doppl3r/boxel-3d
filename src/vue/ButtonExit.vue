@@ -1,21 +1,16 @@
 <script setup>
-  import { Capacitor } from '@capacitor/core';
+  import { Utility } from '../../v1/src/js/Utility.js';
   import { App as cApp } from '@capacitor/app';
   import ButtonAction from './ButtonAction.vue';
 
-  function isElectronApp() {
-    return window.electron != null;
-  }
-
-  function isAndroidApp() {
-    return Capacitor.isNativePlatform()
-  }
+  // Initialize utility library
+  const util = new Utility();
 
   function exit() {
-    if (isElectronApp()) {
+    if (util.isElectronApp()) {
       window.electron.quit();
     }
-    else if (isAndroidApp()) {
+    else if (util.isNativeApp()) {
       cApp.exitApp();
     }
   }
@@ -25,7 +20,7 @@
   <ButtonAction
     class="action"
     title="Exit"
-    v-if="isAndroidApp() || isElectronApp()"
+    v-if="util.isElectronApp() || util.isNativeApp()"
     @click="exit"
   >
     <span class="material-symbols-rounded">undo</span>

@@ -1,6 +1,7 @@
 <script setup>
   import '../scss/App.scss';
   import { onMounted, onUnmounted, ref, watch  } from 'vue';
+  import { Utility } from '../js/Utility.js';
   import { App as cApp } from '@capacitor/app';
   import { App } from '../js/App.js';
   import { useI18n } from 'vue-i18n';
@@ -8,6 +9,7 @@
   import UI from './UI.vue';
 
   // Initialize app and expose to window scope
+  const util = new Utility();
   const i18n = useI18n({ useScope: 'global' });
   var canvas = ref();
   var app = window.app = new App();
@@ -20,9 +22,6 @@
     app.assets.audio.setMasterVolume(isActive ? settings.volumeMusic : 0, 'music');
   });
 
-  // Declare Steam variables
-  const isSteamEnabled = window.electron?.client != undefined;
-
   // Update <html> language value
   function updateLanguageAttribute() {
     document.documentElement.lang = i18n.locale.value;
@@ -30,7 +29,7 @@
 
   function loadMods() {
     // Check if electron app exists
-    if (isSteamEnabled) {
+    if (util.isSteamEnabled()) {
       // Loop through each mod item
       mods.forEach(mod => {
         window.electron.loadScript(mod.path);
@@ -47,7 +46,7 @@
   }
 
   function keydown(e) {
-    if (isElectronApp()) {
+    if (util.isElectronApp()) {
       if (e.code === 'KeyI' && ((e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey))) {
         window.electron.openDevTools();
       }
@@ -58,10 +57,6 @@
         window.electron.quit();
       }
     }
-  }
-
-  function isElectronApp() {
-    return window.electron != null;
   }
   
   // Watch the i18n locale changes

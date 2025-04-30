@@ -1,6 +1,7 @@
 <script setup>
   import '../../v2/src/scss/Global.scss';
   import { onMounted, onUnmounted, shallowReactive, reactive, ref, watch } from 'vue';
+  import { Utility } from '../../v1/src/js/Utility.js';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
   import ButtonAndroid from './ButtonAndroid.vue';
@@ -19,11 +20,13 @@
 
   // Initialize components
   const i18n = useI18n();
+  const util = new Utility();
   const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
   const modalWorkshopVisible = ref(false);
   const isExiting = ref(false);
+  const playLink = ref('./v1/index.html' + document.location.search);
   let volumePrev = settings.volume;
   let ticker;
   let graphics;
@@ -121,7 +124,7 @@
   }
 
   function keydown(e) {
-    if (isElectronApp()) {
+    if (util.isElectronApp()) {
       if (e.code === 'KeyI' && ((e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey))) {
         window.electron.openDevTools();
       }
@@ -136,10 +139,6 @@
         window.electron.quit();
       }
     }
-  }
-
-  function isElectronApp() {
-    return window.electron != null;
   }
 
   // Watch the i18n locale changes
@@ -171,14 +170,14 @@
     <div class="nav">
       <ButtonExit class="left" />
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
-      <ButtonFullScreen />
       <ButtonAndroid @click="openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')" />
+      <ButtonFullScreen />
       <ButtonDiscord @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" />
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
       <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('home.button.workshop') }}</Card>
-      <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
+      <Card :src="'./svg/button-play.svg'" @click="openLink(playLink)">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <div class="footer">
       <ButtonReview />

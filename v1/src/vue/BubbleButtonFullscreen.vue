@@ -1,51 +1,38 @@
 <script setup>
+  import { Utility } from '../js/Utility.js';
   import { ref } from 'vue';
 
+  // Initialize utility library
+  const util = new Utility();
   const fullscreen = ref(false);
 
   document.addEventListener('fullscreenchange', function() {
-    fullscreen.value = isFullscreen();
+    fullscreen.value = util.isFullscreen();
   });
-
-  // Declare Steam variables
-  const isElectronApp = ref(window.electron != undefined);
-
-  function isExtension() {
-    return window.chrome?.extension;
-  }
-
-  function isFullscreen() {
-    return document.fullscreenElement != null;
-  }
-
-  function openLink(url, target = '_blank') {
-    if (window.chrome?.tabs) window.chrome.tabs.create({ url: url });
-    else window.open(url, target);
-  }
 
   function toggleFullscreen() {
     // Open link in new tab if player is using extension
-    if (isExtension()) {
+    if (util.isExtension()) {
       if (window.location.href.includes('?tab=true') == false) {
-        openLink(window.location.href + '?tab=true');
+        util.openLink(window.location.href + '?tab=true');
         return;
       }
     }
 
     // Toggle fullscreen
-    if (isElectronApp.value) {
+    if (util.isElectronApp()) {
       // Send message to preload.mjs
       window.electron.toggleFullScreen();
     }
     else {
-      if (isFullscreen()) document.exitFullscreen();
+      if (util.isFullscreen()) document.exitFullscreen();
       else document.body.requestFullscreen();
     }
   }
 </script>
 
 <template>
-  <a @click="toggleFullscreen">
+  <a @click="toggleFullscreen" title="Fullscreen (F11)" v-if="util.isNativeApp() == false">
     <span class="material-symbols-rounded" v-if="fullscreen == true">fullscreen_exit</span>
     <span class="material-symbols-rounded" v-else>fullscreen</span>
   </a>

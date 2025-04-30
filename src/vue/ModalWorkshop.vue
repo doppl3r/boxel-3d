@@ -1,9 +1,11 @@
 <script setup>
   import { computed, nextTick, ref, toRaw } from 'vue';
+  import { Utility } from '../../v1/src/js/Utility.js';
   import { useI18n } from 'vue-i18n';
   import Loader from './Loader.vue';
   
   // Initialize attributes
+  const util = new Utility();
   const i18n = useI18n({ useScope: 'global' });
   const isSteamEnabled = ref(window.electron?.client != undefined);
   const isLoading = ref(false);
@@ -88,10 +90,6 @@
       e.target.scrollLeft = e.target.scrollWidth;
       e.target.setSelectionRange(e.target.value.length, e.target.value.length);
     }, 100);
-  }
-
-  function openLink(url, target = '_self') {
-    window.open(url, target);
   }
 
   async function getSubscriptions() {
@@ -323,7 +321,7 @@
           <ul class="workshop__items-list" ref="itemsRef">
             <li>
               <template v-if="selectedItemType.id == 'subscriptions'">
-                <button class="primary" @click="openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
+                <button class="primary" @click="util.openLink('https://steamcommunity.com/workshop/browse/?appid=3208440', '_blank')">
                   <span class="material-symbols-rounded">add</span>
                   <span>{{ i18n.t('workshop.text.browse_items') }}</span>
                 </button>
@@ -381,7 +379,7 @@
                 <span class="material-symbols-rounded">folder_open</span>
               </button>
               <button
-                @click="openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')"
+                @click="util.openLink('https://steamcommunity.com/sharedfiles/filedetails/?id=' + item.publishedFileId, '_blank')"
                 title="View item"
               >
                 <span class="material-symbols-rounded">link</span>
