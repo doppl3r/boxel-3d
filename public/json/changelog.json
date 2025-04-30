@@ -652,5 +652,11 @@
     "revisions": [
       "Fixed UI bugs"
     ]
+  },
+  {
+    "version": "2.6.4",
+    "revisions": [
+      "Fixed Level Editor camera rotation"
+    ]
   }
 ]

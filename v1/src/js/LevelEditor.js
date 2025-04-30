@@ -15,7 +15,7 @@ class LevelEditor {
     this.controlsOrbit = new OrbitControls(camera, domElement);
     this.controlsOrbit.enabled = false; // Default disabled for campaign
     this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 }; // 0 = Left/Rotate, 1 = Middle/Dolly, 2 = Right/Pan
-    this.controlsOrbit.touches = { ONE: 1, TWO: 0 }; // 0 = Rotate, 1 = Pan, 2 = Dolly pan, 3 = Dolly rotate
+    this.controlsOrbit.touches = { ONE: 1, TWO: 3 }; // 0 = Rotate, 1 = Pan, 2 = Dolly pan, 3 = Dolly rotate
     this.controlsOrbit.zoomSpeed = 3;
     this.controlsOrbit.minDistance = 10;
     this.controlsOrbit.maxDistance = 1000;
@@ -124,7 +124,7 @@ class LevelEditor {
         }
         else {
           // Add a new object if camera did not move
-          if (this.controlsOrbit.moved == false) {
+          if (this.controlsOrbit.moved == false && this.isSnapped()) {
             var objectType = app.levelEditor.selectedObjectType;
             var objectData = {
               class: objectType,
