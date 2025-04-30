@@ -39,7 +39,7 @@ class Utility {
   }
 
   isExtension() {
-    return window.chrome?.extension;
+    return window.chrome?.extension != undefined;
   }
 
   isElectronApp() {

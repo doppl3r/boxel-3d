@@ -1,6 +1,7 @@
 <script setup>
   import '../../v2/src/scss/Global.scss';
   import { onMounted, onUnmounted, shallowReactive, reactive, ref, watch } from 'vue';
+  import { StorageManager } from '../../v1/src/js/StorageManager.js';
   import { Utility } from '../../v1/src/js/Utility.js';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
@@ -21,7 +22,8 @@
   // Initialize components
   const i18n = useI18n();
   const util = new Utility();
-  const settings = reactive(JSON.parse(localStorage.getItem('settings') || '{"volume": 0}'));
+  const storage = new StorageManager();
+  const settings = reactive(storage.getSettings());
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
   const modalWorkshopVisible = ref(false);
@@ -81,7 +83,7 @@
   }
 
   function updateVolume() {
-    localStorage.setItem('settings', JSON.stringify(settings));
+    storage.setSettings(settings);
     const listener = assets.assetAudioLoader.listener;
     const currentTime = listener.context.currentTime;
     const gain = listener.gain.gain;
