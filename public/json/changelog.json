@@ -646,5 +646,11 @@
       "Updated Android controls",
       "Fixed Level Editor for Android devices"
     ]
+  },
+  {
+    "version": "2.6.3",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
