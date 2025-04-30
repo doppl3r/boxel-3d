@@ -73,6 +73,7 @@
 
 ## Build on Android/iOS
 
+- Increment `versionCode` and `versionName` in `/android/app/build.gradle`
 - Run build & sync with `npm run sync`
 - Open Android Studio: `npx cap open android`
 - Select Build > Generate Signed App Bundle or APK...
