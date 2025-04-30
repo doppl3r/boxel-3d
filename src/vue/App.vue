@@ -109,10 +109,6 @@
     }
   }
 
-  function isExtension() {
-    return window.chrome?.extension;
-  }
-
   function addEventListeners() {
     document.addEventListener('keydown', keydown);
     document.addEventListener('click', function(e) {
@@ -185,7 +181,7 @@
       <Card :src="'./svg/button-play.svg'" @click="openLink('./v1/index.html')">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <div class="footer">
-      <ButtonReview v-if="isExtension()" />
+      <ButtonReview />
     </div>
     <ModalWorkshop @close="modalWorkshopVisible = false" v-show="modalWorkshopVisible == true" />
     <Loading />

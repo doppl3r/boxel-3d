@@ -132,7 +132,7 @@
   }
 
   function openLink(url, target = '_blank') {
-    if (chrome.tabs) chrome.tabs.create({ url: url });
+    if (window.chrome?.tabs) window.chrome.tabs.create({ url: url });
     else window.open(url, target);
   }
 

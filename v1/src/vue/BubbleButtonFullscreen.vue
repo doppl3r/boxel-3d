@@ -18,9 +18,9 @@
     return document.fullscreenElement != null;
   }
 
-  function openLink(url) {
-    if (chrome.tabs) chrome.tabs.create({ url: url });
-    else window.open(url, '_blank');
+  function openLink(url, target = '_blank') {
+    if (window.chrome?.tabs) window.chrome.tabs.create({ url: url });
+    else window.open(url, target);
   }
 
   function toggleFullscreen() {

@@ -28,7 +28,7 @@
     v-if="isAndroidApp() || isElectronApp()"
     @click="exit"
   >
-    <span class="material-symbols-rounded">close</span>
+    <span class="material-symbols-rounded">undo</span>
   </ButtonAction>
 </template>
 

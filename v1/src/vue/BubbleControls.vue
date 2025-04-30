@@ -1,9 +1,11 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { computed, ref, onMounted, onUnmounted } from 'vue';
 
   var keys = ref({});
   var isVisible = ref(false);
   var isDesktop = ref(true);
+  var isCommunityLevel = ref(false);
+  var showJumpButton = computed(() => settings.value.stats == false && isCommunityLevel.value == false)
   var settings = ref(app.storage.getSettings());
 
   // Add event listener(s)
@@ -12,6 +14,7 @@
     window.addEventListener('keyup', keyup);
     window.addEventListener('setMode', setMode);
     window.addEventListener('updateStatsVisibility', updateSettings);
+    window.addEventListener('setCredit', updateJumpButton);
   }
   
   // Remove event listeners
@@ -20,6 +23,7 @@
     window.removeEventListener('keyup', keyup);
     window.removeEventListener('setMode', setMode);
     window.removeEventListener('updateStatsVisibility', updateSettings);
+    window.removeEventListener('setCredit', updateJumpButton);
   }
 
   function keydown(e) {
@@ -53,6 +57,10 @@
     settings.value = app.storage.getSettings();
   }
 
+  function updateJumpButton() {
+    isCommunityLevel.value = true;
+  }
+
   onMounted(function() {
     addEventListeners();
   });
@@ -67,7 +75,7 @@
     <div class="wasd">
       <div class="row">
         <div
-          v-if="settings.stats == false"
+          v-if="showJumpButton"
           class="key fade-in"
           :class="{ 'active': (keys['KeyW'] || keys['ArrowUp'] || keys['Space']) }"
           @touchstart.prevent="triggerKeyEvent({ type: 'keydown', code: 'KeyW' })"
