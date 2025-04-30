@@ -3,6 +3,7 @@
   import { onMounted, onUnmounted, shallowReactive, reactive, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
+  import ButtonAndroid from './ButtonAndroid.vue';
   import ButtonDiscord from './ButtonDiscord.vue';
   import ButtonFullScreen from './ButtonFullScreen.vue';
   import ButtonVolume from './ButtonVolume.vue';
@@ -173,6 +174,7 @@
     <div class="nav">
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
       <ButtonFullScreen />
+      <ButtonAndroid @click="openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')" />
       <ButtonDiscord @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" />
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>

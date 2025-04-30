@@ -31,16 +31,16 @@
 
     &.notification {
       &:after {
-        background-color: #ff0000;
+        animation: throb 1s ease-in-out infinite;
+        background-color: #EB2B6D;
         border-radius: 99em;
         content: '';
         display: block;
-        height: 0.5em;
-        left: 50%;
+        height: 0.75em;
+        right: -0.125em;
         position: absolute;
-        top: 50%;
-        transform: translate(50%, -150%);
-        width: 0.5em;
+        top: -0.125em;
+        width: 0.75em;
       }
     }
 
@@ -58,5 +58,7 @@
       width: 1.5em;
       height: 1.5em;
     }
+
+    @keyframes throb { 0% { transform: scale(1); } 50% { transform: scale(1.20); } 100% { transform: scale(1); }}
   }
 </style>
