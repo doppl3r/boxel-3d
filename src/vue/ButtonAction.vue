@@ -29,6 +29,14 @@
     transition: transform 0.1s ease-out;
     width: 2em;
 
+    &.left {
+      margin-right: auto;
+    }
+
+    &.right {
+      margin-left: auto;
+    }
+
     &.notification {
       &:after {
         animation: throb 1s ease-in-out infinite;

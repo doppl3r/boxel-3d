@@ -638,5 +638,11 @@
       "Added UI scale option",
       "Updated controller buttons"
     ]
+  },
+  {
+    "version": "2.6.2",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]

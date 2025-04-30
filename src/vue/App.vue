@@ -5,6 +5,7 @@
   import Banner from './Banner.vue';
   import ButtonAndroid from './ButtonAndroid.vue';
   import ButtonDiscord from './ButtonDiscord.vue';
+  import ButtonExit from './ButtonExit.vue';
   import ButtonFullScreen from './ButtonFullScreen.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import ButtonReview from './ButtonReview.vue';
@@ -172,6 +173,7 @@
   <canvas ref="canvas"></canvas>
   <div class="ui">
     <div class="nav">
+      <ButtonExit class="left" />
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
       <ButtonFullScreen />
       <ButtonAndroid @click="openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')" />
@@ -232,6 +234,8 @@
     .nav {
       display: flex;
       gap: 0.5em;
+      justify-content: flex-end;
+      left: 1.5em;
       right: 1.5em;
       position: absolute;
       top: 1.5em;
