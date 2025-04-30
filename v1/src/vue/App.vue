@@ -1,8 +1,9 @@
 <script setup>
   import '../scss/App.scss';
   import { onMounted, onUnmounted, ref, watch  } from 'vue';
-  import { useI18n } from 'vue-i18n';
+  import { App as cApp } from '@capacitor/app';
   import { App } from '../js/App.js';
+  import { useI18n } from 'vue-i18n';
   import { mods } from '../js/Data.js';
   import UI from './UI.vue';
 
@@ -10,6 +11,14 @@
   const i18n = useI18n({ useScope: 'global' });
   var canvas = ref();
   var app = window.app = new App();
+
+  // Mute Android audio when state is inactive
+  cApp.addListener('appStateChange', ({ isActive }) => {
+    const settings = app.storage.getSettings(app);
+    app.assets.audio.setMasterVolume(isActive ? settings.volume : 0, 'master');
+    app.assets.audio.setMasterVolume(isActive ? settings.volumeEffects : 0, 'effects');
+    app.assets.audio.setMasterVolume(isActive ? settings.volumeMusic : 0, 'music');
+  });
 
   // Declare Steam variables
   const isSteamEnabled = window.electron?.client != undefined;
