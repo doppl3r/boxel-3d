@@ -644,18 +644,7 @@
     "revisions": [
       "Added Android support",
       "Updated Android controls",
-      "Fixed Level Editor for Android devices"
-    ]
-  },
-  {
-    "version": "2.6.3",
-    "revisions": [
-      "Fixed UI bugs"
-    ]
-  },
-  {
-    "version": "2.6.4",
-    "revisions": [
+      "Fixed UI bugs",
       "Fixed Level Editor camera rotation",
       "Fixed file saving for Android"
     ]
