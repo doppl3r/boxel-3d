@@ -6,6 +6,7 @@
   },
   "home": {
     "button": {
+      "android": "Android",
       "back": "Back",
       "changelog": "Changelog",
       "fullscreen": "Fullscreen (F11)",

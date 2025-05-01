@@ -5,13 +5,13 @@
   import { Utility } from '../../v1/src/js/Utility.js';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
-  import ButtonAndroid from './ButtonAndroid.vue';
   import ButtonDiscord from './ButtonDiscord.vue';
   import ButtonExit from './ButtonExit.vue';
   import ButtonFullScreen from './ButtonFullScreen.vue';
   import ButtonVolume from './ButtonVolume.vue';
   import ButtonReview from './ButtonReview.vue';
   import Card from './Card.vue';
+  import ModalAndroid from './ModalAndroid.vue';
   import ModalWorkshop from './ModalWorkshop.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
   import { Ticker } from '../../v2/src/js/core/Ticker.js';
@@ -26,6 +26,7 @@
   const settings = reactive(storage.getSettings());
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
+  const modalAndroidVisible = ref(false);
   const modalWorkshopVisible = ref(false);
   const isExiting = ref(false);
   const playLink = ref('./v1/index.html' + document.location.search);
@@ -172,18 +173,19 @@
     <div class="nav">
       <ButtonExit class="left" />
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
-      <ButtonAndroid @click="openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')" />
       <ButtonFullScreen />
       <ButtonDiscord @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" />
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
       <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('home.button.workshop') }}</Card>
-      <Card :src="'./svg/button-play.svg'" @click="openLink(playLink)">{{ i18n.t('home.button.play') }}</Card>
+      <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" v-if="util.isNativeApp() == false && util.isElectronApp() == false">{{ i18n.t('home.button.android') }}</Card>
+      <Card :src="'./svg/button-play-pro.svg'" @click="openLink(playLink)">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <div class="footer">
       <ButtonReview />
     </div>
+    <ModalAndroid @close="modalAndroidVisible = false" v-show="modalAndroidVisible == true" />
     <ModalWorkshop @close="modalWorkshopVisible = false" v-show="modalWorkshopVisible == true" />
     <Loading />
 

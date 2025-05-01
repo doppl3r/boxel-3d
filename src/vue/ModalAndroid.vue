@@ -9,16 +9,15 @@
 <template>
   <Modal class="steam">
     <template #title>
-      Steam Workshop
+      <span class="material-symbols-rounded">android</span>
     </template>
     
     <template #text>
-      <p>The <strong>Steam Workshop</strong> is coming soon to Boxel 3D!</p>
-      <p>Purchase Boxel 3D to unlock <strong>unlimited</strong> community levels!</p>
+      <p>Boxel 3D is now available to Download on Android!</p>
     </template>
 
     <template #buttons>
-      <button @click="util.openLink('https://store.steampowered.com/app/3208440/Boxel_3D/', '_blank')">View Steam Page</button>
+      <button @click="util.openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')">Download Now</button>
     </template>
   </Modal>
 </template>

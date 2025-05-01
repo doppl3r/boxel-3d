@@ -6,6 +6,7 @@
   },
   "home": {
     "button": {
+      "android": "Android",
       "back": "뒤로가기",
       "changelog": "업데이트 현황",
       "fullscreen": "풀스크린 (F11)",
