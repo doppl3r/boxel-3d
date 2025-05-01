@@ -176,17 +176,18 @@ class StorageManager {
 
     if (util.isNativeApp()) {
       try {
+        const version = new Date().getTime();
         const result = await Filesystem.writeFile({
-          path: levelData.name + '.json',
+          path: `${ levelData.name } v${ version }.json`,
           data: JSON.stringify(levelData),
           directory: Directory.Documents,
           encoding: Encoding.UTF8,
         });
-
         alert('Success! Saved to ' + result.uri);
       }
       catch (err) {
-        alert(JSON.parse(err));
+        console.error(err);
+        alert(JSON.stringify(err));
       }
     }
     else {
@@ -270,17 +271,18 @@ class StorageManager {
 
     if (util.isNativeApp()) {
       try {
+        const version = new Date().getTime();
         const result = await Filesystem.writeFile({
-          path: 'boxel_3d_backup.json',
+          path: `boxel_3d_backup_${ version }.json`,
           data: JSON.stringify(local),
           directory: Directory.Documents,
           encoding: Encoding.UTF8,
         });
-
         alert('Success! Saved to ' + result.uri);
       }
       catch (err) {
-        alert(JSON.parse(err));
+        console.error(err);
+        alert(JSON.stringify(err));
       }
     }
     else {
