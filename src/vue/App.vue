@@ -179,7 +179,7 @@
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
       <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('home.button.workshop') }}</Card>
-      <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" v-if="util.isNativeApp() == false && util.isElectronApp() == false">{{ i18n.t('home.button.android') }}</Card>
+      <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" v-if="util.isNativeApp() == false">{{ i18n.t('home.button.android') }}</Card>
       <Card :src="'./svg/button-play-pro.svg'" @click="openLink(playLink)">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <div class="footer">
