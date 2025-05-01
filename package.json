@@ -1,6 +1,6 @@
 {
   "name": "boxel-3d",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "Boxel 3D is the 3rd release of your favorite box jumping game made by the developers of Boxel Rebound.",
   "author": "Jacob DeBenedetto",
   "main": "main.mjs",
@@ -48,6 +48,7 @@
     "@capacitor/android": "^7.2.0",
     "@capacitor/app": "^7.0.1",
     "@capacitor/core": "^7.2.0",
+    "@capacitor/filesystem": "^7.0.1",
     "@capacitor/ios": "^7.2.0",
     "@tweenjs/tween.js": "^25.0.0",
     "electron-store": "^10.0.1",

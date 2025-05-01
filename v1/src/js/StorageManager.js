@@ -1,6 +1,7 @@
 import { MathUtils } from 'three';
 import { Utility } from './Utility.js';
 import { saveAs } from 'file-saver';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 
 class StorageManager {
   constructor() {
@@ -167,11 +168,30 @@ class StorageManager {
     return settings;
   }
 
-  saveLevelToFile() {
+  async saveLevelToFile() {
     app.levelEditor.saveLevel();
     var levelData = app.level.exportToJSON(app);
     var blob = new Blob([JSON.stringify(levelData)], { type: "application/json" });
-    saveAs(blob, levelData.name);
+    var util = new Utility();
+
+    if (util.isNativeApp()) {
+      try {
+        const result = await Filesystem.writeFile({
+          path: levelData.name + '.json',
+          data: JSON.stringify(levelData),
+          directory: Directory.Documents,
+          encoding: Encoding.UTF8,
+        });
+
+        alert('Success! Saved to ' + result.uri);
+      }
+      catch (err) {
+        alert(JSON.parse(err));
+      }
+    }
+    else {
+      saveAs(blob, levelData.name);
+    }
   }
 
   screenshot(options) {
@@ -243,10 +263,29 @@ class StorageManager {
     performClick();
   }
 
-  backupToFile() {
+  async backupToFile() {
     var local = app.storage.getAllLocalStorage();
     var blob = new Blob([JSON.stringify(local)], { type: "application/json" });
-    saveAs(blob, 'boxel_3d_backup');
+    var util = new Utility();
+
+    if (util.isNativeApp()) {
+      try {
+        const result = await Filesystem.writeFile({
+          path: 'boxel_3d_backup.json',
+          data: JSON.stringify(local),
+          directory: Directory.Documents,
+          encoding: Encoding.UTF8,
+        });
+
+        alert('Success! Saved to ' + result.uri);
+      }
+      catch (err) {
+        alert(JSON.parse(err));
+      }
+    }
+    else {
+      saveAs(blob, 'boxel_3d_backup');
+    }
   }
 
   restoreFromFile() {

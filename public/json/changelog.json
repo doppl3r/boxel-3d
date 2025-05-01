@@ -656,7 +656,8 @@
   {
     "version": "2.6.4",
     "revisions": [
-      "Fixed Level Editor camera rotation"
+      "Fixed Level Editor camera rotation",
+      "Fixed file saving for Android"
     ]
   }
 ]
