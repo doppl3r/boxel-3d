@@ -645,8 +645,8 @@
       "Added Android support",
       "Added controller settings",
       "Updated gameplay UI",
-      "Fixed Level Editor camera rotation",
-      "Fixed file saving for Android"
+      "Fixed Level Editor camera",
+      "Fixed file saving"
     ]
   }
 ]
