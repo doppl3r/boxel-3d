@@ -445,19 +445,13 @@
         margin-left: auto;
       }
 
-      .stats {
-        .material-symbols-rounded {
-          background-color: #4CA9FF;
-        }
-      }
-
       .credit {
         padding: 0.5em 1em;
+        position: absolute;
+        left: 50%;
         margin-left: auto;
-      }
-
-      .credit ~ .controls {
-        margin-left: 0.5em;
+        transform: translateX(-50%);
+        white-space: nowrap;
       }
     }
   }
@@ -1190,6 +1184,24 @@
   .controls {
     flex-grow: 1;
 
+    &.reverse {
+      .key {
+        &.key-up {
+          order: 1;
+          margin-left: 0;
+          margin-right: auto;
+        }
+
+        &.key-left {
+          order: 2;
+        }
+  
+        &.key-right {
+          order: 3;
+        }
+      }
+    }
+
     &.desktop {
       .key {
         height: 2.5em;
@@ -1222,16 +1234,21 @@
         background-color: #EB2B6D;
       }
 
-      &.left {
-        margin-right: auto;
-      }
-
-      &.right {
-        margin-left: auto;
-      }
-
       &.visible {
         opacity: 1;
+      }
+
+      &.key-left {
+        order: 1;
+      }
+      
+      &.key-right {
+        order: 2;
+      }
+      
+      &.key-up {
+        margin-left: auto;
+        order: 3;
       }
     }
 

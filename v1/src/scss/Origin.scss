@@ -670,9 +670,10 @@
       color: #ffffff;
       position: fixed;
       bottom: 16px;
-      left: 16px;
+      left: 50%;
       width: auto;
       height: auto;
+      transform: translateX(-50%);
 
       img {
         width: 24px;
@@ -1042,10 +1043,42 @@
   }
 
   .controls {
+    flex-grow: 1;
     position: fixed;
     bottom: 1rem;
     right: 1rem;
+    left: 1rem;
     z-index: 1;
+
+    &.reverse {
+      .key {
+        &.key-up {
+          order: 1;
+          margin-left: 0;
+          margin-right: auto;
+        }
+
+        &.key-left {
+          order: 2;
+        }
+  
+        &.key-right {
+          order: 3;
+        }
+      }
+    }
+
+    &.desktop {
+      .key {
+        height: 2.5em;
+      }
+    }
+
+    .wasd {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
 
     .key {
       background-color: rgba(0, 0, 0, 0.25);
@@ -1059,11 +1092,11 @@
       margin-left: 0.5rem;
       text-align: center;
       text-shadow: 0em 0.125em 0 rgba(#000000, 0.25);
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 5rem;
+      height: 5rem;
       opacity: 0;
       pointer-events: all;
-      transition: none;
+      transition: height 0.5s ease-in-out;
 
       &.active {
         background-color: #EB2B6D;
@@ -1071,6 +1104,19 @@
 
       &.visible {
         opacity: 1;
+      }
+
+      &.key-left {
+        order: 1;
+      }
+      
+      &.key-right {
+        order: 2;
+      }
+      
+      &.key-up {
+        margin-left: auto;
+        order: 3;
       }
     }
 

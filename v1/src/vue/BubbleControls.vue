@@ -3,9 +3,9 @@
 
   var keys = ref({});
   var isVisible = ref(false);
+  var isReversed = ref(false);
   var isDesktop = ref(true);
   var isCommunityLevel = ref(false);
-  var showJumpButton = computed(() => settings.value.stats == false && isCommunityLevel.value == false)
   var settings = ref(app.storage.getSettings());
 
   // Add event listener(s)
@@ -14,7 +14,6 @@
     window.addEventListener('keyup', keyup);
     window.addEventListener('setMode', setMode);
     window.addEventListener('updateStatsVisibility', updateSettings);
-    window.addEventListener('setCredit', updateJumpButton);
   }
   
   // Remove event listeners
@@ -23,7 +22,6 @@
     window.removeEventListener('keyup', keyup);
     window.removeEventListener('setMode', setMode);
     window.removeEventListener('updateStatsVisibility', updateSettings);
-    window.removeEventListener('setCredit', updateJumpButton);
   }
 
   function keydown(e) {
@@ -57,10 +55,6 @@
     settings.value = app.storage.getSettings();
   }
 
-  function updateJumpButton() {
-    isCommunityLevel.value = true;
-  }
-
   onMounted(function() {
     addEventListeners();
   });
@@ -71,12 +65,11 @@
 </script>
 
 <template>
-  <div class="controls" v-if="isVisible" :class="{ desktop: isDesktop }">
+  <div class="controls" v-if="isVisible" :class="{ desktop: isDesktop, reverse: isReversed }">
     <div class="wasd">
       <div class="row">
         <div
-          v-if="showJumpButton"
-          class="key fade-in"
+          class="key key-up fade-in"
           :class="{ 'active': (keys['KeyW'] || keys['ArrowUp'] || keys['Space']) }"
           @touchstart.prevent="triggerKeyEvent({ type: 'keydown', code: 'KeyW' })"
           @touchend="triggerKeyEvent({ type: 'keyup', code: 'KeyW' })"
@@ -84,7 +77,7 @@
           <span class="material-symbols-rounded">shift</span>
         </div>
         <div
-          class="key right fade-in"
+          class="key key-left fade-in"
           :class="{ 'active': (keys['KeyA'] || keys['ArrowLeft']) }"
           @touchstart.prevent="triggerKeyEvent({ type: 'keydown', code: 'KeyA' })"
           @touchend="triggerKeyEvent({ type: 'keyup', code: 'KeyA' })"
@@ -92,7 +85,7 @@
           <span class="material-symbols-rounded">fast_rewind</span>
         </div>
         <div
-          class="key fade-in"
+          class="key key-right fade-in"
           :class="{ 'active': (keys['KeyD'] || keys['ArrowRight']) }"
           @touchstart.prevent="triggerKeyEvent({ type: 'keydown', code: 'KeyD' })"
           @touchend="triggerKeyEvent({ type: 'keyup', code: 'KeyD' })"

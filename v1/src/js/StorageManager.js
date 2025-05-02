@@ -128,24 +128,27 @@ class StorageManager {
     var util = new Utility();
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
-      'buffer': 100,
-      'connection': '',
-      'debug': false,
-      'language': 'en',
-      'motion': true,
-      'music': 'boxel-3d-pro',
-      'name': 'Player',
-      'peer': this.generateHex(''),
-      'progress': 1,
-      'quality': 10,
-      'scale': 1,
-      'skin': { id: 466, title: "Smile", url: "../png/smile.png" },
-      'snap': 8,
-      'stats': false,
-      'theme': 'bubble',
-      'volume': util.isExtension() ? 0 : 0.5,
-      'volumeMusic': 0.5,
-      'volumeEffects': 1,
+      buffer: 100,
+      connection: '',
+      debug: false,
+      controls: {
+        reverse: false
+      },
+      language: 'en',
+      motion: true,
+      music: 'boxel-3d-pro',
+      name: 'Player',
+      peer: this.generateHex(''),
+      progress: 1,
+      quality: 10,
+      scale: 1,
+      skin: { id: 466, title: "Smile", url: "../png/smile.png" },
+      snap: 8,
+      stats: false,
+      theme: 'bubble',
+      volume: util.isExtension() ? 0 : 0.5,
+      volumeMusic: 0.5,
+      volumeEffects: 1,
     };
     var settings = defaultSettings; // Use default
 

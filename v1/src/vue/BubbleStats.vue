@@ -86,8 +86,22 @@
 
 <style lang="scss" scoped>
   .stats {
-    gap: 0 ;
-    pointer-events: all;
+    gap: 0;
+    height: 2em !important;
+    width: auto !important;
+    padding: 0.25em 1em 0.25em 0em;
+
+    .material-symbols-rounded {
+      background-color: #4CA9FF;
+      box-shadow: 0em 0.125em 0em rgba(0, 0, 0, 0.25);
+      border-radius: 0.5em;
+      width: 1.5em;
+      height: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.5em;
+    }
 
     > * { pointer-events: none; }
 

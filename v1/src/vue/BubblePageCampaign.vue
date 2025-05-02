@@ -154,10 +154,10 @@
           <div v-html="record"></div>
         </div>
       </div>
+      <BubbleStats />
       <BubbleButtonSettings class="button right fade-in" />
     </div>
     <div class="footer">
-      <BubbleStats />
       <div id="credit" class="credit button fade-in disabled" v-html="credit" v-if="credit"></div>
       <BubbleControls />
     </div>
