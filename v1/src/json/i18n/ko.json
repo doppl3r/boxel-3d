@@ -125,6 +125,12 @@
       "volume_main": "메인 볼륨",
       "volume_music": "음악 볼륨"
     },
+    "controls": {
+      "buffer": "입력 버퍼",
+      "controller": "제어 장치",
+      "reverse": "뒤집다",
+      "title": "통제 수단"
+    },
     "data": {
       "backup_to": "...으로 백업",
       "file": "파일",
@@ -134,7 +140,6 @@
     },
     "graphics": {
       "auto_rotate": "자동 회전",
-      "buffer": "입력 버퍼",
       "camera": "카메라",
       "debug_mode": "디버그 모드",
       "developer_tools": "개발자 툴",

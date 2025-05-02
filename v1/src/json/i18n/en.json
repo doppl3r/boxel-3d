@@ -125,6 +125,12 @@
       "volume_main": "Main Volume",
       "volume_music": "Music Volume"
     },
+    "controls": {
+      "buffer": "Input Buffer",
+      "controller": "Controller",
+      "reverse": "Reverse",
+      "title": "Controls"
+    },
     "data": {
       "backup_to": "Backup to...",
       "file": "File",
@@ -134,7 +140,6 @@
     },
     "graphics": {
       "auto_rotate": "Auto Rotate",
-      "buffer": "Input Buffer",
       "camera": "Camera",
       "debug_mode": "Debug Mode",
       "developer_tools": "Developer Tools",

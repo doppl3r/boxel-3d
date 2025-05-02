@@ -1,12 +1,11 @@
 <script setup>
-  import { computed, ref, onMounted, onUnmounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
 
-  var keys = ref({});
-  var isVisible = ref(false);
-  var isReversed = ref(false);
-  var isDesktop = ref(true);
-  var isCommunityLevel = ref(false);
   var settings = ref(app.storage.getSettings());
+  var isVisible = ref(false);
+  var isReversed = ref(settings.value.controls.reverse);
+  var isDesktop = ref(true);
+  var keys = ref({});
 
   // Add event listener(s)
   function addEventListeners() {
@@ -14,6 +13,7 @@
     window.addEventListener('keyup', keyup);
     window.addEventListener('setMode', setMode);
     window.addEventListener('updateStatsVisibility', updateSettings);
+    window.addEventListener('updateControls', updateControls);
   }
   
   // Remove event listeners
@@ -22,6 +22,7 @@
     window.removeEventListener('keyup', keyup);
     window.removeEventListener('setMode', setMode);
     window.removeEventListener('updateStatsVisibility', updateSettings);
+    window.removeEventListener('updateControls', updateControls);
   }
 
   function keydown(e) {
@@ -53,6 +54,11 @@
 
   function updateSettings() {
     settings.value = app.storage.getSettings();
+  }
+
+  function updateControls() {
+    updateSettings();
+    isReversed.value = settings.value.controls.reverse;
   }
 
   onMounted(function() {

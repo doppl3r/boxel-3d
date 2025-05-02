@@ -125,6 +125,12 @@
       "volume_main": "Volumen Principal",
       "volume_music": "Volumen de Musica"
     },
+    "controls": {
+      "buffer": "Búfer de Entrada",
+      "controller": "Controlador",
+      "reverse": "Inverso",
+      "title": "Controles"
+    },
     "data": {
       "backup_to": "Copia progreso a...",
       "file": "Archivo",
@@ -134,7 +140,6 @@
     },
     "graphics": {
       "auto_rotate": "Rotación de Cámara Automática",
-      "buffer": "Búfer de Entrada",
       "camera": "Cámara",
       "debug_mode": "Modo de Depuración",
       "developer_tools": "Herramientas para Desarrolladores",

@@ -11,6 +11,10 @@
       <label>{{ i18n.t('settings.audio.title') }}</label>
       <span class="material-symbols-rounded">volume_up</span>
     </div>
+    <div class="tab" :class="{ 'selected': tab == 'controls' }" @click="$emit('changeTab', 'controls');">
+      <label>{{ i18n.t('settings.controls.title') }}</label>
+      <span class="material-symbols-rounded">gamepad</span>
+    </div>
     <div class="tab" :class="{ 'selected': tab == 'graphics' }" @click="$emit('changeTab', 'graphics');">
       <label>{{ i18n.t('settings.graphics.title') }}</label>
       <span class="material-symbols-rounded">visibility</span>
@@ -22,10 +26,6 @@
     <div class="tab" :class="{ 'selected': tab == 'language' }" @click="$emit('changeTab', 'language');">
       <label>{{ i18n.t('settings.language.title') }}</label>
       <span class="material-symbols-rounded">translate</span>
-    </div>
-    <div class="tab" :class="{ 'selected': tab == 'mods' }" @click="$emit('changeTab', 'mods');">
-      <label>{{ i18n.t('settings.mods.title') }}</label>
-      <span class="material-symbols-rounded">power</span>
     </div>
     <div class="tab" :class="{ 'selected': tab == 'data' }" @click="$emit('changeTab', 'data');">
       <label>{{ i18n.t('settings.data.title') }}</label>

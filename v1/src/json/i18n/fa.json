@@ -125,6 +125,12 @@
       "volume_main": "صدای پایه",
       "volume_music": "صدای موسیقی"
     },
+    "controls": {
+      "buffer": "بافر ورودی",
+      "controller": "کنترل کننده",
+      "reverse": "معکوس",
+      "title": "کنترل ها"
+    },
     "data": {
       "backup_to": "پشتیبان‌گیری در...",
       "file": "فایل",
@@ -134,7 +140,6 @@
     },
     "graphics": {
       "auto_rotate": "چرخش خودکار",
-      "buffer": "بافر ورودی",
       "camera": "دوربین",
       "debug_mode": "حالت اشکال‌گیری",
       "developer_tools": "ابزارهای سازندگان",

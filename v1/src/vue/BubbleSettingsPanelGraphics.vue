@@ -33,15 +33,6 @@
     </div>
     <div class="group">
       <div class="option">
-        <label for="buffer">{{ i18n.t('settings.graphics.buffer') }}</label>
-      </div>
-      <div class="option">
-        <input type="range" id="buffer" min="0" max="100" step="10" :value="settings.buffer" @change="$emit('updateSettings', $event)">
-        <label for="buffer">{{ settings.buffer }}ms</label>
-      </div>
-    </div>
-    <div class="group">
-      <div class="option">
         <label for="motion">{{ i18n.t('settings.graphics.camera') }}</label>
       </div>
       <div class="option">
