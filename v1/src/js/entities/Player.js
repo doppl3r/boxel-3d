@@ -170,8 +170,8 @@ class Player extends Cube {
     // Apply force to body until it reaches it's max speed (generic)
     if (this.body.speed < this.controls.speed) {
       Body.applyForce(this.body, this.body.position, {
-        x: this.force.x * app.loop.speed,
-        y: this.force.y * app.loop.speed
+        x: this.force.x,
+        y: this.force.y
       });
     }
   }

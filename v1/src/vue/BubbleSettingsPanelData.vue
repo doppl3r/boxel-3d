@@ -23,6 +23,17 @@
   function restoreFromChrome() {
     app.storage.restoreFromChrome();
   }
+
+  function loadClipboard() {
+    var clipboard = localStorage.getItem('clipboard');
+    if (clipboard == null || clipboard == '') clipboard = 'Hello, World!';
+    return clipboard;
+  }
+
+  function saveClipboard(e) {
+    var clipboard = e.target.value;
+    localStorage.setItem('clipboard', clipboard);
+  }
 </script>
 <template>
   <div class="panel">
@@ -55,6 +66,12 @@
           <span class="material-symbols-rounded">cloud_done</span>
           {{ i18n.t('settings.data.google') }}
         </button>
+      </div>
+    </div>
+    <div class="group">
+      <div class="option wrap">
+        <label for="mods"><span class="material-symbols-rounded">assignment</span> {{ i18n.t('settings.mods.clipboard') }}</label>
+        <textarea :value="loadClipboard()" id="mods" @change="saveClipboard" spellcheck="false"></textarea>
       </div>
     </div>
   </div>
