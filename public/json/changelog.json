@@ -643,8 +643,8 @@
     "version": "2.6.2",
     "revisions": [
       "Added Android support",
-      "Updated Android controls",
-      "Fixed UI bugs",
+      "Added controller settings",
+      "Updated gameplay UI",
       "Fixed Level Editor camera rotation",
       "Fixed file saving for Android"
     ]

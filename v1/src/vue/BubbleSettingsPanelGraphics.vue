@@ -45,16 +45,16 @@
         <label>{{ i18n.t('settings.graphics.developer_tools') }}</label>
       </div>
       <div class="option">
-        <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="$emit('updateSettings', $event, { true: 'origin', false: 'bubble' }, setTheme)">
-        <label for="theme">{{ i18n.t('settings.graphics.old_ui') }}</label>
-      </div>
-      <div class="option">
         <input type="checkbox" id="stats" :checked="settings.stats == true" @change="$emit('updateSettings', $event)">
         <label for="stats">{{ i18n.t('settings.graphics.show_fps') }}</label>
       </div>
       <div class="option">
         <input type="checkbox" id="debug" :checked="settings.debug == true" @change="$emit('updateSettings', $event, null, showHelpers)">
         <label for="debug">{{ i18n.t('settings.graphics.debug_mode') }}</label>
+      </div>
+      <div class="option">
+        <input type="checkbox" id="theme" :checked="settings.theme == 'origin'" @change="$emit('updateSettings', $event, { true: 'origin', false: 'bubble' }, setTheme)">
+        <label for="theme">{{ i18n.t('settings.graphics.old_ui') }}</label>
       </div>
     </div>
   </div>
