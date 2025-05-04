@@ -648,5 +648,11 @@
       "Fixed Level Editor camera",
       "Fixed file saving"
     ]
+  },
+  {
+    "version": "2.6.3",
+    "revisions": [
+      "Fixed various bugs"
+    ]
   }
 ]
