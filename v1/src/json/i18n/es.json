@@ -29,7 +29,7 @@
       "7": "¡Buena suerte!",
       "8": "Kargoh es mi YouTuber favorito.",
       "9": "Hecho: Soy malo al juego Fortnite.",
-      "10": "Don't get caught!",
+      "10": "¡No te dejes atrapar!",
       "11": "Los juegos de 3D son difíciles de hacer.",
       "12": "Deberías acer un nivel durante la clase.",
       "13": "Creado con 20 tazas de café todos los días.",
@@ -145,7 +145,7 @@
       "developer_tools": "Herramientas para Desarrolladores",
       "old_ui": "Interfaz de Usuario Antigua",
       "quality": "Qualidad",
-      "scale": "escala",
+      "scale": "Escala",
       "show_fps": "Enseñar FPS",
       "title": "Gráficos"
     },
@@ -165,27 +165,27 @@
     },
     "multiplayer": {
       "host": "Anfitrión",
-      "join": "Unirse",
-      "paste_friend_code": "Pegue código de amigo",
-      "share_friend_code": "Comparte código de amigo",
+      "join": "Juntar",
+      "paste_friend_code": "Pegue código de tu amigo",
+      "share_friend_code": "Comparte su código de amigo",
       "title": "Multijugador",
-      "your_name": "Tu Nombre"
+      "your_name": "Su Nombre"
     }
   },
   "skins": {
     "button": {
       "select": "Selecciona"
     },
-    "description": "Selecciona tu Apariencia",
+    "description": "Selecciona su Apariencia",
     "title": "Apariencia"
   },
   "workshop": {
     "text": {
-      "browse_items": "Explorar artículos",
-      "create_item": "Crear artículo",
+      "browse_items": "Explorar el contenido de Workshop",
+      "create_item": "Crear contenido en el Workshop",
       "creations": "Creaciones",
       "edit": "Editar",
-      "steam_version": "Steam versión",
+      "steam_version": "Versión de Steam",
       "subscriptions": "Suscripciones",
       "workshop": "Workshop"
     }
