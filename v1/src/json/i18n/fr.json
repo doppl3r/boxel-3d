@@ -1,0 +1,194 @@
+{
+  "campaign": {
+    "button": {
+      "pause": "Pause"
+    }
+  },
+  "home": {
+    "button": {
+      "android": "Android",
+      "back": "Retour",
+      "changelog": "Changelog",
+      "fullscreen": "Plein Écran (F11)",
+      "level_editor": "Éditeur de niveaux",
+      "multi_player": "Multijoueur",
+      "news": "Nouvelles",
+      "play": "Jouer",
+      "skins": "Apparences",
+      "steam": "Steam",
+      "workshop": "Atelier"
+    },
+    "messages": {
+      "0": "Bienvenue !",
+      "1": "Est-il Noël ?",
+      "2": "Peut-être qu’un jour j’ajouterai de nouveaux niveaux",
+      "3": "Ne devrais-tu pas faire tes devoirs ?",
+      "4": "Conseil: Buvez beaucoup d'eau !",
+      "5": "Créé par les créateurs de Boxel Rebound.",
+      "6": "Terraria est un jeu vraiment sympa.",
+      "7": "Bonne chance !",
+      "8": "Kargoh est mon YouTubeur favori.",
+      "9": "Fait: Je suis nul à Fortnite.",
+      "10": "Ne vous faites pas attraper !",
+      "11": "Les jeux en 3D sont difficiles à créer.",
+      "12": "Tu devrais créer un niveau en classe.",
+      "13": "Fait avec 20 tasse de café par jour.",
+      "14": "Réduisez les graphismes pour accélérer le jeu.",
+      "15": "J'espère que vous avez une bonne journée.",
+      "16": "Plus addictif que TikTok !",
+      "17": "J'avais essayé de faire des devoirs une fois... je ne l'ai pas aimé.",
+      "18": "Je crée des niveaux pendant mon travail.",
+      "19": "J’aimerais qu’il y ait plus de niveaux dans ce jeu.",
+      "20": "Ne partagez pas votre code d’ami avec des inconnus !",
+      "21": "Rien dans la vie est gratuit, sauf pour ce jeu.",
+      "22": "Mon score est bien meilleur que le tien.",
+      "23": "Sauvegarder votre données pour jouer sur un autre ordinateur.",
+      "24": "Si vous voulez gagner votre vie en créant des jeux, commencez par créer des niveaux.",
+      "25": "Sont les chats meilleurs que les chiens ?",
+      "26": "Shoutout à Stack Overflow pour toute l'aide !",
+      "27": "Maintenent disponible sur le TI-84+ Silver Edition.",
+      "28": "Je pense que t'es plutôt chouette.",
+      "29": "Je suis ravis que vous êtes vivant !",
+      "30": "Joyeux vendredi ! (ou quel que soit le jour)",
+      "31": "Partagez de l'amitié (ou Boxel 3D) avec quelqu'un dès aujourd'hui !",
+      "32": "Vous ne sentez peut-être pas spécial, mais vous êtes spéciale pour moi !",
+      "33": "01101100 01101111 01101100",
+      "34": "As-tu essayé de l’éteindre et de le rallumer ?",
+      "35": "Tous les bugs ont été corrigées (lol jk)",
+      "36": "Baguette, Fromage, Tour d'Eiffel"
+    },
+    "title": "Boxel 3D"
+  },
+  "level_picker": {
+    "button": {
+      "exit": "Retourner à l'accueil (ÉCHAP)",
+      "play": "Jouer"
+    },
+    "title": "Jouer"
+  },
+  "levels": {
+    "campaign_level_1": "Bienvenue à Boxel 3D ! Le plus facile jeu dans le monde !",
+    "campaign_level_3": "J'aurais dû te le dire plus tôt, NE TOUCHEZ PAS AUX PIQUES !",
+    "campaign_level_5": "Savez-vous que vous pouvez sauter après avoir tomber ?",
+    "campaign_level_18": "N'oubliez pas de sauter après avoir touché un tremplin !",
+    "campaign_level_33": "En haut !",
+    "campaign_level_35": "Halte ! Tu ne devrais pas être ici !",
+    "campaign_level_39": "Utilisez votre clavier pour bouger."
+  },
+  "locales": {
+    "en": "English",
+    "es": "Español (Spanish)",
+    "fa": "فارسی (Persian)",
+    "fr": "Français (French)",
+    "ko": "한국어 (Korean)"
+  },
+  "popup": {
+    "button": {
+      "backup": "Sauvegarder",
+      "cancel": "Annuler",
+      "close": "Fermer",
+      "continue": "Continuer",
+      "exit": "Quitter (E)",
+      "no": "Non",
+      "play": "Jouer",
+      "restore": "Restaurer",
+      "retry": "Recommencer (R)",
+      "settings": "Paramètres",
+      "upload": "Téléverser",
+      "yes": "Oui"
+    },
+    "description": {
+      "new_record": "Nouveau record !"
+    },
+    "text": {
+      "all": "Tout",
+      "browse": "Parcourir",
+      "cloud_data_restored": "Succès ! Vos données sont restaurés de votre compte.",
+      "cloud_data_saved": "Succès ! Vos données ont été sauvegarder dans votre compte.",
+      "custom_skin": "Apparence Personnalisée",
+      "file_data_restored": "Données du fichier restaurées !",
+      "info": "Info",
+      "level_packs": "Paquet de niveaux",
+      "paused": "En pause",
+      "restore_cloud_data": "Restaurer toutes les données du cloud ?",
+      "restore_file_data": "Restaurer toutes les données d’un fichier ?",
+      "save_data_to_cloud": "Sauvegarder toutes les données locales dans le cloud ?",
+      "save_level": "Voulez-vous enregistrer votre niveau ?",
+      "search": "Rechercher",
+      "seconds": "Secondes"
+    }
+  },
+  "settings": {
+    "audio": {
+      "music": "Musique",
+      "title": "Audio",
+      "volume_effects": "Effets Sonores",
+      "volume_main": "Volume Principale",
+      "volume_music": "Volume de Musique"
+    },
+    "controls": {
+      "buffer": "Tampon d'entrée",
+      "controller": "Manette",
+      "reverse": "Reverser",
+      "title": "Contrôles"
+    },
+    "data": {
+      "backup_to": "Sauvegarder à...",
+      "file": "Fichier",
+      "google": "Google",
+      "restore_from": "Restaurer de...",
+      "title": "Données"
+    },
+    "graphics": {
+      "auto_rotate": "Rotation Automatique",
+      "camera": "Caméra",
+      "debug_mode": "Mode Debug",
+      "developer_tools": "Outils développeur",
+      "old_ui": "Ancienne interface",
+      "quality": "Qualité",
+      "scale": "Échelle",
+      "show_fps": "Afficher FPS",
+      "title": "Graphismes"
+    },
+    "language": {
+      "credit": "Crédits",
+      "select_language": "Sélectionner la Langue",
+      "title": "Langue"
+    },
+    "mods": {
+      "clipboard": "Clipboard",
+      "download_instructions": "Copier des mods de sites fiables et garder-les dans le clipboard pour plus tard.",
+      "inspect_instructions": "Faites un clic droit sur ce jeu et sélectionnez Inspect.",
+      "paste_instructions": "Ouvrer le tab de Console, coller les mods du clipboard, puis appuyer sur Enter pour charger les mods.",
+      "security": "Pour votre sécurité, les mods doivent être chargés manuellement à chaque lancement du jeu.",
+      "title": "Mods",
+      "trusted_mods": "Mods fiable"
+    },
+    "multiplayer": {
+      "host": "Héberger",
+      "join": "Joindre",
+      "paste_friend_code": "Coller le code d'ami",
+      "share_friend_code": "Partager le code d'ami",
+      "title": "Multijoueur",
+      "your_name": "Votre nom"
+    }
+  },
+  "skins": {
+    "button": {
+      "select": "Sélectionner"
+    },
+    "description": "Sélectionner votre apparence",
+    "title": "Apparence"
+  },
+  "workshop": {
+    "text": {
+      "browse_items": "Parcourir les niveaux, apparences & mods",
+      "create_item": "Créer un élément",
+      "creations": "Créations",
+      "edit": "Modifier",
+      "steam_version": "Version Steam",
+      "subscriptions": "Abonnements",
+      "workshop": "Atelier"
+    }
+  }
+}
