@@ -60,7 +60,13 @@
       pack.levels.forEach(function(level) {
         // Set title and increment count
         if (index == count) {
-          description.value = `${pack.title} - <em>${ selectedItem.value.description || selectedItem.value.title }</em>`;
+          description.value = `${pack.title}: <em>${ selectedItem.value.description || selectedItem.value.title }</em>`;
+
+          if (pack.links) {
+            pack.links.forEach(function(link) {
+              description.value += ' - <a class="' + link.class + '" href="' + link.url + '" target="' + link.target + '"><img src="' + link.icon + '"> ' + link.text + '</a>'
+            });
+          }
         }
         count++;
       });
