@@ -6,7 +6,7 @@
   },
   "home": {
     "button": {
-      "android": "Android",
+      "android": "모바일 버전",
       "back": "뒤로가기",
       "changelog": "업데이트 현황",
       "fullscreen": "풀스크린 (F11)",
@@ -15,8 +15,8 @@
       "news": "뉴스",
       "play": "게임플레이",
       "skins": "스킨",
-      "steam": "Steam",
-      "workshop": "Workshop"
+      "steam": "스팀 페이지",
+      "workshop": "워크샵"
     },
     "messages": {
       "0": "Welcome!",
@@ -102,7 +102,7 @@
     },
     "text": {
       "all": "모두",
-      "browse": "먹다",
+      "browse": "불러오기",
       "cloud_data_restored": "데이터 불러오기 성공!",
       "cloud_data_saved": "데이터 백업 성공!",
       "custom_skin": "커스텀 스킨",
@@ -128,9 +128,9 @@
     },
     "controls": {
       "buffer": "입력 버퍼",
-      "controller": "제어 장치",
-      "reverse": "뒤집다",
-      "title": "통제 수단"
+      "controller": "컨트롤러",
+      "reverse": "버튼 반전",
+      "title": "컨트롤 설정"
     },
     "data": {
       "backup_to": "...으로 백업",
@@ -146,7 +146,7 @@
       "developer_tools": "개발자 툴",
       "old_ui": "옛날 UI",
       "quality": "퀄리티",
-      "scale": "규모",
+      "scale": "팝엄 사이즈",
       "show_fps": "FPS 보기",
       "title": "그래픽"
     },
@@ -182,13 +182,13 @@
   },
   "workshop": {
     "text": {
-      "browse_items": "항목 찾아보기",
-      "create_item": "아이템 생성",
-      "creations": "창작물",
-      "edit": "편집하다",
+      "browse_items": "항목 찾기",
+      "create_item": "항목 생성",
+      "creations": "만든 것들",
+      "edit": "편집하기기",
       "steam_version": "Steam 버전",
       "subscriptions": "구독",
-      "workshop": "Workshop"
+      "workshop": "워크샵샵"
     }
   }
 }
