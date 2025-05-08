@@ -30,19 +30,16 @@
                         </g>
                     </g>
                     <g id="Search" transform="matrix(1,0,0,1,0,21.9904)">
-                        <g transform="matrix(29.9069,0,0,5.86412,-348.239,-147.625)">
-                            <g transform="matrix(1.58108,0,0,1.5,-4.87837,-33.9998)">
-                                <path d="M19,61C19,62.104 18.724,63 18.385,63L15.615,63C15.276,63 15,62.104 15,61C15,59.896 15.276,59 15.615,59L18.385,59C18.724,59 19,59.896 19,61Z"/>
-                            </g>
-                            <g transform="matrix(1.5,0,0,1.25,-3.5,-18.75)">
+                        <g transform="matrix(44.8603,0,0,7.33015,-452.913,-257.577)">
+                            <g>
+                                <g transform="matrix(1,0,0,1,0,0.399999)">
+                                    <path d="M19,61C19,62.104 18.758,63 18.459,63L15.541,63C15.242,63 15,62.104 15,61C15,59.896 15.242,59 15.541,59L18.459,59C18.758,59 19,59.896 19,61Z" style="fill-opacity:0.25;"/>
+                                </g>
                                 <path d="M19,61C19,62.104 18.758,63 18.459,63L15.541,63C15.242,63 15,62.104 15,61C15,59.896 15.242,59 15.541,59L18.459,59C18.758,59 19,59.896 19,61Z" style="fill:white;"/>
                             </g>
                         </g>
                         <g id="Steam" transform="matrix(0.914286,0,0,0.914286,26.5465,-22.4162)">
                             <g transform="matrix(1.32696,0,0,0.801733,267.278,146.867)">
-                                <g transform="matrix(11.9923,0,0,12,-435.706,-184)">
-                                    <circle cx="39" cy="18" r="3"/>
-                                </g>
                                 <path d="M1.305,41.202C5.259,54.386 17.488,64 31.959,64C49.632,64 63.959,49.673 63.959,32C63.959,14.327 49.632,0 31.959,0C15.001,0 1.124,13.193 0.028,29.874C2.102,33.351 2.907,35.502 1.303,41.202L1.305,41.202Z" style="fill:url(#_Linear6);fill-rule:nonzero;"/>
                             </g>
                             <g transform="matrix(1.32696,0,0,0.801733,267.278,146.867)">
@@ -61,7 +58,7 @@
         <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-31.0561,31.0561,-31.0561,-31.0561,989,237)"><stop offset="0" style="stop-color:rgb(76,125,255);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(76,169,255);stop-opacity:1"/></linearGradient>
         <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-16.4532,16.4532,-16.4532,-16.4532,989,237)"><stop offset="0" style="stop-color:rgb(76,125,255);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(76,169,255);stop-opacity:1"/></linearGradient>
         <linearGradient id="_Linear3" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-21.9012,21.9012,-21.9012,-21.9012,989,237)"><stop offset="0" style="stop-color:rgb(76,125,255);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(76,169,255);stop-opacity:1"/></linearGradient>
-        <linearGradient id="_Linear4" x1="0" y1="0" x2="1" y2="-0.0697357" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-16.3609,26.6353,-26.6353,-16.3609,989,237)"><stop offset="0" style="stop-color:rgb(76,125,255);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(76,169,255);stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear4" x1="0" y1="0" x2="1" y2="-0.0635615" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-14.5035,27.7762,-27.7762,-14.5035,989,237)"><stop offset="0" style="stop-color:rgb(76,125,255);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(76,169,255);stop-opacity:1"/></linearGradient>
         <linearGradient id="_Linear5" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-21.9012,21.9012,-21.9012,-21.9012,989,237)"><stop offset="0" style="stop-color:rgb(76,125,255);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(76,169,255);stop-opacity:1"/></linearGradient>
         <linearGradient id="_Linear6" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(3.91887e-15,64,-64,3.91887e-15,31.9935,0)"><stop offset="0" style="stop-color:rgb(17,29,46);stop-opacity:1"/><stop offset="0.21" style="stop-color:rgb(5,24,57);stop-opacity:1"/><stop offset="0.41" style="stop-color:rgb(10,27,72);stop-opacity:1"/><stop offset="0.58" style="stop-color:rgb(19,46,98);stop-opacity:1"/><stop offset="0.74" style="stop-color:rgb(20,75,126);stop-opacity:1"/><stop offset="0.87" style="stop-color:rgb(19,100,151);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(19,135,184);stop-opacity:1"/></linearGradient>
     </defs>
