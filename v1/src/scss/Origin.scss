@@ -668,6 +668,7 @@
       align-items: center;
       display: flex;
       color: #ffffff;
+      pointer-events: none;
       position: fixed;
       bottom: 16px;
       left: 50%;
@@ -1044,6 +1045,7 @@
 
   .controls {
     flex-grow: 1;
+    pointer-events: none;
     position: fixed;
     bottom: 1rem;
     right: 1rem;

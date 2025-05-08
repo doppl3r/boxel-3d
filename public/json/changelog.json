@@ -659,7 +659,8 @@
   {
     "version": "2.6.4",
     "revisions": [
-      "Updated translations"
+      "Updated translations",
+      "Fixed Old UI controls"
     ]
   }
 ]
