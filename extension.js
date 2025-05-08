@@ -37,12 +37,7 @@ zipBuildFiles('chrome', function() {
   // Replace manifest with Firefox manifest
   writeFileSync(manifestChromePath, manifestFirefox);
 
-  // Build Firefox zip file
-  zipBuildFiles('firefox', function() {
-    // Revert manifest
-    writeFileSync(manifestChromePath, manifestChrome);
-  });
+  // Build firefox zip files
+  zipBuildFiles('firefox');
+  zipSrcFiles();
 });
-
-// Zip source files for Firefox submission
-zipSrcFiles();
