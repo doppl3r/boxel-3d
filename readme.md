@@ -13,10 +13,8 @@
 
 ## Build for release
 
-- Run build with `npm run build` to create a fresh `/build` folder
-- Compress `/build` folder into a `.zip` file format
-- (Optional) Replace the manifest.json data from manifest-[browser].json
-- Upload to Chrome Webstore
+- Run `npm run dist-extension` to create zipped files
+- Upload to Chrome Webstore or Firefox Addons
 
 ## Test Chrome Extension
 
@@ -32,11 +30,11 @@
 - Install dependencies: `npm install`
 - Run custom script from package.json: `npm start`
 
-## Build Application
+## Build Electron Application
 
 - Update release version in `package.json`
 - Install dependencies: `npm install`
-- Run custom script from package.json: `npm run dist`
+- Run custom script from package.json: `npm run dist-electron`
 - Upload application from `/dist/boxel-3d x.x.x` to Steam
   - Note: You need a PC to generate `.exe`, a Mac to generate `.app` and Linux to generate `.whatever`
 
@@ -81,4 +79,4 @@
 ## Update App Icon/Splash
 
 - Update the assets within the `/files/png/assets` directory
-- Run asset plugin with `npm run generate`
+- Run asset plugin with `npm run generate-assets`
