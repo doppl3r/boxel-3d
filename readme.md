@@ -26,7 +26,6 @@
 
 ## Test Electron Application
 
-- Update release version in `package.json`
 - Install dependencies: `npm install`
 - Run custom script from package.json: `npm start`
 
@@ -72,7 +71,7 @@
 ## Build on Android/iOS
 
 - Increment `versionCode` and `versionName` in `/android/app/build.gradle`
-- Run build & sync with `npm run sync`
+- Run build & sync with `npm run dist-android`
 - Open Android Studio: `npx cap open android`
 - Select Build > Generate Signed App Bundle or APK...
 

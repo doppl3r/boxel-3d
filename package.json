@@ -9,10 +9,10 @@
     "build": "vite build",
     "dev": "vite",
     "dist-electron": "vite build && electron-builder",
-    "dist-extension": "vite build && node dist-zip.js",
+    "dist-extension": "vite build && node extension.js",
+    "dist-android": "vite build && npx cap sync",
     "generate-assets": "npx @capacitor/assets generate --android --assetPath files/png/assets --iconBackgroundColor #9016ff --splashBackgroundColor #9016ff --splashBackgroundColorDark #9016ff",
-    "start": "vite build && electron .",
-    "sync": "vite build && npx cap sync"
+    "start": "vite build && electron ."
   },
   "build": {
     "appId": "com.electron.boxel.3d",

@@ -2,9 +2,13 @@ import gulp from 'gulp';
 import zip from 'gulp-zip';
 import { readFileSync, writeFileSync } from 'fs';
 
-const manifestChrome = readFileSync('./build/manifest.json', 'utf8');
-const manifestFirefox = readFileSync('./files/json/firefox/manifest.json', 'utf8');
-const version = JSON.parse(manifestChrome).version;
+let packagePath = './package.json';
+let manifestChromePath = './build/manifest.json';
+let manifestFirefoxPath = './files/json/firefox/manifest.json';
+let packageFile = readFileSync(packagePath, 'utf8');
+let manifestChrome = readFileSync(manifestChromePath, 'utf8');
+let manifestFirefox = readFileSync(manifestFirefoxPath, 'utf8');
+let version = JSON.parse(packageFile).version;
 
 function zipBuildFiles(platform = 'chrome', callback = () => {}) {
   // Build Chrome file
@@ -26,12 +30,12 @@ function zipSrcFiles() {
 // Start zipping
 zipBuildFiles('chrome', function() {
   // Replace manifest with Firefox manifest
-  writeFileSync('./build/manifest.json', manifestFirefox);
+  writeFileSync(manifestChromePath, manifestFirefox);
 
   // Build Firefox zip file
   zipBuildFiles('firefox', function() {
     // Revert manifest
-    writeFileSync('./build/manifest.json', manifestChrome);
+    writeFileSync(manifestChromePath, manifestChrome);
   });
 });
 
