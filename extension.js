@@ -10,22 +10,6 @@ let manifestChrome = readFileSync(manifestChromePath, 'utf8');
 let manifestFirefox = readFileSync(manifestFirefoxPath, 'utf8');
 let version = JSON.parse(packageFile).version;
 
-function updateManifestVersionFromPackage() {
-  // Convert string to object
-  const manifestChromeData = JSON.parse(manifestChrome);
-  const manifestFirefoxData = JSON.parse(manifestFirefox);
-
-  // Assign package version to each manifest
-  manifestChromeData.version = version;
-  manifestFirefoxData.version = version;
-
-  // Convert object back to a string before writing
-  manifestChrome = JSON.stringify(manifestChromeData, null, 2);
-  manifestFirefox = JSON.stringify(manifestFirefoxData, null, 2);
-  writeFileSync(manifestChromePath, manifestChrome);
-  writeFileSync(manifestFirefoxPath, manifestFirefox);
-}
-
 function zipBuildFiles(platform = 'chrome', callback = () => {}) {
   // Build Chrome file
   gulp
@@ -47,9 +31,6 @@ function zipSrcFiles() {
     .pipe(zip(`boxel-3d-${ version }-src.zip`, { buffer: true }))
     .pipe(gulp.dest('./dist'));
 }
-
-// Rewrite manifest versions from package version
-updateManifestVersionFromPackage();
 
 // Start zipping
 zipBuildFiles('chrome', function() {
