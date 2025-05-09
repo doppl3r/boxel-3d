@@ -69,7 +69,7 @@
     "@capacitor/cli": "^7.2.0",
     "@dimforge/rapier3d": "^0.16.2",
     "@vitejs/plugin-vue": "^5.2.3",
-    "electron": "^36.1.0",
+    "electron": "^36.2.0",
     "electron-builder": "^26.0.12",
     "gulp": "^5.0.0",
     "gulp-zip": "^6.1.0",
