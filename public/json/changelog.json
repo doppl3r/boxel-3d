@@ -662,5 +662,11 @@
       "Updated translations",
       "Fixed Old UI controls"
     ]
+  },
+  {
+    "version": "2.6.5",
+    "revisions": [
+      "Fix bugs"
+    ]
   }
 ]
