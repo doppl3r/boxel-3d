@@ -294,7 +294,7 @@
 
       // Update progress
       settings = app.storage.getSettings();
-      settings.progress = app.level.getLevelIndex(title) + 1;
+      settings.progress = app.level.getLevelIndex(options.title) + 1;
       app.updateSettings(settings);
 
       // Run optional success callback

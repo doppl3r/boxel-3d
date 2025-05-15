@@ -4,7 +4,7 @@ import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
 import { Timer } from './Timer.js';
 import { Assets } from './Assets.js';
-import { Loop } from './Loop.js';
+import { Ticker } from './Ticker.js';
 import { Graphics } from './Graphics.js';
 import { StorageManager } from './StorageManager.js';
 import { Collision } from './Collision.js';
@@ -41,7 +41,7 @@ class App {
     
     // Set time components
     this.timer = new Timer();
-    this.loop = new Loop();
+    this.ticker = new Ticker();
     this.then = new Date().getTime();
     this.now = this.then;
     this.delta = 0;
@@ -116,30 +116,18 @@ class App {
     // Start game loop
     this.resizeWindow(null, this);
 
-    // Add physics loop
-    this.loop.add(function(data) {
-      this.updateEngine(data.delta, data.alpha);
-    }.bind(this), 60);
-
-    // Add graphic loop
-    this.loop.add(function(data) {
-      this.updateRender(data.delta, data.alpha);
-    }.bind(this), -1);
-
-    // Add network loop
+    // Add physics & render loops
+    this.ticker.add(data => this.updateEngine(data), 1000 / 60);
+    this.ticker.add(data => this.updateRender(data));
+    this.ticker.add(data => this.updateNetwork(data), 1000 / 8);
     this.multiplayer.setTick(8);
-    this.loop.add(function(data) {
-      this.updateNetwork(data.delta, data.alpha);
-    }.bind(this), 8);
-
-    // Start loop
-    this.loop.start();
+    this.ticker.start();
 
     // Run game callback
     callback();
   }
 
-  updateEngine(delta) {
+  updateEngine({ delta }) {
     // Update engine to loop engine rate
     if (this.play == true) {
       // Update player object
@@ -153,7 +141,7 @@ class App {
     }
   }
 
-  updateRender(delta, alpha) {
+  updateRender({ delta, alpha }) {
     // Loop through scene for all children
     if (this.play == true) {
       // Update from new position
@@ -185,7 +173,7 @@ class App {
     }
   }
 
-  updateNetwork(delta, alpha) {
+  updateNetwork({ delta, alpha }) {
     // Update network
     this.multiplayer.update(delta, alpha);
   }
@@ -202,7 +190,7 @@ class App {
     app.camera.position.z = app.camera.position.zDefault;
     a.level.removeParticles(a);
     a.level.resetLevel();
-    a.updateRender(null, 0);
+    a.updateRender({ delta: 0, alpha: 0 }, 0);
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
