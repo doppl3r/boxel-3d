@@ -4,7 +4,7 @@ import { Animation } from './Animation.js';
 import { Utility } from './Utility.js';
 import { Timer } from './Timer.js';
 import { Assets } from './Assets.js';
-import { Ticker } from './Ticker.js';
+import { Interval } from './Interval.js';
 import { Graphics } from './Graphics.js';
 import { StorageManager } from './StorageManager.js';
 import { Collision } from './Collision.js';
@@ -41,7 +41,7 @@ class App {
     
     // Set time components
     this.timer = new Timer();
-    this.ticker = new Ticker();
+    this.interval = new Interval();
     this.then = new Date().getTime();
     this.now = this.then;
     this.delta = 0;
@@ -117,17 +117,17 @@ class App {
     this.resizeWindow(null, this);
 
     // Add physics & render loops
-    this.ticker.add(data => this.updateEngine(data), 1000 / 60);
-    this.ticker.add(data => this.updateRender(data));
-    this.ticker.add(data => this.updateNetwork(data), 1000 / 8);
+    this.interval.add(loop => this.updateEngine(loop), 1000 / 60);
+    this.interval.add(loop => this.updateRender(loop));
+    this.interval.add(loop => this.updateNetwork(loop), 1000 / 8);
     this.multiplayer.setTick(8);
-    this.ticker.start();
+    this.interval.start();
 
     // Run game callback
     callback();
   }
 
-  updateEngine({ delta }) {
+  updateEngine({ delay }) {
     // Update engine to loop engine rate
     if (this.play == true) {
       // Update player object
@@ -137,7 +137,7 @@ class App {
       this.player.updateRope();
 
       // Update world engine
-      Engine.update(this.engine, delta * 1000);
+      Engine.update(this.engine, delay);
     }
   }
 
