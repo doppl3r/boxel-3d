@@ -14,7 +14,7 @@
   import ModalAndroid from './ModalAndroid.vue';
   import ModalWorkshop from './ModalWorkshop.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
-  import { Ticker } from '../../v2/src/js/core/Ticker.js';
+  import { Interval } from '../../v2/src/js/core/Interval.js';
   import { Graphics } from '../../v2/src/js/core/Graphics.js';
   import { LightFactory } from '../../v2/src/js/core/factories/LightFactory.js';
   import { AssetLoader } from '../../v2/src/js/core/loaders/AssetLoader.js';
@@ -31,7 +31,7 @@
   const isExiting = ref(false);
   const playLink = ref('./v1/index.html' + document.location.search);
   let volumePrev = settings.volume;
-  let ticker;
+  let interval;
   let graphics;
   let background;
   let light;
@@ -47,8 +47,8 @@
     graphics.scene.add(background, light);
 
     // Start render loop
-    ticker.add(render, 1000 / 60);
-    ticker.start();
+    interval.add(loop => render(loop), 1000 / 60);
+    interval.start();
 
     // Play background music
     updateVolume();
@@ -62,9 +62,9 @@
     sound.play();
   }
 
-  function render(data) {
+  function render({ delta }) {
     if (modalWorkshopVisible.value == false) {
-      background.mixer.update(data.delta)
+      background.mixer.update(delta / 1000);
       graphics.render();
     }
   }
@@ -151,7 +151,7 @@
 
   // Redirect app after loading
   onMounted(function() {
-    ticker = new Ticker();
+    interval = new Interval();
     graphics = new Graphics(canvas.value);
     assets.load({
       models: './json/menu-models.json',

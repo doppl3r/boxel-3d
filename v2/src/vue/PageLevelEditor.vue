@@ -18,13 +18,12 @@
   const entityPrev = ref({});
   const entitiesSelected = [];
   const history = shallowReactive(new History());
-  const ticker = shallowReactive(props.game.ticker);
+  const interval = shallowReactive(props.game.interval);
   const canUndo = computed(() => history.canUndo());
   const canRedo = computed(() => history.canRedo());
-  const isPlaying = computed(() => ticker.isRunning());
+  const isPlaying = computed(() => interval.threadRunning);
   const contextMenuEvent = ref({});
   const contextMenuActions = ref([]);
-  const controlsTransform = new TransformControls(props.game.graphics.camera, props.game.graphics.canvas);
   const controlsOrbit = new OrbitControls(CameraFactory.create(), props.game.graphics.canvas);
   controlsOrbit.zoomToCursor = true;
   controlsOrbit.zoomSpeed = 3;
@@ -424,21 +423,21 @@
   }
 
   function pause() {
-    ticker.stop();
+    interval.stop();
     props.game.graphics.setCamera(controlsOrbit.object);
     props.game.graphics.render();
     enableControlsOrbit(true);
   }
 
   function play() {
-    ticker.start()
+    interval.start()
     props.game.graphics.setCamera(props.game.player.camera);
     enableControlsOrbit(false);
   }
 
   function updateDebugger() {
     // Refresh the debugger if game is paused
-    if (ticker.isRunning() == false) {
+    if (interval.threadRunning == false) {
       props.game.physics.debugger.update();
       props.game.graphics.render();
     }
@@ -449,7 +448,7 @@
   }
 
   function onControlsOrbitChange() {
-    if (props.game.ticker.isRunning() == false) {
+    if (props.game.interval.threadRunning == false) {
       props.game.graphics.render();
     }
   }
