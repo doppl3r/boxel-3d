@@ -666,7 +666,9 @@
   {
     "version": "2.6.5",
     "revisions": [
-      "Fixed multiplayer bugs"
+      "Added Checkpoint button",
+      "Fixed multiplayer bugs",
+      "Improved performance on Mac (credit: Onionfist)"
     ]
   }
 ]
