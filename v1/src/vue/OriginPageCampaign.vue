@@ -36,9 +36,9 @@
       detail: {
         text: 'Paused',
         inputs: [
-          { value: 'Exit (E)', type: 'button', callback: function(e) { app.exitCampaign(); }},
-          { value: 'Retry (R)', type: 'button', callback: function(e) { app.level.retryLevel(); }},
-          { value: 'Play', type: 'button', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
+          { value: 'Exit (E)', type: 'button', shortcut: 'KeyE', callback: function(e) { app.exitCampaign(); }},
+          { value: 'Retry (R)', type: 'button', shortcut: 'KeyR', callback: function(e) { app.level.retryLevel(); }},
+          { value: 'Play', type: 'button', shortcut: 'Space', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
         ]
       }
     }));

@@ -99,12 +99,13 @@
         runLastInputCallback(e);
       }
 
-      // Replay level
-      if (e.code == 'KeyR') {
-        // Close popup
-        e.preventDefault();
-        runFirstInputCallback(e);
-      }
+      // Check input shortcut
+      inputs.value.forEach(input => {
+        if (e.code === input.shortcut) {
+          e.preventDefault();
+          runCallback(input.callback, e);
+        }
+      });
     }
   }
 

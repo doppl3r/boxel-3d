@@ -44,9 +44,9 @@
       detail: {
         text: i18n.t('popup.text.paused'),
         inputs: [
-          { value: i18n.t('popup.button.exit'), type: 'button', callback: function(e) { app.exitCampaign(); }},
-          { value: i18n.t('popup.button.retry'), type: 'button', callback: function(e) { app.level.retryLevel(); }},
-          { value: i18n.t('popup.button.play'), type: 'button', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
+          { value: i18n.t('popup.button.exit'), type: 'button', shortcut: 'KeyE', callback: function(e) { app.exitCampaign(); }},
+          { value: i18n.t('popup.button.retry'), type: 'button', shortcut: 'KeyR', callback: function(e) { app.level.retryLevel(); }},
+          { value: i18n.t('popup.button.play'), type: 'button', shortcut: 'Space', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
         ]
       }
     }));
