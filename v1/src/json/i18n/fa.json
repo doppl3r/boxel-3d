@@ -86,6 +86,7 @@
     "button": {
       "backup": "پشتیبان‌گیری",
       "cancel": "لغو",
+      "checkpoint": "ایست بازرسی (C)",
       "close": "بستن",
       "continue": "ادامه دادن",
       "exit": "خروج (E)",

@@ -86,6 +86,7 @@
     "button": {
       "backup": "Backup",
       "cancel": "Cancel",
+      "checkpoint": "Checkpoint (C)",
       "close": "Close",
       "continue": "Continue",
       "exit": "Exit (E)",

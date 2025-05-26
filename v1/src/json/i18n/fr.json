@@ -86,6 +86,7 @@
     "button": {
       "backup": "Sauvegarder",
       "cancel": "Annuler",
+      "checkpoint": "Point de Contrôle (C)",
       "close": "Fermer",
       "continue": "Continuer",
       "exit": "Quitter (E)",

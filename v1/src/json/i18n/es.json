@@ -86,6 +86,7 @@
     "button": {
       "backup": "Progreso",
       "cancel": "Cancelar",
+      "checkpoint": "Control (C)",
       "close": "Cerrar",
       "continue": "Continuar",
       "exit": "Salida (E)",

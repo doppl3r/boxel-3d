@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import BubbleButtonCheckpoint from './BubbleButtonCheckpoint.vue';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleControls from './BubbleControls.vue';
   import BubbleStats from './BubbleStats.vue';
@@ -154,6 +155,7 @@
           <div v-html="record"></div>
         </div>
       </div>
+      <BubbleButtonCheckpoint />
       <BubbleStats />
       <BubbleButtonSettings class="button right fade-in" />
     </div>
