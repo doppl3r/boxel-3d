@@ -670,5 +670,11 @@
       "Fixed multiplayer bugs",
       "Improved performance on Mac (credit: Onionfist)"
     ]
+  },
+  {
+    "version": "2.6.6",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
