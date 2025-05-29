@@ -13,6 +13,7 @@ import { Grapple } from './Grapple.js';
 import { Finish } from './Finish.js';
 import { Reset } from './Reset.js';
 import { Control } from './Control.js';
+import { Power } from './Power.js';
 
 class EntityFactory {
   constructor() {
@@ -47,6 +48,9 @@ class EntityFactory {
       case('control'):
         options.model = app.assets.models.clone('cube-control');
         object = new Control(options);
+      case('power'):
+      options.model = app.assets.models.clone('cube-power');
+      object = new Power(options);
       break;
       default: object = new Cube(options);
     }

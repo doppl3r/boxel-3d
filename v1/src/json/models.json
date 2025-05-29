@@ -34,5 +34,8 @@
   },
   "cube-control": {
     "url": "../glb/cube-control.glb"
+  },
+  "cube-power": {
+    "url": "../glb/cube-power.glb"
   }
 }
