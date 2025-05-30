@@ -115,6 +115,12 @@ class Collision {
                   app.assets.audio.play('teleport');
                 }
               }
+              else if (objectA.body.class == 'power') {
+                if (objectB.body.class ==  'player') {
+                  app.player.setMode('power', false);
+                  app.assets.audio.play('teleport');
+                }
+              }
             }
             else {
               if (objectA.body.class == 'cube') {

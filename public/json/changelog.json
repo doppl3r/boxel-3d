@@ -674,6 +674,7 @@
   {
     "version": "2.6.6",
     "revisions": [
+      "Added \"Power\" cube",
       "Fixed popup shortcuts"
     ]
   }

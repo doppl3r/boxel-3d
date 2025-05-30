@@ -75,7 +75,13 @@ class App {
     this.scene.add(this.multiplayer.players);
   }
 
-  init(canvas, callback = function(){}) {
+  async init(canvas, callback = function(){}) {
+    // Set version
+    fetch('../manifest.json')
+      .then(response => response.json())
+      .then(data => this.version = data.version);
+
+    // Initialize graphics
     this.graphics = new Graphics(canvas);
     this.graphics.setCamera(this.camera);
     this.graphics.setScene(this.scene);

@@ -117,6 +117,7 @@ class Level extends Group {
     levelJSON.name = this.name;
     levelJSON.theme = this.theme;
     levelJSON.description = this.description;
+    levelJSON.version = app.version;
     levelJSON.children = [];
 
     // Loop through group children

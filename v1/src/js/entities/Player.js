@@ -51,8 +51,8 @@ class Player extends Cube {
   }
 
   jump() {
-    if (this.mode == 'jump' || this.mode == 'control') {
-      if (this.allowJump == true) {
+    if (this.mode == 'jump' || this.mode == 'control' || this.mode == 'power') {
+      if (this.allowJump == true || this.mode == 'power') {
         this.allowJump = false;
   
         // Define jump conditions
