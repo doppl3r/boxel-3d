@@ -1,4 +1,4 @@
-import { Vector2 } from 'three';
+import { Vector2, Vector3 } from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -12,6 +12,7 @@ class LevelEditor {
     this.controlsTransform.showZ = true;
     this.controlsTransform.space = 'world';
     this.controlsTransform.showAll = false;
+    this.controlsTransform.offset = new Vector3(0, 16, 0);
     this.controlsOrbit = new OrbitControls(camera, domElement);
     this.controlsOrbit.enabled = false; // Default disabled for campaign
     this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 }; // 0 = Left/Rotate, 1 = Middle/Dolly, 2 = Right/Pan
@@ -28,14 +29,14 @@ class LevelEditor {
     this.up = new Vector2();
     this.drag = false;
     this.snap = 16;
+    this.keys = {};
 
     // Set events
-    var _this = this;
-    this.controlsTransform.addEventListener('mouseDown', function() { _this.controlsOrbit.enabled = false; _this.saveSelectedObject(); });
-    this.controlsTransform.addEventListener('mouseUp', function() { _this.controlsOrbit.enabled = true; _this.updateSelectedObject(); });
-    this.controlsTransform.addEventListener('objectChange', function() { _this.controlsTransform.moved = true; });
-    this.controlsOrbit.addEventListener('start', function() { _this.controlsOrbit.moved = false; })
-    this.controlsOrbit.addEventListener('change', function() { _this.controlsOrbit.moved = true; })
+    this.controlsTransform.addEventListener('mouseDown', () => { this.controlsOrbit.enabled = false; this.saveSelectedObject(); });
+    this.controlsTransform.addEventListener('mouseUp', () => { this.controlsOrbit.enabled = true; this.updateSelectedObject(); });
+    this.controlsTransform.addEventListener('objectChange', () => { this.controlsTransform.moved = true; });
+    this.controlsOrbit.addEventListener('start', () => { this.controlsOrbit.moved = false; })
+    this.controlsOrbit.addEventListener('change', () => { this.controlsOrbit.moved = true; })
 
     // Add render listeners
     domElement.addEventListener('pointerdown', this.pointerDown.bind(this));
@@ -46,7 +47,8 @@ class LevelEditor {
     window.addEventListener('setSelectedObject', this.updateRender);
     window.addEventListener('setSelectedMode', this.updateRender);
     window.addEventListener('themeSelected', this.updateRender);
-    window.addEventListener('keyup', this.updateRender);
+    window.addEventListener('keydown', this.keyDown.bind(this));
+    window.addEventListener('keyup', this.keyUp.bind(this));
   }
 
   pointerDown(e) {
@@ -169,6 +171,22 @@ class LevelEditor {
     }
   }
 
+  keyDown(e) {
+    if (app.state == 'level-editor' && app.play == false) {
+      e.preventDefault();
+      if (e.repeat) return;
+    }
+    this.keys[e.code] = true;
+  }
+  
+  keyUp(e) {
+    if (app.state == 'level-editor' && app.play == false) {
+      e.preventDefault();
+    }
+    this.keys[e.code] = false;
+    this.updateRender()
+  }
+
   eraseTarget(e, a) {
     var target = a.mouse.clickObject(e, a);
     if (target != null) {
@@ -179,11 +197,11 @@ class LevelEditor {
     }
   }
 
-  duplicateSelectedObject() {
+  duplicateSelectedObject(offset = { x: 0, y: 0, z: 0 }) {
     if (app.selectedObject) {
       app.selectedObject.select(false);
       app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
-      app.selectedObject.position.y += 16;
+      app.selectedObject.position.add(offset); // Add offset
       app.selectedObject.select(true);
       app.levelEditor.controlsTransform.attach(app.selectedObject);
       app.levelEditor.setMode('translate');
@@ -256,6 +274,12 @@ class LevelEditor {
   }
 
   saveSelectedObject() {
+    // Duplicate before saving
+    if (this.keys['ShiftLeft'] === true) {
+      this.duplicateSelectedObject();
+    }
+
+    // Copy properties before transforming
     var target = app.selectedObject;
     if (target) {
       target.position0 = target.position.clone();
@@ -273,6 +297,15 @@ class LevelEditor {
 
   updateSelectedObject() {
     var target = app.selectedObject;
+
+    // Update offset for duplication
+    if (this.keys['ShiftLeft']) {
+      this.controlsTransform.offset.copy(target.position).sub(target.position0);
+    }
+    else {
+      // Reset duplication position
+      this.controlsTransform.offset.set(0, 0, 0);
+    }
 
     // Update body state (-1 == active physics)
     if (target.position.z == 0) target.body.collisionFilter.mask = -1;

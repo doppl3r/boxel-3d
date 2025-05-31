@@ -675,6 +675,7 @@
     "version": "2.6.6",
     "revisions": [
       "Added \"Power\" cube",
+      "Added \"Repeat Duplication\" feature to level editor. Hold Shift while dragging an object to set offset, then press \"D\" to duplicate.",
       "Fixed input buffer",
       "Fixed popup shortcuts"
     ]
