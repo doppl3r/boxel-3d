@@ -38,7 +38,7 @@ class Player extends Cube {
   update(delta, alpha) {
     // Calculate input buffer
     if (this.jumpBuffer > 0) {
-      this.jumpBuffer -= delta * 1000; // ms
+      this.jumpBuffer -= delta; // ms
 
       // Automatically jump if buffer is set
       if (this.jumpReady == true) {

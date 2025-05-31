@@ -37,7 +37,7 @@
 - Upload application from `/dist/boxel-3d x.x.x` to Steam
   - Note: You need a PC to generate `.exe`, a Mac to generate `.app` and Linux to generate `.whatever`
 
-## Install Steamworks SDK
+## Install Steamworks SDK (only needed once)
 
 - Win: Download Steamworks SDK (`https://partner.steamgames.com/doc/sdk`). Then extract contents into a new folder. Ex: `C:\steamworks\sdk`
 - Mac: Create a new directory and enter it: `mkdir ~/Steam && cd ~/Steam`. Then run `curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_osx.tar.gz"`
