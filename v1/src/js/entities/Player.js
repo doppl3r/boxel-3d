@@ -14,10 +14,11 @@ class Player extends Cube {
     this.setScale({ x: 16, y: 16, z: 16 });
     this.setStatic(false);
     this.setColors('#dc265a');
-    this.setMode('jump'); // Default 'jump'
+    this.setMode('jump');
+    this.setJumpMode('limited');
     this.util = new Utility();
     this.mass = 5;
-    this.allowJump = false;
+    this.jumpReady = false;
     this.jumpBuffer = 0;
     this.inputBuffer = 0;
     this.addLight('#dc265a', 16000, 500, false);
@@ -40,7 +41,7 @@ class Player extends Cube {
       this.jumpBuffer -= delta * 1000; // ms
 
       // Automatically jump if buffer is set
-      if (this.allowJump == true) {
+      if (this.jumpReady == true) {
         this.jumpBuffer = 0;
         this.jump();
       }
@@ -51,9 +52,9 @@ class Player extends Cube {
   }
 
   jump() {
-    if (this.mode == 'jump' || this.mode == 'control' || this.mode == 'power') {
-      if (this.allowJump == true || this.mode == 'power') {
-        this.allowJump = false;
+    if (this.mode == 'jump' || this.mode == 'control') {
+      if (this.jumpReady == true || this.jumpMode == 'unlimited') {
+        this.jumpReady = false;
   
         // Define jump conditions
         var gravity = app.engine.world.gravity;
@@ -351,7 +352,9 @@ class Player extends Cube {
     this.setForceDirection();
     this.setScale({ x: this.scaleOrigin.x, y: this.scaleOrigin.y, z: this.scaleOrigin.z }, false);
     this.setMode(this.modeOrigin, false);
+    this.setJumpMode(this.jumpModeOrigin, false);
     this.controls.left = this.controls.right = 0;
+    this.jumpReady = false;
     this.jumpBuffer = 0;
 
     // Play teleport audio

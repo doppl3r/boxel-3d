@@ -23,7 +23,7 @@ class Collision {
         if (objectA != null && objectB != null) {
           // Check if any collision is related to the player
           if (objectA.body.class == 'player') {
-            a.player.allowJump = true;
+            app.player.jumpReady = true;
           }
 
           // Check bodies if bodyB is not a sensor. This prevents sensors reacting to each other.
@@ -117,7 +117,7 @@ class Collision {
               }
               else if (objectA.body.class == 'power') {
                 if (objectB.body.class ==  'player') {
-                  app.player.setMode('power', false);
+                  app.player.setJumpMode('unlimited', false);
                   app.assets.audio.play('teleport');
                 }
               }

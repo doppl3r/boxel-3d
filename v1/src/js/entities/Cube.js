@@ -49,6 +49,7 @@ class Cube extends Mesh {
     this.setRotation(options.angle);
     this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
     this.setMode();
+    this.setJumpMode();
     this.setForceDirection();
   }
 
@@ -224,6 +225,7 @@ class Cube extends Mesh {
     this.setStatic(this.isStaticOrigin, false);
     this.setFriction(this.frictionOrigin, false);
     this.setMode(this.modeOrigin, false);
+    this.setJumpMode(this.jumpModeOrigin, false);
     Body.setVelocity(this.body, { x: 0, y: 0 });
     Body.setAngularVelocity(this.body, 0);
   }
@@ -269,6 +271,17 @@ class Cube extends Mesh {
 
   setModeOrigin(mode) {
     this.modeOrigin = mode;
+  }
+
+  setJumpMode(mode, updateOrigin = true) {
+    mode = (mode == null) ? 'limited' : mode;
+    this.jumpMode = mode;
+    if (updateOrigin == true) this.setJumpModeOrigin(mode);
+    window.dispatchEvent(new CustomEvent('setJumpMode', { detail: mode }));
+  }
+
+  setJumpModeOrigin(mode) {
+    this.jumpModeOrigin = mode;
   }
 
   getClass() {

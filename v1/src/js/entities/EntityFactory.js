@@ -48,9 +48,10 @@ class EntityFactory {
       case('control'):
         options.model = app.assets.models.clone('cube-control');
         object = new Control(options);
+      break;
       case('power'):
-      options.model = app.assets.models.clone('cube-power');
-      object = new Power(options);
+        options.model = app.assets.models.clone('cube-power');
+        object = new Power(options);
       break;
       default: object = new Cube(options);
     }
