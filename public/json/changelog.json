@@ -679,5 +679,11 @@
       "Fixed input buffer",
       "Fixed popup shortcuts"
     ]
+  },
+  {
+    "version": "2.6.7",
+    "revisions": [
+      "Fix bugs"
+    ]
   }
 ]
