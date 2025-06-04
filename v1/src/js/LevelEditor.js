@@ -172,17 +172,10 @@ class LevelEditor {
   }
 
   keyDown(e) {
-    if (app.state == 'level-editor' && app.play == false) {
-      e.preventDefault();
-      if (e.repeat) return;
-    }
     this.keys[e.code] = true;
   }
   
   keyUp(e) {
-    if (app.state == 'level-editor' && app.play == false) {
-      e.preventDefault();
-    }
     this.keys[e.code] = false;
     this.updateRender()
   }
