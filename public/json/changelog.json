@@ -685,5 +685,11 @@
     "revisions": [
       "Fixed Level Editor shortcuts"
     ]
+  },
+  {
+    "version": "2.6.8",
+    "revisions": [
+      "Fixed UI shortcuts"
+    ]
   }
 ]

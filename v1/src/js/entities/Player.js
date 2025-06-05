@@ -299,8 +299,8 @@ class Player extends Cube {
           text: 'popup.text.seconds',
           description: hasNewScore ? 'popup.description.new_record' : null,
           inputs: [
-            { value: 'popup.button.retry', type: 'button', callback: function() { app.level.retryLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'popup.button.continue', type: 'button', callback: function() { app.level.exitLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }}
+            { value: 'popup.button.retry', type: 'button', shortcut: 'KeyR', callback: function() { app.level.retryLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'popup.button.continue', type: 'button', shortcut: 'Space', callback: function() { app.level.exitLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }}
           ]
         }
       }));
