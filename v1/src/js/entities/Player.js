@@ -354,7 +354,6 @@ class Player extends Cube {
     this.setMode(this.modeOrigin, false);
     this.setJumpMode(this.jumpModeOrigin, false);
     this.controls.left = this.controls.right = 0;
-    this.jumpReady = false;
     this.jumpBuffer = 0;
 
     // Play teleport audio

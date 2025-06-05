@@ -689,6 +689,7 @@
   {
     "version": "2.6.8",
     "revisions": [
+      "Added jump bug (removed in 2.6.6)",
       "Fixed UI shortcuts"
     ]
   }
