@@ -46,11 +46,11 @@
     }
   },
   "dependencies": {
-    "@capacitor/android": "^7.2.0",
+    "@capacitor/android": "^7.3.0",
     "@capacitor/app": "^7.0.1",
     "@capacitor/core": "^7.2.0",
     "@capacitor/filesystem": "^7.1.1",
-    "@capacitor/ios": "^7.2.0",
+    "@capacitor/ios": "^7.3.0",
     "@tweenjs/tween.js": "^25.0.0",
     "electron-store": "^10.0.1",
     "file-saver": "^2.0.5",
@@ -66,10 +66,10 @@
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
-    "@capacitor/cli": "^7.2.0",
+    "@capacitor/cli": "^7.3.0",
     "@dimforge/rapier3d": "^0.17.3",
     "@vitejs/plugin-vue": "^5.2.4",
-    "electron": "^36.3.2",
+    "electron": "^36.4.0",
     "electron-builder": "^26.0.12",
     "gulp": "^5.0.0",
     "gulp-zip": "^6.1.0",
