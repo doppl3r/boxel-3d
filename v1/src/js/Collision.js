@@ -122,12 +122,18 @@ class Collision {
                 }
               }
               else if (objectA.body.class == 'teleport') {
+                // Set position for any cube
                 const position = objectA.text?.split(',') || [];
                 objectB.setPosition({
                   x: Number(position[0] || 0),
                   y: Number(position[1] || 0),
                   z: 0
                 }, false);
+
+                // Only play sound for player
+                if (objectB.body.class ==  'player') {
+                  app.assets.audio.play('teleport');
+                }
               }
             }
             else {
