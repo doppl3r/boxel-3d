@@ -37,5 +37,8 @@
   },
   "cube-power": {
     "url": "../glb/cube-power.glb"
+  },
+  "cube-teleport": {
+    "url": "../glb/cube-teleport.glb"
   }
 }

@@ -121,6 +121,14 @@ class Collision {
                   app.assets.audio.play('teleport');
                 }
               }
+              else if (objectA.body.class == 'teleport') {
+                const position = objectA.text?.split(',') || [];
+                objectB.setPosition({
+                  x: Number(position[0] || 0),
+                  y: Number(position[1] || 0),
+                  z: 0
+                }, false);
+              }
             }
             else {
               if (objectA.body.class == 'cube') {

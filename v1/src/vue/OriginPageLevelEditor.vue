@@ -153,7 +153,7 @@
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: 'Share a tip!',
+        text: 'Edit',
         inputs: [
           { value: app.selectedObject.text, type: 'text', callback: updateText },
           { value: 'Cancel', type: 'button' },
@@ -326,6 +326,7 @@
         <a class="item" :class="{ selected: objectType == 'reset' }" @click="selectObjectType({ detail: { type: 'reset' }})" title="Reset cube"><img :src="'../svg/reset.svg'"></a>
         <a class="item" :class="{ selected: objectType == 'control' }" @click="selectObjectType({ detail: { type: 'control' }})" title="Control cube"><img :src="'../svg/control.svg'"></a>
         <a class="item" :class="{ selected: objectType == 'power' }" @click="selectObjectType({ detail: { type: 'power' }})" title="Power cube"><img :src="'../svg/power.svg'"></a>
+        <a class="item" :class="{ selected: objectType == 'teleport' }" @click="selectObjectType({ detail: { type: 'teleport' }})" title="Teleport cube"><img :src="'../svg/teleport.svg'"></a>
       </div>
       <div class="col object-options" v-if="selectedObject != null">
         <a class="item" :class="{ selected: controlsTransform.mode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img :src="'../svg/move.svg'"></a>

@@ -14,6 +14,7 @@ import { Finish } from './Finish.js';
 import { Reset } from './Reset.js';
 import { Control } from './Control.js';
 import { Power } from './Power.js';
+import { Teleport } from './Teleport.js';
 
 class EntityFactory {
   constructor() {
@@ -52,6 +53,10 @@ class EntityFactory {
       case('power'):
         options.model = app.assets.models.clone('cube-power');
         object = new Power(options);
+      break;
+      case('teleport'):
+        options.model = app.assets.models.clone('cube-teleport');
+        object = new Teleport(options);
       break;
       default: object = new Cube(options);
     }
