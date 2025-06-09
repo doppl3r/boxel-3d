@@ -694,5 +694,11 @@
       "Added jump bug (removed in 2.6.6)",
       "Fixed UI shortcuts"
     ]
+  },
+  {
+    "version": "2.6.9",
+    "revisions": [
+      "Fixed color bug"
+    ]
   }
 ]
