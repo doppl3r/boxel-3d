@@ -150,8 +150,10 @@
     app.levelEditor.setMode(e.detail);
   }
 
-  function updateFriction(e) {
-    selectedObject.value.setFriction(e.target.value);
+  function toggleFriction(e) {
+    const friction = selectedObject.value.getFriction();
+    if (friction == 1) selectedObject.value.setFriction(0, true);
+    else selectedObject.value.setFriction(1, true);
     app.levelHistory.save('Updated object properties', app);
   }
 
@@ -344,15 +346,12 @@
         <a class="item" :class="{ selected: controlsTransform.mode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img :src="'../svg/scale-out-x.svg'"></a>
         <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="keydown({ code: 'KeyR' });" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
         <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img :src="'../svg/pin.svg'"></a>
-        <div class="item" :class="{ disabled: selectedObject.isStatic() }">
-          <a action="friction" title="Friction"><img :src="'../svg/friction.svg'"></a>
-          <div class="slider"><input name="friction" type="range" min="0" max="1" step="0.25" :value="selectedObject.body.friction" @change="updateFriction($event)"></div>
-        </div>
+        <a class="item" :class="{ disabled: selectedObject.isStatic() }" @click="toggleFriction" :title="`Friction (${ selectedObject.getFriction() })`"><img :src="'../svg/friction.svg'"></a>
         <a class="item" :class="{ disabled: selectedObject.text == null }" @click="changeText" title="Text"><img :src="'../svg/type.svg'"></a>
         <div class="item">
           <label>
             <a action="color" title="Color"><img :src="'../svg/color.svg'"></a>
-            <input name="color" type="color" :style="'display: none;'" :value="selectedObject.color" @change="updateColor($event)">
+            <input name="color" type="color" :value="selectedObject.color" @change="updateColor($event)">
           </label>
         </div>
         <a class="item" @click="duplicateSelectedObject" title="Duplicate (D)"><img :src="'../svg/duplicate.svg'"></a>

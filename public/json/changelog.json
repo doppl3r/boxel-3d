@@ -698,7 +698,8 @@
   {
     "version": "2.6.9",
     "revisions": [
-      "Fixed color bug"
+      "Fixed color bug",
+      "Fixed friction menu"
     ]
   }
 ]
