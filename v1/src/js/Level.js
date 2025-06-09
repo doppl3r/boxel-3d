@@ -208,7 +208,7 @@ class Level extends Group {
     object.setStatic(objectData.isStatic);
     object.setText(objectData.text);
     object.setFriction(objectData.friction);
-    object.setColors(objectData.color);
+    object.setColors(objectData.color || app.level.entityFactory.color);
   }
 
   showTip(text) {
