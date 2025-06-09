@@ -242,6 +242,15 @@
     }
   }
 
+  label {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: inherit;
+    justify-content: center;
+    width: inherit;
+  }
+
   input {
     font-family: 'Comfortaa-Bold';
     background-color: transparent;

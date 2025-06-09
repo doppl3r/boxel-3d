@@ -130,6 +130,7 @@ class LevelEditor {
             var objectType = app.levelEditor.selectedObjectType;
             var objectData = {
               class: objectType,
+              color: app.level.entityFactory.color,
               isStatic: true,
               position: { 
                 x: a.mouse.snapToValue(a.mouse.down.x, a.mouse.snap), 
