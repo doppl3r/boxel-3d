@@ -23,6 +23,10 @@ class Tip extends Cube {
     this.shapes.addCube({ y: (u * 1), z: (u * 2), scaleX: u, scaleY: (u * 2), scaleZ: u, color: '#fff' });
     this.shapes.addCube({ y: -(u * 1.5), z: (u * 2), scaleX: u, scaleY: u, scaleZ: u, color: '#fff' });
   }
+
+  setColors() {
+    // Prevent setting colors
+  }
 }
 
 export { Tip };

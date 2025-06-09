@@ -16,6 +16,10 @@ class Direction extends Cube {
     this.addShapes(options);
   }
 
+  setColors() {
+    // Prevent setting colors
+  }
+
   addShapes(options) {
     var u = (options.scaleZ * 0.2); // unit size
     this.shapes.addCube({ x: 0, y: 0, z: -(u * 0.5), scaleX: 1, scaleY: 1, scaleZ: (u * 4), color: '#0287ef' }); // Blue Box

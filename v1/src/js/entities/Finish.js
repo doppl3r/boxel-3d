@@ -15,6 +15,10 @@ class Finish extends Cube {
     this.addShapes(options);
   }
 
+  setColors() {
+    // Prevent setting colors
+  }
+
   addShapes(options) {
     var count = 3;
     var u = (options.scaleZ * (1 / count)); // unit size

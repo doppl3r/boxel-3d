@@ -16,6 +16,10 @@ class Power extends Cube {
     this.shapes.removeAllShapes();
     this.add(options.model);
   }
+
+  setColors() {
+    // Prevent setting colors
+  }
 }
 
 export { Power };

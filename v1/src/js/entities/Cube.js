@@ -99,9 +99,9 @@ class Cube extends Mesh {
     cube.translate(options.position.x, options.position.y, 0);
   }
 
-  setColors(color) {
+  setColors(color, updateOrigin = true) {
     this.color = color; // Update last color
-    this.shapes.setColors(color);
+    this.shapes.setColors(color, updateOrigin);
   }
 
   setPosition(position = {}, updateOrigin = true) {
@@ -411,7 +411,10 @@ class Cube extends Mesh {
     }
 
     // Include text if object is a tip
-    if (this.body.class == 'tip' && this.text != null) json.text = this.text;
+    if (this.text != null) json.text = this.text;
+
+    // Include color if object has color
+    if (this.color != null) json.color = this.color;
 
     // Return json
     return json;

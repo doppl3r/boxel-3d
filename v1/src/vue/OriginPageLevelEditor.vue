@@ -77,6 +77,12 @@
     
     // Recreate current level with new theme data
     const json = app.level.exportToJSON(app);
+
+    // Change each child color to theme color
+    json.children.forEach(child => {
+      if (child.color) child.color = theme.color;
+    });
+
     app.level.clearLevel(app);
     app.level.importFromJSON(json, app);
     app.levelHistory.save('Updated level theme', app);
@@ -146,6 +152,11 @@
 
   function updateFriction(e) {
     selectedObject.value.setFriction(e.target.value);
+    app.levelHistory.save('Updated object properties', app);
+  }
+
+  function updateColor(e) {
+    selectedObject.value.setColors(e.target.value);
     app.levelHistory.save('Updated object properties', app);
   }
 
@@ -338,6 +349,12 @@
           <div class="slider"><input name="friction" type="range" min="0" max="1" step="0.25" :value="selectedObject.body.friction" @change="updateFriction($event)"></div>
         </div>
         <a class="item" :class="{ disabled: selectedObject.text == null }" @click="changeText" title="Text"><img :src="'../svg/type.svg'"></a>
+        <div class="item">
+          <label>
+            <a action="color" title="Color"><img :src="'../svg/color.svg'"></a>
+            <input name="color" type="color" :style="'display: none;'" :value="selectedObject.color" @change="updateColor($event)">
+          </label>
+        </div>
         <a class="item" @click="duplicateSelectedObject" title="Duplicate (D)"><img :src="'../svg/duplicate.svg'"></a>
         <a class="item" @click="deleteSelectedObject" title="Delete (X)"><img :src="'../svg/trash.svg'"></a>
       </div>

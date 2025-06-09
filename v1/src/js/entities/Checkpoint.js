@@ -17,6 +17,10 @@ class Checkpoint extends Cube {
     this.addShapes(options);
   }
 
+  setColors() {
+    // Prevent setting colors
+  }
+
   addShapes(options) {
     var u = (options.scaleZ * 0.2); // unit size
     this.shapes.addCube({ scaleX: u, scaleY: u, scaleZ: u, color: '#fff' });

@@ -31,6 +31,10 @@ class Player extends Cube {
     this.add(this.plane);
   }
 
+  setColors() {
+    // Prevent setting colors
+  }
+
   setScale(scale = {}, updateOrigin = true) {
     super.setScale(scale, updateOrigin);
   }

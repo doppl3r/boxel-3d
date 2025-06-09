@@ -17,6 +17,10 @@ class Grow extends Cube {
     this.addShapes(options);
   }
 
+  setColors() {
+    // Prevent setting colors
+  }
+
   addShapes(options) {
     var u = (options.scaleZ * 0.2); // unit size
     this.shapes.addCube({ scaleX: (u * 3), scaleY: (u * 3), scaleZ: (u * 3), color: '#dc265a' });

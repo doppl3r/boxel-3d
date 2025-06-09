@@ -208,6 +208,7 @@ class Level extends Group {
     object.setStatic(objectData.isStatic);
     object.setText(objectData.text);
     object.setFriction(objectData.friction);
+    object.setColors(objectData.color);
   }
 
   showTip(text) {

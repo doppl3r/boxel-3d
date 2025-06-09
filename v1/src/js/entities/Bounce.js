@@ -21,6 +21,10 @@ class Bounce extends Cube {
     this.addShapes(options);
   }
 
+  setColors() {
+    // Prevent setting colors
+  }
+
   addShapes(options) {
     var u = (options.scaleZ * 0.2); // unit size
     this.shapes.addCube({ y: (u * 2), scaleX: (u * 5), scaleY: (u * 1), scaleZ: (u * 5), color: '#0287ef' });
