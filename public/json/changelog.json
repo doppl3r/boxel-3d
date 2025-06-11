@@ -701,5 +701,11 @@
       "Fixed color bug",
       "Fixed friction menu"
     ]
+  },
+  {
+    "version": "2.7.0",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
