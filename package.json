@@ -8,6 +8,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
+    "dist": "vite build && node extension.js && npx cap sync && electron-builder",
     "dist-electron": "vite build && electron-builder",
     "dist-extension": "vite build && node extension.js",
     "dist-android": "vite build && npx cap sync",
