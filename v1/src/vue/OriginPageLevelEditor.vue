@@ -290,9 +290,9 @@
 </script>
 
 <template>
-  <Teleport to="body">
+  <!--<Teleport to="body">
     <div v-if="objectTypeVisible == false" class="background-cubes"></div>
-  </Teleport>
+  </Teleport>-->
   <div class="level-editor">
     <div class="row top">
       <div class="col options-level">

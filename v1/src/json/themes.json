@@ -64,5 +64,11 @@
     "color": "#5503A8",
     "model": "background-forest",
     "thumbnail": "../svg/button-pack-zacks-levels.svg"
+  },
+  "blank": {
+    "background_color": "#000000",
+    "color": "#620460",
+    "model": "background-blank",
+    "thumbnail": "../svg/button-pack-blank.svg"
   }
 }

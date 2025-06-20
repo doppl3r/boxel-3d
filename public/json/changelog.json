@@ -705,7 +705,7 @@
   {
     "version": "2.7.0",
     "revisions": [
-      "Fixed bugs"
+      "Added blank theme to Level Editor"
     ]
   }
 ]

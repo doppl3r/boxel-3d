@@ -1,4 +1,7 @@
 {
+  "background-blank": {
+    "url": "../glb/background-blank.glb"
+  },
   "background-blue": {
     "url": "../glb/background-blue.glb"
   },

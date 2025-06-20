@@ -207,7 +207,7 @@
           &:before,
           &:after {
             border: 2px solid #ffffff;
-            box-shadow: 0 2px 2px rgba(#000, 0.15), inset 0 2px 2px rgba(#000, 0.15);
+            box-shadow: 2px 2px 0px rgba(#000, 0.5), inset 2px 2px 0px rgba(#000, 0.5);
             content: '';
             width: 12px;
             height: 12px;
@@ -224,7 +224,7 @@
 
             &:after {
               background-color: #ffffff;
-              box-shadow: 0 2px 2px rgba(#000, 0.15);
+              box-shadow: 2px 2px 0px rgba(#000, 0.5);
               height: 4px;
               width: 4px;
             }
@@ -790,7 +790,7 @@
           position: absolute;
           top: 4px;
           left: 4px;
-          box-shadow: 0 2px 0px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 2px 0px rgba(0, 0, 0, 0.5);
         }
 
         &:hover:after,
@@ -804,8 +804,7 @@
           left: 8px;
           border-radius: 8px;
           background-color: #fff;
-          box-shadow: 0 2px 0px rgba(0, 0, 0, 0.15);
-
+          box-shadow: 0 2px 0px rgba(0, 0, 0, 0.5);
         }
 
         &.selected {
