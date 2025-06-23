@@ -707,5 +707,11 @@
     "revisions": [
       "Added blank theme to Level Editor"
     ]
+  },
+  {
+    "version": "2.7.1",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
