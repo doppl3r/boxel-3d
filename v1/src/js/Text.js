@@ -15,13 +15,13 @@ class Text extends CSS2DObject {
     // Add CSS2DObject to group
     this.element = document.createElement(options.type);
     this.element.className = options.class;
+
     this.setText(options.text);
 
     // Ensure this text is removed after parent is removed
-    this.addEventListener('added',
-      function(e) {
+    this.addEventListener('added', (e) => {
         e.target.parent.addEventListener('removed', this.removeFromParent.bind(this));
-      }.bind(this)
+      }
     );
   }
 

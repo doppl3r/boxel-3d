@@ -187,7 +187,7 @@
   }
 
   function updateText(e) {
-    app.selectedObject.text = e.target.value;
+    app.selectedObject.setText(e.target.value);
     app.levelHistory.save('Updated tip', app);
   }
 

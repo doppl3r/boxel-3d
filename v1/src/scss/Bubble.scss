@@ -1289,6 +1289,11 @@
     text-align: center;
     text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
     z-index: 0 !important;
+
+    &.tip {
+      font-size: 0.75em;
+      max-width: 10em;
+    }
   }
 }
 
