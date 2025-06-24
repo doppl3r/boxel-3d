@@ -711,7 +711,7 @@
   {
     "version": "2.7.1",
     "revisions": [
-      "Fixed bugs"
+      "Fixed input while popup is closing"
     ]
   }
 ]

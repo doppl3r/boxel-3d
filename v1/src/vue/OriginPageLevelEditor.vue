@@ -4,15 +4,16 @@
   import OriginControls from './OriginControls.vue';
   import { themes } from '../js/Data.js';
 
-  var emit = defineEmits(['setPage']);
-  var drawMode = ref('draw');
-  var objectType = ref(app.levelEditor.selectedObjectType || 'cube');
-  var objectTypeVisible = ref(true);
-  var selectedObject = ref();
-  var selectedTheme = ref(app.level.theme);
-  var themeOptionsVisible = ref(false);
-  var controlsTransform = ref(app.levelEditor.controlsTransform);
-  var isClosed = ref(true); // Popup animation state
+  const emit = defineEmits(['setPage']);
+  const drawMode = ref('draw');
+  const objectType = ref(app.levelEditor.selectedObjectType || 'cube');
+  const objectTypeVisible = ref(true);
+  const selectedObject = ref();
+  const selectedTheme = ref(app.level.theme);
+  const themeOptionsVisible = ref(false);
+  const controlsTransform = ref(app.levelEditor.controlsTransform);
+  const isClosed = ref(true); // Popup animation state
+  const isClosing = ref(false);
 
   function addEventListeners() {
     window.addEventListener('exitLevel', resetBackground);
@@ -21,6 +22,7 @@
     window.addEventListener('setTransformMode', setTransformMode);
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
+    window.addEventListener('popupClosing', popupClosing);
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);
   }
@@ -42,6 +44,11 @@
   
   function popupClosed() {
     isClosed.value = true;
+    isClosing.value = false;
+  }
+
+  function popupClosing() {
+    isClosing.value = true;
   }
 
   function setDrawMode(mode) {
@@ -193,7 +200,7 @@
 
   function keydown(e) {
     // Make sure popup is closed
-    if (isClosed.value == true) {
+    if (isClosed.value == true || isClosing.value === true) {
       // Jump if one of the keys is pressed
       var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
       if (app.play == true) {

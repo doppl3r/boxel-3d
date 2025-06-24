@@ -5,14 +5,16 @@
   import OriginStats from './OriginStats.vue';
 
   // Initialize variables
-  var credit = ref('');
-  var isClosed = ref(true); // Popup animation state
+  const credit = ref('');
+  const isClosed = ref(true); // Popup animation state
+  const isClosing = ref(false);
 
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('setCredit', setCredit);
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
+    window.addEventListener('popupClosing', popupClosing);
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);
   }
@@ -22,6 +24,7 @@
     window.removeEventListener('setCredit', setCredit);
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
+    window.removeEventListener('popupClosing', popupClosing);
     window.removeEventListener('keydown', keydown);
     window.removeEventListener('keyup', keyup);
   }
@@ -50,11 +53,16 @@
   
   function popupClosed() {
     isClosed.value = true;
+    isClosing.value = false;
+  }
+
+  function popupClosing() {
+    isClosing.value = true;
   }
 
   function keydown(e) {
     // Make sure popup is closed
-    if (isClosed.value == true) {
+    if (isClosed.value == true || isClosing.value === true) {
       if (e.code == 'Escape') {
         e.preventDefault();
         pauseLevel();

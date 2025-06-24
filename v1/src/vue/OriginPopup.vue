@@ -68,6 +68,7 @@
 
   function closePopup() {
     isOpen.value = false;
+    window.dispatchEvent(new CustomEvent('popupClosing'));
 
     // Trigger opened event
     setTimeout(function() {

@@ -8,15 +8,17 @@
 
   // Initialize variables
   const i18n = useI18n({ useScope: 'global' });
-  var credit = ref('');
-  var isClosed = ref(true); // Popup animation state
-  var record = ref();
+  const credit = ref('');
+  const isClosed = ref(true); // Popup animation state
+  const isClosing = ref(false);
+  const record = ref();
 
   // Add event listener(s)
   function addEventListeners() {
     window.addEventListener('setCredit', setCredit);
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
+    window.addEventListener('popupClosing', popupClosing);
     window.addEventListener('beforeSettingsOpened', settingsOpened);
     window.addEventListener('beforeSettingsClosed', settingsClosed);
     window.addEventListener('keydown', keydown);
@@ -28,6 +30,7 @@
     window.removeEventListener('setCredit', setCredit);
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
+    window.removeEventListener('popupClosing', popupClosing);
     window.removeEventListener('beforeSettingsOpened', settingsOpened);
     window.removeEventListener('beforeSettingsClosed', settingsClosed);
     window.removeEventListener('keydown', keydown);
@@ -58,7 +61,12 @@
   
   function popupClosed() {
     isClosed.value = true;
+    isClosing.value = false;
     getHighScore(); // Refresh record score
+  }
+
+  function popupClosing() {
+    isClosing.value = true;
   }
 
   function settingsOpened() {
@@ -71,7 +79,7 @@
 
   function keydown(e) {
     // Make sure popup is closed
-    if (isClosed.value == true) {
+    if (isClosed.value == true || isClosing.value === true) {
       // Ignore events from inputs
       if (e.target.value == null) {
         if (e.code == 'Escape') {
