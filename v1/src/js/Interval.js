@@ -11,9 +11,12 @@ class Interval {
   constructor() {
     this.loops = [];
     this.speed = 1;
-    this.thread = () => {};
+    this.thread = timestamp => this.update(timestamp);
     this.threadTimestamp = 0;
-    this.threadRunning = false;
+    this.threadFrame = 0;
+
+    // Add tab visibility event listener
+    document.addEventListener('visibilitychange', e => this.onVisibilityChange(e));
   }
 
   add(callback, delay = -1) {
@@ -30,46 +33,46 @@ class Interval {
   }
 
   start() {
-    this.threadRunning = true;
-    this.thread = timestamp => this.update(timestamp);
-    
     // Set initial timestamps before starting thread
-    requestAnimationFrame(timestamp => {
+    this.threadFrame = requestAnimationFrame(timestamp => {
       this.threadTimestamp = timestamp;
       this.loops.forEach(loop => loop.timestamp = timestamp);
       this.thread(timestamp);
     });
   }
 
+  stop() {
+    cancelAnimationFrame(this.threadFrame);
+  }
+
   update(timestamp) {
-    if (this.threadRunning === true) {
-      // Rerun thread on next repaint
-      requestAnimationFrame(this.thread);
+    // Rerun thread on next repaint
+    this.threadFrame = requestAnimationFrame(this.thread);
 
-      // Set thread delta from thread timestamp
-      const threadDelta = timestamp - this.threadTimestamp;
-      this.threadTimestamp = timestamp;
+    // Set thread delta from thread timestamp
+    const threadDelta = timestamp - this.threadTimestamp;
+    this.threadTimestamp = timestamp;
 
-      // Loop through array of loops (descending order)
-      for (let i = this.loops.length - 1; i >= 0; i--) {
-        // Add thread delta to loop sum
-        this.loops[i].sum += threadDelta * this.speed;
+    // Loop through array of loops (descending order)
+    for (let i = this.loops.length - 1; i >= 0; i--) {
+      // Add thread delta to loop sum
+      this.loops[i].sum += threadDelta * this.speed;
 
-        // Trigger loop callback
-        if (this.loops[i].sum >= this.loops[i].delay) {
-          this.loops[i].sum %= this.loops[i].delay;
-          this.loops[i].delta = (timestamp - this.loops[i].timestamp) * this.speed;
-          this.loops[i].alpha = this.loops[0].sum / this.loops[0].delay;
-          this.loops[i].frame++;
-          this.loops[i].timestamp = timestamp;
-          this.loops[i].callback(this.loops[i]);
-        }
+      // Trigger loop callback
+      if (this.loops[i].sum >= this.loops[i].delay) {
+        this.loops[i].sum %= this.loops[i].delay;
+        this.loops[i].delta = (timestamp - this.loops[i].timestamp) * this.speed;
+        this.loops[i].alpha = this.loops[0].sum / this.loops[0].delay;
+        this.loops[i].frame++;
+        this.loops[i].timestamp = timestamp;
+        this.loops[i].callback(this.loops[i]);
       }
     }
   }
 
-  stop() {
-    this.threadRunning = false;
+  onVisibilityChange() {
+    if (document.hidden) this.stop();
+    else this.start();
   }
 }
 
