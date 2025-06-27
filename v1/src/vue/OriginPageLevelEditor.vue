@@ -19,6 +19,7 @@
   function addEventListeners() {
     window.addEventListener('exitLevel', resetBackground);
     window.addEventListener('setSelectedObject', setSelectedObject);
+    window.addEventListener('objectChange', updateCoordinatesFromEvent);
     window.addEventListener('selectObjectType', selectObjectType);
     window.addEventListener('setTransformMode', setTransformMode);
     window.addEventListener('popupOpened', popupOpened);
@@ -31,6 +32,7 @@
   function removeEventListeners() {
     window.removeEventListener('exitLevel', resetBackground);
     window.removeEventListener('setSelectedObject', setSelectedObject);
+    window.removeEventListener('objectChange', updateCoordinatesFromEvent);
     window.removeEventListener('selectObjectType', selectObjectType);
     window.removeEventListener('setTransformMode', setTransformMode);
     window.removeEventListener('popupOpened', popupOpened);
@@ -159,6 +161,11 @@
     app.levelEditor.setMode(e.detail);
   }
 
+  function updateCoordinatesFromEvent(e) {
+    const position = e.detail.position;
+    updateCoordinates(position);
+  }
+
   function updateCoordinatesFromMouse(e) {
     const position = app.mouse.getPosition(e, app);
     position.x = app.mouse.snapToValue(position.x, app.mouse.snap);
@@ -169,6 +176,16 @@
 
   function updateCoordinates(position) {
     coordinates.value = `${ position.x }, ${ position.y }, ${ position.z }`;
+  }
+
+  function updatePositionFromEvent(e) {
+    const points = e.target.value.split(',').map(point => point = parseInt(point) || 0);
+    const position = { x: points[0] || 0, y: points[1] || 0, z: points[2] || 0 };
+    if (selectedObject.value) {
+      selectedObject.value.setPosition(position);
+      app.levelEditor.updateSelectedObject();
+      app.levelHistory.save('Updated object position', app);
+    }
   }
 
   function toggleFriction(e) {
@@ -342,7 +359,13 @@
         <a class="item" @click="rewind" title="Restart level"><img :src="'../svg/rewind.svg'"></a>
         <a class="item" @click="pauseLevel" title="Pause level"><img :src="'../svg/pause.svg'"></a>
         <a class="item" @click="playCurrentLevel" title="Play level"><img :src="'../svg/play.svg'"></a>
-        <a class="item auto" title="Play level"><input class="coordinates" v-model="coordinates"></a>
+        <a class="item auto" title="Play level" v-if="selectedObject">
+          <input class="coordinates"
+            v-model="coordinates"
+            v-on:keyup.enter="$event.target.blur()"
+            @change="updatePositionFromEvent($event)"
+          >
+        </a>
         <OriginButtonSettings class="item last" />
       </div>
     </div>

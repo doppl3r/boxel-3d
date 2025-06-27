@@ -34,7 +34,10 @@ class LevelEditor {
     // Set events
     this.controlsTransform.addEventListener('mouseDown', () => { this.controlsOrbit.enabled = false; this.saveSelectedObject(); });
     this.controlsTransform.addEventListener('mouseUp', () => { this.controlsOrbit.enabled = true; this.updateSelectedObject(); });
-    this.controlsTransform.addEventListener('objectChange', () => { this.controlsTransform.moved = true; });
+    this.controlsTransform.addEventListener('objectChange', () => {
+      this.controlsTransform.moved = true;
+      window.dispatchEvent(new CustomEvent('objectChange', { detail: app.selectedObject }));
+    });
     this.controlsOrbit.addEventListener('start', () => { this.controlsOrbit.moved = false; })
     this.controlsOrbit.addEventListener('change', () => { this.controlsOrbit.moved = true; })
 
@@ -311,7 +314,7 @@ class LevelEditor {
     // Update body scale (reset transformation first)
     var tempAngle = target.rotation.z;
     target.setRotation(0, false);
-    target.setBodyScale(target.scale.x / target.scale0.x, target.scale.y / target.scale0.y);
+    target.setBodyScale(target.scale.x / target.scale0?.x || 1, target.scale.y / target.scale0?.y || 1);
     target.setRotation(tempAngle, false); // Revert angle
     target.setScale(target.getScale());
 
