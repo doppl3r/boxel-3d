@@ -711,6 +711,7 @@
   {
     "version": "2.7.1",
     "revisions": [
+      "Added coordinates to Level Editor",
       "Fixed input while popup is closing"
     ]
   }

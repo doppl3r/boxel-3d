@@ -12,6 +12,7 @@
   const selectedTheme = ref(app.level.theme);
   const themeOptionsVisible = ref(false);
   const controlsTransform = ref(app.levelEditor.controlsTransform);
+  const coordinates = ref('0, 0, 0');
   const isClosed = ref(true); // Popup animation state
   const isClosing = ref(false);
 
@@ -145,6 +146,7 @@
   }
 
   function setSelectedObject(e) {
+    if (e.detail) updateCoordinates(e.detail.position);
     selectedObject.value = e.detail;
   }
 
@@ -155,6 +157,18 @@
   function setTransformMode(e) {
     controlsTransform.value.mode = e.detail;
     app.levelEditor.setMode(e.detail);
+  }
+
+  function updateCoordinatesFromMouse(e) {
+    const position = app.mouse.getPosition(e, app);
+    position.x = app.mouse.snapToValue(position.x, app.mouse.snap);
+    position.y = app.mouse.snapToValue(position.y, app.mouse.snap);
+    position.z = app.mouse.snapToValue(position.z, app.mouse.snap);
+    updateCoordinates(position);
+  }
+
+  function updateCoordinates(position) {
+    coordinates.value = `${ position.x }, ${ position.y }, ${ position.z }`;
   }
 
   function toggleFriction(e) {
@@ -328,6 +342,7 @@
         <a class="item" @click="rewind" title="Restart level"><img :src="'../svg/rewind.svg'"></a>
         <a class="item" @click="pauseLevel" title="Pause level"><img :src="'../svg/pause.svg'"></a>
         <a class="item" @click="playCurrentLevel" title="Play level"><img :src="'../svg/play.svg'"></a>
+        <a class="item auto" title="Play level"><input class="coordinates" v-model="coordinates"></a>
         <OriginButtonSettings class="item last" />
       </div>
     </div>
