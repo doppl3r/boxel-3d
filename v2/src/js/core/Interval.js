@@ -14,9 +14,6 @@ class Interval {
     this.thread = timestamp => this.update(timestamp);
     this.threadTimestamp = 0;
     this.threadFrame = 0;
-
-    // Add tab visibility event listener
-    document.addEventListener('visibilitychange', e => this.onVisibilityChange(e));
   }
 
   add(callback, delay = -1) {
@@ -68,11 +65,6 @@ class Interval {
         this.loops[i].callback(this.loops[i]);
       }
     }
-  }
-
-  onVisibilityChange() {
-    if (document.hidden) this.stop();
-    else this.start();
   }
 }
 
