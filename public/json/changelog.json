@@ -714,5 +714,11 @@
       "Added coordinates to Level Editor",
       "Fixed input while popup is closing"
     ]
+  },
+  {
+    "version": "2.7.2",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
