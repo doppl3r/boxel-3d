@@ -344,11 +344,11 @@
                 </template>
                 <template v-else>
                   <p>The Steam Workshop allows players to download & share community content such as <strong>levels</strong>, <strong>skins</strong>, & <strong>mods</strong></p>
-                  <p>This feature is only available on Steam. Add Boxel 3D to your <em>Steam Wishlist<span>Get emails for<br>Boxel 3D discounts</span></em> or purchase a copy today!</p>
+                  <p>This feature is only available on Steam.</p>
                   <p>
                     <a href="https://store.steampowered.com/app/3208440/Boxel_3D/" target="_blank">
                       <img :src="'./svg/steam.svg'" />
-                      <span>View Steam Page</span>
+                      <span>Download on Steam</span>
                     </a>
                   </p>
                 </template>

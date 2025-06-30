@@ -13,7 +13,7 @@
     </template>
     
     <template #text>
-      <p>Boxel 3D is now available to Download on Android!</p>
+      <p>Play Boxel 3D wherever you go!</p>
     </template>
 
     <template #buttons>
