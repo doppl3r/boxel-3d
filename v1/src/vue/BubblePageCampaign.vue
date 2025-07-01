@@ -11,6 +11,7 @@
   const credit = ref('');
   const isClosed = ref(true); // Popup animation state
   const isClosing = ref(false);
+  const isInputEnabled = ref(true);
   const record = ref();
 
   // Add event listener(s)
@@ -21,6 +22,7 @@
     window.addEventListener('popupClosing', popupClosing);
     window.addEventListener('beforeSettingsOpened', settingsOpened);
     window.addEventListener('beforeSettingsClosed', settingsClosed);
+    window.addEventListener('pointerdown', pointerdown);
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);
   }
@@ -33,6 +35,7 @@
     window.removeEventListener('popupClosing', popupClosing);
     window.removeEventListener('beforeSettingsOpened', settingsOpened);
     window.removeEventListener('beforeSettingsClosed', settingsClosed);
+    window.removeEventListener('pointerdown', pointerdown);
     window.removeEventListener('keydown', keydown);
     window.removeEventListener('keyup', keyup);
   }
@@ -57,11 +60,13 @@
 
   function popupOpened() {
     isClosed.value = false;
+    isInputEnabled.value = false;
   }
   
   function popupClosed() {
     isClosed.value = true;
     isClosing.value = false;
+    isInputEnabled.value = true;
     getHighScore(); // Refresh record score
   }
 
@@ -75,6 +80,14 @@
   
   function settingsClosed() {
     app.resumeLevel();
+  }
+
+  function pointerdown(e) {
+    // Make sure popup is closed
+    if (isClosed.value == true || isClosing.value === true) {
+      // Enable input immediately
+      isInputEnabled.value = true;
+    }
   }
 
   function keydown(e) {
@@ -107,10 +120,13 @@
         }
         else {
           var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
-          if (jumpKeys.indexOf(e.code) > -1) {
+          if (isInputEnabled.value === true && jumpKeys.indexOf(e.code) > -1) {
             // Jump if one of the keys is pressed
             app.player.jump();
           }
+
+          // Enable input immediately
+          isInputEnabled.value = true;
         }
       }
     }

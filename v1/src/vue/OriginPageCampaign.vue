@@ -8,6 +8,7 @@
   const credit = ref('');
   const isClosed = ref(true); // Popup animation state
   const isClosing = ref(false);
+  const isInputEnabled = ref(true);
 
   // Add event listener(s)
   function addEventListeners() {
@@ -15,6 +16,7 @@
     window.addEventListener('popupOpened', popupOpened);
     window.addEventListener('popupClosed', popupClosed);
     window.addEventListener('popupClosing', popupClosing);
+    window.addEventListener('pointerdown', pointerdown);
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);
   }
@@ -25,6 +27,7 @@
     window.removeEventListener('popupOpened', popupOpened);
     window.removeEventListener('popupClosed', popupClosed);
     window.removeEventListener('popupClosing', popupClosing);
+    window.removeEventListener('pointerdown', pointerdown);
     window.removeEventListener('keydown', keydown);
     window.removeEventListener('keyup', keyup);
   }
@@ -49,15 +52,25 @@
 
   function popupOpened() {
     isClosed.value = false;
+    isInputEnabled.value = false;
   }
   
   function popupClosed() {
     isClosed.value = true;
     isClosing.value = false;
+    isInputEnabled.value = true;
   }
 
   function popupClosing() {
     isClosing.value = true;
+  }
+
+  function pointerdown(e) {
+    // Make sure popup is closed
+    if (isClosed.value == true || isClosing.value === true) {
+      // Enable input immediately
+      isInputEnabled.value = true;
+    }
   }
 
   function keydown(e) {
@@ -88,10 +101,13 @@
       }
       else {
         var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
-        if (jumpKeys.indexOf(e.code) > -1) {
+        if (isInputEnabled.value === true && jumpKeys.indexOf(e.code) > -1) {
           // Jump if one of the keys is pressed
           app.player.jump();
         }
+
+        // Enable input immediately
+        isInputEnabled.value = true;
       }
     }
   }
