@@ -720,5 +720,11 @@
     "revisions": [
       "Prevent initial jump when closing popup"
     ]
+  },
+  {
+    "version": "2.7.3",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
