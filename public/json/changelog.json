@@ -718,7 +718,7 @@
   {
     "version": "2.7.2",
     "revisions": [
-      "Remove initial jump input when closing popup"
+      "Prevent initial jump when closing popup"
     ]
   }
 ]
