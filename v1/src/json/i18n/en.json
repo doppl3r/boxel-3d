@@ -137,6 +137,7 @@
       "backup_to": "Backup to...",
       "file": "File",
       "google": "Google",
+      "reload": "Reload",
       "restore_from": "Restore from...",
       "title": "Data"
     },

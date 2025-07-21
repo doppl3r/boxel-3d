@@ -25,6 +25,54 @@ function getItemState(item, key) {
   return localStorage.getItem(`item_${ item.publishedFileId }_${ key }`);
 }
 
+function isValidUrl(urlString) {
+  try {
+    new URL(urlString);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+async function fetchLevelPacks() {
+  const level_packs = localStorage.getItem('level_packs');
+  const urls = level_packs?.split(/\r?\n/);
+  for (let i = 0; i < urls?.length || 0; i++) {
+    try {
+      const url = urls[i];
+
+      // Check if URL is valid
+      if (isValidUrl(url)) {
+        const root = url.substring(0, url.lastIndexOf('/')) + '/';
+        const response = await fetch(`${url}`);
+  
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+  
+        const communityLevels = await response.json();
+        // Add Workshop pack with empty levels
+        const pack = {
+          title: "Level Packs",
+          theme: "workshop",
+          description: "Custom community levels",
+          levels: []
+        }
+        levels.packs.push(pack);
+  
+        communityLevels.levels.forEach(level => {
+          level.path = root + level.path;
+          level.description = level.title;
+          level.overlay = true;
+          pack.levels.push(level);
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching JSON from GitHub:", error);
+    }
+  }
+}
+
+fetchLevelPacks();
+
 // Add workshop items to data points
 if (isSteamEnabled) {
   // Add Workshop pack with empty levels

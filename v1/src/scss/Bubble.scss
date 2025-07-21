@@ -639,6 +639,8 @@
           label {
             width: 100%;
             margin: 0.25em 0em;
+            word-break: break-all;
+            word-wrap: break-word;
 
             .material-symbols-rounded {
               vertical-align: bottom;
@@ -902,6 +904,11 @@
           resize: none;
           text-shadow: 0em 0.125em 0em rgba(#000000, 0.25);
           width: 100%;
+
+          &::placeholder {
+            color: rgba(#ffffff, 0.5);
+            text-shadow: none;
+          }
         }
   
         .close {

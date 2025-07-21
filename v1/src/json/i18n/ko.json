@@ -137,6 +137,7 @@
       "backup_to": "...으로 백업",
       "file": "파일",
       "google": "구글",
+      "reload": "다시 장전하다",
       "restore_from": "...에서 저장",
       "title": "데이터"
     },
