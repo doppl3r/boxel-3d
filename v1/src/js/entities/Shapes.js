@@ -1,5 +1,4 @@
-import { ConeGeometry, ExtrudeGeometry, Group, Mesh, Shape, MeshPhongMaterial } from 'three';
-import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { BoxGeometry, ConeGeometry, ExtrudeGeometry, Group, Mesh, Shape, MeshPhongMaterial } from 'three';
 
 class Shapes extends Group {
   constructor() {
@@ -18,7 +17,7 @@ class Shapes extends Group {
     options.color = (options.color == null) ? '#620460' : options.color;
     options.opacity = (options.opacity == null) ? 1 : options.opacity;
 
-    var geometry = new RoundedBoxGeometry(options.scaleX, options.scaleY, options.scaleZ, options.segments, options.radius);
+    var geometry = new BoxGeometry(options.scaleX, options.scaleY, options.scaleZ);
     var material = new MeshPhongMaterial({ color: options.color, transparent: true });
     var cube = new Mesh(geometry, material);
     cube.castShadow = true;
