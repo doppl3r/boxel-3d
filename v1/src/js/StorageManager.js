@@ -135,6 +135,7 @@ class StorageManager {
         reverse: false
       },
       language: 'en',
+      levelPacks: '',
       motion: true,
       music: 'boxel-3d-pro',
       name: 'Player',

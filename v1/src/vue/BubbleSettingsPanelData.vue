@@ -4,7 +4,8 @@
 
   const i18n = useI18n({ useScope: 'global' });
   const restartRequired = ref(false);
-  var props = defineProps(['settings']);
+  const props = defineProps(['settings']);
+  const emit = defineEmits(['updateSettings']);
 
   function hasChromeStorage() {
     return window.chrome?.storage != null;
@@ -38,24 +39,18 @@
   }
 
   function checkLevelPacks(e) {
-    var levelPacks = localStorage.getItem('level_packs');
+    var value = e.target.value;
 
     // Set default level packs using placeholder
-    if (levelPacks === null || levelPacks === '') {
+    if (value === null || value === '') {
       e.target.value = e.target.placeholder;
       saveLevelPacks(e);
     }
   }
 
-  function loadLevelPacks() {
-    var levelPacks = localStorage.getItem('level_packs');
-    return levelPacks;
-  }
-
   function saveLevelPacks(e) {
-    var levelPacks = e.target.value;
+    emit('updateSettings', e)
     restartRequired.value = true;
-    localStorage.setItem('level_packs', levelPacks);
   }
 
   function reloadPage() {
@@ -97,14 +92,14 @@
     </div>
     <div class="group">
       <div class="option">
-        <label for="level_packs">
+        <label for="levelPacks">
           <span class="material-symbols-rounded">link</span> {{ i18n.t('popup.text.level_packs') }}
         </label>
       </div>
       <div class="option gap wrap">
         <textarea
-          :value="loadLevelPacks()"
-          id="level_packs"
+          :value="settings.levelPacks"
+          id="levelPacks"
           @input="saveLevelPacks"
           @click="checkLevelPacks"
           placeholder="https://raw.githubusercontent.com/Charlieee1/Boxel-3d-Mods/refs/heads/main/community-levels/community-levels.json"

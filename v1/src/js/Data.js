@@ -35,8 +35,19 @@ function isValidUrl(urlString) {
 }
 
 async function fetchLevelPacks() {
-  const level_packs = localStorage.getItem('level_packs');
-  const urls = level_packs?.split(/\r?\n/);
+  // Get settings from local storage
+  const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+
+  // Get list of URLs (and remove duplicates)
+  const urls = [...new Set(settings?.levelPacks?.split(/\r?\n/) || [])];
+  const pack = {
+    title: "Level Packs",
+    theme: "workshop",
+    description: "Custom community levels",
+    levels: []
+  }
+
+  // Loop through URLs
   for (let i = 0; i < urls?.length || 0; i++) {
     try {
       const url = urls[i];
@@ -47,23 +58,23 @@ async function fetchLevelPacks() {
         const response = await fetch(`${url}`);
   
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-  
-        const communityLevels = await response.json();
-        // Add Workshop pack with empty levels
-        const pack = {
-          title: "Level Packs",
-          theme: "workshop",
-          description: "Custom community levels",
-          levels: []
+        else {
+          // Assign community levels to response JSON data
+          const communityLevels = await response.json();
+          
+          // Add levels to the community pack (only once)
+          const hasPack = levels.packs.some(p => p.title === pack.title);
+          if (hasPack === false) levels.packs.push(pack);
+
+          // Update level data from response
+          communityLevels.levels.forEach(level => {
+            level.path = root + level.path;
+            level.description = level.title;
+            level.overlay = true;
+            pack.levels.push(level);
+          });
         }
-        levels.packs.push(pack);
   
-        communityLevels.levels.forEach(level => {
-          level.path = root + level.path;
-          level.description = level.title;
-          level.overlay = true;
-          pack.levels.push(level);
-        });
       }
     } catch (error) {
       console.error("Error fetching JSON from GitHub:", error);
