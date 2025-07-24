@@ -42,7 +42,7 @@ async function fetchLevelPacks() {
   const urls = [...new Set(settings?.levelPacks?.split(/\r?\n/) || [])];
   const pack = {
     title: "Level Packs",
-    theme: "workshop",
+    theme: "classic",
     description: "Custom community levels",
     levels: []
   }
