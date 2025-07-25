@@ -60,14 +60,20 @@ async function fetchLevelPacks() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         else {
           // Assign community levels to response JSON data
-          const communityLevels = await response.json();
+          const data = await response.json();
           
           // Add levels to the community pack (only once)
           const hasPack = levels.packs.some(p => p.title === pack.title);
-          if (hasPack === false) levels.packs.push(pack);
+          if (hasPack === false) {
+            // Allow publisher to change the pack theme
+            pack.theme = data.theme ?? pack.theme;
 
-          // Update level data from response
-          communityLevels.levels.forEach(level => {
+            // Add new pack
+            levels.packs.push(pack);
+          }
+
+          // Update level data from data
+          data.levels.forEach(level => {
             level.path = root + level.path;
             level.description = level.title;
             level.overlay = true;
