@@ -80,7 +80,6 @@ async function fetchLevelPacks() {
             pack.levels.push(level);
           });
         }
-  
       }
     } catch (error) {
       console.error("Error fetching JSON from GitHub:", error);
