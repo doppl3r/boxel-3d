@@ -13,11 +13,12 @@
     </template>
     
     <template #text>
-      <p>Play Boxel 3D wherever you go!</p>
+      <p>Want to support Boxel 3D?</p>
+      <p>Purchase Boxel 3D on <strong>Google Play</strong> to unlock all features wherever you go!</p>
     </template>
 
     <template #buttons>
-      <button @click="util.openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')">Download Now</button>
+      <button @click="util.openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')">Google Play</button>
     </template>
   </Modal>
 </template>

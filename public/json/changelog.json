@@ -730,7 +730,8 @@
   {
     "version": "2.7.4",
     "revisions": [
-      "Fixed bugs"
+      "Added theme option to level packs",
+      "Update level pack default theme"
     ]
   }
 ]
