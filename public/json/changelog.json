@@ -733,5 +733,11 @@
       "Added theme option to level packs",
       "Update level pack default theme"
     ]
+  },
+  {
+    "version": "2.7.5",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
