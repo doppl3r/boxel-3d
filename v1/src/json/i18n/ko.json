@@ -134,11 +134,11 @@
       "title": "컨트롤 설정"
     },
     "data": {
-      "backup_to": "...으로 백업",
+      "backup_to": "...으로 저장",
       "file": "파일",
       "google": "구글",
       "reload": "다시 장전하다",
-      "restore_from": "...에서 저장",
+      "restore_from": "...에서 백업",
       "title": "데이터"
     },
     "graphics": {
