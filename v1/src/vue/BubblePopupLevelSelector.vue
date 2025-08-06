@@ -368,6 +368,8 @@
 
             span {
               font-size: 0.75em;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
         }

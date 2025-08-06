@@ -4,6 +4,7 @@ import es from '../json/i18n/es.json';
 import fa from '../json/i18n/fa.json';
 import fr from '../json/i18n/fr.json';
 import ko from '../json/i18n/ko.json';
+import hi from '../json/i18n/hi.json';
 
 const settings = JSON.parse(localStorage.getItem('settings') || '{}');
 const i18n = createI18n({
@@ -15,7 +16,8 @@ const i18n = createI18n({
     es: es,
     fa: fa,
     fr: fr,
-    ko: ko
+    ko: ko,
+    hi: hi,
   }
 });
 

@@ -42,6 +42,7 @@
           <li>Zeta (Persian/Farsi)</li>
           <li>R - G - C™ (French)</li>
           <li>SangSang2 (Korean)</li>
+          <li>Ash (ADL) (Hindi)</li>
         </ul>
       </div>
     </div>
