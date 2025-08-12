@@ -739,5 +739,11 @@
     "revisions": [
       "Added Hindi translations (credit: Ash (ADL))"
     ]
+  },
+  {
+    "version": "2.7.6",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
