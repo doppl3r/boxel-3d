@@ -116,6 +116,16 @@ class LevelEditor {
       if (a.selectedObject == null || target) {
         // Select a new object on start click
         if (target) {
+          // Copy selected object color to target color
+          if (e.shiftKey === true) {
+            if (a.selectedObject) {
+              target.setColors(a.selectedObject.color);
+              a.levelHistory.save('Copied color', a);
+              this.updateRender();
+              return;
+            }
+          }
+
           if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
             a.level.deselectLevel(a);
             a.selectedObject = target;
