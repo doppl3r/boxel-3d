@@ -291,7 +291,13 @@ class App {
   
       // Fetch level json data
       try {
-        const response = await fetch(options.path);
+        // Encode the file name
+        const pathArray = options.path.split('/');
+        const fileName = pathArray.pop();
+        const encodedPath = pathArray.join('/') + '/' + encodeURIComponent(fileName);
+
+        // Fetch and parse JSON
+        const response = await fetch(encodedPath);
         options.json = await response.json();
       }
       catch (error) {
