@@ -225,7 +225,7 @@ class StorageManager {
     const ctx2d = canvas2d.getContext('2d');
     ctx2d.drawImage(webglCanvas, 0, 0);
     
-    // Draw white text '2' in the top left corner
+    // Add verification badge
     var settings = app.storage.getSettings(app);
     if (settings.buffer == 0 && settings.debug == false) {
       ctx2d.save();
