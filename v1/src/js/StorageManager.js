@@ -81,11 +81,6 @@ class StorageManager {
       this.saveThumbnailAfterPopupOpened(key);
     }
 
-    // Save missing screenshot
-    if (this.getThumbnail(key) == null) {
-      this.saveThumbnailAfterPopupOpened(key);
-    }
-
     // Return new score state
     return hasNewScore;
   }
