@@ -756,7 +756,7 @@
   {
     "version": "2.7.8",
     "revisions": [
-      "Fixed bugs"
+      "Added input buffer verification badge to thumbnail"
     ]
   }
 ]
