@@ -213,7 +213,7 @@ class StorageManager {
     var heightOrigin = window.innerHeight;
     var zoomOrigin = app.graphics.camera.zoom;
     var pixelRatioOrigin = app.graphics.renderer.getPixelRatio();
-
+    
     // Update camera and renderer for screenshot
     app.graphics.camera.zoom = options.zoom;
     app.graphics.camera.aspect = options.width / options.height;
@@ -221,11 +221,37 @@ class StorageManager {
     app.graphics.renderer.setPixelRatio(1);
     app.graphics.renderer.setSize(options.width, options.height);
     app.graphics.renderer.render(app.graphics.scene, app.graphics.camera);
-    src = app.graphics.renderer.domElement.toDataURL('image/png');
+    
+    // Create a new 2D canvas from the three.js WebGL canvas
+    const webglCanvas = app.graphics.renderer.domElement;
+    const canvas2d = document.createElement('canvas');
+    canvas2d.width = webglCanvas.width;
+    canvas2d.height = webglCanvas.height;
+    const ctx2d = canvas2d.getContext('2d');
+    ctx2d.drawImage(webglCanvas, 0, 0);
+    
+    // Draw white text '2' in the top left corner
+    var settings = app.storage.getSettings(app);
+    if (settings.buffer == 0 && settings.debug == false) {
+      ctx2d.save();
+      ctx2d.font = '48px "Material Symbols Rounded", sans-serif';
+      ctx2d.fillStyle = '#FFFFFF';
+      ctx2d.textAlign = 'left';
+      ctx2d.textBaseline = 'top';
+      ctx2d.shadowColor = 'rgba(0, 0, 0, 0.25)';
+      ctx2d.shadowOffsetX = 0;
+      ctx2d.shadowOffsetY = 2;
+      ctx2d.shadowBlur = 0;
+      ctx2d.fillText(String.fromCharCode(parseInt('ef76', 16)), 10, 10);
+      ctx2d.restore();
+    }
+
+    // You can now use ctx2d to draw 2D graphics, text, etc.
+    src = canvas2d.toDataURL('image/png');
     
     // Save to file
     if (options.save == true) {
-      app.graphics.renderer.domElement.toBlob(blob => saveAs(blob, 'screenshot.png'));
+      canvas2d.toBlob(blob => saveAs(blob, 'screenshot.png'));
     }
     
     // Reset camera and renderer
