@@ -56,7 +56,7 @@ async function fetchLevelPacks() {
       if (isValidUrl(url)) {
         const root = url.substring(0, url.lastIndexOf('/')) + '/';
         const response = await fetch(`${url}`);
-  
+
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         else {
           // Assign community levels to response JSON data
@@ -67,6 +67,7 @@ async function fetchLevelPacks() {
           if (hasPack === false) {
             // Allow publisher to change the pack theme
             pack.theme = data.theme ?? pack.theme;
+            pack.description = data.description ?? pack.description
 
             // Add new pack
             levels.packs.push(pack);
