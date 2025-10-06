@@ -756,7 +756,8 @@
   {
     "version": "2.7.8",
     "revisions": [
-      "Added input buffer verification badge to thumbnail"
+      "Added input buffer verification badge to thumbnail",
+      "Added optional description to custom level packs"
     ]
   }
 ]
