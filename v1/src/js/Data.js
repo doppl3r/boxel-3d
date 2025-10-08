@@ -76,7 +76,7 @@ async function fetchLevelPacks() {
           // Update level data from data
           data.levels.forEach(level => {
             level.path = root + level.path;
-            level.description = level.description ?? level.title;
+            level.description = level.title;
             level.overlay = true;
             pack.levels.push(level);
           });
