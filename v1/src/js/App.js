@@ -100,6 +100,7 @@ class App {
     this.canvas.addEventListener('pointerup', function(e){ this.mouse.mouseUp(e, this); }.bind(this), false);
     this.canvas.addEventListener('wheel', function(e){ this.mouse.wheel(e, this); }.bind(this), false);
     this.window.addEventListener('resize', function(e) { this.resizeWindow(e, this); }.bind(this));
+    this.window.addEventListener('message', e => this.onMessage(e));
     Events.on(this.engine, 'collisionStart', function(e) { this.collision.checkPlayerCollision(e, this); }.bind(this));
     
     // Load assets, then load game
@@ -279,6 +280,19 @@ class App {
 
     // Play jump sound
     this.assets.audio.play('jump');
+  }
+
+  onMessage = e => {
+    const { type, ...args } = e.data;
+    if (app[type]) {
+      // Run app function with arguments
+      const options = Array.isArray(args.detail) ? [...args.detail] : [args.detail];
+      app[type](...options);
+    }
+    else {
+      // Dispatch custom event
+      window.dispatchEvent(new CustomEvent(type, args));
+    }
   }
 
   async playLevel(options) {
