@@ -27,7 +27,7 @@ class Player extends Cube {
     this.skin = { url: '' };
 
     // Add an invisible plane to player for rope raycaster mechanics
-    this.plane = new Mesh(new PlaneGeometry(1000, 1000), new MeshPhongMaterial({ visible: false, side: DoubleSide }));
+    this.plane = new Mesh(new PlaneGeometry(1000000, 1000000), new MeshPhongMaterial({ visible: false, side: DoubleSide }));
     this.add(this.plane);
   }
 
