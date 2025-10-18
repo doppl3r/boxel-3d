@@ -35,7 +35,7 @@
       content: '';
       display: block;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) rotate(-30deg);
       left: 0;
       position: absolute;
       width: 100%;
