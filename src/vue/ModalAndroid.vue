@@ -18,13 +18,15 @@
 
     <template #buttons>
       <button @click="util.openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')">
-        <span class="discount">$2.99</span> $0.99
+        <span class="discount">$2.99</span> <span class="price">$0.99</span>
       </button>
     </template>
   </Modal>
 </template>
 
 <style lang="scss" scoped>
+  @keyframes throb { 0% { transform: scale(1); } 25% { transform: scale(1.20); } 50% { transform: scale(1); }}
+
   .discount {
     display: inline-block;
     opacity: 0.25;
@@ -40,5 +42,10 @@
       position: absolute;
       width: 100%;
     }
+  }
+
+  .price {
+    animation: throb 3s ease-in-out infinite;
+    display: inline-block;
   }
 </style>
