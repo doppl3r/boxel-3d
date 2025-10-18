@@ -13,16 +13,32 @@
     </template>
     
     <template #text>
-      <p>Want to support Boxel 3D?</p>
-      <p>Purchase Boxel 3D on <strong>Google Play</strong> to unlock all features wherever you go!</p>
+      <p>Boxel 3D is now available on <strong>Google Play!</strong></p>
     </template>
 
     <template #buttons>
-      <button @click="util.openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')">Google Play</button>
+      <button @click="util.openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')">
+        <span class="discount">$2.99</span> $0.99
+      </button>
     </template>
   </Modal>
 </template>
 
 <style lang="scss" scoped>
-  
+  .discount {
+    display: inline-block;
+    opacity: 0.25;
+    position: relative;
+
+    &:after {
+      border-bottom: 0.125em solid #000;
+      content: '';
+      display: block;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+  }
 </style>

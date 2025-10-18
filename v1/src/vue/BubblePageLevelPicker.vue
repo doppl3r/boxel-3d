@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Utility } from '../js/Utility.js';
   import BubbleButtonSettings from './BubbleButtonSettings.vue';
   import BubbleCarousel from './BubbleCarousel.vue';
   import BubblePopupLevelSelector from './BubblePopupLevelSelector.vue';
@@ -8,6 +9,7 @@
 
   // Initialize variables
   const i18n = useI18n({ useScope: 'global' });
+  const util = new Utility();
   var description = ref('Select a level');
   var items = ref([]); // Carousel items
   var selectedItem = ref();
@@ -133,6 +135,10 @@
     window.dispatchEvent(new CustomEvent('openLevelSelectorPopup'));
   }
 
+  function openDiscord() {
+    window.open('https://discord.gg/j8fvd4UvbE', '_blank')
+  }
+
   function keydown(e) {
     // Ignore events from inputs
     if (e.target.value == null) {
@@ -180,8 +186,11 @@
       <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
         <span class="material-symbols-rounded">search</span>
       </a>
-      <a class="button fade-in" href="../index.html?workshop=true" :title="i18n.t('workshop.text.workshop')">
+      <a class="button fade-in" v-if="util.isElectronApp()" href="../index.html?workshop=true" :title="i18n.t('workshop.text.workshop')">
         <img :src="'../svg/steam.svg'">
+      </a>
+      <a class="button fade-in" @click="openDiscord" :title="i18n.t('workshop.text.workshop')">
+        <img :src="'../svg/discord.svg'">
       </a>
       <BubbleButtonSettings class="button fade-in" />
     </div>

@@ -40,14 +40,16 @@
     &.notification {
       &:after {
         animation: throb 1s ease-in-out infinite;
-        background-color: #EB2B6D;
+        background-color: #000000;
+        border: 0.125em solid #FFCB4C;
+        /* box-shadow: 0 0.125em 0 #000000; */
         border-radius: 99em;
         content: '';
         display: block;
         height: 0.75em;
-        right: -0.125em;
+        right: -0.25em;
         position: absolute;
-        top: -0.125em;
+        top: -0.25em;
         width: 0.75em;
       }
     }
@@ -67,6 +69,6 @@
       height: 1.5em;
     }
 
-    @keyframes throb { 0% { transform: scale(1); } 50% { transform: scale(1.20); } 100% { transform: scale(1); }}
+    @keyframes throb { 0% { transform: scale(1); } 50% { transform: scale(0.80); } 100% { transform: scale(1); }}
   }
 </style>

@@ -10,9 +10,9 @@
   <ButtonAction
     class="action notification"
     title="Download Android app"
-    v-if="util.isNativeApp() == false && util.isElectronApp() == false"
+    v-if="util.isNativeApp() == false"
   >
-    <span class="material-symbols-rounded">phone_android</span>
+    <span class="material-symbols-rounded">android</span>
   </ButtonAction>
 </template>
 

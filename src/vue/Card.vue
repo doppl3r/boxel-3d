@@ -13,6 +13,8 @@
 </template>
 
 <style lang="scss" scoped>
+  @keyframes pulse { 0% { transform: scale(1); } 25% { transform: scale(1.20); } 50% { transform: scale(1); } }
+
   .card {
     background-color: #000000;
     border: 0 solid #000000;
@@ -32,6 +34,14 @@
 
     &:active {
       transform: scale(0.9);
+    }
+
+    &.pulse {
+      animation: pulse 2s ease-in-out infinite;
+
+      &:hover {
+        transform: scale(1);
+      }
     }
 
     img {
