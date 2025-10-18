@@ -40,7 +40,7 @@
     &.notification {
       &:after {
         animation: throb 1s ease-in-out infinite;
-        background-color: #000000;
+        background-color: #EB2B6D;
         border: 0.125em solid #FFCB4C;
         /* box-shadow: 0 0.125em 0 #000000; */
         border-radius: 99em;
