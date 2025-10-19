@@ -61,6 +61,7 @@
   },
   "level_picker": {
     "button": {
+      "discord": "Discord",
       "exit": "Salir a la página de inicio (ESC)",
       "play": "Jugar"
     },
