@@ -1,5 +1,17 @@
 # Boxel 3D
 
+## License
+
+This project is released under a custom, source-available,
+non-commercial license: "Boxel-3D Non-Commercial License v1.0". The
+license permits viewing, modifying, and sharing the source for
+non-commercial purposes only. Commercial use and sale are prohibited
+unless you obtain explicit written permission from the copyright
+holder. This license is not OSI-approved and is not an "open source"
+license in the OSI/FSF sense — it is source-available with a
+non-commercial restriction. See `public/license.txt` for the full
+text.
+
 ## Local Development
 
 - Install NodeJS package libraries: `npm install`
@@ -73,6 +85,7 @@
 - Increment `versionCode` and `versionName` in `/android/app/build.gradle`
 - Run build & sync with `npm run dist-android`
 - Open Android Studio: `npx cap open android`
+- Copy/paste keystore file from Google Drive to `/android/keystores/my-keystore.jsk`
 - Select Build > Generate Signed App Bundle or APK...
 
 ## Update App Icon/Splash

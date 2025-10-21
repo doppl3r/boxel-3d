@@ -6,3 +6,11 @@ debug.log
 package-lock.json
 *.afdesign~lock~
 .DS_Store
+
+# Android signing keys
+*.keystore
+*.jks
+*.key
+*.p12
+*.pfx
+android/keystores/
