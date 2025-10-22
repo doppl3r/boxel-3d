@@ -3,7 +3,7 @@
 ## License
 
 This project is released under a custom, source-available,
-non-commercial license: "Boxel-3D Non-Commercial License v1.0". The
+non-commercial license: "Boxel 3D Non-Commercial License v1.0". The
 license permits viewing, modifying, and sharing the source for
 non-commercial purposes only. Commercial use and sale are prohibited
 unless you obtain explicit written permission from the copyright
