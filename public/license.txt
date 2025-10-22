@@ -1,9 +1,9 @@
-Boxel-3D Non-Commercial License
+Boxel 3D Non-Commercial License
 Version 1.0
 
-Copyright (C) 2025 doppl3r. All rights reserved.
+Copyright (C) 2025 Doppler Creative. All rights reserved.
 
-This license makes the Boxel-3D source available for non-commercial use
+This license makes the Boxel 3D source available for non-commercial use
 only. You are welcome to study, modify, and share the code so long as
 the restrictions in this document are respected. Commercial use and
 sale are prohibited except by written permission from the copyright
@@ -55,7 +55,7 @@ Permissions
 Additional terms
 
 8. Definitions
-   - "Software" means Boxel-3D and related source, assets, and
+   - "Software" means Boxel 3D and related source, assets, and
      documentation.
    - "Non-commercial" means not primarily intended for or directed
      toward commercial advantage or monetary compensation.
