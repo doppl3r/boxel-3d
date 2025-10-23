@@ -190,7 +190,7 @@ class StorageManager {
       }
     }
     else {
-      saveAs(blob, levelData.name);
+      saveAs(blob, levelData.name + '.json');
     }
   }
 

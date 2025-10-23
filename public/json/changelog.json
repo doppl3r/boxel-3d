@@ -768,7 +768,9 @@
   {
     "version": "2.8.0",
     "revisions": [
-      "Fixed text duplication bug"
+      "Fixed text duplication bug",
+      "Fixed level editor file bug",
+      "Updated libraries"
     ]
   }
 ]
