@@ -5,6 +5,7 @@ class Tip extends Cube {
   constructor(options = {}) {
     super(options);
     this.body.class = 'tip';
+    this.textEnabled = true;
     this.text = 'Do not touch the spikes!';
     this.text2D = new Text({ text: this.text, class: 'CSS2DObject tip' });
     //this.add(this.text2D);

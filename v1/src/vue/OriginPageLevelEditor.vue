@@ -408,7 +408,7 @@
         <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="keydown({ code: 'KeyR' });" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
         <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img :src="'../svg/pin.svg'"></a>
         <a class="item" :class="{ disabled: selectedObject.isStatic() }" @click="toggleFriction" :title="`Friction (${ selectedObject.getFriction() })`"><img :src="'../svg/friction.svg'"></a>
-        <a class="item" :class="{ disabled: selectedObject.text == null }" @click="changeText" title="Text"><img :src="'../svg/type.svg'"></a>
+        <a class="item" :class="{ disabled: selectedObject.textEnabled === false }" @click="changeText" title="Text"><img :src="'../svg/type.svg'"></a>
         <div class="item">
           <label>
             <a action="color" title="Color"><img :src="'../svg/color.svg'"></a>

@@ -5,6 +5,7 @@ class Teleport extends Cube {
   constructor(options = {}) {
     super(options);
     this.body.class = 'teleport';
+    this.textEnabled = true;
     this.text = '0,0';
     
     // Set sensor the same size as rectangle

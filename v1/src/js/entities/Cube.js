@@ -45,6 +45,7 @@ class Cube extends Mesh {
     // Update properties from options
     this.name = this.uuid;
     this.isCube = true; // Used for level editor
+    this.textEnabled = false;
     this.setPosition({ x: options.x, y: options.y, z: options.z });
     this.setRotation(options.angle);
     this.setScale({ x: options.scaleX, y: options.scaleY, z: options.scaleZ });
@@ -289,7 +290,7 @@ class Cube extends Mesh {
   }
 
   setText(text) {
-    if (text != null) this.text = text;
+    if (this.textEnabled === true && text != null) this.text = text;
   }
 
   getText() { return this.text; }
@@ -411,7 +412,7 @@ class Cube extends Mesh {
     }
 
     // Include text if object is a tip
-    if (this.text != null) json.text = this.text;
+    if (this.textEnabled === true && this.text != null) json.text = this.text;
 
     // Include color if object has color
     if (this.color != null) json.color = this.color;

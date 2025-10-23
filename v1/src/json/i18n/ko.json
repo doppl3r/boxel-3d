@@ -61,7 +61,6 @@
   },
   "level_picker": {
     "button": {
-      "discord": "Discord",
       "exit": "홈으로 바로가기 (ESC)",
       "play": "플레이"
     },

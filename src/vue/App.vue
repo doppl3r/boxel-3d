@@ -6,7 +6,6 @@
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
   import ButtonAndroid from './ButtonAndroid.vue';
-  import ButtonDiscord from './ButtonDiscord.vue';
   import ButtonExit from './ButtonExit.vue';
   import ButtonFullScreen from './ButtonFullScreen.vue';
   import ButtonVolume from './ButtonVolume.vue';

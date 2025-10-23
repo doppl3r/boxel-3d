@@ -61,7 +61,6 @@
   },
   "level_picker": {
     "button": {
-      "discord": "Discord",
       "exit": "होम पर लौटो (ESC)",
       "play": "खेलो"
     },
