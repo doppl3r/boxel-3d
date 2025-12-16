@@ -778,5 +778,11 @@
     "revisions": [
       "Added more mod support"
     ]
+  },
+  {
+    "version": "2.8.2",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
