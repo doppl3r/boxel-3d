@@ -73,6 +73,11 @@ class App {
     this.network = new Network();
     this.multiplayer = new Multiplayer(this.network);
     this.scene.add(this.multiplayer.players);
+
+    // Initialize events
+    this.eventRenderUpdated = new CustomEvent('renderUpdated', { detail: { delta: 0, alpha: 0 } });
+    this.eventEngineUpdated = new CustomEvent('engineUpdated', { detail: { delay: 0, engine: this.engine } });
+    this.eventCameraUpdated = new CustomEvent('cameraUpdated', { detail: this.camera });
   }
 
   async init(canvas, callback = function(){}) {
@@ -145,6 +150,10 @@ class App {
 
       // Update world engine
       Engine.update(this.engine, delay);
+
+      // Dispatch engine event
+      this.eventEngineUpdated.detail.delay = delay;
+      window.dispatchEvent(this.eventEngineUpdated);
     }
   }
 
@@ -160,6 +169,11 @@ class App {
       this.background.update(delta, alpha, app.motion == false);
       this.animation.update(delta, alpha);
       this.graphics.update(delta);
+
+      // Dispatch render event
+      this.eventRenderUpdated.detail.delta = delta;
+      this.eventRenderUpdated.detail.alpha = alpha;
+      window.dispatchEvent(this.eventRenderUpdated);
     }
 
     // Update network animations (tweens)
@@ -205,6 +219,9 @@ class App {
     a.camera.position.x = a.player.position.x;
     a.camera.position.y = a.player.position.y + a.camera.tilt;
     //a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
+
+    // Dispatch render event
+    window.dispatchEvent(this.eventCameraUpdated);
   }
 
   updateSettings(settings, a = app) {
