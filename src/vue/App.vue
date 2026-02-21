@@ -5,7 +5,7 @@
   import { Utility } from '../../v1/src/js/Utility.js';
   import { useI18n } from 'vue-i18n';
   import Banner from './Banner.vue';
-  import ButtonAndroid from './ButtonAndroid.vue';
+  import ButtonDiscord from './ButtonDiscord.vue';
   import ButtonExit from './ButtonExit.vue';
   import ButtonFullScreen from './ButtonFullScreen.vue';
   import ButtonVolume from './ButtonVolume.vue';
@@ -174,12 +174,12 @@
       <ButtonExit class="left" />
       <ButtonVolume :assets="assets" :volume="settings.volume" @click="toggleVolume();"/>
       <ButtonFullScreen />
-      <ButtonAndroid @click="modalAndroidVisible = true;" />
+      <ButtonDiscord @click="openLink('https://discord.gg/j8fvd4UvbE', '_blank')" />
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
       <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('home.button.workshop') }}</Card>
-      <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" class="pulse" v-if="util.isNativeApp() == false">{{ i18n.t('home.button.android') }}</Card>
+      <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" v-if="util.isNativeApp() == false">{{ i18n.t('home.button.android') }}</Card>
       <Card :src="'./svg/button-play-pro.svg'" @click="openLink(playLink)">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <div class="footer">

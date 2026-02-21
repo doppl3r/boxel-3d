@@ -135,6 +135,10 @@
     window.dispatchEvent(new CustomEvent('openLevelSelectorPopup'));
   }
 
+  function openDiscord() {
+    window.open('https://discord.gg/j8fvd4UvbE', '_blank')
+  }
+
   function keydown(e) {
     // Ignore events from inputs
     if (e.target.value == null) {
@@ -184,6 +188,9 @@
       </a>
       <a class="button fade-in" v-if="util.isElectronApp()" href="../index.html?workshop=true" :title="i18n.t('workshop.text.workshop')">
         <img :src="'../svg/steam.svg'">
+      </a>
+      <a class="button fade-in" @click="openDiscord" :title="i18n.t('level_picker.button.discord')">
+        <img :src="'../svg/discord.svg'">
       </a>
       <BubbleButtonSettings class="button fade-in" />
     </div>

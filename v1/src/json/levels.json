@@ -332,6 +332,15 @@
       "title": "Community Pack",
       "theme": "classic",
       "description": "Levels are made by the Boxel Community and are picked by the developer.",
+      "links": [
+        {
+          "class": "discord",
+          "icon": "../svg/discord.svg",
+          "target": "_blank",
+          "text": "Join the Discord",
+          "url": "https://discord.gg/j8fvd4UvbE"
+        }
+      ],
       "levels": [
         {
           "title": "Junsie",

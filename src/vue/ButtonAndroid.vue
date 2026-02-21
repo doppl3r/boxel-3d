@@ -8,11 +8,11 @@
 
 <template>
   <ButtonAction
-    class="action notification"
+    class="action"
     title="Download Android app"
     v-if="util.isNativeApp() == false"
   >
-    <span class="material-symbols-rounded">android</span>
+    <span class="material-symbols-rounded">shop</span>
   </ButtonAction>
 </template>
 
