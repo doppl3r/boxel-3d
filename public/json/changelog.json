@@ -782,7 +782,8 @@
   {
     "version": "2.8.2",
     "revisions": [
-      "Added Discord links"
+      "Added Discord links",
+      "Updated libraries"
     ]
   }
 ]
