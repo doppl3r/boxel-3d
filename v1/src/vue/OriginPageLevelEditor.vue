@@ -265,8 +265,7 @@
           app.player.restart();
         }
         else {
-          var jumpKeys = ['Space', 'Enter', 'ArrowUp', 'KeyW'];
-          if (isInputEnabled.value === true && jumpKeys.indexOf(e.code) > -1) {
+          if (isInputEnabled.value === true && jumpKeys.includes(e.code)) {
             // Jump if one of the keys is pressed
             app.player.jump();
           }
@@ -276,7 +275,6 @@
         }
       }
       else {
-        // Add undo/redo logic
         if (e.code == 'Digit0') {
           app.levelEditor.resetZAxis();
         }
@@ -287,7 +285,7 @@
         else if (e.code == 'KeyD') {
           duplicateSelectedObject();
         }
-        else if (e.code == 'KeyG') {
+        else if (e.code == 'KeyG' || e.code == 'KeyT') {
           setTransformMode({ detail: 'translate' });
         }
         else if (e.code == 'KeyR') {
@@ -304,15 +302,12 @@
           }
           else setTransformMode({ detail: 'scale' });
         }
-        else if (e.code == 'KeyT') {
-          setTransformMode({ detail: 'translate' });
-        }
         else if (e.code == 'KeyX') {
           app.levelEditor.deleteSelectedObject();
         }
-        else if (e.code == 'KeyZ') {
-          if (e.ctrlKey == true && e.shiftKey == false) app.levelEditor.undo();
-          if (e.ctrlKey == true && e.shiftKey == true) app.levelEditor.redo();
+        else if (e.code == 'KeyZ' && e.ctrlKey) {
+          if (e.shiftKey == false) app.levelEditor.undo();
+          if (e.shiftKey == true) app.levelEditor.redo();
         }
       }
     }
