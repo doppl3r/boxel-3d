@@ -7,7 +7,7 @@
   // Initialize attributes
   const util = new Utility();
   const i18n = useI18n({ useScope: 'global' });
-  const isSteamEnabled = ref(window.electron?.client != undefined);
+  const isSteamEnabled = ref(window.electron?.steam?.enabled === true);
   const isLoading = ref(false);
   const itemsRef = ref();
   const itemTypes = ref([
@@ -97,12 +97,12 @@
     if (isSteamEnabled.value == true) {
       try {
         // Get array of item ids
-        const itemIds = window.electron.client.workshop.getSubscribedItems();
+        const itemIds = await window.electron.steam.workshop.getSubscribedItems();
         
         if (itemIds.length > 0) {
           // Get array of item objects
           try {
-            const data = await window.electron.client.workshop.getItems(itemIds);
+            const data = await window.electron.steam.workshop.getItems(itemIds);
             const items = data.items.filter(item => item !== null);
             items.sort((a, b) => b.timeUpdated - a.timeUpdated);
             itemsSubscriptions.value = items;
@@ -116,7 +116,7 @@
               setItemState(item, 'enabled', enabled);
               
               // Download immediately if the file is missing
-              const installInfo = await window.electron.client.workshop.installInfo(item.publishedFileId);
+              const installInfo = await window.electron.steam.workshop.installInfo(item.publishedFileId);
               if (installInfo) {
                 // Download if no file names exist
                 const fileNames = await window.electron.getFileNames(installInfo.folder);
@@ -139,12 +139,12 @@
   async function getCreations() {
     isLoading.value = true;
     if (isSteamEnabled.value == true) {
-      const appOwner = window.electron.client.apps.appOwner();
-      const appId = window.electron.client.utils.getAppId();
+      const appOwner = await window.electron.steam.apps.appOwner();
+      const appId = await window.electron.steam.utils.getAppId();
 
       // page: 1, accountId: 37133196, listType: Published, itemType: All, sortOrder: CreationOrderAsc, appIds: {}
       try {
-        const data = await window.electron.client.workshop.getUserItems(1, appOwner.accountId, 0, 13, 0, { creator: appId });
+        const data = await window.electron.steam.workshop.getUserItems(1, appOwner.accountId, 0, 13, 0, { creator: appId });
         const items = data.items;
         items.sort((a, b) => b.timeUpdated - a.timeUpdated);
         itemsCreations.value = items;
@@ -160,9 +160,9 @@
     try {
       // Create item and select it
       isLoading.value = true;
-      const appId = window.electron.client.utils.getAppId();
-      const data = await window.electron.client.workshop.createItem(appId);
-      const item = await window.electron.client.workshop.getItem(data.itemId);
+      const appId = await window.electron.steam.utils.getAppId();
+      const data = await window.electron.steam.workshop.createItem(appId);
+      const item = await window.electron.steam.workshop.getItem(data.itemId);
       const preview = await window.electron.getFilePath('public/png/workshop-thumbnail.png');
       const meta = {
         title: 'New Workshop Item',
@@ -201,7 +201,7 @@
       
       // updateDetails: title, description, changeNote, previewPath, contentPath, tags, visibility
       isLoading.value = true;
-      ugcResult = await window.electron.client.workshop.updateItem(item.publishedFileId, updateDetails);
+      ugcResult = await window.electron.steam.workshop.updateItem(item.publishedFileId, updateDetails);
     }
     catch (error) {
       console.error(error);
@@ -226,7 +226,7 @@
 
   async function downloadContent(item) {
     isLoading.value = true;
-    let downloaded = await window.electron.client.workshop.download(item.publishedFileId, true);
+    let downloaded = await window.electron.steam.workshop.download(item.publishedFileId, true);
     isLoading.value = false;
     return downloaded;
   }

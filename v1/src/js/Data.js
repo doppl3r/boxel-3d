@@ -4,7 +4,7 @@ import skins from '../json/skins.json';
 import mods from '../json/mods.json';
 
 // Declare Steam variables
-const isSteamEnabled = window.electron?.client != undefined;
+const isSteamEnabled = window.electron?.steam?.enabled === true;
 
 // Format existing levels
 levels.packs.forEach(function(pack, i) {
@@ -104,13 +104,13 @@ if (isSteamEnabled) {
   // Make a request to Steam Workshop API
   try {
     // Get array of item ids
-    const itemIds = window.electron.client.workshop.getSubscribedItems();
+    const itemIds = window.electron.steam.workshop.getSubscribedItems();
     
     if (itemIds.length > 0) {
       // Get array of item objects
       try {
         // Get workshop items using a promise
-        window.electron.client.workshop.getItems(itemIds).then(data => {
+        window.electron.steam.workshop.getItems(itemIds).then(data => {
           const items = data.items.filter(item => item !== null);
           items.sort((a, b) => b.timeUpdated - a.timeUpdated);
 
@@ -122,7 +122,7 @@ if (isSteamEnabled) {
             else enabled = enabled === 'true'; // Convert string to boolean
 
             // Get item install information
-            const installInfo = window.electron.client.workshop.installInfo(item.publishedFileId);
+            const installInfo = window.electron.steam.workshop.installInfo(item.publishedFileId);
             if (installInfo && enabled === true) {
               // Get filenames using a Promise
               window.electron.getFileNames(installInfo.folder).then(fileNames => {

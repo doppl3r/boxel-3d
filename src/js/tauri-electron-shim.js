@@ -13,8 +13,78 @@ export async function setupTauriElectronShim() {
     return;
   }
 
+  const steamEnabled = await invoke('steam_is_enabled').catch(() => false);
+
+  function ensureSteamEnabled() {
+    if (steamEnabled !== true) {
+      throw new Error('Steam integration is unavailable for this build.');
+    }
+  }
+
   const electronApi = {
     client: undefined,
+    steam: {
+      enabled: steamEnabled,
+      workshop: {
+        getSubscribedItems() {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_get_subscribed_items');
+        },
+        getItems(itemIds) {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_get_items', { itemIds });
+        },
+        installInfo(publishedFileId) {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_install_info', { publishedFileId: String(publishedFileId) });
+        },
+        getUserItems(page, accountId, listType, itemType, sortOrder, appIds) {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_get_user_items', {
+            page,
+            accountId,
+            listType,
+            itemType,
+            sortOrder,
+            appIds,
+          });
+        },
+        createItem(appId) {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_create_item', { appId });
+        },
+        getItem(itemId) {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_get_item', { itemId: String(itemId) });
+        },
+        updateItem(publishedFileId, updateDetails) {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_update_item', {
+            publishedFileId: String(publishedFileId),
+            updateDetails,
+          });
+        },
+        download(publishedFileId, highPriority) {
+          ensureSteamEnabled();
+          return invoke('steam_workshop_download', {
+            publishedFileId: String(publishedFileId),
+            highPriority: Boolean(highPriority),
+          });
+        },
+      },
+      apps: {
+        appOwner() {
+          ensureSteamEnabled();
+          return invoke('steam_apps_app_owner');
+        },
+      },
+      utils: {
+        getAppId() {
+          ensureSteamEnabled();
+          return invoke('steam_utils_get_app_id');
+        },
+      },
+    },
     async getFile(...parts) {
       return invoke('get_file', { parts: normalizeParts(parts) });
     },

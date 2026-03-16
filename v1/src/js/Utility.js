@@ -47,7 +47,7 @@ class Utility {
   }
 
   isSteamEnabled() {
-    return window.electron?.client != undefined;
+    return window.electron?.steam?.enabled === true;
   }
 
   isNativeApp() {

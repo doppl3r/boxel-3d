@@ -136,6 +136,71 @@ fn show_dialog(options: DialogOptions) -> DialogResult {
   }
 }
 
+#[tauri::command]
+fn steam_is_enabled() -> bool {
+  false
+}
+
+#[tauri::command]
+fn steam_workshop_get_subscribed_items() -> Result<Vec<String>, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_workshop_get_items(_item_ids: Vec<String>) -> Result<serde_json::Value, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_workshop_install_info(_published_file_id: String) -> Result<serde_json::Value, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_apps_app_owner() -> Result<serde_json::Value, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_utils_get_app_id() -> Result<u32, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_workshop_get_user_items(
+  _page: u32,
+  _account_id: u32,
+  _list_type: u32,
+  _item_type: u32,
+  _sort_order: u32,
+  _app_ids: serde_json::Value,
+) -> Result<serde_json::Value, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_workshop_create_item(_app_id: u32) -> Result<serde_json::Value, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_workshop_get_item(_item_id: String) -> Result<serde_json::Value, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_workshop_update_item(
+  _published_file_id: String,
+  _update_details: serde_json::Value,
+) -> Result<serde_json::Value, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
+#[tauri::command]
+fn steam_workshop_download(_published_file_id: String, _high_priority: bool) -> Result<bool, String> {
+  Err("Steam workshop integration is not implemented yet".to_string())
+}
+
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
@@ -146,7 +211,18 @@ fn main() {
       get_file_names,
       get_file_exists,
       get_file_path,
-      show_dialog
+      show_dialog,
+      steam_is_enabled,
+      steam_workshop_get_subscribed_items,
+      steam_workshop_get_items,
+      steam_workshop_install_info,
+      steam_apps_app_owner,
+      steam_utils_get_app_id,
+      steam_workshop_get_user_items,
+      steam_workshop_create_item,
+      steam_workshop_get_item,
+      steam_workshop_update_item,
+      steam_workshop_download
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
