@@ -39,7 +39,23 @@ fn toggle_full_screen(window: Window) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn open_dev_tools() {}
+fn open_dev_tools(app: AppHandle) -> Result<(), String> {
+  #[cfg(debug_assertions)]
+  {
+    if let Some(window) = app.get_webview_window("main") {
+      window.open_devtools();
+      return Ok(());
+    }
+
+    Err("main window not found".to_string())
+  }
+
+  #[cfg(not(debug_assertions))]
+  {
+    let _ = app;
+    Ok(())
+  }
+}
 
 #[tauri::command]
 fn quit(app: AppHandle) {
