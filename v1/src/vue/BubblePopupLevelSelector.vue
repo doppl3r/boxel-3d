@@ -6,6 +6,7 @@
   // Initialize attributes
   const isOpen = ref(false);
   const i18n = useI18n({ useScope: 'global' });
+  const workshopRefreshTick = ref(0);
 
   // Set packs and levels from level data
   const packsRef = ref();
@@ -22,6 +23,9 @@
 
   const levelsRef = ref();
   const levels = computed(() => {
+    // Recompute when workshop data arrives after initial render.
+    workshopRefreshTick.value;
+
     // Return a shallow array of levels and their pack Data
     const arr = [];
 
@@ -66,6 +70,7 @@
   function addEventListeners() {
     window.addEventListener('openLevelSelectorPopup', openLevelSelectorPopup);
 	  window.addEventListener('closeLevelSelectorPopup', closeLevelSelectorPopup);
+    window.addEventListener('workshopLevelsUpdated', workshopLevelsUpdated);
     window.addEventListener('keydown', keydown);
   }
   
@@ -73,7 +78,12 @@
   function removeEventListeners() {
     window.removeEventListener('openLevelSelectorPopup', openLevelSelectorPopup);
 	  window.removeEventListener('closeLevelSelectorPopup', closeLevelSelectorPopup);
+    window.removeEventListener('workshopLevelsUpdated', workshopLevelsUpdated);
     window.removeEventListener('keydown', keydown);
+  }
+
+  function workshopLevelsUpdated() {
+    workshopRefreshTick.value++;
   }
 
   function openLevelSelectorPopup(e) {

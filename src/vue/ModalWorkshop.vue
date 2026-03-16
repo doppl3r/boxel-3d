@@ -227,6 +227,9 @@
   async function downloadContent(item) {
     isLoading.value = true;
     let downloaded = await window.electron.steam.workshop.download(item.publishedFileId, true);
+    if (downloaded === true) {
+      window.dispatchEvent(new CustomEvent('workshopContentUpdated'));
+    }
     isLoading.value = false;
     return downloaded;
   }
