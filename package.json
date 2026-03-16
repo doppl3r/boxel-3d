@@ -8,46 +8,16 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "dist": "vite build && node extension.js && npx cap sync && electron-builder",
-    "dist-electron": "vite build && electron-builder",
+    "dist": "vite build && node extension.js && npx cap sync && tauri build",
     "dist-extension": "vite build && node extension.js",
     "dist-android": "vite build && npx cap sync",
+    "dist-tauri": "tauri build",
     "generate-assets": "npx @capacitor/assets generate --android --assetPath files/png/assets --iconBackgroundColor #9016ff --splashBackgroundColor #9016ff --splashBackgroundColorDark #9016ff",
-    "start": "vite build && electron ."
-  },
-  "build": {
-    "appId": "com.electron.boxel.3d",
-    "artifactName": "${productName}.${ext}",
-    "directories": {
-      "output": "dist"
-    },
-    "extraFiles": [
-      "public/png/workshop-thumbnail.png"
-    ],
-    "icon": "png/icon512.png",
-    "files": [
-      "build",
-      "main.mjs",
-      "preload.mjs"
-    ],
-    "mac": {
-      "category": "public.app-category.arcade-games",
-      "target": {
-        "target": "default",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      }
-    },
-    "win": {
-      "target": "portable"
-    },
-    "linux": {
-      "target": "AppImage"
-    }
+    "start": "tauri dev",
+    "tauri": "tauri"
   },
   "dependencies": {
+    "@tauri-apps/api": "^2.8.0",
     "@capacitor/android": "^8.1.0",
     "@capacitor/app": "^8.0.1",
     "@capacitor/core": "^8.1.0",
@@ -55,14 +25,11 @@
     "@capacitor/ios": "^8.1.0",
     "@parcel/watcher": "^2.5.6",
     "@tweenjs/tween.js": "^25.0.0",
-    "electron-store": "^11.0.2",
     "file-saver": "^2.0.5",
     "matter-js": "^0.19.0",
-    "node-abi": "^4.26.0",
     "peerjs": "^1.5.5",
     "sanitize-html": "^2.17.1",
     "sass": "^1.97.3",
-    "steamworks.js": "^0.4.0",
     "three": "^0.183.1",
     "vue": "^3.5.28",
     "vue-i18n": "^11.2.8",
@@ -72,9 +39,8 @@
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.1.0",
     "@dimforge/rapier3d": "^0.19.3",
+    "@tauri-apps/cli": "^2.8.0",
     "@vitejs/plugin-vue": "^6.0.4",
-    "electron": "^40.6.0",
-    "electron-builder": "^26.8.1",
     "gulp": "^5.0.1",
     "gulp-zip": "^6.1.0",
     "vite": "^7.3.1",

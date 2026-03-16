@@ -2,6 +2,7 @@
 node_modules/
 build/
 dist/
+src-tauri/target/
 debug.log
 package-lock.json
 *.afdesign~lock~

@@ -31,7 +31,9 @@ text.
 - Click `Load unpacked` and navigate to the `/build` folder
 - Open extension within Chrome
 
-## Test Electron Application
+## Test Tauri Application
 
 - Install dependencies: `npm install`
-- Run custom script from package.json: `npm start`
+- Ensure Rust is installed (https://www.rust-lang.org/tools/install)
+- Run desktop app in development: `npm start`
+- Build desktop bundle: `npm run dist-tauri`

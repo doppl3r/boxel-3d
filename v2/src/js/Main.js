@@ -2,6 +2,9 @@ import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from '../vue/App.vue'
 import Routes from './routes/Routes.js'
+import { setupTauriElectronShim } from '../../../src/js/tauri-electron-shim.js';
+
+await setupTauriElectronShim();
 
 /*
   Router history modes

@@ -236,7 +236,7 @@
     selectItem(item);
 
     // Prompt dialog for data
-    const data = await electron.dialog({
+    const data = await window.electron.dialog({
       properties: ['openFile', 'multiSelections'],
       filters: [
         { 'name': 'Level File(s)', 'extensions': ['json'] },
@@ -272,7 +272,7 @@
     selectItem(item);
 
     // Prompt dialog for data
-    const data = await electron.dialog({
+    const data = await window.electron.dialog({
       properties: ['openFile'],
       filters: [{ 'name': 'Preview Image', 'extensions': ['png', 'jpg', 'gif'] }]
     });
