@@ -3,5 +3,5 @@
   "identifier": "default",
   "description": "Default desktop capability for Boxel 3D.",
   "windows": ["main"],
-  "permissions": ["core:default"]
+  "permissions": ["core:default", "window-state:default"]
 }

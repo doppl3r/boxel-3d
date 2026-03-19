@@ -151,6 +151,14 @@ fn open_external_url(url: String) -> Result<(), String> {
 
 fn main() {
   tauri::Builder::default()
+    .plugin(tauri_plugin_window_state::Builder::default().build())
+    .setup(|app| {
+      if let Some(window) = app.get_webview_window("main") {
+        let _ = window.show();
+      }
+
+      Ok(())
+    })
     .invoke_handler(tauri::generate_handler![
       toggle_full_screen,
       open_dev_tools,

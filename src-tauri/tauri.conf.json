@@ -15,6 +15,7 @@
         "title": "Boxel 3D",
         "width": 640,
         "height": 360,
+        "visible": false,
         "resizable": true,
         "fullscreen": false
       }
