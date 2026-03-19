@@ -39,15 +39,15 @@
   }
 
   function keydown(e) {
-    if (util.isElectronApp()) {
+    if (util.isDesktopApp()) {
       if (e.code === 'KeyI' && ((e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey))) {
-        window.electron.openDevTools();
+        window.desktop.openDevTools();
       }
       else if (e.code === 'F11') {
-        window.electron.toggleFullScreen();
+        window.desktop.toggleFullScreen();
       }
       else if (e.code === 'KeyQ' && e.metaKey) {
-        window.electron.quit();
+        window.desktop.quit();
       }
     }
   }

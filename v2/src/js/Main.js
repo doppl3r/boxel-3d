@@ -2,9 +2,9 @@ import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from '../vue/App.vue'
 import Routes from './routes/Routes.js'
-import { setupTauriElectronShim } from '../../../src/js/tauri-electron-shim.js';
+import { setupTauriDesktopBridge } from '../../../src/js/tauri-desktop-bridge.js';
 
-await setupTauriElectronShim();
+await setupTauriDesktopBridge();
 
 /*
   Router history modes
@@ -12,7 +12,7 @@ await setupTauriElectronShim();
   - createWebHistory: /home
   - createMemoryHistory: /home
 
-  createWebHashHistory works great with Electron because it expects
+  createWebHashHistory works great in desktop builds because it expects
   an index.html file, allowing /index.html#/home to work.
 */
 

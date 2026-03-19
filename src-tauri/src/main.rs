@@ -142,6 +142,13 @@ fn show_dialog(options: DialogOptions) -> DialogResult {
   }
 }
 
+#[tauri::command]
+fn open_external_url(url: String) -> Result<(), String> {
+  webbrowser::open(&url)
+    .map(|_| ())
+    .map_err(|err| err.to_string())
+}
+
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
@@ -152,7 +159,8 @@ fn main() {
       get_file_names,
       get_file_exists,
       get_file_path,
-      show_dialog
+      show_dialog,
+      open_external_url
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");

@@ -1,5 +1,6 @@
 <script setup>
   import { onMounted, onUnmounted } from 'vue';
+  import { Utility } from '../js/Utility.js';
   import { levels } from '../js/Data.js';
 
   // Initialize variables
@@ -8,6 +9,11 @@
   var progress = parseInt(settings.progress);
   var progressTitle = getLevelTitle(progress - 1);
   var emit = defineEmits(['setPage']);
+  const util = new Utility();
+
+  function openPackLink(url) {
+    util.openLink(url, '_blank');
+  }
 
   // Add event listener(s)
   function addEventListeners() {
@@ -120,7 +126,7 @@
             <h2>{{ pack.title }}</h2>
             <p v-if="pack.description">{{ pack.description }}</p>
             <div class="buttons" v-if="pack.links">
-              <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target">
+              <a v-for="(link) of pack.links" class="button" :class="link.class" :href="link.url" :target="link.target" @click.prevent="openPackLink(link.url)">
                 <span>{{ link.text }}</span> <img v-if="link.icon" :src="'./' + link.icon" />
               </a>
             </div>

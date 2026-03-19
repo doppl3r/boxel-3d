@@ -8,12 +8,12 @@ function normalizeParts(parts) {
   return parts.map(part => String(part));
 }
 
-export async function setupTauriElectronShim() {
+export async function setupTauriDesktopBridge() {
   if (!isTauri()) {
     return;
   }
 
-  const electronApi = {
+  const desktopApi = {
     client: undefined,
     async getFile(...parts) {
       return invoke('get_file', { parts: normalizeParts(parts) });
@@ -28,11 +28,14 @@ export async function setupTauriElectronShim() {
       return invoke('get_file_exists', { parts: normalizeParts(parts) });
     },
     async loadScript(...parts) {
-      const code = await electronApi.getFile(...parts);
+      const code = await desktopApi.getFile(...parts);
       return (0, eval)(code);
     },
     async dialog(options) {
       return invoke('show_dialog', { options });
+    },
+    async openExternal(url) {
+      return invoke('open_external_url', { url: String(url) });
     },
     async toggleFullScreen() {
       return invoke('toggle_full_screen');
@@ -45,6 +48,6 @@ export async function setupTauriElectronShim() {
     }
   };
 
-  window.electron = electronApi;
-  globalThis.electron = electronApi;
+  window.desktop = desktopApi;
+  globalThis.desktop = desktopApi;
 }

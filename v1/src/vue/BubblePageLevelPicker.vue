@@ -136,7 +136,7 @@
   }
 
   function openDiscord() {
-    window.open('https://discord.gg/j8fvd4UvbE', '_blank')
+    util.openLink('https://discord.gg/j8fvd4UvbE', '_blank');
   }
 
   function keydown(e) {

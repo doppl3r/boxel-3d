@@ -1,11 +1,11 @@
 # Publishing Instructions
 
-## Build Electron Application
+## Build Desktop Application
 
 - Update release version in `package.json`
 - Install dependencies: `npm install`
-- Run custom script from package.json: `npm run dist-electron`
-- Upload application from `/dist/boxel-3d x.x.x` to Steam
+- Run custom script from package.json: `npm run dist-tauri`
+- Upload application from `/src-tauri/target/release/bundle` to Steam
   - Note: You need a PC to generate `.exe`, a Mac to generate `.app` and Linux to generate `.whatever`
 
 ## Install Steamworks SDK (only needed once)

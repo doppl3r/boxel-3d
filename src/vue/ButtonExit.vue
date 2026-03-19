@@ -7,8 +7,8 @@
   const util = new Utility();
 
   function exit() {
-    if (util.isElectronApp()) {
-      window.electron.quit();
+    if (util.isDesktopApp()) {
+      window.desktop.quit();
     }
     else if (util.isNativeApp()) {
       cApp.exitApp();
@@ -20,7 +20,7 @@
   <ButtonAction
     class="action"
     title="Exit"
-    v-if="util.isElectronApp() || util.isNativeApp()"
+    v-if="util.isDesktopApp() || util.isNativeApp()"
     @click="exit"
   >
     <span class="material-symbols-rounded">undo</span>

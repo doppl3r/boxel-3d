@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import App from '../vue/App.vue'
 import i18n from '../../v1/src/js/i18n';
-import { setupTauriElectronShim } from './tauri-electron-shim.js';
+import { setupTauriDesktopBridge } from './tauri-desktop-bridge.js';
 
-await setupTauriElectronShim();
+await setupTauriDesktopBridge();
 
 const app = createApp(App);
 app.use(i18n);
