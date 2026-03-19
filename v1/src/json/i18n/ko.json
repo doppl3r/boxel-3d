@@ -14,9 +14,7 @@
       "multi_player": "멀티플레이어",
       "news": "뉴스",
       "play": "게임플레이",
-      "skins": "스킨",
-      "steam": "스팀 페이지",
-      "workshop": "워크샵"
+      "skins": "스킨"
     },
     "messages": {
       "0": "Welcome!",
@@ -183,16 +181,5 @@
     },
     "description": "스킨을 고르세요.",
     "title": "스킨"
-  },
-  "workshop": {
-    "text": {
-      "browse_items": "항목 찾기",
-      "create_item": "항목 생성",
-      "creations": "만든 것들",
-      "edit": "편집하기",
-      "steam_version": "스팀 버전",
-      "subscriptions": "구독",
-      "workshop": "워크샵"
-    }
   }
 }

@@ -14,9 +14,7 @@
       "multi_player": "چند نفره",
       "news": "اخبار",
       "play": " بازی",
-      "skins": "پوسته‌ها",
-      "steam": "Steam",
-      "workshop": "Workshop"
+      "skins": "پوسته‌ها"
     },
     "messages": {
       "0": "خوش آمدید!",
@@ -183,16 +181,5 @@
     },
     "description": "پوسته بازیکن خود را انتخاب کنید",
     "title": "پوسته‌ها"
-  },
-  "workshop": {
-    "text": {
-      "browse_items": "موارد را مرور کنید",
-      "create_item": "مورد ایجاد کنید",
-      "creations": "آفرینش ها",
-      "edit": "ویرایش کنید",
-      "steam_version": "Steam نسخه",
-      "subscriptions": "اشتراک ها",
-      "workshop": "Workshop"
-    }
   }
 }

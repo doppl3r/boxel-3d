@@ -28,13 +28,6 @@
   }
 
   function loadMods() {
-    // Check if electron app exists
-    if (util.isSteamEnabled()) {
-      // Loop through each mod item
-      mods.forEach(mod => {
-        window.electron.loadScript(mod.path);
-      });
-    }
   }
 
   function addEventListeners() {

@@ -5,12 +5,6 @@
     "model": "background-blue",
     "thumbnail": "../svg/button-pack-easy-peasy.svg"
   }, 
-  "workshop": {
-    "background_color": "#4c7dff",
-    "color": "#ffffff",
-    "model": "background-blue",
-    "thumbnail": "../svg/button-level-editor.svg"
-  },
   "city": {
     "background_color": "#4c7dff",
     "color": "#ffffff",

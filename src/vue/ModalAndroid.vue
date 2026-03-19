@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <Modal class="steam">
+  <Modal>
     <template #title>
       <span class="material-symbols-rounded">android</span>
     </template>

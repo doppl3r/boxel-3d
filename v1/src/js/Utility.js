@@ -46,10 +46,6 @@ class Utility {
     return window.electron != null;
   }
 
-  isSteamEnabled() {
-    return window.electron?.steam?.enabled === true;
-  }
-
   isNativeApp() {
     return Capacitor.isNativePlatform();
   }

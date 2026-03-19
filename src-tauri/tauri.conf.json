@@ -24,13 +24,11 @@
     "active": true,
     "targets": "all",
     "icon": [
+      "icons/icon.ico",
       "../public/png/icon32.png",
       "../public/png/icon128.png",
       "../public/png/icon256.png",
       "../public/png/icon512.png"
-    ],
-    "resources": [
-      "../public/png/workshop-thumbnail.png"
     ]
   }
 }

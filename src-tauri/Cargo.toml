@@ -13,4 +13,3 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tauri = { version = "2", features = [] }
 rfd = "0.15"
-steamworks = "0.12.2"

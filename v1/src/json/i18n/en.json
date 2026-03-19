@@ -14,9 +14,7 @@
       "multi_player": "Multi-player",
       "news": "News",
       "play": "Play",
-      "skins": "Skins",
-      "steam": "Steam",
-      "workshop": "Workshop"
+      "skins": "Skins"
     },
     "messages": {
       "0": "Welcome!",
@@ -183,16 +181,5 @@
     },
     "description": "Select your player skin",
     "title": "Skins"
-  },
-  "workshop": {
-    "text": {
-      "browse_items": "Browse levels, skins & mods",
-      "create_item": "Create item",
-      "creations": "Creations",
-      "edit": "Edit",
-      "steam_version": "Steam version",
-      "subscriptions": "Subscriptions",
-      "workshop": "Workshop"
-    }
   }
 }

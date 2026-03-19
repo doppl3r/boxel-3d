@@ -186,9 +186,6 @@
       <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
         <span class="material-symbols-rounded">search</span>
       </a>
-      <a class="button fade-in" v-if="util.isElectronApp()" href="../index.html?workshop=true" :title="i18n.t('workshop.text.workshop')">
-        <img :src="'../svg/steam.svg'">
-      </a>
       <a class="button fade-in" @click="openDiscord" :title="i18n.t('level_picker.button.discord')">
         <img :src="'../svg/discord.svg'">
       </a>

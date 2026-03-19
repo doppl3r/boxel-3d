@@ -789,7 +789,8 @@
   {
     "version": "2.8.3",
     "revisions": [
-      "Update level editor shortcuts"
+      "Update level editor shortcuts",
+      "Removed Steam Workshop"
     ]
   }
 ]
