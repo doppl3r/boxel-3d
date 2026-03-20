@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import wasm from "vite-plugin-wasm";
-import topLevelAwait from "vite-plugin-top-level-await";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,7 +17,7 @@ export default defineConfig({
       },
       treeshake: true // was false for Rapier.js build
     },
-    target: "ES2022"
+    target: "es2022"
   },
   css: {
     preprocessorOptions : {
@@ -28,7 +27,6 @@ export default defineConfig({
     } 
   },
   plugins: [
-    topLevelAwait(),
     vue(),
     wasm()
   ],
