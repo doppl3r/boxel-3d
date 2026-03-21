@@ -17,7 +17,8 @@
         "height": 360,
         "visible": false,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "devtools": true
       }
     ]
   },
