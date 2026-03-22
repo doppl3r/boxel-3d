@@ -21,7 +21,7 @@
 ## Building to Steam (Windows)
 
 - Copy app files:
-  - Copy: `D:\Development\boxel-3d\dist\boxel-3d.exe`
+  - Copy `.exe` file: `D:\Development\boxel-3d\src-tauri\target\release`
   - Paste: `C:\steamworks\sdk\tools\ContentBuilder\content\boxel-3d\windows`
 - Run SteamCMD `C:\steamworks\sdk\tools\ContentBuilder\builder\steamcmd.exe +login fragem123`
 - Run build script `run_app_build C:\steamworks\sdk\tools\ContentBuilder\scripts\app_build_3208440.vdf`.
