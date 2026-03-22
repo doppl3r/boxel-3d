@@ -15,6 +15,23 @@
   var inputs = ref([]);
   var isOpen = ref(false);
   var settings = ref({});
+  var pendingScrollTarget = null;
+
+  function parseOpenSettingsDetail(detail) {
+    if (typeof detail !== 'string' || detail.length === 0) return;
+    var parts = detail.split(':');
+    if (parts[0]) tab.value = parts[0];
+    pendingScrollTarget = parts[1] || null;
+  }
+
+  function scrollToSettingsTarget(id) {
+    var container = document.querySelector('.popup.settings .content');
+    if (container == null || id == null || id === '') return;
+    var target = container.querySelector('#' + id);
+    if (target == null) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (typeof target.focus == 'function') target.focus({ preventScroll: true });
+  }
 
   // Add event listener(s)
   function addEventListeners() {
@@ -33,11 +50,13 @@
   function openSettings(e) {
     isOpen.value = true;
     settings.value = app.storage.getSettings();
-    if (e.detail) tab.value = e.detail;
+    pendingScrollTarget = null;
+    parseOpenSettingsDetail(e?.detail);
     window.dispatchEvent(new CustomEvent('beforeSettingsOpened'));
     
     // Trigger opened event
     setTimeout(function() {
+      scrollToSettingsTarget(pendingScrollTarget);
       window.dispatchEvent(new CustomEvent('settingsOpened'));
     }, 100);
   }
