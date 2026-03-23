@@ -1,11 +1,13 @@
 <script setup>
   import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Utility } from '../js/Utility.js';
   import { levels as levelData, themes as themeData } from '../js/Data.js';
   
   // Initialize attributes
   const isOpen = ref(false);
   const i18n = useI18n({ useScope: 'global' });
+  const util = new Utility();
 
   // Set packs and levels from level data
   const packsRef = ref();
@@ -74,6 +76,10 @@
     window.removeEventListener('openLevelSelectorPopup', openLevelSelectorPopup);
 	  window.removeEventListener('closeLevelSelectorPopup', closeLevelSelectorPopup);
     window.removeEventListener('keydown', keydown);
+  }
+
+  function openExternalLink(url) {
+    util.openLink(url, '_blank');
   }
 
   function openLevelSelectorPopup(e) {
@@ -241,7 +247,7 @@
                   <span v-else>{{ selectedLevel.description }}</span>
                 </li>
                 <li class="links" v-for="link in selectedLevel.links">
-                  <a :href="link" target="_blank" :title="link">
+                  <a :href="link" target="_blank" :title="link" @click.prevent="openExternalLink(link)">
                     <img :src="'../svg/speedrun.svg'" v-if="link.includes('speedrun')">
                     <span v-else class="material-symbols-rounded">link</span>
                   </a>

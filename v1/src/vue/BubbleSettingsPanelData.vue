@@ -56,6 +56,11 @@
   function reloadPage() {
     window.location.reload();
   }
+
+  function loadDefault() {
+    const input = document.querySelector('#levelPacks');
+    input.click();
+  }
 </script>
 <template>
   <div class="panel">
@@ -108,6 +113,10 @@
         <button v-if="restartRequired" @click="reloadPage">
           <span class="material-symbols-rounded">refresh</span>
           {{ i18n.t('settings.data.reload') }}
+        </button>
+        <button v-else-if="settings.levelPacks === ''" @click="loadDefault">
+          <span class="material-symbols-rounded">search</span>
+          {{ i18n.t('popup.text.search') }}
         </button>
       </div>
     </div>

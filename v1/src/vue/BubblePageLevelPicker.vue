@@ -16,6 +16,7 @@
   var scores = app.storage.getScores();
   var settings = app.storage.getSettings();
   var progress = parseInt(settings.progress);
+  var preventAutoPlay = false;
   var emit = defineEmits(['setPage']);
 
   // Add event listener(s)
@@ -44,7 +45,16 @@
   }
 
   function updateSelectedItem(e) {
-    if (selectedItem.value == e.detail) playSelectedItem();
+    // Open the settings data page if the add button is clicked
+    if (e.detail?.class === 'add-button') {
+      preventAutoPlay = true;
+      window.dispatchEvent(new CustomEvent('openSettings', { detail: 'data:levelPacks' }));
+      return;
+    }
+
+    // Prevent playing level if opening settings, but still update selected item
+    if (preventAutoPlay) preventAutoPlay = false;
+    else if (selectedItem.value == e.detail) playSelectedItem();
     selectedItem.value = e.detail;
     settings = app.storage.getSettings();
     settings.progress = app.level.getLevelIndex(selectedItem.value.title) + 1;
@@ -129,6 +139,14 @@
         items.value.push(item);
       })
     });
+
+    // Add button to load more levels via settings
+    items.value.push({
+      class: 'add-button',
+      label: 'Add',
+      subtitle: 'Level Packs',
+      url: '../svg/button-level-pack.svg',
+    });
   }
 
   function openLevelSelector() {
@@ -136,7 +154,7 @@
   }
 
   function openDiscord() {
-    window.open('https://discord.gg/j8fvd4UvbE', '_blank')
+    util.openLink('https://discord.gg/j8fvd4UvbE', '_blank');
   }
 
   function keydown(e) {
@@ -185,9 +203,6 @@
       </a>
       <a class="button fade-in right" @click="openLevelSelector" :title="i18n.t('popup.text.search')">
         <span class="material-symbols-rounded">search</span>
-      </a>
-      <a class="button fade-in" v-if="util.isElectronApp()" href="../index.html?workshop=true" :title="i18n.t('workshop.text.workshop')">
-        <img :src="'../svg/steam.svg'">
       </a>
       <a class="button fade-in" @click="openDiscord" :title="i18n.t('level_picker.button.discord')">
         <img :src="'../svg/discord.svg'">

@@ -12,7 +12,6 @@
   import ButtonReview from './ButtonReview.vue';
   import Card from './Card.vue';
   import ModalAndroid from './ModalAndroid.vue';
-  import ModalWorkshop from './ModalWorkshop.vue';
   import Loading from '../../v2/src/vue/Loading.vue';
   import { Interval } from '../../v2/src/js/core/Interval.js';
   import { Graphics } from '../../v2/src/js/core/Graphics.js';
@@ -27,7 +26,6 @@
   const assets = shallowReactive(new AssetLoader(onLoad));
   const canvas = ref();
   const modalAndroidVisible = ref(false);
-  const modalWorkshopVisible = ref(false);
   const isExiting = ref(false);
   const playLink = ref('./v1/index.html' + document.location.search);
   let volumePrev = settings.volume;
@@ -63,10 +61,8 @@
   }
 
   function render({ delta }) {
-    if (modalWorkshopVisible.value == false) {
-      background.mixer.update(delta / 1000);
-      graphics.render();
-    }
+    background.mixer.update(delta / 1000);
+    graphics.render();
   }
 
   function toggleVolume() {
@@ -99,7 +95,12 @@
 
     // Open link with a delay (for fade animation)
     setTimeout(() => {
-      window.open(url, target);
+      if (target === '_blank' && window.desktop?.openExternal) {
+        window.desktop.openExternal(url);
+      }
+      else {
+        window.open(url, target);
+      }
     }, delay);
   }
 
@@ -109,10 +110,6 @@
   }
 
   function checkParameters() {
-    if (location.href.includes('workshop=true')) {
-      graphics.render();
-      modalWorkshopVisible.value = true;
-    }
   }
 
   function addEventListeners() {
@@ -127,19 +124,18 @@
   }
 
   function keydown(e) {
-    if (util.isElectronApp()) {
+    if (util.isDesktopApp()) {
       if (e.code === 'KeyI' && ((e.ctrlKey && e.shiftKey) || (e.metaKey && e.shiftKey))) {
-        window.electron.openDevTools();
+        window.desktop.openDevTools();
       }
       else if (e.code === 'Escape') {
-        if (modalWorkshopVisible.value == true) modalWorkshopVisible.value = false;
-        else window.electron.toggleFullScreen();
+        window.desktop.toggleFullScreen();
       }
       else if (e.code === 'F11') {
-        window.electron.toggleFullScreen();
+        window.desktop.toggleFullScreen();
       }
       else if (e.code === 'KeyQ' && e.metaKey) {
-        window.electron.quit();
+        window.desktop.quit();
       }
     }
   }
@@ -178,7 +174,6 @@
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-steam.svg'" @click="modalWorkshopVisible = true;">{{ i18n.t('home.button.workshop') }}</Card>
       <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" v-if="util.isNativeApp() == false">{{ i18n.t('home.button.android') }}</Card>
       <Card :src="'./svg/button-play-pro.svg'" @click="openLink(playLink)">{{ i18n.t('home.button.play') }}</Card>
     </div>
@@ -186,7 +181,6 @@
       <ButtonReview />
     </div>
     <ModalAndroid @close="modalAndroidVisible = false" v-show="modalAndroidVisible == true" />
-    <ModalWorkshop @close="modalWorkshopVisible = false" v-show="modalWorkshopVisible == true" />
     <Loading />
 
     <div class="fade-exit" :class="{ 'is-exiting': isExiting }"></div>

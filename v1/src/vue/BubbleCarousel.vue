@@ -105,7 +105,7 @@
 <template>
   <div class="carousel" @wheel.passive="scrollFromEvent($event)">
     <template v-for="(item, key) of items">
-      <div class="item" :class="{ 'selected': isSelected(item) }" @click="selectItem(item, $event)">
+      <div class="item" :class="[{ 'selected': isSelected(item) }, item.class]" @click="selectItem(item, $event)">
         <div class="thumbnail">
           <img :src="item.url">
           <div v-if="item.overlay" class="overlay"></div>

@@ -42,12 +42,8 @@ class Utility {
     return window.chrome?.extension != undefined;
   }
 
-  isElectronApp() {
-    return window.electron != null;
-  }
-
-  isSteamEnabled() {
-    return window.electron?.client != undefined;
+  isDesktopApp() {
+    return window.desktop != null;
   }
 
   isNativeApp() {
@@ -60,6 +56,7 @@ class Utility {
 
   openLink(url, target = '_blank') {
     if (window.chrome?.tabs) window.chrome.tabs.create({ url: url });
+    else if (window.desktop?.openExternal && target === '_blank') window.desktop.openExternal(url);
     else window.open(url, target);
   }
 }

@@ -14,9 +14,7 @@
       "multi_player": "Multi-jugador",
       "news": "Informacion",
       "play": "Jugar",
-      "skins": "Apariencia",
-      "steam": "Steam",
-      "workshop": "Workshop"
+      "skins": "Apariencia"
     },
     "messages": {
       "0": "¡Bienvenidos!",
@@ -183,16 +181,5 @@
     },
     "description": "Selecciona su Apariencia",
     "title": "Apariencia"
-  },
-  "workshop": {
-    "text": {
-      "browse_items": "Explorar el contenido de Workshop",
-      "create_item": "Crear contenido en el Workshop",
-      "creations": "Creaciones",
-      "edit": "Editar",
-      "steam_version": "Versión de Steam",
-      "subscriptions": "Suscripciones",
-      "workshop": "Workshop"
-    }
   }
 }

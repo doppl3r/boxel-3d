@@ -3,7 +3,7 @@ import zip from 'gulp-zip';
 import { readFileSync, writeFileSync } from 'fs';
 
 let packagePath = './package.json';
-let manifestChromePath = './build/manifest.json';
+let manifestChromePath = './dist/manifest.json';
 let manifestFirefoxPath = './files/json/firefox/manifest.json';
 let packageFile = readFileSync(packagePath, 'utf8');
 let manifestChrome = readFileSync(manifestChromePath, 'utf8');
@@ -13,9 +13,9 @@ let version = JSON.parse(packageFile).version;
 function zipBuildFiles(platform = 'chrome', callback = () => {}) {
   // Build Chrome file
   gulp
-    .src(['./build/**/*'], { encoding: false })
+    .src(['./dist/**/*'], { encoding: false })
     .pipe(zip(`boxel-3d-${ version }-${ platform }.zip`, { buffer: true }))
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest('./dist-extension'))
     .on('end', callback); // Execute callback
 }
 
@@ -29,7 +29,7 @@ function zipSrcFiles() {
       './v2/**/*'
     ], { base: '.', encoding: false })
     .pipe(zip(`boxel-3d-${ version }-src.zip`, { buffer: true }))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist-extension'));
 }
 
 // Start zipping

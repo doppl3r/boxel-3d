@@ -14,9 +14,7 @@
       "multi_player": "Multijoueur",
       "news": "Nouvelles",
       "play": "Jouer",
-      "skins": "Apparences",
-      "steam": "Steam",
-      "workshop": "Atelier"
+      "skins": "Apparences"
     },
     "messages": {
       "0": "Bienvenue !",
@@ -183,16 +181,5 @@
     },
     "description": "Sélectionner votre apparence",
     "title": "Apparence"
-  },
-  "workshop": {
-    "text": {
-      "browse_items": "Parcourir les niveaux, apparences & mods",
-      "create_item": "Créer un élément",
-      "creations": "Créations",
-      "edit": "Modifier",
-      "steam_version": "Version Steam",
-      "subscriptions": "Abonnements",
-      "workshop": "Atelier"
-    }
   }
 }

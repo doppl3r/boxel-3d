@@ -20,9 +20,9 @@
     }
 
     // Toggle fullscreen
-    if (util.isElectronApp()) {
-      // Send message to preload.mjs
-      window.electron.toggleFullScreen();
+    if (util.isDesktopApp()) {
+      // Send fullscreen toggle through the desktop bridge
+      window.desktop.toggleFullScreen();
     }
     else {
       if (util.isFullscreen()) document.exitFullscreen();
