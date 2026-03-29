@@ -174,7 +174,7 @@
     </div>
     <Banner>{{ i18n.t('home.title') }}</Banner>
     <div class="cards">
-      <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" v-if="util.isNativeApp() == false">{{ i18n.t('home.button.android') }}</Card>
+      <Card :src="'./svg/button-android.svg'" @click="modalAndroidVisible = true;" v-if="util.isNativeApp() == false">{{ i18n.t('home.button.news') }}</Card>
       <Card :src="'./svg/button-play-pro.svg'" @click="openLink(playLink)">{{ i18n.t('home.button.play') }}</Card>
     </div>
     <div class="footer">
