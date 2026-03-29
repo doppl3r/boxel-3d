@@ -26,7 +26,10 @@
     var el = getSelectedElement(e.target);
     var behavior = e.isTrusted ? 'smooth' : 'instant'; // Keyboard "click" = "not trusted"
     scrollToSelected(el, behavior);
-    selectedItem.value = item;
+
+    // Keep the last playable item selected for non-level tiles (for example: "Add").
+    if (item?.title != null) selectedItem.value = item;
+
     window.dispatchEvent(new CustomEvent('itemSelected', { detail: item }));
 
     // Play click sound
@@ -35,12 +38,28 @@
 
   function selectNext() {
     var el = document.querySelector(".item[class*='selected']");
-    if (el && el.nextElementSibling) el.nextElementSibling.click();
+    var next = getPlayableSibling(el, 'next');
+    if (next) next.click();
   }
 
   function selectPrev() {
     var el = document.querySelector(".item[class*='selected']");
-    if (el && el.previousElementSibling) el.previousElementSibling.click();
+    var prev = getPlayableSibling(el, 'previous');
+    if (prev) prev.click();
+  }
+
+  function getPlayableSibling(el, direction) {
+    if (el == null) return null;
+
+    var node = direction == 'next' ? el.nextElementSibling : el.previousElementSibling;
+    while (node) {
+      if (node.classList && node.classList.contains('item') && !node.classList.contains('add-button')) {
+        return node;
+      }
+      node = direction == 'next' ? node.nextElementSibling : node.previousElementSibling;
+    }
+
+    return null;
   }
 
   function getSelectedElement(node) {

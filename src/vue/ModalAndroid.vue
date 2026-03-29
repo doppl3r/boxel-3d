@@ -18,7 +18,7 @@
 
     <template #buttons>
       <button @click="util.openLink('https://play.google.com/store/apps/details?id=com.boxel3d.app', '_blank')">
-        <span class="discount">$2.99</span> <span class="price">$0.99</span>
+        <span class="discount">$2.99</span> <span class="price">$1.99</span>
       </button>
     </template>
   </Modal>
