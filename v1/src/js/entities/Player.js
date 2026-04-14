@@ -383,6 +383,7 @@ class Player extends Cube {
           this.skin = new Mesh(geometry, material);
           this.skin.url = skin.url;
           this.add(this.skin);
+          this.updateMatrixWorld(); // Compute world matrix for new skin child
         }.bind(this),
         undefined,
         function(err) {

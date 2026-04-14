@@ -19,8 +19,9 @@ class Level extends Group {
       this.parent.add(object.helper);
     }
     
-    // Add to group
+    // Add to group and compute world matrix once (scene.matrixWorldAutoUpdate is off)
     this.add(object);
+    object.updateMatrixWorld();
   }
 
   removeObject(object, a, override = false) {

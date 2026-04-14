@@ -87,6 +87,10 @@ class LevelEditor {
   updateRender() {
     // Only force render level editor if app is paused
     if (app.state == 'level-editor' && app.play == false) {
+      // Manually update matrices for edited objects (scene.matrixWorldAutoUpdate is off)
+      if (app.selectedObject) app.selectedObject.updateMatrixWorld();
+      this.controlsTransform.getHelper().updateMatrixWorld();
+      app.camera.updateMatrixWorld();
       app.graphics.render();
     }
   }

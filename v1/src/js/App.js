@@ -60,10 +60,14 @@ class App {
     this.camera.position.zDefault = 180;
     this.camera.position.z = this.camera.position.zDefault;
 
+    // Disable automatic matrix world updates for performance
+    this.scene.matrixWorldAutoUpdate = false;
+
     // Add lighting to scene
     this.light = new HemisphereLight('#ffffff', '#000000', 1 * Math.PI); // PI was added after three.js r155
     this.light.position.set(0.25, 0.5, 1);
     this.scene.add(this.light);
+    this.light.updateMatrixWorld();
 
     // Add background to scene
     this.background = new Background();
@@ -167,6 +171,7 @@ class App {
       
       // Update game objects
       this.background.update(delta, alpha, app.motion == false);
+      this.background.updateMatrixWorld();
       this.animation.update(delta, alpha);
       this.graphics.update(delta);
 
@@ -178,6 +183,7 @@ class App {
 
     // Update network animations (tweens)
     this.multiplayer.render(delta, alpha);
+    this.multiplayer.players.updateMatrixWorld();
   }
 
   updateChildren(delta, alpha) {
@@ -186,9 +192,10 @@ class App {
     while (index >= 0) {
       var child = this.level.children[index];
 
-      // Update child if it has a collision box
-      if (child.body != null && child.isFrozen() == false) {
+      // Update child if it has a collision box (skip static objects as they don't move)
+      if (child.body != null && child.isFrozen() == false && child.isStatic() == false) {
         child.update(delta, alpha);
+        child.updateMatrixWorld();
       }
       index--; // Update iterator
     }
@@ -218,7 +225,7 @@ class App {
   updateCamera(a) {
     a.camera.position.x = a.player.position.x;
     a.camera.position.y = a.player.position.y + a.camera.tilt;
-    //a.camera.lookAt(a.player.position.x, a.player.position.y, a.player.position.z);
+    a.camera.updateMatrixWorld();
 
     // Dispatch render event
     window.dispatchEvent(this.eventCameraUpdated);
