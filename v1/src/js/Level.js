@@ -22,6 +22,7 @@ class Level extends Group {
     // Add to group and compute world matrix once (scene.matrixWorldAutoUpdate is off)
     this.add(object);
     object.updateMatrixWorld();
+    object.updateHelper();
   }
 
   removeObject(object, a, override = false) {
@@ -158,6 +159,8 @@ class Level extends Group {
     for (var i = 0; i < this.children.length; i++) {
       var child = this.children[i];
       child.resetToOrigin();
+      child.updateMatrixWorld();
+      child.updateHelper();
     }
   }
 

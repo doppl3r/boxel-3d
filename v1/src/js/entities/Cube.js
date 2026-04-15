@@ -81,6 +81,7 @@ class Cube extends Mesh {
       this.helper.position.z = this.position.z;
       this.helper.rotation.z = -this.body.anglePrev;
       this.helper.scale.copy(this.scale).multiplyScalar(1);
+      this.helper.updateMatrixWorld();
     }
   }
 

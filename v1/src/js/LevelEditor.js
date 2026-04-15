@@ -1,4 +1,5 @@
 import { Vector2, Vector3 } from 'three';
+import { Composite, World } from 'matter-js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -42,14 +43,15 @@ class LevelEditor {
     this.controlsOrbit.addEventListener('change', () => { this.controlsOrbit.moved = true; })
 
     // Add render listeners
+    this.boundUpdateRender = this.updateRender.bind(this);
     domElement.addEventListener('pointerdown', this.pointerDown.bind(this));
     domElement.addEventListener('pointermove', this.pointerMove.bind(this));
     domElement.addEventListener('pointerup', this.pointerUp.bind(this));
-    domElement.addEventListener('wheel', this.updateRender);
-    window.addEventListener('resize', this.updateRender);
-    window.addEventListener('setSelectedObject', this.updateRender);
-    window.addEventListener('setSelectedMode', this.updateRender);
-    window.addEventListener('themeSelected', this.updateRender);
+    domElement.addEventListener('wheel', this.boundUpdateRender);
+    window.addEventListener('resize', this.boundUpdateRender);
+    window.addEventListener('setSelectedObject', this.boundUpdateRender);
+    window.addEventListener('setSelectedMode', this.boundUpdateRender);
+    window.addEventListener('themeSelected', this.boundUpdateRender);
     window.addEventListener('keydown', this.keyDown.bind(this));
     window.addEventListener('keyup', this.keyUp.bind(this));
   }
@@ -191,11 +193,12 @@ class LevelEditor {
 
   keyDown(e) {
     this.keys[e.code] = true;
+    this.updateRender();
   }
   
   keyUp(e) {
     this.keys[e.code] = false;
-    this.updateRender()
+    this.updateRender();
   }
 
   eraseTarget(e, a) {
@@ -319,8 +322,21 @@ class LevelEditor {
     }
 
     // Update body state (-1 == active physics)
-    if (target.position.z == 0) target.body.collisionFilter.mask = -1;
-    else target.body.collisionFilter.mask = 0; // Disable physics
+    if (target.position.z == 0) {
+      target.body.collisionFilter.mask = -1;
+      if (!Composite.get(app.engine.world, target.body.id, 'body')) {
+        World.add(app.engine.world, target.body);
+        app.scene.add(target.helper);
+        target.helper.updateMatrixWorld();
+      }
+    }
+    else {
+      target.body.collisionFilter.mask = 0; // Disable physics
+      if (Composite.get(app.engine.world, target.body.id, 'body')) {
+        World.remove(app.engine.world, target.body);
+        app.scene.remove(target.helper);
+      }
+    }
 
     // Update body position
     target.setPosition(target.getPosition());

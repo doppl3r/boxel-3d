@@ -243,6 +243,9 @@
   }
 
   function keydown(e) {
+    // Ignore keyboard shortcuts when typing in an input field
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
     // Make sure popup is closed
     if (isClosed.value == true || isClosing.value === true) {
       // Jump if one of the keys is pressed

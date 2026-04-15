@@ -129,6 +129,7 @@ class Collision {
                   y: Number(position[1] || 0),
                   z: 0
                 }, false);
+                objectB.updateMatrixWorld();
 
                 // Only play sound for player
                 if (objectB.body.class ==  'player') {
