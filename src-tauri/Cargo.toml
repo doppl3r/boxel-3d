@@ -1,6 +1,6 @@
 [package]
 name = "boxel-3d"
-version = "2.8.4"
+version = "2.8.5"
 description = "Boxel 3D desktop app"
 authors = ["Jacob DeBenedetto"]
 edition = "2021"

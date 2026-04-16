@@ -799,5 +799,14 @@
     "revisions": [
       "Fixed level picker shortcut bug"
     ]
+  },
+  {
+    "version": "2.8.5",
+    "revisions": [
+      "Optimized game performance (credit: Charlieee1)",
+      "Updated game libraries",
+      "Fixed level editor bugs",
+      "Fixed missing workshop theme"
+    ]
   }
 ]
