@@ -87,7 +87,7 @@
       "backup": "백업",
       "cancel": "취소",
       "close": "닫기",
-      "checkpoint": "검문소 (C)",
+      "checkpoint": "체크포인트 (C)",
       "continue": "계속하기",
       "exit": "나가기(E)",
       "no": "취소",
@@ -134,11 +134,11 @@
       "title": "컨트롤 설정"
     },
     "data": {
-      "backup_to": "...으로 저장",
+      "backup_to": "...에서 백업",
       "file": "파일",
       "google": "구글",
-      "reload": "다시 장전하다",
-      "restore_from": "...에서 백업",
+      "reload": "새로고침",
+      "restore_from": "...으로 저장",
       "title": "데이터"
     },
     "graphics": {
