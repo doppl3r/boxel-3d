@@ -1,5 +1,6 @@
 import { Vector2, Vector3 } from 'three';
 import { Composite, World } from 'matter-js';
+import { PuttyControls } from './PuttyControls';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -9,6 +10,7 @@ class LevelEditor {
     this.selectedObjectType = 'cube';
 
     // Add controls with camera and active canvas
+    this.controlsPutty = new PuttyControls(camera, domElement);
     this.controlsTransform = new TransformControls(camera, domElement);
     this.controlsTransform.showZ = true;
     this.controlsTransform.space = 'world';

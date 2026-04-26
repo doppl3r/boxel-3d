@@ -17,6 +17,7 @@
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval';"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "unlimitedStorage"
   ]
 }
