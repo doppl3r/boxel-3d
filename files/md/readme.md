@@ -4,7 +4,7 @@
 
 - Update release version in `package.json`
 - Install dependencies: `npm install`
-- Run custom script from package.json: `npm run dist-tauri`
+- Run custom script from package.json: `npm run build-tauri`
 - Upload application from `/src-tauri/target/release/bundle` to Steam
   - Note: You need a PC to generate `.exe`, a Mac to generate `.app` and Linux to generate `.whatever`
 
@@ -42,10 +42,13 @@
 ## Build on Android/iOS
 
 - Increment `versionCode` and `versionName` in `/android/app/build.gradle`
-- Run build & sync with `npm run dist-android`
+- Run build & sync with `npm run build-android`
 - Open Android Studio: `npx cap open android`
 - Copy/paste keystore file from Google Drive to `/android/keystores/my-keystore.jsk`
 - Select Build > Generate Signed App Bundle or APK...
+- Copy/paste `.aab` file to desktop: `D:\Development\boxel-3d\android\app\release`
+- Select "Create new release": `https://play.google.com/console/u/0/developers/7090777458282935969/app/4972579011570604048/tracks/production?tab=releases`
+- Upload
 
 ## Update App Icon/Splash
 
