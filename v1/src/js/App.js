@@ -216,6 +216,7 @@ class App {
 
   resetScene(a = app) {
     app.camera.position.z = app.camera.position.zDefault;
+    a.player.removeRope();
     a.level.removeParticles(a);
     a.level.resetLevel();
     a.updateRender({ delta: 0, alpha: 0 }, 0);
