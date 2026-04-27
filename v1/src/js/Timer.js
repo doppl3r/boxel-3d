@@ -9,7 +9,10 @@ class Timer {
     }
 
     pause() {
-        this.pauseTime = Date.now();
+        if (this.isPaused === false) {
+            this.pauseTime = Date.now();
+            this.isPaused = true;
+        }
     }
 
     reset() {
@@ -17,10 +20,16 @@ class Timer {
         this.startTime = now;
         this.pauseTime = now;
         this.playTime = 0;
+        this.isPaused = true;
     }
 
     resume() { 
-        this.playTime += Date.now() - this.pauseTime;
+        if (this.isPaused === true) {
+            var now = Date.now();
+            this.playTime += now - this.pauseTime;
+            this.pauseTime = now;
+            this.isPaused = false;
+        }
     }
 
     getPlayTime() {

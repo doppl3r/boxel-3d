@@ -113,7 +113,7 @@
       <img :src="'../svg/background-purple.svg'">
     </div>
     <div class="nav">
-      <a class="button fade-in" @click="exitSkins" title="Exit to home (ESC)">
+      <a class="button left fade-in" @click="exitSkins" title="Exit to home (ESC)">
         <span class="material-symbols-rounded">undo</span>
       </a>
       <BubbleButtonSettings class="button fade-in" />

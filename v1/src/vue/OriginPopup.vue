@@ -100,6 +100,7 @@
           // Close popup
           e.preventDefault();
           runLastInputCallback(e);
+          return;
         }
 
         // Check input shortcut
