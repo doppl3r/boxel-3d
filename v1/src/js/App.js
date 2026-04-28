@@ -99,6 +99,7 @@ class App {
     // Initialize level editor
     this.levelEditor = new LevelEditor(this.camera, canvas);
     this.scene.add(this.levelEditor.controlsTransform.getHelper());
+    this.scene.add(this.levelEditor.controlsPutty.getHelper());
 
     // Add event listeners
     this.canvas = canvas;

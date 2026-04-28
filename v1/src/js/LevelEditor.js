@@ -94,6 +94,7 @@ class LevelEditor {
       // Manually update matrices for edited objects (scene.matrixWorldAutoUpdate is off)
       if (app.selectedObject) app.selectedObject.updateMatrixWorld();
       this.controlsTransform.getHelper().updateMatrixWorld();
+      this.controlsPutty.getHelper().updateMatrixWorld();
       app.camera.updateMatrixWorld();
       app.graphics.render();
     }
@@ -139,6 +140,7 @@ class LevelEditor {
             a.selectedObject = target;
             a.selectedObject.select(true);
             this.controlsTransform.attach(target);
+            this.controlsPutty.attach(target);
 
             // Update Vue.js UI from custom event
             if (a.selectedObject.getClass() != 'player') window.dispatchEvent(new CustomEvent('selectObjectType', { detail: { type: a.selectedObject.getClass(), checkNull: false }}));
@@ -168,6 +170,7 @@ class LevelEditor {
             a.levelHistory.save('Added ' + objectType, a);
             a.selectedObject.select(true);
             this.controlsTransform.attach(a.selectedObject);
+            this.controlsPutty.attach(a.selectedObject);
             window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: a.selectedObject }));
           }
         }
@@ -177,6 +180,7 @@ class LevelEditor {
         if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
           a.level.deselectLevel(app);
           this.controlsTransform.detach();
+          this.controlsPutty.detach();
           window.dispatchEvent(new CustomEvent('setSelectedObject'));
         }
       }
@@ -187,6 +191,7 @@ class LevelEditor {
         a.level.deselectLevel(a); // Deselect everything
         a.levelHistory.save('Erased object', a);
         this.controlsTransform.detach();
+        this.controlsPutty.detach();
         window.dispatchEvent(new CustomEvent('setSelectedObject'));
       }
       a.mouse.mode = a.mouse.prevMode;
@@ -220,6 +225,7 @@ class LevelEditor {
       app.selectedObject.position.add(offset); // Add offset
       app.selectedObject.select(true);
       app.levelEditor.controlsTransform.attach(app.selectedObject);
+      app.levelEditor.controlsPutty.attach(app.selectedObject);
       app.levelEditor.setMode('translate');
       app.levelHistory.save('Duplicated object', app);
     }
@@ -229,6 +235,7 @@ class LevelEditor {
     if (app.selectedObject) {
       app.level.removeObject(app.selectedObject, app);
       app.levelEditor.controlsTransform.detach();
+      app.levelEditor.controlsPutty.detach();
       app.levelHistory.save('Deleted object', app);
       window.dispatchEvent(new CustomEvent('setSelectedObject'));
     }
@@ -236,6 +243,7 @@ class LevelEditor {
 
   saveLevel() {
     app.levelEditor.controlsTransform.detach();
+    app.levelEditor.controlsPutty.detach();
     app.resetScene(app);
     app.level.deselectLevel(app);
     app.level.saveLevelData(app);
@@ -261,6 +269,7 @@ class LevelEditor {
     app.levelEditor.controlsOrbit.enabled = false;
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
+    app.levelEditor.controlsPutty.detach();
     app.play = false;
     if (saveLevel == true) app.levelEditor.saveLevel();
     app.level.clearLevel(app);
@@ -273,6 +282,7 @@ class LevelEditor {
 
   undo() {
     app.levelEditor.controlsTransform.detach();
+    app.levelEditor.controlsPutty.detach();
     app.levelHistory.undo(app);
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
@@ -383,6 +393,7 @@ class LevelEditor {
       app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
       app.selectedObject.select(true);
       app.levelEditor.controlsTransform.attach(app.selectedObject);
+      app.levelEditor.controlsPutty.attach(app.selectedObject);
       app.levelHistory.save('Changed object to ' + type, app);
       window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
     }
@@ -396,6 +407,7 @@ class LevelEditor {
     app.selectedObject = app.level.refreshObject(app.selectedObject, app);
     app.selectedObject.select(true);
     app.levelEditor.controlsTransform.attach(app.selectedObject);
+    app.levelEditor.controlsPutty.attach(app.selectedObject);
     app.levelHistory.save('Updated object state', app);
     window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
   }

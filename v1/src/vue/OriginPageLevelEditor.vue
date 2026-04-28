@@ -82,6 +82,7 @@
     rewind();
     app.level.deselectLevel(app);
     app.levelEditor.controlsTransform.detach();
+    app.levelEditor.controlsPutty.detach();
 
     // Store current theme settings
     const theme = app.level.getTheme(name);
@@ -139,6 +140,7 @@
     app.levelEditor.controlsOrbit.enabled = false;
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
+    app.levelEditor.controlsPutty.detach();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
     app.startLevel();
   }

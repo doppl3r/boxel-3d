@@ -1,4 +1,4 @@
-import { BufferGeometry, Controls, Float32BufferAttribute, Points, PointsMaterial } from 'three';
+import { BufferGeometry, Controls, Object3D, Float32BufferAttribute, Points, PointsMaterial } from 'three';
 import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
 
 /*
@@ -32,10 +32,18 @@ class PuttyControls extends Controls {
     // Define points
     this.geometry = new BufferGeometry();
     this.geometry.setAttribute('position', new Float32BufferAttribute([0, 0, 0], 3));
-    this.material = new PointsMaterial({ color: '#ffffff', size: 0.25, sizeAttenuation: true });
+    this.material = new PointsMaterial({ color: '#ffffff', depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true });
     this.pointA = new Points(this.geometry, this.material);
     this.pointB = new Points(this.geometry, this.material);
-    this.dragControls = new DragControls([this.pointA, this.pointB], camera, domElement);
+    this.pointA.renderOrder = Infinity;
+    this.pointB.renderOrder = Infinity;
+    this.points = new Object3D();
+    this.points.visible = false;
+    this.points.add(this.pointA, this.pointB);
+
+    // Initialize drag controls
+    this.dragControls = new DragControls(this.points.children, camera, domElement);
+    this.dragControls.raycaster.params.Points.threshold = 4;
 
     // Define properties
     defineProperty('axis', 'X');
@@ -45,10 +53,16 @@ class PuttyControls extends Controls {
 
   attach(object) {
     this.object = object;
+    this.points.visible = true;
   }
 
   detach() {
     this.object = undefined;
+    this.points.visible = false;
+  }
+
+  getHelper() {
+    return this.points;
   }
 }
 
