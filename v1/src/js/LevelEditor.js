@@ -366,21 +366,31 @@ class LevelEditor {
   }
 
   setMode(mode) {
-    this.controlsTransform.setMode(mode);
-    if (mode == 'translate') {
-      this.controlsTransform.showX = true;
-      this.controlsTransform.showY = true;
-      this.controlsTransform.showZ = true;
+    if (mode == 'putty') {
+      this.controlsPutty.getHelper().visible = true;
+      this.controlsTransform.getHelper().visible = false;
+      this.controlsTransform.enabled = false;
     }
-    else if (mode == 'scale') {
-      this.controlsTransform.showX = true;
-      this.controlsTransform.showY = true;
-      this.controlsTransform.showZ = true;
-    }
-    else if (mode == 'rotate') {
-      this.controlsTransform.showX = this.controlsTransform.showAll; // Default false
-      this.controlsTransform.showY = this.controlsTransform.showAll; // Default false
-      this.controlsTransform.showZ = true;
+    else {
+      this.controlsPutty.getHelper().visible = false;
+      this.controlsTransform.getHelper().visible = true;
+      this.controlsTransform.enabled = true;
+      this.controlsTransform.setMode(mode);
+      if (mode == 'translate') {
+        this.controlsTransform.showX = true;
+        this.controlsTransform.showY = true;
+        this.controlsTransform.showZ = true;
+      }
+      else if (mode == 'scale') {
+        this.controlsTransform.showX = true;
+        this.controlsTransform.showY = true;
+        this.controlsTransform.showZ = true;
+      }
+      else if (mode == 'rotate') {
+        this.controlsTransform.showX = this.controlsTransform.showAll; // Default false
+        this.controlsTransform.showY = this.controlsTransform.showAll; // Default false
+        this.controlsTransform.showZ = true;
+      }
     }
 
     // Dispatch level editor more change

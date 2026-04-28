@@ -1,4 +1,4 @@
-import { BufferGeometry, Controls, Object3D, Float32BufferAttribute, Points, PointsMaterial } from 'three';
+import { BufferGeometry, Controls, Float32BufferAttribute, Group, Line, LineBasicMaterial, Points, PointsMaterial } from 'three';
 import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
 
 /*
@@ -32,18 +32,33 @@ class PuttyControls extends Controls {
     // Define points
     this.geometry = new BufferGeometry();
     this.geometry.setAttribute('position', new Float32BufferAttribute([0, 0, 0], 3));
-    this.material = new PointsMaterial({ color: '#ffffff', depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true });
+    this.material = new PointsMaterial({ color: '#0000ff', depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true });
     this.pointA = new Points(this.geometry, this.material);
     this.pointB = new Points(this.geometry, this.material);
     this.pointA.renderOrder = Infinity;
     this.pointB.renderOrder = Infinity;
-    this.points = new Object3D();
-    this.points.visible = false;
-    this.points.add(this.pointA, this.pointB);
+    this.pointA.position.x = -0.5;
+    this.pointB.position.x = 0.5;
+
+    // Define line
+    this.lineGeometry = new BufferGeometry().setFromPoints([this.pointA.position, this.pointB.position]);
+    this.lineMaterial = new LineBasicMaterial({ color: '#0000ff', depthTest: false, depthWrite: false, transparent: true });
+    this.line = new Line(this.lineGeometry, this.lineMaterial);
+    this.line.renderOrder = Infinity;
+
+    // Create points group
+    this.group = new Group();
+    this.group.visible = false;
+    this.group.add(this.pointA, this.pointB, this.line);
 
     // Initialize drag controls
-    this.dragControls = new DragControls(this.points.children, camera, domElement);
+    this.dragControls = new DragControls([this.pointA, this.pointB], camera, domElement);
     this.dragControls.raycaster.params.Points.threshold = 4;
+    this.dragControls.raycaster.params.Line.threshold = 0.1;
+    this.dragControls.addEventListener('drag', this.onDrag);
+    this.dragControls.addEventListener('dragend', this.onDragEnd);
+    this.dragControls.addEventListener('hoveron', this.onHoverOn);
+    this.dragControls.addEventListener('hoveroff', this.onHoverOff);
 
     // Define properties
     defineProperty('axis', 'X');
@@ -51,18 +66,41 @@ class PuttyControls extends Controls {
     defineProperty('distanceLocked', true);
   }
 
+  onDrag = event => {
+    // Update line position
+    const positions = this.lineGeometry.attributes.position;
+    positions.setXYZ(0, this.pointA.position.x, this.pointA.position.y, this.pointA.position.z);
+    positions.setXYZ(1, this.pointB.position.x, this.pointB.position.y, this.pointB.position.z);
+    positions.needsUpdate = true;
+  }
+
+  onDragEnd = event => {
+    
+  }
+
+  onHoverOff = event => {
+    event.object.material.color.set('#0000ff');
+  }
+
+  onHoverOn = event => {
+    event.object.material.color.set('#ffff00');
+  }
+
   attach(object) {
     this.object = object;
-    this.points.visible = true;
+    this.group.visible = true;
+    this.group.position.copy(object.position);
+    this.group.rotation.copy(object.rotation);
+    this.group.scale.copy(object.scale);
   }
 
   detach() {
     this.object = undefined;
-    this.points.visible = false;
+    this.group.visible = false;
   }
 
   getHelper() {
-    return this.points;
+    return this.group;
   }
 }
 

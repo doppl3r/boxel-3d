@@ -11,7 +11,7 @@
   const selectedObject = ref();
   const selectedTheme = ref(app.level.theme);
   const themeOptionsVisible = ref(false);
-  const controlsTransform = ref(app.levelEditor.controlsTransform);
+  const selectedMode = ref(app.levelEditor.controlsTransform.mode);
   const coordinates = ref('0, 0, 0');
   const isClosed = ref(true); // Popup animation state
   const isClosing = ref(false);
@@ -164,7 +164,7 @@
   }
 
   function setTransformMode(e) {
-    controlsTransform.value.mode = e.detail;
+    selectedMode.value = e.detail;
     app.levelEditor.setMode(e.detail);
   }
 
@@ -294,6 +294,9 @@
         else if (e.code == 'KeyG' || e.code == 'KeyT') {
           setTransformMode({ detail: 'translate' });
         }
+        else if (e.code == 'KeyP') {
+          setTransformMode({ detail: 'putty' });
+        }
         else if (e.code == 'KeyR') {
           // Toggle rotation axis visibility before setting mode
           if (app.levelEditor.controlsTransform.mode == 'rotate') {
@@ -404,9 +407,10 @@
         <a class="item" :class="{ selected: objectType == 'teleport' }" @click="selectObjectType({ detail: { type: 'teleport' }})" title="Teleport cube"><img :src="'../svg/teleport.svg'"></a>
       </div>
       <div class="col object-options" v-if="selectedObject != null">
-        <a class="item" :class="{ selected: controlsTransform.mode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img :src="'../svg/move.svg'"></a>
-        <a class="item" :class="{ selected: controlsTransform.mode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img :src="'../svg/scale-out-x.svg'"></a>
-        <a class="item" :class="{ selected: controlsTransform.mode == 'rotate'}" @click="keydown({ code: 'KeyR' });" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
+        <a class="item" :class="{ selected: selectedMode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img :src="'../svg/move.svg'"></a>
+        <a class="item" :class="{ selected: selectedMode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img :src="'../svg/scale-out-x.svg'"></a>
+        <a class="item" :class="{ selected: selectedMode == 'rotate'}" @click="keydown({ code: 'KeyR' });" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
+        <a class="item" :class="{ selected: selectedMode == 'putty'}" @click="keydown({ code: 'KeyP' });" title="Putty (P)"><img :src="'../svg/putty.svg'"></a>
         <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img :src="'../svg/pin.svg'"></a>
         <a class="item" :class="{ disabled: selectedObject.isStatic() }" @click="toggleFriction" :title="`Friction (${ selectedObject.getFriction() })`"><img :src="'../svg/friction.svg'"></a>
         <a class="item" :class="{ disabled: selectedObject.textEnabled === false }" @click="changeText" title="Text"><img :src="'../svg/type.svg'"></a>
