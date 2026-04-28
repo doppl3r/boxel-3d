@@ -817,5 +817,11 @@
       "Fixed pause timer bug",
       "Fixed grapple restart bug"
     ]
+  },
+  {
+    "version": "2.8.7",
+    "revisions": [
+      "Fixed rotation bug in level editor"
+    ]
   }
 ]
