@@ -19,21 +19,21 @@ import {
 // Initialize module-scoped variables
 const _changeEvent = { type: 'change' };
 const _objectChangeEvent = { type: 'objectChange' };
+const _vectorCross = new Vector3();
+const _vectorDelta = new Vector3();
+const _vectorMidpoint = new Vector3();
+const _vectorAxisDirection = new Vector3();
+const _vectorCurrentStable = new Vector3();
+const _vectorTargetStable = new Vector3();
 const _vectorWorld = new Vector3();
+const _vectorWorldForward = new Vector3(0, 0, 1);
 const _vectorWorldSnapped = new Vector3();
-const _deltaVector = new Vector3();
-const _midpointVector = new Vector3();
-const _axisDirectionVector = new Vector3();
-const _currentStableVector = new Vector3();
-const _targetStableVector = new Vector3();
-const _crossVector = new Vector3();
-const _localPrimaryAxis = new Vector3();
-const _localStableAxis = new Vector3();
+const _vectorWorldUp = new Vector3(0, 1, 0);
 const _quaternionAlign = new Quaternion();
 const _quaternionTwist = new Quaternion();
 const _quaternionFinal = new Quaternion();
-const _worldUp = new Vector3(0, 1, 0);
-const _worldForward = new Vector3(0, 0, 1);
+const _axisLocalPrimary = new Vector3();
+const _axisLocalStable = new Vector3();
 const _axisSettings = {
   X: {
     scaleKey: 'x',
@@ -109,22 +109,22 @@ class PuttyControls extends Controls {
   }
 
   getAxisSettings() {
-    return _axisSettings[this.axis] || _axisSettings.X;
+    return _axisSettings[this.axis];
   }
 
   getAxisDirection() {
-    const { localPrimaryAxis } = this.getAxisSettings();
-    _axisDirectionVector.copy(localPrimaryAxis);
-    if (this.object) _axisDirectionVector.applyQuaternion(this.object.quaternion);
-    return _axisDirectionVector.normalize();
+    _vectorAxisDirection.copy(this.getAxisSettings().localPrimaryAxis);
+    if (this.object) _vectorAxisDirection.applyQuaternion(this.object.quaternion);
+    return _vectorAxisDirection.normalize();
   }
 
-  getObjectHalfExtent(object) {
-    const { scaleKey } = this.getAxisSettings();
+  getAxisHalfExtent(object) {
+    const axisSettings = this.getAxisSettings();
+    const scaleKey = axisSettings.scaleKey;
     return (object?.scale?.[scaleKey] || 0) / 2;
   }
 
-  syncLineFromPoints() {
+  updateLineFromPoints() {
     const linePositions = this.lineGeometry.attributes.position;
     linePositions.setXYZ(0, this.pointA.position.x, this.pointA.position.y, this.pointA.position.z);
     linePositions.setXYZ(1, this.pointB.position.x, this.pointB.position.y, this.pointB.position.z);
@@ -134,49 +134,45 @@ class PuttyControls extends Controls {
   updateObjectFromPoints() {
     if (!this.object) return;
 
-    const { scaleKey, localPrimaryAxis, localStableAxis } = this.getAxisSettings();
-
-    _deltaVector.subVectors(this.pointB.position, this.pointA.position);
-    const pointDistance = _deltaVector.length();
+    // Calculate the midpoint and direction between the two points.
+    _vectorDelta.subVectors(this.pointB.position, this.pointA.position);
+    const pointDistance = _vectorDelta.length();
     if (pointDistance <= 0.000001) return;
+    _vectorMidpoint.copy(this.pointA.position).add(this.pointB.position).multiplyScalar(0.5);
+    this.object.position.copy(_vectorMidpoint);
+    
+    // Align the object's primary axis with the line direction.
+    const lineDirection = _vectorDelta.divideScalar(pointDistance);
+    _axisLocalPrimary.copy(this.getAxisSettings().localPrimaryAxis).normalize();
+    _quaternionAlign.setFromUnitVectors(_axisLocalPrimary, lineDirection);
 
-    const lineDirection = _deltaVector.divideScalar(pointDistance);
+    // Remove roll/twist by nudging a secondary axis toward world-up.
+    _axisLocalStable.copy(this.getAxisSettings().localStableAxis).normalize();
+    _vectorCurrentStable.copy(_axisLocalStable).applyQuaternion(_quaternionAlign);
 
-    _midpointVector.copy(this.pointA.position).add(this.pointB.position).multiplyScalar(0.5);
-    this.object.position.copy(_midpointVector);
+    // Project the current and target stable vectors onto a plane orthogonal to the line direction.
+    _vectorTargetStable.copy(_vectorWorldUp).projectOnPlane(lineDirection);
+    if (_vectorTargetStable.lengthSq() < 0.000001) _vectorTargetStable.copy(_vectorWorldForward).projectOnPlane(lineDirection);
+    if (_vectorTargetStable.lengthSq() < 0.000001) _vectorTargetStable.set(1, 0, 0).projectOnPlane(lineDirection);
+    _vectorTargetStable.normalize();
 
-    // Step 1: align the selected local axis to the A->B line direction.
-    _localPrimaryAxis.copy(localPrimaryAxis).normalize();
-    _quaternionAlign.setFromUnitVectors(_localPrimaryAxis, lineDirection);
+    // Project the current stable vector onto the same plane to find the twist angle difference.
+    _vectorCurrentStable.projectOnPlane(lineDirection);
+    if (_vectorCurrentStable.lengthSq() < 0.000001) _vectorCurrentStable.copy(_vectorTargetStable);
+    _vectorCurrentStable.normalize();
 
-    // Step 2: remove roll/twist by nudging a secondary axis toward world-up.
-    _localStableAxis.copy(localStableAxis).normalize();
-    _currentStableVector.copy(_localStableAxis).applyQuaternion(_quaternionAlign);
+    // Determine the twist angle and apply it as a second rotation after the initial alignment.
+    let twistAngle = _vectorCurrentStable.angleTo(_vectorTargetStable);
+    _vectorCross.crossVectors(_vectorCurrentStable, _vectorTargetStable);
+    if (_vectorCross.dot(lineDirection) < 0) twistAngle = -twistAngle;
 
-    _targetStableVector.copy(_worldUp).projectOnPlane(lineDirection);
-    if (_targetStableVector.lengthSq() < 0.000001) {
-      _targetStableVector.copy(_worldForward).projectOnPlane(lineDirection);
-    }
-    if (_targetStableVector.lengthSq() < 0.000001) {
-      _targetStableVector.set(1, 0, 0).projectOnPlane(lineDirection);
-    }
-    _targetStableVector.normalize();
-
-    _currentStableVector.projectOnPlane(lineDirection);
-    if (_currentStableVector.lengthSq() < 0.000001) {
-      _currentStableVector.copy(_targetStableVector);
-    }
-    _currentStableVector.normalize();
-
-    let twistAngle = _currentStableVector.angleTo(_targetStableVector);
-    _crossVector.crossVectors(_currentStableVector, _targetStableVector);
-    if (_crossVector.dot(lineDirection) < 0) twistAngle = -twistAngle;
-
+    // Apply the combined rotation to the object.
     _quaternionTwist.setFromAxisAngle(lineDirection, twistAngle);
     _quaternionFinal.copy(_quaternionTwist).multiply(_quaternionAlign);
     this.object.quaternion.copy(_quaternionFinal);
 
-    this.object.scale[scaleKey] = pointDistance;
+    // Update the object scale
+    this.object.scale[this.getAxisSettings().scaleKey] = pointDistance;
   }
 
   onDragStart = event => {
@@ -200,7 +196,7 @@ class PuttyControls extends Controls {
 
     // Update controlled object and helper visuals.
     this.updateObjectFromPoints();
-    this.syncLineFromPoints();
+    this.updateLineFromPoints();
 
     // Bubble up event
     this.dispatchEvent(event);
@@ -232,10 +228,11 @@ class PuttyControls extends Controls {
     this.object = object;
     this.group.visible = true;
 
-    // Place points at the object's world-space edge positions for the active axis.
+    // Calculate axis direction and object half extent for positioning the points.
     const axisDirection = this.getAxisDirection();
-    const halfExtent = this.getObjectHalfExtent(object);
+    const halfExtent = this.getAxisHalfExtent(object);
 
+    // Place points at the object's world-space edge positions for the active axis.
     this.pointA.position.set(
       object.position.x - axisDirection.x * halfExtent,
       object.position.y - axisDirection.y * halfExtent,
@@ -247,7 +244,7 @@ class PuttyControls extends Controls {
       object.position.z + axisDirection.z * halfExtent
     );
 
-    this.syncLineFromPoints();
+    this.updateLineFromPoints();
   }
 
   detach() {
