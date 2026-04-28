@@ -34,13 +34,23 @@ class LevelEditor {
     this.snap = 16;
     this.keys = {};
 
-    // Set events
+    // Putty constrols events
+    this.controlsPutty.addEventListener('dragstart', () => { this.controlsOrbit.enabled = false; this.saveSelectedObject(); });
+    this.controlsPutty.addEventListener('dragend', () => { this.controlsOrbit.enabled = true; this.updateSelectedObject(); });
+    this.controlsPutty.addEventListener('objectChange', () => {
+      this.controlsPutty.moved = true;
+      window.dispatchEvent(new CustomEvent('objectChange', { detail: app.selectedObject }));
+    });
+
+    // Transform controls events
     this.controlsTransform.addEventListener('mouseDown', () => { this.controlsOrbit.enabled = false; this.saveSelectedObject(); });
     this.controlsTransform.addEventListener('mouseUp', () => { this.controlsOrbit.enabled = true; this.updateSelectedObject(); });
     this.controlsTransform.addEventListener('objectChange', () => {
       this.controlsTransform.moved = true;
       window.dispatchEvent(new CustomEvent('objectChange', { detail: app.selectedObject }));
     });
+
+    // Orbit controls events
     this.controlsOrbit.addEventListener('start', () => { this.controlsOrbit.moved = false; })
     this.controlsOrbit.addEventListener('change', () => { this.controlsOrbit.moved = true; })
 
@@ -102,6 +112,12 @@ class LevelEditor {
 
   mouseDown(e, a) {
     a.mouse.setPosition('down', a.mouse.getPosition(e, a));
+
+    // Update snap settings for putty controls
+    this.controlsPutty.moved = false;
+    this.controlsPutty.setSnap(a.mouse.snap);
+    
+    // Update transform controls snap settings
     this.controlsTransform.moved = false;
     this.controlsTransform.setTranslationSnap(a.mouse.snap);
     this.controlsTransform.setScaleSnap(a.mouse.snap);
@@ -135,7 +151,9 @@ class LevelEditor {
             }
           }
 
-          if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
+          if (this.controlsTransform.moved == false &&
+            this.controlsOrbit.moved == false &&
+            this.controlsPutty.moved == false) {
             a.level.deselectLevel(a);
             a.selectedObject = target;
             a.selectedObject.select(true);
@@ -177,7 +195,9 @@ class LevelEditor {
       }
       else {
         // Deselect if object and camera was not moved
-        if (this.controlsTransform.moved == false && this.controlsOrbit.moved == false) {
+        if (this.controlsTransform.moved == false
+          && this.controlsOrbit.moved == false
+          && this.controlsPutty.moved == false) {
           a.level.deselectLevel(app);
           this.controlsTransform.detach();
           this.controlsPutty.detach();
