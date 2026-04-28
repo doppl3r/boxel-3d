@@ -33,6 +33,10 @@ class LevelEditor {
     this.drag = false;
     this.snap = 16;
     this.keys = {};
+    this.selectedMode = 'translate';
+
+    // Initialize helper visibility from current mode.
+    this.applyControlsModeState();
 
     // Putty constrols events
     this.controlsPutty.addEventListener('dragstart', () => { this.controlsOrbit.enabled = false; this.saveSelectedObject(); });
@@ -157,8 +161,7 @@ class LevelEditor {
             a.level.deselectLevel(a);
             a.selectedObject = target;
             a.selectedObject.select(true);
-            this.controlsTransform.attach(target);
-            this.controlsPutty.attach(target);
+            this.attachControls(target);
 
             // Update Vue.js UI from custom event
             if (a.selectedObject.getClass() != 'player') window.dispatchEvent(new CustomEvent('selectObjectType', { detail: { type: a.selectedObject.getClass(), checkNull: false }}));
@@ -187,8 +190,7 @@ class LevelEditor {
             a.level.addObject(a.selectedObject, a);
             a.levelHistory.save('Added ' + objectType, a);
             a.selectedObject.select(true);
-            this.controlsTransform.attach(a.selectedObject);
-            this.controlsPutty.attach(a.selectedObject);
+            this.attachControls(a.selectedObject);
             window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: a.selectedObject }));
           }
         }
@@ -199,8 +201,7 @@ class LevelEditor {
           && this.controlsOrbit.moved == false
           && this.controlsPutty.moved == false) {
           a.level.deselectLevel(app);
-          this.controlsTransform.detach();
-          this.controlsPutty.detach();
+          this.detachControls();
           window.dispatchEvent(new CustomEvent('setSelectedObject'));
         }
       }
@@ -210,8 +211,7 @@ class LevelEditor {
         a.levelEditor.eraseTarget(e, a);
         a.level.deselectLevel(a); // Deselect everything
         a.levelHistory.save('Erased object', a);
-        this.controlsTransform.detach();
-        this.controlsPutty.detach();
+        this.detachControls();
         window.dispatchEvent(new CustomEvent('setSelectedObject'));
       }
       a.mouse.mode = a.mouse.prevMode;
@@ -244,8 +244,7 @@ class LevelEditor {
       app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
       app.selectedObject.position.add(offset); // Add offset
       app.selectedObject.select(true);
-      app.levelEditor.controlsTransform.attach(app.selectedObject);
-      app.levelEditor.controlsPutty.attach(app.selectedObject);
+      app.levelEditor.attachControls(app.selectedObject);
       app.levelEditor.setMode('translate');
       app.levelHistory.save('Duplicated object', app);
     }
@@ -254,16 +253,14 @@ class LevelEditor {
   deleteSelectedObject() {
     if (app.selectedObject) {
       app.level.removeObject(app.selectedObject, app);
-      app.levelEditor.controlsTransform.detach();
-      app.levelEditor.controlsPutty.detach();
+      app.levelEditor.detachControls();
       app.levelHistory.save('Deleted object', app);
       window.dispatchEvent(new CustomEvent('setSelectedObject'));
     }
   }
 
   saveLevel() {
-    app.levelEditor.controlsTransform.detach();
-    app.levelEditor.controlsPutty.detach();
+    app.levelEditor.detachControls();
     app.resetScene(app);
     app.level.deselectLevel(app);
     app.level.saveLevelData(app);
@@ -288,8 +285,7 @@ class LevelEditor {
   saveAndExitLevelEditor(saveLevel) {
     app.levelEditor.controlsOrbit.enabled = false;
     app.levelEditor.controlsOrbit.reset();
-    app.levelEditor.controlsTransform.detach();
-    app.levelEditor.controlsPutty.detach();
+    app.levelEditor.detachControls();
     app.play = false;
     if (saveLevel == true) app.levelEditor.saveLevel();
     app.level.clearLevel(app);
@@ -301,8 +297,7 @@ class LevelEditor {
   }
 
   undo() {
-    app.levelEditor.controlsTransform.detach();
-    app.levelEditor.controlsPutty.detach();
+    app.levelEditor.detachControls();
     app.levelHistory.undo(app);
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
@@ -385,16 +380,29 @@ class LevelEditor {
     app.levelHistory.save('Object updated', app);
   }
 
-  setMode(mode) {
-    if (mode == 'putty') {
-      this.controlsPutty.getHelper().visible = true;
-      this.controlsTransform.getHelper().visible = false;
-      this.controlsTransform.enabled = false;
-    }
-    else {
-      this.controlsPutty.getHelper().visible = false;
-      this.controlsTransform.getHelper().visible = true;
-      this.controlsTransform.enabled = true;
+  attachControls(target) {
+    this.controlsTransform.attach(target);
+    this.controlsPutty.attach(target);
+    this.applyControlsModeState();
+  }
+
+  detachControls() {
+    this.controlsTransform.detach();
+    this.controlsPutty.detach();
+    this.applyControlsModeState();
+  }
+
+  applyControlsModeState() {
+    const mode = this.selectedMode || 'translate';
+    const hasSelection = this.controlsTransform.object != null;
+    const isPuttyActive = hasSelection && mode == 'putty';
+
+    this.controlsPutty.getHelper().visible = isPuttyActive;
+    this.controlsPutty.enabled = isPuttyActive;
+    this.controlsTransform.getHelper().visible = hasSelection && mode != 'putty';
+    this.controlsTransform.enabled = mode != 'putty';
+
+    if (mode != 'putty') {
       this.controlsTransform.setMode(mode);
       if (mode == 'translate') {
         this.controlsTransform.showX = true;
@@ -412,6 +420,11 @@ class LevelEditor {
         this.controlsTransform.showZ = true;
       }
     }
+  }
+
+  setMode(mode) {
+    this.selectedMode = mode;
+    this.applyControlsModeState();
 
     // Dispatch level editor more change
     window.dispatchEvent(new CustomEvent('setSelectedMode', { detail: mode }));
@@ -422,8 +435,7 @@ class LevelEditor {
     if (app.selectedObject != null && checkNull == true) {
       app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
       app.selectedObject.select(true);
-      app.levelEditor.controlsTransform.attach(app.selectedObject);
-      app.levelEditor.controlsPutty.attach(app.selectedObject);
+      app.levelEditor.attachControls(app.selectedObject);
       app.levelHistory.save('Changed object to ' + type, app);
       window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
     }
@@ -436,8 +448,7 @@ class LevelEditor {
     app.selectedObject.toggleStatic();
     app.selectedObject = app.level.refreshObject(app.selectedObject, app);
     app.selectedObject.select(true);
-    app.levelEditor.controlsTransform.attach(app.selectedObject);
-    app.levelEditor.controlsPutty.attach(app.selectedObject);
+    app.levelEditor.attachControls(app.selectedObject);
     app.levelHistory.save('Updated object state', app);
     window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
   }

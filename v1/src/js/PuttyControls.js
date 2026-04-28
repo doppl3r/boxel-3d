@@ -1,16 +1,5 @@
 import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
-import {
-  BufferGeometry,
-  Controls,
-  Float32BufferAttribute,
-  Group,
-  Line,
-  LineBasicMaterial,
-  Points,
-  PointsMaterial,
-  Quaternion,
-  Vector3
-} from 'three';
+import { BufferGeometry, Controls, Float32BufferAttribute, Group, Line, LineBasicMaterial, Points, PointsMaterial, Quaternion, Vector3 } from 'three';
 
 /*
   The putty controls class lets you scale and rotate an object between two points.
@@ -36,16 +25,22 @@ const _axisLocalPrimary = new Vector3();
 const _axisLocalStable = new Vector3();
 const _axisSettings = {
   X: {
+    color: '#ff0000',
+    colorHover: '#aa0000',
     scaleKey: 'x',
     localPrimaryAxis: new Vector3(1, 0, 0),
     localStableAxis: new Vector3(0, 1, 0)
   },
   Y: {
+    color: '#00ff00',
+    colorHover: '#00aa00',
     scaleKey: 'y',
     localPrimaryAxis: new Vector3(0, 1, 0),
     localStableAxis: new Vector3(0, 0, 1)
   },
   Z: {
+    color: '#0000ff',
+    colorHover: '#0000aa',
     scaleKey: 'z',
     localPrimaryAxis: new Vector3(0, 0, 1),
     localStableAxis: new Vector3(0, 1, 0)
@@ -65,6 +60,7 @@ class PuttyControls extends Controls {
           if (value !== newValue) {
             value = newValue;
             this.dispatchEvent({ type: name + '-changed', value: newValue });
+            this.dispatchEvent({ type: name + '-change', value: newValue });
             this.dispatchEvent(_changeEvent);
           }
         }
@@ -72,11 +68,11 @@ class PuttyControls extends Controls {
     }
 
     // Define points
-    this.geometry = new BufferGeometry();
-    this.geometry.setAttribute('position', new Float32BufferAttribute([0, 0, 0], 3));
-    this.material = new PointsMaterial({ color: '#0000ff', depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true });
-    this.pointA = new Points(this.geometry, this.material);
-    this.pointB = new Points(this.geometry, this.material);
+    this.pointGeometry = new BufferGeometry();
+    this.pointGeometry.setAttribute('position', new Float32BufferAttribute([0, 0, 0], 3));
+    this.pointMaterial = new PointsMaterial({ color: '#ff0000', depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true });
+    this.pointA = new Points(this.pointGeometry, this.pointMaterial);
+    this.pointB = new Points(this.pointGeometry, this.pointMaterial);
     this.pointA.renderOrder = Infinity;
     this.pointB.renderOrder = Infinity;
     this.pointA.position.x = -0.5;
@@ -84,7 +80,7 @@ class PuttyControls extends Controls {
 
     // Define line
     this.lineGeometry = new BufferGeometry().setFromPoints([this.pointA.position, this.pointB.position]);
-    this.lineMaterial = new LineBasicMaterial({ color: '#0000ff', depthTest: false, depthWrite: false, transparent: true });
+    this.lineMaterial = new LineBasicMaterial({ color: '#ff0000', depthTest: false, depthWrite: false, transparent: true });
     this.line = new Line(this.lineGeometry, this.lineMaterial);
     this.line.renderOrder = Infinity;
 
@@ -106,6 +102,11 @@ class PuttyControls extends Controls {
     // Define properties
     defineProperty('axis', 'X');
     defineProperty('snap', null);
+    defineProperty('enabled', true);
+
+    // Keep DragControls interactivity in sync with PuttyControls enabled state.
+    this.dragControls.enabled = this.enabled;
+    this.addEventListener('enabled-change', event => { this.dragControls.enabled = event.value; });
   }
 
   getAxisSettings() {
@@ -210,7 +211,8 @@ class PuttyControls extends Controls {
 
   onHoverOff = event => {
     // Update point color
-    event.object.material.color.set('#0000ff');
+    this.pointMaterial.color.set(this.getAxisSettings().color);
+    this.lineMaterial.color.set(this.getAxisSettings().color);
 
     // Bubble up event
     this.dispatchEvent(event);
@@ -218,7 +220,8 @@ class PuttyControls extends Controls {
 
   onHoverOn = event => {
     // Update point color
-    event.object.material.color.set('#ffff00');
+    this.pointMaterial.color.set(this.getAxisSettings().colorHover);
+    this.lineMaterial.color.set(this.getAxisSettings().colorHover);
 
     // Bubble up event
     this.dispatchEvent(event);
@@ -262,6 +265,8 @@ class PuttyControls extends Controls {
 
   setAxis(axis) {
     this.axis = axis;
+    this.pointMaterial.color.set(this.getAxisSettings().color);
+    this.lineMaterial.color.set(this.getAxisSettings().color);
     if (this.object) this.attach(this.object);
   }
 }
