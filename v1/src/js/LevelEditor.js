@@ -34,6 +34,7 @@ class LevelEditor {
     this.snap = 16;
     this.keys = {};
     this.selectedMode = 'translate';
+    this.puttyAxes = ['X', 'Y', 'Z'];
 
     // Initialize helper visibility from current mode.
     this.applyControlsModeState();
@@ -423,6 +424,15 @@ class LevelEditor {
   }
 
   setMode(mode) {
+    // Swap Putty axis if putty mode is selected again
+    if (mode == 'putty' && this.selectedMode == 'putty') {
+      const currentAxis = this.controlsPutty.axis || 'X';
+      const currentIndex = this.puttyAxes.indexOf(currentAxis);
+      const nextIndex = (currentIndex + 1) % this.puttyAxes.length;
+      this.controlsPutty.setAxis(this.puttyAxes[nextIndex]);
+    }
+
+    // Update mode state
     this.selectedMode = mode;
     this.applyControlsModeState();
 
