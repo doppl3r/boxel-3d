@@ -28,6 +28,7 @@ const _axisSettings = {
     color: '#ff0000',
     colorHover: '#aa0000',
     scaleKey: 'x',
+    stabilizeTwist: true,
     localPrimaryAxis: new Vector3(1, 0, 0),
     localStableAxis: new Vector3(0, 1, 0)
   },
@@ -35,6 +36,7 @@ const _axisSettings = {
     color: '#00ff00',
     colorHover: '#00aa00',
     scaleKey: 'y',
+    stabilizeTwist: false,
     localPrimaryAxis: new Vector3(0, 1, 0),
     localStableAxis: new Vector3(0, 0, 1)
   },
@@ -42,6 +44,7 @@ const _axisSettings = {
     color: '#0000ff',
     colorHover: '#0000aa',
     scaleKey: 'z',
+    stabilizeTwist: true,
     localPrimaryAxis: new Vector3(0, 0, 1),
     localStableAxis: new Vector3(0, 1, 0)
   }
@@ -103,6 +106,12 @@ class PuttyControls extends Controls {
     defineProperty('axis', 'X');
     defineProperty('snap', null);
     defineProperty('enabled', true);
+    defineProperty('minX', -Infinity);
+    defineProperty('maxX', Infinity);
+    defineProperty('minY', -Infinity);
+    defineProperty('maxY', Infinity);
+    defineProperty('minZ', -Infinity);
+    defineProperty('maxZ', Infinity);
 
     // Keep DragControls interactivity in sync with PuttyControls enabled state.
     this.dragControls.enabled = this.enabled;
@@ -143,12 +152,21 @@ class PuttyControls extends Controls {
     this.object.position.copy(_vectorMidpoint);
     
     // Align the object's primary axis with the line direction.
+    const axisSettings = this.getAxisSettings();
     const lineDirection = _vectorDelta.divideScalar(pointDistance);
-    _axisLocalPrimary.copy(this.getAxisSettings().localPrimaryAxis).normalize();
+
+    _axisLocalPrimary.copy(axisSettings.localPrimaryAxis).normalize();
     _quaternionAlign.setFromUnitVectors(_axisLocalPrimary, lineDirection);
 
+    // Skip twist stabilization for this axis.
+    if (axisSettings.stabilizeTwist === false) {
+      this.object.quaternion.copy(_quaternionAlign);
+      this.object.scale[axisSettings.scaleKey] = pointDistance;
+      return;
+    }
+
     // Remove roll/twist by nudging a secondary axis toward world-up.
-    _axisLocalStable.copy(this.getAxisSettings().localStableAxis).normalize();
+    _axisLocalStable.copy(axisSettings.localStableAxis).normalize();
     _vectorCurrentStable.copy(_axisLocalStable).applyQuaternion(_quaternionAlign);
 
     // Project the current and target stable vectors onto a plane orthogonal to the line direction.
@@ -173,7 +191,7 @@ class PuttyControls extends Controls {
     this.object.quaternion.copy(_quaternionFinal);
 
     // Update the object scale
-    this.object.scale[this.getAxisSettings().scaleKey] = pointDistance;
+    this.object.scale[axisSettings.scaleKey] = pointDistance;
   }
 
   onDragStart = event => {
@@ -181,19 +199,29 @@ class PuttyControls extends Controls {
   }
 
   onDrag = event => {
-    // Update snap position
+    // Get world position for optional snapping and bounds clamping.
+    event.object.getWorldPosition(_vectorWorld);
+
+    // Apply snapping if enabled.
     if (this.snap) {
-      // Snap position according to world space
-      event.object.getWorldPosition(_vectorWorld);
-      _vectorWorldSnapped.set(
+      _vectorWorld.set(
         Math.round(_vectorWorld.x / this.snap) * this.snap,
         Math.round(_vectorWorld.y / this.snap) * this.snap,
-        Math.round(_vectorWorld.z / this.snap) * this.snap);
-      
-      // Convert back to local space and update position
-      event.object.parent.worldToLocal(_vectorWorldSnapped);
-      event.object.position.copy(_vectorWorldSnapped);
+        Math.round(_vectorWorld.z / this.snap) * this.snap
+      );
     }
+
+    // Clamp to bounds if enabled.
+    _vectorWorld.set(
+      Math.max(this.minX, Math.min(this.maxX, _vectorWorld.x)),
+      Math.max(this.minY, Math.min(this.maxY, _vectorWorld.y)),
+      Math.max(this.minZ, Math.min(this.maxZ, _vectorWorld.z))
+    );
+
+    // Convert back to local space and update position.
+    _vectorWorldSnapped.copy(_vectorWorld);
+    event.object.parent.worldToLocal(_vectorWorldSnapped);
+    event.object.position.copy(_vectorWorldSnapped);
 
     // Update controlled object and helper visuals.
     this.updateObjectFromPoints();

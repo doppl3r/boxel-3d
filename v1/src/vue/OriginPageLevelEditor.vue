@@ -294,7 +294,7 @@
         else if (e.code == 'KeyG' || e.code == 'KeyT') {
           setTransformMode({ detail: 'translate' });
         }
-        else if (e.code == 'KeyP') {
+        else if (e.code == 'KeyQ') {
           setTransformMode({ detail: 'putty' });
         }
         else if (e.code == 'KeyR') {
@@ -410,7 +410,7 @@
         <a class="item" :class="{ selected: selectedMode == 'translate'}" @click="setTransformMode({ detail: 'translate' })" title="Move (T or G)"><img :src="'../svg/move.svg'"></a>
         <a class="item" :class="{ selected: selectedMode == 'scale'}" @click="setTransformMode({ detail: 'scale' })" title="Scale (S)"><img :src="'../svg/scale-out-x.svg'"></a>
         <a class="item" :class="{ selected: selectedMode == 'rotate'}" @click="keydown({ code: 'KeyR' });" title="Rotate (R)"><img :src="'../svg/rotate-clockwise.svg'"></a>
-        <a class="item" :class="{ selected: selectedMode == 'putty'}" @click="keydown({ code: 'KeyP' });" title="Putty (P)"><img :src="'../svg/putty.svg'"></a>
+        <a class="item" :class="{ selected: selectedMode == 'putty'}" @click="keydown({ code: 'KeyQ' });" title="Putty (Q)"><img :src="'../svg/putty.svg'"></a>
         <a class="item" :class="{ selected: selectedObject.isStatic() }" @click="toggleSelectedObjectStaticState" title="Pin"><img :src="'../svg/pin.svg'"></a>
         <a class="item" :class="{ disabled: selectedObject.isStatic() }" @click="toggleFriction" :title="`Friction (${ selectedObject.getFriction() })`"><img :src="'../svg/friction.svg'"></a>
         <a class="item" :class="{ disabled: selectedObject.textEnabled === false }" @click="changeText" title="Text"><img :src="'../svg/type.svg'"></a>
