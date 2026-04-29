@@ -175,6 +175,7 @@ class Level extends Group {
     // Remove checkpoint, or respawn to checkpoint
     if (keepCheckpoint == false || a.player.checkpoint == null) {
       a.timer.reset();
+      a.timer.start();
       a.player.removeCheckpoint();
     }
     else a.player.respawn(true);

@@ -103,6 +103,7 @@
       if (jumpKeys.indexOf(e.code) > -1) {
         // Close popup
         e.preventDefault();
+        e.stopImmediatePropagation();
         runLastInputCallback(e);
         return;
       }
@@ -111,6 +112,7 @@
       inputs.value.forEach(input => {
         if (e.code === input.shortcut) {
           e.preventDefault();
+          e.stopImmediatePropagation();
           runCallback(input.callback, e);
         }
       });

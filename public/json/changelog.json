@@ -823,7 +823,7 @@
     "revisions": [
       "Added \"Putty\" tool to level editor",
       "Fixed rotation bug in level editor",
-      "Fixed timer reset bug"
+      "Fixed timer bugs"
     ]
   }
 ]

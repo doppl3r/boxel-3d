@@ -44,7 +44,7 @@
         inputs: [
           { value: 'Exit (E)', type: 'button', shortcut: 'KeyE', callback: function(e) { app.exitCampaign(); }},
           { value: 'Retry (R)', type: 'button', shortcut: 'KeyR', callback: function(e) { app.level.retryLevel(); }},
-          { value: 'Play', type: 'button', shortcut: 'Space', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
+          { value: 'Play', type: 'button', shortcut: 'Space', callback: function(e) { app.resumeLevel(); }}
         ]
       }
     }));
@@ -58,11 +58,13 @@
   function popupClosed() {
     isClosed.value = true;
     isClosing.value = false;
-    isInputEnabled.value = true;
   }
 
   function popupClosing() {
     isClosing.value = true;
+    setTimeout(function() {
+      isInputEnabled.value = true;
+    }, 50);
   }
 
   function pointerdown(e) {

@@ -52,11 +52,13 @@
   function popupClosed() {
     isClosed.value = true;
     isClosing.value = false;
-    isInputEnabled.value = true;
   }
 
   function popupClosing() {
     isClosing.value = true;
+    setTimeout(function() {
+      isInputEnabled.value = true;
+    }, 50);
   }
 
   function setDrawMode(mode) {

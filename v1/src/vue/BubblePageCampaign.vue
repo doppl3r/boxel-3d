@@ -52,7 +52,7 @@
         inputs: [
           { value: i18n.t('popup.button.exit'), type: 'button', shortcut: 'KeyE', callback: function(e) { app.exitCampaign(); }},
           { value: i18n.t('popup.button.retry'), type: 'button', shortcut: 'KeyR', callback: function(e) { app.level.retryLevel(); }},
-          { value: i18n.t('popup.button.play'), type: 'button', shortcut: 'Space', callback: function(e) { setTimeout(function() { app.resumeLevel(); }, 100); }}
+          { value: i18n.t('popup.button.play'), type: 'button', shortcut: 'Space', callback: function(e) { app.resumeLevel(); }}
         ]
       }
     }));
@@ -66,12 +66,14 @@
   function popupClosed() {
     isClosed.value = true;
     isClosing.value = false;
-    isInputEnabled.value = true;
     getHighScore(); // Refresh record score
   }
 
   function popupClosing() {
     isClosing.value = true;
+    setTimeout(function() {
+      isInputEnabled.value = true;
+    }, 50);
   }
 
   function settingsOpened() {
