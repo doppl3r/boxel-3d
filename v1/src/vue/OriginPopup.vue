@@ -93,8 +93,11 @@
 
   function keydown(e) {
     if (isOpen.value == true) {
+      // Prevent duplicate callbacks when key is held down
+      if (e.repeat === true) return;
+
       // Prevent actions while typing
-      if (e.target.type != 'text') {
+      if (e.target.type != 'text' && e.target.tagName != 'TEXTAREA' && e.target.isContentEditable !== true) {
         var jumpKeys = ['Space', 'Enter', 'Escape'];
         if (jumpKeys.indexOf(e.code) > -1) {
           // Close popup

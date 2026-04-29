@@ -821,7 +821,9 @@
   {
     "version": "2.8.7",
     "revisions": [
-      "Fixed rotation bug in level editor"
+      "Added \"Putty\" tool to level editor",
+      "Fixed rotation bug in level editor",
+      "Fixed timer reset bug"
     ]
   }
 ]

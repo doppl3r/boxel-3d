@@ -404,7 +404,7 @@ class App {
   }
 
   resumeLevel() {
-    app.timer.start();
+    app.timer.resume();
     app.play = true;
     window.dispatchEvent(new CustomEvent('closePopup'));
   }

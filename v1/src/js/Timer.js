@@ -4,7 +4,7 @@ class Timer {
     }
 
     start() {
-        if (this.pauseTime <= this.startTime) { this.reset(); }
+        if (this.pauseTime < this.startTime) { this.reset(); }
         this.resume();
     }
 
@@ -20,6 +20,7 @@ class Timer {
         this.startTime = now;
         this.pauseTime = now;
         this.playTime = 0;
+        this.lastTime = 0;
         this.isPaused = true;
     }
 
@@ -34,6 +35,12 @@ class Timer {
 
     getPlayTime() {
         var time = Date.now() - this.startTime - (this.playTime);
+        if (time < this.lastTime) {
+            time = this.lastTime;
+        }
+        else {
+            this.lastTime = time;
+        }
         return time;
     }
 
