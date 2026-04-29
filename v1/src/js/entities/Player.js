@@ -13,6 +13,7 @@ class Player extends Cube {
     // Update body
     this.setScale({ x: 16, y: 16, z: 16 });
     this.setStatic(false);
+    this.color = '#dc265a';
     this.setColors('#dc265a');
     this.setMode('jump');
     this.setJumpMode('limited');
