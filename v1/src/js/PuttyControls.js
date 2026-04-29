@@ -8,45 +8,27 @@ import { BufferGeometry, Controls, Float32BufferAttribute, Group, Line, LineBasi
 // Initialize module-scoped variables
 const _changeEvent = { type: 'change' };
 const _objectChangeEvent = { type: 'objectChange' };
-const _vectorCross = new Vector3();
-const _vectorDelta = new Vector3();
-const _vectorMidpoint = new Vector3();
 const _vectorAxisDirection = new Vector3();
-const _vectorCurrentStable = new Vector3();
-const _vectorTargetStable = new Vector3();
 const _vectorWorld = new Vector3();
-const _vectorWorldForward = new Vector3(0, 0, 1);
 const _vectorWorldSnapped = new Vector3();
-const _vectorWorldUp = new Vector3(0, 1, 0);
-const _quaternionAlign = new Quaternion();
-const _quaternionTwist = new Quaternion();
-const _quaternionFinal = new Quaternion();
-const _axisLocalPrimary = new Vector3();
-const _axisLocalStable = new Vector3();
 const _axisSettings = {
   X: {
     color: '#ff0000',
     colorHover: '#aa0000',
     scaleKey: 'x',
-    stabilizeTwist: true,
-    localPrimaryAxis: new Vector3(1, 0, 0),
-    localStableAxis: new Vector3(0, 1, 0)
+    localPrimaryAxis: new Vector3(1, 0, 0)
   },
   Y: {
     color: '#00ff00',
     colorHover: '#00aa00',
     scaleKey: 'y',
-    stabilizeTwist: false,
-    localPrimaryAxis: new Vector3(0, 1, 0),
-    localStableAxis: new Vector3(0, 0, 1)
+    localPrimaryAxis: new Vector3(0, 1, 0)
   },
   Z: {
     color: '#0000ff',
     colorHover: '#0000aa',
     scaleKey: 'z',
-    stabilizeTwist: true,
-    localPrimaryAxis: new Vector3(0, 0, 1),
-    localStableAxis: new Vector3(0, 1, 0)
+    localPrimaryAxis: new Vector3(0, 0, 1)
   }
 };
 
@@ -144,54 +126,24 @@ class PuttyControls extends Controls {
   updateObjectFromPoints() {
     if (!this.object) return;
 
-    // Calculate the midpoint and direction between the two points.
-    _vectorDelta.subVectors(this.pointB.position, this.pointA.position);
-    const pointDistance = _vectorDelta.length();
-    if (pointDistance <= 0.000001) return;
-    _vectorMidpoint.copy(this.pointA.position).add(this.pointB.position).multiplyScalar(0.5);
-    this.object.position.copy(_vectorMidpoint);
+    // Rotate, scale and position object between two points.
     
-    // Align the object's primary axis with the line direction.
+    // Position the object at the midpoint between the two points
+    this.object.position.set(
+      (this.pointA.position.x + this.pointB.position.x) / 2,
+      (this.pointA.position.y + this.pointB.position.y) / 2,
+      (this.pointA.position.z + this.pointB.position.z) / 2
+    );
+    
+    // Scale the object based on the distance between points
+    const distance = this.pointA.position.distanceTo(this.pointB.position);
     const axisSettings = this.getAxisSettings();
-    const lineDirection = _vectorDelta.divideScalar(pointDistance);
-
-    _axisLocalPrimary.copy(axisSettings.localPrimaryAxis).normalize();
-    _quaternionAlign.setFromUnitVectors(_axisLocalPrimary, lineDirection);
-
-    // Skip twist stabilization for this axis.
-    if (axisSettings.stabilizeTwist === false) {
-      this.object.quaternion.copy(_quaternionAlign);
-      this.object.scale[axisSettings.scaleKey] = pointDistance;
-      return;
-    }
-
-    // Remove roll/twist by nudging a secondary axis toward world-up.
-    _axisLocalStable.copy(axisSettings.localStableAxis).normalize();
-    _vectorCurrentStable.copy(_axisLocalStable).applyQuaternion(_quaternionAlign);
-
-    // Project the current and target stable vectors onto a plane orthogonal to the line direction.
-    _vectorTargetStable.copy(_vectorWorldUp).projectOnPlane(lineDirection);
-    if (_vectorTargetStable.lengthSq() < 0.000001) _vectorTargetStable.copy(_vectorWorldForward).projectOnPlane(lineDirection);
-    if (_vectorTargetStable.lengthSq() < 0.000001) _vectorTargetStable.set(1, 0, 0).projectOnPlane(lineDirection);
-    _vectorTargetStable.normalize();
-
-    // Project the current stable vector onto the same plane to find the twist angle difference.
-    _vectorCurrentStable.projectOnPlane(lineDirection);
-    if (_vectorCurrentStable.lengthSq() < 0.000001) _vectorCurrentStable.copy(_vectorTargetStable);
-    _vectorCurrentStable.normalize();
-
-    // Determine the twist angle and apply it as a second rotation after the initial alignment.
-    let twistAngle = _vectorCurrentStable.angleTo(_vectorTargetStable);
-    _vectorCross.crossVectors(_vectorCurrentStable, _vectorTargetStable);
-    if (_vectorCross.dot(lineDirection) < 0) twistAngle = -twistAngle;
-
-    // Apply the combined rotation to the object.
-    _quaternionTwist.setFromAxisAngle(lineDirection, twistAngle);
-    _quaternionFinal.copy(_quaternionTwist).multiply(_quaternionAlign);
-    this.object.quaternion.copy(_quaternionFinal);
-
-    // Update the object scale
-    this.object.scale[axisSettings.scaleKey] = pointDistance;
+    this.object.scale[axisSettings.scaleKey] = distance;
+    
+    // Rotate the object so the current axis points from pointA toward pointB
+    const direction = new Vector3().subVectors(this.pointB.position, this.pointA.position).normalize();
+    const quaternion = new Quaternion().setFromUnitVectors(axisSettings.localPrimaryAxis, direction);
+    this.object.quaternion.copy(quaternion);
   }
 
   onDragStart = event => {
