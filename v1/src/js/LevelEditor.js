@@ -241,10 +241,16 @@ class LevelEditor {
 
   duplicateSelectedObject(offset = { x: 0, y: 0, z: 0 }) {
     if (app.selectedObject) {
+      // Update object select state before duplication
       app.selectedObject.select(false);
       app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
-      app.selectedObject.position.add(offset); // Add offset
+
+      // Add offset and update position
+      app.selectedObject.position.add(offset);
+      app.selectedObject.setPosition(app.selectedObject.position);
       app.selectedObject.select(true);
+
+      // Update Vue.js UI from custom event
       app.levelEditor.attachControls(app.selectedObject);
       app.levelHistory.save('Duplicated object', app);
     }
