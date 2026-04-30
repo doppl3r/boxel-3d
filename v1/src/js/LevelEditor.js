@@ -15,7 +15,7 @@ class LevelEditor {
     this.controlsTransform.showZ = true;
     this.controlsTransform.space = 'world';
     this.controlsTransform.showAll = false;
-    this.controlsTransform.offset = new Vector3(0, 16, 0);
+    this.duplicateOffset = new Vector3(0, 16, 0);
     this.controlsOrbit = new OrbitControls(camera, domElement);
     this.controlsOrbit.enabled = false; // Default disabled for campaign
     this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 0 }; // 0 = Left/Rotate, 1 = Middle/Dolly, 2 = Right/Pan
@@ -246,7 +246,6 @@ class LevelEditor {
       app.selectedObject.position.add(offset); // Add offset
       app.selectedObject.select(true);
       app.levelEditor.attachControls(app.selectedObject);
-      app.levelEditor.setMode('translate');
       app.levelHistory.save('Duplicated object', app);
     }
   }
@@ -342,11 +341,11 @@ class LevelEditor {
 
     // Update offset for duplication
     if (this.keys['ShiftLeft']) {
-      this.controlsTransform.offset.copy(target.position).sub(target.position0);
+      this.duplicateOffset.copy(target.position).sub(target.position0);
     }
     else {
       // Reset duplication position
-      this.controlsTransform.offset.set(0, 0, 0);
+      this.duplicateOffset.set(0, 16, 0);
     }
 
     // Update body state (-1 == active physics)

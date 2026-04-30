@@ -224,7 +224,7 @@
   }
 
   function duplicateSelectedObject() {
-    app.levelEditor.duplicateSelectedObject(app.levelEditor.controlsTransform.offset);
+    app.levelEditor.duplicateSelectedObject(app.levelEditor.duplicateOffset);
     setSelectedObject({ detail: app.selectedObject });
     window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
   }

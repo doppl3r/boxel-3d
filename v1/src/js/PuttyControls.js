@@ -125,8 +125,6 @@ class PuttyControls extends Controls {
 
   updateObjectFromPoints() {
     if (!this.object) return;
-
-    // Rotate, scale and position object between two points.
     
     // Position the object at the midpoint between the two points
     this.object.position.set(
