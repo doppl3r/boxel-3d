@@ -822,8 +822,9 @@
     "version": "2.8.7",
     "revisions": [
       "Added \"Putty\" tool to level editor",
+      "Fixed timer UI bugs",
       "Fixed rotation bug in level editor",
-      "Fixed timer bugs"
+      "Fixed duplication bug in level editor"
     ]
   }
 ]
