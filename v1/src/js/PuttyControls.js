@@ -8,9 +8,12 @@ import { BufferGeometry, Controls, Float32BufferAttribute, Group, Line, LineBasi
 // Initialize module-scoped variables
 const _changeEvent = { type: 'change' };
 const _objectChangeEvent = { type: 'objectChange' };
+const _vector = new Vector3();
 const _vectorAxisDirection = new Vector3();
 const _vectorWorld = new Vector3();
 const _vectorWorldSnapped = new Vector3();
+const _vectorLineDirection = new Vector3();
+const _vectorLineAnchor = new Vector3();
 const _axisSettings = {
   X: {
     color: '#ff0000',
@@ -86,14 +89,15 @@ class PuttyControls extends Controls {
 
     // Define properties
     defineProperty('axis', 'X');
-    defineProperty('snap', null);
     defineProperty('enabled', true);
-    defineProperty('minX', -Infinity);
+    defineProperty('lockRotation', false);
     defineProperty('maxX', Infinity);
-    defineProperty('minY', -Infinity);
     defineProperty('maxY', Infinity);
-    defineProperty('minZ', -Infinity);
     defineProperty('maxZ', Infinity);
+    defineProperty('minX', -Infinity);
+    defineProperty('minY', -Infinity);
+    defineProperty('minZ', -Infinity);
+    defineProperty('snap', null);
 
     // Keep DragControls interactivity in sync with PuttyControls enabled state.
     this.dragControls.enabled = this.enabled;
@@ -145,6 +149,11 @@ class PuttyControls extends Controls {
   }
 
   onDragStart = event => {
+    // Store the initial line direction and anchor point for lockRotation
+    _vectorLineDirection.subVectors(this.pointB.position, this.pointA.position).normalize();
+    _vectorLineAnchor.copy((event.object === this.pointA ? this.pointB : this.pointA).position);
+    
+    // Bubble up event
     this.dispatchEvent(event);
   }
 
@@ -152,13 +161,21 @@ class PuttyControls extends Controls {
     // Get world position for optional snapping and bounds clamping.
     event.object.getWorldPosition(_vectorWorld);
 
-    // Apply snapping if enabled.
-    if (this.snap) {
-      _vectorWorld.set(
-        Math.round(_vectorWorld.x / this.snap) * this.snap,
-        Math.round(_vectorWorld.y / this.snap) * this.snap,
-        Math.round(_vectorWorld.z / this.snap) * this.snap
-      );
+    // Apply lockRotation constraint
+    if (this.lockRotation) {
+      // Project point onto the line using the dot product
+      _vector.subVectors(_vectorWorld, _vectorLineAnchor);
+      _vectorWorld.copy(_vectorLineDirection).multiplyScalar(_vector.dot(_vectorLineDirection)).add(_vectorLineAnchor);
+    }
+    else {
+      // Apply snapping only when rotation is not locked
+      if (this.snap) {
+        _vectorWorld.set(
+          Math.round(_vectorWorld.x / this.snap) * this.snap,
+          Math.round(_vectorWorld.y / this.snap) * this.snap,
+          Math.round(_vectorWorld.z / this.snap) * this.snap
+        );
+      }
     }
 
     // Clamp to bounds if enabled.

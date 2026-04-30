@@ -221,11 +221,23 @@ class LevelEditor {
 
   keyDown(e) {
     this.keys[e.code] = true;
+    
+    // Enable lockRotation when holding Shift
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+      this.controlsPutty.lockRotation = true;
+    }
+    
     this.updateRender();
   }
   
   keyUp(e) {
     this.keys[e.code] = false;
+    
+    // Disable lockRotation when releasing Shift
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+      this.controlsPutty.lockRotation = false;
+    }
+    
     this.updateRender();
   }
 
@@ -321,9 +333,14 @@ class LevelEditor {
   }
 
   saveSelectedObject() {
-    // Duplicate before saving
-    if (this.keys['ShiftLeft'] === true) {
-      this.duplicateSelectedObject();
+    if (this.selectedMode === 'putty') {
+
+    }
+    else {
+      // Duplicate before saving
+      if (this.keys['ShiftLeft']) {
+        this.duplicateSelectedObject();
+      }
     }
 
     // Copy properties before transforming
@@ -387,6 +404,7 @@ class LevelEditor {
   }
 
   attachControls(target) {
+    if (!target) return;
     this.controlsTransform.attach(target);
     this.controlsPutty.attach(target);
     this.applyControlsModeState();
@@ -440,6 +458,7 @@ class LevelEditor {
     // Update mode state
     this.selectedMode = mode;
     this.applyControlsModeState();
+    this.attachControls(app.selectedObject);
 
     // Dispatch level editor more change
     window.dispatchEvent(new CustomEvent('setSelectedMode', { detail: mode }));
