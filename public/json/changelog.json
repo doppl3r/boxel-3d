@@ -826,5 +826,11 @@
       "Fixed rotation bug in level editor",
       "Fixed duplication bug in level editor"
     ]
+  },
+  {
+    "version": "2.8.8",
+    "revisions": [
+      "Added \"Putty\" rotation lock (ex: Hold Shift)"
+    ]
   }
 ]
