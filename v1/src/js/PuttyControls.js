@@ -180,9 +180,14 @@ class PuttyControls extends Controls {
 
     // Apply lockRotation constraint
     if (this.lockRotation) {
-      // Project point onto the line using the dot product
+      // Get vector from anchor to current point position
       _vector.subVectors(_vectorWorld, _vectorLineAnchor);
-      _vectorWorld.copy(_vectorLineDirection).multiplyScalar(_vector.dot(_vectorLineDirection)).add(_vectorLineAnchor);
+      
+      // Snap projected point by distance (not grid)
+      const distance = _vector.dot(_vectorLineDirection);
+      _vectorWorld.copy(_vectorLineDirection);
+      _vectorWorld.multiplyScalar(this.snap ? Math.round(distance / this.snap) * this.snap : distance);
+      _vectorWorld.add(_vectorLineAnchor);
     }
     else {
       // Apply snapping only when rotation is not locked
