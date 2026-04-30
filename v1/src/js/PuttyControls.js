@@ -14,6 +14,8 @@ const _vectorWorld = new Vector3();
 const _vectorWorldSnapped = new Vector3();
 const _vectorLineDirection = new Vector3();
 const _vectorLineAnchor = new Vector3();
+const _vectorScale = new Vector3();
+const _vectorOffset = new Vector3();
 const _axisSettings = {
   X: {
     color: '#ff0000',
@@ -90,6 +92,7 @@ class PuttyControls extends Controls {
     // Define properties
     defineProperty('axis', 'X');
     defineProperty('enabled', true);
+    defineProperty('lockRatio', false);
     defineProperty('lockRotation', false);
     defineProperty('maxX', Infinity);
     defineProperty('maxY', Infinity);
@@ -140,7 +143,19 @@ class PuttyControls extends Controls {
     // Scale the object based on the distance between points
     const distance = this.pointA.position.distanceTo(this.pointB.position);
     const axisSettings = this.getAxisSettings();
-    this.object.scale[axisSettings.scaleKey] = distance;
+    
+    // Scale uniformly in all directions while maintaining proportions
+    if (this.lockRatio) {
+      const scaleFactor = distance / _vectorOffset.length();
+      this.object.scale.set(
+        _vectorScale.x * scaleFactor,
+        _vectorScale.y * scaleFactor,
+        _vectorScale.z * scaleFactor
+      );
+    } else {
+      // Scale only along the active axis
+      this.object.scale[axisSettings.scaleKey] = distance;
+    }
     
     // Rotate the object so the current axis points from pointA toward pointB
     const direction = new Vector3().subVectors(this.pointB.position, this.pointA.position).normalize();
@@ -152,6 +167,8 @@ class PuttyControls extends Controls {
     // Store the initial line direction and anchor point for lockRotation
     _vectorLineDirection.subVectors(this.pointB.position, this.pointA.position).normalize();
     _vectorLineAnchor.copy((event.object === this.pointA ? this.pointB : this.pointA).position);
+    _vectorScale.copy(this.object.scale);
+    _vectorOffset.subVectors(this.pointB.position, this.pointA.position);
     
     // Bubble up event
     this.dispatchEvent(event);
