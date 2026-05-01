@@ -19,19 +19,19 @@ const _vectorOffset = new Vector3();
 const _axisSettings = {
   X: {
     color: '#ff0000',
-    colorHover: '#aa0000',
+    colorHover: '#990000',
     scaleKey: 'x',
     localPrimaryAxis: new Vector3(1, 0, 0)
   },
   Y: {
     color: '#00ff00',
-    colorHover: '#00aa00',
+    colorHover: '#009900',
     scaleKey: 'y',
     localPrimaryAxis: new Vector3(0, 1, 0)
   },
   Z: {
     color: '#0000ff',
-    colorHover: '#0000aa',
+    colorHover: '#000099',
     scaleKey: 'z',
     localPrimaryAxis: new Vector3(0, 0, 1)
   }
@@ -218,6 +218,8 @@ class PuttyControls extends Controls {
   }
 
   onDragStart = event => {
+    if (!this.object) return;
+    
     // Store the initial line direction and anchor point for lockRotation
     _vectorLineDirection.subVectors(this.pointB.position, this.pointA.position).normalize();
     _vectorLineAnchor.copy((event.object === this.pointA ? this.pointB : this.pointA).position);
@@ -229,6 +231,8 @@ class PuttyControls extends Controls {
   }
 
   onDrag = event => {
+    if (!this.object) return;
+    
     // Get world position for optional snapping and bounds clamping.
     event.object.getWorldPosition(_vectorWorld);
 
@@ -282,10 +286,11 @@ class PuttyControls extends Controls {
   }
 
   onHoverOff = event => {
-    // Update color
+    // Update line or point vertex color
     const color = this.getAxisSettings().color;
     this.lineMaterial.color.set(color);
     
+    // Update point vertex colors
     if (event.object.isPoints) {
       const colorAttr = event.object.geometry.attributes.color;
       const rgb = new Color(color);
@@ -298,7 +303,7 @@ class PuttyControls extends Controls {
   }
 
   onHoverOn = event => {
-    // Update color
+    // Update line or point vertex color
     if (event.object.isLine) {
       this.lineMaterial.color.set(this.getAxisSettings().colorHover);
     }
