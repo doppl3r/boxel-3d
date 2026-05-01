@@ -11,6 +11,7 @@ class LevelEditor {
 
     // Add controls with camera and active canvas
     this.controlsPutty = new PuttyControls(camera, domElement);
+    this.controlsPutty.threshold = 0.02; // Default 0.01
     this.controlsTransform = new TransformControls(camera, domElement);
     this.controlsTransform.showZ = true;
     this.controlsTransform.space = 'world';

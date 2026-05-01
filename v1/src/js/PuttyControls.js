@@ -90,10 +90,9 @@ class PuttyControls extends Controls {
     this.group.add(this.line, this.pointA, this.pointB);
 
     // Override updateMatrixWorld to update thresholds every frame
-    const scope = this;
     const originalUpdateMatrixWorld = this.group.updateMatrixWorld.bind(this.group);
     this.group.updateMatrixWorld = force => {
-      scope.updateThresholds();
+      this.updateThresholds();
       originalUpdateMatrixWorld(force);
     };
 
@@ -136,6 +135,7 @@ class PuttyControls extends Controls {
     defineProperty('minY', -Infinity);
     defineProperty('minZ', -Infinity);
     defineProperty('snap', null);
+    defineProperty('threshold', 0.01);
 
     // Keep DragControls interactivity in sync with PuttyControls enabled state.
     this.dragControls.enabled = this.enabled;
@@ -162,7 +162,7 @@ class PuttyControls extends Controls {
     if (!this.object || !this.camera) return;
 
     // Scale thresholds based on camera distance (adjust multiplier as needed)
-    const scaleFactor = this.camera.position.distanceTo(this.object.position) * 0.01;
+    const scaleFactor = this.camera.position.distanceTo(this.object.position) * this.threshold;
     this.dragControls.raycaster.params.Points.threshold = scaleFactor;
     this.dragControls.raycaster.params.Line.threshold = scaleFactor;
   }
@@ -361,6 +361,7 @@ class PuttyControls extends Controls {
     );
 
     this.updateLineFromPoints();
+    this.updateThresholds();
   }
 
   detach() {
