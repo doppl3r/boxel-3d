@@ -1,5 +1,5 @@
 import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
-import { BufferGeometry, Controls, Float32BufferAttribute, Group, Line, LineBasicMaterial, Points, PointsMaterial, Quaternion, Vector3 } from 'three';
+import { BufferGeometry, Color, Controls, Float32BufferAttribute, Group, Line, LineBasicMaterial, Points, PointsMaterial, Quaternion, Vector3 } from 'three';
 
 /*
   The putty controls class lets you scale and rotate an object between two points.
@@ -57,15 +57,23 @@ class PuttyControls extends Controls {
       });
     }
 
-    // Define points
-    this.pointGeometry = new BufferGeometry();
-    this.pointGeometry.setAttribute('position', new Float32BufferAttribute([0, 0, 0], 3));
-    this.pointMaterial = new PointsMaterial({ color: '#ff0000', depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true });
-    this.pointA = new Points(this.pointGeometry, this.pointMaterial);
-    this.pointB = new Points(this.pointGeometry, this.pointMaterial);
+    // Define points material
+    this.pointMaterial = new PointsMaterial({ depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true, vertexColors: true });
+    
+    // Define pointA
+    const pointGeometryA = new BufferGeometry();
+    pointGeometryA.setAttribute('position', new Float32BufferAttribute([0, 0, 0], 3));
+    pointGeometryA.setAttribute('color', new Float32BufferAttribute([1, 0, 0], 3));
+    this.pointA = new Points(pointGeometryA, this.pointMaterial);
     this.pointA.renderOrder = Infinity;
-    this.pointB.renderOrder = Infinity;
     this.pointA.position.x = -0.5;
+    
+    // Define pointB
+    const pointGeometryB = new BufferGeometry();
+    pointGeometryB.setAttribute('position', new Float32BufferAttribute([0, 0, 0], 3));
+    pointGeometryB.setAttribute('color', new Float32BufferAttribute([1, 0, 0], 3));
+    this.pointB = new Points(pointGeometryB, this.pointMaterial);
+    this.pointB.renderOrder = Infinity;
     this.pointB.position.x = 0.5;
 
     // Define line
@@ -77,12 +85,31 @@ class PuttyControls extends Controls {
     // Create points group
     this.group = new Group();
     this.group.visible = false;
-    this.group.add(this.pointA, this.pointB, this.line);
+    this.group.add(this.line, this.pointA, this.pointB);
 
-    // Initialize drag controls
-    this.dragControls = new DragControls([this.pointA, this.pointB], camera, domElement);
+    // Initialize drag controls (points first for priority)
+    this.dragControls = new DragControls([this.pointA, this.pointB, this.line], camera, domElement);
     this.dragControls.raycaster.params.Points.threshold = 4;
-    this.dragControls.raycaster.params.Line.threshold = 0.1;
+    this.dragControls.raycaster.params.Line.threshold = 2;
+    
+    // Override raycaster intersectObjects to prioritize points over line
+    const originalIntersect = this.dragControls.raycaster.intersectObjects.bind(this.dragControls.raycaster);
+    this.dragControls.raycaster.intersectObjects = (objects, recursive, intersects) => {
+      const results = originalIntersect(objects, recursive, intersects);
+      const pointHits = results.filter(r => r.object.isPoints);
+
+      // Return points instead of line
+      if (pointHits.length > 0) {
+        if (intersects) {
+          intersects.length = 0;
+          intersects.push(...pointHits);
+        }
+        return pointHits;
+      }
+      return results;
+    };
+
+    // Add event listeners for dragging and hovering
     this.dragControls.addEventListener('dragstart', this.onDragStart);
     this.dragControls.addEventListener('drag', this.onDrag);
     this.dragControls.addEventListener('dragend', this.onDragEnd);
@@ -123,11 +150,38 @@ class PuttyControls extends Controls {
     return (object?.scale?.[scaleKey] || 0) / 2;
   }
 
-  updateLineFromPoints() {
+  updatePointsFromLine() {
     const linePositions = this.lineGeometry.attributes.position;
-    linePositions.setXYZ(0, this.pointA.position.x, this.pointA.position.y, this.pointA.position.z);
-    linePositions.setXYZ(1, this.pointB.position.x, this.pointB.position.y, this.pointB.position.z);
-    linePositions.needsUpdate = true;
+    
+    // Convert first vertex position to world space, then to pointA local space
+    _vector.set(linePositions.getX(0), linePositions.getY(0), linePositions.getZ(0));
+    this.line.localToWorld(_vector);
+    this.pointA.parent.worldToLocal(_vector);
+    this.pointA.position.copy(_vector);
+    
+    // Convert second vertex position to world space, then to pointB local space
+    _vector.set(linePositions.getX(1), linePositions.getY(1), linePositions.getZ(1));
+    this.line.localToWorld(_vector);
+    this.pointB.parent.worldToLocal(_vector);
+    this.pointB.position.copy(_vector);
+  }
+
+  updateLineFromPoints() {
+    // Update line from pointA world-to-local position
+    _vector.copy(this.pointA.position);
+    this.pointA.parent.localToWorld(_vector);
+    this.line.worldToLocal(_vector);
+    this.lineGeometry.attributes.position.setXYZ(0, _vector.x, _vector.y, _vector.z);
+    
+    // Update line from pointB world-to-local position
+    _vector.copy(this.pointB.position);
+    this.pointB.parent.localToWorld(_vector);
+    this.line.worldToLocal(_vector);
+    this.lineGeometry.attributes.position.setXYZ(1, _vector.x, _vector.y, _vector.z);
+    
+    // Recompute line geometry
+    this.lineGeometry.attributes.position.needsUpdate = true;
+    this.lineGeometry.computeBoundingSphere();
   }
 
   updateObjectFromPoints() {
@@ -213,8 +267,9 @@ class PuttyControls extends Controls {
     event.object.position.copy(_vectorWorldSnapped);
 
     // Update controlled object and helper visuals.
+    if (event.object.isLine) this.updatePointsFromLine();
+    else this.updateLineFromPoints();
     this.updateObjectFromPoints();
-    this.updateLineFromPoints();
 
     // Bubble up event
     this.dispatchEvent(event);
@@ -227,18 +282,32 @@ class PuttyControls extends Controls {
   }
 
   onHoverOff = event => {
-    // Update point color
-    this.pointMaterial.color.set(this.getAxisSettings().color);
-    this.lineMaterial.color.set(this.getAxisSettings().color);
+    // Update color
+    const color = this.getAxisSettings().color;
+    this.lineMaterial.color.set(color);
+    
+    if (event.object.isPoints) {
+      const colorAttr = event.object.geometry.attributes.color;
+      const rgb = new Color(color);
+      colorAttr.setXYZ(0, rgb.r, rgb.g, rgb.b);
+      colorAttr.needsUpdate = true;
+    }
 
     // Bubble up event
     this.dispatchEvent(event);
   }
 
   onHoverOn = event => {
-    // Update point color
-    this.pointMaterial.color.set(this.getAxisSettings().colorHover);
-    this.lineMaterial.color.set(this.getAxisSettings().colorHover);
+    // Update color
+    if (event.object.isLine) {
+      this.lineMaterial.color.set(this.getAxisSettings().colorHover);
+    }
+    else if (event.object.isPoints) {
+      const colorAttr = event.object.geometry.attributes.color;
+      const rgb = new Color(this.getAxisSettings().colorHover);
+      colorAttr.setXYZ(0, rgb.r, rgb.g, rgb.b);
+      colorAttr.needsUpdate = true;
+    }
 
     // Bubble up event
     this.dispatchEvent(event);
@@ -282,8 +351,19 @@ class PuttyControls extends Controls {
 
   setAxis(axis) {
     this.axis = axis;
-    this.pointMaterial.color.set(this.getAxisSettings().color);
-    this.lineMaterial.color.set(this.getAxisSettings().color);
+    const color = this.getAxisSettings().color;
+    const rgb = new Color(color);
+    
+    // Update both point colors
+    const colorAttrA = this.pointA.geometry.attributes.color;
+    colorAttrA.setXYZ(0, rgb.r, rgb.g, rgb.b);
+    colorAttrA.needsUpdate = true;
+    
+    const colorAttrB = this.pointB.geometry.attributes.color;
+    colorAttrB.setXYZ(0, rgb.r, rgb.g, rgb.b);
+    colorAttrB.needsUpdate = true;
+    
+    this.lineMaterial.color.set(color);
     if (this.object) this.attach(this.object);
   }
 }
