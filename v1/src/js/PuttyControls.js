@@ -2,7 +2,7 @@ import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
 import { BufferGeometry, Color, Controls, Float32BufferAttribute, Group, Line, LineBasicMaterial, Points, PointsMaterial, Quaternion, Vector3 } from 'three';
 
 /*
-  The putty controls class lets you scale and rotate an object between two points.
+  Putty Controls lets you scale and rotate an object between two points.
 */
 
 // Initialize module-scoped variables
@@ -41,6 +41,8 @@ class PuttyControls extends Controls {
   constructor(camera, domElement) {
     // Inherit Three.js core Controls class
     super(camera, domElement);
+    this.camera = camera;
+    this.domElement = domElement;
 
     // Add reactive properties
     const defineProperty = (name, value) => {
@@ -58,7 +60,7 @@ class PuttyControls extends Controls {
     }
 
     // Define points material
-    this.pointMaterial = new PointsMaterial({ depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: true, vertexColors: true });
+    this.pointMaterial = new PointsMaterial({ depthTest: false, depthWrite: false, transparent: true, size: 8, sizeAttenuation: false, vertexColors: true });
     
     // Define pointA
     const pointGeometryA = new BufferGeometry();
@@ -87,10 +89,16 @@ class PuttyControls extends Controls {
     this.group.visible = false;
     this.group.add(this.line, this.pointA, this.pointB);
 
+    // Override updateMatrixWorld to update thresholds every frame
+    const scope = this;
+    const originalUpdateMatrixWorld = this.group.updateMatrixWorld.bind(this.group);
+    this.group.updateMatrixWorld = force => {
+      scope.updateThresholds();
+      originalUpdateMatrixWorld(force);
+    };
+
     // Initialize drag controls (points first for priority)
     this.dragControls = new DragControls([this.pointA, this.pointB, this.line], camera, domElement);
-    this.dragControls.raycaster.params.Points.threshold = 4;
-    this.dragControls.raycaster.params.Line.threshold = 2;
     
     // Override raycaster intersectObjects to prioritize points over line
     const originalIntersect = this.dragControls.raycaster.intersectObjects.bind(this.dragControls.raycaster);
@@ -148,6 +156,15 @@ class PuttyControls extends Controls {
     const axisSettings = this.getAxisSettings();
     const scaleKey = axisSettings.scaleKey;
     return (object?.scale?.[scaleKey] || 0) / 2;
+  }
+
+  updateThresholds() {
+    if (!this.object || !this.camera) return;
+
+    // Scale thresholds based on camera distance (adjust multiplier as needed)
+    const scaleFactor = this.camera.position.distanceTo(this.object.position) * 0.01;
+    this.dragControls.raycaster.params.Points.threshold = scaleFactor;
+    this.dragControls.raycaster.params.Line.threshold = scaleFactor;
   }
 
   updatePointsFromLine() {
@@ -228,6 +245,7 @@ class PuttyControls extends Controls {
     
     // Bubble up event
     this.dispatchEvent(event);
+    this.dispatchEvent(_changeEvent);
   }
 
   onDrag = event => {
@@ -277,12 +295,14 @@ class PuttyControls extends Controls {
 
     // Bubble up event
     this.dispatchEvent(event);
+    this.dispatchEvent(_changeEvent);
     this.dispatchEvent(_objectChangeEvent);
   }
 
   onDragEnd = event => {
     // Bubble up event
     this.dispatchEvent(event);
+    this.dispatchEvent(_changeEvent);
   }
 
   onHoverOff = event => {
@@ -300,6 +320,7 @@ class PuttyControls extends Controls {
 
     // Bubble up event
     this.dispatchEvent(event);
+    this.dispatchEvent(_changeEvent);
   }
 
   onHoverOn = event => {
@@ -316,6 +337,7 @@ class PuttyControls extends Controls {
 
     // Bubble up event
     this.dispatchEvent(event);
+    this.dispatchEvent(_changeEvent);
   }
 
   attach(object) {
