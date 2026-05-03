@@ -329,6 +329,7 @@ class LevelEditor {
   rewind() {
     app.level.retryLevel(app);
     app.level.deselectLevel(app);
+    app.levelEditor.detachControls();
     app.pauseLevel();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
