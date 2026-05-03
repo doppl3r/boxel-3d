@@ -1,5 +1,12 @@
 # Publishing Instructions
 
+## Install Tauri for Windows
+ - Build prerequisites: Rust toolchain (`rustup`/`cargo`) and Visual Studio Build Tools (MSVC) with the "Desktop development with C++" workload. Install via the Visual Studio Installer or use a package manager (e.g., Chocolatey) to obtain the build tools.
+
+## Install Tauri for MacOS
+
+- Build prerequisites: Rust toolchain (`rustup`/`cargo`) and Xcode Command Line Tools (`xcode-select --install`).
+
 ## Build Desktop Application
 
 - Update release version in `package.json`
@@ -16,7 +23,6 @@
   - Option 1: Watch videos showing how to do it: `https://partner.steamgames.com/doc/sdk/uploading`
   - Option 2:
     - Win: Copy the build & depot `.vdf` files from `/files/vdf/` to `C:\steamworks\sdk\tools\ContentBuilder\scripts`
-    - Mac: Copy the build & depot `.vdf` files from `/files/vdf/` to `/Users/jacob/Steam/sdk/tools/ContentBuilder/scripts`
 
 ## Building to Steam (Windows)
 
@@ -29,7 +35,7 @@
 ## Building to Steam (Mac)
 
 - Copy app files:
-  - Copy: `/Users/jacob/Development/boxel-3d/dist/mac-arm64/boxel-3d.app`
+  - Copy `.app` file: `/Users/jacob/Development/boxel-3d/src-tauri/target/release/bundle/macos/`
   - Paste: `/Users/jacob/Steam/sdk/tools/ContentBuilder/content/boxel-3d/mac`
 - Run SteamCMD `cd /Users/jacob/Steam && ./steamcmd.sh +login fragem123`
 - Run build script `run_app_build /Users/jacob/Steam/sdk/tools/ContentBuilder/scripts/app_build_3208440.vdf`

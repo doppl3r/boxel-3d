@@ -26,6 +26,7 @@
     "active": true,
     "targets": "all",
     "icon": [
+      "icons/icon.icns",
       "icons/icon.ico",
       "../public/png/icon32.png",
       "../public/png/icon128.png",
