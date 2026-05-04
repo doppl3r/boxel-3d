@@ -833,5 +833,11 @@
       "Added \"Putty\" rotation lock (ex: Hold Shift)",
       "Added \"Putty\" draggable line"
     ]
+  },
+  {
+    "version": "2.8.9",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
