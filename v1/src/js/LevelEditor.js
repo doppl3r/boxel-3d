@@ -121,7 +121,7 @@ class LevelEditor {
 
     // Update snap settings for putty controls
     this.controlsPutty.moved = false;
-    this.controlsPutty.setSnap(a.mouse.snap);
+    this.controlsPutty.snap = a.mouse.snap;
     
     // Update transform controls snap settings
     this.controlsTransform.moved = false;
@@ -454,7 +454,10 @@ class LevelEditor {
       const currentAxis = this.controlsPutty.axis || 'X';
       const currentIndex = this.puttyAxes.indexOf(currentAxis);
       const nextIndex = (currentIndex + 1) % this.puttyAxes.length;
-      this.controlsPutty.setAxis(this.puttyAxes[nextIndex]);
+      
+      // Update putty controls axis and color
+      this.controlsPutty.axis = this.puttyAxes[nextIndex];
+      this.controlsPutty.updateHelper();
     }
 
     // Update mode state
@@ -462,7 +465,7 @@ class LevelEditor {
     this.applyControlsModeState();
     this.attachControls(app.selectedObject);
 
-    // Dispatch level editor more change
+    // Dispatch level editor mode change
     window.dispatchEvent(new CustomEvent('setSelectedMode', { detail: mode }));
   }
 

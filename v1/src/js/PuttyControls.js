@@ -140,6 +140,7 @@ class PuttyControls extends Controls {
     // Keep DragControls interactivity in sync with PuttyControls enabled state.
     this.dragControls.enabled = this.enabled;
     this.addEventListener('enabled-change', event => { this.dragControls.enabled = event.value; });
+    this.addEventListener('axis-change', () => { this.updateHelper(); });
   }
 
   getAxisSettings() {
@@ -342,30 +343,35 @@ class PuttyControls extends Controls {
     this.dispatchEvent(_changeEvent);
   }
 
-  attach(object) {
-    this.object = object;
-    this.group.visible = true;
-    this.dragControls.enabled = this.enabled;
+  updateHelper() {
+    if (!this.object) return;
 
     // Calculate axis direction and object half extent for positioning the points.
     const axisDirection = this.getAxisDirection();
-    const halfExtent = this.getAxisHalfExtent(object);
+    const halfExtent = this.getAxisHalfExtent(this.object);
 
     // Place points at the object's world-space edge positions for the active axis.
     this.pointA.position.set(
-      object.position.x - axisDirection.x * halfExtent,
-      object.position.y - axisDirection.y * halfExtent,
-      object.position.z - axisDirection.z * halfExtent
+      this.object.position.x - axisDirection.x * halfExtent,
+      this.object.position.y - axisDirection.y * halfExtent,
+      this.object.position.z - axisDirection.z * halfExtent
     );
     this.pointB.position.set(
-      object.position.x + axisDirection.x * halfExtent,
-      object.position.y + axisDirection.y * halfExtent,
-      object.position.z + axisDirection.z * halfExtent
+      this.object.position.x + axisDirection.x * halfExtent,
+      this.object.position.y + axisDirection.y * halfExtent,
+      this.object.position.z + axisDirection.z * halfExtent
     );
 
     this.updateLineFromPoints();
     this.updateThresholds();
     this.updateColors(this.getAxisSettings().color);
+  }
+
+  attach(object) {
+    this.object = object;
+    this.group.visible = true;
+    this.dragControls.enabled = this.enabled;
+    this.updateHelper();
   }
 
   detach() {
@@ -376,16 +382,6 @@ class PuttyControls extends Controls {
 
   getHelper() {
     return this.group;
-  }
-
-  setSnap(snap) {
-    this.snap = snap;
-  }
-
-  setAxis(axis) {
-    this.axis = axis;
-    this.updateColors(this.getAxisSettings().color);
-    if (this.object) this.attach(this.object);
   }
 }
 
