@@ -52,7 +52,6 @@ class PuttyControls extends Controls {
           if (value !== newValue) {
             value = newValue;
             this.dispatchEvent({ type: name + '-changed', value: newValue });
-            this.dispatchEvent({ type: name + '-change', value: newValue });
             this.dispatchEvent(_changeEvent);
           }
         }
@@ -139,8 +138,8 @@ class PuttyControls extends Controls {
 
     // Keep DragControls interactivity in sync with PuttyControls enabled state.
     this.dragControls.enabled = this.enabled;
-    this.addEventListener('enabled-change', event => { this.dragControls.enabled = event.value; });
-    this.addEventListener('axis-change', () => { this.updateHelper(); });
+    this.addEventListener('enabled-changed', event => { this.dragControls.enabled = event.value; });
+    this.addEventListener('axis-changed', () => { this.updateHelper(); });
   }
 
   getAxisSettings() {
