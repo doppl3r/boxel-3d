@@ -311,6 +311,12 @@ class App {
     app.play = true;
     app.timer.start();
 
+    // Adjust camera zoom
+    if (app.level.zoom) {
+      app.camera.position.zDefault = app.level.zoom;
+      app.camera.position.z = app.level.zoom;
+    }
+
     // Play jump sound
     this.assets.audio.play('jump');
   }
