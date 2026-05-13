@@ -293,11 +293,13 @@ class App {
 
   saveOrbitState() {
     // Keep the game camera perpendicular while preserving z tilt from gravity.
-    this.camera.rotation.x = 0;
-    this.camera.rotation.y = 0;
-    this.camera.updateMatrixWorld();
-    this.levelEditor.controlsOrbit.target.copy(this.player.position);
-    this.levelEditor.controlsOrbit.saveState();
+    if (this.state == 'level-editor') {
+      this.camera.rotation.x = 0;
+      this.camera.rotation.y = 0;
+      this.camera.updateMatrixWorld();
+      this.levelEditor.controlsOrbit.target.copy(this.player.position);
+      this.levelEditor.controlsOrbit.saveState();
+    }
   }
 
   updateCameraZoom(zoom, a = app) {
