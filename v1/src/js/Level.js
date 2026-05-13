@@ -42,6 +42,7 @@ class Level extends Group {
     var length = a.level.children.length;
     this.name = this.defaultName;
     this.theme = this.defaultTheme;
+    this.zoom = undefined;
     a.player.removeRope();
     for (var i=0; i < length; i++) {
       var child = a.level.children[0];

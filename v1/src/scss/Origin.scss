@@ -1055,6 +1055,11 @@
             &:hover { animation: shake 0.25s; }
             &:last-of-type { background-color: #27A0FF; }
           }
+
+          &[disabled] {
+            opacity: 0.25;
+            pointer-events: none;
+          }
         }
       }
     }

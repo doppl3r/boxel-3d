@@ -445,13 +445,26 @@ class App {
     app.canvas.classList.add('hidden');
   }
 
-  isVerified() {
+  isInputBufferValid() {
     var settings = app.storage.getSettings(app);
-    var inputBufferIsDisabled = settings.buffer == 0;
-    var debugIsDisabled = settings.debug == false;
+    var inputBufferIsDisabled = settings.buffer === 0;
+    return inputBufferIsDisabled;
+  }
+
+  isDebugValid() {
+    var settings = app.storage.getSettings(app);
+    var debugIsDisabled = settings.debug === false;
+    return debugIsDisabled;
+  }
+
+  isZoomValid() {
     var zoom = app.camera.position.z;
     var zoomIsValid = app.level.zoom ? (zoom == app.level.zoom) : (zoom == 180);
-    return inputBufferIsDisabled && debugIsDisabled && zoomIsValid;
+    return zoomIsValid;
+  }
+
+  isVerified() {
+    return this.isInputBufferValid() && this.isDebugValid() && this.isZoomValid();
   }
 }
 

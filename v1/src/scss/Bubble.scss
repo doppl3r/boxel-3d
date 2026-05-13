@@ -637,14 +637,47 @@
           }
 
           label {
-            width: 100%;
+            align-items: center;
+            display: flex;
+            gap: 0.5em;
             margin: 0.25em 0em;
             word-break: break-all;
             word-wrap: break-word;
+            width: 100%;
 
             .material-symbols-rounded {
-              vertical-align: bottom;
               color: #FFC24C;
+              line-height: 0;
+              vertical-align: middle;
+              position: relative;
+              
+              &[data-title] {
+                cursor: pointer;
+
+                &:hover {
+                  &:after {
+                    background-color: #EB2B6D;
+                    border-radius: 0.5em;
+                    color: #ffffff;
+                    content: attr(data-title);
+                    font-family: 'Comfortaa-Bold';
+                    font-size: 0.75em;
+                    left: 100%;
+                    line-height: 1.25em;
+                    padding: 0.5em;
+                    position: absolute;
+                    pointer-events: none;
+                    text-align: center;
+                    top: 0;
+                    transform: translate(-1em, -100%);
+                    white-space: normal;
+                    width: 8em;
+                    word-break: break-word;
+                    z-index: 1;
+                  }
+                }
+              }
+
             }
           }
 
@@ -871,6 +904,11 @@
             &::placeholder {
               color: rgba(#ffffff, 0.5);
             }
+          }
+
+          &[disabled] {
+            pointer-events: none;
+            opacity: 0.5;
           }
         }
 
