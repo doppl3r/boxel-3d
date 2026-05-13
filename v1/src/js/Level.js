@@ -136,7 +136,8 @@ class Level extends Group {
   }
 
   saveLevelData(a) {
-    a.storage.setLevelData(this.key, this.exportToJSON(a));
+    this.key = a.storage.setLevelData(this.key, this.exportToJSON(a));
+    return this.key;
   }
 
   importFromJSON(levelData, a) {
