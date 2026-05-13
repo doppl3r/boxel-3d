@@ -255,6 +255,7 @@ class App {
     a.player.setInputBuffer(settings.buffer, a);
     a.storage.setSettings(settings); // Store locally
     a.updateCameraMotion(settings.motion, a);
+    a.updateCameraZoom(settings.zoom, a);
     window.dispatchEvent(new CustomEvent('updateStatsVisibility'));
     window.dispatchEvent(new CustomEvent('updateScale', { detail: settings.scale }));
   }
@@ -288,6 +289,12 @@ class App {
 
   updateCameraMotion(motion, a = app) {
     a.motion = motion;
+  }
+
+  updateCameraZoom(zoom, a = app) {
+    a.camera.position.zDefault = zoom;
+    a.camera.position.z = zoom;
+    a.graphics.render();
   }
 
   exitCampaign() {

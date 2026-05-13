@@ -148,9 +148,10 @@
       "developer_tools": "Outils développeur",
       "old_ui": "Ancienne interface",
       "quality": "Qualité",
-      "scale": "Échelle",
+      "scale": "Échelle de l'interface utilisateur",
       "show_fps": "Afficher FPS",
-      "title": "Graphismes"
+      "title": "Graphismes",
+      "zoom": "Zoom"
     },
     "language": {
       "credit": "Crédits",

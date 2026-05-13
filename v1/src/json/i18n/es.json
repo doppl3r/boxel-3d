@@ -148,9 +148,10 @@
       "developer_tools": "Herramientas para Desarrolladores",
       "old_ui": "Interfaz de Usuario Antigua",
       "quality": "Qualidad",
-      "scale": "Escala",
+      "scale": "Usuario Antigua Escala",
       "show_fps": "Enseñar FPS",
-      "title": "Gráficos"
+      "title": "Gráficos",
+      "zoom": "Zoom"
     },
     "language": {
       "credit": "Crédito",

@@ -148,9 +148,10 @@
       "developer_tools": "개발자 툴",
       "old_ui": "옛날 UI",
       "quality": "퀄리티",
-      "scale": "팝업 사이즈",
+      "scale": "사용자 인터페이스 규모",
       "show_fps": "FPS 보기",
-      "title": "그래픽"
+      "title": "그래픽",
+      "zoom": "줌"
     },
     "language": {
       "credit": "크레딧",

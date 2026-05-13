@@ -148,9 +148,10 @@
       "developer_tools": "Developer Tools",
       "old_ui": "Old UI",
       "quality": "Quality",
-      "scale": "Scale",
+      "scale": "UI Scale",
       "show_fps": "Show FPS",
-      "title": "Graphics"
+      "title": "Graphics",
+      "zoom": "Zoom"
     },
     "language": {
       "credit": "Credit",

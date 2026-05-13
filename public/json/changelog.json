@@ -837,7 +837,7 @@
   {
     "version": "2.8.9",
     "revisions": [
-      "Fixed bugs"
+      "Added camera zoom option (Settings > Graphics > Zoom)"
     ]
   }
 ]

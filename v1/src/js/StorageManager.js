@@ -145,6 +145,7 @@ class StorageManager {
       volume: util.isExtension() ? 0 : 0.5,
       volumeMusic: 0.5,
       volumeEffects: 1,
+      zoom: 180
     };
     var settings = defaultSettings; // Use default
 

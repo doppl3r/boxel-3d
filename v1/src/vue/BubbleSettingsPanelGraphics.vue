@@ -31,6 +31,7 @@
         <label for="scale">{{ (settings.scale * 100) }}%</label>
       </div>
     </div>
+
     <div class="group">
       <div class="option">
         <label for="motion">{{ i18n.t('settings.graphics.camera') }}</label>
@@ -38,6 +39,13 @@
       <div class="option">
         <input type="checkbox" id="motion" :checked="settings.motion == true" @change="$emit('updateSettings', $event)">
         <label for="motion">{{ i18n.t('settings.graphics.auto_rotate') }}</label>
+      </div>
+      <div class="option">
+        <label for="zoom">{{ i18n.t('settings.graphics.zoom') }}</label>
+      </div>
+      <div class="option">
+        <input type="range" id="zoom" min="80" max="280" step="20" :value="settings.zoom" @input="$emit('updateSettings', $event)">
+        <label for="zoom">{{ (settings.zoom) }}</label>
       </div>
     </div>
     <div class="group">

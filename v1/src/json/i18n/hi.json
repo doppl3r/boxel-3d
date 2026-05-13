@@ -148,9 +148,10 @@
       "developer_tools": "डेवलपर टूल्स",
       "old_ui": "पुराना यूआई",
       "quality": "क्वालिटी",
-      "scale": "स्केल",
+      "scale": "यूआई स्केल",
       "show_fps": "FPS दिखाएँ",
-      "title": "ग्राफिक्स"
+      "title": "ग्राफिक्स",
+      "zoom": "जूम"
     },
     "language": {
       "credit": "क्रेडिट",

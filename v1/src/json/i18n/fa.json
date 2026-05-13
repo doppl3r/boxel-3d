@@ -148,9 +148,10 @@
       "developer_tools": "ابزارهای سازندگان",
       "old_ui": "ظاهر قدیمی",
       "quality": "کیفیت",
-      "scale": "مقیاس",
+      "scale": "مقياس واجهة المستخدم",
       "show_fps": "نمایش FPS",
-      "title": "گرافیک"
+      "title": "گرافیک",
+      "zoom": "تكبير"
     },
     "language": {
       "credit": "اعتبار",
