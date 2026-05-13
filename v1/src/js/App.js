@@ -359,9 +359,12 @@ class App {
       var description = app.level.getDescriptionByTitle(title)
       var author = app.level.getAuthorByTitle(title);
       var theme = app.level.getTheme(options.json.theme);
+      var zoom = options.json.zoom || app.camera.position.zDefault;
       if (theme == null) theme = app.level.getPackTheme(title);
       if (storageSettings.theme == 'origin' || theme == null) theme = app.level.getTheme('classic');
       app.level.entityFactory.color = theme.color;
+      app.camera.position.z = zoom;
+      app.camera.position.zDefault = zoom;
 
       // Set optional fog
       if (theme.fog) {
@@ -422,6 +425,15 @@ class App {
 
   hideCanvas() {
     app.canvas.classList.add('hidden');
+  }
+
+  isVerified() {
+    var settings = app.storage.getSettings(app);
+    var inputBufferIsDisabled = settings.buffer == 0;
+    var debugIsDisabled = settings.debug == false;
+    var zoom = app.camera.position.z;
+    var zoomIsValid = app.level.zoom ? (zoom == app.level.zoom) : (zoom == 180);
+    return inputBufferIsDisabled && debugIsDisabled && zoomIsValid;
   }
 }
 

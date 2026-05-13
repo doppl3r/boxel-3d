@@ -227,8 +227,7 @@ class StorageManager {
     ctx2d.drawImage(webglCanvas, 0, 0);
     
     // Add verification badge
-    var settings = app.storage.getSettings(app);
-    if (settings.buffer == 0 && settings.debug == false) {
+    if (app.isVerified()) {
       ctx2d.save();
       ctx2d.font = '48px "Material Symbols Rounded", sans-serif';
       ctx2d.fillStyle = '#FFFFFF';

@@ -10,6 +10,7 @@ class Level extends Group {
     this.theme = this.defaultTheme = 'classic';
     this.entityFactory = new EntityFactory();
     this.publishedFileId = null; // Reserved for Steam itemIds
+    this.zoom = undefined;
   }
 
   addObject(object, a) {
@@ -119,6 +120,7 @@ class Level extends Group {
     levelJSON.name = this.name;
     levelJSON.theme = this.theme;
     levelJSON.description = this.description;
+    levelJSON.zoom = this.zoom;
     levelJSON.version = app.version;
     levelJSON.children = [];
 
@@ -141,6 +143,7 @@ class Level extends Group {
     this.name = levelData.name;
     this.theme = levelData.theme;
     this.description = levelData.description;
+    this.zoom = levelData.zoom;
 
     // Loop through JSON level data
     for (var i = 0; i < levelData.children.length; i++) {
