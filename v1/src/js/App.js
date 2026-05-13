@@ -291,9 +291,19 @@ class App {
     a.motion = motion;
   }
 
+  saveOrbitState() {
+    // Keep the game camera perpendicular while preserving z tilt from gravity.
+    this.camera.rotation.x = 0;
+    this.camera.rotation.y = 0;
+    this.camera.updateMatrixWorld();
+    this.levelEditor.controlsOrbit.target.copy(this.player.position);
+    this.levelEditor.controlsOrbit.saveState();
+  }
+
   updateCameraZoom(zoom, a = app) {
     a.camera.position.zDefault = zoom;
     a.camera.position.z = zoom;
+    a.saveOrbitState();
     a.graphics.render();
   }
 
@@ -315,6 +325,7 @@ class App {
     if (app.level.zoom) {
       app.camera.position.zDefault = app.level.zoom;
       app.camera.position.z = app.level.zoom;
+      app.saveOrbitState();
     }
 
     // Play jump sound
@@ -390,6 +401,7 @@ class App {
       app.level.clearLevel(app);
       app.level.importFromJSON(options.json, app);
       app.level.publishedFileId = options.publishedFileId; // Steam level ID
+      app.saveOrbitState();
       app.background.visible = true;
       app.startLevel();
       app.resetScene();
