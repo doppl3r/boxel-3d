@@ -655,6 +655,9 @@
                 cursor: pointer;
 
                 &:hover {
+                  animation: shake 0.25s ease-in-out;
+                  animation-fill-mode: forwards;
+
                   &:after {
                     background-color: #EB2B6D;
                     border-radius: 0.5em;
@@ -774,6 +777,7 @@
                 border-radius: 99em;
                 opacity: 0.25;
                 display: inline-block;
+                flex-shrink: 0;
                 width: 3em;
                 height: 1.5em;
                 margin-right: 0.5em;

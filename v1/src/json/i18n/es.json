@@ -129,6 +129,7 @@
     },
     "controls": {
       "buffer": "Búfer de Entrada",
+      "buffer_badge": "La insignia verificada requiere 0ms de búfer de entrada",
       "controller": "Controlador",
       "reverse": "Inverso",
       "title": "Controles"
@@ -145,13 +146,16 @@
       "auto_rotate": "Rotación de Cámara Automática",
       "camera": "Cámara",
       "debug_mode": "Modo de Depuración",
+      "debug_badge": "La insignia verificada requiere depuración deshabilitada",
       "developer_tools": "Herramientas para Desarrolladores",
       "old_ui": "Interfaz de Usuario Antigua",
       "quality": "Qualidad",
       "scale": "Usuario Antigua Escala",
       "show_fps": "Enseñar FPS",
       "title": "Gráficos",
-      "zoom": "Zoom"
+      "zoom": "Zoom",
+      "zoom_badge": "La insignia verificada requiere 180 zoom",
+      "zoom_disabled": "Deshabilitado por nivel"
     },
     "language": {
       "credit": "Crédito",

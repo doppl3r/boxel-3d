@@ -129,6 +129,7 @@
     },
     "controls": {
       "buffer": "Tampon d'entrée",
+      "buffer_badge": "Le badge vérifié nécessite un tampon d'entrée de 0ms",
       "controller": "Manette",
       "reverse": "Reverser",
       "title": "Contrôles"
@@ -145,13 +146,16 @@
       "auto_rotate": "Rotation Automatique",
       "camera": "Caméra",
       "debug_mode": "Mode Debug",
+      "debug_badge": "Le badge vérifié nécessite le debug désactivé",
       "developer_tools": "Outils développeur",
       "old_ui": "Ancienne interface",
       "quality": "Qualité",
       "scale": "Échelle de l'interface utilisateur",
       "show_fps": "Afficher FPS",
       "title": "Graphismes",
-      "zoom": "Zoom"
+      "zoom": "Zoom",
+      "zoom_badge": "Le badge vérifié nécessite un zoom de 180",
+      "zoom_disabled": "Désactivé par niveau"
     },
     "language": {
       "credit": "Crédits",

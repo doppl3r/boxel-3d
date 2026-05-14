@@ -64,7 +64,7 @@
     <div class="group">
       <div class="option">
         <label for="buffer">
-          <span v-if="isInputBufferValid" class="material-symbols-rounded" data-title="Verified badge requires 0ms input Buffer">verified_off</span>
+          <span v-if="isInputBufferValid" class="material-symbols-rounded" :data-title="i18n.t('settings.controls.buffer_badge')">verified_off</span>
           {{ i18n.t('settings.controls.buffer') }}
         </label>
       </div>

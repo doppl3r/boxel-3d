@@ -129,6 +129,7 @@
     },
     "controls": {
       "buffer": "Input Buffer",
+      "buffer_badge": "Verified badge requires 0ms input Buffer",
       "controller": "Controller",
       "reverse": "Reverse",
       "title": "Controls"
@@ -145,13 +146,16 @@
       "auto_rotate": "Auto Rotate",
       "camera": "Camera",
       "debug_mode": "Debug Mode",
+      "debug_badge": "Verified badge requires debug disabled",
       "developer_tools": "Developer Tools",
       "old_ui": "Old UI",
       "quality": "Quality",
       "scale": "UI Scale",
       "show_fps": "Show FPS",
       "title": "Graphics",
-      "zoom": "Zoom"
+      "zoom": "Zoom",
+      "zoom_badge": "Verified badge requires 180 zoom",
+      "zoom_disabled": "Disabled by level"
     },
     "language": {
       "credit": "Credit",

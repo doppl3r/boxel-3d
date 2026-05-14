@@ -129,6 +129,7 @@
     },
     "controls": {
       "buffer": "입력 버퍼",
+      "buffer_badge": "검증된 배지는 0ms 입력 버퍼가 필요합니다",
       "controller": "컨트롤러",
       "reverse": "버튼 반전",
       "title": "컨트롤 설정"
@@ -145,13 +146,16 @@
       "auto_rotate": "자동 회전",
       "camera": "카메라",
       "debug_mode": "디버그 모드",
+      "debug_badge": "검증된 배지는 디버그 모드가 비활성화되어야 합니다",
       "developer_tools": "개발자 툴",
       "old_ui": "옛날 UI",
       "quality": "퀄리티",
       "scale": "사용자 인터페이스 규모",
       "show_fps": "FPS 보기",
       "title": "그래픽",
-      "zoom": "줌"
+      "zoom": "줌",
+      "zoom_badge": "검증된 배지는 180 줌이 필요합니다",
+      "zoom_disabled": "레벨에 의해 비활성화됨"
     },
     "language": {
       "credit": "크레딧",

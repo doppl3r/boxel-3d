@@ -79,8 +79,8 @@
       </div>
       <div class="option">
         <label for="zoom">
-          <span v-if="!isZoomValid" class="material-symbols-rounded" data-title="Verified badge requires 180 zoom">verified_off</span>
-          <span v-if="zoomDisabled" class="material-symbols-rounded" data-title="Disabled by level">lock</span>
+          <span v-if="!isZoomValid" class="material-symbols-rounded" :data-title="i18n.t('settings.graphics.zoom_badge')">verified_off</span>
+          <span v-if="zoomDisabled" class="material-symbols-rounded" :data-title="i18n.t('settings.graphics.zoom_disabled')">lock</span>
           <span>{{ i18n.t('settings.graphics.zoom') }}</span>
         </label>
       </div>
@@ -100,7 +100,7 @@
       <div class="option">
         <input type="checkbox" id="debug" :checked="settings.debug == true" @change="onChange('updateSettings', $event, null, showHelpers)">
         <label for="debug">
-          <span v-if="!isDebugValid" class="material-symbols-rounded" data-title="Verified badge requires debug disabled">verified_off</span>
+          <span v-if="!isDebugValid" class="material-symbols-rounded" :data-title="i18n.t('settings.graphics.debug_badge')">verified_off</span>
           <span>{{ i18n.t('settings.graphics.debug_mode') }}</span>
         </label>
       </div>
