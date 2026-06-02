@@ -9,14 +9,6 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     outDir: './dist',
-    rolldownOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html'),
-        v1: path.resolve(__dirname, 'v1/index.html'),
-        v2: path.resolve(__dirname, 'v2/index.html')
-      },
-      treeshake: true
-    },
     target: "es2022"
   },
   css: {

@@ -24,9 +24,7 @@ function zipSrcFiles() {
   gulp
     .src([
       './index.html',
-      './src/**/*',
-      './v1/**/*',
-      './v2/**/*'
+      './src/**/*'
     ], { base: '.', encoding: false })
     .pipe(zip(`boxel-3d-${ version }-src.zip`, { buffer: true }))
     .pipe(gulp.dest('./dist-extension'));

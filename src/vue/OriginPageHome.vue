@@ -116,8 +116,7 @@
         <div class="message"><img class="google-icon" :src="'../svg/light.svg'" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
-        <OriginButtonFullscreen class="button top-right" />
-        <a class="button top-right three"  @click="goBack" title="Go back"><img :src="'../svg/back.svg'"></a>
+        <OriginButtonFullscreen class="button top-right three" />
         <a class="button top-right two" @click="showAccountOptions" title="Account"><img :src="'../svg/cloud-check.svg'"></a>
         <OriginButtonSettings class="button top-right" />
         <a class="button" @click="$emit('setPage', 'level-manager')" tabindex="0"><span>Level Maker</span> <img :src="'../svg/pencil.svg'"></a>

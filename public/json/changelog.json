@@ -839,5 +839,11 @@
     "revisions": [
       "Added camera zoom option (Settings > Graphics > Zoom)"
     ]
+  },
+  {
+    "version": "2.9.0",
+    "revisions": [
+      "Updated libraries"
+    ]
   }
 ]

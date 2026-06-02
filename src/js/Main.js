@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from '../vue/App.vue'
-import i18n from '../../v1/src/js/i18n';
+import i18n from './i18n';
 import { setupTauriDesktopBridge } from './tauri-desktop-bridge.js';
 
 await setupTauriDesktopBridge();

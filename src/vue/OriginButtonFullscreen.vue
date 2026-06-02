@@ -32,7 +32,7 @@
 </script>
 
 <template>
-  <a class="button top-right four" @click="toggleFullscreen" title="Fullscreen (F11)" v-if="util.isNativeApp() == false">
+  <a class="button top-right" @click="toggleFullscreen" title="Fullscreen (F11)" v-if="util.isNativeApp() == false">
     <img :src="'../svg/grow.svg'" v-if="fullscreen == false">
     <img :src="'../svg/shrink.svg'" v-else>
   </a>

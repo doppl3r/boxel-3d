@@ -157,10 +157,7 @@
       <img :src="'../svg/background-purple.svg'">
     </div>
     <div class="nav">
-      <a class="button left fade-in" @click="goBack" :title="i18n.t('home.button.back')">
-        <span class="material-symbols-rounded">undo</span>
-      </a>
-      <BubbleButtonFullscreen class="button fade-in" :title="i18n.t('home.button.fullscreen')" />
+      <BubbleButtonFullscreen class="button fade-in right" :title="i18n.t('home.button.fullscreen')" />
       <BubbleButtonSettings class="button fade-in" />
     </div>
     <div class="content fade-in">
