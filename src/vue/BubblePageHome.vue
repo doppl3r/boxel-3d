@@ -19,12 +19,12 @@
   var menu = computed(() => [
     {
       "title": i18n.t('home.button.skins'),
-      "url": "../svg/button-skins.svg",
+      "url": "./svg/button-skins.svg",
       "callback": function() { emit('setPage', 'skins') }
     },
     {
       "title": i18n.t('home.button.level_editor'),
-      "url": "../svg/button-level-editor.svg",
+      "url": "./svg/button-level-editor.svg",
       "callback": function() {
         // TODO: Replace events after developing Level Editor 2.0
         window.dispatchEvent(new CustomEvent('setTheme', { detail: 'origin' }));
@@ -33,14 +33,14 @@
     },
     {
       "title": i18n.t('home.button.multi_player'),
-      "url": "../svg/button-multiplayer.svg",
+      "url": "./svg/button-multiplayer.svg",
       "callback": function() {
         window.dispatchEvent(new CustomEvent('openSettings', { detail: 'multiplayer' }));
       }
     },
     {
       "title": i18n.t('home.button.play'),
-      "url": "../svg/button-play.svg",
+      "url": "./svg/button-play.svg",
       "callback": function() {
         emit('setPage', 'level-picker')
       }
@@ -76,7 +76,7 @@
   }
 
   async function updateVersion() {
-    var response = await fetch('../manifest.json');
+    var response = await fetch('./manifest.json');
     var json = await response.json();
     manifest.value = json;
     version.value = 'v' + json.version;
@@ -101,7 +101,7 @@
   }
 
   async function openChangelog() {
-    const changelog = await fetch('../json/changelog.json').then(function (response) {
+    const changelog = await fetch('./json/changelog.json').then(function (response) {
       if (response.ok) { return response.json(); }
       throw new Error('Something went wrong');
     })
@@ -133,10 +133,6 @@
     if (e.target.href) util.openLink(e.target.href);
   }
 
-  function goBack() {
-    window.location.href = '../index.html';
-  }
-
   // Run function after being mounted (visible)
   onMounted(function() {
     updateVersion();
@@ -154,7 +150,7 @@
 <template>
   <div class="page" :key="menuKey">
     <div class="background">
-      <img :src="'../svg/background-purple.svg'">
+      <img :src="'./svg/background-purple.svg'">
     </div>
     <div class="nav">
       <BubbleButtonFullscreen class="button fade-in right" :title="i18n.t('home.button.fullscreen')" />

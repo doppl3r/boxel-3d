@@ -108,7 +108,7 @@
         </div>
       </div>
       <div class="buttons">
-        <a class="button top-left" @click="exitSkins" title="Exit to home (ESC)"><img :src="'../svg/home.svg'"></a>
+        <a class="button top-left" @click="exitSkins" title="Exit to home (ESC)"><img :src="'./svg/home.svg'"></a>
       </div>
     </div>
   </div>

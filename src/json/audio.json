@@ -1,13 +1,13 @@
 {
   "bounce": {
-    "url": "../ogg/bounce.ogg",
+    "url": "./ogg/bounce.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "boxel-1": {
-    "url": "../ogg/boxel-1.ogg",
+    "url": "./ogg/boxel-1.ogg",
     "userData": {
       "loop": true,
       "name": "Boxel 1",
@@ -16,7 +16,7 @@
     }
   },
   "boxel-rebound": {
-    "url": "../ogg/boxel-rebound.ogg",
+    "url": "./ogg/boxel-rebound.ogg",
     "userData": {
       "loop": true,
       "name": "Boxel Rebound",
@@ -25,7 +25,7 @@
     }
   },
   "boxel-golf": {
-    "url": "../ogg/boxel-golf.ogg",
+    "url": "./ogg/boxel-golf.ogg",
     "userData": {
       "loop": true,
       "name": "Boxel Golf",
@@ -34,7 +34,7 @@
     }
   },
   "boxel-3d-classic": {
-    "url": "../ogg/boxel-3d-classic.ogg",
+    "url": "./ogg/boxel-3d-classic.ogg",
     "userData": {
       "loop": true,
       "name": "Boxel 3D Classic",
@@ -43,7 +43,7 @@
     }
   },
   "boxel-3d-pro": {
-    "url": "../ogg/boxel-3d-pro.ogg",
+    "url": "./ogg/boxel-3d-pro.ogg",
     "userData": {
       "loop": true,
       "name": "Boxel 3D Pro",
@@ -52,105 +52,105 @@
     }
   },
   "clap": {
-    "url": "../ogg/clap.ogg",
+    "url": "./ogg/clap.ogg",
     "userData": {
       "type": "effect",
       "volume": 2
     }
   },
   "click": {
-    "url": "../ogg/click.ogg",
+    "url": "./ogg/click.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "glass": {
-    "url": "../ogg/glass.ogg",
+    "url": "./ogg/glass.ogg",
     "userData": {
       "type": "effect",
       "volume": 0.5
     }
   },
   "ice": {
-    "url": "../ogg/ice.ogg",
+    "url": "./ogg/ice.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "impact1": {
-    "url": "../ogg/impact1.ogg",
+    "url": "./ogg/impact1.ogg",
     "userData": {
       "type": "effect",
       "volume": 2
     }
   },
   "impact2": {
-    "url": "../ogg/impact2.ogg",
+    "url": "./ogg/impact2.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "jump": {
-    "url": "../ogg/jump.ogg",
+    "url": "./ogg/jump.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "kill": {
-    "url": "../ogg/kill.ogg",
+    "url": "./ogg/kill.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "pop1": {
-    "url": "../ogg/pop1.ogg",
+    "url": "./ogg/pop1.ogg",
     "userData": {
       "type": "effect",
       "volume": 0.25
     }
   },
   "pop2": {
-    "url": "../ogg/pop2.ogg",
+    "url": "./ogg/pop2.ogg",
     "userData": {
       "type": "effect",
       "volume": 0.5
     }
   },
   "resize": {
-    "url": "../ogg/resize.ogg",
+    "url": "./ogg/resize.ogg",
     "userData": {
       "type": "effect",
       "volume": 2
     }
   },
   "success": {
-    "url": "../ogg/success.ogg",
+    "url": "./ogg/success.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "teleport": {
-    "url": "../ogg/teleport.ogg",
+    "url": "./ogg/teleport.ogg",
     "userData": {
       "type": "effect",
       "volume": 0.5
     }
   },
   "tip": {
-    "url": "../ogg/tip.ogg",
+    "url": "./ogg/tip.ogg",
     "userData": {
       "type": "effect",
       "volume": 1
     }
   },
   "wood": {
-    "url": "../ogg/wood.ogg",
+    "url": "./ogg/wood.ogg",
     "userData": {
       "type": "effect",
       "volume": 0.5

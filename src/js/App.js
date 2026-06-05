@@ -86,7 +86,7 @@ class App {
 
   async init(canvas, callback = function(){}) {
     // Set version
-    fetch('../manifest.json')
+    fetch('./manifest.json')
       .then(response => response.json())
       .then(data => this.version = data.version);
 
@@ -354,7 +354,7 @@ class App {
     if (options.json == null) {
       // Resolve missing path by title
       if (options.path == null) {
-        options.path = '../json/levels/' + options.title + '.json';
+        options.path = './json/levels/' + options.title + '.json';
       }
   
       // Fetch level json data

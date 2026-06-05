@@ -147,7 +147,7 @@
     <div id="credit" class="fade-in" v-html="credit" v-if="credit"></div>
     <div id="speedometer"><span id="speed"></span></div>
     <div class="buttons">
-      <a class="button top-left" @click="pauseLevel" title="Pause (ESC)"><img :src="'../svg/pause.svg'"></a>
+      <a class="button top-left" @click="pauseLevel" title="Pause (ESC)"><img :src="'./svg/pause.svg'"></a>
       <OriginButtonSettings class="button top-right" />
     </div>
     <OriginStats />

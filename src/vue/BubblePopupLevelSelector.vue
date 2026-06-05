@@ -248,7 +248,7 @@
                 </li>
                 <li class="links" v-for="link in selectedLevel.links">
                   <a :href="link" target="_blank" :title="link" @click.prevent="openExternalLink(link)">
-                    <img :src="'../svg/speedrun.svg'" v-if="link.includes('speedrun')">
+                    <img :src="'./svg/speedrun.svg'" v-if="link.includes('speedrun')">
                     <span v-else class="material-symbols-rounded">link</span>
                   </a>
                 </li>

@@ -5,7 +5,6 @@
   import { App as cApp } from '@capacitor/app';
   import { App } from '../js/App.js';
   import { useI18n } from 'vue-i18n';
-  import { mods } from '../js/Data.js';
   import UI from './UI.vue';
 
   // Initialize app and expose to window scope

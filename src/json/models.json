@@ -1,47 +1,47 @@
 {
   "background-blank": {
-    "url": "../glb/background-blank.glb"
+    "url": "./glb/background-blank.glb"
   },
   "background-blue": {
-    "url": "../glb/background-blue.glb"
+    "url": "./glb/background-blue.glb"
   },
   "background-pink": {
-    "url": "../glb/background-pink.glb"
+    "url": "./glb/background-pink.glb"
   },
   "background-purple": {
-    "url": "../glb/background-purple.glb"
+    "url": "./glb/background-purple.glb"
   },
   "background-city": {
-    "url": "../glb/background-city.glb"
+    "url": "./glb/background-city.glb"
   },
   "background-classic": {
-    "url": "../glb/background-classic.glb"
+    "url": "./glb/background-classic.glb"
   },
   "background-desert": {
-    "url": "../glb/background-desert.glb"
+    "url": "./glb/background-desert.glb"
   },
   "background-forest": {
-    "url": "../glb/background-forest.glb"
+    "url": "./glb/background-forest.glb"
   },
   "background-hell": {
-    "url": "../glb/background-hell.glb"
+    "url": "./glb/background-hell.glb"
   },
   "background-kargoh": {
-    "url": "../glb/background-kargoh.glb"
+    "url": "./glb/background-kargoh.glb"
   },
   "background-tokyo": {
-    "url": "../glb/background-tokyo.glb"
+    "url": "./glb/background-tokyo.glb"
   },
   "background-tropic": {
-    "url": "../glb/background-tropic.glb"
+    "url": "./glb/background-tropic.glb"
   },
   "cube-control": {
-    "url": "../glb/cube-control.glb"
+    "url": "./glb/cube-control.glb"
   },
   "cube-power": {
-    "url": "../glb/cube-power.glb"
+    "url": "./glb/cube-power.glb"
   },
   "cube-teleport": {
-    "url": "../glb/cube-teleport.glb"
+    "url": "./glb/cube-teleport.glb"
   }
 }

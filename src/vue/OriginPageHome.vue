@@ -9,14 +9,10 @@
   var message = ref('You are currently using the old UI');
 
   async function updateVersion() {
-    var response = await fetch('../manifest.json');
+    var response = await fetch('./manifest.json');
     var json = await response.json();
     manifest.value = json;
     version.value = json.version;
-  }
-
-  function goBack() {
-    window.location.href = '../index.html';
   }
 
   function showAccountOptions() {
@@ -37,14 +33,14 @@
     // Dispatch new popup from event
     window.dispatchEvent(new CustomEvent('openPopup', {
       detail: {
-        text: '<img src="../svg/cloud-check.svg">',
+        text: '<img src="./svg/cloud-check.svg">',
         inputs: inputs
       }
     }));
   }
 
   async function showChangelog() {
-    const changelog = await fetch('../json/changelog.json').then(function (response) {
+    const changelog = await fetch('./json/changelog.json').then(function (response) {
       if (response.ok) { return response.json(); }
       throw new Error('Something went wrong');
     })
@@ -111,17 +107,17 @@
     <div class="background-cubes"></div>
     <a class="version fade-in" @click="showChangelog">v{{ version }}</a>
     <div class="wrapper fade-in">
-      <img :src="'../svg/logo-white.svg'" class="logo">
+      <img :src="'./svg/logo-white.svg'" class="logo">
       <div class="message-bar">
-        <div class="message"><img class="google-icon" :src="'../svg/light.svg'" /> <span class="message-text" v-html="message"></span></div>
+        <div class="message"><img class="google-icon" :src="'./svg/light.svg'" /> <span class="message-text" v-html="message"></span></div>
       </div>
       <div class="buttons">
         <OriginButtonFullscreen class="button top-right three" />
-        <a class="button top-right two" @click="showAccountOptions" title="Account"><img :src="'../svg/cloud-check.svg'"></a>
+        <a class="button top-right two" @click="showAccountOptions" title="Account"><img :src="'./svg/cloud-check.svg'"></a>
         <OriginButtonSettings class="button top-right" />
-        <a class="button" @click="$emit('setPage', 'level-manager')" tabindex="0"><span>Level Maker</span> <img :src="'../svg/pencil.svg'"></a>
-        <a class="button" @click="$emit('setPage', 'skins')" tabindex="0"><span>Skins</span> <img :src="'../svg/smile.svg'"></a>
-        <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img :src="'../svg/play.svg'"></a>
+        <a class="button" @click="$emit('setPage', 'level-manager')" tabindex="0"><span>Level Maker</span> <img :src="'./svg/pencil.svg'"></a>
+        <a class="button" @click="$emit('setPage', 'skins')" tabindex="0"><span>Skins</span> <img :src="'./svg/smile.svg'"></a>
+        <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img :src="'./svg/play.svg'"></a>
       </div>
     </div>
   </div>

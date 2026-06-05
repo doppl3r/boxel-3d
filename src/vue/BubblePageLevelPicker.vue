@@ -145,7 +145,7 @@
       class: 'add-button',
       label: 'Add',
       subtitle: 'Level Packs',
-      url: '../svg/button-level-pack.svg',
+      url: './svg/button-level-pack.svg',
     });
   }
 
@@ -195,7 +195,7 @@
 <template>
   <div class="page">
     <div class="background">
-      <img :src="'../svg/background-purple.svg'">
+      <img :src="'./svg/background-purple.svg'">
     </div>
     <div class="nav">
       <a class="button fade-in" @click="exitLevelPicker" :title="i18n.t('level_picker.button.exit')">
@@ -205,7 +205,7 @@
         <span class="material-symbols-rounded">search</span>
       </a>
       <a class="button fade-in" @click="openDiscord" :title="i18n.t('level_picker.button.discord')">
-        <img :src="'../svg/discord.svg'">
+        <img :src="'./svg/discord.svg'">
       </a>
       <BubbleButtonSettings class="button fade-in" />
     </div>

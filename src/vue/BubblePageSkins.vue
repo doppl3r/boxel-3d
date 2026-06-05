@@ -110,7 +110,7 @@
 <template>
   <div class="page">
     <div class="background">
-      <img :src="'../svg/background-purple.svg'">
+      <img :src="'./svg/background-purple.svg'">
     </div>
     <div class="nav">
       <a class="button left fade-in" @click="exitSkins" title="Exit to home (ESC)">
