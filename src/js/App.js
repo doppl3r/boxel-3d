@@ -303,6 +303,8 @@ class App {
   }
 
   updateCameraZoom(zoom, a = app) {
+    // Skip camera update if level has a locked zoom
+    if (a.level.zoom !== undefined) return;
     a.camera.position.zDefault = zoom;
     a.camera.position.z = zoom;
     a.saveOrbitState();

@@ -843,7 +843,9 @@
   {
     "version": "2.9.0",
     "revisions": [
-      "Updated libraries"
+      "Updated libraries",
+      "Updated home page",
+      "Fixed camera zoom bug"
     ]
   }
 ]
