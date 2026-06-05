@@ -845,7 +845,8 @@
     "revisions": [
       "Updated libraries",
       "Updated home page",
-      "Fixed camera zoom bug"
+      "Fixed camera zoom bug",
+      "Fixed UI scale bug"
     ]
   }
 ]

@@ -42,6 +42,14 @@
   // Run function after being mounted (visible)
   onMounted(function() {
     addEventListeners();
+    // Apply current settings scale on mount so remount preserves user choice
+    try {
+      var settings = app.storage.getSettings(app);
+      updateScale({ detail: settings.scale });
+    }
+    catch (err) {
+      console.error(err);
+    }
   });
 
   onUnmounted(function() {
