@@ -253,7 +253,8 @@ class LevelEditor {
   }
 
   duplicateSelectedObject(offset = { x: 0, y: 0, z: 0 }) {
-    if (app.selectedObject) {
+    const isPlayerSelected = app.selectedObject.getClass() == 'player';
+    if (app.selectedObject && !isPlayerSelected) {
       // Update object select state before duplication
       app.selectedObject.select(false);
       app.selectedObject = app.level.duplicateObject(app.selectedObject, app);

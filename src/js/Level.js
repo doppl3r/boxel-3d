@@ -14,6 +14,9 @@ class Level extends Group {
   }
 
   addObject(object, a) {
+    // Prevent multiple player objects from being added to the level
+    if (object.getClass() == 'player' && object !== a.player) return
+
     // Update body state (-1 == active physics)
     if (object.position.z == 0) {
       World.add(a.engine.world, object.body); // Add hitbox to world
@@ -83,6 +86,9 @@ class Level extends Group {
   }
 
   duplicateObject(object, a) {
+    // Prevent duplicating the player object
+    if (object.getClass() == 'player') return object;
+
     var objectData = object.toJSON();
     var newObject = this.entityFactory.createObject(objectData.class);
     this.setObjectProperties(newObject, objectData);
