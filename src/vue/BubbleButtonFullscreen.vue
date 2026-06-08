@@ -32,7 +32,7 @@
 </script>
 
 <template>
-  <a @click="toggleFullscreen" title="Fullscreen (F11)" v-if="util.isNativeApp() == false">
+  <a @click="toggleFullscreen" title="Fullscreen (F11)">
     <span class="material-symbols-rounded" v-if="fullscreen == true">fullscreen_exit</span>
     <span class="material-symbols-rounded" v-else>fullscreen</span>
   </a>

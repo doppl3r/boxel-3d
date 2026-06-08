@@ -153,8 +153,8 @@
       <img :src="'./svg/background-purple.svg'">
     </div>
     <div class="nav">
-      <BubbleButtonFullscreen class="button fade-in right" :title="i18n.t('home.button.fullscreen')" />
-      <BubbleButtonSettings class="button fade-in" />
+      <BubbleButtonFullscreen class="button fade-in right" :title="i18n.t('home.button.fullscreen')" v-if="util.isNativeApp() == false" />
+      <BubbleButtonSettings class="button fade-in" :class="{ right: util.isNativeApp() }" />
     </div>
     <div class="content fade-in">
       <h1>BOXEL3D</h1>
