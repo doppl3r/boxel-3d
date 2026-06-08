@@ -849,5 +849,11 @@
       "Fixed UI scale bug",
       "Fixed duplicate player bug"
     ]
+  },
+  {
+    "version": "2.9.1",
+    "revisions": [
+      "Optimize collision detection"
+    ]
   }
 ]
