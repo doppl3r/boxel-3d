@@ -17,8 +17,8 @@ class Collision {
       for (var bodyIndex = 0; bodyIndex < bodies.length; bodyIndex++) {
         var bodyA = bodies[(bodyIndex + 0) % 2]; // Switch bodyA to bodyB
         var bodyB = bodies[(bodyIndex + 1) % 2]; // Switch bodyB to bodyA
-        var objectA = a.level.getObjectByName(bodyA.parent.name);
-        var objectB = a.level.getObjectByName(bodyB.parent.name);
+        var objectA = bodyA.parent.object3D;
+        var objectB = bodyB.parent.object3D;
 
         if (objectA != null && objectB != null) {
           // Check if any collision is related to the player

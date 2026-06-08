@@ -34,7 +34,8 @@ class Cube extends Mesh {
       slop: 0.0, // Default: 0.05
       timeScale: 1.0, // Default: 1
       name: this.uuid, // Useful for finding scene object
-      class: 'cube'
+      class: 'cube',
+      object3D: this
     });
 
     // Add helper
