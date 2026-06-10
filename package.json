@@ -31,6 +31,7 @@
     "vue-i18n": "^11.4.4",
     "vue-router": "^5.1.0"
   },
+  "license": "MIT",
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.3.4",
