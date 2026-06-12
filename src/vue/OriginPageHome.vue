@@ -1,9 +1,11 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
+  import { Utility } from '../js/Utility.js';
   import OriginButtonFullscreen from './OriginButtonFullscreen.vue';
   import OriginButtonSettings from './OriginButtonSettings.vue';
 
   // Initialize attributes
+  const util = new Utility();
   var manifest = ref();
   var version = ref();
   var message = ref('You are currently using the old UI');
@@ -13,6 +15,23 @@
     var json = await response.json();
     manifest.value = json;
     version.value = json.version;
+  }
+
+  function openReviewLink() {
+    var url = '';
+
+    if (util.isNativeApp()) {
+      url = 'https://play.google.com/store/apps/details?id=com.boxel3d.app';
+    }
+    else {
+      // Other userAgents: https://stackoverflow.com/a/26358856/2510368
+      if (navigator.userAgent.indexOf("Edg") != -1) { url = 'https://microsoftedge.microsoft.com/addons/detail/boxel-3d/gcklngphfijejfnnicbadhghhdifidek'; }
+      else if (navigator.userAgent.indexOf("Chrome") != -1) { url = 'https://chromewebstore.google.com/detail/boxel-3d/mjjgmlmpeaikcaajghilhnioimmaibon/reviews'; }
+      else if (navigator.userAgent.indexOf("Firefox") != -1) { url = 'https://addons.mozilla.org/en-US/firefox/addon/boxel-3d-game/'; }
+    }
+
+    // Open the link
+    util.openLink(url);
   }
 
   function showAccountOptions() {
@@ -120,5 +139,8 @@
         <a class="button focus" @click="$emit('setPage', 'level-picker')" tabindex="0"><span>Play</span> <img :src="'./svg/play.svg'"></a>
       </div>
     </div>
+    <a class="review fade-in" @click="openReviewLink" v-if="util.isExtension() || util.isNativeApp()">
+      <img :src="'./svg/heart.svg'">Write a review
+    </a>
   </div>
 </template>
