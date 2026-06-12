@@ -855,5 +855,11 @@
     "revisions": [
       "Optimize collision detection"
     ]
+  },
+  {
+    "version": "2.9.2",
+    "revisions": [
+      "Fixed bugs"
+    ]
   }
 ]
