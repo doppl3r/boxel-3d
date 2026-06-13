@@ -116,42 +116,42 @@ class LevelEditor {
     }
   }
 
-  mouseDown(e, a) {
-    a.mouse.setPosition('down', a.mouse.getPosition(e, a));
+  mouseDown(e) {
+    app.mouse.setPosition('down', app.mouse.getPosition(e));
 
     // Update snap settings for putty controls
     this.controlsPutty.moved = false;
-    this.controlsPutty.snap = a.mouse.snap;
+    this.controlsPutty.snap = app.mouse.snap;
     
     // Update transform controls snap settings
     this.controlsTransform.moved = false;
-    this.controlsTransform.setTranslationSnap(a.mouse.snap);
-    this.controlsTransform.setScaleSnap(a.mouse.snap);
-    this.controlsTransform.setRotationSnap(a.mouse.snap > 1 ? (Math.PI / 12) : null); // 15 degrees or granular (null)
+    this.controlsTransform.setTranslationSnap(app.mouse.snap);
+    this.controlsTransform.setScaleSnap(app.mouse.snap);
+    this.controlsTransform.setRotationSnap(app.mouse.snap > 1 ? (Math.PI / 12) : null); // 15 degrees or granular (null)
   }
 
-  mouseMove(e, a) {
-    a.mouse.setPosition('move', a.mouse.getPosition(e, a));
+  mouseMove(e) {
+    app.mouse.setPosition('move', app.mouse.getPosition(e));
   }
 
-  mouseUp(e, a) {
-    var target = a.mouse.clickObject(e, a);
-    a.mouse.setPosition('up', a.mouse.getPosition(e, a));
+  mouseUp(e) {
+    var target = app.mouse.clickObject(e);
+    app.mouse.setPosition('up', app.mouse.getPosition(e));
 
     // Allow quick erase
-    if (e.button == 2) a.mouse.mode = 'erase';
+    if (e.button == 2) app.mouse.mode = 'erase';
 
     // Check if drawing or erasing
-    if (a.mouse.mode == 'draw') {
+    if (app.mouse.mode == 'draw') {
       // Check if object is not selected
-      if (a.selectedObject == null || target) {
+      if (app.selectedObject == null || target) {
         // Select a new object on start click
         if (target) {
           // Copy selected object color to target color
           if (e.shiftKey === true) {
-            if (a.selectedObject) {
-              target.setColors(a.selectedObject.color);
-              a.levelHistory.save('Copied color', a);
+            if (app.selectedObject) {
+              target.setColors(app.selectedObject.color);
+              app.levelHistory.save('Copied color');
               this.updateRender();
               return;
             }
@@ -160,64 +160,61 @@ class LevelEditor {
           if (this.controlsTransform.moved == false &&
             this.controlsOrbit.moved == false &&
             this.controlsPutty.moved == false) {
-            a.level.deselectLevel(a);
-            a.selectedObject = target;
-            a.selectedObject.select(true);
+            app.level.deselectLevel();
+            app.selectedObject = target;
+            app.selectedObject.select(true);
             this.attachControls(target);
 
             // Update Vue.js UI from custom event
-            if (a.selectedObject.getClass() != 'player') window.dispatchEvent(new CustomEvent('selectObjectType', { detail: { type: a.selectedObject.getClass(), checkNull: false }}));
-            window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: a.selectedObject }));
+            if (app.selectedObject.getClass() != 'player') window.dispatchEvent(new CustomEvent('selectObjectType', { detail: { type: app.selectedObject.getClass(), checkNull: false }}));
+            window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
           }
         }
         else {
           // Add a new object if camera did not move
           if (this.controlsOrbit.moved == false && this.isSnapped()) {
-            var objectType = app.levelEditor.selectedObjectType;
+            var objectType = this.selectedObjectType;
             var objectData = {
               class: objectType,
               color: app.level.entityFactory.color,
               isStatic: true,
               position: { 
-                x: a.mouse.snapToValue(a.mouse.down.x, a.mouse.snap), 
-                y: a.mouse.snapToValue(a.mouse.down.y, a.mouse.snap), 
+                x: app.mouse.snapToValue(app.mouse.down.x, app.mouse.snap), 
+                y: app.mouse.snapToValue(app.mouse.down.y, app.mouse.snap), 
                 z: 0 
               },
               rotation: { x: 0, y: 0, z: 0 },
-              scale: { x: a.BOX_SIZE, y: a.BOX_SIZE, z: a.BOX_SIZE }
+              scale: { x: app.BOX_SIZE, y: app.BOX_SIZE, z: app.BOX_SIZE }
             };
-            a.level.deselectLevel(a); // Deselect everything
-            a.selectedObject = a.level.entityFactory.createObject(objectType);
-            a.level.setObjectProperties(a.selectedObject, objectData);
-            a.level.addObject(a.selectedObject, a);
-            a.levelHistory.save('Added ' + objectType, a);
-            a.selectedObject.select(true);
-            this.attachControls(a.selectedObject);
-            window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: a.selectedObject }));
+            app.level.deselectLevel(); // Deselect everything
+            app.selectedObject = app.level.entityFactory.createObject(objectType);
+            app.level.setObjectProperties(app.selectedObject, objectData);
+            app.level.addObject(app.selectedObject);
+            app.levelHistory.save('Added ' + objectType);
+            app.selectedObject.select(true);
+            this.attachControls(app.selectedObject);
+            window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
           }
         }
       }
       else {
         // Deselect if object and camera was not moved
-        if (this.controlsTransform.moved == false
-          && this.controlsOrbit.moved == false
-          && this.controlsPutty.moved == false) {
-          a.level.deselectLevel(app);
+        if (this.controlsTransform.moved == false &&
+          this.controlsOrbit.moved == false &&
+          this.controlsPutty.moved == false &&
+          this.isSnapped()) {
+          app.level.deselectLevel();
           this.detachControls();
           window.dispatchEvent(new CustomEvent('setSelectedObject'));
         }
       }
     }
-    else if (a.mouse.mode == 'erase') {
-      if (this.controlsOrbit.moved == false) {
-        a.levelEditor.eraseTarget(e, a);
-        a.level.deselectLevel(a); // Deselect everything
-        a.levelHistory.save('Erased object', a);
-        this.detachControls();
-        window.dispatchEvent(new CustomEvent('setSelectedObject'));
-      }
-      a.mouse.mode = a.mouse.prevMode;
+    else if (app.mouse.mode == 'erase') {
+      this.eraseTarget(e);
     }
+
+    // Reset mouse mode after quick erase
+    if (e.button == 2) app.mouse.mode = app.mouse.prevMode;
   }
 
   keyDown(e) {
@@ -242,12 +239,12 @@ class LevelEditor {
     this.updateRender();
   }
 
-  eraseTarget(e, a) {
-    var target = a.mouse.clickObject(e, a);
+  eraseTarget(e) {
+    var target = app.mouse.clickObject(e);
     if (target != null) {
       if (target.getClass() != 'player') {
         target.select(true);
-        a.level.removeObject(target, a, true);
+        app.level.removeObject(target, true);
       }
     }
   }
@@ -257,7 +254,7 @@ class LevelEditor {
     if (app.selectedObject && !isPlayerSelected) {
       // Update object select state before duplication
       app.selectedObject.select(false);
-      app.selectedObject = app.level.duplicateObject(app.selectedObject, app);
+      app.selectedObject = app.level.duplicateObject(app.selectedObject);
 
       // Add offset and update position
       app.selectedObject.position.add(offset);
@@ -265,8 +262,8 @@ class LevelEditor {
       app.selectedObject.select(true);
 
       // Update Vue.js UI from custom event
-      app.levelEditor.attachControls(app.selectedObject);
-      app.levelHistory.save('Duplicated object', app);
+      this.attachControls(app.selectedObject);
+      app.levelHistory.save('Duplicated object');
     }
   }
 
@@ -274,16 +271,16 @@ class LevelEditor {
     if (app.selectedObject) {
       app.level.removeObject(app.selectedObject, app);
       app.levelEditor.detachControls();
-      app.levelHistory.save('Deleted object', app);
+      app.levelHistory.save('Deleted object');
       window.dispatchEvent(new CustomEvent('setSelectedObject'));
     }
   }
 
   saveLevel() {
-    app.levelEditor.detachControls();
-    app.resetScene(app);
-    app.level.deselectLevel(app);
-    app.level.saveLevelData(app);
+    this.detachControls();
+    app.resetScene();
+    app.level.deselectLevel();
+    app.level.saveLevelData();
   }
 
   exitLevel() {
@@ -293,37 +290,37 @@ class LevelEditor {
         detail: {
           text: 'popup.text.save_level',
           inputs: [
-            { value: 'popup.button.no', type: 'button', callback: function() { app.levelEditor.saveAndExitLevelEditor(false); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'popup.button.yes', type: 'button', callback: function() { app.levelEditor.saveAndExitLevelEditor(true); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'popup.button.no', type: 'button', callback: () => { this.saveAndExitLevelEditor(false); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'popup.button.yes', type: 'button', callback: () => { this.saveAndExitLevelEditor(true); window.dispatchEvent(new CustomEvent('closePopup')); }},
           ]
         }
       }));
     }
-    else app.levelEditor.saveAndExitLevelEditor(false);
+    else this.saveAndExitLevelEditor(false);
   }
 
   saveAndExitLevelEditor(saveLevel) {
-    app.levelEditor.controlsOrbit.enabled = false;
-    app.levelEditor.controlsOrbit.reset();
-    app.levelEditor.detachControls();
+    this.controlsOrbit.enabled = false;
+    this.controlsOrbit.reset();
+    this.detachControls();
     app.play = false;
-    if (saveLevel == true) app.levelEditor.saveLevel();
-    app.level.clearLevel(app);
+    if (saveLevel == true) this.saveLevel();
+    app.level.clearLevel();
     app.levelHistory.clear();
     app.player.removeCheckpoint();
     app.player.setPosition({ x: 0, y: 0, z: 0 });
-    app.levelEditor.controlsOrbit.enabled = false;
+    this.controlsOrbit.enabled = false;
     window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-manager' }));
   }
 
   undo() {
-    app.levelEditor.detachControls();
-    app.levelHistory.undo(app);
+    this.detachControls();
+    app.levelHistory.undo();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
   redo() {
-    app.levelHistory.redo(app);
+    app.levelHistory.redo();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 

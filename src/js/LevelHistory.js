@@ -3,10 +3,10 @@ class LevelHistory {
         this.clear(); // Initialize empty
     }
 
-    save(description = "Edited level", a) {
+    save(description = "Edited level") {
         this.history.length = this.historyIndex + 1; // Alt splice
         this.history.push({ 
-            'data': a.level.exportToJSON(a),
+            'data': app.level.exportToJSON(),
             'description': description
         });
         this.historyIndex++;
@@ -17,19 +17,19 @@ class LevelHistory {
         this.historyIndex = 0;
     }
 
-    undo(a) {
+    undo() {
         if (this.historyIndex > 1) {
             this.historyIndex--;
-            a.level.clearLevel(a);
-            a.level.importFromJSON(this.history[this.historyIndex].data, a);
+            app.level.clearLevel();
+            app.level.importFromJSON(this.history[this.historyIndex].data);
         }
     }
 
-    redo(a) {
+    redo() {
         if (this.historyIndex < this.history.length - 1) {
             this.historyIndex++;
-            a.level.clearLevel(a);
-            a.level.importFromJSON(this.history[this.historyIndex].data, a);
+            app.level.clearLevel();
+            app.level.importFromJSON(this.history[this.historyIndex].data);
         }
     }
 }

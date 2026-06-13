@@ -12,52 +12,52 @@ class Mouse {
     this.prevMode = this.mode;
   }
   
-  mouseDown(e, a) {
+  mouseDown(e) {
     this.setTolerance();
-    if (a.play == false) { a.levelEditor.mouseDown(e, a); }
+    if (app.play == false) { app.levelEditor.mouseDown(e); }
     else {
-      var position = a.mouse.getPosition(e, a);
-      a.player.jump(position);
-      a.player.addRope(position);
+      var position = this.getPosition(e);
+      app.player.jump(position);
+      app.player.addRope(position);
     }
   }
 
-  mouseMove(e, a) {
-    if (a.play == false) { a.levelEditor.mouseMove(e, a); }
+  mouseMove(e) {
+    if (app.play == false) { app.levelEditor.mouseMove(e); }
   }
 
-  mouseUp(e, a) {
-    if (a.play == false) {
+  mouseUp(e) {
+    if (app.play == false) {
       if (app.state == 'level-editor') {
-        a.levelEditor.mouseUp(e, a);
+        app.levelEditor.mouseUp(e);
       }
     }
-    a.player.removeRope(); // Always remove rope
+    app.player.removeRope(); // Always remove rope
   }
 
-  getPosition(e, a) {
+  getPosition(e) {
     var raycaster = new Raycaster();
     var pos = new Vector3(); // create once and reuse
     var intersects = [];
 
     // Check intersection with player "plane" for rope collision
-    raycaster.setFromCamera(a.mouse.getMouse(e, a), a.camera);
-    intersects = raycaster.intersectObject(a.player, true);
+    raycaster.setFromCamera(this.getMouse(e), app.camera);
+    intersects = raycaster.intersectObject(app.player, true);
 
     // Copy and return position
     if (intersects.length > 0) pos.copy(intersects[0].point);
     return(pos);
   }
 
-  clickObject(e, a) {
+  clickObject(e) {
     var raycaster = new Raycaster();
     var vec = new Vector3();
     var object;
-    var x = (e.clientX / a.window.innerWidth) * 2 - 1;
-    var y = -(e.clientY / a.window.innerHeight) * 2 + 1;
+    var x = (e.clientX / app.window.innerWidth) * 2 - 1;
+    var y = -(e.clientY / app.window.innerHeight) * 2 + 1;
     vec.set(x, y, 0);
-    raycaster.setFromCamera(vec, a.camera);
-    var intersects = raycaster.intersectObjects(a.scene.children, true);
+    raycaster.setFromCamera(vec, app.camera);
+    var intersects = raycaster.intersectObjects(app.scene.children, true);
 
     // Loop through objects selected
     for (var i = 0; i < intersects.length; i++) {
@@ -77,7 +77,7 @@ class Mouse {
     return(object);
   }
 
-  wheel(e, a) {
+  wheel(e) {
     e.preventDefault();
   }
 
@@ -135,10 +135,10 @@ class Mouse {
     return this.mode;
   }
 
-  getMouse(e, a) {
+  getMouse(e) {
     return {
-      x: (e.clientX / a.window.innerWidth) * 2 - 1,
-      y: -(e.clientY / a.window.innerHeight) * 2 + 1,
+      x: (e.clientX / app.window.innerWidth) * 2 - 1,
+      y: -(e.clientY / app.window.innerHeight) * 2 + 1,
       z: 0.5
     };
   }

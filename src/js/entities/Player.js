@@ -331,7 +331,7 @@ class Player extends Cube {
     }, false);
   }
 
-  renderSpeed(a) {
+  renderSpeed() {
     var speed = this.body.speed;
     var maxSpeed = 10;
     var newSpeed = 0;
@@ -341,12 +341,12 @@ class Player extends Cube {
     if (speed > maxSpeed) speed = maxSpeed;
     newSpeed = (speed / maxSpeed) * 100;
     width = 'width: calc(' + newSpeed + '% - 8px)';
-    if (a.document.getElementById('speed')) {
-      a.document.getElementById('speed').setAttribute('style', width);
+    if (app.document.getElementById('speed')) {
+      app.document.getElementById('speed').setAttribute('style', width);
     }
   }
 
-  setSkin(skin = {}, a = app) {
+  setSkin(skin = {}) {
     // Add texture
     this.addTexture(skin);
   }

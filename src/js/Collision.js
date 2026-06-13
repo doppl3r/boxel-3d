@@ -5,7 +5,7 @@ class Collision {
     
   }
 
-  checkPlayerCollision(e, a) {
+  checkPlayerCollision(e) {
     var pairs = e.pairs;
 
     // Loop through pairs of collisions

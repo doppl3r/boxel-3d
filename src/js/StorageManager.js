@@ -119,7 +119,7 @@ class StorageManager {
     localStorage.setItem('settings', JSON.stringify(settings));
   }
 
-  getSettings(a = app) {
+  getSettings() {
     var util = new Utility();
     var storageSettings = localStorage.getItem('settings');
     var defaultSettings = { 
@@ -169,15 +169,14 @@ class StorageManager {
   }
 
   async saveLevelToFile() {
-    app.levelEditor.saveLevel();
-    var levelData = app.level.exportToJSON(app);
+    var levelData = app.level.exportToJSON();
     var blob = new Blob([JSON.stringify(levelData)], { type: "application/json" });
     var util = new Utility();
 
     if (util.isNativeApp()) {
       try {
         const version = new Date().getTime();
-        const result = await Filesystem.writeFile({
+        await Filesystem.writeFile({
           path: `${ levelData.name } v${ version }.json`,
           data: JSON.stringify(levelData),
           directory: Directory.Documents,
@@ -280,8 +279,8 @@ class StorageManager {
           var name = theFile.name.split('.').slice(0, -1).join('.');
           var levelData = JSON.parse(e.target.result);
           levelData.name = name; // Rename level name to file name
-          app.level.clearLevel(app);
-          app.level.importFromJSON(levelData, app);
+          app.level.clearLevel();
+          app.level.importFromJSON(levelData);
         };
       })(f);
       reader.readAsText(f);

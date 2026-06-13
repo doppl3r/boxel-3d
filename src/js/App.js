@@ -105,23 +105,23 @@ class App {
     this.canvas = canvas;
     this.canvas.classList.add('hidden'); // Default hidden with CSS
     this.canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); }, false);
-    this.canvas.addEventListener('pointerdown', function(e){ this.mouse.mouseDown(e, this); }.bind(this), false);
-    this.canvas.addEventListener('pointermove', function(e){ this.mouse.mouseMove(e, this); }.bind(this), false);
-    this.canvas.addEventListener('pointerup', function(e){ this.mouse.mouseUp(e, this); }.bind(this), false);
-    this.canvas.addEventListener('wheel', function(e){ this.mouse.wheel(e, this); }.bind(this), false);
-    this.window.addEventListener('resize', function(e) { this.resizeWindow(e, this); }.bind(this));
+    this.canvas.addEventListener('pointerdown', function(e){ this.mouse.mouseDown(e); }.bind(this), false);
+    this.canvas.addEventListener('pointermove', function(e){ this.mouse.mouseMove(e); }.bind(this), false);
+    this.canvas.addEventListener('pointerup', function(e){ this.mouse.mouseUp(e); }.bind(this), false);
+    this.canvas.addEventListener('wheel', function(e){ this.mouse.wheel(e); }.bind(this), false);
+    this.window.addEventListener('resize', function(e) { this.resizeWindow(e); }.bind(this));
     this.window.addEventListener('message', e => this.onMessage(e));
-    Events.on(this.engine, 'collisionStart', function(e) { this.collision.checkPlayerCollision(e, this); }.bind(this));
+    Events.on(this.engine, 'collisionStart', function(e) { this.collision.checkPlayerCollision(e); }.bind(this));
     
     // Load assets, then load game
     this.assets.load(function() {
       this.load(callback);
-      this.updateSettings(null, this); // Update settings
+      this.updateSettings(null); // Update settings
     }.bind(this));
   }
 
   load(callback = function(){}) {
-    var storageSettings = app.storage.getSettings(app);
+    var storageSettings = this.storage.getSettings();
 
     // Start music
     this.assets.audio.play(storageSettings.music, { queue: true });
@@ -131,7 +131,7 @@ class App {
     this.background.init();
 
     // Start game loop
-    this.resizeWindow(null, this);
+    this.resizeWindow(null);
 
     // Add physics & render loops
     this.interval.add(loop => this.updateEngine(loop), 1000 / 60);
@@ -166,8 +166,8 @@ class App {
     // Loop through scene for all children
     if (this.play == true) {
       // Update from new position
-      this.updateChildren(delta, alpha)
-      this.updateCamera(this);
+      this.updateChildren(delta, alpha);
+      this.updateCamera();
       this.timer.render();
       
       // Update game objects
@@ -207,35 +207,35 @@ class App {
     this.multiplayer.update(delta, alpha);
   }
 
-  resizeWindow(e, a = app) {
-    var screenWidth = a.window.innerWidth;
-    var screenHeight = a.window.innerHeight;
-    a.camera.aspect = screenWidth / screenHeight;
-    a.camera.updateProjectionMatrix();
-    a.graphics.setSize(screenWidth, screenHeight);
+  resizeWindow(e) {
+    var screenWidth = this.window.innerWidth;
+    var screenHeight = this.window.innerHeight;
+    this.camera.aspect = screenWidth / screenHeight;
+    this.camera.updateProjectionMatrix();
+    this.graphics.setSize(screenWidth, screenHeight);
   }
 
-  resetScene(a = app) {
+  resetScene() {
     app.camera.position.z = app.camera.position.zDefault;
-    a.player.removeRope();
-    a.level.removeParticles(a);
-    a.level.resetLevel();
-    a.updateRender({ delta: 0, alpha: 0 }, 0);
+    this.player.removeRope();
+    this.level.removeParticles();
+    this.level.resetLevel();
+    this.updateRender({ delta: 0, alpha: 0 }, 0);
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
 
-  updateCamera(a) {
-    a.camera.position.x = a.player.position.x;
-    a.camera.position.y = a.player.position.y + a.camera.tilt;
-    a.camera.updateMatrixWorld();
+  updateCamera() {
+    this.camera.position.x = this.player.position.x;
+    this.camera.position.y = this.player.position.y + this.camera.tilt;
+    this.camera.updateMatrixWorld();
 
     // Dispatch render event
     window.dispatchEvent(this.eventCameraUpdated);
   }
 
-  updateSettings(settings, a = app) {
+  updateSettings(settings) {
     // Compare new settings with local storage
-    var storageSettings = a.storage.getSettings(a);
+    var storageSettings = this.storage.getSettings();
     if (settings == null) settings = storageSettings;
     
     // Add missing keys from storage
@@ -246,16 +246,16 @@ class App {
     });
     
     // Update application from settings
-    a.assets.audio.setMasterVolume(settings.volume, 'master');
-    a.assets.audio.setMasterVolume(settings.volumeEffects, 'effects');
-    a.assets.audio.setMasterVolume(settings.volumeMusic, 'music');
-    a.updateQuality(settings.quality, a);
-    a.mouse.setSnap(settings.snap);
-    a.player.setSkin(settings.skin, a);
-    a.player.setInputBuffer(settings.buffer, a);
-    a.storage.setSettings(settings); // Store locally
-    a.updateCameraMotion(settings.motion, a);
-    a.updateCameraZoom(settings.zoom, a);
+    this.assets.audio.setMasterVolume(settings.volume, 'master');
+    this.assets.audio.setMasterVolume(settings.volumeEffects, 'effects');
+    this.assets.audio.setMasterVolume(settings.volumeMusic, 'music');
+    this.updateQuality(settings.quality);
+    this.mouse.setSnap(settings.snap);
+    this.player.setSkin(settings.skin);
+    this.player.setInputBuffer(settings.buffer);
+    this.storage.setSettings(settings); // Store locally
+    this.updateCameraMotion(settings.motion);
+    this.updateCameraZoom(settings.zoom);
     window.dispatchEvent(new CustomEvent('updateStatsVisibility'));
     window.dispatchEvent(new CustomEvent('updateScale', { detail: settings.scale }));
   }
@@ -281,14 +281,14 @@ class App {
     }
   }
 
-  updateQuality(quality, a = app) {
+  updateQuality(quality) {
     if (quality <= 0) quality = 1;
-    a.graphics.setPixelRatio(a.window.devicePixelRatio / (10 / quality));
+    this.graphics.setPixelRatio(this.window.devicePixelRatio / (10 / quality));
     //a.graphics.smaaPass.enabled = (quality == 10); // Enable if max graphics
   }
 
-  updateCameraMotion(motion, a = app) {
-    a.motion = motion;
+  updateCameraMotion(motion) {
+    app.motion = motion;
   }
 
   saveOrbitState() {
@@ -302,13 +302,13 @@ class App {
     }
   }
 
-  updateCameraZoom(zoom, a = app) {
+  updateCameraZoom(zoom) {
     // Skip camera update if level has a locked zoom
-    if (a.level.zoom !== undefined) return;
-    a.camera.position.zDefault = zoom;
-    a.camera.position.z = zoom;
-    a.saveOrbitState();
-    a.graphics.render();
+    if (this.level.zoom !== undefined) return;
+    this.camera.position.zDefault = zoom;
+    this.camera.position.z = zoom;
+    this.saveOrbitState();
+    this.graphics.render();
   }
 
   exitCampaign() {
@@ -375,13 +375,13 @@ class App {
 
     // Load level if json exists
     if (options.json) {
-      var storageSettings = app.storage.getSettings(app);
+      var storageSettings = this.storage.getSettings();
       var title = options.json.name;
-      var description = app.level.getDescriptionByTitle(title)
-      var author = app.level.getAuthorByTitle(title);
-      var theme = app.level.getTheme(options.json.theme);
+      var description = this.level.getDescriptionByTitle(title)
+      var author = this.level.getAuthorByTitle(title);
+      var theme = this.level.getTheme(options.json.theme);
       var zoom = options.json.zoom || app.camera.position.zDefault;
-      if (theme == null) theme = app.level.getPackTheme(title);
+      if (theme == null) theme = this.level.getPackTheme(title);
       if (storageSettings.theme == 'origin' || theme == null) theme = app.level.getTheme('classic');
       app.level.entityFactory.color = theme.color;
       app.camera.position.z = zoom;

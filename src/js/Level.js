@@ -13,13 +13,13 @@ class Level extends Group {
     this.zoom = undefined;
   }
 
-  addObject(object, a) {
+  addObject(object) {
     // Prevent multiple player objects from being added to the level
-    if (object.getClass() == 'player' && object !== a.player) return
+    if (object.getClass() == 'player' && object !== app.player) return
 
     // Update body state (-1 == active physics)
     if (object.position.z == 0) {
-      World.add(a.engine.world, object.body); // Add hitbox to world
+      World.add(app.engine.world, object.body); // Add hitbox to world
       this.parent.add(object.helper);
     }
     
@@ -29,100 +29,100 @@ class Level extends Group {
     object.updateHelper();
   }
 
-  removeObject(object, a, override = false) {
+  removeObject(object, override = false) {
     // Prevent deleting the player
-    if ((a.selectedObject != null && a.selectedObject.getClass() != 'player') || override == true) {
+    if ((app.selectedObject != null && app.selectedObject.getClass() != 'player') || override == true) {
       if (object != undefined) {
-        World.remove(a.engine.world, object.body);
+        World.remove(app.engine.world, object.body);
         this.parent.remove(object.helper);
         this.remove(object);
-        a.level.deselectLevel(a);
+        this.deselectLevel();
       }
     }
   }
 
-  clearLevel(a) {
-    var length = a.level.children.length;
+  clearLevel() {
+    var length = this.children.length;
     this.name = this.defaultName;
     this.theme = this.defaultTheme;
     this.zoom = undefined;
-    a.player.removeRope();
+    app.player.removeRope();
     for (var i=0; i < length; i++) {
-      var child = a.level.children[0];
-      this.removeObject(child, a, true);
+      var child = this.children[0];
+      this.removeObject(child, true);
     }
   }
 
-  removeParticles(a) {
-    var length = a.level.children.length;
+  removeParticles() {
+    var length = this.children.length;
     var index = length - 1;
     while (index >= 0) {
-      var child = a.level.children[index];
-      if (child.isParticle != null) this.removeObject(child, a, true);
+      var child = this.children[index];
+      if (child.isParticle != null) this.removeObject(child, true);
       index--;
     }
   }
 
-  refreshLevel(a) {
+  refreshLevel() {
     // Useful for updating all static objects
-    var levelData = this.exportToJSON(a);
-    this.clearLevel(a);
-    this.importFromJSON(levelData, a);
+    var levelData = this.exportToJSON();
+    this.clearLevel();
+    this.importFromJSON(levelData);
   }
 
-  refreshObject(object, a) {
-    this.removeObject(object, a); // Clear old object from world/engine
-    var newObject = this.duplicateObject(object, a);
+  refreshObject(object) {
+    this.removeObject(object); // Clear old object from world/engine
+    var newObject = this.duplicateObject(object);
     return newObject;
   }
 
-  changeObjectType(object, type, a) {
+  changeObjectType(object, type) {
     var newObject = object; // Default as self
     if (object.getClass() != 'player') {
       object.body.class = type;
-      newObject = this.refreshObject(object, a);
+      newObject = this.refreshObject(object);
     }
     return newObject;
   }
 
-  duplicateObject(object, a) {
+  duplicateObject(object) {
     // Prevent duplicating the player object
     if (object.getClass() == 'player') return object;
 
     var objectData = object.toJSON();
     var newObject = this.entityFactory.createObject(objectData.class);
     this.setObjectProperties(newObject, objectData);
-    this.addObject(newObject, a);
+    this.addObject(newObject);
     return newObject;
   }
 
-  createNewLevel(a) {
+  createNewLevel() {
     // Reset player properties
-    a.player.setPosition({ x: 0, y: 0, z: 0 });
-    a.player.setScale({ x: 16, y: 16, z: 16 });
-    a.player.setRotation(0);
-    a.player.setFriction(0);
+    app.player.setPosition({ x: 0, y: 0, z: 0 });
+    app.player.setScale({ x: 16, y: 16, z: 16 });
+    app.player.setRotation(0);
+    app.player.setFriction(0);
 
     // Prepare level with a single floor
-    this.clearLevel(a);
-    this.add(a.player); // Add player object
+    this.clearLevel();
+    this.add(app.player); // Add player object
     var floor = this.entityFactory.createObject('cube', { x: 0, y: -64, z: 0 });
     floor.setScale({ x: 64, y: 16, z: 16 });
     floor.setStatic(true);
     this.add(floor);
   }
 
-  deselectLevel(a) {
-    a.selectedObject = null;
-    for (var i=0; i < a.level.children.length; i++) {
-      var child = a.level.children[i];
+  deselectLevel() {
+    app.selectedObject = null;
+    for (var i=0; i < this.children.length; i++) {
+      var child = this.children[i];
       if (child.body != null) {
         child.select(false);
       }
     }
   }
 
-  exportToJSON(a) {
+  exportToJSON() {
     var levelJSON = {};
     levelJSON.name = this.name;
     levelJSON.theme = this.theme;
@@ -132,8 +132,8 @@ class Level extends Group {
     levelJSON.children = [];
 
     // Loop through group children
-    for (var i = 0; i < a.level.children.length; i++) {
-      var object = a.level.children[i];
+    for (var i = 0; i < this.children.length; i++) {
+      var object = this.children[i];
       if (object.type == "Mesh") {
         var objectData = object.toJSON();
         levelJSON.children.push(objectData);
@@ -142,12 +142,12 @@ class Level extends Group {
     return levelJSON;
   }
 
-  saveLevelData(a) {
-    this.key = a.storage.setLevelData(this.key, this.exportToJSON(a));
+  saveLevelData() {
+    this.key = app.storage.setLevelData(this.key, this.exportToJSON());
     return this.key;
   }
 
-  importFromJSON(levelData, a) {
+  importFromJSON(levelData) {
     this.name = levelData.name;
     this.theme = levelData.theme;
     this.description = levelData.description;
@@ -155,13 +155,13 @@ class Level extends Group {
 
     // Loop through JSON level data
     for (var i = 0; i < levelData.children.length; i++) {
-      var settings = a.storage.getSettings(a);
+      var settings = app.storage.getSettings();
       var objectData = levelData.children[i];
       var object = this.entityFactory.createObject(objectData.class);
-      if (objectData.class == 'player') object = a.player;
+      if (objectData.class == 'player') object = app.player;
       object.helper.visible = settings.debug;
       this.setObjectProperties(object, objectData);
-      this.addObject(object, a);
+      this.addObject(object);
     }
   }
 
@@ -175,46 +175,46 @@ class Level extends Group {
     }
   }
 
-  retryLevel(a = app, keepCheckpoint = false) {
-    a.updateGravity();
-    a.play = true;
-    a.level.removeParticles(a);
-    a.player.cancelRestart();
-    a.resetScene(a);
+  retryLevel(keepCheckpoint = false) {
+    app.updateGravity();
+    app.play = true;
+    app.level.removeParticles();
+    app.player.cancelRestart();
+    app.resetScene();
     window.dispatchEvent(new CustomEvent('closePopup'));
     
     // Remove checkpoint, or respawn to checkpoint
-    if (keepCheckpoint == false || a.player.checkpoint == null) {
-      a.timer.reset();
-      a.timer.start();
-      a.player.removeCheckpoint();
+    if (keepCheckpoint == false || app.player.checkpoint == null) {
+      app.timer.reset();
+      app.timer.start();
+      app.player.removeCheckpoint();
     }
-    else a.player.respawn(true);
+    else app.player.respawn(true);
   }
 
-  exitLevel(a) {
-    a.timer.reset();
-    a.player.removeCheckpoint();
+  exitLevel() {
+    app.timer.reset();
+    app.player.removeCheckpoint();
 
     // Check current state
-    if (a.state == 'campaign') {
-      var settings = a.storage.getSettings(a);
+    if (app.state == 'campaign') {
+      var settings = app.storage.getSettings();
       var progress = parseInt(settings.progress)
       progress++; // Increase level progress
       settings.progress = progress;
-      a.updateSettings(settings, a);
+      app.updateSettings(settings);
       window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-picker' }));
     }
-    else if (a.state == 'level-editor') {
-      a.updateGravity();
-      a.resetScene(a);
+    else if (app.state == 'level-editor') {
+      app.updateGravity();
+      app.resetScene();
       app.levelEditor.controlsOrbit.enabled = true;
       app.levelEditor.controlsOrbit.reset();
       app.background.visible = false;
     }
 
     // Dispatch event after exiting level
-    window.dispatchEvent(new CustomEvent('exitLevel', { detail: a.state }));
+    window.dispatchEvent(new CustomEvent('exitLevel', { detail: app.state }));
   }
 
   setObjectProperties(object, objectData) {
