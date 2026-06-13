@@ -44,7 +44,7 @@
     addEventListeners();
     // Apply current settings scale on mount so remount preserves user choice
     try {
-      var settings = app.storage.getSettings(app);
+      var settings = app.storage.getSettings();
       updateScale({ detail: settings.scale });
     }
     catch (err) {

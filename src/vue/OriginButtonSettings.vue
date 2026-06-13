@@ -2,7 +2,7 @@
   import { ref } from 'vue';
 
   function showSettings() {
-    var settings = app.storage.getSettings(app);
+    var settings = app.storage.getSettings();
     var inputs = [
       { label: 'Master Volume', name: 'volume', type: 'range', min: 0, max: 1, step: 0.1, value: settings.volume, callback: function(e) { updateSettings('volume', e.target.value); }},
       { label: 'Graphic Quality', name: 'quality', type: 'range', min: 2, max: 10, value: settings.quality, callback: function(e) { updateSettings('quality', parseInt(e.target.value)); }},
@@ -46,7 +46,7 @@
   }
 
   function updateSettings(key, value) {
-    var settings = app.storage.getSettings(app);
+    var settings = app.storage.getSettings();
     settings[key] = value;
     app.updateSettings(settings);
   }

@@ -24,8 +24,8 @@
   function addLevel() {
     var levelData = {};
     var key = null;
-    app.level.createNewLevel(app);
-    levelData = app.level.exportToJSON(app); // Init default data
+    app.level.createNewLevel();
+    levelData = app.level.exportToJSON(); // Init default data
     key = app.storage.setLevelData(null, levelData); // Store data and generate new key
     items.value.push({ key: key, level: levelData });
   }
@@ -37,16 +37,16 @@
       reader.onload = function() {
         var level = JSON.parse(reader.result);
         var theme = app.level.getTheme(level.theme) || {};
-        app.level.clearLevel(app);
+        app.level.clearLevel();
         app.level.key = null; // Reset key to generate new save key
         app.background.visible = false;
         app.level.entityFactory.color = theme.color || '#620460';
         app.background.setTheme(theme.model || 'background-classic');
-        app.level.clearLevel(app);
-        app.level.importFromJSON(level, app);
-        app.levelHistory.save('Downloaded level', app);
-        app.levelHistory.save('Loaded level', app); // Force dialog check to save
-        app.resetScene(app);
+        app.level.clearLevel();
+        app.level.importFromJSON(level);
+        app.levelHistory.save('Downloaded level');
+        app.levelHistory.save('Loaded level'); // Force dialog check to save
+        app.resetScene();
         app.levelEditor.controlsOrbit.enabled = true;
         app.levelEditor.controlsOrbit.reset();
         app.graphics.render();
@@ -59,18 +59,18 @@
   function editLevel(item) {
     var levelData = app.storage.getLevelData(item.key);
     var theme = app.level.getTheme(levelData.theme) || {};
-    var settings = app.storage.getSettings(app);
+    var settings = app.storage.getSettings();
     levelData.name = item.level.name;
     app.level.entityFactory.color = theme.color || '#620460';
     app.background.setTheme(theme.model || 'background-classic');
-    app.level.clearLevel(app);
-    app.level.importFromJSON(levelData, app);
+    app.level.clearLevel();
+    app.level.importFromJSON(levelData);
     app.level.key = item.key;
     app.level.updateHelpers();
-    app.updateSettings(settings, app);
+    app.updateSettings(settings);
     app.background.visible = false;
-    app.levelHistory.save('Edited level', app);
-    app.resetScene(app);
+    app.levelHistory.save('Edited level');
+    app.resetScene();
     app.levelEditor.controlsOrbit.enabled = true;
     app.levelEditor.controlsOrbit.reset();
     app.graphics.render();
@@ -84,7 +84,7 @@
 
   function shareLevel(item) {
     editLevel(item);
-    app.resetScene(app);
+    app.resetScene();
     app.storage.saveLevelToFile();
     emit('setPage', 'level-manager');
   }

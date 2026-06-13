@@ -66,7 +66,7 @@ class Cube extends Mesh {
     if (this.position.y < -1000) {
       if (this.getClass() == 'player' && this.isStatic() == false) this.kill();
       else {
-        app.level.removeObject(this, app);
+        app.level.removeObject(this, true);
         //this.resetToOrigin();
       }
     }

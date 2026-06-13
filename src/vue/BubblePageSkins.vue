@@ -53,7 +53,7 @@
       reader.onloadend = function() {
         var skin = { id: 680, title: file.name, url: reader.result };
         settings.value.skin = skin;
-        app.player.setSkin(skin, app);
+        app.player.setSkin(skin);
         app.updateSettings(settings.value);
         window.dispatchEvent(new CustomEvent('closePopup'));
       }

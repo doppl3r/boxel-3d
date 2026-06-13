@@ -82,7 +82,7 @@
   function selectTheme(name) {
     // Deselect before recoloring level children
     rewind();
-    app.level.deselectLevel(app);
+    app.level.deselectLevel();
     app.levelEditor.controlsTransform.detach();
     app.levelEditor.controlsPutty.detach();
 
@@ -94,16 +94,16 @@
     app.level.theme = name;
     
     // Recreate current level with new theme data
-    const json = app.level.exportToJSON(app);
+    const json = app.level.exportToJSON();
 
     // Change each child color to theme color
     json.children.forEach(child => {
       if (child.color) child.color = theme.color;
     });
 
-    app.level.clearLevel(app);
-    app.level.importFromJSON(json, app);
-    app.levelHistory.save('Updated level theme', app);
+    app.level.clearLevel();
+    app.level.importFromJSON(json);
+    app.levelHistory.save('Updated level theme');
 
     // Dispatch event
     window.dispatchEvent(new CustomEvent('themeSelected', { detail: theme }));
@@ -126,11 +126,11 @@
   function pauseLevel() {
     objectTypeVisible.value = true;
     app.pauseLevel();
-    app.level.deselectLevel(app);
+    app.level.deselectLevel();
     app.levelEditor.controlsOrbit.enabled = true;
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsOrbit.target.copy(app.player.position);
-    app.updateCamera(app);
+    app.updateCamera();
     app.background.visible = false;
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
   }
@@ -138,7 +138,7 @@
   function playCurrentLevel() {
     objectTypeVisible.value = false;
     app.background.visible = true;
-    app.level.deselectLevel(app);
+    app.level.deselectLevel();
     app.levelEditor.controlsOrbit.enabled = false;
     app.levelEditor.controlsOrbit.reset();
     app.levelEditor.controlsTransform.detach();
@@ -176,7 +176,7 @@
   }
 
   function updateCoordinatesFromMouse(e) {
-    const position = app.mouse.getPosition(e, app);
+    const position = app.mouse.getPosition(e);
     position.x = app.mouse.snapToValue(position.x, app.mouse.snap);
     position.y = app.mouse.snapToValue(position.y, app.mouse.snap);
     position.z = app.mouse.snapToValue(position.z, app.mouse.snap);
@@ -193,7 +193,7 @@
     if (selectedObject.value) {
       selectedObject.value.setPosition(position);
       app.levelEditor.updateSelectedObject();
-      app.levelHistory.save('Updated object position', app);
+      app.levelHistory.save('Updated object position');
     }
   }
 
@@ -201,12 +201,12 @@
     const friction = selectedObject.value.getFriction();
     if (friction == 1) selectedObject.value.setFriction(0, true);
     else selectedObject.value.setFriction(1, true);
-    app.levelHistory.save('Updated object properties', app);
+    app.levelHistory.save('Updated object properties');
   }
 
   function updateColor(e) {
     selectedObject.value.setColors(e.target.value);
-    app.levelHistory.save('Updated object properties', app);
+    app.levelHistory.save('Updated object properties');
   }
 
   function changeText() {
@@ -235,7 +235,7 @@
 
   function updateText(e) {
     app.selectedObject.setText(e.target.value);
-    app.levelHistory.save('Updated tip', app);
+    app.levelHistory.save('Updated tip');
   }
 
   function pointerdown(e) {

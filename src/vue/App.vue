@@ -15,7 +15,7 @@
 
   // Mute Android audio when state is inactive
   cApp.addListener('appStateChange', ({ isActive }) => {
-    const settings = app.storage.getSettings(app);
+    const settings = app.storage.getSettings();
     app.assets.audio.setMasterVolume(isActive ? settings.volume : 0, 'master');
     app.assets.audio.setMasterVolume(isActive ? settings.volumeEffects : 0, 'effects');
     app.assets.audio.setMasterVolume(isActive ? settings.volumeMusic : 0, 'music');

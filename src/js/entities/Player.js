@@ -215,7 +215,7 @@ class Player extends Cube {
           };
           var particle = app.level.entityFactory.createObject('cube');
           app.level.setObjectProperties(particle, particleData);
-          app.level.addObject(particle, app);
+          app.level.addObject(particle);
           particle.isParticle = true;
           particle.setColors(this.color);
           Body.setVelocity(particle.body, this.body.velocity);
@@ -259,7 +259,7 @@ class Player extends Cube {
   respawn(override = false) {
     // Override is used when a checkpoint set
     if (this.isFrozen() == true || override == true) {
-      app.level.removeParticles(app);
+      app.level.removeParticles();
       this.resetToOrigin();
       this.setPositionToCheckpoint();
 
@@ -269,7 +269,7 @@ class Player extends Cube {
   }
 
   restart() {
-    app.level.retryLevel(app, true);
+    app.level.retryLevel(true);
 
     // Dispatch restart event
     window.dispatchEvent(new CustomEvent('playerRestart', { detail: { player: this }}));
@@ -303,8 +303,8 @@ class Player extends Cube {
           text: 'popup.text.seconds',
           description: hasNewScore ? 'popup.description.new_record' : null,
           inputs: [
-            { value: 'popup.button.retry', type: 'button', shortcut: 'KeyR', callback: function() { app.level.retryLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }},
-            { value: 'popup.button.continue', type: 'button', shortcut: 'Space', callback: function() { app.level.exitLevel(app); window.dispatchEvent(new CustomEvent('closePopup')); }}
+            { value: 'popup.button.retry', type: 'button', shortcut: 'KeyR', callback: function() { app.level.retryLevel(); window.dispatchEvent(new CustomEvent('closePopup')); }},
+            { value: 'popup.button.continue', type: 'button', shortcut: 'Space', callback: function() { app.level.exitLevel(); window.dispatchEvent(new CustomEvent('closePopup')); }}
           ]
         }
       }));

@@ -269,7 +269,7 @@ class LevelEditor {
 
   deleteSelectedObject() {
     if (app.selectedObject) {
-      app.level.removeObject(app.selectedObject, app);
+      app.level.removeObject(app.selectedObject, true);
       app.levelEditor.detachControls();
       app.levelHistory.save('Deleted object');
       window.dispatchEvent(new CustomEvent('setSelectedObject'));
@@ -325,8 +325,8 @@ class LevelEditor {
   }
 
   rewind() {
-    app.level.retryLevel(app);
-    app.level.deselectLevel(app);
+    app.level.retryLevel(true);
+    app.level.deselectLevel();
     app.levelEditor.detachControls();
     app.pauseLevel();
     window.dispatchEvent(new CustomEvent('setSelectedObject'));
@@ -400,7 +400,7 @@ class LevelEditor {
 
     // Refresh body rotation
     target.setRotation(target.getRotation());
-    app.levelHistory.save('Object updated', app);
+    app.levelHistory.save('Object updated');
   }
 
   attachControls(target) {
@@ -470,10 +470,10 @@ class LevelEditor {
   selectObjectType(type, checkNull = true) {
     // Swap object by type
     if (app.selectedObject != null && checkNull == true) {
-      app.selectedObject = app.level.changeObjectType(app.selectedObject, type, app);
+      app.selectedObject = app.level.changeObjectType(app.selectedObject, type);
       app.selectedObject.select(true);
       app.levelEditor.attachControls(app.selectedObject);
-      app.levelHistory.save('Changed object to ' + type, app);
+      app.levelHistory.save('Changed object to ' + type);
       window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
     }
 
@@ -483,10 +483,10 @@ class LevelEditor {
 
   toggleSelectedObjectStaticState() {
     app.selectedObject.toggleStatic();
-    app.selectedObject = app.level.refreshObject(app.selectedObject, app);
+    app.selectedObject = app.level.refreshObject(app.selectedObject);
     app.selectedObject.select(true);
     app.levelEditor.attachControls(app.selectedObject);
-    app.levelHistory.save('Updated object state', app);
+    app.levelHistory.save('Updated object state');
     window.dispatchEvent(new CustomEvent('setSelectedObject', { detail: app.selectedObject }));
   }
 }

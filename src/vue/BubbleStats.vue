@@ -51,7 +51,7 @@
   }
 
   function updateStatsVisibility() {
-    var settings = app.storage.getSettings(app);
+    var settings = app.storage.getSettings();
     isVisible.value = settings.stats;
   }
 

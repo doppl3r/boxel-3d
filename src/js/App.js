@@ -313,8 +313,8 @@ class App {
 
   exitCampaign() {
     app.play = false;
-    app.resetScene(app);
-    app.level.clearLevel(app);
+    app.resetScene();
+    app.level.clearLevel();
     app.player.removeCheckpoint();
     app.player.setPosition({ x: 0, y: 0, z: 0 });
     window.dispatchEvent(new CustomEvent('setPage', { detail: 'level-picker' }));
@@ -402,8 +402,8 @@ class App {
       app.updateGravity();
       app.play = true;
       app.timer.reset();
-      app.level.clearLevel(app);
-      app.level.importFromJSON(options.json, app);
+      app.level.clearLevel();
+      app.level.importFromJSON(options.json);
       app.level.publishedFileId = options.publishedFileId; // Steam level ID
       app.saveOrbitState();
       app.background.visible = true;
@@ -450,13 +450,13 @@ class App {
   }
 
   isInputBufferValid() {
-    var settings = app.storage.getSettings(app);
+    var settings = app.storage.getSettings();
     var inputBufferIsDisabled = settings.buffer === 0;
     return inputBufferIsDisabled;
   }
 
   isDebugValid() {
-    var settings = app.storage.getSettings(app);
+    var settings = app.storage.getSettings();
     var debugIsDisabled = settings.debug === false;
     return debugIsDisabled;
   }
