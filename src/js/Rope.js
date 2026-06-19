@@ -68,26 +68,36 @@ class Rope extends Group {
   }
   
   updateJoints() {
+    // Shrink every joint (physics only)
+    for (var i = 0; i < this.children.length; i++) {
+      this.children[i].shrink();
+    }
+  }
+
+  renderJoints(alpha) {
     for (var i = 0; i < this.children.length; i++) {
       var points = [];
       var child = this.children[i];
-      var pointA = child.constraint.bodyA.position;
-      var pointB = child.constraint.bodyB.position;
-      
-      // Shrink every joint
-      child.shrink();
+      var bodyA = child.constraint.bodyA;
+      var bodyB = child.constraint.bodyB;
+
+      // Interpolate positions between previous and current physics step
+      var ax = bodyA.positionPrev.x + (bodyA.position.x - bodyA.positionPrev.x) * alpha;
+      var ay = bodyA.positionPrev.y + (bodyA.position.y - bodyA.positionPrev.y) * alpha;
+      var bx = bodyB.positionPrev.x + (bodyB.position.x - bodyB.positionPrev.x) * alpha;
+      var by = bodyB.positionPrev.y + (bodyB.position.y - bodyB.positionPrev.y) * alpha;
 
       // Update line mesh
       if (child.line2 != null) {
-        points.push(pointA.x, -pointA.y, 0);
-        points.push(pointB.x + child.offset.x, -(pointB.y + child.offset.y), 0);
+        points.push(ax, -ay, 0);
+        points.push(bx + child.offset.x, -(by + child.offset.y), 0);
         child.line2Geometry.setPositions(points);
         child.line2.computeLineDistances();
       }
 
       // Update circle mesh
       if (child.circleMesh != null) {
-        child.circleMesh.position.set(pointB.x, -pointB.y, 0);
+        child.circleMesh.position.set(bx, -by, 0);
       }
     }
   }

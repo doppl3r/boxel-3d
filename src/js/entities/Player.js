@@ -186,6 +186,10 @@ class Player extends Cube {
     this.rope.updateJoints();
   }
 
+  renderRope(alpha) {
+    this.rope.renderJoints(alpha);
+  }
+
   removeRope() {
     this.rope.removeJoints();
     app.level.remove(this.rope);
