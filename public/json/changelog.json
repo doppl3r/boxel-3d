@@ -859,6 +859,7 @@
   {
     "version": "2.9.2",
     "revisions": [
+      "Improved rendering performance",
       "Improved rope animation"
     ]
   }
