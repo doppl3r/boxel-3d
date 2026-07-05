@@ -14,11 +14,21 @@ class Interval {
     this.thread = timestamp => this.update(timestamp);
     this.threadTimestamp = 0;
     this.threadFrame = 0;
+    this.paused = true;
   }
 
   add(callback, delay = -1) {
     // Create a loop with a callback and delay (milliseconds)
-    return this.loops.push({ callback, delay, delta: 0, alpha: 0, frame: 0, sum: 0, timestamp: 0 });
+    return this.loops.push({
+      alpha: 0,
+      callback,
+      delay,
+      delta: 0,
+      frame: 0,
+      paused: false,
+      sum: 0,
+      timestamp: 0
+    });
   }
 
   get(i) {
@@ -30,36 +40,58 @@ class Interval {
   }
 
   start() {
-    // Set initial timestamps before starting thread
-    this.threadFrame = requestAnimationFrame(timestamp => {
-      this.threadTimestamp = timestamp;
-      this.loops.forEach(loop => loop.timestamp = timestamp);
-      this.thread(timestamp);
-    });
+    // Only start if thread is paused
+    if (this.paused === true) {
+      this.paused = false;
+
+      // Set initial timestamps before starting thread
+      this.threadFrame = requestAnimationFrame(timestamp => {
+        this.threadTimestamp = timestamp;
+        this.loops.forEach(loop => loop.timestamp = timestamp);
+        this.thread(timestamp);
+      });
+    }
   }
 
   stop() {
-    cancelAnimationFrame(this.threadFrame);
+    this.paused = true;
+  }
+
+  pause(i) {
+    this.loops[i].paused = true;
+  }
+
+  resume(i) {
+    this.loops[i].paused = false;
   }
 
   update(timestamp) {
+    // Cancel the interval thread
+    if (this.paused === true) return;
+
     // Rerun thread on next repaint
     this.threadFrame = requestAnimationFrame(this.thread);
 
     // Set thread delta from thread timestamp
     const threadDelta = timestamp - this.threadTimestamp;
+    const maxDelta = this.loops[0].delay;
+    const cappedDelta = Math.min(threadDelta, maxDelta);
     this.threadTimestamp = timestamp;
 
     // Loop through array of loops (descending order)
     for (let i = this.loops.length - 1; i >= 0; i--) {
+      // Skip loop if it is paused
+      if (this.loops[i].paused === true) continue;
+      
       // Add thread delta to loop sum
-      this.loops[i].sum += threadDelta * this.speed;
+      this.loops[i].sum += cappedDelta * this.speed;
 
       // Trigger loop callback
       if (this.loops[i].sum >= this.loops[i].delay) {
-        this.loops[i].sum %= this.loops[i].delay;
+        this.loops[i].sum -= this.loops[i].delay;
         this.loops[i].delta = (timestamp - this.loops[i].timestamp) * this.speed;
         this.loops[i].alpha = this.loops[0].sum / this.loops[0].delay;
+        this.loops[i].fps = 1000 / this.loops[i].delta;
         this.loops[i].frame++;
         this.loops[i].timestamp = timestamp;
         this.loops[i].callback(this.loops[i]);
