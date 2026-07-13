@@ -78,8 +78,8 @@ class Interval {
     const cappedDelta = Math.min(threadDelta, maxDelta);
     this.threadTimestamp = timestamp;
 
-    // Loop through array of loops (descending order)
-    for (let i = this.loops.length - 1; i >= 0; i--) {
+    // Loop through array of loops
+    for (let i = 0; i < this.loops.length; i++) {
       // Skip loop if it is paused
       if (this.loops[i].paused === true) continue;
       
