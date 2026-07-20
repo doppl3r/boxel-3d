@@ -171,6 +171,7 @@ class App {
       this.timer.render();
       
       // Update game objects
+      this.player.updateMatrixWorld();
       this.player.renderRope(alpha);
       this.background.update(delta, alpha, app.motion == false);
       this.background.updateMatrixWorld();

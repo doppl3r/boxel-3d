@@ -857,10 +857,16 @@
     ]
   },
   {
-    "version": "2.9.3",
+    "version": "2.9.2",
     "revisions": [
       "Improved rendering performance",
       "Improved rope animation"
+    ]
+  },
+  {
+    "version": "2.9.3",
+    "revisions": [
+      "Fix low FPS bug"
     ]
   }
 ]
