@@ -866,7 +866,7 @@
   {
     "version": "2.9.3",
     "revisions": [
-      "Fix low FPS bug"
+      "Fixed low FPS bug"
     ]
   }
 ]
